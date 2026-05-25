@@ -17,3 +17,7 @@ desktop.ini
 # Backup temporanei
 *.bak
 *.tmp
+
+# Log: ignora tutto tranne il log storico degli addon (append-only, tracciato per context)
+*.log
+!addons/installs.log
