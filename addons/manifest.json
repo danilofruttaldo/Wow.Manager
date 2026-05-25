@@ -1,0 +1,155 @@
+{
+  "_meta": {
+    "schema_version": 1,
+    "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
+    "wow_build": "12.0.5.67602",
+    "last_sync": "2026-05-24"
+  },
+  "addons": {
+    "BigWigs": {
+      "name": "BigWigs",
+      "version": "unknown",
+      "interface": "120001, 120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/big-wigs",
+      "installed": "pre-existing",
+      "folders": [
+        "BigWigs",
+        "BigWigs_Core",
+        "BigWigs_Options",
+        "BigWigs_Plugins",
+        "BigWigs_MidnightWorld",
+        "BigWigs_TheDreamrift",
+        "BigWigs_TheVoidspire",
+        "BigWigs_Sporefall",
+        "BigWigs_MarchOnQuelDanas"
+      ],
+      "notes": "Raid boss mods, suite Midnight Season 1"
+    },
+    "LittleWigs": {
+      "name": "LittleWigs",
+      "version": "12.0.48",
+      "interface": "120001, 120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/little-wigs",
+      "installed": "2026-05-24",
+      "folders": [
+        "LittleWigs",
+        "LittleWigs_BattleForAzeroth",
+        "LittleWigs_BurningCrusade",
+        "LittleWigs_Cataclysm",
+        "LittleWigs_Classic",
+        "LittleWigs_Dragonflight",
+        "LittleWigs_Legion",
+        "LittleWigs_MistsOfPandaria",
+        "LittleWigs_Shadowlands",
+        "LittleWigs_TheWarWithin",
+        "LittleWigs_WarlordsOfDraenor",
+        "LittleWigs_WrathOfTheLichKing"
+      ],
+      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs"
+    },
+    "MythicDungeonTools": {
+      "name": "Mythic Dungeon Tools",
+      "version": "unknown",
+      "interface": "120007, 120005, 120001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
+      "installed": "pre-existing",
+      "folders": ["MythicDungeonTools"],
+      "notes": "Planner M+ con route, pull, sim"
+    },
+    "Plater": {
+      "name": "Plater Nameplates",
+      "version": "unknown",
+      "interface": "120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/plater-nameplates",
+      "installed": "pre-existing",
+      "folders": ["Plater"],
+      "notes": "Nameplates avanzati"
+    },
+    "WeakAuras": {
+      "name": "WeakAuras",
+      "version": "unknown",
+      "interface": "40402",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/weakauras-2",
+      "installed": "pre-existing",
+      "folders": [
+        "WeakAuras",
+        "WeakAurasArchive",
+        "WeakAurasModelPaths",
+        "WeakAurasOptions",
+        "WeakAurasTemplates"
+      ],
+      "notes": "TOC dichiara 40402 (Cata) — sospetto out-of-date; verificare e aggiornare alla prossima sync"
+    },
+    "Details": {
+      "name": "Details! Damage Meter",
+      "version": "Details.20260516.15079.171",
+      "interface": "120005",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/details",
+      "installed": "2026-05-24",
+      "folders": [
+        "Details",
+        "Details_Compare2",
+        "Details_DataStorage",
+        "Details_EncounterDetails",
+        "Details_RaidCheck"
+      ],
+      "notes": "Damage meter standard; rimossi plugin Streamer/Vanguard/TinyThreat su richiesta utente"
+    },
+    "Leatrix_Plus": {
+      "name": "Leatrix Plus",
+      "version": "12.0.15",
+      "interface": "120005",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
+      "installed": "2026-05-24",
+      "folders": ["Leatrix_Plus"],
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. 12.0.16+ esiste ma targeta 12.0.7 PTR"
+    },
+    "HandyNotes": {
+      "name": "HandyNotes",
+      "version": "1.6.28",
+      "interface": "110207,120000,120001,11508,20505,50503",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes",
+      "installed": "2026-05-24",
+      "folders": ["HandyNotes"],
+      "notes": "Core framework per plugin di mappa. TOC out-of-date ma API stabile, funziona con 'Load out of date AddOns'"
+    },
+    "HandyNotes_Midnight": {
+      "name": "HandyNotes: Midnight",
+      "version": "v144",
+      "interface": "120005",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
+      "installed": "2026-05-24",
+      "folders": ["HandyNotes_Midnight"],
+      "notes": "Plugin kemayo per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso)"
+    },
+    "TeleportMenu": {
+      "name": "Teleport Menu",
+      "version": "12.4",
+      "interface": "120000, 120001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/teleport-me-nu",
+      "installed": "2026-05-24",
+      "folders": ["TeleportMenu"],
+      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). TOC out-of-date ma API stabile"
+    },
+    "TomTom": {
+      "name": "TomTom",
+      "version": "4.3.1",
+      "interface": "120005",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/tomtom",
+      "installed": "2026-05-24",
+      "folders": ["TomTom"],
+      "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo)"
+    }
+  }
+}

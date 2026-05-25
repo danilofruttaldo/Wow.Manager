@@ -1,0 +1,19 @@
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Binari / archivi grandi non versionati
+*.zip
+*.7z
+*.rar
+
+# Backup temporanei
+*.bak
+*.tmp
