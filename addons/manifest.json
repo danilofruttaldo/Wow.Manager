@@ -103,14 +103,13 @@
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
-      "version": "12.0.15",
-      "latest_available": "12.0.19",
-      "interface": "120005",
+      "version": "12.0.19",
+      "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-05-24",
+      "installed": "2026-05-25",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. UPDATE PENDING 12.0.15 → 12.0.19 (rilasciata 2026-05-21, file_id 8123715). Cloudflare blocca curl, scaricare manualmente da Curseforge o CF App"
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-05-25 via forgecdn CDN diretto (vedi feedback-curseforge-cdn-trick)"
     },
     "HandyNotes": {
       "name": "HandyNotes",

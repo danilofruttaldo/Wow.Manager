@@ -15,4 +15,5 @@
 2026-05-24 REMOVE   QuickQuest (redundant con Leatrix Plus)
 2026-05-25 SYNC     Audit Curseforge versioni: BigWigs v415.3, MDT 6.1.5, Plater v645-Retail, WeakAuras 5.21.6 (manifest aggiornato da unknown)
 2026-05-25 ALERT    Leatrix_Plus 12.0.15 → 12.0.19 disponibile (rilasciata 2026-05-21). Download manuale richiesto (Cloudflare blocca curl)
+2026-05-25 UPDATE   Leatrix_Plus 12.0.15 → 12.0.19. Download via forgecdn CDN diretto (mediafilez.forgecdn.net/files/8123/715/...). Backup vecchia versione in AddOns/Leatrix_Plus.bak-12.0.15-20260525-125345
 2026-05-25 SYNC     Tutti gli altri addon allineati alla latest stable Curseforge: LittleWigs, Details, HandyNotes, HandyNotes_Midnight, TeleportMenu, TomTom
