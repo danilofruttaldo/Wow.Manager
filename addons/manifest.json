@@ -3,12 +3,12 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67602",
-    "last_sync": "2026-05-24"
+    "last_sync": "2026-05-25"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "unknown",
+      "version": "v415.3",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
@@ -51,8 +51,8 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
-      "version": "unknown",
-      "interface": "120007, 120005, 120001",
+      "version": "6.1.5",
+      "interface": "120007, 120005, 120001, 50503",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
       "installed": "pre-existing",
@@ -61,7 +61,7 @@
     },
     "Plater": {
       "name": "Plater Nameplates",
-      "version": "unknown",
+      "version": "Plater-v645-Retail",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/plater-nameplates",
@@ -71,7 +71,7 @@
     },
     "WeakAuras": {
       "name": "WeakAuras",
-      "version": "unknown",
+      "version": "5.21.6",
       "interface": "40402",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/weakauras-2",
@@ -83,7 +83,7 @@
         "WeakAurasOptions",
         "WeakAurasTemplates"
       ],
-      "notes": "TOC dichiara 40402 (Cata) — sospetto out-of-date; verificare e aggiornare alla prossima sync"
+      "notes": "Locale 5.21.6 più nuovo della stable Curseforge 5.21.1 (gen 2026) — probabilmente da GitHub release o beta channel. TOC dichiara 40402 (Cata) ma funziona con 'Load out of date AddOns'"
     },
     "Details": {
       "name": "Details! Damage Meter",
@@ -104,12 +104,13 @@
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "version": "12.0.15",
+      "latest_available": "12.0.19",
       "interface": "120005",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
       "installed": "2026-05-24",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. 12.0.16+ esiste ma targeta 12.0.7 PTR"
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. UPDATE PENDING 12.0.15 → 12.0.19 (rilasciata 2026-05-21, file_id 8123715). Cloudflare blocca curl, scaricare manualmente da Curseforge o CF App"
     },
     "HandyNotes": {
       "name": "HandyNotes",
