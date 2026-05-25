@@ -1,0 +1,15 @@
+2026-05-24 INIT     Manifest creato. WoW build 12.0.5.67602. Sync iniziale da AddOns folder.
+2026-05-24 INSTALL  QuickQuest 120000.96-Release (rimosso stesso giorno, redundant con Leatrix Plus)
+2026-05-24 INSTALL  Leatrix_Plus 12.0.15
+2026-05-24 INSTALL  HandyNotes 1.6.28
+2026-05-24 INSTALL  HandyNotes_MidnightTreasures v46 (rimosso stesso giorno, sostituito da HandyNotes_Midnight)
+2026-05-24 INSTALL  Pawn 2.13.8 (rimosso stesso giorno, su richiesta utente)
+2026-05-24 INSTALL  HandyNotes_Midnight v144
+2026-05-24 REMOVE   HandyNotes_MidnightTreasures
+2026-05-24 REMOVE   Pawn
+2026-05-24 INSTALL  TeleportMenu 12.4
+2026-05-24 INSTALL  LittleWigs 12.0.48
+2026-05-24 INSTALL  Details 20260516.15079.171
+2026-05-24 REMOVE   Details_Streamer, Details_Vanguard, Details_TinyThreat (plugin opzionali)
+2026-05-24 INSTALL  TomTom 4.3.1
+2026-05-24 REMOVE   QuickQuest (redundant con Leatrix Plus)
