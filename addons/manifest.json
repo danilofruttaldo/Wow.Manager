@@ -131,6 +131,16 @@
       "folders": ["HandyNotes_Midnight"],
       "notes": "Plugin kemayo per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso)"
     },
+    "HandyNotes_MidnightGlyphs": {
+      "name": "HandyNotes: Midnight - Glyphs & Vistas",
+      "version": "1.1.1",
+      "interface": "120001, 120005",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-midnight-glyphs-vistas",
+      "installed": "2026-05-25",
+      "folders": ["HandyNotes_MidnightGlyphs"],
+      "notes": "Plugin glifi skyriding + vista points zone Midnight. Dipende da HandyNotes. Installato via forgecdn CDN diretto"
+    },
     "TeleportMenu": {
       "name": "Teleport Menu",
       "version": "12.4",
