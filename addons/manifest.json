@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67602",
-    "last_sync": "2026-05-25"
+    "last_sync": "2026-05-26"
   },
   "addons": {
     "BigWigs": {
@@ -51,11 +51,11 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
-      "version": "6.1.5",
+      "version": "6.1.9",
       "interface": "120007, 120005, 120001, 50503",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
-      "installed": "pre-existing",
+      "installed": "2026-05-26",
       "folders": ["MythicDungeonTools"],
       "notes": "Planner M+ con route, pull, sim"
     },
@@ -87,11 +87,11 @@
     },
     "Details": {
       "name": "Details! Damage Meter",
-      "version": "Details.20260516.15079.171",
+      "version": "Details.20260525.15089.171",
       "interface": "120005",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/details",
-      "installed": "2026-05-24",
+      "installed": "2026-05-26",
       "folders": [
         "Details",
         "Details_Compare2",
