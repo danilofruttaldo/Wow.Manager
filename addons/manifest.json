@@ -160,6 +160,16 @@
       "installed": "2026-05-24",
       "folders": ["TomTom"],
       "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo)"
+    },
+    "WIM": {
+      "name": "WIM (WoW Instant Messenger) v3",
+      "version": "3.16.14",
+      "interface": "11508, 20505, 30405, 40402, 50503, 120000, 120001, 120005",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/wim-3",
+      "installed": "2026-05-27",
+      "folders": ["WIM"],
+      "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. TOC compatibile 120005. Download via forgecdn files/8151/363"
     }
   }
 }
