@@ -161,6 +161,16 @@
       "folders": ["TomTom"],
       "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo)"
     },
+    "BetterBags": {
+      "name": "BetterBags",
+      "version": "v0.4.7",
+      "interface": "120000, 120001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/better-bags",
+      "installed": "2026-05-27",
+      "folders": ["BetterBags"],
+      "notes": "Successore moderno di AdiBags. Borsa unica con auto-categorizzazione (sezioni: armi, consumabili, quest, trade, equip, ecc.), warband bank, ricerca avanzata, temi. TOC out-of-date (120001 vs 120005 installato) → richiede 'Load out of date AddOns' ma API compat. Download forgecdn files/7644/715"
+    },
     "WIM": {
       "name": "WIM (WoW Instant Messenger) v3",
       "version": "3.16.14",
