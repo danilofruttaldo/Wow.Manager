@@ -1,0 +1,2 @@
+#showtooltip
+/cast [@mouseover,harm,nodead][@focus,harm,nodead][] Storm Bolt

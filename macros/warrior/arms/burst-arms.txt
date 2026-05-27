@@ -1,0 +1,5 @@
+#showtooltip Avatar
+/cast Avatar
+/cast Recklessness
+/use 13
+/use 14
