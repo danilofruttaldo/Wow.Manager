@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67602",
-    "last_sync": "2026-05-26"
+    "last_sync": "2026-05-27"
   },
   "addons": {
     "BigWigs": {
@@ -51,11 +51,11 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
-      "version": "6.1.9",
+      "version": "6.1.11",
       "interface": "120007, 120005, 120001, 50503",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
-      "installed": "2026-05-26",
+      "installed": "2026-05-27",
       "folders": ["MythicDungeonTools"],
       "notes": "Planner M+ con route, pull, sim"
     },
@@ -103,13 +103,13 @@
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
-      "version": "12.0.19",
+      "version": "12.0.20",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-05-25",
+      "installed": "2026-05-27",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-05-25 via forgecdn CDN diretto (vedi feedback-curseforge-cdn-trick)"
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-05-27 via forgecdn files/8153/240"
     },
     "HandyNotes": {
       "name": "HandyNotes",
