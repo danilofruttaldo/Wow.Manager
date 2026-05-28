@@ -2,4 +2,4 @@
 /cast Avatar
 /use 13
 /use 14
-/cast [@cursor]Ravager
+/cast Colossus Smash
