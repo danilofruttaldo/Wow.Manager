@@ -34,3 +34,4 @@
 2026-05-28 MACROS   Aggiunta ravager-cursor (character, Arms): standalone @cursor per follow-up dopo arms-burst. Set Stantu Arms completo a 4 macro tracciate: leap @cursor, charge/intervene, arms-burst, ravager @cursor.
 2026-05-28 MACROS   Aggiunta sweeping-cleave (character, Arms): Sweeping Strikes (off-GCD buff cleave 12s) + Cleave (on-GCD) in un press. Apertura pack M+ con cleave garantito al primo colpo. Set Stantu Arms a 5 macro.
 2026-05-28 MACROS   Fix sweeping-cleave: Sweeping Strikes è on-GCD in patch 12.x (errore precedente). Riscritta come /castsequence reset=12: 1° press SS, 2° press Cleave. #showtooltip dinamico mostra ability corrente.
+2026-05-28 MACROS   heroic-leap-cursor: aggiunto `!` davanti a Heroic Leap per evitare reset indicator su multi-press (suggerimento Icy Veins).
