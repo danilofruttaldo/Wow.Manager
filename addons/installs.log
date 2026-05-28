@@ -39,3 +39,4 @@
 2026-05-28 MACROS   sweeping-cleave fix definitivo: scoperto che /cast su ability in CD blocca le linee successive in WoW moderno (verified via Blizzard forums). Riscritta con modifier: [mod:shift]Sweeping Strikes;Cleave. Shift+press = SS, press normale = Cleave. Zero edge case.
 2026-05-28 MACROS   sweeping-cleave: utente preferisce castsequence, niente modifier. Versione finale: castsequence reset=combat SS + 19 Cleave (20 step ≈ 30s SS CD). Reset su uscita combat = SS fresh ad ogni nuovo pack.
 2026-05-28 MACROS   sweeping-cleave: reset=combat → reset=29 (preferenza utente). Reset si attiva dopo 29s di idle no-press (SS CD = 30s, allineato). 204 chars, dentro limite.
+2026-05-28 MACROS   sweeping-cleave: buffer Cleave 19 → 10. Cleave base CD ~5-6s = max 10 Cleave in 30s realistici, buffer minimale ma coerente. 132 chars.
