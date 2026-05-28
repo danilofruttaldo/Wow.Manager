@@ -40,6 +40,18 @@
       "body_file": "warrior/arms/burst-arms.txt",
       "body": null,
       "notes": "Avatar (off-GCD) + trinket 13/14 (off-GCD) + Colossus Smash (on-GCD = applica debuff subito). Ravager su bind separato da premere al GCD successivo dentro la finestra CS per max amp. Build Arms M+ Wowhead 2026-05-28."
+    },
+    "warrior-ravager-cursor": {
+      "name": "Ravager @cursor",
+      "scope": "character",
+      "class": "warrior",
+      "spec": "arms",
+      "character": "Stantu-PozzoDellEternita",
+      "slot": null,
+      "icon": null,
+      "body_file": "warrior/arms/ravager-cursor.txt",
+      "body": null,
+      "notes": "Ravager ground-target su cursor, skip indicator. Premere al GCD successivo al burst opener (Arms Burst macro) per spawnare il pet dentro finestra Colossus Smash."
     }
   }
 }
