@@ -52,6 +52,18 @@
       "body_file": "warrior/arms/ravager-cursor.txt",
       "body": null,
       "notes": "Ravager ground-target su cursor, skip indicator. Premere al GCD successivo al burst opener (Arms Burst macro) per spawnare il pet dentro finestra Colossus Smash."
+    },
+    "warrior-sweeping-cleave": {
+      "name": "Sweep+Cleave",
+      "scope": "character",
+      "class": "warrior",
+      "spec": "arms",
+      "character": "Stantu-PozzoDellEternita",
+      "slot": null,
+      "icon": "Cleave",
+      "body_file": "warrior/arms/sweeping-cleave.txt",
+      "body": null,
+      "notes": "Sweeping Strikes (off-GCD, 12s buff cleave) + Cleave (on-GCD) in un press. Apre i pack M+ garantendo cleave attivo al primo colpo AoE. Caveat: SS ha 30s CD, non sprecare su pack piccoli."
     }
   }
 }
