@@ -63,7 +63,7 @@
       "icon": null,
       "body_file": "warrior/arms/sweeping-cleave.txt",
       "body": null,
-      "notes": "Modifier-based: Shift+press = Sweeping Strikes, press normale = Cleave. Approccio robusto: nessun edge case (multiline /cast e castsequence falliscono entrambi per il blocking di /cast su ability in CD). #showtooltip senza args mostra icona dinamica del ramo che parte (Cleave o SS)."
+      "notes": "Castsequence: SS poi 19 Cleave (20 step totali ≈ 30s = SS CD). reset=combat torna a step 1 quando esci da combat → ogni nuovo pack inizia con SS. #showtooltip dinamico mostra ability corrente nella sequenza. 208 chars, sotto limite 255."
     }
   }
 }

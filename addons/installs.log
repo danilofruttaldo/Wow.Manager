@@ -37,3 +37,4 @@
 2026-05-28 MACROS   heroic-leap-cursor: aggiunto `!` davanti a Heroic Leap per evitare reset indicator su multi-press (suggerimento Icy Veins).
 2026-05-28 MACROS   sweeping-cleave: rimosso /castsequence (bloccava i Cleave durante CD di SS). Tornata a 2 /cast lineari: primo press = SS, press successivi durante 12s buff = Cleave spam (SS in CD non triggera GCD, Cleave fires). Comportamento desiderato dall'utente.
 2026-05-28 MACROS   sweeping-cleave fix definitivo: scoperto che /cast su ability in CD blocca le linee successive in WoW moderno (verified via Blizzard forums). Riscritta con modifier: [mod:shift]Sweeping Strikes;Cleave. Shift+press = SS, press normale = Cleave. Zero edge case.
+2026-05-28 MACROS   sweeping-cleave: utente preferisce castsequence, niente modifier. Versione finale: castsequence reset=combat SS + 19 Cleave (20 step ≈ 30s SS CD). Reset su uscita combat = SS fresh ad ogni nuovo pack.
