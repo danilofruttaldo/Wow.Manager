@@ -1,2 +1,3 @@
-#showtooltip
-/castsequence reset=12 Sweeping Strikes, Cleave
+#showtooltip Cleave
+/cast Sweeping Strikes
+/cast Cleave

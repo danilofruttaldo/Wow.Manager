@@ -60,10 +60,10 @@
       "spec": "arms",
       "character": "Stantu-PozzoDellEternita",
       "slot": null,
-      "icon": null,
+      "icon": "Cleave",
       "body_file": "warrior/arms/sweeping-cleave.txt",
       "body": null,
-      "notes": "Castsequence: 1° press Sweeping Strikes (on-GCD nei patch attuali), 2° press Cleave. Reset 12s = durata buff SS. #showtooltip senza args mostra l'ability successiva nella sequenza (icona dinamica). Caveat: se SS fallisce (range/CD) la sequenza si blocca, premere di nuovo per skippare al next step."
+      "notes": "Due /cast lineari: 1° press lancia SS (Cleave bloccato da GCD), press successivi durante 12s buff window lanciano Cleave (SS in CD fallisce silently, NON triggera GCD, Cleave fires). Spam-friendly: una sola bind per intero ciclo SS→Cleave×N."
     }
   }
 }
