@@ -1,2 +1,2 @@
 #showtooltip
-/castsequence reset=combat Sweeping Strikes, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave
+/castsequence reset=29 Sweeping Strikes, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave
