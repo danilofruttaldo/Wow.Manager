@@ -1,3 +1,2 @@
-#showtooltip Cleave
-/cast Sweeping Strikes
-/cast Cleave
+#showtooltip
+/cast [mod:shift]Sweeping Strikes;Cleave

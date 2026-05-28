@@ -36,3 +36,4 @@
 2026-05-28 MACROS   Fix sweeping-cleave: Sweeping Strikes è on-GCD in patch 12.x (errore precedente). Riscritta come /castsequence reset=12: 1° press SS, 2° press Cleave. #showtooltip dinamico mostra ability corrente.
 2026-05-28 MACROS   heroic-leap-cursor: aggiunto `!` davanti a Heroic Leap per evitare reset indicator su multi-press (suggerimento Icy Veins).
 2026-05-28 MACROS   sweeping-cleave: rimosso /castsequence (bloccava i Cleave durante CD di SS). Tornata a 2 /cast lineari: primo press = SS, press successivi durante 12s buff = Cleave spam (SS in CD non triggera GCD, Cleave fires). Comportamento desiderato dall'utente.
+2026-05-28 MACROS   sweeping-cleave fix definitivo: scoperto che /cast su ability in CD blocca le linee successive in WoW moderno (verified via Blizzard forums). Riscritta con modifier: [mod:shift]Sweeping Strikes;Cleave. Shift+press = SS, press normale = Cleave. Zero edge case.

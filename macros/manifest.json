@@ -60,10 +60,10 @@
       "spec": "arms",
       "character": "Stantu-PozzoDellEternita",
       "slot": null,
-      "icon": "Cleave",
+      "icon": null,
       "body_file": "warrior/arms/sweeping-cleave.txt",
       "body": null,
-      "notes": "Due /cast lineari: 1° press lancia SS (Cleave bloccato da GCD), press successivi durante 12s buff window lanciano Cleave (SS in CD fallisce silently, NON triggera GCD, Cleave fires). Spam-friendly: una sola bind per intero ciclo SS→Cleave×N."
+      "notes": "Modifier-based: Shift+press = Sweeping Strikes, press normale = Cleave. Approccio robusto: nessun edge case (multiline /cast e castsequence falliscono entrambi per il blocking di /cast su ability in CD). #showtooltip senza args mostra icona dinamica del ramo che parte (Cleave o SS)."
     }
   }
 }
