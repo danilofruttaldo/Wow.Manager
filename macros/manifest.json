@@ -60,10 +60,10 @@
       "spec": "arms",
       "character": "Stantu-PozzoDellEternita",
       "slot": null,
-      "icon": "Cleave",
+      "icon": null,
       "body_file": "warrior/arms/sweeping-cleave.txt",
       "body": null,
-      "notes": "Sweeping Strikes (off-GCD, 12s buff cleave) + Cleave (on-GCD) in un press. Apre i pack M+ garantendo cleave attivo al primo colpo AoE. Caveat: SS ha 30s CD, non sprecare su pack piccoli."
+      "notes": "Castsequence: 1° press Sweeping Strikes (on-GCD nei patch attuali), 2° press Cleave. Reset 12s = durata buff SS. #showtooltip senza args mostra l'ability successiva nella sequenza (icona dinamica). Caveat: se SS fallisce (range/CD) la sequenza si blocca, premere di nuovo per skippare al next step."
     }
   }
 }
