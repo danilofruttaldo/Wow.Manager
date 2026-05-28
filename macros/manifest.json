@@ -15,7 +15,7 @@
       "icon": null,
       "body_file": "warrior/arms/heroic-leap-cursor.txt",
       "body": null,
-      "notes": "Salta sulla posizione del mouse. Standard QoL warrior, evita il targeting AoE classico."
+      "notes": "Salta sulla posizione del mouse. `!` previene il reset dell'indicator se ripremi prima del cast (spam-safe). Standard QoL warrior."
     },
     "warrior-charge-intervene": {
       "name": "Charge/Intervene",
