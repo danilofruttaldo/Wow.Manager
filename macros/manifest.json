@@ -2,33 +2,9 @@
   "_meta": {
     "schema_version": 1,
     "wtf_path": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\WTF",
-    "last_sync": "2026-05-27"
+    "last_sync": "2026-05-28"
   },
   "macros": {
-    "warrior-pummel-mouseover": {
-      "name": "Pummel MO",
-      "scope": "account",
-      "class": "warrior",
-      "spec": null,
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "warrior/arms/pummel-mouseover.txt",
-      "body": null,
-      "notes": "Kick su mouseover, fallback focus, fallback target. Cross-spec (Arms+Fury+Prot)."
-    },
-    "warrior-storm-bolt-mouseover": {
-      "name": "StormBolt MO",
-      "scope": "account",
-      "class": "warrior",
-      "spec": null,
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "warrior/arms/storm-bolt-mouseover.txt",
-      "body": null,
-      "notes": "Stun talent su mouseover, fallback focus/target. Disponibile sia Arms che Fury se talentato."
-    },
     "warrior-heroic-leap-cursor": {
       "name": "Leap @cursor",
       "scope": "account",
@@ -51,19 +27,7 @@
       "icon": null,
       "body_file": "warrior/arms/charge-intervene.txt",
       "body": null,
-      "notes": "Singolo bottone: Intervene su ally (target o mouseover), Charge su nemico."
-    },
-    "warrior-spell-reflection-focus": {
-      "name": "SpellRef Focus",
-      "scope": "account",
-      "class": "warrior",
-      "spec": null,
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "warrior/arms/spell-reflection-focus.txt",
-      "body": null,
-      "notes": "Spell Reflection priorità mouseover ally → focus → self. Per riflettere su tank/healer in raid."
+      "notes": "Cross-spec gap-closer: friendly target → Intervene, modifier+Prot → Shield Charge, fallback → Charge. Usa known: per safety cross-spec."
     },
     "warrior-arms-burst": {
       "name": "Arms Burst",
@@ -75,19 +39,7 @@
       "icon": "Avatar",
       "body_file": "warrior/arms/burst-arms.txt",
       "body": null,
-      "notes": "Avatar + Recklessness + trinket slot 13 + trinket slot 14. Reck è off-GCD, Avatar inizia GCD. Premere prima del primo Mortal Strike/Colossus Smash window."
-    },
-    "warrior-bladestorm-cancel": {
-      "name": "Bladestorm/Cancel",
-      "scope": "account",
-      "class": "warrior",
-      "spec": null,
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "warrior/arms/bladestorm-cancel.txt",
-      "body": null,
-      "notes": "Primo press: cast Bladestorm. Secondo press durante channel: cancella (es. per evitare meccaniche). /cancelaura è no-op se non attivo."
+      "notes": "Avatar (off-GCD) + trinket 13/14 (off-GCD) + Ravager @cursor (on-GCD). Premere all'opener: Avatar+trinket si attivano, Ravager spawna sotto il cursor. Bladestorm/Mortal Strike a parte. Build Arms M+ Wowhead 2026-05-28."
     }
   }
 }
