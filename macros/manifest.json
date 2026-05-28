@@ -63,7 +63,7 @@
       "icon": null,
       "body_file": "warrior/arms/sweeping-cleave.txt",
       "body": null,
-      "notes": "Castsequence: SS poi 19 Cleave buffer. reset=29 (timer si refresha ad ogni press, quindi reset triggera solo dopo 29s di idle no-press → tipicamente boss intro/drink break, non chain pull veloci). Logica: dentro un pack stai sempre su step Cleave (Cleave ha proprio CD, non avanzi 19 step in un pack), quindi press = Cleave when up. SS step 1 si rifa solo dopo idle prolungato. 204 chars."
+      "notes": "Castsequence: SS poi 10 Cleave buffer. reset=29 (timer si refresha ad ogni press, quindi reset triggera solo dopo 29s di idle no-press → tipicamente boss intro/drink break, non chain pull veloci). Logica: dentro un pack stai sempre su step Cleave (Cleave ha proprio CD ~5-6s, ne firi 5-10 in 30s, 10 buffer = safe), quindi press = Cleave when up. 132 chars."
     }
   }
 }
