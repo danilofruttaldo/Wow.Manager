@@ -39,7 +39,7 @@
       "icon": "Avatar",
       "body_file": "warrior/arms/burst-arms.txt",
       "body": null,
-      "notes": "Avatar (off-GCD) + trinket 13/14 (off-GCD) + Ravager @cursor (on-GCD). Premere all'opener: Avatar+trinket si attivano, Ravager spawna sotto il cursor. Bladestorm/Mortal Strike a parte. Build Arms M+ Wowhead 2026-05-28."
+      "notes": "Avatar (off-GCD) + trinket 13/14 (off-GCD) + Colossus Smash (on-GCD = applica debuff subito). Ravager su bind separato da premere al GCD successivo dentro la finestra CS per max amp. Build Arms M+ Wowhead 2026-05-28."
     }
   }
 }
