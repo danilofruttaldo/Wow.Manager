@@ -180,6 +180,16 @@
       "installed": "2026-05-27",
       "folders": ["WIM"],
       "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. TOC compatibile 120005. Download via forgecdn files/8151/363"
+    },
+    "SimpleItemLevel": {
+      "name": "Simple Item Level",
+      "version": "v65",
+      "interface": "120001, 120000, 110207, 50503, 30405, 20505, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/simple-item-level",
+      "installed": "2026-05-28",
+      "folders": ["SimpleItemLevel"],
+      "notes": "Mostra item level su ogni oggetto in character pane, bags, bank, mail. Author Kemayo. TOC 120001 vs build 120005 → out-of-date, richiede 'Load out of date AddOns'. Download forgecdn files/7797/577."
     }
   }
 }
