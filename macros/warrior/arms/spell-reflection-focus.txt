@@ -1,2 +1,0 @@
-#showtooltip
-/cast [@mouseover,help,nodead][@focus,help,nodead][@player] Spell Reflection

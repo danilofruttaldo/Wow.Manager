@@ -1,3 +1,0 @@
-#showtooltip Bladestorm
-/cancelaura Bladestorm
-/cast Bladestorm
