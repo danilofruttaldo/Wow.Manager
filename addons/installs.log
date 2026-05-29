@@ -41,3 +41,5 @@
 2026-05-28 MACROS   sweeping-cleave: reset=combat → reset=29 (preferenza utente). Reset si attiva dopo 29s di idle no-press (SS CD = 30s, allineato). 204 chars, dentro limite.
 2026-05-28 MACROS   sweeping-cleave: buffer Cleave 19 → 10. Cleave base CD ~5-6s = max 10 Cleave in 30s realistici, buffer minimale ma coerente. 132 chars.
 2026-05-28 INSTALL  SimpleItemLevel v65 (rilasciato 2026-03-23). Author Kemayo, mostra ilvl su character pane/bags/bank/mail. Download forgecdn files/7797/577. TOC 120001 → out-of-date vs build 120005, richiede 'Load out of date AddOns'. 25KB.
+2026-05-29 REMOVE   HandyNotes_MidnightGlyphs 1.1.1 (su richiesta utente). Cartella AddOns rimossa, entry manifest eliminata. HandyNotes core e HandyNotes_Midnight mantenuti. Richiede /reload o riavvio.
+2026-05-29 SYNC     Audit Curseforge tutti 13 addon rimanenti: nessun update disponibile. Allineati a latest Release (BigWigs v415.3, LittleWigs 12.0.48, MDT 6.1.11, Plater v645, Details 20260525, Leatrix 12.0.20, HandyNotes 1.6.28, HN_Midnight v144, TeleportMenu 12.4, TomTom 4.3.1, BetterBags v0.4.7, WIM 3.16.14, SimpleItemLevel v65). WeakAuras locale 5.21.6 invariato.
