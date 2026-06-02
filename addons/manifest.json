@@ -2,17 +2,17 @@
   "_meta": {
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
-    "wow_build": "12.0.5.67602",
-    "last_sync": "2026-05-29"
+    "wow_build": "12.0.5.67823",
+    "last_sync": "2026-06-01"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v415.3",
+      "version": "v416",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "pre-existing",
+      "installed": "2026-06-02",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -28,11 +28,11 @@
     },
     "LittleWigs": {
       "name": "LittleWigs",
-      "version": "12.0.48",
+      "version": "v12.0.49",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-05-24",
+      "installed": "2026-06-02",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -51,13 +51,13 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
-      "version": "6.1.11",
+      "version": "6.1.12",
       "interface": "120007, 120005, 120001, 50503",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
-      "installed": "2026-05-27",
+      "installed": "2026-06-01",
       "folders": ["MythicDungeonTools"],
-      "notes": "Planner M+ con route, pull, sim"
+      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-01 6.1.11->6.1.12 via forgecdn files/8177/59"
     },
     "Plater": {
       "name": "Plater Nameplates",
