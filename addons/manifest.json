@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67823",
-    "last_sync": "2026-06-01"
+    "last_sync": "2026-06-03"
   },
   "addons": {
     "BigWigs": {
@@ -28,11 +28,11 @@
     },
     "LittleWigs": {
       "name": "LittleWigs",
-      "version": "v12.0.49",
+      "version": "v12.0.50",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-06-02",
+      "installed": "2026-06-03",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
