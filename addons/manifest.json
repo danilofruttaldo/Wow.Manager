@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67823",
-    "last_sync": "2026-06-03"
+    "last_sync": "2026-06-05"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v416",
+      "version": "v416.1",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-02",
+      "installed": "2026-06-05",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -28,11 +28,11 @@
     },
     "LittleWigs": {
       "name": "LittleWigs",
-      "version": "v12.0.50",
+      "version": "v12.0.52",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-06-03",
+      "installed": "2026-06-05",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -51,13 +51,13 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
-      "version": "6.1.12",
-      "interface": "120007, 120005, 120001, 50503",
+      "version": "6.1.14",
+      "interface": "120007, 120005, 120001, 50504",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
-      "installed": "2026-06-01",
+      "installed": "2026-06-05",
       "folders": ["MythicDungeonTools"],
-      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-01 6.1.11->6.1.12 via forgecdn files/8177/59"
+      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-05 6.1.12->6.1.14 via forgecdn files/8198/438"
     },
     "Plater": {
       "name": "Plater Nameplates",
@@ -87,11 +87,11 @@
     },
     "Details": {
       "name": "Details! Damage Meter",
-      "version": "Details.20260525.15089.171",
-      "interface": "120005",
+      "version": "Details.20260603.15101.172",
+      "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/details",
-      "installed": "2026-05-26",
+      "installed": "2026-06-05",
       "folders": [
         "Details",
         "Details_Compare2",
@@ -99,7 +99,7 @@
         "Details_EncounterDetails",
         "Details_RaidCheck"
       ],
-      "notes": "Damage meter standard; rimossi plugin Streamer/Vanguard/TinyThreat su richiesta utente. 2026-06-03: TOC retail di Details_EncounterDetails e Details_DataStorage erano fermi a 110207 (packager non li ha bumpati) → mostrati 'Incompatible' in-game; corretto Interface a 120005, codice già del build 20260525 come il resto"
+      "notes": "Damage meter standard; rimossi plugin Streamer/Vanguard/TinyThreat su richiesta utente (lo zip li reinclude ad ogni update → vanno ri-cancellati). Aggiornato 2026-06-05 a build 20260603 via forgecdn files/8194/99 (filename Details-Details.20260603.15101.172.zip). Anche stavolta TOC di Details_EncounterDetails e Details_DataStorage fermi a 110207 → ripatchati a 120005"
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
@@ -143,31 +143,31 @@
     },
     "TomTom": {
       "name": "TomTom",
-      "version": "4.3.1",
+      "version": "v4.3.4-release",
       "interface": "120005",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/tomtom",
-      "installed": "2026-05-24",
+      "installed": "2026-06-05",
       "folders": ["TomTom"],
       "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo)"
     },
     "Baganator": {
       "name": "Baganator",
-      "version": "805",
-      "interface": "120005, 120001, 50503, 38000, 20505, 11508",
+      "version": "806",
+      "interface": "120005, 50504, 38001, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/baganator",
-      "installed": "2026-06-03",
+      "installed": "2026-06-05",
       "folders": ["Baganator"],
       "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. TOC dichiara 120005 → match esatto build, niente 'Load out of date'. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Download forgecdn files/8132/592"
     },
     "Syndicator": {
       "name": "Syndicator",
-      "version": "268",
-      "interface": "120005, 120001, 50503, 38001, 20505, 11508",
+      "version": "270",
+      "interface": "120005, 50504, 38001, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/syndicator",
-      "installed": "2026-06-03",
+      "installed": "2026-06-05",
       "folders": ["Syndicator"],
       "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. TOC 120005 → match build. Download forgecdn files/8119/125"
     },
