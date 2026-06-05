@@ -1,2 +1,2 @@
 #showtooltip
-/castsequence reset=29 Sweeping Strikes, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave
+/castsequence [known:Cleave]reset=29 Sweeping Strikes, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave, Cleave; reset=29 Sweeping Strikes, Whirlwind, Whirlwind, Whirlwind, Whirlwind, Whirlwind, Whirlwind, Whirlwind, Whirlwind
