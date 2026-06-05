@@ -5,6 +5,8 @@
 - **URL:** https://www.icy-veins.com/wow/fury-warrior-pve-dps-spec-builds-talents
 - **Downloaded:** 2026-05-25
 
+> **Player note (2026-06-05, Stantu):** spec attiva dopo lo switch da Arms; **Mountain Thane** è il loadout di default per le key (rage gen + AoE sostenuto su trash). Usa Thunder Clap al posto di Whirlwind per il cleave — la macro `WW/ThunderClap cleave` lo fa già da sola. Slayer solo per key molto boss-heavy.
+
 ## Recommended hero talent
 
 Mountain Thane (primary), Slayer (alternative)
