@@ -1,4 +1,0 @@
-#showtooltip Avatar
-/cast Avatar
-/use 13
-/use 14

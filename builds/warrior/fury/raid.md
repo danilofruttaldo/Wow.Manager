@@ -5,6 +5,8 @@
 - **URL:** https://www.icy-veins.com/wow/fury-warrior-pve-dps-spec-builds-talents
 - **Downloaded:** 2026-05-25
 
+> **Player note (2026-06-05, Stantu):** spec attiva dopo lo switch da Arms. Loadout principale = **Mountain Thane**: ST quasi identico a Slayer ma AoE sostenuto molto migliore, quindi un solo loadout copre la maggior parte dei boss. Tieni **Slayer** pronto solo per gli encounter puramente single-target citati sotto (Imperator, Vorasius, Crown of the Cosmos, Belo'ren, Midnight Falls). Macro: la `WW/ThunderClap cleave` si auto-adatta (Thunder Clap in MT, Whirlwind in Slayer).
+
 ## Recommended hero talent
 
 Slayer (primary for single-target), Mountain Thane (alternative for multi-target encounters). Slayer excels on Imperator, Vorasius, Crown of the Cosmos, Belo'ren, and Midnight Falls.

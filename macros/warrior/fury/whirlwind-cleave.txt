@@ -1,0 +1,2 @@
+#showtooltip
+/cast [known:Thunder Clap]Thunder Clap;Whirlwind
