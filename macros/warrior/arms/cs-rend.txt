@@ -1,2 +1,2 @@
 #showtooltip
-/castsequence [known:Rend]reset=target Colossus Smash, Rend, Rend, Rend, Rend, Rend, Rend, Rend; Colossus Smash
+/castsequence [known:Rend]reset=44 Colossus Smash, Rend, Rend, Rend, Rend, Rend, Rend, Rend; Colossus Smash

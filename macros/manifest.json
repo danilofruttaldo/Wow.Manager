@@ -29,6 +29,18 @@
       "body": null,
       "notes": "Cross-spec gap-closer: friendly target → Intervene, modifier+Prot → Shield Charge, fallback → Charge. Usa known: per safety cross-spec."
     },
+    "warrior-avatar-trinket": {
+      "name": "Avatar+Trinket",
+      "scope": "character",
+      "class": "warrior",
+      "spec": "arms",
+      "character": "Stantu-PozzoDellEternita",
+      "slot": null,
+      "icon": "Avatar",
+      "body_file": "warrior/arms/avatar-trinket.txt",
+      "body": null,
+      "notes": "Burst opener: Avatar (off-GCD) + trinket slot 13 e 14 (off-GCD) in una pressione. Niente Colossus Smash qui (sta su warrior-cs-rend). Tutto off-GCD → parte tutto insieme senza bruciare il GCD, così al press successivo puoi castare subito un'abilità on-GCD dentro la finestra. /use 13 e /use 14 = trinket superiore/inferiore; se un trinket è passivo o non on-use semplicemente non fa nulla."
+    },
     "warrior-ravager-bladestorm": {
       "name": "Ravager/Bladestorm",
       "scope": "character",
@@ -75,7 +87,7 @@
       "icon": "Colossus Smash",
       "body_file": "warrior/arms/cs-rend.txt",
       "body": null,
-      "notes": "Castsequence stile SS+Cleave, cadenzata dal CD di Rend (6s): Colossus Smash poi 7x Rend a coprire i 45s di CD di CS (7 Rend × 6s ≈ 42s ≈ CD CS). Come sweeping-cleave è cadenzata dal CD di Cleave: ogni step Rend avanza solo quando Rend è off-CD, quindi NON si spamma/clippa, lo paga il suo CD. known:Rend via due sequenze: Rend talentato → 'CS + 7 Rend'; build no-Rend → fallback 'Colossus Smash' (solo CS). reset=target → su cambio bersaglio riparte da CS (debuff fresco). 7 step = ~7 Rend tra un CS e l'altro (45÷6≈7.5); per ridurre la finestra 'stuck su CS' al wrap si può salire a 8."
+      "notes": "Castsequence stile SS+Cleave, cadenzata dal CD di Rend (6s): Colossus Smash poi 7x Rend a coprire i 45s di CD di CS (7 Rend × 6s ≈ 42s ≈ CD CS). Come sweeping-cleave è cadenzata dal CD di Cleave: ogni step Rend avanza solo quando Rend è off-CD, quindi NON si spamma/clippa, lo paga il suo CD. known:Rend via due sequenze: Rend talentato → 'CS + 7 Rend'; build no-Rend → fallback 'Colossus Smash' (solo CS). reset=44 → dopo 44s di idle (no-press) la sequenza riparte da CS, allineato al CD di CS (45s) così dopo una pausa riprende fresco da Colossus Smash. 7 step = ~7 Rend tra un CS e l'altro (45÷6≈7.5); per ridurre la finestra 'stuck su CS' al wrap si può salire a 8."
     }
   }
 }
