@@ -47,3 +47,10 @@
 2026-06-02 UPDATE   BigWigs v415.3 -> v416 + LittleWigs 12.0.48 -> v12.0.49 (suite, rilasciati 2026-06-01; primo audit aveva dato dati cached). Backup /c/tmp/bw-lw-backup-20260602-095712. forgecdn files/8182/962 e files/8182/960
 2026-06-03 UPDATE   LittleWigs v12.0.49 -> v12.0.50 (rilasciato 2026-06-02). Download forgecdn files/8186/610. Mainline TOC 120001,120005,120007 compat build 12.0.5. Backup /c/tmp/wow-upd/LittleWigs-bak-v12.0.49. Richiede /reload.
 2026-06-03 SYNC     Audit Curseforge tutti 14 addon: solo LittleWigs aveva update. Allineati (BigWigs v416, MDT 6.1.12, Plater v645, Details 20260525, Leatrix 12.0.20, HandyNotes 1.6.28, HN_Midnight v144, TeleportMenu 12.4, TomTom 4.3.1, BetterBags v0.4.7, WIM 3.16.14, SimpleItemLevel v65). WeakAuras: CF 5.21.7 e' SOLO classic (zip GitHub privo di TOC Mainline); retail CF fermo a 5.21.1; locale 5.21.6 invariato. WoW build 12.0.5.67823.
+2026-06-05 update BigWigs v416 -> v416.1 (forgecdn files/8192/202)
+2026-06-05 update LittleWigs v12.0.50 -> v12.0.52 (forgecdn files/8192/36)
+2026-06-05 update Details 20260525.15089.171 -> 20260603.15101.172 (forgecdn files/8194/99); rimossi di nuovo Streamer/TinyThreat/Vanguard; ripatchato Interface 120005 su DataStorage+EncounterDetails
+2026-06-05 update MythicDungeonTools 6.1.12 -> 6.1.14 (forgecdn files/8198/438)
+2026-06-05 update Baganator 805 -> 806 (forgecdn files/8190/977)
+2026-06-05 update Syndicator 268 -> 270 (forgecdn files/8197/143)
+2026-06-05 update TomTom 4.3.1 -> v4.3.4-release (forgecdn files/8199/672)
