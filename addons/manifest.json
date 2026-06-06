@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67823",
-    "last_sync": "2026-06-05"
+    "last_sync": "2026-06-06"
   },
   "addons": {
     "BigWigs": {
@@ -103,13 +103,13 @@
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
-      "version": "12.0.20",
+      "version": "12.0.21",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-05-27",
+      "installed": "2026-06-06",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-05-27 via forgecdn files/8153/240"
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-06-06 12.0.20->12.0.21 via forgecdn files/8201/355. TOC 120005,120007 match build"
     },
     "HandyNotes": {
       "name": "HandyNotes",
