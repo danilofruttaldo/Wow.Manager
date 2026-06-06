@@ -54,3 +54,5 @@
 2026-06-05 update Baganator 805 -> 806 (forgecdn files/8190/977)
 2026-06-05 update Syndicator 268 -> 270 (forgecdn files/8197/143)
 2026-06-05 update TomTom 4.3.1 -> v4.3.4-release (forgecdn files/8199/672)
+2026-06-06 UPDATE   Leatrix_Plus 12.0.20 -> 12.0.21 (rilasciato 2026-06-05). Download forgecdn files/8201/355. Backup /c/tmp/wow-upd/Leatrix_Plus-bak-12.0.20. TOC 120005,120007 match build. Richiede /reload.
+2026-06-06 SYNC     Audit Curseforge tutti 14 addon: solo Leatrix_Plus aveva update. Allineati (BigWigs v416.1, LittleWigs v12.0.52, Details 20260603.15101.172, MDT 6.1.14, Plater v645, HandyNotes 1.6.28, HN_Midnight v144, TeleportMenu 12.4, TomTom v4.3.4-release, Baganator 806, Syndicator 270, WIM 3.16.14, SimpleItemLevel v65). WeakAuras locale 5.21.6 invariato. WoW build 12.0.5.67823.
