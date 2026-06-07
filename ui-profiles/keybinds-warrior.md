@@ -56,6 +56,20 @@
 | D3 | TODO | Raid CD | Rallying Cry | Rallying Cry | = |
 | D4 | TODO | Self-heal | Victory Rush / Impending Victory | Victory Rush / Impending Victory | = |
 
+### E — Protection (occasionale, parked 2026-06-06)
+
+Spec tank usata saltuariamente. Le **=/~** della griglia sopra valgono anche qui (stesso tasto/ruolo): A4 Execute, B3 `ravager-bladestorm` (solo se talenti Ravager — vedi caveat), C1 `avatar-reck-trinket` (→ Avatar+trinket), C2 `charge-intervene`, C3 `heroic-leap-cursor`, C4 `shockwave-howl`, D1/D3 Spell Reflection/Rallying Cry. Cambiano i filler (Shield Slam, Revenge, Thunder Clap, Devastate) e si aggiunge il layer tank.
+
+| Slot | Key | Ruolo | Macro/Abilità | Tipo |
+|---|---|---|---|---|
+| A1 | TODO | Filler 1 | Shield Slam | ≠ |
+| A2 | TODO | Filler 2 | Revenge | ≠ |
+| A3 | TODO | AoE/maintain | Thunder Clap (`whirlwind-cleave` casta TC) | ≠ |
+| A4 | TODO | Execute = | Execute | = |
+| P1 | TODO | Active mitigation | Shield Block + Ignore Pain (tasti raw, no macro) | Prot-only |
+
+> **Caveat B3:** in Prot `ravager-bladestorm` funziona solo con **Ravager talentato** (→ Ravager@cursor). Confermato 2026-06-07 che **nessuna** delle due build Prot MT (M+ e raid) talenta Ravager → in Prot lo slot è **inerte** (il fallback Bladestorm non esiste in Prot). L'AoE in Prot lo fa Thunder Clap (`whirlwind-cleave`).
+
 ## Bilancio allineamento
 
 - **Fury raid (Slayer) ↔ Fury M+ (Mountain Thane):** ~**100% identico**. Le uniche due differenze (cleave applier B1, Avatar in C1) sono macro che si adattano da sole. Nessuno slot da rifare cambiando loadout.

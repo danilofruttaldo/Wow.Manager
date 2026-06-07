@@ -22,10 +22,10 @@ Le cartelle servono solo a organizzare i file di export. Lo **stato** vive nel m
 ```json
 "<macro-id-slug>": {
   "name": "Charge+Pummel",
-  "scope": "account | character",
+  "scope": "account",
   "class": "warrior",
   "spec": "fury",
-  "character": "Stantu-PozzoDellEternita",
+  "character": null,
   "slot": 1,
   "icon": "INV_Misc_QuestionMark",
   "body_file": "warrior/fury/charge-pummel.txt",
@@ -34,7 +34,7 @@ Le cartelle servono solo a organizzare i file di export. Lo **stato** vive nel m
 }
 ```
 
-- `scope=account` → max 120 slot, valida per tutti i char (slot account 1-120).
-- `scope=character` → slot 121-138, char-specific.
-- `class=null` per macro shared/ (mount, marker, generiche).
+- **Tutte le macro stanno nel tab account-wide (General Macros).** Il discriminante è la **classe** (`class`), non il personaggio: una macro warrior è account-wide ma utile solo su warrior. `scope` è sempre `account`; `character` è sempre `null` (il tab character-specific non viene usato).
+- `spec` (`fury`/`arms`/`protection`/`null`) indica per quale spec/loadout la macro è pensata; `null` = cross-spec.
+- `class=null` per macro shared/ (mount, marker, generiche cross-class).
 - Preferire `body_file` a `body` inline — più leggibile in diff e riusabile.
