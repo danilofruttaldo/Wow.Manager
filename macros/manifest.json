@@ -4,8 +4,8 @@
     "wtf_path": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\WTF",
     "last_sync": "2026-05-28",
     "active_spec": "fury",
-    "parked_specs": ["arms"],
-    "active_spec_notes": "Switch Arms->Fury il 2026-06-05 (Fury +~6% sim ST/AoE leggero, MT loadout flessibile). Le macro Arms-specific (cs-rend, ravager-bladestorm, sweeping-cleave) restano in manifest come kit parcheggiato (slot character condivisi tra spec): non cancellate, riusabili al reswitch. warrior-cs-rend NON ha equivalente Fury (no Colossus Smash/Rend). Il vecchio warrior-avatar-trinket (Arms) è stato FUSO in warrior-avatar-reck-trinket (spec:null, cross-spec via known:Recklessness/known:Avatar): un solo burst opener per Fury e Arms, file arms/avatar-trinket.txt eliminato. Stessa fusione per Bladestorm: warrior-bladestorm (Fury) assorbito in warrior-ravager-bladestorm (spec:null), file fury/bladestorm.txt eliminato. Obiettivo: keybind allineati Fury+Arms, ruoli cross-spec sugli stessi slot — vedi ui-profiles/keybinds-warrior.md."
+    "parked_specs": ["arms", "protection"],
+    "active_spec_notes": "Switch Arms->Fury il 2026-06-05 (Fury +~6% sim ST/AoE leggero, MT loadout flessibile). Le macro Arms-specific (cs-rend, ravager-bladestorm, sweeping-cleave) restano in manifest come kit parcheggiato (account-wide, condivise tra spec): non cancellate, riusabili al reswitch. warrior-cs-rend NON ha equivalente Fury (no Colossus Smash/Rend). Il vecchio warrior-avatar-trinket (Arms) è stato FUSO in warrior-avatar-reck-trinket (spec:null, cross-spec via known:Recklessness/known:Avatar): un solo burst opener per Fury e Arms, file arms/avatar-trinket.txt eliminato. Stessa fusione per Bladestorm: warrior-bladestorm (Fury) assorbito in warrior-ravager-bladestorm (spec:null), file fury/bladestorm.txt eliminato. Obiettivo: keybind allineati Fury+Arms, ruoli cross-spec sugli stessi slot — vedi ui-profiles/keybinds-warrior.md. PROTECTION (occasionale, parked 2026-06-06): una sola macro Prot-specific: warrior-prot-intimidating-howl (known:Intimidating Shout → IntShout, altrimenti Piercing Howl, stesso pattern di shockwave-howl). Kit tank precedente creato e poi eliminato 2026-06-07 su richiesta utente (prot-active-mitigation, prot-defensives, prot-taunt, prot-spell-reflect-ally). Per il resto Prot è coperto dalle cross-spec. Le cross-spec esistenti coprono già Prot via known: charge-intervene, heroic-leap-cursor, shockwave-howl, avatar-reck-trinket (Avatar+trinket, Reck saltato), whirlwind-cleave (sempre Thunder Clap, ridondante). CAVEAT: warrior-ravager-bladestorm in Prot funziona SOLO con Ravager talentato (fallback Bladestorm non esiste in Prot). CONFERMATO 2026-06-07: NESSUNA delle due build Prot MT scelte (mplus + raid) talenta Ravager -> in Prot la macro e' INERTE, lo slot AoE-channel resta vuoto. L'AoE Prot e' coperto da Thunder Clap (whirlwind-cleave). Vedi keybinds-warrior.md sezione E."
   },
   "macros": {
     "warrior-heroic-leap-cursor": {
@@ -34,10 +34,10 @@
     },
     "warrior-ravager-bladestorm": {
       "name": "Ravager/Bladestorm",
-      "scope": "character",
+      "scope": "account",
       "class": "warrior",
       "spec": null,
-      "character": "Stantu-PozzoDellEternita",
+      "character": null,
       "slot": null,
       "icon": null,
       "body_file": "warrior/arms/ravager-bladestorm.txt",
@@ -58,10 +58,10 @@
     },
     "warrior-sweeping-cleave": {
       "name": "Sweep+Cleave/WW",
-      "scope": "character",
+      "scope": "account",
       "class": "warrior",
       "spec": "arms",
-      "character": "Stantu-PozzoDellEternita",
+      "character": null,
       "slot": null,
       "icon": null,
       "body_file": "warrior/arms/sweeping-cleave.txt",
@@ -70,10 +70,10 @@
     },
     "warrior-cs-rend": {
       "name": "CS+Rend",
-      "scope": "character",
+      "scope": "account",
       "class": "warrior",
       "spec": "arms",
-      "character": "Stantu-PozzoDellEternita",
+      "character": null,
       "slot": null,
       "icon": "Colossus Smash",
       "body_file": "warrior/arms/cs-rend.txt",
@@ -82,27 +82,39 @@
     },
     "warrior-avatar-reck-trinket": {
       "name": "Avatar+Reck+Trinket",
-      "scope": "character",
+      "scope": "account",
       "class": "warrior",
       "spec": null,
-      "character": "Stantu-PozzoDellEternita",
+      "character": null,
       "slot": null,
       "icon": null,
       "body_file": "warrior/fury/reck-avatar-trinket.txt",
       "body": null,
-      "notes": "Burst opener cross-spec (Fury + Arms), un solo bind. Tutto off-GCD in una pressione: Fury → Recklessness + Avatar (se talentato) + trinket 13/14; Arms → Recklessness saltato (known:), Avatar + trinket 13/14 (= vecchio warrior-avatar-trinket, ora assorbito qui). Entrambe le ability dietro known: così non si rompe su nessuna spec/loadout. #showtooltip con stesso condizionale known: → icona/CD dinamici (Recklessness in Fury, Avatar in Arms); NON usare #showtooltip nudo, pescherebbe il trinket /use 13. /use 13 e 14 = trinket superiore/inferiore; se passivo/non on-use non fa nulla. Macro character-scope → vive nel tab macro del personaggio, condivisa tra le spec."
+      "notes": "Burst opener cross-spec (Fury + Arms), un solo bind. Tutto off-GCD in una pressione: Fury → Recklessness + Avatar (se talentato) + trinket 13/14; Arms → Recklessness saltato (known:), Avatar + trinket 13/14 (= vecchio warrior-avatar-trinket, ora assorbito qui). Entrambe le ability dietro known: così non si rompe su nessuna spec/loadout. #showtooltip con stesso condizionale known: → icona/CD dinamici (Recklessness in Fury, Avatar in Arms); NON usare #showtooltip nudo, pescherebbe il trinket /use 13. /use 13 e 14 = trinket superiore/inferiore; se passivo/non on-use non fa nulla. Account-wide (General Macros tab), condivisa tra tutte le spec del warrior."
     },
     "warrior-whirlwind-cleave": {
       "name": "WW/ThunderClap cleave",
-      "scope": "character",
+      "scope": "account",
       "class": "warrior",
       "spec": "fury",
-      "character": "Stantu-PozzoDellEternita",
+      "character": null,
       "slot": null,
       "icon": null,
       "body_file": "warrior/fury/whirlwind-cleave.txt",
       "body": null,
-      "notes": "Applicatore cleave AoE auto-adattivo su hero talent via known:Thunder Clap. Mountain Thane → Thunder Clap (MT sostituisce Whirlwind con Thunder Clap, alimenta anche il loop Thunder Blast); altrimenti (Slayer) → Whirlwind (applica Improved Whirlwind + Rend a tutti i target). Un solo bind copre MT e Slayer. A differenza del sweeping-cleave di Arms NON è una castsequence: in Fury premi l'applicatore dentro la normale priority quando il buff cleave sta per scadere, non 8 volte di fila. DISCRIMINATORE VALIDO: confermato 2026-06-05 che il build Slayer da raid NON talenta Thunder Clap (sta nell'albero di classe ma Slayer non lo prende), quindi known:Thunder Clap distingue in modo affidabile MT (vero→Thunder Clap) da Slayer (falso→Whirlwind). Se un futuro build Slayer dovesse talentare Thunder Clap, switchare il discriminatore a known:Thunder Blast (talento esclusivo Mountain Thane)."
+      "notes": "Applicatore cleave AoE auto-adattivo su hero talent via known:Thunder Clap. Mountain Thane → Thunder Clap (MT sostituisce Whirlwind con Thunder Clap, alimenta anche il loop Thunder Blast); altrimenti (Slayer) → Whirlwind (applica Improved Whirlwind + Rend a tutti i target). Un solo bind copre MT e Slayer. A differenza del sweeping-cleave di Arms NON è una castsequence: in Fury premi l'applicatore dentro la normale priority quando il buff cleave sta per scadere, non 8 volte di fila. DISCRIMINATORE VALIDO: confermato 2026-06-05 che il build Slayer da raid NON talenta Thunder Clap (sta nell'albero di classe ma Slayer non lo prende), quindi known:Thunder Clap distingue in modo affidabile MT (vero→Thunder Clap) da Slayer (falso→Whirlwind). Se un futuro build Slayer dovesse talentare Thunder Clap, switchare il discriminatore a known:Thunder Blast (talento esclusivo Mountain Thane). NOTA Prot: Protection ha Thunder Clap baseline → in Prot questa macro casta sempre Thunder Clap (ridondante con la rotazione, ma non si rompe)."
+    },
+    "warrior-prot-intimidating-howl": {
+      "name": "IntShout/Howl",
+      "scope": "account",
+      "class": "warrior",
+      "spec": "protection",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warrior/protection/intimidating-howl.txt",
+      "body": null,
+      "notes": "AoE control auto-adattivo via known:Intimidating Shout, stesso pattern di warrior-shockwave-howl: Intimidating Shout talentato → fear AoE 8s (hard CC, si rompe a danno sui target secondari); altrimenti → Piercing Howl (slow AoE). Nessun modifier. #showtooltip dinamico mostra l'icona giusta in base al loadout. NB: Piercing Howl compare anche come fallback in warrior-shockwave-howl — slot/ruoli diversi, nessun conflitto. Raggruppata nel kit Prot ma le ability sono cross-spec."
     }
   }
 }
