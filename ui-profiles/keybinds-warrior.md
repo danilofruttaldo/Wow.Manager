@@ -33,7 +33,7 @@
 
 | Slot | Key | Ruolo | Fury | Arms | Tipo |
 |---|---|---|---|---|---|
-| B1 | **Q** | Cleave applier | `whirlwind-cleave` (M+ Thunder Clap / raid castsequence Rend+WW, via known:Rend) | `sweeping-cleave` (SS+Cleave/WW) | ≠ (macro per spec, stesso slot) |
+| B1 | **Q** | Cleave applier | `rend-whirlwind` (M+ Thunder Clap / raid castsequence Rend+WW, via known:Thunder Clap) | `sweeping-cleave` (SS+Cleave/WW) | ≠ (macro per spec, stesso slot) |
 | B2 | TODO | CD cleave/maintain | Odyn's Fury | `cs-rend` (Colossus Smash+Rend) | ≠ |
 | B3 | TODO | AoE channel | Bladestorm (raid Slayer, raw) / Avatar (M+ MT, raw) — nodo di scelta, stesso slot per loadout, niente macro | `ravager-bladestorm` (Ravager@cursor/BS) — Arms only | ≠ |
 
@@ -64,11 +64,11 @@ Spec tank usata saltuariamente. Le **=/~** della griglia sopra valgono anche qui
 |---|---|---|---|---|
 | A1 | TODO | Filler 1 | Shield Slam | ≠ |
 | A2 | TODO | Filler 2 | Revenge | ≠ |
-| A3 | TODO | AoE/maintain | Thunder Clap (`whirlwind-cleave` casta TC) | ≠ |
+| A3 | TODO | AoE/maintain | Thunder Clap (`rend-whirlwind` casta TC) | ≠ |
 | A4 | TODO | Execute = | Execute | = |
 | P1 | TODO | Active mitigation | Shield Block + Ignore Pain (tasti raw, no macro) | Prot-only |
 
-> **Nota Prot AoE/CD:** l'AoE in Prot lo fa Thunder Clap (`whirlwind-cleave` → known:Thunder Clap → Thunder Clap). Avatar (talentato) si usa raw. `ravager-bladestorm` è Arms-only → non riguarda Prot.
+> **Nota Prot AoE/CD:** l'AoE in Prot lo fa Thunder Clap (`rend-whirlwind` → known:Thunder Clap → Thunder Clap). Avatar (talentato) si usa raw. `ravager-bladestorm` è Arms-only → non riguarda Prot.
 
 ## Bilancio allineamento
 
@@ -77,7 +77,7 @@ Spec tank usata saltuariamente. Le **=/~** della griglia sopra valgono anche qui
 
 ## Bind decisi finora (account-wide, bindings-cache.wtf)
 
-- **Q** = `ACTIONBUTTON5` (Barra 1, slot 5) → metti qui la macro `whirlwind-cleave` (NON Thunder Clap raw, altrimenti il tasto muore in raid Slayer). Bar 1 è per-spec: su Fury slot5 = `whirlwind-cleave`, su Arms slot5 = `sweeping-cleave`.
+- **Q** = `ACTIONBUTTON5` (Barra 1, slot 5) → metti qui la macro `rend-whirlwind` (NON Thunder Clap raw, altrimenti il tasto muore in raid Slayer). Bar 1 è per-spec: su Fury slot5 = `rend-whirlwind`, su Arms slot5 = `sweeping-cleave`.
 - **Shift+Q** = `MULTIACTIONBAR1BUTTON5` → **liberato** (Whirlwind non serve come tasto separato; la macro su Q lo copre). Riassegnabile a un difensivo o utility.
 
 ## Setup in-game (quando hai scelto i tasti)
