@@ -181,6 +181,16 @@
       "folders": ["WIM"],
       "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. TOC compatibile 120005. Download via forgecdn files/8151/363"
     },
+    "Molinari": {
+      "name": "Molinari",
+      "version": "120000.144-Release",
+      "interface": "120001, 120005, 50503, 38001, 20505, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/molinari",
+      "installed": "2026-06-08",
+      "folders": ["Molinari"],
+      "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. TOC 120005 match build, niente 'Load out of date'. Download forgecdn files/7940/854"
+    },
     "SimpleItemLevel": {
       "name": "Simple Item Level",
       "version": "v65",
