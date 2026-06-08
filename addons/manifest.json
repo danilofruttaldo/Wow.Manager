@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67823",
-    "last_sync": "2026-06-06"
+    "last_sync": "2026-06-08"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v416.1",
+      "version": "v416.2",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-05",
+      "installed": "2026-06-08",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -24,7 +24,7 @@
         "BigWigs_Sporefall",
         "BigWigs_MarchOnQuelDanas"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1"
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-08 v416.1->v416.2 via forgecdn files/8205/695. Cache stale al primo fetch mostrava ancora v416.1"
     },
     "LittleWigs": {
       "name": "LittleWigs",
