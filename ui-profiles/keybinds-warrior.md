@@ -33,15 +33,15 @@
 
 | Slot | Key | Ruolo | Fury | Arms | Tipo |
 |---|---|---|---|---|---|
-| B1 | **Q** | Cleave applier | `whirlwind-cleave` (WW↔Thunder Clap) | `sweeping-cleave` (SS+Cleave/WW) | ≠ (macro per spec, stesso slot) |
+| B1 | **Q** | Cleave applier | `whirlwind-cleave` (M+ Thunder Clap / raid castsequence Rend+WW, via known:Rend) | `sweeping-cleave` (SS+Cleave/WW) | ≠ (macro per spec, stesso slot) |
 | B2 | TODO | CD cleave/maintain | Odyn's Fury | `cs-rend` (Colossus Smash+Rend) | ≠ |
-| B3 | TODO | AoE channel | `ravager-bladestorm` (Bladestorm) | `ravager-bladestorm` (Ravager@cursor/BS) | ~ cross-spec |
+| B3 | TODO | AoE channel | Bladestorm (raid Slayer, raw) / Avatar (M+ MT, raw) — nodo di scelta, stesso slot per loadout, niente macro | `ravager-bladestorm` (Ravager@cursor/BS) — Arms only | ≠ |
 
 ### C — Utility / cooldown (tutti = o ~, tasto NON cambia mai)
 
 | Slot | Key | Ruolo | Macro/Abilità | Tipo |
 |---|---|---|---|---|
-| C1 | TODO | Burst opener | `avatar-reck-trinket` (Fury: Reck+Avatar / Arms: Avatar) | ~ |
+| C1 | TODO | Burst opener | `reck-trinket` (Reck + trinket) — **Fury only** | ≠ |
 | C2 | TODO | Gap close | `charge-intervene` | = |
 | C3 | TODO | Mobilità | `heroic-leap-cursor` (@cursor) | = |
 | C4 | TODO | AoE CC | `shockwave-howl` (Shockwave/Piercing Howl) | ~ |
@@ -58,7 +58,7 @@
 
 ### E — Protection (occasionale, parked 2026-06-06)
 
-Spec tank usata saltuariamente. Le **=/~** della griglia sopra valgono anche qui (stesso tasto/ruolo): A4 Execute, B3 `ravager-bladestorm` (solo se talenti Ravager — vedi caveat), C1 `avatar-reck-trinket` (→ Avatar+trinket), C2 `charge-intervene`, C3 `heroic-leap-cursor`, C4 `shockwave-howl`, D1/D3 Spell Reflection/Rallying Cry. Cambiano i filler (Shield Slam, Revenge, Thunder Clap, Devastate) e si aggiunge il layer tank.
+Spec tank usata saltuariamente. Le **=/~** della griglia sopra valgono anche qui (stesso tasto/ruolo): A4 Execute, C2 `charge-intervene`, C3 `heroic-leap-cursor`, C4 `shockwave-howl`, D1/D3 Spell Reflection/Rallying Cry. In Prot Avatar (talentato) si usa raw. `ravager-bladestorm` è Arms-only. Cambiano i filler (Shield Slam, Revenge, Thunder Clap, Devastate) e si aggiunge il layer tank.
 
 | Slot | Key | Ruolo | Macro/Abilità | Tipo |
 |---|---|---|---|---|
@@ -68,7 +68,7 @@ Spec tank usata saltuariamente. Le **=/~** della griglia sopra valgono anche qui
 | A4 | TODO | Execute = | Execute | = |
 | P1 | TODO | Active mitigation | Shield Block + Ignore Pain (tasti raw, no macro) | Prot-only |
 
-> **Caveat B3:** in Prot `ravager-bladestorm` funziona solo con **Ravager talentato** (→ Ravager@cursor). Confermato 2026-06-07 che **nessuna** delle due build Prot MT (M+ e raid) talenta Ravager → in Prot lo slot è **inerte** (il fallback Bladestorm non esiste in Prot). L'AoE in Prot lo fa Thunder Clap (`whirlwind-cleave`).
+> **Nota Prot AoE/CD:** l'AoE in Prot lo fa Thunder Clap (`whirlwind-cleave` → known:Thunder Clap → Thunder Clap). Avatar (talentato) si usa raw. `ravager-bladestorm` è Arms-only → non riguarda Prot.
 
 ## Bilancio allineamento
 

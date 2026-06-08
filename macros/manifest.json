@@ -36,13 +36,13 @@
       "name": "Ravager/Bladestorm",
       "scope": "account",
       "class": "warrior",
-      "spec": null,
+      "spec": "arms",
       "character": null,
       "slot": null,
       "icon": null,
       "body_file": "warrior/arms/ravager-bladestorm.txt",
       "body": null,
-      "notes": "Cross-spec (Fury + Arms), un solo bind per il ruolo 'AoE channel'. Auto-adattiva via known:Ravager: Arms con Ravager talentato → ground-target su cursor; altrimenti (Fury, o Arms build Bladestorm) → Bladestorm channel sul posto (@cursor innocuo su BS che è self-centered). Assorbe il vecchio warrior-bladestorm Fury (file fury/bladestorm.txt eliminato). Premere al GCD successivo all'opener di burst."
+      "notes": "ARMS ONLY (riclassificata 2026-06-08). Ruolo 'AoE channel' di Arms, auto-adattiva via known:Ravager: Ravager talentato (Arms M+) → ground-target su cursor; altrimenti (Arms raid) → Bladestorm sul posto (@cursor innocuo, BS self-centered). In FURY questa macro NON si usa: lì Bladestorm e Avatar sono lo stesso nodo di scelta (raid Slayer = Bladestorm, M+ MT = Avatar) e si mettono raw sulla barra per-loadout (nessuna macro: in raid Slayer ST Bladestorm quasi non si usa). Premere al GCD successivo all'opener."
     },
     "warrior-shockwave-howl": {
       "name": "Shockwave/Howl",
@@ -80,20 +80,20 @@
       "body": null,
       "notes": "Castsequence stile SS+Cleave, cadenzata dal CD di Rend (6s): Colossus Smash poi 7x Rend a coprire i 45s di CD di CS (7 Rend × 6s ≈ 42s ≈ CD CS). Come sweeping-cleave è cadenzata dal CD di Cleave: ogni step Rend avanza solo quando Rend è off-CD, quindi NON si spamma/clippa, lo paga il suo CD. known:Rend via due sequenze: Rend talentato → 'CS + 7 Rend'; build no-Rend → fallback 'Colossus Smash' (solo CS). reset=44 → dopo 44s di idle (no-press) la sequenza riparte da CS, allineato al CD di CS (45s) così dopo una pausa riprende fresco da Colossus Smash. 7 step = ~7 Rend tra un CS e l'altro (45÷6≈7.5); per ridurre la finestra 'stuck su CS' al wrap si può salire a 8."
     },
-    "warrior-avatar-reck-trinket": {
-      "name": "Avatar+Reck+Trinket",
+    "warrior-reck-trinket": {
+      "name": "Reck+Trinket",
       "scope": "account",
       "class": "warrior",
-      "spec": null,
+      "spec": "fury",
       "character": null,
       "slot": null,
       "icon": null,
-      "body_file": "warrior/fury/reck-avatar-trinket.txt",
+      "body_file": "warrior/fury/reck-trinket.txt",
       "body": null,
-      "notes": "Burst opener cross-spec (Fury + Arms), un solo bind. Tutto off-GCD in una pressione: Fury → Recklessness + Avatar (se talentato) + trinket 13/14; Arms → Recklessness saltato (known:), Avatar + trinket 13/14 (= vecchio warrior-avatar-trinket, ora assorbito qui). Entrambe le ability dietro known: così non si rompe su nessuna spec/loadout. #showtooltip con stesso condizionale known: → icona/CD dinamici (Recklessness in Fury, Avatar in Arms); NON usare #showtooltip nudo, pescherebbe il trinket /use 13. /use 13 e 14 = trinket superiore/inferiore; se passivo/non on-use non fa nulla. Account-wide (General Macros tab), condivisa tra tutte le spec del warrior."
+      "notes": "Burst Fury off-GCD: Recklessness + trinket 13/14 in un press (tutto off-GCD, Reck GCD 0). spec=fury perché Recklessness è solo-Fury (riclassificata 2026-06-08: prima era null/shared, ma l'identità è il burst Fury). Avatar (M+) e Bladestorm (raid) sono il nodo di scelta Fury, si usano raw sulla barra per-loadout (niente macro dedicata). #showtooltip nudo mostra Recklessness. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. NB: i trinket /use partirebbero anche su Arms/Prot, ma lì Reck non c'è e la macro non è pensata per quelle spec."
     },
     "warrior-whirlwind-cleave": {
-      "name": "WW/ThunderClap cleave",
+      "name": "TC / Rend+WW",
       "scope": "account",
       "class": "warrior",
       "spec": "fury",
@@ -102,7 +102,7 @@
       "icon": null,
       "body_file": "warrior/fury/whirlwind-cleave.txt",
       "body": null,
-      "notes": "Applicatore cleave AoE auto-adattivo su hero talent via known:Thunder Clap. Mountain Thane → Thunder Clap (MT sostituisce Whirlwind con Thunder Clap, alimenta anche il loop Thunder Blast); altrimenti (Slayer) → Whirlwind (applica Improved Whirlwind + Rend a tutti i target). Un solo bind copre MT e Slayer. A differenza del sweeping-cleave di Arms NON è una castsequence: in Fury premi l'applicatore dentro la normale priority quando il buff cleave sta per scadere, non 8 volte di fila. DISCRIMINATORE VALIDO: confermato 2026-06-05 che il build Slayer da raid NON talenta Thunder Clap (sta nell'albero di classe ma Slayer non lo prende), quindi known:Thunder Clap distingue in modo affidabile MT (vero→Thunder Clap) da Slayer (falso→Whirlwind). Se un futuro build Slayer dovesse talentare Thunder Clap, switchare il discriminatore a known:Thunder Blast (talento esclusivo Mountain Thane). NOTA Prot: Protection ha Thunder Clap baseline → in Prot questa macro casta sempre Thunder Clap (ridondante con la rotazione, ma non si rompe)."
+      "notes": "Cleave applier Fury auto-adattivo su build via known:Thunder Clap (un solo bind, B1/Q). M+ (Mountain Thane, ha Thunder Clap) → known:Thunder Clap → Thunder Clap singolo (alimenta il loop Thunder Blast). RAID (Slayer, niente Thunder Clap) → noknown:Thunder Clap → castsequence 'Rend, Whirlwind x4' (rapporto 1 Rend : 4 Whirlwind, reset=5s idle: Rend rientra ogni 5 press, no clip del DoT). Rami mutuamente esclusivi (TC vs noTC) → niente doppio-cast. Discriminatore = known:Thunder Clap (scelta utente 2026-06-08): VALIDO perché confermato che Fury raid = Slayer (NO Thunder Clap) e Fury M+ = Mountain Thane (Thunder Clap). Se in futuro il raid passasse a Mountain Thane entrambi i build avrebbero Thunder Clap → spostare il discriminatore su known:Rend (Rend resta solo-raid). ATTENZIONE typo: ogni step deve essere esattamente 'Whirlwind' (un nome errato inchioda la sequence su quello step). reset=5 può ripartire da Rend dopo pause >5s in combat (movimento) — alzare se dà fastidio. Assorbe la vecchia warrior-fury-rend-whirlwind (eliminata, doppione). NOTA Prot: Protection ha Thunder Clap baseline → known:Thunder Clap → casta sempre Thunder Clap (ok, ridondante con la rotazione)."
     },
     "warrior-prot-intimidating-howl": {
       "name": "IntShout/Howl",

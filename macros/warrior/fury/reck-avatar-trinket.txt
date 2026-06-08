@@ -1,5 +1,0 @@
-#showtooltip [known:Recklessness]Recklessness;[known:Avatar]Avatar
-/cast [known:Recklessness]Recklessness
-/cast [known:Avatar]Avatar
-/use 13
-/use 14
