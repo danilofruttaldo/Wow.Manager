@@ -127,18 +127,6 @@
       "body_file": "mage/decurse-spellsteal.txt",
       "body": null,
       "notes": "Mage-wide (tutte le spec hanno Remove Curse + Spellsteal), spec:null. Friendly mouseover vivo → Remove Curse (decurse alleato senza cambiare target); altrimenti → Spellsteal sul target corrente (ruba buff nemico). nodead evita di tentare il decurse su un alleato morto. Un solo bind copre utility difensiva e offensiva."
-    },
-    "mage-blizzard-cursor": {
-      "name": "Blizzard @cursor",
-      "scope": "account",
-      "class": "mage",
-      "spec": "frost",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "mage/frost/blizzard-cursor.txt",
-      "body": null,
-      "notes": "Blizzard ground-target piazzato direttamente sul cursore (niente reticolo verde da riconfermare). spec:frost — Blizzard è ability Frost (Arcane usa Arcane Explosion, Fire usa Flamestrike). Standard QoL AoE per il filler/innesco proc (Frozen Orb + Blizzard)."
     }
   }
 }
