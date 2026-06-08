@@ -4,6 +4,7 @@
 - **Source:** Icy Veins
 - **URL:** https://www.icy-veins.com/wow/frost-mage-pve-dps-spec-builds-talents
 - **Downloaded:** 2026-05-25
+- **Updated:** 2026-06-08 — string corrente fornita dall'utente
 
 ## Recommended hero talent
 
@@ -11,7 +12,13 @@ Spellslinger — standard for single-target raid; Frostfire is a burstier altern
 
 ## Talent builds
 
-### Spellslinger — Single-Target
+### Single-Target — build corrente (utente, 2026-06-08)
+
+```
+CAEAAAAAAAAAAAAAAAAAAAAAAYGGLzMzswMzEzMzMzMzMziZmZMjZAAAgZmZWWmZaDAAAAAAsBw22YmZGMbDjZYDAAgZ2AmJjBMDGA
+```
+
+### Spellslinger — Single-Target (Icy Veins 2026-05-25, archiviata)
 
 ```
 CAEAAAAAAAAAAAAAAAAAAAAAAYGGLzMzsMmZmYmZmZMjZWMzMzMjZAAAgZmZWWmZaDAAAAAAsBw22YmZGMLzDYMDLAAAMzCwMwAmBD

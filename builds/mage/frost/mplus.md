@@ -4,6 +4,7 @@
 - **Source:** Icy Veins
 - **URL:** https://www.icy-veins.com/wow/frost-mage-pve-dps-spec-builds-talents
 - **Downloaded:** 2026-05-25
+- **Updated:** 2026-06-08 — string corrente fornita dall'utente
 
 ## Recommended hero talent
 
@@ -11,7 +12,13 @@ Spellslinger — recommended for dungeons and AoE content; Frostfire is a bursti
 
 ## Talent builds
 
-### Spellslinger — AoE / Mythic+ / Delves
+### AoE / Mythic+ — build corrente (utente, 2026-06-08)
+
+```
+CAEAAAAAAAAAAAAAAAAAAAAAAMzwYZmZmFmZmYGmZmZmZWMzMMjZAAAgZmZWWmZaDAAWAAAAWAYbbMzMDmthxMjNAAAmZDYmMGwMYA
+```
+
+### Spellslinger — AoE / Mythic+ / Delves (Icy Veins 2026-05-25, archiviata)
 
 ```
 CAEAAAAAAAAAAAAAAAAAAAAAAYGGLzMzsMmZmYmxMzMzMziZmZMjZAAAgZmZWWmZaDAA2AAAAWAYbbMzMDmthxMsAAAwMbAzADYGMA
