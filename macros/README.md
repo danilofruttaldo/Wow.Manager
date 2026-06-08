@@ -11,7 +11,7 @@ macros/
   manifest.json              ← unico, fonte di verità per tutte le macro
   shared/                    ← macro account-wide cross-class (mount, /target, /tt, generiche)
   <class>/<slug>.txt         ← macro cross-spec della classe (spec:null) — nella ROOT della classe, es. warrior/charge-intervene.txt
-  <class>/<spec>/<slug>.txt  ← macro di una spec specifica (es. warrior/fury/whirlwind-cleave.txt)
+  <class>/<spec>/<slug>.txt  ← macro di una spec specifica (es. warrior/fury/rend-whirlwind.txt)
 ```
 
 Classi scaffoldate: death-knight, demon-hunter, druid, evoker, hunter, mage, monk, paladin, priest, rogue, shaman, warlock, warrior.
