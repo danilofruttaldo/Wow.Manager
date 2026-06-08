@@ -10,12 +10,13 @@ Backup e gestione macro WoW.
 macros/
   manifest.json              ← unico, fonte di verità per tutte le macro
   shared/                    ← macro account-wide cross-class (mount, /target, /tt, generiche)
-  <class>/<spec>/<slug>.txt  ← export body, una macro per file (es. warrior/fury/burst-all-in.txt)
+  <class>/<slug>.txt         ← macro cross-spec della classe (spec:null) — nella ROOT della classe, es. warrior/charge-intervene.txt
+  <class>/<spec>/<slug>.txt  ← macro di una spec specifica (es. warrior/fury/whirlwind-cleave.txt)
 ```
 
 Classi scaffoldate: death-knight, demon-hunter, druid, evoker, hunter, mage, monk, paladin, priest, rogue, shaman, warlock, warrior.
 
-Le cartelle servono solo a organizzare i file di export. Lo **stato** vive nel manifest unico (campo `class` e `spec` discriminano).
+Le cartelle servono solo a organizzare i file di export, ma vanno tenute coerenti col campo `spec`: `spec:null` → root della classe (`<class>/`); `spec:<nome>` → sottocartella della spec (`<class>/<spec>/`). Lo **stato** resta nel manifest unico (`class` e `spec` discriminano).
 
 ## Schema entry manifest
 
