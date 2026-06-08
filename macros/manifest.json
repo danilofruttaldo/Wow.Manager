@@ -16,7 +16,7 @@
       "character": null,
       "slot": null,
       "icon": null,
-      "body_file": "warrior/arms/heroic-leap-cursor.txt",
+      "body_file": "warrior/heroic-leap-cursor.txt",
       "body": null,
       "notes": "Salta sulla posizione del mouse. `!` previene il reset dell'indicator se ripremi prima del cast (spam-safe). Standard QoL warrior."
     },
@@ -28,7 +28,7 @@
       "character": null,
       "slot": null,
       "icon": null,
-      "body_file": "warrior/arms/charge-intervene.txt",
+      "body_file": "warrior/charge-intervene.txt",
       "body": null,
       "notes": "Cross-spec gap-closer: friendly target → Intervene, modifier+Prot → Shield Charge, fallback → Charge. Usa known: per safety cross-spec."
     },
@@ -52,7 +52,7 @@
       "character": null,
       "slot": null,
       "icon": null,
-      "body_file": "warrior/arms/shockwave-howl.txt",
+      "body_file": "warrior/shockwave-howl.txt",
       "body": null,
       "notes": "AoE CC auto-adattiva su talent loadout: Shockwave talentato → stun cono frontale istantaneo nella direzione in cui sei girato (NON ground-target: Shockwave usa il facing, non il cursore — niente @cursor); altrimenti → Piercing Howl slow centrato su player. Stesso pattern `known:` di Ravager/Bladestorm — un bind solo per il control AoE."
     },
