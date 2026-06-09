@@ -1,0 +1,2 @@
+#showtooltip
+/use [@mouseover,help,nodead]Cleanse Toxins;Hand of Reckoning
