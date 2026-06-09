@@ -139,6 +139,30 @@
       "body_file": "mage/frost/dragonsbreath-conecold.txt",
       "body": null,
       "notes": "Control AoE cono frontale, auto-adattiva via known:Dragon's Breath (stesso pattern known: delle macro warrior). Dragon's Breath talentato → Dragon's Breath (disorient, si rompe a danno); altrimenti → Cone of Cold (slow + danno, baseline). VERIFICATO 2026-06-09 (Icy Veins 12.0.5): Dragon's Breath è nell'albero classe CONDIVISO del mago, quindi Frost può talentarlo → il ramo NON è inerte. Entrambe le ability sono coni frontali ISTANTANEI basati sul facing (NON ground-target: usano la direzione in cui sei girato, niente @cursor — stesso caveat di warrior-shockwave-howl). #showtooltip nudo dinamico mostra l'icona del ramo attivo per build. Registrata spec:frost perché è il loadout di riferimento, ma è account-wide come tutte. NB: apostrofo in known:Dragon's Breath; se il parser desse problemi usare l'ID known:31661."
+    },
+    "paladin-cleanse-taunt": {
+      "name": "Cleanse/Taunt",
+      "scope": "account",
+      "class": "paladin",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "paladin/cleanse-taunt.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-09 (richiesta 'entrambe shared' → spec:null). Un bottone a doppio ruolo: mouseover su alleato vivo (help,nodead) → Cleanse Toxins (dispel poison/disease); altrimenti (mouseover nemico o nessun mouseover) → Hand of Reckoning (taunt sul target corrente). #showtooltip nudo dinamico mostra l'icona giusta in base a cosa c'è sotto il mouse. CAVEAT spec: Cleanse Toxins è il dispel di Prot/Ret; HOLY ha invece 'Cleanse' (dispella anche magia) → su Holy il ramo dispel darebbe 'spell sconosciuta'. Se in futuro si gioca Holy, rendere il primo ramo auto-adattivo: [@mouseover,help,nodead,known:Cleanse]Cleanse;[@mouseover,help,nodead]Cleanse Toxins;Hand of Reckoning. Hand of Reckoning (taunt) è baseline su tutte le spec."
+    },
+    "paladin-intercession-redemption": {
+      "name": "Res (combat)",
+      "scope": "account",
+      "class": "paladin",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "paladin/intercession-redemption.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-09 (spec:null, cross-spec). Battle-res auto-adattiva sullo stato di combattimento: [combat] → Intercession (combat res del paladino, charge sull'alleato morto + rez); fuori combat → Redemption (rez normale, lunga). Un solo bind copre entrambi i casi. Entrambe le spell sono baseline su tutte le spec del paladino → davvero cross-spec senza caveat. Target = il bersaglio corrente (alleato morto): usare con target di un cadavere alleato."
     }
   }
 }
