@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67823",
-    "last_sync": "2026-06-08"
+    "last_sync": "2026-06-09"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v416.2",
+      "version": "v416.3",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-08",
+      "installed": "2026-06-09",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -24,15 +24,15 @@
         "BigWigs_Sporefall",
         "BigWigs_MarchOnQuelDanas"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-08 v416.1->v416.2 via forgecdn files/8205/695. Cache stale al primo fetch mostrava ancora v416.1"
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-09 v416.2->v416.3 via forgecdn files/8217/189"
     },
     "LittleWigs": {
       "name": "LittleWigs",
-      "version": "v12.0.52",
+      "version": "v12.0.53",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-06-05",
+      "installed": "2026-06-09",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -51,13 +51,13 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
-      "version": "6.1.14",
+      "version": "6.1.15",
       "interface": "120007, 120005, 120001, 50504",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
-      "installed": "2026-06-05",
+      "installed": "2026-06-09",
       "folders": ["MythicDungeonTools"],
-      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-05 6.1.12->6.1.14 via forgecdn files/8198/438"
+      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-09 6.1.14->6.1.15 via forgecdn files/8217/963"
     },
     "Plater": {
       "name": "Plater Nameplates",
