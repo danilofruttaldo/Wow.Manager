@@ -127,6 +127,18 @@
       "body_file": "mage/decurse-spellsteal.txt",
       "body": null,
       "notes": "Mage-wide, spec:null, auto-adattiva via known:Spellsteal (stesso pattern delle macro warrior known:). Cascata: 1) mouseover amichevole vivo → Remove Curse (decurse alleato senza cambiare target); 2) Spellsteal talentato → Spellsteal sul target nemico (ruba buff); 3) build raid (Spellsteal NON talentato) → Remove Curse su @player. Discriminatore = known:Spellsteal perché in spec raid Spellsteal non viene preso (conferma utente 2026-06-09): in raid la macro è puro decurse, niente errore 'spell sconosciuta'. nodead evita il decurse su alleato morto. #showtooltip nudo dinamico: mostra Remove Curse in raid, Spellsteal con target nemico nelle altre build."
+    },
+    "mage-dragonsbreath-conecold": {
+      "name": "DragBreath/Cone",
+      "scope": "account",
+      "class": "mage",
+      "spec": "frost",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "mage/frost/dragonsbreath-conecold.txt",
+      "body": null,
+      "notes": "Control AoE cono frontale, auto-adattiva via known:Dragon's Breath (stesso pattern known: delle macro warrior). Dragon's Breath talentato → Dragon's Breath (disorient, si rompe a danno); altrimenti → Cone of Cold (slow + danno, baseline). VERIFICATO 2026-06-09 (Icy Veins 12.0.5): Dragon's Breath è nell'albero classe CONDIVISO del mago, quindi Frost può talentarlo → il ramo NON è inerte. Entrambe le ability sono coni frontali ISTANTANEI basati sul facing (NON ground-target: usano la direzione in cui sei girato, niente @cursor — stesso caveat di warrior-shockwave-howl). #showtooltip nudo dinamico mostra l'icona del ramo attivo per build. Registrata spec:frost perché è il loadout di riferimento, ma è account-wide come tutte. NB: apostrofo in known:Dragon's Breath; se il parser desse problemi usare l'ID known:31661."
     }
   }
 }
