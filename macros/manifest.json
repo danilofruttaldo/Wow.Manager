@@ -126,7 +126,7 @@
       "icon": null,
       "body_file": "mage/decurse-spellsteal.txt",
       "body": null,
-      "notes": "Mage-wide (tutte le spec hanno Remove Curse + Spellsteal), spec:null. Friendly mouseover vivo → Remove Curse (decurse alleato senza cambiare target); altrimenti → Spellsteal sul target corrente (ruba buff nemico). nodead evita di tentare il decurse su un alleato morto. Un solo bind copre utility difensiva e offensiva."
+      "notes": "Mage-wide, spec:null, auto-adattiva via known:Spellsteal (stesso pattern delle macro warrior known:). Cascata: 1) mouseover amichevole vivo → Remove Curse (decurse alleato senza cambiare target); 2) Spellsteal talentato → Spellsteal sul target nemico (ruba buff); 3) build raid (Spellsteal NON talentato) → Remove Curse su @player. Discriminatore = known:Spellsteal perché in spec raid Spellsteal non viene preso (conferma utente 2026-06-09): in raid la macro è puro decurse, niente errore 'spell sconosciuta'. nodead evita il decurse su alleato morto. #showtooltip nudo dinamico: mostra Remove Curse in raid, Spellsteal con target nemico nelle altre build."
     }
   }
 }
