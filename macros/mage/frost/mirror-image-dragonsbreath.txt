@@ -1,0 +1,2 @@
+#showtooltip
+/use [known:Mirror Image]Mirror Image;Dragon's Breath
