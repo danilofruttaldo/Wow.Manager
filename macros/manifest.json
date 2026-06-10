@@ -128,17 +128,17 @@
       "body": null,
       "notes": "Mage-wide, spec:null, auto-adattiva via known:Spellsteal (stesso pattern delle macro warrior known:). Cascata: 1) mouseover amichevole vivo → Remove Curse (decurse alleato senza cambiare target); 2) Spellsteal talentato → Spellsteal sul target nemico (ruba buff); 3) build raid (Spellsteal NON talentato) → Remove Curse su @player. Discriminatore = known:Spellsteal perché in spec raid Spellsteal non viene preso (conferma utente 2026-06-09): in raid la macro è puro decurse, niente errore 'spell sconosciuta'. nodead evita il decurse su alleato morto. #showtooltip nudo dinamico: mostra Remove Curse in raid, Spellsteal con target nemico nelle altre build."
     },
-    "mage-dragonsbreath-conecold": {
-      "name": "DragBreath/Cone",
+    "mage-mirror-image-dragonsbreath": {
+      "name": "Mirror/DragBreath",
       "scope": "account",
       "class": "mage",
       "spec": "frost",
       "character": null,
       "slot": null,
       "icon": null,
-      "body_file": "mage/frost/dragonsbreath-conecold.txt",
+      "body_file": "mage/frost/mirror-image-dragonsbreath.txt",
       "body": null,
-      "notes": "Control AoE cono frontale, auto-adattiva via known:Dragon's Breath (stesso pattern known: delle macro warrior). Dragon's Breath talentato → Dragon's Breath (disorient, si rompe a danno); altrimenti → Cone of Cold (slow + danno, baseline). VERIFICATO 2026-06-09 (Icy Veins 12.0.5): Dragon's Breath è nell'albero classe CONDIVISO del mago, quindi Frost può talentarlo → il ramo NON è inerte. Entrambe le ability sono coni frontali ISTANTANEI basati sul facing (NON ground-target: usano la direzione in cui sei girato, niente @cursor — stesso caveat di warrior-shockwave-howl). #showtooltip nudo dinamico mostra l'icona del ramo attivo per build. Registrata spec:frost perché è il loadout di riferimento, ma è account-wide come tutte. NB: apostrofo in known:Dragon's Breath; se il parser desse problemi usare l'ID known:31661."
+      "notes": "Cambiata 2026-06-10 da dragonsbreath-conecold (file rinominato, vecchio contenuto Dragon's Breath/Cone of Cold sostituito su richiesta utente). Auto-adattiva via known:Mirror Image (stesso pattern known: delle altre macro): Mirror Image talentato → Mirror Image (CD utility, evoca 3 copie 15s; in 12.0.5 NON dà più riduzione danni — VERIFICATO Icy Veins/Method); altrimenti → Dragon's Breath (cono frontale disorient, istantaneo sul facing). CAVEAT cambiato rispetto a prima: il vecchio fallback Cone of Cold era BASELINE (sempre disponibile); ora ENTRAMBI i rami (Mirror Image e Dragon's Breath) sono TALENTI dell'albero classe condiviso → se il loadout non talenta NESSUNO dei due la macro è inerte, e se li talenta ENTRAMBI il ramo Dragon's Breath è irraggiungibile (known:Mirror Image vince sempre). Discriminatore sensato solo se nei tuoi build Frost i due NON coesistono. #showtooltip nudo dinamico mostra l'icona del ramo attivo. Registrata spec:frost (loadout di riferimento) ma account-wide come tutte. ID se il parser desse problemi: Mirror Image 55342, Dragon's Breath 31661."
     },
     "paladin-cleanse-taunt": {
       "name": "Cleanse/Taunt",

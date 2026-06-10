@@ -1,2 +1,0 @@
-#showtooltip
-/use [known:Dragon's Breath]Dragon's Breath;Cone of Cold
