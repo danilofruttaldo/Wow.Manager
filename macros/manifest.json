@@ -259,6 +259,42 @@
       "body_file": "shaman/restoration/spirit-link-totem.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-09 (spec:restoration). Piazza Spirit Link Totem sul cursore (@cursor): CD difensivo Resto che redistribuisce gli HP tra i membri del gruppo nel raggio + ~10% riduzione danni. @cursor evita il prompt di targeting → piazzamento immediato sotto il mouse. spec:restoration: è un totem Resto. #showtooltip nudo mostra Spirit Link Totem."
+    },
+    "druid-rebirth-revitalize-revive": {
+      "name": "Res druido",
+      "scope": "account",
+      "class": "druid",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/rebirth-revitalize-revive.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-12, versione UNIFICATA auto-adattiva (sostituisce le due varianti separate Resto/shared dello stesso giorno). 3 rami: [combat] → Rebirth (battle res in combat, 100% HP/≥20% mana — spell=20484); [nocombat,mod,known:Revitalize] → Revitalize (mass-res Resto: tutti i party member morti a 35% HP/mana, fuori combat — spell=212040); altrimenti → Revive (rez singolo, fuori combat — spell=50769). Il discriminatore known:Revitalize rende UNA macro valida per TUTTE le spec (utente: 'così funziona per tutte le spec'): su Resto il modifier dà il mass-res; su Balance/Feral/Guardian il ramo [mod] fallisce known: e ricade su Revive → niente 'spell sconosciuta'. spec:null (cross-spec). Stesso pattern known: delle macro warrior/mago e schema mass-res-su-modifier del rez shaman. #showtooltip nudo dinamico mostra il ramo attivo. Target = cadavere alleato corrente."
+    },
+    "druid-travel-wild-charge": {
+      "name": "Travel/Charge",
+      "scope": "account",
+      "class": "druid",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/travel-wild-charge.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-12. Movimento a doppio ramo via [mod]: modifier tenuto → Travel Form (shapeshift forma viaggio, +velocità, baseline); altrimenti → Wild Charge (talento: scatto direzionale che varia per forma — Cat balzo al nemico, Bear carica, Moonkin/no-forma disengage all'indietro, Aquatic guizzo). spec:null cross-spec. CAVEAT: Wild Charge è un TALENTO (albero classe) → se non talentato il ramo di default è inerte; Travel Form via [mod] resta sempre valida. Nessun @cursor/@unit: Wild Charge usa target/forma correnti."
+    },
+    "druid-innervate-prowl": {
+      "name": "Innervate/Prowl",
+      "scope": "account",
+      "class": "druid",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/innervate-prowl.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-12 (era 'da feral'), poi resa SHARED + auto-adattiva su richiesta utente (spec:null). Doppio ruolo un-bottone: mouseover su alleato vivo CON Innervate talentato (@mouseover,help,nodead,known:Innervate) → Innervate (al bersaglio cast senza costo mana per 8s, tipicamente un healer — spell=29166); altrimenti (no mouseover / mouseover nemico / Innervate non talentato) → Prowl (stealth, auto Cat Form). Il guard known:Innervate (stesso trucco di druid-rebirth-revitalize-revive con known:Revitalize) rende la macro valida a prescindere da spec/loadout: senza il talento ricade pulita su Prowl, niente 'spell sconosciuta'. VERIFICATO 12.0.5: Innervate è talento albero classe (tutte le spec se talentato); Prowl è baseline (qualsiasi druido entra in stealth via Cat Form). spec:null cross-spec. #showtooltip nudo dinamico mostra il ramo attivo."
     }
   }
 }
