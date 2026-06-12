@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67823",
-    "last_sync": "2026-06-09"
+    "last_sync": "2026-06-11"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v416.4",
+      "version": "v416.6",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-09",
+      "installed": "2026-06-11",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -24,7 +24,7 @@
         "BigWigs_Sporefall",
         "BigWigs_MarchOnQuelDanas"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-09 v416.3->v416.4 via forgecdn files/8222/479"
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-11 v416.4->v416.6 via forgecdn files/8233/756"
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -103,13 +103,13 @@
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
-      "version": "12.0.21",
+      "version": "12.0.22",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-06-06",
+      "installed": "2026-06-11",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-06-06 12.0.20->12.0.21 via forgecdn files/8201/355. TOC 120005,120007 match build"
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-06-11 12.0.21->12.0.22 via forgecdn files/8231/37 (subbucket SENZA zero iniziale: file_id 8231037 -> /8231/37/). TOC 120005,120007 match build"
     },
     "HandyNotes": {
       "name": "HandyNotes",
