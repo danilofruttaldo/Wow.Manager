@@ -181,6 +181,16 @@
       "folders": ["WIM"],
       "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. TOC compatibile 120005. Download via forgecdn files/8151/363"
     },
+    "ToyBoxEnhanced": {
+      "name": "Toy Box Enhanced",
+      "version": "2.37.2",
+      "interface": "50503, 120001, 120005",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/toy-box-enhanced",
+      "installed": "2026-06-13",
+      "folders": ["ToyBoxEnhanced"],
+      "notes": "Estende il toybox: filtri per Effetto/funzione (di fatto classifica i toy per utilità), fonte, fazione; ricerca nelle descrizioni; profili di preferiti multipli; nascondi toy inutili; conta toy usabili. TOC 120005 match build, niente 'Load out of date'. Download forgecdn files/7956/92 (subbucket senza zero iniziale: file_id 7956092 -> /7956/92/)"
+    },
     "CursorRing": {
       "name": "Cursor Ring",
       "version": "1.5.2",
