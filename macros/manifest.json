@@ -295,6 +295,18 @@
       "body_file": "druid/innervate-prowl.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-12 (era 'da feral'), poi resa SHARED + auto-adattiva su richiesta utente (spec:null). Doppio ruolo un-bottone: mouseover su alleato vivo CON Innervate talentato (@mouseover,help,nodead,known:Innervate) → Innervate (al bersaglio cast senza costo mana per 8s, tipicamente un healer — spell=29166); altrimenti (no mouseover / mouseover nemico / Innervate non talentato) → Prowl (stealth, auto Cat Form). Il guard known:Innervate (stesso trucco di druid-rebirth-revitalize-revive con known:Revitalize) rende la macro valida a prescindere da spec/loadout: senza il talento ricade pulita su Prowl, niente 'spell sconosciuta'. VERIFICATO 12.0.5: Innervate è talento albero classe (tutte le spec se talentato); Prowl è baseline (qualsiasi druido entra in stealth via Cat Form). spec:null cross-spec. #showtooltip nudo dinamico mostra il ramo attivo."
+    },
+    "druid-soothe-remove-corruption": {
+      "name": "RemCorr/Soothe",
+      "scope": "account",
+      "class": "druid",
+      "spec": "feral",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/feral/soothe-remove-corruption.txt",
+      "body": null,
+      "notes": "Creata 2026-06-12 su richiesta utente come analogo druido di mage-decurse-spellsteal ('macro druido feral come spellsteal/decurse ma con soothe/remove corruption'). Stessa cascata a 3 rami: 1) mouseover alleato vivo (@mouseover,nodead,help) → Remove Corruption (dispel Curse+Poison sull'alleato senza cambiare target); 2) known:Soothe → Soothe sul target nemico (dispel Enrage, range 40y, usabile in Cat Form); 3) fallback @player → Remove Corruption su se stesso. Discriminatore known:Soothe = analogo di known:Spellsteal del mago: senza Soothe talentato la macro è puro dispel amichevole, niente 'spell sconosciuta' sul ramo offensivo. VERIFICATO 12.0.5 (Icy Veins/Method): Soothe e Remove Corruption sono ENTRAMBI talenti albero classe (Remove Corruption disponibile a Balance/Feral/Guardian, NON Resto che usa Nature's Cure con dispel anche Magic). CAVEAT diverso dal mago: lì Remove Curse è baseline (fallback sempre valido), qui Remove Corruption è un talento → se non talentato i rami 1 e 3 sono inerti; in pratica su Feral M+ entrambi sono talentati (Soothe richiesto per pathing). spec:feral ma le ability valgono anche Balance/Guardian → si può rendere shared. #showtooltip nudo dinamico mostra il ramo attivo."
     }
   }
 }
