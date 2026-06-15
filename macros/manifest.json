@@ -307,6 +307,18 @@
       "body_file": "druid/feral/soothe-remove-corruption.txt",
       "body": null,
       "notes": "Creata 2026-06-12 su richiesta utente come analogo druido di mage-decurse-spellsteal ('macro druido feral come spellsteal/decurse ma con soothe/remove corruption'). Stessa cascata a 3 rami: 1) mouseover alleato vivo (@mouseover,nodead,help) → Remove Corruption (dispel Curse+Poison sull'alleato senza cambiare target); 2) known:Soothe → Soothe sul target nemico (dispel Enrage, range 40y, usabile in Cat Form); 3) fallback @player → Remove Corruption su se stesso. Discriminatore known:Soothe = analogo di known:Spellsteal del mago: senza Soothe talentato la macro è puro dispel amichevole, niente 'spell sconosciuta' sul ramo offensivo. VERIFICATO 12.0.5 (Icy Veins/Method): Soothe e Remove Corruption sono ENTRAMBI talenti albero classe (Remove Corruption disponibile a Balance/Feral/Guardian, NON Resto che usa Nature's Cure con dispel anche Magic). CAVEAT diverso dal mago: lì Remove Curse è baseline (fallback sempre valido), qui Remove Corruption è un talento → se non talentato i rami 1 e 3 sono inerti; in pratica su Feral M+ entrambi sono talentati (Soothe richiesto per pathing). spec:feral ma le ability valgono anche Balance/Guardian → si può rendere shared. #showtooltip nudo dinamico mostra il ramo attivo."
+    },
+    "druid-moonkin-flap": {
+      "name": "Moonkin/Flap",
+      "scope": "account",
+      "class": "druid",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/moonkin-flap.txt",
+      "body": null,
+      "notes": "Creata 2026-06-12 su richiesta utente (macro shared druido). Una riga: [noform:4] → Moonkin Form (entra in forma boomkin se non ci sei già); altrimenti (già in Moonkin) → Flap (glide/slow-fall da boomkin). Sistema a 2 press: 1ª pressione shifta in Moonkin se serve, le successive castano Flap. Indice forma 4 = Moonkin Form (VERIFICATO 2026-06-12: forum Blizzard + Icy Veins Balance, entrambi [noform:4]/[nostance:4]). VERIFICATO 12.0.5: Moonkin Form è nell'albero classe → disponibile a tutte le spec se talentata (per questo spec:null shared); Flap è il glide utilizzabile in Moonkin Form. CAVEAT: Moonkin Form è un talento → senza, la macro non può shiftare (inerte). #showtooltip nudo dinamico mostra Moonkin Form quando sei fuori forma, Flap quando sei in Moonkin."
     }
   }
 }
