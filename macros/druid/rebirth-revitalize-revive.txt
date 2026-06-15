@@ -1,2 +1,2 @@
 #showtooltip
-/use [combat]Rebirth;[nocombat,mod,known:Revitalize]Revitalize;Revive
+/use [@mouseover,help,dead,combat]Rebirth;[combat]Rebirth;[nocombat,mod,known:Revitalize]Revitalize;[@mouseover,help,dead]Revive;Revive
