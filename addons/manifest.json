@@ -181,6 +181,26 @@
       "folders": ["WIM"],
       "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. TOC compatibile 120005. Download via forgecdn files/8151/363"
     },
+    "RCLootCouncil": {
+      "name": "RCLootCouncil",
+      "version": "3.22.0",
+      "interface": "120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/rclootcouncil",
+      "installed": "2026-06-16",
+      "folders": ["RCLootCouncil"],
+      "notes": "Interfaccia per gestire un Loot Council in raid (distribuzione loot con voti/note). TOC 120005,120007 match build, niente 'Load out of date'. Download forgecdn files/8256/944"
+    },
+    "MethodRaidTools": {
+      "name": "Method Raid Tools",
+      "version": "5300",
+      "interface": "120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/method-raid-tools",
+      "installed": "2026-06-16",
+      "folders": ["MRT"],
+      "notes": "Suite raid: note (MRT note editor), timer/cooldowns, weakaura-like per boss. Cartella singola MRT. TOC Mainline 120005,120007 match build (lo zip ha anche MRT-Classic.toc). Download forgecdn files/8192/989 (filename MRT5300.zip)"
+    },
     "CursorRing": {
       "name": "Cursor Ring",
       "version": "1.5.2",
