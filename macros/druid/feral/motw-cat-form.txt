@@ -1,2 +1,2 @@
 #showtooltip
-/cast [mod][form:2]Mark of the Wild;Cat Form
+/cast [mod]Mark of the Wild;[form:2]Prowl;Cat Form
