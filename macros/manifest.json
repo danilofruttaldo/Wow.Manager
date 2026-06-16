@@ -330,7 +330,7 @@
       "icon": null,
       "body_file": "druid/feral/motw-cat-form.txt",
       "body": null,
-      "notes": "Fornita dall'utente 2026-06-12 (spec:feral). Doppio ruolo: [mod][form:2] (mod tenuto OPPURE già in Cat Form, indice 2) → Mark of the Wild (buff druido); altrimenti (fuori da Cat Form e senza mod) → Cat Form (shift in forma). Logica voluta dall'utente: 'no cat -> cat; mark se mod o se cat' — il ramo [form:2] evita di slammare fuori dalla Cat Form quando ci sei già (ti dà Mark invece di ri-shiftare e uscire). Mark of the Wild e Cat Form sono baseline tutte le spec (taggata feral su scelta utente). Indice forma 2 = Cat Form (mappa Bear=1/Cat=2/Travel=3/Moonkin=4, verificata Icy Veins). #showtooltip nudo dinamico mostra il ramo attivo."
+      "notes": "Fornita dall'utente 2026-06-12 (spec:feral), logica raffinata stesso giorno. Cascata a 3 rami: [mod] → Mark of the Wild (buff druido, PRIORITÀ — 'resta mod mark'); [form:2] (già in Cat Form) → Prowl (stealth; Prowl richiede Cat Form, qui garantita); altrimenti (non in Cat, no mod) → Cat Form (shift in forma). Logica utente finale: 'no cat -> cat; mod -> mark; se gatto -> prowl'. Indice forma 2 = Cat Form (mappa Bear=1/Cat=2/Travel=3/Moonkin=4, verificata Icy Veins). Mark of the Wild/Cat Form/Prowl sono baseline tutte le spec (taggata feral su scelta utente). NB: il file resta motw-cat-form.txt anche se ora include Prowl. #showtooltip nudo dinamico mostra il ramo attivo."
     }
   }
 }
