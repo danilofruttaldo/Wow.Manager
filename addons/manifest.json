@@ -85,22 +85,6 @@
       ],
       "notes": "Locale 5.21.6 più nuovo della stable Curseforge 5.21.1 (gen 2026) — probabilmente da GitHub release o beta channel. TOC dichiara 40402 (Cata) ma funziona con 'Load out of date AddOns'"
     },
-    "Details": {
-      "name": "Details! Damage Meter",
-      "version": "Details.20260603.15101.172",
-      "interface": "120005, 120007",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/details",
-      "installed": "2026-06-05",
-      "folders": [
-        "Details",
-        "Details_Compare2",
-        "Details_DataStorage",
-        "Details_EncounterDetails",
-        "Details_RaidCheck"
-      ],
-      "notes": "Damage meter standard; rimossi plugin Streamer/Vanguard/TinyThreat su richiesta utente (lo zip li reinclude ad ogni update → vanno ri-cancellati). Aggiornato 2026-06-05 a build 20260603 via forgecdn files/8194/99 (filename Details-Details.20260603.15101.172.zip). Anche stavolta TOC di Details_EncounterDetails e Details_DataStorage fermi a 110207 → ripatchati a 120005"
-    },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "version": "12.0.22",
