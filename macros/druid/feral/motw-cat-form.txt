@@ -1,2 +1,0 @@
-#showtooltip
-/cast [mod]Mark of the Wild;[form:2]Prowl;Cat Form
