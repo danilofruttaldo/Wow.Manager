@@ -319,6 +319,18 @@
       "body_file": "druid/moonkin-flap.txt",
       "body": null,
       "notes": "Creata 2026-06-12 su richiesta utente (macro shared druido). Una riga: [noform:4] → Moonkin Form (entra in forma boomkin se non ci sei già); altrimenti (già in Moonkin) → Flap (glide/slow-fall da boomkin). Sistema a 2 press: 1ª pressione shifta in Moonkin se serve, le successive castano Flap. Indice forma 4 = Moonkin Form (VERIFICATO 2026-06-12: forum Blizzard + Icy Veins Balance, entrambi [noform:4]/[nostance:4]). VERIFICATO 12.0.5: Moonkin Form è nell'albero classe → disponibile a tutte le spec se talentata (per questo spec:null shared); Flap è il glide utilizzabile in Moonkin Form. CAVEAT: Moonkin Form è un talento → senza, la macro non può shiftare (inerte). #showtooltip nudo dinamico mostra Moonkin Form quando sei fuori forma, Flap quando sei in Moonkin."
+    },
+    "druid-motw-cat-form": {
+      "name": "MotW/Cat",
+      "scope": "account",
+      "class": "druid",
+      "spec": "feral",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/feral/motw-cat-form.txt",
+      "body": null,
+      "notes": "Fornita dall'utente 2026-06-12 (spec:feral). Doppio ruolo: [mod][form:2] (mod tenuto OPPURE già in Cat Form, indice 2) → Mark of the Wild (buff druido); altrimenti (fuori da Cat Form e senza mod) → Cat Form (shift in forma). Logica voluta dall'utente: 'no cat -> cat; mark se mod o se cat' — il ramo [form:2] evita di slammare fuori dalla Cat Form quando ci sei già (ti dà Mark invece di ri-shiftare e uscire). Mark of the Wild e Cat Form sono baseline tutte le spec (taggata feral su scelta utente). Indice forma 2 = Cat Form (mappa Bear=1/Cat=2/Travel=3/Moonkin=4, verificata Icy Veins). #showtooltip nudo dinamico mostra il ramo attivo."
     }
   }
 }

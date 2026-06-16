@@ -1,0 +1,2 @@
+#showtooltip
+/cast [mod][form:2]Mark of the Wild;Cat Form
