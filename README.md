@@ -14,7 +14,6 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 | [macros/](macros/) | Macro per account/character con body, slot, icon | `macros/manifest.json` |
 | [ui-profiles/](ui-profiles/) | Profili addon (Plater, Details, ecc.) | `ui-profiles/manifest.json` |
 | [builds/](builds/) | Talent/gear build per char/spec/contenuto | un `.md` per build |
-| [scripts/](scripts/) | Utility (sync, audit, backup WTF) | — |
 
 ## Regole operative
 
