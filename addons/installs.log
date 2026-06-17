@@ -81,3 +81,4 @@
 2026-06-17 REMOVE   Simple Item Level (su richiesta utente). Rimossa cartella SimpleItemLevel, entry manifest eliminata. Era OOD a 120007 (TOC 120001). Richiede /reload o riavvio.
 2026-06-17 UPDATE   via /aggiorna-addon (2o giro stesso giorno): MythicDungeonTools 6.1.17->6.1.18 (forgecdn files/8265/367, rilasciato 2026-06-17). TOC include 120007 match build 12.0.7, cartella invariata. Richiede /reload.
 2026-06-17 SYNC     Audit completo 16 addon: update solo MDT. Current: BigWigs v417, LittleWigs v12.0.55, Plater v645, Leatrix 12.0.22, Baganator 807, Syndicator 271, TeleportMenu 12.5, CursorRing 1.5.3, RCLootCouncil 3.22.0, MRT 5310, HandyNotes 1.6.28, HN_Midnight v144, TomTom v4.3.4, WIM 3.16.14, Molinari 120000.144. OOD a 120007 (no release piu nuova, caricano con Load out of date): HandyNotes, HN_Midnight, TomTom, WIM, Molinari. WoW build 12.0.7.68235.
+2026-06-17 INSTALL  AllTheThings 5.2.1 (collection tracker) via forgecdn files/8263/722
