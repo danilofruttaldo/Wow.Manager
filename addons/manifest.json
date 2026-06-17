@@ -2,8 +2,8 @@
   "_meta": {
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
-    "wow_build": "12.0.5.67823",
-    "last_sync": "2026-06-16"
+    "wow_build": "12.0.7.68235",
+    "last_sync": "2026-06-17"
   },
   "addons": {
     "BigWigs": {
@@ -117,13 +117,13 @@
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
-      "version": "12.4",
-      "interface": "120000, 120001",
+      "version": "12.5",
+      "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/teleport-me-nu",
-      "installed": "2026-05-24",
+      "installed": "2026-06-17",
       "folders": ["TeleportMenu"],
-      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). TOC out-of-date ma API stabile"
+      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). Aggiornato 2026-06-17 12.4->12.5 via forgecdn files/8260/536 (filename TeleportMenu-v12.5.zip, NB prefisso 'v'); TOC ora 120005,120007 match build 12.0.7 (non più out-of-date)."
     },
     "TomTom": {
       "name": "TomTom",
@@ -137,23 +137,23 @@
     },
     "Baganator": {
       "name": "Baganator",
-      "version": "806",
-      "interface": "120005, 50504, 38001, 20505, 11508",
+      "version": "807",
+      "interface": "120007, 120005, 50504, 38001, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/baganator",
-      "installed": "2026-06-05",
+      "installed": "2026-06-17",
       "folders": ["Baganator"],
-      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. TOC dichiara 120005 → match esatto build, niente 'Load out of date'. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Download forgecdn files/8132/592"
+      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-06-17 806->807 via forgecdn files/8257/245 (Baganator-807.zip); TOC ora include 120007 (build 12.0.7)."
     },
     "Syndicator": {
       "name": "Syndicator",
-      "version": "270",
-      "interface": "120005, 50504, 38001, 20505, 11508",
+      "version": "271",
+      "interface": "120007, 120005, 50504, 38001, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/syndicator",
-      "installed": "2026-06-05",
+      "installed": "2026-06-17",
       "folders": ["Syndicator"],
-      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. TOC 120005 → match build. Download forgecdn files/8119/125"
+      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-06-17 270->271 via forgecdn files/8257/257 (Syndicator-271.zip); TOC ora include 120007 (build 12.0.7)."
     },
     "WIM": {
       "name": "WIM (WoW Instant Messenger) v3",
@@ -177,23 +177,23 @@
     },
     "MethodRaidTools": {
       "name": "Method Raid Tools",
-      "version": "5300",
+      "version": "5310",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/method-raid-tools",
-      "installed": "2026-06-16",
+      "installed": "2026-06-17",
       "folders": ["MRT"],
-      "notes": "Suite raid: note (MRT note editor), timer/cooldowns, weakaura-like per boss. Cartella singola MRT. TOC Mainline 120005,120007 match build (lo zip ha anche MRT-Classic.toc). Download forgecdn files/8192/989 (filename MRT5300.zip)"
+      "notes": "Suite raid: note (MRT note editor), timer/cooldowns, weakaura-like per boss. Cartella singola MRT. TOC Mainline 120005,120007 (lo zip ha anche MRT-Classic.toc). Aggiornato 2026-06-17 5300->5310 via forgecdn files/8261/765 (filename MRT5310.zip)."
     },
     "CursorRing": {
       "name": "Cursor Ring",
-      "version": "1.5.2",
+      "version": "1.5.3",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/cursorring",
-      "installed": "2026-06-09",
+      "installed": "2026-06-17",
       "folders": ["CursorRing"],
-      "notes": "Anello class-colored attorno al cursore con animazioni cast/GCD/combat: migliora visibilità del cursore + funge da GCD tracker. TOC 120005,120007 match build, niente 'Load out of date'. Scelto come miglior/più aggiornato tra i cursor addon (vs CursorTrail/Cursor Ring +). Download forgecdn files/8175/858"
+      "notes": "Anello class-colored attorno al cursore con animazioni cast/GCD/combat: migliora visibilità del cursore + funge da GCD tracker. TOC 120005,120007 match build. Scelto come miglior/più aggiornato tra i cursor addon (vs CursorTrail/Cursor Ring +). Aggiornato 2026-06-17 1.5.2->1.5.3 via forgecdn files/8261/188 (filename CursorRing-v1.5.3.zip, NB prefisso 'v'; ignorata la 1.5.3-beta più vecchia)."
     },
     "Molinari": {
       "name": "Molinari",
