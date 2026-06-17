@@ -188,6 +188,16 @@
       "installed": "2026-06-08",
       "folders": ["Molinari"],
       "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. TOC 120005 match build, niente 'Load out of date'. Download forgecdn files/7940/854"
+    },
+    "AllTheThings": {
+      "name": "All The Things",
+      "version": "5.2.1",
+      "interface": "11508, 20505, 38001, 40402, 50504, 120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/all-the-things",
+      "installed": "2026-06-17",
+      "folders": ["AllTheThings"],
+      "notes": "Collection tracker completo (mount, pet, toy, transmog, achievement, quest, ecc.) con mappa nodi. Scaricato 2026-06-17 v5.2.1 via forgecdn files/8263/722 (AllTheThings-5.2.1.zip). TOC include 120007 match build 12.0.7, niente 'Load out of date'."
     }
   }
 }
