@@ -188,16 +188,6 @@
       "installed": "2026-06-08",
       "folders": ["Molinari"],
       "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. TOC 120005 match build, niente 'Load out of date'. Download forgecdn files/7940/854"
-    },
-    "SimpleItemLevel": {
-      "name": "Simple Item Level",
-      "version": "v65",
-      "interface": "120001, 120000, 110207, 50503, 30405, 20505, 11508",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/simple-item-level",
-      "installed": "2026-05-28",
-      "folders": ["SimpleItemLevel"],
-      "notes": "Mostra item level su ogni oggetto in character pane, bags, bank, mail. Author Kemayo. TOC 120001 vs build 120005 → out-of-date, richiede 'Load out of date AddOns'. Download forgecdn files/7797/577."
     }
   }
 }
