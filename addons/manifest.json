@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.5.67823",
-    "last_sync": "2026-06-15"
+    "last_sync": "2026-06-16"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v416.6",
+      "version": "v417",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-11",
+      "installed": "2026-06-16",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -24,7 +24,7 @@
         "BigWigs_Sporefall",
         "BigWigs_MarchOnQuelDanas"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-11 v416.4->v416.6 via forgecdn files/8233/756"
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-16 v416.6->v417 via forgecdn files/8258/158"
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -51,13 +51,13 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
-      "version": "6.1.16",
+      "version": "6.1.17",
       "interface": "120007, 120005, 120001, 50504",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
-      "installed": "2026-06-09",
+      "installed": "2026-06-16",
       "folders": ["MythicDungeonTools"],
-      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-09 6.1.15->6.1.16 via forgecdn files/8221/922"
+      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-16 6.1.16->6.1.17 via forgecdn files/8262/12 (subbucket senza zero iniziale: file_id 8262012 -> /8262/12/)"
     },
     "Plater": {
       "name": "Plater Nameplates",
