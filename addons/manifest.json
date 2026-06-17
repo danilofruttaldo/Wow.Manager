@@ -61,13 +61,13 @@
     },
     "Plater": {
       "name": "Plater Nameplates",
-      "version": "Plater-v645-Retail",
+      "version": "Plater-v646",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/plater-nameplates",
-      "installed": "pre-existing",
+      "installed": "2026-06-17",
       "folders": ["Plater"],
-      "notes": "Nameplates avanzati"
+      "notes": "Nameplates avanzati. Aggiornato 2026-06-17 v645->v646 (redeploy migrazione desktop) via forgecdn files/8266/346 (Plater-v646.zip)"
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
