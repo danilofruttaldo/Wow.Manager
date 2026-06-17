@@ -69,22 +69,6 @@
       "folders": ["Plater"],
       "notes": "Nameplates avanzati"
     },
-    "WeakAuras": {
-      "name": "WeakAuras",
-      "version": "5.21.6",
-      "interface": "40402",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/weakauras-2",
-      "installed": "pre-existing",
-      "folders": [
-        "WeakAuras",
-        "WeakAurasArchive",
-        "WeakAurasModelPaths",
-        "WeakAurasOptions",
-        "WeakAurasTemplates"
-      ],
-      "notes": "Locale 5.21.6 (da GitHub release/beta). La stable CurseForge è ora avanzata a 5.21.7 (più nuova della 5.21.6), ma l'utente ha scelto di NON aggiornare (2026-06-17): tenere la 5.21.6 locale, non declassare né switchare a CF senza richiesta esplicita. TOC dichiara 40402 (Cata) ma funziona con 'Load out of date AddOns'."
-    },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "version": "12.0.22",
