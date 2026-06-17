@@ -12,7 +12,6 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 |---|---|---|
 | [addons/](addons/) | Addon installati, versioni, source, folder list | `addons/manifest.json` |
 | [macros/](macros/) | Macro per account/character con body, slot, icon | `macros/manifest.json` |
-| [weakauras/](weakauras/) | WeakAuras importate con metadata + export string | `weakauras/manifest.json` |
 | [ui-profiles/](ui-profiles/) | Profili addon (Plater, Details, ecc.) | `ui-profiles/manifest.json` |
 | [builds/](builds/) | Talent/gear build per char/spec/contenuto | un `.md` per build |
 | [scripts/](scripts/) | Utility (sync, audit, backup WTF) | — |
@@ -28,5 +27,4 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 
 - **Install addon**: verifica compat → estrai in `_retail_/Interface/AddOns/` → entry in `addons/manifest.json` → log in `addons/installs.log`.
 - **Backup macro**: copia testo macro in-game → file in `macros/exports/<char>-<slot>.txt` → entry in `macros/manifest.json`.
-- **Import WA**: salva export string in `weakauras/imports/<slug>.txt` → entry in `weakauras/manifest.json` con source e scope.
 - **Sync/audit**: confronta manifest vs filesystem reale per detect drift.
