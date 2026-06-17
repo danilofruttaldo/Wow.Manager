@@ -1,39 +1,24 @@
 # Mage Arcane — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/arcane-mage-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/arcane/mage/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Spellslinger — preferred for all content, including Mythic+.
+Spellslinger (98.6%)
 
-## Talent builds
-
-### Spellslinger — Mythic+
+## Talent build
 
 ```
-C4DAAAAAAAAAAAAAAAAAAAAAAMzwMLzMzsgZGamZmBAAwAAAAzMzssMzELAAsNjZmxsZWmZmxMjxYmZmxGzYGDAgBAAwMLAgZAwwA
+C4DAAAAAAAAAAAAAAAAAAAAAAMzwYZmZmFMzQzMzAAAwAAAAzMzssMzELAAsNjZmxsZWmZmxMjxwMzMWYmZmHYGAgBAAwMLAgZAwwA
 ```
-
-### Spellslinger — Delves (kiting/survival)
-
-```
-C4DAAAAAAAAAAAAAAAAAAAAAAMzwYZmZmFbmZoZmZGAAADAAAMzMzyyMTsAAw2MmZGzmZZmZGzMGjZmxYjZMjZAAGAAAzsAAmBADD
-```
-
-### Sunfury — Mythic+
-
-(not extractable from page — paste manually from URL above; guide notes this build is ~20% behind the Spellslinger M+ build)
 
 ## Stat priority
 
-Stat priority not detailed on this page — consult the dedicated Arcane stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Spellslinger outperforms Sunfury in all current content.
-- M+ build optimized for AoE via Arcane Pulse and utility talents.
-- Delves variant maximizes survival and kiting at minimal DPS cost.
-- Sunfury M+ build is significantly behind and not recommended.
+- Alternative hero talent: Sunfury (1.31%).

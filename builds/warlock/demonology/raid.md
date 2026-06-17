@@ -1,28 +1,25 @@
 # Warlock Demonology — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/demonology-warlock-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/demonology/warlock/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Soul Harvester for single-target raid encounters.
+Diabolist (95.20%)
 
-## Talent builds
-
-### Single-Target (Soul Harvester)
+## Talent build
 
 ```
-CoQAAAAAAAAAAAAAAAAAAAAAAwMzMzoZjhZmxsMAAAAAAAjtlBGwAmhtQGbGjx2sMzMjZAAzMzMzAMzMmxMDAAwYmZmZMDLDAD
+CoQAAAAAAAAAAAAAAAAAAAAAAwMmZGNbM2mZGzyAAAAAAAAGzYYBGYbYhGWMYmlZbmZGzAAzwMzMzMAjZMzsBAAmZmZGDjZZGDYA
 ```
 
 ## Stat priority
 
-Intellect > Haste > Crit > Mastery > Versatility
+Not published on archon talents page.
 
 ## Notes
 
-- Maximizes "Dominion of Argus windows" to spawn additional demons.
-- Better single-target performance than the Diabolist variant.
-- Focuses on post-Tyrant setup with Hand of Gul'dan spam.
+- Alternative hero talent: Soul Harvester (4.85%).
+- Key Diabolist selections: Soul-Etched Circles (99.81%), Infernal Machine (99.6%), Infernal Vitality (72.97%).

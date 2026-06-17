@@ -1,41 +1,24 @@
 # Druid Restoration — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/restoration-druid-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/restoration/druid/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Wildstalker — primary M+ choice across all key levels; Keeper of the Grove viable as damage-focused alternative post-12.0.5.
+Wildstalker (82.78%)
 
-## Talent builds
-
-### Mythic+ — Wildstalker
+## Talent build
 
 ```
-CkGAAAAAAAAAAAAAAAAAAAAAAMMmZZMjZmxsN8AMzsNjFbzAAAAAAAAAAgFDNbzw0MAmFzMzMLGGAAAAAMAAzAAQAAAz2MbNbzsYjZmZGMzGoZAAmZAYA
-```
-
-### Delves — Wildstalker
-
-```
-CkGAAAAAAAAAAAAAAAAAAAAAAMMmxYGzMjZbmZYYhZx2MAAAAAAAAAAYbQzmhpZMzYMLmZmZWmhxAAAAAAAYMAAEAAwsMzWzyML2gZeAMjFQzAAMzAwA
-```
-
-### Mythic+ — Keeper of the Grove (Alternative)
-
-```
-(not extractable from page — paste manually from URL above)
+CkGAAAAAAAAAAAAAAAAAAAAAAMMmZZMjZmxsN8AMzswsYbGAAAAAAAAAAsMoZzw0MjxMmFzMzMmhxAAAAAAAgBAAAAAz2MbNLzsYjZmBmZWANDAwMDAD
 ```
 
 ## Stat priority
 
-Intellect > standard healer secondaries; lean Haste/Mastery for Lifebloom cleave throughput. Everbloom Apex scales heavily with Mastery in dungeons.
+Not published on archon talents page.
 
 ## Notes
 
-- Wildstalker M+ centers on Symbiotic Blooms and passive healing buffs; Cat Form is not required despite the tree's identity.
-- Lifebloom cleave via Everbloom (Apex) keeps the tank near-immortal; competitive damage alongside healing.
-- KotG alternative is a burst-healing/damage option using Grove Guardians; activates 4-5 guardians during Convoke.
-- Delves variant maximizes solo damage output while keeping survivability intact for weekly objectives.
+- Alternative hero talent: Keeper of the Grove (17.22%).

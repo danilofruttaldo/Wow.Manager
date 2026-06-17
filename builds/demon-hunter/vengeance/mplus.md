@@ -1,60 +1,26 @@
 # Demon Hunter Vengeance — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/vengeance-demon-hunter-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/vengeance/demon-hunter/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Annihilator is the offensively dominant choice for M+; Aldrachi Reaver trades damage for self-sustain.
+Annihilator (96.6%)
 
-## Talent builds
-
-### Annihilator Weekly Mythic+
+## Talent build
 
 ```
-CUkAAAAAAAAAAAAAAAAAAAAAAAAMjZmZMMzkZmBWMjZwMjZGzMzMzYwsNzYjZ2GDDAAAAAAAAzMzsBAAAgBmZmZmt2mZmBAGAAAAD
-```
-
-### Annihilator High Mythic+
-
-```
-(not extractable from page — paste manually from URL above)
-```
-
-### Annihilator Delves
-
-```
-(not extractable from page — paste manually from URL above)
-```
-
-### Aldrachi Reaver Weekly Mythic+
-
-```
-(not extractable from page — paste manually from URL above)
-```
-
-### Aldrachi Reaver High Mythic+
-
-```
-(not extractable from page — paste manually from URL above)
-```
-
-### Aldrachi Reaver Delves
-
-```
-(not extractable from page — paste manually from URL above)
+CUkAAAAAAAAAAAAAAAAAAAAAAAAMjZmZMMjMzMYWMjZwMjZGz8AzMzYwsNzYzMz2YMDAAAAAAAAzMjNAAAAMwMzMzs12MzMAwAAAAYA
 ```
 
 ## Stat priority
 
-Stat priorities are not specified per build in the source guide; consult the URL for the general Vengeance stat priority section.
+Not published on archon talents page.
 
 ## Notes
 
-- Annihilator Weekly M+: aggressive playstyle around cooldown windows; strong AoE burst with World Killer reducing Metamorphosis cooldown.
-- Annihilator High M+: adds Sigil of Chains for utility versus enemies immune to Sigil of Misery while keeping offensive focus.
-- Annihilator Delves: burst-focused around Metamorphosis and Mass Acceleration, with mobility nodes.
-- Aldrachi Reaver M+/High: defensive nodes (Feed the Demon, Calcified Spikes, Last Resort); Wounded Quarry scales at higher keys.
-- All builds use Untethered Rage apex talent for extra Metamorphosis charges and Soul Fragment damage.
+- Alternative hero talent: Aldrachi Reaver (3.43% usage).
+- Within Aldrachi Reaver: Unhindered Assault 68.17%, Incorruptible Spirit 88.49%, Keen Engagement 89.29%.
+- Sample: top performers in +7 to +24 keys.

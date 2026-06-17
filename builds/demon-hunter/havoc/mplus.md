@@ -1,48 +1,25 @@
 # Demon Hunter Havoc — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/havoc-demon-hunter-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/havoc/demon-hunter/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Fel-Scarred is the general recommendation; Aldrachi Reaver is viable but currently behind.
+Fel-Scarred (97.4%)
 
-## Talent builds
-
-### Fel-Scarred Mythic+ / AoE
+## Talent build
 
 ```
-CEkAAAAAAAAAAAAAAAAAAAAAAYmZmZmZ2mxMzMGzkxMDAAAAAAYWMmtZYmBmx2sNzMjxALDsNbmxwsw0YmZMjNAAAgBAAAwMDGAAAAG
-```
-
-### Fel-Scarred Delves
-
-```
-CEkAAAAAAAAAAAAAAAAAAAAAAYmZmZmZMjZmZMmJjZGAAAAAAwsYMbjxMDMjtZbmZGjBWGYb2MjhZhpxMzYGbAAAADAAAgZGMAAAAM
-```
-
-### Aldrachi Reaver Mythic+
-
-```
-(not extractable from page — paste manually from URL above)
-```
-
-### Aldrachi Reaver Delves
-
-```
-(not extractable from page — paste manually from URL above)
+CEkAAAAAAAAAAAAAAAAAAAAAAYmZmZmZ2mxMzMmZmMmZAAAAAAAzixsNDzMwM2mtZmZMGYZgtZzMGmFmGzMjhNAAAgBAAAwMDGAAAAG
 ```
 
 ## Stat priority
 
-Stat priorities are not differentiated by build in the source guide; refer to the URL for the general Havoc stat priority section.
+Not published on archon talents page.
 
 ## Notes
 
-- Fel-Scarred M+/AoE leverages frequent burst AoE from Eye Beam and Demonic windows while keeping single-target flexibility via cleave talents.
-- Fel-Scarred Delves emphasises explosive burst with high Metamorphosis uptime for Soul Rending self-sustain.
-- Aldrachi Reaver M+ provides funnel tools with Wounded Quarry but suffers target-cap limitations.
-- Aldrachi Reaver Delves offers high Soul Fragment generation for added sustain; Reaver's Mark management can feel awkward.
-- All Fel-Scarred builds invest full 4 points in Eternal Hunt apex talent.
+- Alternative hero talent: Aldrachi Reaver (2.53% usage, 153.0k DPS) vs Fel-Scarred 168.1k DPS.
+- Within Fel-Scarred: Improved Soul Rending 72.97%, Wave of Debilitation 80.88%, Flamebound 93.09%.

@@ -1,29 +1,26 @@
 # Shaman Elemental — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/elemental-shaman-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/elemental/shaman/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Stormbringer on most fights; Farseer has a significantly better target profile on Lightblinded Vanguard.
+Stormbringer (77.3%)
 
-## Talent builds
-
-### Elemental Single Target — Stormbringer
+## Talent build
 
 ```
-CYQAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbLzMzMzMLbbDMmZAAAAAgNzYYDWgZYoxGAYbmZmZmtlZCzYhlZmZGzwsMjFzMMzCAwAYmBGGG
+CYQAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbbzMzMzMLbbDMmZAAAAAgNzYYDWgZYoxGAMLzMzYstYahZmlxyMzMjhlZZYxMDzsAAMAmZghhB
 ```
 
 ## Stat priority
 
-Not explicitly listed for M+ vs Raid in the source builds page; refer to the dedicated Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Elemental Blast provides more damage but mobility loss is significant.
-- Earth Shock offers only ~5% loss if mobility is critical on a fight.
-- Feedback Loop apex talent mandatory in all circumstances.
-- Consider fight-specific utility adjustments (Purge, Tremor, etc.).
+- Alternative hero talent: Farseer (22.6%).
+- Stormbringer core talents: Supercharge (99.9%), Nature's Protection (99.9%), Electroshock (83.2%).
+- Top 50% of parses over last 14 days; 26,247 total parses analyzed.

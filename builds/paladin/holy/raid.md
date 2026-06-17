@@ -1,42 +1,26 @@
 # Paladin Holy — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/holy-paladin-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/holy/paladin/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Herald of the Sun (primary); Lightsmith viable for Avenging Crusader / damage-leaning play.
+Herald of the Sun (99.6%)
 
-## Talent builds
-
-### Herald of the Sun Raiding - Standard
+## Talent build
 
 ```
-CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYBAMAAglxMzYGzMzGjxYWGbzMLmpJmlZMzMMMbZAYAYDsZWmxMLz2Mzs1AAAAsAAbMGDzMAAwMDzYMMA
-```
-
-### Herald of the Sun Raiding - Judgment Focus
-
-```
-(not extractable from page — paste manually from URL above)
-```
-
-### Lightsmith Raiding - Avenging Crusader
-
-```
-(not extractable from page — paste manually from URL above)
+CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYBAMAAglxMzYGzMzGjxYWGbzMLmpJGzYmZYY2yAwAG2AbsMjZWmtZmZrBAAAYBA2MMmxMAAgZGmxYYA
 ```
 
 ## Stat priority
 
-Refer to dedicated Stat Priority guide on Icy Veins; talent page does not list stats explicitly.
+Not published on archon talents page.
 
 ## Notes
 
-- Herald of the Sun is the default raid pick for sustained healing.
-- Judgment Focus variant emphasizes Truth Prevails + Empyrean Legacy rotation.
-- Lightsmith pairs naturally with Avenging Crusader cooldown windows.
-- Beacon of the Savior apex talent auto-places on the lowest health ally.
-- Divine Overload alternative shines on absorb-heavy encounters.
+- Alternative hero talent: Lightsmith (0.3%).
+- Core healing talents near 100% adoption: Holy Shock, Light of Dawn, Infusion of Light, Aura Mastery, Beacon of the Lightbringer.
+- Build emphasizes consistent healing output in Mythic raids.

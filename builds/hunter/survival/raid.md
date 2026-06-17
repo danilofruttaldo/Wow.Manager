@@ -1,36 +1,25 @@
 # Hunter Survival — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/survival-hunter-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/survival/hunter/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Pack Leader for both ST and AoE raid encounters; Sentinel listed as alternative for single-target only.
+Pack Leader (99.9%)
 
-## Talent builds
-
-### Pack Leader Single-Target
+## Talent build
 
 ```
-C8PAAAAAAAAAAAAAAAAAAAAAAMgxMGWgNYGGawixMzMzYZAAAAAAwMmZmhZMmxMYMNDAAAADAMWWmZmFzMzMegZGDYmNADjxM2MA
-```
-
-### Pack Leader Raid AoE
-
-```
-C8PAAAAAAAAAAAAAAAAAAAAAAMgxMGWgFYGGawiZmZmZYZAAAAAAwMmZmx2MGzYGWGTzAAAAwAAjllZmZxMzMYMGwMbAYGjZmNDA
+C8PAAAAAAAAAAAAAAAAAAAAAAMgxMG2gFYGGawiZmZmZYZAAAAAAwMmZmx2MGzYGWGTzAAAAwAAjllZmZxMzMYMGwMbAGGjZmNDA
 ```
 
 ## Stat priority
 
-(not extractable from page — paste manually from URL above)
+Not published on archon talents page.
 
 ## Notes
 
-- Survival exclusively plays Pack Leader; Sentinel exists but not currently competitive.
-- Swap Lethal Calibration to Twin Fangs on pure single-target fights.
-- Stampede after Takedown is the major AoE burst window.
-- Raptor Swipe (Apex) procs convert Raptor Strike into cleave on multi-target.
-- Howl of the Pack Leader procs spawn assist beasts off Kill Command.
+- Alternative hero talent: Sentinel (0.00% in recommended build data).
+- Based on 12,609 parses, top 50% of data over the last 14 days.

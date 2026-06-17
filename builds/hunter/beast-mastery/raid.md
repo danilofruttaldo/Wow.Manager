@@ -1,35 +1,24 @@
 # Hunter Beast Mastery — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/beast-mastery-hunter-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/beast-mastery/hunter/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Pack Leader for both single-target and raid AoE.
+Pack Leader (99.2%)
 
-## Talent builds
-
-### Pack Leader Single-Target
+## Talent build
 
 ```
-C0PAAAAAAAAAAAAAAAAAAAAAAAMmxwCsAzwQDbAAYG2GzsNzwMmZYYmxYmxMzYGzwMzYGzgx0MAAAAAmBAAgxMzMgZ2AbwsA2GA
-```
-
-### Pack Leader Raid AoE
-
-```
-C0PAAAAAAAAAAAAAAAAAAAAAAAMmxwGsAzwQDbAAYGPwyMzsYGmZmZGzMMzMmhZGzMDbzMjZMDLjpZAAAAAAAAAMzYAzsBgZWAbDA
+C0PAAAAAAAAAAAAAAAAAAAAAAAMmxwCsAzwQDbAAYG2GzsNzwMmZYYmxYmxMzYGzwMzYGzghmBAAAAwMAAAMzMzAMzGghZBsNA
 ```
 
 ## Stat priority
 
-(not extractable from page — paste manually from URL above)
+Not published on archon talents page.
 
 ## Notes
 
-- Pack Leader is preferred across all raid content; Dark Ranger viable but more complex.
-- Single-target build leans into sustained Kill Command and Bestial Wrath windows.
-- AoE build identical to M+ Pack Leader variant — Howl/Stampede driven cleave.
-- Maintain Barbed Shot uptime to keep Frenzy stacks on pet.
+- Alternative hero talent: Dark Ranger (0.71%).

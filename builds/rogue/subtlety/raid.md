@@ -1,35 +1,26 @@
 # Rogue Subtlety — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/subtlety-rogue-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/subtlety/rogue/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Trickster for raid single-target and cleave; Deathstalker viable on pure ST if Haste threshold is met.
+Trickster (96.4% usage)
 
-## Talent builds
-
-### Raid / Single-Target — Trickster
+## Talent build
 
 ```
-CUQAAAAAAAAAAAAAAAAAAAAAAAgx2MAAAAAwsMGLTMbbjxMjZwMzMzYMbDzYbbmZmZmZMYMz2AAAAwgxAGzmhBGYW0CtYDzAmZwMGA
-```
-
-### Single-Target — Deathstalker (alternative)
-
-```
-(not extractable from page — paste manually from URL above)
+CUQAAAAAAAAAAAAAAAAAAAAAAAgx2MAAAAAwsMGLTMbbjxMjZwMzMzYMbDzYbbmZmZmZMYMz2AAAAwgxAGzmhBGYWYhWshZAzMYGDA
 ```
 
 ## Stat priority
 
-Refer to companion stat-priority guide on Icy Veins; talent page focuses on talent selection only.
+Not published on archon talents page.
 
 ## Notes
 
-- Trickster favored in burst windows with Shadow Blades and Secret Technique.
-- Deathstalker requires ~1,100 Haste rating to perform optimally — hard to reach currently.
-- Use Deathstalker only on pure single-target encounters with no add waves.
-- Ancient Arts apex talent enables efficient Shadow Techniques utilization.
+- Alternative hero talent: Deathstalker (3.54% usage).
+- Featured talents: Find Weakness, Improved Shuriken Storm, Shadow Blades, Improved Backstab; Trickster utility (Smoke, So Tricky, Thousand Cuts, No Scruples).
+- Mythic raid, all bosses (VS / DR / MQD), 21,239 parses (top 50%).

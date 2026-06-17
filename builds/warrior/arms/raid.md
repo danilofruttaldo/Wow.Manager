@@ -1,35 +1,27 @@
 # Warrior Arms — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/arms-warrior-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/arms/warrior/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Slayer (primary, better on all but two raid encounters), Colossus (alternative for multi-target encounters)
+Slayer (80.4%)
 
-## Talent builds
-
-### Slayer — Single-Target Raid
+## Talent build
 
 ```
-CgcBAAAAAAAAAAAAAAAAAAAAAAA2MmZmZmZmxwMAAAAAAAegxsNYGAAAAAAAAmxMMzMzMzMzMDzsYGjFZhZmZmt2mZmBwwAQgZMYMD
-```
-
-### Colossus — Multi-Target Raid
-
-```
-CcEAAAAAAAAAAAAAAAAAAAAAAgZmxsMzMzYGAAAghphxwMbLzMzMjZGzMAAAAAGbmB2iBsZGDLwAzoNaMYBYGMGMbmtBzMAgZmhB
+CcEAAAAAAAAAAAAAAAAAAAAAAAzMzsMzYmZAAAAMMNMzYGWmZmZGMmZAAAAAMzyMDslxYZZgFwAmhJwMYDMzgZbMYmtBYmBgZMMA
 ```
 
 ## Stat priority
 
-Page does not enumerate a distinct raid stat priority; refer to Icy Veins Arms stat priority guide.
+Not published on archon talents page.
 
 ## Notes
 
-- Slayer build is single-target focused but retains surprising multi-target via Sweeping Strikes and Bladestorm.
-- Colossus build excels in encounters with large add waves via Cleave and Demolish.
-- Apex talent: Master of Warfare.
-- Flexible swaps: Fearless, Stance Mastery, mobility options per encounter.
+- Alternative hero talent: Colossus (19.5%).
+- Slayer key talents: Relentless Pursuit (96%), Culling Cyclone (98%), Fierce Followthrough (93%).
+- Colossus key talents: One Against Many (97%), Veteran Vitality (99.5%), Earthquaker (89.9%).
+- Data from 18,987 parses, top 50% of performers, last 14 days, Mythic difficulty.

@@ -1,42 +1,26 @@
 # Priest Shadow — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/shadow-priest-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/shadow/priest/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Voidweaver — recommended for M+ due to burst AoE potential.
+Voidweaver (65.5%)
 
-## Talent builds
-
-### Voidweaver AoE (M+)
+## Talent build
 
 ```
-CIQAAAAAAAAAAAAAAAAAAAAAAMMjZGAAAAAAAAAAAghZxMGLzMmZWmZYG2mZGzMzYDZGLmpBYmZGAIAz2stAmNGAYkxMzMmtxMYmBzED
-```
-
-### Voidweaver Delves
-
-```
-CIQAAAAAAAAAAAAAAAAAAAAAAMMDDAAAAAAAAAAAgxYxMGLzMmZWmZYG2mZGzMzMbIzYZjGgZmZAgAMbz2CY2YAmZGYMzMjZjZwMDmBD
-```
-
-### Archon M+ / Archon 3-Target / Archon Delves / Voidweaver 3-Target / Voidweaver M+
-
-```
-(not extractable from page — paste manually from URL above)
+CIQAAAAAAAAAAAAAAAAAAAAAAMjZMGAAAAAAAAAAAAjZZmxYZmxMz2MDjx2MzYmZGQGsNTjBmZmBACwsNbbgZjBAGMzMzMmtxMYmBzgB
 ```
 
 ## Stat priority
 
-Not listed on the builds page; refer to the dedicated Shadow Priest "Stats" guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Voidweaver excels in burst scenarios — well suited to M+ pulls.
-- "Invoked Nightmare vs Misery" choice defines playstyle; Misery preferred for M+ due to faster ramp.
-- Psychic Link remains valuable even when add spawns are limited.
-- Class talents emphasize mobility (Angelic Feather, Body and Soul) and utility (Dispel Magic, Leap of Faith).
-- Spell Warding (4% magic reduction) is the strongest defensive option.
+- Alternative hero talent: Archon (34.4%).
+- Most popular Voidweaver picks: Dark Energy (99.81%), Darkening Horizon (98.89%), Embrace the Shadow (69.47%).
+- Based on 45,980 parses from keys +7 and above over the last 14 days.

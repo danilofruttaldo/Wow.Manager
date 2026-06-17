@@ -1,28 +1,24 @@
 # Warlock Destruction — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/destruction-warlock-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/destruction/warlock/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Diabolist for single-target raid encounters.
+Hellcaller (70.97%)
 
-## Talent builds
-
-### Single-Target (Diabolist)
+## Talent build
 
 ```
-CsQAAAAAAAAAAAAAAAAAAAAAAwMzMzoZjhZmZmlZzMzMLGjFzAAgZmxMzsAGzYYBGYbYjGLMAAwYgxGAmZAMzYMAAAMzMzAAYMM
+CsQAAAAAAAAAAAAAAAAAAAAAAwMmZGNbM2mZmZWmlZmZmFjZbxMAAYGjZmZxCMwsY0YGAzG2YAAgxAsBAMzgZmxYAAAYmZGAAGDD
 ```
 
 ## Stat priority
 
-Intellect > Haste > Crit > Mastery > Versatility
+Not published on archon talents page.
 
 ## Notes
 
-- Maximizes Chaos Bolt damage output and shard generation.
-- Uses Soul Fire and Inferno for resource management.
-- Best for encounters with single targets or light stacking.
+- Alternative hero talent: Diabolist (29.03%).

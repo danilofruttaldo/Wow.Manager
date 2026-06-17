@@ -1,29 +1,26 @@
 # Monk Mistweaver — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/mistweaver-monk-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/mistweaver/monk/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Conduit of the Celestials — dominant choice across all content types.
+Conduit of the Celestials (97.1%)
 
-## Talent builds
-
-### Rising Mist Raid (Conduit of the Celestials)
+## Talent build
 
 ```
-C4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM2mB2sYGzMLzYDzMDzsstNzYhZ0MmBMYwY2mZmZY2GMMLmAAAAAAgFLzsMbzMAAwAGgZAjhxiMmBA
+C4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAghx2MwmFzYmZZGbYmZYmltlZGLMjmxMgBDGzyMzMDz2gBLmAAAAAAgFLzsMbzMAAwAGgZAjhxiMmBA
 ```
 
 ## Stat priority
 
-Not listed on the talents page; consult the dedicated Stat Priority guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Maintain a large stack of Renewing Mists during Invoke windows.
-- Aggressively spot heal with Vivify to consume the Renewing Mist bed.
-- Rising Mist is the engine; align cooldowns to overlap with raid damage.
-- Master of Harmony remains a niche alternative, but Conduit of the Celestials is the default raid choice.
+- Alternative hero talent: Master of Harmony (2.83%).
+- Conduit tree key picks: Temple Training (99.7%), Restore Balance (98.3%), Jade Sanctuary (87.7%).
+- Based on 36,834 parses (top 50%, last 14 days). HPS ~214.5k / DPS ~18.8k.

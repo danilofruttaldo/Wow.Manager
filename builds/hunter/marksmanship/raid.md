@@ -1,35 +1,24 @@
 # Hunter Marksmanship — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/marksmanship-hunter-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/marksmanship/hunter/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Sentinel for cleave-heavy fights; Dark Ranger for pure single-target encounters like Vorasius.
+Sentinel (72.5%)
 
-## Talent builds
-
-### Dark Ranger Single-Target
+## Talent build
 
 ```
-C4PAAAAAAAAAAAAAAAAAAAAAAYzsMwAGwMsFYWAAAAAAAAAmxMmhZMzMmBjpZMzM22YMzyMzMzMzywsMYAAAGzMzMzMDQYWMAbMDA
-```
-
-### Sentinel Raid Cleave
-
-```
-C4PAAAAAAAAAAAAAAAAAAAAAAwCMwMGNWGAzgNAAAAAAAAgZMzMDz4BmZMDGTzYwsttNzMMzMzMzsgZZYmBAAMzMzAgZGbMMAbMzYA
+C4PAAAAAAAAAAAAAAAAAAAAAAwCMwMGNWGAzgNAAAAAAAAgZMjZwYmZMDGTzYwsttZmZMzMzMzsgZZYmBAAMzMzAgZGbbGGgNmZM
 ```
 
 ## Stat priority
 
-(not extractable from page — paste manually from URL above)
+Not published on archon talents page.
 
 ## Notes
 
-- Pick hero talent per encounter: Sentinel for cleave, Dark Ranger for pure ST.
-- Dark Ranger ST revolves around Black Arrow proc prioritization.
-- Sentinel uses Sentinel's Mark in place of Spotter's Mark for stronger cleave damage.
-- Align Trueshot with major raid burst windows.
+- Alternative hero talent: Dark Ranger (27.4%).

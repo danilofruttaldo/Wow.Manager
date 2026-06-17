@@ -1,36 +1,27 @@
 # Paladin Retribution — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Method.gg (fallback — Icy Veins page renders builds via JS widget)
-- **URL:** https://www.method.gg/guides/retribution-paladin/talents
-- **Fallback URL:** https://www.icy-veins.com/wow/retribution-paladin-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/retribution/paladin/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Templar — recommended primary raid pick; Herald of the Sun viable alternative.
+Templar (90.79%)
 
-## Talent builds
-
-### Templar Single Target (Raid)
+## Talent build
 
 ```
-CYEAAAAAAAAAAAAAAAAAAAAAAAAAAMAgRz22MzsMMzAAAAAAwoMLGmZsNMbDzsNjxYmhZsx2wAAQmZabmZbGAwGgBAjZYgZMmNsMDGGDDG
-```
-
-### Herald of the Sun Single Target (Raid)
-
-```
-CYEAAAAAAAAAAAAAAAAAAAAAAAAAAMAAaW2mZmlhZGAAAAAAGlZxwMjthZbYmtZMGzMMjF2GGwsMbzMzWDCAAYBwAgxMMDmxYWAmZGGDDG
+CYEAAAAAAAAAAAAAAAAAAAAAAAAAAAAQz22MzsMMzAAAAAAwoMmhZGbDz2wMbzYMmZYGbsNMAAwMTbzMbzAA2AMAYMDzgZMmNsMDGGzYwA
 ```
 
 ## Stat priority
 
-Refer to the Method.gg stats page for current Retribution priority.
+Not published on archon talents page.
 
 ## Notes
 
-- Templar Single Target is the default raid pick; can swap Execution Sentence for Radiant Glory (removing 1 point from Heart Of The Crusader, adding to Sanctify) for an enhanced 30s burst window.
-- Light Within apex prioritizes using Blade of Justice on procs for a sizeable damage increase.
-- Herald of the Sun ST is a viable alternative for fights favoring Dawnlights and Hammer of Wrath amplification.
-- Utility talents (Cleanse Toxins, Empyreal Ward, defensives) are swappable per boss mechanic.
+- Alternative hero talent: Herald of the Sun (9.29%) — Gleaming Rays (95.20%), Blessing of An'she (98.50%), Will of the Dawn (93.99%).
+- Core damage: Blade of Justice, Divine Storm, Crusade.
+- Near-universal (90%+): Hammer of Wrath, Greater Judgment, Divine Toll.
+- Data from top 50% over 14 days (49,662 parses).

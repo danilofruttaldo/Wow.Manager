@@ -1,42 +1,25 @@
 # Shaman Restoration — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/restoration-shaman-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/restoration/shaman/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Totemic — primary recommendation for dungeons (frequent instant casts via Surging Totem repositioning).
+Totemic (94.4%)
 
-## Talent builds
-
-### Totemic Dungeons (M+)
+## Talent build
 
 ```
-CgQAAAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAzMzMLLLDzMGzMzMDzYBWgZsox2AYGYzMMYWGzMTz2yMziZMLsMjZGDmlBAAAmZGMzAADG
-```
-
-### Farseer Mythic+
-
-```
-CgQAAAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAjZMW2mZmZmZmZmxwYxMLwAGwswEYsYGzgZbmZGNbLzMMzMLsYmZGDmlBAAAYGAMzgZwA
-```
-
-### Farseer Delves
-
-```
-CgQAAAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAjZMW2mZmZmZmZmxwYxMLwAGwswEYsYGzgZbmZGNbLzMMzMLsYmZGDmlBAAAYGAMzgZwA
+CgQAAAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAjZmZZbZMzMzYmZGzYYB2gZsox2AYGYDzMY2mZMTzyyMDzY2YxYmxwysMAAYAMzgZGAGDG
 ```
 
 ## Stat priority
 
-Not explicitly listed for M+ vs Raid in the source builds page; refer to the dedicated Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Include any utility needed for specific encounters or dungeons.
-- Totemic enables frequent instant casts via Surging Totem repositioning.
-- Ancestral Vigor reduces burst damage impact on allies.
-- Chain Heal generates free casts through Lively Totems with Healing Stream Totem.
-- Healing Tide Totem synergizes with Totemic via Splitstream and Primal Catalyst.
+- Alternative hero talent: Farseer (5.6%).
+- Based on 177,308 parses across keys +7 over 14 days; recommended build reaches +23 keystone, ~94.7k HPS.

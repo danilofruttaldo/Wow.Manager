@@ -1,36 +1,26 @@
 # Evoker Devastation — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Method.gg (fallback — Icy Veins page renders builds via JS widget)
-- **URL:** https://www.method.gg/guides/devastation-evoker/talents
-- **Fallback URL:** https://www.icy-veins.com/wow/devastation-evoker-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/devastation/evoker/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Scalecommander for general M+ cleave; Flameshaper as alternative for sustained dot-cleave / ST priority pulls.
+Scalecommander (64.464% usage)
 
-## Talent builds
-
-### Scalecommander Mythic+ & Cleave
+## Talent build
 
 ```
-CsbBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgZmZgZ8AzgBGGjZaMzMNjx2MmZmZGzMzAmZmxYmZZmZgBGDWglxox2AyMIYDzgZGMMA
-```
-
-### Flameshaper Mythic+
-
-```
-CsbBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgZGjZmZmZGMwMGDTDzMZMWGmZGGzMzAmZmZGzMLzMDmBmxMwCYDMDTgtglhZAmZGG
+CsbBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMDgZGmhxMzYMTMzMNDz2MmZmZmZmZGAzMzYmxYGYgxgFYZMasNAmBgNMDmZAG
 ```
 
 ## Stat priority
 
-Haste > Crit ~ Mastery > Versatility. Refer to the Method.gg stats page for fine-tuned values.
+Not published on archon talents page.
 
 ## Notes
 
-- Scalecommander is recommended for superior damage in most M+ scenarios via Mass Disintegrate and Deep Breath windows.
-- Flameshaper variant excels on sustained dot-cleave; rotation revolves around Fire Breath uptime and Disintegrate / Pyre consumption.
-- Core talents: Animosity, Tyranny, Causality, Charged Blast.
-- Rising Fury apex talent smooths Dragonrage windows — maintain stacks throughout the burst.
+- Alternative hero talent: Flameshaper (35.536% usage).
+- Scalecommander featured talents: Extended Battle, Hardened Scales, Slipstream.
+- Reference build measured at ~149.0k DPS around +20 keystone level.

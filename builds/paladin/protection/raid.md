@@ -1,29 +1,27 @@
 # Paladin Protection — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/protection-paladin-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/protection/paladin/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Templar — primary recommendation for raid single-target burst windows.
+Templar (87.0%)
 
-## Talent builds
-
-### Single-Target - Templar
+## Talent build
 
 ```
-CIEAAAAAAAAAAAAAAAAAAAAAAsNzMYWGLjZMjZbZMzwsMbzYAAGAAAAAA00MDzYmhxMbtBgBAMYbAAgZm2mZWmBAYzADYwYGGDAwyMgZmBMA
+CIEAAAAAAAAAAAAAAAAAAAAAAsZm5BYWGLzMjZGbLjxYmFbzYAAGAAAAAAkmZWMjZmxYmt2AwAGwgNAAwMTbzMLzAAsBmBAjZYMAALzAMzAG
 ```
 
 ## Stat priority
 
-Prioritize survivability via armor and block mechanics; secondary focus on Haste for Holy Power generation and cooldown reduction.
+Not published on archon talents page.
 
 ## Notes
 
-- Glory of the Vanguard apex drives damage through Avenger's Shield buff synergy.
-- Templar synergizes with Divine Toll and Hammer of Light burst every 60s.
-- Lightsmith remains a viable alternative with Holy Bulwark group utility.
-- Tune individual talents per encounter (movement, magic damage profile, etc.).
+- Alternative hero talent: Lightsmith (12.9%).
+- Within Templar: Unrelenting Charger (98.6%), Endless Wrath (91.5%).
+- Core spec talents ~99.8%: Avenger's Shield, Blessed Hammer, Ardent Defender.
+- Flexible: Consecration in Flame (70.4%), Undying Embers (50%), Sanctuary (49.2%) per encounter.

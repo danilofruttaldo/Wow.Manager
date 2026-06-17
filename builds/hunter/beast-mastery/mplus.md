@@ -1,35 +1,25 @@
 # Hunter Beast Mastery — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/beast-mastery-hunter-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/beast-mastery/hunter/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Pack Leader for most players; Dark Ranger marginally ~2% better for highest keys but more complex.
+Pack Leader (75.375%)
 
-## Talent builds
-
-### Pack Leader Mythic+
+## Talent build
 
 ```
-C0PAAAAAAAAAAAAAAAAAAAAAAAMmxwGsAzwQDbAAYGPwyMzsYGmZmZGzMMzMmhZGzMDbzMjZMDLjpZAAAAAAAAAMzYAzsBgZWAbDA
-```
-
-### Dark Ranger Mythic+
-
-```
-C0PAAAAAAAAAAAAAAAAAAAAAAYzsNwAGwMsFYsAAgZGLzMDzwMzMYGzMzwMmZGzMDbzMjZMDLjpZAAAAAMDAAAMzYYmBIwMLgtBA
+C0PAAAAAAAAAAAAAAAAAAAAAAAMmxwCsAzwQDbAAYGPwyMzsYGmZmZGzMMzMmhZGzMzgZGzYGMmmBAAAAAAAAMzYMgZ2AYxsA2GA
 ```
 
 ## Stat priority
 
-(not extractable from page — paste manually from URL above)
+Not published on archon talents page.
 
 ## Notes
 
-- Pack Leader generates beast summons and Stampede AoE via Howl proc.
-- Dark Ranger adds Black Arrow as an extra damage button with proc management.
-- Balance Kill Command spacing with filler abilities (Barbed Shot, Cobra Shot).
-- Both builds remain flexible between single-target and AoE depending on pull.
+- Alternative hero talent: Dark Ranger (24.625%, ~158.1k DPS).
+- Pack Leader build ~171.9k DPS across key levels +7 to +24.

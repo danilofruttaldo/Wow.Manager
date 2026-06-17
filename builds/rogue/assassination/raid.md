@@ -1,41 +1,26 @@
 # Rogue Assassination — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/assassination-rogue-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/assassination/rogue/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Fatebound is the primary recommendation for raid.
+Fatebound (99.3% usage)
 
-## Talent builds
-
-### Fatebound Pure Single Target
+## Talent build
 
 ```
-CMQAAAAAAAAAAAAAAAAAAAAAAYmlxsZwAAAAAAzyglZAAAAAAttNzMzMzMGzMzMbzsMzMDmZmZmxMDjBwALwMGNmFALDYzAgZmBD
-```
-
-### Fatebound Raid (Recommended)
-
-```
-CMQAAAAAAAAAAAAAAAAAAAAAAYmlZmNDGAAAAAYWGsNDAAAAAottZmZmZmxYmZmZbmlZG8AzMzMjhZGjBwALwMGNmNALDYzYDwMDjB
-```
-
-### Deathstalker Raid
-
-```
-(not extractable from page — paste manually from URL above)
+CMQAAAAAAAAAAAAAAAAAAAAAAYmlxsZwAAAAAAzyglZAAAAAAttNzMzMzMGzMzMbzsMzMDzMzMzMMDzMAGYBmxoxsAYbAbGAMzAD
 ```
 
 ## Stat priority
 
-Refer to companion stat-priority guide on Icy Veins; talent page focuses on talent selection only.
+Not published on archon talents page.
 
 ## Notes
 
-- Apex talent Implacable smooths Energy recharge and boosts Bleed/Nature damage and Kingsbane.
-- Fatebound is more forgiving than Deathstalker with similar or better damage.
-- Deathstalker remains an option for pure priority-target fights with stable target uptime.
-- Pick Pure Single Target on encounters without any cleave opportunities.
+- Alternative hero talent: Deathstalker (0.61% usage).
+- Featured Fatebound talents: Overflowing Purse (99.7%), Tempted Fate (63.1%).
+- Mythic raid, all bosses (VS / DR / MQD), average 130.4k DPS.

@@ -1,33 +1,26 @@
 # Death Knight Unholy — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/unholy-death-knight-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/unholy/death-knight/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Rider of the Apocalypse for both M+ and Raid; San'layn is an alternative variant focused on minions.
+Rider of the Apocalypse (99.8%)
 
-## Talent builds
-
-### Rider of the Apocalypse — Mythic+/Delves
+## Talent build
 
 ```
-CwPAAAAAAAAAAAAAAAAAAAAAAAYmhZMzMDz2MzMTzmZGjZAAAAAAAAgZGzYAwyMmZ2MzYMDYzsZYgBmNGasgBMDAjZmxMAzMzYMA
+CwPAAAAAAAAAAAAAAAAAAAAAAAYmhZMjBzyYmZa2mZGzMjBAAAAAAAgZGDDAWmxMzmZGzMDYzsZYgBmNGasgBMDAjZmxMAzMjZMA
 ```
-
-### San'layn — Mythic+ Minion
-
-(not extractable from page — paste manually from URL above; selectable via the interactive hero-talent toggle on the page)
 
 ## Stat priority
 
-Stat priority not detailed in the talent page; refer to the dedicated stats page on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- M+ build sacrifices some single-target damage to gain AoE capability.
-- Blightburst provides quality-of-life via effectively infinite plague duration.
-- Apex talent Forbidden Knowledge transforms abilities and synergizes with minion builds.
-- San'layn lags in ST and is not recommended for raid, but works as a minion-flavored M+ alternative.
+- Alternative hero talent: San'layn (0.1%).
+- Unholy tree popular picks: Outbreak, Scourge Strike, Sudden Doom, Dark Transformation, Festering Scythe.
+- Based on parses from keys +7 and above over the last 14 days (255,033 parses, max +24 keystone).

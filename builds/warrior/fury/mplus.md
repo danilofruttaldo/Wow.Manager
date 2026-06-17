@@ -1,47 +1,28 @@
 # Warrior Fury — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/fury-warrior-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/fury/warrior/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 > **Player note (2026-06-05, Stantu):** spec attiva dopo lo switch da Arms; **Mountain Thane** è il loadout di default per le key (rage gen + AoE sostenuto su trash). Usa Thunder Clap al posto di Whirlwind per il cleave — la macro `WW/ThunderClap cleave` lo fa già da sola. Slayer solo per key molto boss-heavy.
 
 ## Recommended hero talent
 
-Mountain Thane (primary), Slayer (alternative)
+Mountain Thane (65.5%)
 
-## Talent builds
-
-### Mountain Thane — Mythic+ Dungeons
+## Talent build
 
 ```
-CgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgGDjZMz2yMzMjZmxMjZMjZWmZGjZmlxMzAAAhB2glFjGzAysgZsAYGMGAMzAYYmZGMYA
-```
-
-### Mountain Thane — Delves
-
-Page states "near identical talent builds most of the time" — reuse the M+ string above.
-
-```
-CgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgGDjZMz2yMzMjZmxMjZMjZWmZGjZmlxMzAAAhB2glFjGzAysgZsAYGMGAMzAYYmZGMYA
-```
-
-### Slayer — Mythic+ Dungeons (alternative)
-
-Page does not publish a separate Slayer M+ string; reuses the Slayer single-target raid build.
-
-```
-CgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgGDDzMjlZmZmZYMzYGzYmlZmxYmZZMzMAAQYgNYZxoxMgMLYGLAmZjZbAwMDghZmZwgB
+CgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgGDjZMz2yMzMjZmxMjZMjZWmZGjZmlxMzAAAhB2glFjGzAYWwMWAMDGDAmZAMMzMDGM
 ```
 
 ## Stat priority
 
-Page does not enumerate a distinct stat priority; refer to Icy Veins Fury stat priority guide.
+Not published on archon talents page.
 
 ## Notes
 
-- Mountain Thane provides strong sustained, consistent multi-target — favored for trash-heavy keys.
-- Mountain Thane uses Thunder Clap instead of Whirlwind.
-- Apex: Rampaging Berserker stacks Berserk via Rampage casts.
-- Slayer focuses on Execute and Sudden Death procs — pick for boss-focused keys.
+- Alternative hero talent: Slayer (34.5%).
+- Recommended build reaches +21 keystone at 162.3k DPS.
+- Notable picks: Leeching Strikes (82.3% in top 100), Field Dressing (76.9%), Storm Bolt (68.5%).

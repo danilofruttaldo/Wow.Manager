@@ -1,35 +1,27 @@
 # Demon Hunter Vengeance — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/vengeance-demon-hunter-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/vengeance/demon-hunter/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Annihilator is the recommended raid/single-target hero tree; Aldrachi Reaver trades damage for sustain.
+Annihilator (97.9%)
 
-## Talent builds
-
-### Annihilator Single-Target (Raid)
+## Talent build
 
 ```
-CUkAAAAAAAAAAAAAAAAAAAAAAAAMjZmZMzMjMzMDziZmZMMjZGzYGzMDzwM2MzsNGAAAAAAAAwMzYDAAAADGzMzMbtNzMDAMAAAAG
-```
-
-### Aldrachi Reaver Single-Target (Raid)
-
-```
-(not extractable from page — paste manually from URL above)
+CUkAAAAAAAAAAAAAAAAAAAAAAAAMjZmZMzMkZmBziZMDmZMzYGzMzYYmlZGbmZ2GDAAAAAAAAYmZsBAAAgBzMzMzs12MzMAwAAAAYA
 ```
 
 ## Stat priority
 
-Stat priorities are not specified per build in the source guide; consult the URL for the general Vengeance stat priority section.
+Not published on archon talents page.
 
 ## Notes
 
-- No dedicated separate Raid builds exist beyond these single-target variants; refer to M+ build with minor adjustments if needed.
-- Annihilator Single-Target focuses offensive value with cooldown-centred burst around Metamorphosis, synergising Fiery Brand with Voidfall and Untethered Rage procs.
-- Aldrachi Reaver Single-Target is behind in pure single-target damage but offers enhanced self-sustain through healing mechanics.
-- All builds use Untethered Rage apex talent for extra Metamorphosis charges and Soul Fragment damage.
+- Alternative hero talent: Aldrachi Reaver (2.02% usage).
+- Within Annihilator: State of Matter 75.48%, Harness the Cosmos 99.81%.
+- Within Aldrachi Reaver: Evasive Action 51.15%, Incorruptible Spirit 84.48%, Keen Engagement 75.18%.
+- Sample: 6,457 parses from top 50% performers over 14 days.

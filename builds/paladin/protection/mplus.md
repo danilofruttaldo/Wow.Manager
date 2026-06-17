@@ -1,47 +1,26 @@
 # Paladin Protection — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/protection-paladin-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/protection/paladin/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Templar — high burst AoE damage with a synergistic 1-minute rotation cycle.
+Lightsmith (80.1%)
 
-## Talent builds
-
-### Weekly Keys - Templar
+## Talent build
 
 ```
-CIEAAAAAAAAAAAAAAAAAAAAAAsZMMzyYZmZMzMLLjxwsMLzYAAAAAAAAgmmZWMjZGGmt2AwAGwgtBAAmZabmZZGAgNGMAYMDjBAYZGwMzAG
-```
-
-### High Keys - Templar
-
-```
-CIEAAAAAAAAAAAAAAAAAAAAAAsNj5BYWmHYZMjZmZZZMzwsYZGDAAAAAAAA00MziZMzwwsFAMgBMYbAAgZm2mZWmBAYzMYAwYGGDAwyMgZmBMA
-```
-
-### Delves - Templar
-
-```
-CIEAAAAAAAAAAAAAAAAAAAAAAsZMMzyYZmZMzMLLjxwsMLzYAAAAAAAAgmmZWMjZGGmt2AwAGwgtBAAmZabmZZGAgNGMAYMDjBAYZGwMzAG
-```
-
-### Beginner-Friendly - Lightsmith
-
-```
-(not extractable from page — paste manually from URL above)
+CIEAAAAAAAAAAAAAAAAAAAAAAsNjBzyYbMjZmZZZMzwsMLzYAAGAAAAAA00MzyMjZwwDs1GAGYAzgNAAAAYmZZbplZGLmhZAwYGGDAmZAwMDYA
 ```
 
 ## Stat priority
 
-Prioritize survivability via armor and block mechanics; secondary focus on Haste for Holy Power generation and cooldown reduction.
+Not published on archon talents page.
 
 ## Notes
 
-- Glory of the Vanguard apex drives damage through Avenger's Shield buff synergy.
-- Templar lines up with Divine Toll and Hammer of Light burst every 60s.
-- Lightsmith offers group utility via Holy Bulwark shields with a simpler rotation.
-- M+ builds vary with key level and Holy Power comfort.
+- Alternative hero talent: Templar (19.8%).
+- Core talents at 95-100% usage: Lay on Hands, Auras of the Resolute, Divine Toll, Sanctified Plates.
+- Situational flexibility: Cleanse Toxins (60%), Empyreal Ward (74%) per dungeon mechanics.

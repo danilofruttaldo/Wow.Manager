@@ -1,35 +1,26 @@
 # Monk Brewmaster — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/brewmaster-monk-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/brewmaster/monk/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Master of Harmony — consistent single-target damage and improved defensives, best fit for raid.
+Shado-Pan (84.6%)
 
-## Talent builds
-
-### Defensive (Master of Harmony)
+## Talent build
 
 ```
-CwQAAAAAAAAAAAAAAAAAAAAAAAAAAgZbzYGPwYWM2mxMDAAAAAAALLYEmBmhxmZMmZmZMzywMmZZYZzy2sMMLAAwysMtMbzsMAAAAzwGYmBMNGAAwA
-```
-
-### Offensive / Advanced (Shado-Pan)
-
-```
-(not extractable from page — paste manually from URL above)
+CwQAAAAAAAAAAAAAAAAAAAAAAAAAAwMbbGzYGWmxGmZMAAAAAAALLYEzMwMMzGDmZmZY2GmxMLDLb22GzYWAAgNAAAwsNLNzMziZYDgZGmGDAAYA
 ```
 
 ## Stat priority
 
-Not listed on the talents page; consult the dedicated Stats guide on Icy Veins for the current priority.
+Not published on archon talents page.
 
 ## Notes
 
-- Master of Harmony emphasizes single-target consistency, fitting most raid encounters.
-- Apex talent Bring Me Another saves Energy and boosts Keg Smash damage via Empty Barrels.
-- Celestial Brew vs Celestial Infusion: pick spike absorption vs sustained mitigation per fight.
-- Offensive Shado-Pan variant is available for damage-heavy raid scripts when defensives are not the bottleneck.
+- Alternative hero talent: Master of Harmony (15.3%).
+- Core spec talents at ~100% adoption: Keg Smash, Purifying Brew, Shuffle, Black Ox Brew, Dragonfire Brew, Blackout Combo, Heart of the Ox, Bring Me Another.
+- Empty the Cellar at 65.5% adoption in top builds.

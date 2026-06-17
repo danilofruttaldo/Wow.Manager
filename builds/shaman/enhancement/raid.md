@@ -1,35 +1,25 @@
 # Shaman Enhancement — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/enhancement-shaman-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/enhancement/shaman/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Totemic — provides the strongest single-target option while also bringing cleave and frequent burst.
+Stormbringer (56.0%)
 
-## Talent builds
-
-### Totemic Raid / Single-Target
+## Talent build
 
 ```
-CcQAAAAAAAAAAAAAAAAAAAAAAMzMjZmZmZmZmZmZmZGAAAAAAAAAYB2gZsox2AYGwGAzyMmZGLLzAzMbsMzMzwwYGAADwYmJmZAgxA
-```
-
-### Stormbringer Raid / Single-Target
-
-```
-(not extractable from page — paste manually from URL above)
+CcQAAAAAAAAAAAAAAAAAAAAAAMzMzgZmZmZmhZmZAAAAAAAAAsBYzMG2gFYGGawCAz2MmxYZZGLMzsNWmZmZYsMmBAYGGzMMCMzgBjB
 ```
 
 ## Stat priority
 
-Not explicitly listed for M+ vs Raid in the source builds page; refer to the dedicated Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Totemic avoids Ascendance to keep Doom Winds synced with Surging Totem.
-- Always pick Earthsurge in the Totemic hero tree for Splitstream efficiency.
-- All four Storm Unleashed points recommended for Crash Lightning integration.
-- Totemic momentum provides priority damage with strong cleave capability.
+- Alternative hero talent: Totemic (44.0%) — totem-based gameplay, fairly close split with Stormbringer.
+- Data across all boss encounters, Mythic difficulty.

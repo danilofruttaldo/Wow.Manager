@@ -1,35 +1,26 @@
 # Monk Windwalker — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/windwalker-monk-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/windwalker/monk/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Shado-Pan — baseline Windwalker with no extra mechanics; increases core kit power. Best for all content.
+Shado-Pan (99.5%)
 
-## Talent builds
-
-### Mythic+ / Delves (Shado-Pan)
+## Talent build
 
 ```
-C0QAAAAAAAAAAAAAAAAAAAAAAMzYMYMYbmZ2mxAAAAAAAAAAAALDzEmhhBMjhZmZGmthZYWmJAgFzsNGGzMDAgNAYWmlmZmZBYYgZGAYZMEDYA
-```
-
-### Alternative M+ (Conduit of the Celestials)
-
-```
-(not extractable from page — paste manually from URL above)
+C0QAAAAAAAAAAAAAAAAAAAAAAMzYMYMYbmZ2mxAAAAAAAAAAAALDzEmhhBMMjZmZGmNMDzyMBAsYmtxwYmZAAsBAzys0MzMLAjZgZGAGLDgBM
 ```
 
 ## Stat priority
 
-Not listed on the talents page; consult the dedicated Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Shado-Pan adds Flurry Strikes damage during cooldowns like Fists of Fury and Rising Sun Kick.
-- No complex mechanics with Shado-Pan — straightforward priority playstyle.
-- Conduit variant requires managing buff windows from Heart of the Jade Serpent for optimal damage.
-- Apex talent Tigereye Brew provides crit scaling without changing the rotation.
+- Alternative hero talent: Conduit of the Celestials (0.4%).
+- Shado-Pan tree key picks: Pride of Pandaria (99.7%), Whirling Steel (96.9%), Combat Stance (83.7%).
+- Based on 31,833 parses (keys 7+, last 14 days). DPS 168.4k. Max key +21.

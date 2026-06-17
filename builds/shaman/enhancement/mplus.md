@@ -1,41 +1,26 @@
 # Shaman Enhancement — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/enhancement-shaman-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/enhancement/shaman/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Totemic is the primary recommendation; Stormbringer viable at higher key levels with organized groups.
+Stormbringer (80.8%)
 
-## Talent builds
-
-### Totemic Mythic+ / AoE
+## Talent build
 
 ```
-CcQAAAAAAAAAAAAAAAAAAAAAAMzMjZmZmZmZmZmZGzAAAAAAAAAALwGMjFN2GAzA2AYWmxMGLLGYmZbsMzMzMYZMDAAwYMjYmBYwYA
-```
-
-### Totemic Delves
-
-```
-CcQAAAAAAAAAAAAAAAAAAAAAAMzMjZmZmZmZmZmZGzAAAAAAAAAALwGMjFN2GAzA2AYWmxMGLLzAzMGLmZmZMWYGAADMGzMxMDAMGA
-```
-
-### Stormbringer Mythic+ / High Key
-
-```
-(not extractable from page — paste manually from URL above)
+CcQAAAAAAAAAAAAAAAAAAAAAAMzMzgZmZmZmhZmZAAAAAAAAAsBYzMG2gFYGGawCAz2MmxYZZGYmZbsMzMzwYZMDAwMMmZYmAzMYwYA
 ```
 
 ## Stat priority
 
-Not explicitly listed for M+ vs Raid in the source builds page; refer to the dedicated Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Stormbringer requires organized routing for 2-minute cooldown alignment.
-- Totemic's 1-minute burst timers adapt to varied group compositions.
-- Capacitor Totem can reach 30-second cooldown reduction with full investment.
-- Both trees allow dungeon-specific utility adjustments for CC and cleanse needs.
+- Alternative hero talent: Totemic (19.2%).
+- Stormbringer core talents: Supercharge (98.9%), Electroshock (97.2%), Nature's Protection (96.7%).
+- Based on 54,318 parses from keys +7 and above over 14 days; recommended build reaches +23 keystone level.

@@ -1,37 +1,27 @@
 # Paladin Retribution — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Method.gg (fallback — Icy Veins page renders builds via JS widget)
-- **URL:** https://www.method.gg/guides/retribution-paladin/talents
-- **Fallback URL:** https://www.icy-veins.com/wow/retribution-paladin-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/retribution/paladin/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Templar — recommended for both Mythic+ and Raid, superior gameplay experience over Herald of the Sun.
+Templar (97.80%)
 
-## Talent builds
-
-### Templar (Raid Cleave & Mythic+)
+## Talent build
 
 ```
-CYEAAAAAAAAAAAAAAAAAAAAAAAAAAMAAa22mZmlxYmBAAAAAwMlZxwMjthZbYmtZMGjhZsxGGAAyMTbzMbzAA2AMAYMDDMzMzshlZwwYYwA
-```
-
-### Herald of the Sun (Mythic+)
-
-```
-CYEAAAAAAAAAAAAAAAAAAAAAAAAAAMAgRz22MzsMmxMAAAAAAmpMLGmZsNMbDzsNjxYMMjF2wAmlZbmZ2aQAAALAGAMmhBmxMzGwMzwYYwA
+CYEAAAAAAAAAAAAAAAAAAAAAAAAAAAAQz22MzsMGzMAAAAAAmpMLzwMjthZbYmtZMGjhZsxGAAAzMtNzsNDAYDwAgxMMwMzMzGWmBDjZMYA
 ```
 
 ## Stat priority
 
-Refer to the Method.gg stats page for current Retribution priority.
+Not published on archon talents page.
 
 ## Notes
 
-- Templar is the default M+ pick; Hammer of Light after Wake of Ashes provides strong AoE burst.
-- Tempest Of The Lightbringer can swap to Jurisdiction for single-target priority.
-- Execution Sentence trades for Radiant Glory depending on funnel needs.
-- Class tree utility (Cleanse Toxins, Empyreal Ward) is swappable per dungeon mechanics.
-- Herald of the Sun is a viable alternative for cleave content via Dawnlights and Hammer of Wrath amplification.
+- Alternative hero talent: Herald of the Sun (2.22%).
+- Build emphasizes mobility/survivability: Cavalier, Divine Toll, Crusade capstone.
+- Core damage: Blade of Justice, Divine Storm, Final Verdict.
+- Data based on all keys level 7+ over the last 14 days (204,973 parses).

@@ -1,35 +1,26 @@
 # Rogue Outlaw — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/outlaw-rogue-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/outlaw/rogue/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Trickster is the primary recommendation, offering 10%+ higher DPS than Fatebound.
+Trickster (97.3% usage)
 
-## Talent builds
-
-### Outlaw AoE — Trickster
+## Talent build
 
 ```
-CQQAAAAAAAAAAAAAAAAAAAAAAAgx2MYmZmZmtZmZMzMzsBmZbaZw2MAAAAAgZbbmZGmZmZGzMzyAAAAwYAwYWMMwAzCL0CbMAzMYgB
-```
-
-### Outlaw Delves — Trickster
-
-```
-CQQAAAAAAAAAAAAAAAAAAAAAAAgx2MYmZmZmtZmZMzMzsBmZbaZw2MAAAAAgZbbmZGmZmZGzMzyAAAAwYAwYWMMwAzCL0CbMAzMYgB
+CQQAAAAAAAAAAAAAAAAAAAAAAAgx2MYmZmZmtZmZMzMzsBmZbaZw2MAAAAAAbLzMzwMzMzYmZ2GAAAAGDAGzihBGYWYhWYjBYmBzgB
 ```
 
 ## Stat priority
 
-Refer to companion stat-priority guide on Icy Veins; talent page focuses on talent selection only.
+Not published on archon talents page.
 
 ## Notes
 
-- Trickster excels with frequent Blade Flurry cleave opportunities in dungeons.
-- Gravedigger apex talent grants free Between the Eyes casts and bonus Dispatch damage.
-- Spec offers consistent sustained damage without major cooldown windows.
-- Fatebound is a viable single-target alternative at ~1–3% lower DPS with easier play.
+- Alternative hero talent: Fatebound (2.7% usage).
+- Featured talents: Opportunity, Adrenaline Rush, Expert Duelist.
+- Sample: 26,838 parses, keys +7 and above (last 14 days), average 184.6k DPS.
