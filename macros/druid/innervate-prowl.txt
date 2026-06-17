@@ -1,2 +1,0 @@
-#showtooltip
-/use [@mouseover,help,nodead,known:Innervate]Innervate;Prowl
