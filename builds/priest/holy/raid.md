@@ -1,36 +1,25 @@
 # Priest Holy — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Method.gg (fallback — Icy Veins page renders builds via JS widget)
-- **URL:** https://www.method.gg/guides/holy-priest/talents
-- **Fallback URL:** https://www.icy-veins.com/wow/holy-priest-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/holy/priest/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Archon is recommended for Raid with Prayer of Healing synergies; Oracle remains viable through Prayer of Mending focus.
+Archon (98.6%)
 
-## Talent builds
-
-### Raid (Archon)
+## Talent build
 
 ```
-CEQAAAAAAAAAAAAAAAAAAAAAAwYAAAAAAAgZmtxMjZmZYmZYZGmBAAAwMsMDzMzMMDzAYmaAgZWMTmFDAMGsZmZ2A0MGjxwMz2yAMDMA
-```
-
-### Raid (Oracle)
-
-```
-CEQAAAAAAAAAAAAAAAAAAAAAAwYAAAAAAAGjZmtZmZMzMDzMDLzwMAAAAmhlZYmZmhZYGAzUDgZWwQYMLDwYgFGzGgmxYMGmZAmZmBG
+CEQAAAAAAAAAAAAAAAAAAAAAAwYAAAAAAAgZmlxYMzMDzMzYZGmBAAAwMmlZwMzMMDzAYmaAgZWMDziBAGD2MzMLAaGjxYYmZbZAmBG
 ```
 
 ## Stat priority
 
-Refer to the Method.gg stats page for current Holy Priest values.
+Not published on archon talents page.
 
 ## Notes
 
-- Archon is the default raid pick, synergizing with Prayer of Healing and amplifying Halo cooldowns.
-- Oracle is a viable alternative when Void Shield / Prayer of Mending stacking is preferred.
-- Halo should pair with Apotheosis or Divine Hymn for powerful raid healing windows.
-- Benediction triggers at normalized rates regardless of hero talent choice.
+- Alternative hero talent: Oracle (1.41%).
+- Build snapshot metrics: ~189.2k HPS / ~19.5k DPS (Mythic VS / DR / MQD).

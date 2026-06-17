@@ -1,41 +1,26 @@
 # Rogue Assassination — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/assassination-rogue-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/assassination/rogue/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Fatebound for general M+; Deathstalker as an alternative for very high keys focused on priority-target damage.
+Fatebound (92.69% usage)
 
-## Talent builds
-
-### Fatebound Mythic+ (Recommended)
+## Talent build
 
 ```
-CMQAAAAAAAAAAAAAAAAAAAAAAYmlZmNDGAAAAAYWGsNDAAAAAottZmZmZmxYmZmZbmlZG8AzMzMjhZGjBwALwMGNmNALDYzYDwMDjB
-```
-
-### Deathstalker High-Key Mythic+
-
-```
-(not extractable from page — paste manually from URL above)
-```
-
-### Deathstalker Delves
-
-```
-CMQAAAAAAAAAAAAAAAAAAAAAAwsMzsYwAAAAAAz2gtZAAAAAAZbmZmZmZwMzMz2MbzMGPwMzMzYYmxYA2MLDMgFw2wEYYxYzMDwYMG
+CMQAAAAAAAAAAAAAAAAAAAAAAYmlZmNDGAAAAAYWGsNDAAAAAotlZmZmZmxYmZmZbmlZGPgHYmZmZMMzYMAGYBmxoxsBYbAbGAMzMYA
 ```
 
 ## Stat priority
 
-Refer to companion stat-priority guide on Icy Veins; talent page focuses on talent selection only.
+Not published on archon talents page.
 
 ## Notes
 
-- Apex talent Implacable smooths Energy recharge and boosts Bleed/Nature damage and Kingsbane.
-- Fatebound is the more forgiving option while matching or exceeding Deathstalker damage.
-- Deathstalker's Mark management can be cumbersome and risky during target switches.
-- Use Deathstalker only on keys where priority-target damage is the limiting factor.
+- Alternative hero talent: Deathstalker (7.37% usage).
+- Featured Fatebound talents: Overflowing Purse (98.20%), Death's Arrival (81.68%), Tempted Fate (80.18%).
+- Sample: 16,312 parses, keys +7 to +24, average 183.3k DPS.

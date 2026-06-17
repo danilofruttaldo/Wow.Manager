@@ -1,37 +1,26 @@
 # Priest Holy — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Method.gg (fallback — Icy Veins page renders builds via JS widget)
-- **URL:** https://www.method.gg/guides/holy-priest/talents
-- **Fallback URL:** https://www.icy-veins.com/wow/holy-priest-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/holy/priest/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Both Oracle and Archon are viable for M+. Oracle excels via Prayer of Mending mechanics; Archon provides enhanced cooldown flexibility through Halo interactions.
+Archon (76.2%)
 
-## Talent builds
-
-### Mythic+ (Oracle)
+## Talent build
 
 ```
-CEQAAAAAAAAAAAAAAAAAAAAAAwYAAAAAAAMzMmlxMMzYYGGLzMzMAAAAGmlZYmZmhZMzAYmaAMzCGCjZbAGDsYmZWA0MGjxgZAmZmB+A
-```
-
-### Mythic+ (Archon)
-
-```
-CEQAAAAAAAAAAAAAAAAAAAAAAwYAAAAAAAMmxsMmhZGjHYGGLzMzMAAAAGmlZYmZmhZMzAYmaAgZ2MTmNDAMGsZmZWA0MGjxgZWWGgZgPA
+CEQAAAAAAAAAAAAAAAAAAAAAAwYAAAAAAgZzwYWGMmZmZMzMjlZmZAAAAYMWmBzMzYzYmxAmpAAzsZGmNDAMGsZMWA0MmZMGmZ2WGgBMA
 ```
 
 ## Stat priority
 
-Refer to the Method.gg stats page for current Holy Priest values.
+Not published on archon talents page.
 
 ## Notes
 
-- Oracle and Archon are both viable in M+; pick based on group composition and personal comfort.
-- Oracle leans into Prayer of Mending throughput and passive healing.
-- Archon pairs Halo with Apotheosis or Divine Hymn for burst group healing.
-- Benediction triggers at normalized rates regardless of hero talent choice.
-- Dominate Mind remains a strong utility pick for Delves and select dungeon pulls.
+- Alternative hero talent: Oracle (23.7%).
+- Most popular Archon picks: Word of Supremacy (98.5%), Spiritwell (94.5%), Incessant Screams (80.9%).
+- Build snapshot metrics: avg keystone +19, ~72.3k HPS / ~26.9k DPS.

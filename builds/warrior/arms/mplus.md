@@ -1,45 +1,26 @@
 # Warrior Arms — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/arms-warrior-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/arms/warrior/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Colossus (primary for trash-heavy dungeons), Slayer (alternative for smoother gameplay / boss-heavy keys)
+Colossus (78.0%)
 
-## Talent builds
-
-### Colossus — Mythic+ Dungeons
-
-Page reuses the Colossus Multi-Target raid string for M+ dungeons.
+## Talent build
 
 ```
-CcEAAAAAAAAAAAAAAAAAAAAAAgZmxsMzMzYGAAAghphxwMbLzMzMjZGzMAAAAAGbmB2iBsZGDLwAzoNaMYBYGMGMbmtBzMAgZmhB
-```
-
-### Colossus — Delves
-
-```
-CcEAAAAAAAAAAAAAAAAAAAAAAgZmZmFzYmZGAAAghphxYmZzMzMzYmxMDAAAAgxyMDsFGLbDsAGwMMhMD2AzMMMY2mZbAmZAwYYA
-```
-
-### Slayer — Mythic+ Dungeons (alternative)
-
-Page reuses the Slayer Single-Target raid string for M+ — smoother gameplay, lower multi-target output.
-
-```
-CgcBAAAAAAAAAAAAAAAAAAAAAAA2MmZmZmZmxwMAAAAAAAegxsNYGAAAAAAAAmxMMzMzMzMzMDzsYGjFZhZmZmt2mZmBwwAQgZMYMD
+CcEAAAAAAAAAAAAAAAAAAAAAAgZmxsMzMzYGAAAghphZGmZbZmZmZYGzMAAAAAGbmB2iBsZGDLwAzwGNGsAmZYYwsZ2GMzAAMzwA
 ```
 
 ## Stat priority
 
-Page does not enumerate a distinct M+ stat priority; refer to Icy Veins Arms stat priority guide.
+Not published on archon talents page.
 
 ## Notes
 
-- Colossus M+ build delivers very high multi-target damage but weaker single-target on bosses.
-- Slayer M+ build trades multi-target output for smoother, more consistent gameplay.
-- Apex talent: Master of Warfare (procs increase Slam value and buff rotational abilities).
-- Flexible swaps: Fearless, Stance Mastery, and mobility options depending on dungeon mechanics.
+- Alternative hero talent: Slayer (21.9%).
+- Notably popular choices: Avatar (100%), Mass Execution (90.7%), Bloodsurge (89%).
+- Data from 67,912 parses across keys 7+ in the last 14 days.

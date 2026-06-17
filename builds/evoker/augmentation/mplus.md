@@ -1,36 +1,26 @@
 # Evoker Augmentation — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/augmentation-evoker-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/augmentation/evoker/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Scalecommander for both M+ and Raid — personal damage focus and easier rotation.
+Scalecommander (99.1% usage)
 
-## Talent builds
-
-### Weekly Mythic+ Build — Scalecommander
+## Talent build
 
 ```
-CEcBAAAAAAAAAAAAAAAAAAAAAMmZmZbmZmxyAzsNjxwMAAAAAAAAwM8AzwYM1YmZGAAAAYmZMmZ2GzMwMbGDWglxwYbAMDiNMzMYmBDG
-```
-
-### High Key Mythic+ Build — Scalecommander
-
-```
-CEcBAAAAAAAAAAAAAAAAAAAAAMmZmZbmZmxyAzsMjxwMAAAAAAAAwM8AzwYM1YmZGAAAAYmZMmZ2GzMwMbGDWglxwYbAMDiNMzMYmBDG
+CEcBAAAAAAAAAAAAAAAAAAAAAwMzMbzMzgBzMLzYMMzGAAAAAMAAwM8AzAjpGzMzAAAAgZmZMmZWGzMwMbzYwCsMGGLDgZQshZmBzMAG
 ```
 
 ## Stat priority
 
-Haste and Critical Strike are prioritized with the Apex talent Duplicate; focus on maximizing buff uptime and cooldown efficiency.
+Not published on archon talents page.
 
 ## Notes
 
-- Scalecommander emphasizes personal damage through Bombardments and Essence Spender gameplay rather than buff-focused mechanics.
-- Instant-cast filler spells simplify rotation during M+ for higher uptime while moving.
-- Press Breath of Eons on cooldown to maximize Duplicate extension and overall buff duration.
-- Less reliant on ally performance compared to Chronowarden alternative.
-- Apply and extend Bombardments via Eruption casts for consistent damage output.
+- Alternative hero talent: Chronowarden (0.81% usage; Temporality 93.69%, Double-time 97.49%).
+- Scalecommander top talents: Extended Battle (99.61%), Hardened Scales (99.71%), Nimble Flyer (75.27%).
+- Reference build: +24 keystone, ~194.2k DPS; most popular combination at 36.0% adoption.

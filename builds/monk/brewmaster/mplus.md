@@ -1,35 +1,27 @@
 # Monk Brewmaster — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/brewmaster-monk-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/brewmaster/monk/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Shado-Pan — burst AoE damage and passive defense via dodge mechanics, best fit for Mythic+.
+Master of Harmony (51.85%)
 
-## Talent builds
-
-### Standard (Shado-Pan)
+## Talent build
 
 ```
-CwQAAAAAAAAAAAAAAAAAAAAAAAAAAwMLbGDzwyM2MmZAAAAAAAYZBmYmBmhBzgZmZGzsNMjZWGW2ssNbzYWAAglZZaZ2mZZAAAAMsBmZATjBMAgB
-```
-
-### High-Key / Defensive (Master of Harmony)
-
-```
-(not extractable from page — paste manually from URL above)
+CwQAAAAAAAAAAAAAAAAAAAAAAAAAAgZbzYGGzyMzGzMjBAAAAAAYZBmYmBmhZ2MwMzMDzGzMmZZYZ7BW2mNMLAAwysMtMbzsMAAAAG2AzMgpxAAAG
 ```
 
 ## Stat priority
 
-Not listed on the talents page; consult the dedicated Stats guide on Icy Veins for the current priority.
+Not published on archon talents page.
 
 ## Notes
 
-- Foundational talents are stable across builds; flex the cooldown/defensive layer per dungeon.
-- Apex talent Bring Me Another generates Empty Barrels for bonus Keg Smash damage and Energy savings.
-- Pick Celestial Brew for spike absorption or Celestial Infusion for sustained mitigation depending on the dungeon pull profile.
-- Shado-Pan favors AoE burst potential, the typical M+ profile.
+- Alternative hero talent: Shado-Pan (48.15%).
+- Master of Harmony key picks: Mantra of Purity (99.71%), Way of a Thousand Strikes (99.30%), Tiger's Vigor (84.69%).
+- Notable spec talents: Chi Transfer (94.3%), Jade Walk (59%), Pressure Points (43.3%).
+- Based on 93,884 parses (keys 7+, last 14 days). Max key +23.

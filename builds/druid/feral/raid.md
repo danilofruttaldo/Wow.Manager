@@ -1,35 +1,24 @@
 # Druid Feral — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/feral-druid-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/feral/druid/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Wildstalker — strongest ST DoT-centric profile; Druid of the Claw available as burst-CD alternative.
+Wildstalker (93.99%)
 
-## Talent builds
-
-### Raid — Wildstalker (Recommended)
+## Talent build
 
 ```
-CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjZwMzMzMmtlxyMbzYGzMDAAAAbBzmhxMjaGzyMzMzYMjBAAAAAgBGAAAAAgZbmlmtZW2Az8AALmBDAgZGAMA
-```
-
-### Raid — Druid of the Claw (Alternative)
-
-```
-(not extractable from page — paste manually from URL above)
+CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjZwMzMzMmtl5BWGbzYm5BmZAAAAYLY2MMmZUzYWmZmZGjZMAAAAAAMwAAAAAAMbzs0sNzyGYmHAYxMYAAMzAgB
 ```
 
 ## Stat priority
 
-Agility > Crit / Haste (vary by build) > Mastery / Versatility (situational). All four Apex points in Unseen Predator for max Rip amplification.
+Not published on archon talents page.
 
 ## Notes
 
-- Wildstalker: DoT-heavy ST; Unseen Predator's 4th point grants +30% Rip damage plus guaranteed Unseen Attacks post Tiger's Fury.
-- Full Berserk suite paired with Convoke aligns 1-min / 2-min burst; Lunar Inspiration adds a third DoT.
-- Focused Frenzy delivers a 30-second damage spike during the burst window.
-- DotC alternative leans on Convoke + Berserk + Focused Frenzy and Ferocious Bite (Saber Jaws); avoid Apex Predator's Craving to keep Ravage procs clean.
+- Alternative hero talent: Druid of the Claw (6.06%).

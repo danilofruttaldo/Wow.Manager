@@ -1,35 +1,26 @@
 # Rogue Subtlety — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/subtlety-rogue-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/subtlety/rogue/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Trickster for multi-target/AoE flexibility in M+.
+Trickster (99.5% usage)
 
-## Talent builds
-
-### Mythic+ / AoE — Trickster
+## Talent build
 
 ```
-CUQAAAAAAAAAAAAAAAAAAAAAAAgx2MAAAAAwsMGLTMbbjxMjZMegZmZGjZbYGbbzMzMzMjBjZWGAAAAGMGwY2MMwAziWoFbYGwMDmxA
-```
-
-### Delves — Trickster
-
-```
-CUQAAAAAAAAAAAAAAAAAAAAAAAgx2MAAAAAwsMGLTMbbjxMjZMegZmZGjZbYGbbzMzMzMjBjZWGAAAAGMGwY2MMwAziWoFbYGwMDmxA
+CUQAAAAAAAAAAAAAAAAAAAAAAAgx2MAAAAAwsMGLTMbbjxMjZMegZmZGjZbYGbLzMjZmZMYMz2AAAAwMMGwY2MMwAzCL0iNMDYmBzYA
 ```
 
 ## Stat priority
 
-Refer to companion stat-priority guide on Icy Veins; talent page focuses on talent selection only.
+Not published on archon talents page.
 
 ## Notes
 
-- Trickster excels in burst windows with Shadow Blades and Secret Technique.
-- Multi-target encounters favor Trickster despite slight single-target disadvantage.
-- Potent Powder substitution viable in dungeons with extended downtime.
-- Ancient Arts apex talent enables efficient Shadow Techniques utilization.
+- Alternative hero talent: Deathstalker (0.51% usage).
+- Trickster talents: Thousand Cuts (99.9%), So Tricky (98.5%), Smoke (96.6%), No Scruples (83.3%).
+- Sample: 41,080 parses, keys +7 and above (last 14 days), average 176.5k DPS.

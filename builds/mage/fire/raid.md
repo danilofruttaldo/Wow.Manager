@@ -1,33 +1,25 @@
 # Mage Fire — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/fire-mage-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/fire/mage/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Frostfire — highest single-target and cleave; slightly ahead of Sunfury.
+Sunfury (98.0%)
 
-## Talent builds
-
-### Frostfire — Raid
+## Talent build
 
 ```
-C8DAAAAAAAAAAAAAAAAAAAAAAYGGLzMzswMDZmZGAAAmZZmmZWmFAAAwiZmx2YmZGbAAAAAwmZmZmBAAjZMzMzMzMbAzMgwYMYwA
+C8DAAAAAAAAAAAAAAAAAAAAAAYGGLzMzswMDZmZGAAAGAwMz0sssMDAwmZmx2YmZGAAAAAgFzMzMDAAGzYGzMzMzyAwMDMGjBGG
 ```
-
-### Sunfury — Raid
-
-(not extractable from page — paste manually from URL above; very close in DPS to Frostfire)
 
 ## Stat priority
 
-Stat priority not detailed on this page — consult the dedicated Fire stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Frostfire drops Scorch — Frostfire Bolt is the superior filler.
-- Both hero talents are very close in actual DPS; pick by playstyle.
-- Use Frostfire for single-target and cleave raid encounters.
-- Sunfury becomes preferable if the fight has heavy AoE phases.
+- Alternative hero talent: Frostfire (2.02%).
+- Recommended (Sunfury) ~170.2k DPS vs Frostfire ~137.4k DPS at Mythic.

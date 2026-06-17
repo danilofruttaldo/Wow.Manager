@@ -1,36 +1,24 @@
 # Shaman Restoration — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/restoration-shaman-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/restoration/shaman/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Both Farseer and Totemic are viable. Farseer offers more impactful casts; Totemic provides more passive group healing.
+Totemic (99.7%)
 
-## Talent builds
-
-### Farseer Raid
+## Talent build
 
 ```
-CgQAAAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAjZMW2mZmZmZmZmxwYxMLwAGwswEYsYGzgZbmZGNbLzMMzMLsYmZGDmlBAAAYGAMzgZwA
-```
-
-### Totemic Raid
-
-```
-CgQAAAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAzMzMLLLDzMGzMzMDzYBWgZsox2AYGYzMMYWGzMTz2yMziZMLsMjZGDmlBAAAmZGMzAADG
+CgQAAAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAzMzMLLbDzMGzMzMDzYBWgZsox2AYGYzMMYWGjZa2WmZWMjZhFzMzYwsMAAAwMzgZGAYwA
 ```
 
 ## Stat priority
 
-Not explicitly listed for M+ vs Raid in the source builds page; refer to the dedicated Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Ascendance offers higher potential healing than Healing Tide Totem for flexibility.
-- Deeply Rooted Elements synergizes with Resurgence through guaranteed healing crits.
-- Farseer excels in high value-per-cast scenarios with Maelstrom Supremacy.
-- Riptide talents preferred over Downpour for easier execution and synergy.
-- Both hero talents remain viable depending on encounter mechanics.
+- Alternative hero talent: Farseer (0.2%) — near-universal Totemic adoption among top raid performers.

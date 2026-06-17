@@ -1,35 +1,25 @@
 # Shaman Elemental — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/elemental-shaman-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/elemental/shaman/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Stormbringer — generally ahead, particularly at higher key levels and on bigger pulls. Farseer is a higher-mobility alternative.
+Stormbringer (86.3%)
 
-## Talent builds
-
-### Elemental Mythic+ — Stormbringer
+## Talent build
 
 ```
-CYQAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbLzMzYML2mhZMzAAAAAAbmxwGsAzwQjNAY2mZmxMbLzEmBWmZmZMDzyMWMzMmZBAYGgZGYYYA
-```
-
-### Elemental Delves — Farseer (solo / mobility alternative)
-
-```
-CYQAAAAAAAAAAAAAAAAAAAAAAAAAAAmZZZmxMzMbbbjxMmZAAAAALmZDGwAmNmAzCAMbzMzYmtlZCzMYxMzMmBLzYBzMzsAAMjBwMjhhB
+CYQAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbLzMzYML2mhZMzAAAAAAbmxwGsAzwQjNAY2mZmxYbxEmx2YZmZm5BmxilZsYmZMzCAwAYmBGGG
 ```
 
 ## Stat priority
 
-Not explicitly listed for M+ vs Raid in the source builds page; refer to the dedicated Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Stormbringer offers significantly more AoE but requires more optimal play.
-- Farseer provides higher mobility as an alternative for movement-heavy keys.
-- Earthquake placement via `@cursor` macro recommended.
-- Adapt utility talents (Purge, etc.) based on dungeon mechanics.
+- Alternative hero talent: Farseer (13.6%).
+- Based on 69,752 parses over 14 days; recommended build reaches +22 keystone level.

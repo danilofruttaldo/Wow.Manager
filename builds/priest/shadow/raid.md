@@ -1,36 +1,26 @@
 # Priest Shadow — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/shadow-priest-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/shadow/priest/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Archon — recommended for Raid; suits sustained single-target damage.
+Archon (89.8%)
 
-## Talent builds
-
-### Archon Single Target (Raid)
+## Talent build
 
 ```
-CIQAAAAAAAAAAAAAAAAAAAAAAMMjZGAAAAAAAAAAAgxMMjxyMDzsNzwMsNzMmZmxGyMWMTDwMAzsZGmNDAZMWAwMAjZmZMbjZ2WGgZwA
-```
-
-### Archon 3-Target / Voidweaver Raid / Voidweaver 3-Target
-
-```
-(not extractable from page — paste manually from URL above)
+CIQAAAAAAAAAAAAAAAAAAAAAAMMjZGAAAAAAAAAAAgxYxMGLzMMz2MDzw2MzYmZGbIzYxMNAzAMzmZY2MAkxYBAzAMmZmxsNmZbZAmBD
 ```
 
 ## Stat priority
 
-Not listed on the builds page; refer to the dedicated Shadow Priest "Stats" guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Archon suits sustained damage profiles typical of raid bosses.
-- Voidweaver Raid remains viable when burst windows align with damage checks.
-- "Invoked Nightmare vs Misery" choice defines playstyle significantly.
-- Psychic Link is valuable even in single-target raids due to frequent add spawns.
-- Spell Warding (4% magic reduction) is the strongest defensive option for raid.
+- Alternative hero talent: Voidweaver (10.1%).
+- Most popular Archon picks: Word of Supremacy (99.5%), Spiritwell (99.9%), Incessant Screams (91.6%), Sustained Potency (90.6%).
+- ~179.6k DPS; based on 18,951 Mythic parses (VS / DR / MQD), top 50% over last 14 days.

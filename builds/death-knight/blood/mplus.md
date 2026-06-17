@@ -1,41 +1,26 @@
 # Death Knight Blood — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/blood-death-knight-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/blood/death-knight/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Deathbringer for Mythic+ (easier execution, plug-and-play); San'layn viable with planning for ~10% more damage.
+Deathbringer (86.0%)
 
-## Talent builds
-
-### Deathbringer — Mythic+ (Entry-Level)
+## Talent build
 
 ```
-CoPAAAAAAAAAAAAAAAAAAAAAAwMzyMzMmxMzMMLzMz0MLGjxMGAAAAwMmZmZmZYGjBAjZmZGAAgxsNwAWCWGmADLAmhZAAMzAYYA
-```
-
-### Deathbringer — Delves
-
-```
-CoPAAAAAAAAAAAAAAAAAAAAAAwMzyMzMmxMzMMLzMz0MLGjxMGAAAAwMmZmZmZYGjBAjZmZGAAgxsNwAWCWGmADLAmhZAAMzAYYA
-```
-
-### San'layn — Mythic+
-
-```
-CoPAAAAAAAAAAAAAAAAAAAAAAwYWmZmxMmZmhZZmZmmZxYMmxAAAAAzMzMzMzMDzYMAgZmZGAAADMwMW0YZDklBsBYGmBAAmZghB
+CoPAAAAAAAAAAAAAAAAAAAAAAwMzyMzwMmxYMLzMz0MLzMjZmBAAAAwgZmZmZMzMjBAzMzMzAAAMmtBGwCYZYCMsAYGDAAmZAYMA
 ```
 
 ## Stat priority
 
-Stat priority not provided in the talent page; refer to the dedicated stats page on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Deathbringer trivializes bone shield management and gives superior survivability.
-- San'layn requires methodical planning to extract value but is the higher-throughput option.
-- 12.0.5 nerfed Desecrate significantly; Blood-Soaked Ground is the preferable choice.
-- Apex talent Dance of Midnight grants ~50% combined uptime on Dancing Rune Weapon procs.
+- Alternative hero talent: San'layn (13.9%).
+- Deathbringer core picks: Rune Carved Plates (98.8%), Death's Messenger (95.7%), Dark Talons (70.0%).
+- Based on top parses over the last 14 days (58,655 parses, ~+22 keystone reference).

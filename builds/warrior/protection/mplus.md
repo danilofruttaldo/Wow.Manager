@@ -1,44 +1,26 @@
 # Warrior Protection — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/protection-warrior-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/protection/warrior/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Mountain Thane (primary, all content), Colossus (alternative, viable in both raid and M+)
+Mountain Thane (97.1%)
 
-## Talent builds
-
-### Mountain Thane — AoE
+## Talent build
 
 ```
-CkEAAAAAAAAAAAAAAAAAAAAAAkBAAGzYmZmZmxsYmZZGjxoxMGWMzMzYGmZAAAAwyAwMGgB2glFjGzAYWwMbwMzMDmlBAzMAAMDYA
-```
-
-### Colossus — AoE
-
-```
-CkEAAAAAAAAAAAAAAAAAAAAAAkBAAGzYmZmZmxsYmZZGjxoxMGWMzMzYGmZAAAAwyAwMGgB2glFjGzAYWwMbwMzMDmlBAzMAAMDYA
-```
-
-### Mountain Thane — Delves
-
-Page reuses the AoE build for Delves.
-
-```
-CkEAAAAAAAAAAAAAAAAAAAAAAkBAAGzYmZmZmxsYmZZGjxoxMGWMzMzYGmZAAAAwyAwMGgB2glFjGzAYWwMbwMzMDmlBAzMAAMDYA
+CkEAAAAAAAAAAAAAAAAAAAAAAkBAAGzYmZmZmxsZmZZGjxoZmxwixMzYGmZAAAAwyMDwMGgB2glFjGzAYWwMbYmZmZYsNAYmBAgZAPA
 ```
 
 ## Stat priority
 
-Page does not enumerate a distinct stat priority; refer to Icy Veins Protection stat priority guide.
+Not published on archon talents page.
 
 ## Notes
 
-- Mountain Thane has superior rage generation via the Lightning Strikes -> Shield Slam -> Thunder Blast feedback loop.
-- Colossus centers on Demolish damage and bleed amplification; more methodical rage management.
-- Apex: Phalanx adds frontal-cone damage to Thunder Clap and Shield Slam.
-- Flex points: Tough as Nails and Bloodborne.
-- Swap Heavy Repercussions -> Into the Fray as haste increases for better Shield Block uptime.
+- Alternative hero talent: Colossus (2.83%).
+- Mountain Thane key talents: Keep Your Feet on the Ground (98.6%), Thorim's Might (91.8%), Storm Bolts (83.6%).
+- Recommended spec & hero popularity 14.0% at +20 keystone.

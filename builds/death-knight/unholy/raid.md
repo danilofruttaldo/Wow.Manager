@@ -1,29 +1,24 @@
 # Death Knight Unholy — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/unholy-death-knight-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/unholy/death-knight/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Rider of the Apocalypse — focuses on minion damage and provides superior single-target DPS. San'layn lags too far behind in ST to be viable in Raid.
+Rider of the Apocalypse (97.8%)
 
-## Talent builds
-
-### Rider of the Apocalypse — Single Target (Raid)
+## Talent build
 
 ```
-CwPAAAAAAAAAAAAAAAAAAAAAAAwMjZMzYY2mZmZa2MzMjZAAAAAAAAgZGmZAw2MmZ2mZGjZAbmFDDMwsxQjFAMDAjZmxMAzMzYMA
+CwPAAAAAAAAAAAAAAAAAAAAAAAwMjZMDDz2MzMTzmZmZMjBAAAAAAAgZGmZAw2MmZ2mZGjZAbmFDDMwsxQjFAMDAjZmxMAzMzYMA
 ```
 
 ## Stat priority
 
-Stat priority not detailed in the talent page; refer to the dedicated stats page on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Raid build prioritizes Reanimation and Grave Mastery for minion synergy.
-- Blightburst provides quality-of-life via effectively infinite plague duration.
-- Apex talent Forbidden Knowledge transforms abilities and synergizes with minion builds.
-- Avoid San'layn for raid: its single-target output is not competitive.
+- Alternative hero talent: San'layn (2.22%).

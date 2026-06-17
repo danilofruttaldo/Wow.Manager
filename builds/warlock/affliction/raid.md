@@ -1,28 +1,25 @@
 # Warlock Affliction — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/affliction-warlock-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/affliction/warlock/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Soul Harvester for single-target raid encounters.
+Soul Harvester (99.8%)
 
-## Talent builds
-
-### Single-Target (Soul Harvester)
+## Talent build
 
 ```
-CkQAAAAAAAAAAAAAAAAAAAAAAwMzMzoZhhZmZmlBAAYmZxxMzsMzAAjllBGwEMDbBG2GAAAmBAAwMDzMjBGmZmZGzgZmZGAwMwA
+CkQAAAAAAAAAAAAAAAAAAAAAAgZmZGNbMMzMmlBAAYmZxyMzsMzAAjllBGwAmhtADbDAAAzAAAYmhZmZmNMMzMzMmBzMzMAgZgB
 ```
 
 ## Stat priority
 
-Intellect > Haste > Crit > Mastery > Versatility
+Not published on archon talents page.
 
 ## Notes
 
-- Focuses on aggressive shard spending to reduce Dark Harvest cooldown.
-- Maintains high Cascading Calamity uptime.
-- Best for single-target encounters with extended durations.
+- Alternative hero talent: Hellcaller (0.1%).
+- Sample: top 50% of players over the last 14 days, 7,829 encounters.

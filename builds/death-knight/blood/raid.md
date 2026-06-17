@@ -1,29 +1,26 @@
 # Death Knight Blood — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/blood-death-knight-pve-tank-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/blood/death-knight/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-San'layn dominates raid content with superior single-target and priority damage (~10% more than Deathbringer).
+San'layn (70.6%)
 
-## Talent builds
-
-### San'layn — Single Target (Raid)
+## Talent build
 
 ```
-CoPAAAAAAAAAAAAAAAAAAAAAAwYWmZmxMmZmhZZmZmmZxYMmxAAAAAzMzMzMzMDzYMAgZmZGAAADMwMW0YZDklBsBYGmBAAmZghB
+CoPAAAAAAAAAAAAAAAAAAAAAAwYWGzMmxMzMMbzMz0MLmZMmxAAAAAzMzMzMzMDzYMAYMzMzAAAYgBmxmGLbA2GwGgZYAAAzMYwA
 ```
 
 ## Stat priority
 
-Stat priority not provided in the talent page; refer to the dedicated stats page on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- San'layn yields roughly 10% more damage than Deathbringer in raids when played with proper planning.
-- Deathbringer remains a valid safer choice if survivability or simpler bone shield management is preferred.
-- 12.0.5 nerfed Desecrate; Blood-Soaked Ground is favored.
-- Apex talent Dance of Midnight grants ~50% combined uptime on Dancing Rune Weapon procs.
+- Alternative hero talent: Deathbringer (29.4%).
+- San'layn popular picks: Bloody Fortitude (90.8%), Vampiric Speed (78.8%).
+- Based on the top 50% of data over the last 14 days (25,714 parses).

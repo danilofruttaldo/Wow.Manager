@@ -1,35 +1,26 @@
 # Paladin Holy — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/holy-paladin-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/holy/paladin/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Herald of the Sun (primary); Lightsmith viable for damage-focused play.
+Herald of the Sun (92.2%)
 
-## Talent builds
-
-### Herald of the Sun Mythic+
+## Talent build
 
 ```
-CEEAAAAAAAAAAAAAAAAAAAAAAAAAAMLAgZAAglxMzMzYmZWgxwyYbmZxMNxsMjZmhhZLDADAbgNWmZmZZ2mZmtGAAAgF2YGsBMMAAAzMMjxwA
-```
-
-### Lightsmith Mythic+
-
-```
-CEEAAAAAAAAAAAAAAAAAAAAAAAAAAMLAgZAAglxMzMzYmZWgxwyYbmZxMNxsMjZmhhZLDADAbgNWmZGAAAYmZbbx2MDbsxMYDYYAAmZAYGjRD
+CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYBAMDAwglxMzMzYmZWgxwyYbmZxMNxsYMzMjhZLDADAbgN2mZmZZ2mZmtGAAAgF2wgNYMjBAAYmhZMGGA
 ```
 
 ## Stat priority
 
-Refer to dedicated Stat Priority guide on Icy Veins; talent page does not list stats explicitly.
+Not published on archon talents page.
 
 ## Notes
 
-- Herald of the Sun provides better healing throughput; Lightsmith leans into damage.
-- Beacon of the Savior apex talent auto-places on the lowest health ally.
-- Divine Overload is an alternative for fights with significant healing absorbs.
-- Lightsmith synergizes strongly with Avenging Crusader windows.
+- Alternative hero talent: Lightsmith (7.78%).
+- Within Herald of the Sun: Blessing of An'she (99.51%) and Gleaming Rays (97.59%) are near-universal.
+- Data based on all keys level 7+ over the last 14 days (53,162 parses).

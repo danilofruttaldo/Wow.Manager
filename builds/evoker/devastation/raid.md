@@ -1,37 +1,26 @@
 # Evoker Devastation — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Method.gg (fallback — Icy Veins page renders builds via JS widget)
-- **URL:** https://www.method.gg/guides/devastation-evoker/talents
-- **Fallback URL:** https://www.icy-veins.com/wow/devastation-evoker-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/devastation/evoker/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Scalecommander for raid (ST and cleave variants both); Flameshaper for sustained ST priority fights.
+Scalecommander (73.3% usage)
 
-## Talent builds
-
-### Scalecommander Single Target
+## Talent build
 
 ```
-CsbBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMDMDzYmBMYMTzMzMNjx2MmZmZmHYmZGwMmxYmZZmZgBGDWglxox2AyMIYDDMzghB
-```
-
-### Flameshaper Single Target
-
-```
-CsbBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgZmZwMDGMgBjZamZmJjxyMzMzwMzMzAmxMzYmZZmZwMwMmB2ALgZYCsFsMMAmZGG
+CsbBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMDMDzYmBMYMTzMzMNjx2MmZmZmHYmZGwMmxYmZZmZgBGDWglxox2AYGA2wAzMYYA
 ```
 
 ## Stat priority
 
-Haste > Crit ~ Mastery > Versatility. See Method.gg stats page for fine-tuned values.
+Not published on archon talents page.
 
 ## Notes
 
-- Scalecommander Single Target is the default raid pick; emphasizes Deep Breath windows and Mass Disintegrate.
-- Flameshaper ST is an alternative for fights favoring sustained dot pressure.
-- Core talents: Animosity, Tyranny, Causality, Charged Blast.
-- Rising Fury apex stack maintenance is core to throughput during Dragonrage.
-- Hover resets from Scalecommander allow mobility for raid mechanics without DPS loss.
+- Alternative hero talent: Flameshaper (26.7% usage; Trailblazer, Expanded Lungs, Draconic Instincts).
+- Scalecommander featured talents: Extended Battle, Hardened Scales, Slipstream.
+- Core spec talents at 100% usage among top 100: Pyre, Essence Burst (both variants), Eternity Surge, Dragonrage.

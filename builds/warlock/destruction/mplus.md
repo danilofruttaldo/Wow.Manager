@@ -1,28 +1,25 @@
 # Warlock Destruction — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/destruction-warlock-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/destruction/warlock/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Hellcaller for M+ AoE scaling.
+Diabolist (57.36%)
 
-## Talent builds
-
-### AoE/Mythic+ (Hellcaller)
+## Talent build
 
 ```
-CsQAAAAAAAAAAAAAAAAAAAAAAwMjZGNLmx2MzYWmtZGzsYGLLjBAAzYMzMLWgBmFjGzAY2wGDAAMmhBAAzMYMzwsBAAYmZmBAgZYA
+CsQAAAAAAAAAAAAAAAAAAAAAAwMjZGNLmxiZGzysNzMjFzYZZmBAAzgZmZxCMwsY0YGAzG2YAAgxMMAAYmBjZGzsBAAYmZmBAgZYA
 ```
 
 ## Stat priority
 
-Intellect > Haste > Crit > Mastery > Versatility
+Not published on archon talents page.
 
 ## Notes
 
-- "Higher AoE potential especially as the target count increases."
-- Emphasizes spreading Wither and Rain of Fire expenditure.
-- Two Backlash points can be swapped to Cataclysm and Lake of Fire for 7+ targets.
+- Alternative hero talent: Hellcaller (42.64%) — nearly an even split, ~160.4k vs ~144.3k DPS.
+- Based on all keys +7 and above in the last 14 days.

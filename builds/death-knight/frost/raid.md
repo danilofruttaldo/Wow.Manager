@@ -1,28 +1,25 @@
 # Death Knight Frost — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/frost-death-knight-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/frost/death-knight/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Deathbringer for single-target raid damage via Reaper's Mark burst windows.
+Deathbringer (99.6%)
 
-## Talent builds
-
-### Deathbringer — Single Target (2H Breath of Sindragosa)
+## Talent build
 
 ```
-CsPAAAAAAAAAAAAAAAAAAAAAAMDwMjZmZGDz2MzMzMLmZmMjxMDzw4BMzgZmZmZAAAAAAAAAYMbDMgFwywEYsgZGzMDMDghZGAgB
+CsPAAAAAAAAAAAAAAAAAAAAAAMDwMjZMGDz2MzMzMbmZ0MjxYYGGMzMzMzMzMDAAAAAAAAAjZbgBsAWGmAjFMzYmZgBghZGgZgB
 ```
 
 ## Stat priority
 
-Stat priority not provided in the talent page; refer to the dedicated stats page on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Deathbringer offers superior single-target damage via Reaper's Mark burst windows.
-- Setup uses a 2H weapon with Breath of Sindragosa as the core damage cooldown.
-- Cycle Breath windows aligned with Reaper's Mark detonations for maximum throughput.
+- Alternative hero talent: Rider of the Apocalypse (0.3%).
+- Deathbringer core picks: Rune Carved Plates, Death's Messenger, Dark Talons.

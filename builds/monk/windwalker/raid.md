@@ -1,29 +1,27 @@
 # Monk Windwalker — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/windwalker-monk-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/windwalker/monk/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Shado-Pan — primary choice for all content, including single-target raid. Conduit of the Celestials performs slightly behind.
+Shado-Pan (99.91%)
 
-## Talent builds
-
-### Single Target (Shado-Pan)
+## Talent build
 
 ```
-C0QAAAAAAAAAAAAAAAAAAAAAAMzYw2MGsNzMbzAAAAAAAAAAAAsMMCzYbYAzYYmZmhZZYGmlZCAYzMbjhZmZGAAbAwsMLNzMzCAGYmBAWGDxAG
+C0QAAAAAAAAAAAAAAAAAAAAAAMzYMYMYbmZ2mxAAAAAAAAAAAALDjwMMMgZMMzMzwsMMDzyMBAsYmtxwYmZAAsBAzys0MzMLADDMzAwYZMgBM
 ```
 
 ## Stat priority
 
-Not listed on the talents page; consult the dedicated Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Shado-Pan adds Flurry Strikes damage layered onto Fists of Fury and Rising Sun Kick windows.
-- Straightforward priority playstyle with no extra hero mechanics to track.
-- Conduit of the Celestials is a viable alternative when buff window management from Heart of the Jade Serpent fits the encounter.
-- Apex talent Tigereye Brew adds crit scaling without altering the rotation.
+- Alternative hero talent: Conduit of the Celestials (~0%).
+- Consensus spec talents at 100%: Fists of Fury, Sharp Reflexes, Momentum Boost, Combat Wisdom, Ascension.
+- Build diversity in: Inner Peace (52.3%), Jadefire Stomp (51.4%), Shadowboxing Treads (47.5%).
+- Based on 15,765 parses (top 50%, last 14 days).

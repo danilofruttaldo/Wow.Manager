@@ -1,36 +1,25 @@
 # Warlock Affliction — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/affliction-warlock-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/affliction/warlock/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Soul Harvester is the default M+ pick; Hellcaller is the alternative for higher target counts.
+Soul Harvester (96.3%)
 
-## Talent builds
-
-### AoE/Mythic+ (Soul Harvester)
+## Talent build
 
 ```
-CkQAAAAAAAAAAAAAAAAAAAAAAwMjZGNLmxiZGzyAAAmZmlZzMzyYAALwAziRjZAZ2ALDAAAzAAAzMYMzMmtxYGmZmZYYmZmBAMDMA
-```
-
-### AoE/Mythic+ (Hellcaller)
-
-```
-(not extractable from page — paste manually from URL above)
+CkQAAAAAAAAAAAAAAAAAAAAAAwMjZGNbmZ2mZGzyAAAmZmlZzMzyYAgx2yADYAzwWghtBAAgZAAAMzMmxM2GjZMmZmZMMzMDAwAG
 ```
 
 ## Stat priority
 
-Intellect > Haste > Crit > Mastery > Versatility
+Not published on archon talents page.
 
 ## Notes
 
-- Soul Harvester gives better damage at lower target counts with multitarget scaling via Seed of Destruction.
-- "Shard abundance" reduces reliance on Drain Soul sniping; Shadow Bolt preferred for mobility.
-- Hellcaller offers superior AoE damage with emphasis on Agony uptime across targets.
-- Hellcaller has slower shard generation and is more demanding to play optimally.
-- Malefic Grasp is baseline in the Hellcaller build; Eye Contract is swappable for a 2% AoE boost.
+- Alternative hero talent: Hellcaller (3.64%).
+- Key Soul Harvester selections: Feast of Souls (84.18%), Eternal Servitude (54.25%), Friends In Dark Places (92.99%).

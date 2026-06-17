@@ -1,29 +1,24 @@
 # Druid Restoration — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/restoration-druid-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/restoration/druid/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Wildstalker — default raid tree for passive throughput and survivability.
+Wildstalker (98.8%)
 
-## Talent builds
-
-### Raid — Wildstalker
+## Talent build
 
 ```
-CkGAAAAAAAAAAAAAAAAAAAAAAMjxMbz2MmZGz2wDwMzmxCzAAAAAAAAAAgtBNbMmmZM8AmlZmZmhhZAAAAAAAAAAEAAwsNzSz2Mb2YMzMMzAjmBAYmBgB
+CkGAAAAAAAAAAAAAAAAAAAAAAMjxMLz2MmZGz2wDwMzmxCzAAAAAAAAAAgNDNbmx0MDwsMzMzMMMDAAAAADAAAAAAAY2mZpZbmNbMmZGmZgRzAAMzAwA
 ```
 
 ## Stat priority
 
-Intellect > standard healer secondaries; Mastery scales Symbiotic Blooms healing-intake buff on targets.
+Not published on archon talents page.
 
 ## Notes
 
-- Passive profile: strong without active mechanic requirements, well suited to progression raiding.
-- Symbiotic Blooms enhances target healing intake by stacking Mastery.
-- Viable across all raid difficulty tiers; balances survivability and competitive HPS.
-- Everbloom Apex added value post-12.0.5; solid addition to raid builds for Lifebloom cleave.
+- Alternative hero talent: Keeper of the Grove (1.11%).

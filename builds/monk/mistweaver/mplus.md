@@ -1,41 +1,26 @@
 # Monk Mistweaver — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/mistweaver-monk-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/mistweaver/monk/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Conduit of the Celestials — dominant choice across all content; Master of Harmony exists as a niche alternative.
+Conduit of the Celestials (98.6%)
 
-## Talent builds
-
-### DPS Mythic+ (Conduit of the Celestials)
+## Talent build
 
 ```
-C4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAghxyMLjZx2MjZsYstsNjZ2Mz22yMjFGaGzAGMgxMzMDz2sxwsMTAAAAAAwitZWmtZGAAYAAmBMGYRGzA
-```
-
-### Healing-Focused Mythic+ (Conduit of the Celestials)
-
-```
-(not extractable from page — paste manually from URL above)
-```
-
-### Delves (Conduit of the Celestials)
-
-```
-C4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAghxyMLjZx2MjZsYstsNjZ2Mz22yMjFGaGzAGjBMmZmZY2wMMLzEAAAAAAsYbmlZbmBAAGAgZAjBWkxMA
+C4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAghxyMLjZx2MmZsZstsMjZ2Mz2yyMjFmRzYGwYMAmZmZY2wMMLzEAAAAAAsYbmlZbmBAAGAgZAjBWkxMA
 ```
 
 ## Stat priority
 
-Not listed on the talents page; consult the dedicated Stat Priority guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Skip Apex talents in M+; use Thunder Focus Tea on Rising Sun Kick to trigger Jadefire Stomp damage converted to healing.
-- Healing-focused alternative leans on damage prevention via CC plus Ancient Teachings passive healing.
-- Delves: pull aggressively with Spinning Crane Kick + Ancient Teachings (Windwalker is generally recommended for solo content).
-- Conduit of the Celestials is the default hero talent across every M+ profile.
+- Alternative hero talent: Master of Harmony (1.4%).
+- Key spec talents at 100% usage: Enveloping Mist, Thunder Focus Tea; survivability via Life Cocoon and Fortifying Brew.
+- Based on 215,858 parses (keys 7+, last 14 days). HPS 110.6k / DPS 48.8k. Max key +24.

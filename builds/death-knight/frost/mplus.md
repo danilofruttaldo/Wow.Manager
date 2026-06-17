@@ -1,33 +1,26 @@
 # Death Knight Frost — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/frost-death-knight-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/frost/death-knight/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Deathbringer is the primary recommendation; Rider of the Apocalypse is a pure-AoE alternative.
+Deathbringer (98.4%)
 
-## Talent builds
-
-### Deathbringer — Mythic+/Delves ("Breathbane", 2H BoS + Frostbane)
+## Talent build
 
 ```
-CsPAAAAAAAAAAAAAAAAAAAAAAMDYmZMzMzYY2mZmZmZxMzkZwYmZMgZMzMzMzMDAAAAAAAAAjZbgBsAWGmAjFMzwMDMDghZGAgB
+CsPAAAAAAAAAAAAAAAAAAAAAAMAzMjZMzYY2mZmZmZxMjmZMmZmZGYMzwMzMjZAAAAAAAAAYMbDMgFwywEYsgZGmZgZAMMzAAM
 ```
-
-### Rider of the Apocalypse — Frostbane-Winter (Dual-Wield, pure AoE)
-
-(not extractable from page — paste manually from URL above)
 
 ## Stat priority
 
-Stat priority not provided in the talent page; refer to the dedicated stats page on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- "Breathbane" combines Breath of Sindragosa with Frostbane on a 2H weapon for a strong M+ profile.
-- Build powers up AoE significantly with a moderate single-target loss.
-- Rider of the Apocalypse with Dual-Wield (Razorice + Fallen Crusader) is the maximum AoE-focused variant.
-- Optional Remorseless Winter talent configurations trade points between AoE and ST damage.
+- Alternative hero talent: Rider of the Apocalypse (1.52%).
+- Class tree near-universal picks: Anti-Magic Zone, Will of the Necropolis, Unholy Bond (99-100%).
+- Based on parses from keys +7 and above over the last 14 days (17,127 parses, ~+22 keystone reference).

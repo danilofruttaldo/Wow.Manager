@@ -1,28 +1,26 @@
 # Warlock Demonology — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/demonology-warlock-pve-dps-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/demonology/warlock/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Diabolist is the M+ pick for AoE scaling.
+Diabolist (99.3%)
 
-## Talent builds
-
-### Mythic+ AoE (Diabolist)
+## Talent build
 
 ```
-CoQAAAAAAAAAAAAAAAAAAAAAAwMjZGNLmxmZGzyAAAAAAAAGzYYBGYb0CNsYMzYZ2mZmxMAwMjZGzMDwYmxMbAAgxMzMzww2MGwA
+CoQAAAAAAAAAAAAAAAAAAAAAAwMmZGNbMz2MzYWGAAAAAAAwYGDLwAbDL0wixMjlZbmZGzAAzMGzMzMAjZMjNAAwYmZGDDLzYAD
 ```
 
 ## Stat priority
 
-Intellect > Haste > Crit > Mastery > Versatility
+Not published on archon talents page.
 
 ## Notes
 
-- Diabolist offers superior multi-target scaling compared to Soul Harvester.
-- Uses Implosion for Demonic Core generation and cleave via "To Hell and Back".
-- Front-loads burst damage from Overlord and Pit Lord.
+- Alternative hero talent: Soul Harvester (0.61%).
+- Key Diabolist selections: Soul-Etched Circles (98.1%), Infernal Machine (98.4%), Infernal Vitality (89.8%).
+- Sample: 138,310 parses over 14 days; recommended key level +22.

@@ -1,34 +1,26 @@
 # Priest Discipline — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/discipline-priest-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/discipline/priest/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Oracle — leverages the strength of Void Shield better than Voidweaver for Atonement raiding.
+Oracle (99.9%)
 
-## Talent builds
-
-### Oracle Raid
+## Talent build
 
 ```
-CAQAAAAAAAAAAAAAAAAAAAAAAADsAz2MzMYmhZbmtZmZmhZAAAAAAAAAAMDLzgZmZYGmBmpZamBYmFMEGzyAMGsAAAjxMjBzAMzMaGG
+CAQAAAAAAAAAAAAAAAAAAAAAAADsAz2MzMYmhZbmtZmZmhZAAAAAAAAAAMDLzgZmZYGmBmpZamBYmFMEGzyAMGsAAAjxMjBzAMzMMDD
 ```
-
-### Voidweaver Raid
-
-(not extractable from page — paste manually from URL above)
 
 ## Stat priority
 
-Not listed on the builds page; refer to the dedicated Discipline Priest "Stats" guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Voidweaver Raid is an alternative but is behind Oracle in output potential.
-- Oracle synergizes with Void Shield since shields inherit Power Word: Shield modifiers.
-- Master the Darkness three-card deck guarantees a Void Shield proc every three Penance casts.
-- Penance applies Atonement when cast on allies but not via Twinsight offensives.
-- War Mode provides minimal PvE benefit; only useful for leveling bonuses.
+- Alternative hero talent: Voidweaver (0.0%).
+- Most popular Oracle picks: Prophet's Will (98.3%), Divine Feathers (58.8%).
+- Build snapshot metrics: ~208.3k HPS / ~34.0k DPS (Mythic all-bosses).

@@ -1,38 +1,26 @@
 # Priest Discipline — M+
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/discipline-priest-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/discipline/priest/mythic-plus/talents/10/all-dungeons/this-week
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Oracle — strong Shadow Word: Death output and superior single-target healing via Shadow Mend.
+Oracle (98.5%)
 
-## Talent builds
-
-### Oracle Mythic+
+## Talent build
 
 ```
-CAQAAAAAAAAAAAAAAAAAAAAAAADsYwyMjZmZGMbzYmZmZMzAAAAAAAAAAYGWmBzMzMMmZwmpZiBYmFMEGzyAMGsAAAjZmZMYGgZmRwA
+CAQAAAAAAAAAAAAAAAAAAAAAAADsYwyMjZmZGMbzYmZmZMzAAAAAAAAAAYYWmBzMzwMmZATzEDwMLYIMmlBYMYBAAGzMzYwMAzMzAG
 ```
-
-### Voidweaver Mythic+
-
-(not extractable from page — paste manually from URL above)
-
-### Voidweaver Delve
-
-(not extractable from page — paste manually from URL above)
 
 ## Stat priority
 
-Not listed on the builds page; refer to the dedicated Discipline Priest "Stats" guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Voidweaver is significantly behind Oracle in HPS potential for M+.
-- Oracle synergizes with Void Shield because shields inherit Power Word: Shield modifiers.
-- Master the Darkness uses a "three card deck" for Void Shield procs — guaranteed one every three Penance casts but unpredictable timing.
-- Penance applies Atonement when cast directly on allies but not via Twinsight offensives.
-- Voidweaver Delve variant exists for solo/group Delve content.
+- Alternative hero talent: Voidweaver (1.52%).
+- Build snapshot metrics: ~92.8k HPS / ~24.6k DPS, max keystone +22.
+- Based on 88,086 parses from keys +7 and above over the last 14 days.

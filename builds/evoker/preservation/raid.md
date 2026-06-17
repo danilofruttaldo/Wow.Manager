@@ -1,36 +1,26 @@
 # Evoker Preservation — Raid
 
 - **Patch:** 12.0.5 (Midnight)
-- **Source:** Icy Veins
-- **URL:** https://www.icy-veins.com/wow/preservation-evoker-pve-healing-spec-builds-talents
-- **Downloaded:** 2026-05-25
+- **Source:** archon.gg
+- **URL:** https://www.archon.gg/wow/builds/preservation/evoker/raid/talents/mythic/all-bosses
+- **Updated:** 2026-06-17
 
 ## Recommended hero talent
 
-Chronowarden as primary for raid; Flameshaper as alternative for farm content.
+Chronowarden (62.5% usage)
 
-## Talent builds
-
-### Chronowarden Raiding
+## Talent build
 
 ```
-CwbBAAAAAAAAAAAAAAAAAAAAAAAAAAAYmZ2WmHAzYmxsZMzMzyAAAMzYGDmxMyMzAAAAMzMTmxMjZbmZAwAjZsxCMwMM0AWgxMDwYA
-```
-
-### Flameshaper Raiding
-
-```
-CwbBAAAAAAAAAAAAAAAAAAAAAAAAAAAYmZ2WmHAzYmxsZYmZWGAAAzYGDmxMyMzAAAAMzMTmxMjZbmZAwMmBWALgZYCsZYzwAYmZmB
+CwbBAAAAAAAAAAAAAAAAAAAAAAAAAAAYmZ2MPAGmZMbGzMzsMDAAwMmxMGjZEmBAAAYmZkZMzMzyMzAgBGzYjFYgZYohhFYMzAMGA
 ```
 
 ## Stat priority
 
-Not explicitly listed on the builds page; consult the Stats guide on Icy Veins.
+Not published on archon talents page.
 
 ## Notes
 
-- Chronowarden raiding focuses on Tip the Scales windows and Temporal Anomaly shield placement.
-- Stack Haste through repeated Verdant Embrace casts (Reverberation + Primacy synergy).
-- Maintain Merithra's Blessing on Reversion for multi-target bounce healing.
-- Flameshaper raiding leverages extra Dream Breath charges for burst healing windows.
-- Chronowarden is the recommended progression build; Flameshaper is comfortable on farm.
+- Alternative hero talent: Flameshaper (37.4% usage; Trailblazer 97.30%, Enkindle 91.49%, Draconic Instincts 66.67%).
+- Chronowarden key picks: Temporality (99.51%), Time Convergence (90.89%).
+- Reference build: ~194.1k HPS / ~12.5k DPS. Based on 13,799 parses, top 50% over 14 days.
