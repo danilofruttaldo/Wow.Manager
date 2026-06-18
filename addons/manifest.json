@@ -59,16 +59,6 @@
       "folders": ["MythicDungeonTools"],
       "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-17 6.1.17->6.1.18 via forgecdn files/8265/367. TOC include 120007 (build 12.0.7)"
     },
-    "Plater": {
-      "name": "Plater Nameplates",
-      "version": "Plater-v646",
-      "interface": "120005, 120007",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/plater-nameplates",
-      "installed": "2026-06-17",
-      "folders": ["Plater"],
-      "notes": "Nameplates avanzati. Aggiornato 2026-06-17 v645->v646 (redeploy migrazione desktop) via forgecdn files/8266/346 (Plater-v646.zip)"
-    },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "version": "12.0.23",
