@@ -198,6 +198,16 @@
       "installed": "2026-06-17",
       "folders": ["AllTheThings"],
       "notes": "Collection tracker completo (mount, pet, toy, transmog, achievement, quest, ecc.) con mappa nodi. Scaricato 2026-06-17 v5.2.1 via forgecdn files/8263/722 (AllTheThings-5.2.1.zip). TOC include 120007 match build 12.0.7, niente 'Load out of date'."
+    },
+    "SimpleItemLevel": {
+      "name": "Simple Item Level",
+      "version": "v65",
+      "interface": "120001, 120000, 110207, 50503, 30405, 20505, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/simple-item-level",
+      "installed": "2026-06-18",
+      "folders": ["SimpleItemLevel"],
+      "notes": "Mostra item level su character/inspect/bag, su unit frame e nameplate. Reinstallato 2026-06-18 su richiesta utente (rimosso 2026-06-17). Latest CF ancora v65 (rilasciato 2026-03-23) via forgecdn files/7797/577. TOC max 120001 -> OOD a build 12.0.7, carica con 'Load out of date AddOns' (gia ON)."
     }
   }
 }
