@@ -71,13 +71,13 @@
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
-      "version": "12.0.22",
-      "interface": "120005, 120007",
+      "version": "12.0.23",
+      "interface": "120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
       "installed": "2026-06-11",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-06-11 12.0.21->12.0.22 via forgecdn files/8231/37 (subbucket SENZA zero iniziale: file_id 8231037 -> /8231/37/). TOC 120005,120007 match build"
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-06-18 12.0.22->12.0.23 via forgecdn files/8271/584 (Leatrix_Plus-12.0.23.zip; il 12.0.23 era .alpha.1 il 2026-06-18 mattina, ora release piena). TOC ora 120007 puro (match build 12.0.7, non piu OOD)"
     },
     "HandyNotes": {
       "name": "HandyNotes",
