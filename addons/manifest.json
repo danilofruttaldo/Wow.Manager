@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-06-17"
+    "last_sync": "2026-06-18"
   },
   "addons": {
     "BigWigs": {
@@ -101,13 +101,13 @@
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
-      "version": "12.5",
+      "version": "12.6",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/teleport-me-nu",
-      "installed": "2026-06-17",
+      "installed": "2026-06-18",
       "folders": ["TeleportMenu"],
-      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). Aggiornato 2026-06-17 12.4->12.5 via forgecdn files/8260/536 (filename TeleportMenu-v12.5.zip, NB prefisso 'v'); TOC ora 120005,120007 match build 12.0.7 (non più out-of-date)."
+      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). Aggiornato 2026-06-18 12.5->12.6 via forgecdn files/8268/422 (filename TeleportMenu-v12.6.zip, NB prefisso 'v'); TOC 120005,120007 match build 12.0.7."
     },
     "TomTom": {
       "name": "TomTom",
@@ -161,13 +161,13 @@
     },
     "MethodRaidTools": {
       "name": "Method Raid Tools",
-      "version": "5310",
-      "interface": "120005, 120007",
+      "version": "5315",
+      "interface": "120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/method-raid-tools",
-      "installed": "2026-06-17",
+      "installed": "2026-06-18",
       "folders": ["MRT"],
-      "notes": "Suite raid: note (MRT note editor), timer/cooldowns, weakaura-like per boss. Cartella singola MRT. TOC Mainline 120005,120007 (lo zip ha anche MRT-Classic.toc). Aggiornato 2026-06-17 5300->5310 via forgecdn files/8261/765 (filename MRT5310.zip)."
+      "notes": "Suite raid: note (MRT note editor), timer/cooldowns, weakaura-like per boss. Cartella singola MRT. TOC Mainline 120007 (lo zip ha anche MRT-Classic.toc). Aggiornato 2026-06-18 5310->5315 via forgecdn files/8268/621 (filename MRT5315.zip)."
     },
     "CursorRing": {
       "name": "Cursor Ring",
