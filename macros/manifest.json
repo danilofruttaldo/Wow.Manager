@@ -307,6 +307,18 @@
       "body_file": "druid/feral/prowl-cat-form.txt",
       "body": null,
       "notes": "Sostituisce druid-motw-cat-form 2026-06-12 (Mark of the Wild spostato dall'utente su un bottone separato; questa resta solo Prowl/Cat Form). spec:feral. Logica combat-based 2 rami: [nocombat] → Prowl (stealth); altrimenti (in combat) → !Cat Form (entra in forma cat). VERIFICATO Warcraft Wiki: Prowl AUTO-SHIFTA in Cat Form ('Shift into Cat Form and enter stealth') → fuori combat parte da QUALSIASI forma, cat+stealth in un press; e Prowl NON è usabile in combat. Per questo l'orientamento è nocombat→Prowl/combat→Cat (il viceversa è impossibile: niente Prowl in combat). Il prefisso ! su Cat Form impedisce di USCIRE di forma se premi in combat mentre sei già in Cat (senza !, ri-casteresti Cat Form uscendo). #showtooltip nudo dinamico mostra Prowl fuori combat, Cat Form in combat."
+    },
+    "druid-ursols-vortex": {
+      "name": "Vortex @cursor",
+      "scope": "account",
+      "class": "druid",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/ursols-vortex.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-18 ('shared' → spec:null, cross-spec). Piazza Ursol's Vortex sulla posizione del mouse (@cursor): area che rallenta i nemici e, se provano a uscirne, li ricentra (pseudo-grip AoE). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem e degli altri @cursor druido). VERIFICATO: Ursol's Vortex è talento albero classe → disponibile a tutte le spec druido se talentato (per questo spec:null shared). CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo dinamico mostra Ursol's Vortex."
     }
   }
 }
