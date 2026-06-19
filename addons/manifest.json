@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-06-18"
+    "last_sync": "2026-06-19"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v417",
+      "version": "v417.2",
       "interface": "120001, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-16",
+      "installed": "2026-06-19",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -24,7 +24,7 @@
         "BigWigs_Sporefall",
         "BigWigs_MarchOnQuelDanas"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-16 v416.6->v417 via forgecdn files/8258/158"
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-19 v417->v417.2 via GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120001,120005,120007 match build 12.0.7, 9 cartelle invariate."
     },
     "LittleWigs": {
       "name": "LittleWigs",
