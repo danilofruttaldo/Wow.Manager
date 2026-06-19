@@ -129,6 +129,16 @@
       "folders": ["Syndicator"],
       "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-06-17 270->271 via forgecdn files/8257/257 (Syndicator-271.zip); TOC ora include 120007 (build 12.0.7)."
     },
+    "Auctionator": {
+      "name": "Auctionator",
+      "version": "327",
+      "interface": "120007, 120005, 50504, 38000, 20505, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/auctionator",
+      "installed": "2026-06-19",
+      "folders": ["Auctionator"],
+      "notes": "Addon casa d'aste: posting/cancel rapido, shopping list, prezzi cronologici, vendor/disenchant value. Stesso ecosistema plusmouse di [[Syndicator]]/[[Baganator]] (usa il loro data layer per inventario cross-char). Installato 2026-06-19 v327 via forgecdn files/8261/983 (Auctionator-327.zip). TOC 120007 match build 12.0.7, no Load out of date. Cartella singola. OptionalDeps solo LibAHTab (bundled). Richiede /reload."
+    },
     "WIM": {
       "name": "WIM (WoW Instant Messenger) v3",
       "version": "3.16.14",
