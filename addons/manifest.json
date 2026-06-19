@@ -24,7 +24,7 @@
         "BigWigs_Sporefall",
         "BigWigs_MarchOnQuelDanas"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-19 v417->v417.2 via GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120001,120005,120007 match build 12.0.7, 9 cartelle invariate."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-19 v417->v417.2 via GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120001,120005,120007 match build 12.0.7, 9 cartelle invariate. PATCH LOCALE 2026-06-19: disabilitato il 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua ~riga 1533: prefisso 'if false and ...' al blocco. Nessuna opzione in-game per disattivarlo. DA RI-APPLICARE dopo ogni update (BigWigs aggiorna spessissimo -> va persa)."
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -97,7 +97,7 @@
       "url": "https://www.curseforge.com/wow/addons/teleport-me-nu",
       "installed": "2026-06-18",
       "folders": ["TeleportMenu"],
-      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). Aggiornato 2026-06-18 12.5->12.6 via forgecdn files/8268/422 (filename TeleportMenu-v12.6.zip, NB prefisso 'v'); TOC 120005,120007 match build 12.0.7."
+      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). Aggiornato 2026-06-18 12.5->12.6 via forgecdn files/8268/422 (filename TeleportMenu-v12.6.zip, NB prefisso 'v'); TOC 120005,120007 match build 12.0.7. PATCH LOCALE 2026-06-19: spostato Lightveil Recall Beacon (toy 276371) da Data/Hearthstones.lua a tpm.ItemTeleports in Data/Items.lua -> compare come bottone teleport dedicato anziche nel pool hearthstone. NB ItemTeleports e' opt-in (richiede TeleportMenuDB[id]==true, abilitare in opzioni). DA RI-APPLICARE dopo ogni update addon (va persa)."
     },
     "TomTom": {
       "name": "TomTom",
