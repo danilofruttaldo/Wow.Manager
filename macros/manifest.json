@@ -284,6 +284,18 @@
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-20 (nel set Elemental, ma classificata spec:null su scelta utente). Piazza Earthbind Totem sulla posizione del mouse (@cursor): totem che rallenta i nemici nel raggio. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem). Earthbind Totem è baseline su TUTTE le spec shaman → cross-spec come Capacitor, per questo spec:null (root classe). #showtooltip nudo mostra Earthbind Totem."
     },
+    "shaman-wind-rush-totem": {
+      "name": "Wind Rush @cur",
+      "scope": "account",
+      "class": "shaman",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/wind-rush-totem.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-20. Piazza Wind Rush Totem sulla posizione del mouse (@cursor): totem che dà uno scatto di velocità movimento agli alleati che lo attraversano. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem / shaman-earthbind-totem). Wind Rush Totem è TALENTO albero classe → disponibile a tutte le spec shaman se talentato, per questo spec:null (root classe). CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo mostra Wind Rush Totem."
+    },
     "druid-rebirth-revitalize-revive": {
       "name": "Res druido",
       "scope": "account",
