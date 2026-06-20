@@ -101,13 +101,13 @@
     },
     "TomTom": {
       "name": "TomTom",
-      "version": "v4.3.4-release",
-      "interface": "120005",
+      "version": "v4.3.5-release",
+      "interface": "120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/tomtom",
-      "installed": "2026-06-05",
+      "installed": "2026-06-19",
       "folders": ["TomTom"],
-      "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo)"
+      "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-06-19 v4.3.4-release->v4.3.5-release via /aggiorna-addon (workflow) forgecdn files/8278/335. TOC ora 120007 puro match build 12.0.7 (prima 120005), niente piu Load out of date."
     },
     "Baganator": {
       "name": "Baganator",
@@ -191,13 +191,13 @@
     },
     "SimpleItemLevel": {
       "name": "Simple Item Level",
-      "version": "v65",
-      "interface": "120001, 120000, 110207, 50503, 30405, 20505, 11508",
+      "version": "v66",
+      "interface": "120007, 50504, 30405, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/simple-item-level",
-      "installed": "2026-06-18",
+      "installed": "2026-06-19",
       "folders": ["SimpleItemLevel"],
-      "notes": "Mostra item level su character/inspect/bag, su unit frame e nameplate. Reinstallato 2026-06-18 su richiesta utente (rimosso 2026-06-17). Latest CF ancora v65 (rilasciato 2026-03-23) via forgecdn files/7797/577. TOC max 120001 -> OOD a build 12.0.7, carica con 'Load out of date AddOns' (gia ON)."
+      "notes": "Mostra item level su character/inspect/bag, su unit frame e nameplate. Reinstallato 2026-06-18 (rimosso 2026-06-17). Aggiornato 2026-06-19 v65->v66 via /aggiorna-addon (workflow) forgecdn files/8282/890. TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date)."
     }
   }
 }
