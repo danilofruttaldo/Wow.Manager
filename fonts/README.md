@@ -20,9 +20,11 @@ Copiare `source_file` (dal manifest) sotto ognuno dei `files` nella cartella `wo
 
 ```bash
 for n in FRIZQT__.TTF ARIALN.TTF MORPHEUS.TTF skurri.TTF 2002.TTF 2002B.TTF; do
-  cp -f "C:/Windows/Fonts/segoeui.ttf" "C:/Program Files (x86)/World of Warcraft/_retail_/Fonts/$n"
+  cp -f "C:/Windows/Fonts/seguisb.ttf" "C:/Program Files (x86)/World of Warcraft/_retail_/Fonts/$n"
 done
 ```
+
+> Font scelto: **Segoe UI Semibold** (`seguisb.ttf`) — peso più marcato di Regular per leggibilità su numeri/combat/nameplate.
 
 Il binario `.ttf` **non è versionato** (font di sistema, ricostruibile). I `.slug` interni Blizzard non si toccano.
 
