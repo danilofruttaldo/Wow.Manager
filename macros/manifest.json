@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": 1,
     "wtf_path": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\WTF",
-    "last_sync": "2026-06-09",
+    "last_sync": "2026-06-20",
     "active_spec": "fury",
     "parked_specs": ["arms", "protection"],
     "active_spec_notes": "Switch Arms->Fury il 2026-06-05 (Fury +~6% sim ST/AoE leggero, MT loadout flessibile). Le macro Arms-specific (cs-rend, ravager-bladestorm, sweeping-cleave) restano in manifest come kit parcheggiato (account-wide, condivise tra spec): non cancellate, riusabili al reswitch. warrior-cs-rend NON ha equivalente Fury (no Colossus Smash/Rend). Il vecchio warrior-avatar-trinket (Arms) è stato FUSO in warrior-avatar-reck-trinket (spec:null, cross-spec via known:Recklessness/known:Avatar): un solo burst opener per Fury e Arms, file arms/avatar-trinket.txt eliminato. Stessa fusione per Bladestorm: warrior-bladestorm (Fury) assorbito in warrior-ravager-bladestorm (spec:null), file fury/bladestorm.txt eliminato. Obiettivo: keybind allineati Fury+Arms, ruoli cross-spec sugli stessi slot — vedi ui-profiles/keybinds-warrior.md. PROTECTION (occasionale, parked 2026-06-06): una sola macro Prot-specific: warrior-prot-intimidating-howl (known:Intimidating Shout → IntShout, altrimenti Piercing Howl, stesso pattern di shockwave-howl). Kit tank precedente creato e poi eliminato 2026-06-07 su richiesta utente (prot-active-mitigation, prot-defensives, prot-taunt, prot-spell-reflect-ally). Per il resto Prot è coperto dalle cross-spec. Le cross-spec esistenti coprono già Prot via known: charge-intervene, heroic-leap-cursor, shockwave-howl, avatar-reck-trinket (Avatar+trinket, Reck saltato), rend-whirlwind (sempre Thunder Clap, ridondante). CAVEAT: warrior-ravager-bladestorm in Prot funziona SOLO con Ravager talentato (fallback Bladestorm non esiste in Prot). CONFERMATO 2026-06-07: NESSUNA delle due build Prot MT scelte (mplus + raid) talenta Ravager -> in Prot la macro e' INERTE, lo slot AoE-channel resta vuoto. L'AoE Prot e' coperto da Thunder Clap (rend-whirlwind). Vedi keybinds-warrior.md sezione E."
@@ -192,13 +192,13 @@
       "name": "ChainHeal/CL",
       "scope": "account",
       "class": "shaman",
-      "spec": "restoration",
+      "spec": null,
       "character": null,
       "slot": null,
       "icon": null,
-      "body_file": "shaman/restoration/chain-heal-chain-lightning.txt",
+      "body_file": "shaman/chain-heal-chain-lightning.txt",
       "body": null,
-      "notes": "Fornita dall'utente verbatim 2026-06-09 (spec:restoration). Hybrid heal/DPS un-bottone (stesso schema di healing-wave-lightning-bolt): mouseover su alleato vivo → Chain Heal (heal AoE a rimbalzo, parte dall'alleato sotto il mouse); altrimenti → Chain Lightning (danno AoE) sul target corrente. #showtooltip nudo dinamico mostra il ramo attivo."
+      "notes": "Fornita dall'utente verbatim 2026-06-09 (allora spec:restoration). RICLASSIFICATA spec:null 2026-06-20: l'utente ha fornito la stessa identica macro per Elemental → body byte-identico, riusabile cross-spec, quindi unificata invece di duplicare (stesso principio del Capacitor Totem null e delle fusioni warrior cross-spec). File spostato in shaman/chain-heal-chain-lightning.txt (root classe = convenzione spec:null). Hybrid heal/DPS un-bottone (stesso schema di healing-wave-lightning-bolt): mouseover su alleato vivo → Chain Heal (heal AoE a rimbalzo, parte dall'alleato sotto il mouse); altrimenti → Chain Lightning (danno AoE) sul target corrente. Chain Heal e Chain Lightning sono disponibili a tutte le spec shaman → davvero cross-spec: in Resto il ramo heal è il ruolo primario, in Elemental è l'off-heal d'emergenza e Chain Lightning il filler AoE. #showtooltip nudo dinamico mostra il ramo attivo."
     },
     "shaman-healing-surge-lava-burst": {
       "name": "HealSurge/Lava",
@@ -247,6 +247,42 @@
       "body_file": "shaman/restoration/spirit-link-totem.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-09 (spec:restoration). Piazza Spirit Link Totem sul cursore (@cursor): CD difensivo Resto che redistribuisce gli HP tra i membri del gruppo nel raggio + ~10% riduzione danni. @cursor evita il prompt di targeting → piazzamento immediato sotto il mouse. spec:restoration: è un totem Resto. #showtooltip nudo mostra Spirit Link Totem."
+    },
+    "shaman-purge-cleanse-spirit": {
+      "name": "Purge/Cleanse",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "elemental",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/elemental/purge-cleanse-spirit.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-20 ('macro per elemental'). Dispel a doppio ruolo: mouseover su alleato vivo (@mouseover,help,nodead) → Cleanse Spirit (dispella Curse dall'alleato senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) → Purge (dispel offensivo magia sul target corrente). Il ramo default NON ha @mouseover → Purge va sul target attuale, non sul mouseover nemico. nodead evita il cleanse su alleato morto. spec:elemental perché Cleanse Spirit è il dispel Curse di Elemental/Enhancement (la Restoration usa invece Purify Spirit, che dispella anche Magic) → su Resto il ramo cleanse darebbe 'spell sconosciuta'. Funziona identica anche su Enhancement (Cleanse Spirit baseline Enh). Purge è cross-spec (tutte le spec). #showtooltip nudo dinamico mostra l'icona del ramo attivo."
+    },
+    "shaman-healing-surge-lightning-bolt": {
+      "name": "HealSurge/Bolt",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "elemental",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/elemental/healing-surge-lightning-bolt.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-20 ('macro per elemental'). Hybrid heal/DPS un-bottone (stesso schema delle hybrid Resto): mouseover su alleato vivo → Healing Surge (heal singolo veloce d'emergenza); altrimenti → Lightning Bolt (filler danno ST Elemental) sul target corrente. Il ramo default NON ha @mouseover → il danno va sul target attuale. Distinta dalla resto shaman-healing-surge-lava-burst: stessa cura ma filler Lightning Bolt invece di Lava Burst (coppia pensata per Elemental). Healing Surge e Lightning Bolt sono baseline su tutte le spec, ma la coppia è raggruppata nel kit Elemental → spec:elemental. #showtooltip nudo dinamico mostra il ramo attivo."
+    },
+    "shaman-earthbind-totem": {
+      "name": "Earthbind @cur",
+      "scope": "account",
+      "class": "shaman",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/earthbind-totem.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-20 (nel set Elemental, ma classificata spec:null su scelta utente). Piazza Earthbind Totem sulla posizione del mouse (@cursor): totem che rallenta i nemici nel raggio. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem). Earthbind Totem è baseline su TUTTE le spec shaman → cross-spec come Capacitor, per questo spec:null (root classe). #showtooltip nudo mostra Earthbind Totem."
     },
     "druid-rebirth-revitalize-revive": {
       "name": "Res druido",
