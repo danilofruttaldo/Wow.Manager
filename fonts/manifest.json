@@ -5,8 +5,8 @@
     "last_sync": "2026-06-20"
   },
   "override": {
-    "source_font": "Segoe UI",
-    "source_file": "C:\\Windows\\Fonts\\segoeui.ttf",
+    "source_font": "Segoe UI Semibold",
+    "source_file": "C:\\Windows\\Fonts\\seguisb.ttf",
     "installed": "2026-06-20",
     "scope": "UI Blizzard di default, globale (tutti i personaggi e account)",
     "files": [
@@ -17,6 +17,6 @@
       "2002.TTF",
       "2002B.TTF"
     ],
-    "notes": "Font unico in tutta la UI base. Metodo: copia di segoeui.ttf sotto i nomi-override che WoW carica da Fonts/ (FRIZQT__ = font principale, ARIALN = chat/numeri, MORPHEUS = titoli quest/posta, skurri = combat text, 2002/2002B = numeri secondari). Il binario .ttf NON e' versionato (font di sistema Windows, ricostruibile copiando source_file). I .slug interni Blizzard restano intatti. Si carica all'AVVIO del client (non basta /reload). Revert: cancellare i 6 .TTF da Fonts/. CAVEAT: addon con font proprio (Details, BigWigs, MRT) non seguono questo override, vanno impostati nei rispettivi selettori."
+    "notes": "Font unico in tutta la UI base. Scelto Semibold (non Regular) per leggibilita su numeri/action bar/nameplate/combat text (sfondi carichi). Metodo: copia di seguisb.ttf sotto i nomi-override che WoW carica da Fonts/ (FRIZQT__ = font principale, ARIALN = chat/numeri, MORPHEUS = titoli quest/posta, skurri = combat text, 2002/2002B = numeri secondari). Il binario .ttf NON e' versionato (font di sistema Windows, ricostruibile copiando source_file). I .slug interni Blizzard restano intatti. Si carica all'AVVIO del client (non basta /reload). Revert: cancellare i 6 .TTF da Fonts/. CAVEAT: addon con font proprio (Details, BigWigs, MRT) non seguono questo override, vanno impostati nei rispettivi selettori."
   }
 }
