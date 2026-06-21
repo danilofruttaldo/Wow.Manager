@@ -8,8 +8,8 @@
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v417.2",
-      "interface": "120001, 120005, 120007",
+      "version": "v417.3",
+      "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
       "installed": "2026-06-19",
@@ -24,7 +24,7 @@
         "BigWigs_Sporefall",
         "BigWigs_MarchOnQuelDanas"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-19 v417->v417.2 via GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120001,120005,120007 match build 12.0.7, 9 cartelle invariate. PATCH LOCALE 2026-06-19: disabilitato il 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua ~riga 1533: prefisso 'if false and ...' al blocco. Nessuna opzione in-game per disattivarlo. DA RI-APPLICARE dopo ogni update (BigWigs aggiorna spessissimo -> va persa)."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-21 v417.2->v417.3 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 9 cartelle. PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua ~riga 1533 (prefisso 'if false and ...' al blocco): PERSO con l'update del 2026-06-21, DA RI-APPLICARE. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update."
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -128,16 +128,6 @@
       "installed": "2026-06-17",
       "folders": ["Syndicator"],
       "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-06-17 270->271 via forgecdn files/8257/257 (Syndicator-271.zip); TOC ora include 120007 (build 12.0.7)."
-    },
-    "Auctionator": {
-      "name": "Auctionator",
-      "version": "327",
-      "interface": "120007, 120005, 50504, 38000, 20505, 11508",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/auctionator",
-      "installed": "2026-06-19",
-      "folders": ["Auctionator"],
-      "notes": "Addon casa d'aste: posting/cancel rapido, shopping list, prezzi cronologici, vendor/disenchant value. Stesso ecosistema plusmouse di [[Syndicator]]/[[Baganator]] (usa il loro data layer per inventario cross-char). Installato 2026-06-19 v327 via forgecdn files/8261/983 (Auctionator-327.zip). TOC 120007 match build 12.0.7, no Load out of date. Cartella singola. OptionalDeps solo LibAHTab (bundled). Richiede /reload."
     },
     "WIM": {
       "name": "WIM (WoW Instant Messenger) v3",
