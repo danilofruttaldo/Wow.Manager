@@ -71,13 +71,13 @@
     },
     "HandyNotes": {
       "name": "HandyNotes",
-      "version": "1.6.28",
-      "interface": "110207,120000,120001,11508,20505,50503",
+      "version": "v1.6.29",
+      "interface": "120007,11508,20505,50504",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes",
       "installed": "2026-05-24",
       "folders": ["HandyNotes"],
-      "notes": "Core framework per plugin di mappa. TOC out-of-date ma API stabile, funziona con 'Load out of date AddOns'"
+      "notes": "Core framework per plugin di mappa. Aggiornato 2026-06-22 1.6.28->v1.6.29 via /aggiorna-addon (workflow) forgecdn files/8297/983 (HandyNotes-v1.6.29.zip). TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date)."
     },
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
