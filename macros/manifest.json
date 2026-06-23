@@ -260,6 +260,18 @@
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-20 ('macro per elemental'). Dispel a doppio ruolo: mouseover su alleato vivo (@mouseover,help,nodead) → Cleanse Spirit (dispella Curse dall'alleato senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) → Purge (dispel offensivo magia sul target corrente). Il ramo default NON ha @mouseover → Purge va sul target attuale, non sul mouseover nemico. nodead evita il cleanse su alleato morto. spec:elemental perché Cleanse Spirit è il dispel Curse di Elemental/Enhancement (la Restoration usa invece Purify Spirit, che dispella anche Magic) → su Resto il ramo cleanse darebbe 'spell sconosciuta'. Funziona identica anche su Enhancement (Cleanse Spirit baseline Enh). Purge è cross-spec (tutte le spec). #showtooltip nudo dinamico mostra l'icona del ramo attivo."
     },
+    "shaman-earthquake": {
+      "name": "Earthquake @cur",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "elemental",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/elemental/earthquake.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-23 ('macro per shaman elemental'). Piazza Earthquake sulla posizione del mouse (@cursor): danno AoE a terra + chance di interrupt/knockdown nell'area. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema dei totem @cursor). Usa /cast (verbatim utente; equivalente a /use). Earthquake è abilità Elemental (talento/spell della spec) → spec:elemental. #showtooltip nudo mostra Earthquake."
+    },
     "shaman-healing-surge-lightning-bolt": {
       "name": "HealSurge/Bolt",
       "scope": "account",
