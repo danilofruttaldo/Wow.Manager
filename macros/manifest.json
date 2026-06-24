@@ -380,6 +380,18 @@
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-24 ('dk shared' -> spec:null, cross-spec). Piazza Anti-Magic Zone sulla posizione del mouse (@cursor): zona a terra che riduce il danno magico subito dal gruppo nel raggio. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema dei totem @cursor shaman e degli altri ground-target). Anti-Magic Zone e' pick di classe quasi universale nelle build Frost/Unholy/Blood (vedi builds/death-knight/frost/mplus.md) -> disponibile a tutte le spec DK se talentato, per questo spec:null (root classe). CAVEAT: se non talentato nel loadout corrente la macro e' inerte (spell non disponibile). #showtooltip nudo mostra Anti-Magic Zone. Prima macro Death Knight del repertorio."
     },
+    "death-knight-death-and-decay": {
+      "name": "DnD @cursor",
+      "scope": "account",
+      "class": "death-knight",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "death-knight/death-and-decay.txt",
+      "body": null,
+      "notes": "Creata 2026-06-24 su richiesta utente ('macro death and decay'). Piazza Death and Decay sulla posizione del mouse (@cursor): zona a terra che infligge danno AoE. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema di death-knight-anti-magic-zone e dei totem @cursor shaman). Death and Decay e' BASELINE su tutte le spec DK (Blood/Frost/Unholy) -> davvero cross-spec, per questo spec:null (root classe), nessun caveat 'se talentato' a differenza di AMZ. USO Frost: solo in AoE 3+ bersagli per abilitare Cleaving Strikes (rende Obliterate/Frostscythe e Glacial Advance ad area); in single target NON si usa (spreca GCD) -- vedi builds/death-knight/frost. In Blood e' invece staple della rotazione/mitigazione, in Unholy filler AoE. #showtooltip nudo mostra Death and Decay."
+    },
     "death-knight-frost-pillar-erw-trinket": {
       "name": "Pillar+ERW+Trinket",
       "scope": "account",
