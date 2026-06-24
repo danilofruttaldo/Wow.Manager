@@ -1,0 +1,5 @@
+#showtooltip Pillar of Frost
+/cast Pillar of Frost
+/cast Empower Rune Weapon
+/use 13
+/use 14
