@@ -368,6 +368,30 @@
       "body": null,
       "notes": "Sostituisce druid-motw-cat-form 2026-06-12 (Mark of the Wild spostato dall'utente su un bottone separato; questa resta solo Prowl/Cat Form). spec:feral. Logica combat-based 2 rami: [nocombat] → Prowl (stealth); altrimenti (in combat) → !Cat Form (entra in forma cat). VERIFICATO Warcraft Wiki: Prowl AUTO-SHIFTA in Cat Form ('Shift into Cat Form and enter stealth') → fuori combat parte da QUALSIASI forma, cat+stealth in un press; e Prowl NON è usabile in combat. Per questo l'orientamento è nocombat→Prowl/combat→Cat (il viceversa è impossibile: niente Prowl in combat). Il prefisso ! su Cat Form impedisce di USCIRE di forma se premi in combat mentre sei già in Cat (senza !, ri-casteresti Cat Form uscendo). #showtooltip nudo dinamico mostra Prowl fuori combat, Cat Form in combat."
     },
+    "death-knight-anti-magic-zone": {
+      "name": "AMZ @cursor",
+      "scope": "account",
+      "class": "death-knight",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "death-knight/anti-magic-zone.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-24 ('dk shared' -> spec:null, cross-spec). Piazza Anti-Magic Zone sulla posizione del mouse (@cursor): zona a terra che riduce il danno magico subito dal gruppo nel raggio. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema dei totem @cursor shaman e degli altri ground-target). Anti-Magic Zone e' pick di classe quasi universale nelle build Frost/Unholy/Blood (vedi builds/death-knight/frost/mplus.md) -> disponibile a tutte le spec DK se talentato, per questo spec:null (root classe). CAVEAT: se non talentato nel loadout corrente la macro e' inerte (spell non disponibile). #showtooltip nudo mostra Anti-Magic Zone. Prima macro Death Knight del repertorio."
+    },
+    "death-knight-frost-pillar-erw-trinket": {
+      "name": "Pillar+ERW+Trinket",
+      "scope": "account",
+      "class": "death-knight",
+      "spec": "frost",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "death-knight/frost/pillar-erw-trinket.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-24 ('dk frost' -> spec:frost). Burst opener Frost off-GCD in un press, analogo esatto di warrior-reck-trinket: Pillar of Frost (CD danno Frost, off-GCD) + Empower Rune Weapon (genera rune+RP, off-GCD) + trinket 13/14 in un colpo solo. Tutto off-GCD -> niente conflitti, parte tutto insieme e puoi castare subito dopo. #showtooltip nudo mostra Pillar of Frost. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. spec:frost perche' Pillar of Frost ed Empower Rune Weapon sono abilita' Frost (su Unholy/Blood la macro darebbe spell non disponibile)."
+    },
     "druid-ursols-vortex": {
       "name": "Vortex @cursor",
       "scope": "account",
