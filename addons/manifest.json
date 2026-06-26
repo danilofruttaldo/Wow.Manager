@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-06-19"
+    "last_sync": "2026-06-26"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v417.3",
+      "version": "v417.4",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-19",
+      "installed": "2026-06-26",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -22,9 +22,10 @@
         "BigWigs_TheDreamrift",
         "BigWigs_TheVoidspire",
         "BigWigs_Sporefall",
-        "BigWigs_MarchOnQuelDanas"
+        "BigWigs_MarchOnQuelDanas",
+        "BigWigs_TheVenomousAbyss"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-21 v417.2->v417.3 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 9 cartelle. PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua ~riga 1533 (prefisso 'if false and ...' al blocco): PERSO con l'update del 2026-06-21, DA RI-APPLICARE. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-26 v417.3->v417.4 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (aggiunta BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: il blocco ora e' ~riga 1546 (prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then'): RI-APPLICATA il 2026-06-26 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -61,13 +62,13 @@
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
-      "version": "12.0.23",
-      "interface": "120007",
+      "version": "12.0.24",
+      "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-06-11",
+      "installed": "2026-06-26",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-06-18 12.0.22->12.0.23 via forgecdn files/8271/584 (Leatrix_Plus-12.0.23.zip; il 12.0.23 era .alpha.1 il 2026-06-18 mattina, ora release piena). TOC ora 120007 puro (match build 12.0.7, non piu OOD)"
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-06-26 12.0.23->12.0.24 via /aggiorna-addon (workflow) forgecdn files/8314/888 (Leatrix_Plus-12.0.24.zip). TOC 120007,120100 (match build 12.0.7, non piu OOD)"
     },
     "HandyNotes": {
       "name": "HandyNotes",
