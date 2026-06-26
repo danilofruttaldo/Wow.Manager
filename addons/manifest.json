@@ -29,11 +29,11 @@
     },
     "LittleWigs": {
       "name": "LittleWigs",
-      "version": "v12.0.55",
-      "interface": "120001, 120005, 120007",
+      "version": "v12.0.56",
+      "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-06-09",
+      "installed": "2026-06-26",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -48,7 +48,7 @@
         "LittleWigs_WarlordsOfDraenor",
         "LittleWigs_WrathOfTheLichKing"
       ],
-      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs"
+      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-06-26 v12.0.55->v12.0.56 via /aggiorna-addon (workflow) forgecdn files/8319/147. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle."
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
@@ -82,13 +82,13 @@
     },
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
-      "version": "v144",
-      "interface": "120005",
+      "version": "v145",
+      "interface": "",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
-      "installed": "2026-05-24",
+      "installed": "2026-06-26",
       "folders": ["HandyNotes_Midnight"],
-      "notes": "Plugin kemayo per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso)"
+      "notes": "Plugin kemayo per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-06-26 v144->v145 via /aggiorna-addon (workflow) forgecdn files/8321/842. NB il .toc NON ha riga '## Interface' (nessuna dichiarazione di build) -> dipende da HandyNotes per il versioning, niente OOD."
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
@@ -112,13 +112,13 @@
     },
     "Baganator": {
       "name": "Baganator",
-      "version": "807",
+      "version": "809",
       "interface": "120007, 120005, 50504, 38001, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/baganator",
-      "installed": "2026-06-17",
+      "installed": "2026-06-26",
       "folders": ["Baganator"],
-      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-06-17 806->807 via forgecdn files/8257/245 (Baganator-807.zip); TOC ora include 120007 (build 12.0.7)."
+      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-06-26 807->809 via /aggiorna-addon (workflow) forgecdn files/8319/282 (Baganator-809.zip); TOC 120007 match build 12.0.7."
     },
     "Syndicator": {
       "name": "Syndicator",
