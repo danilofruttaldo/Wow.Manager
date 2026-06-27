@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-06-26"
+    "last_sync": "2026-06-27"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v417.4",
+      "version": "v417.6",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-26",
+      "installed": "2026-06-27",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -25,7 +25,7 @@
         "BigWigs_MarchOnQuelDanas",
         "BigWigs_TheVenomousAbyss"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-26 v417.3->v417.4 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (aggiunta BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: il blocco ora e' ~riga 1546 (prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then'): RI-APPLICATA il 2026-06-26 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-27 v417.4->v417.6 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1551): RI-APPLICATA il 2026-06-27 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -92,13 +92,13 @@
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
-      "version": "12.6",
+      "version": "v12.6",
       "interface": "120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/teleport-me-nu",
-      "installed": "2026-06-18",
+      "installed": "2026-06-27",
       "folders": ["TeleportMenu"],
-      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). Aggiornato 2026-06-18 12.5->12.6 via forgecdn files/8268/422 (filename TeleportMenu-v12.6.zip, NB prefisso 'v'); TOC 120005,120007 match build 12.0.7. PATCH LOCALE 2026-06-19: spostato Lightveil Recall Beacon (toy 276371) da Data/Hearthstones.lua a tpm.ItemTeleports in Data/Items.lua -> compare come bottone teleport dedicato anziche nel pool hearthstone. NB ItemTeleports e' opt-in (richiede TeleportMenuDB[id]==true, abilitare in opzioni). DA RI-APPLICARE dopo ogni update addon (va persa)."
+      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). Versione in manifest tenuta con prefisso 'v12.6' per matchare cfwidget (era '12.6' -> l'audit la flaggava come falso positivo ogni volta, reinstall stessa versione). TOC 120005,120007 match build 12.0.7. PATCH LOCALE: spostato Lightveil Recall Beacon (toy 276371) da Data/Hearthstones.lua a tpm.ItemTeleports in Data/Items.lua -> compare come bottone teleport dedicato anziche nel pool hearthstone. NB ItemTeleports e' opt-in (richiede TeleportMenuDB[id]==true, abilitare in opzioni). RI-APPLICATA il 2026-06-27 (persa col reinstall del workflow). DA RI-APPLICARE dopo ogni update addon (va persa)."
     },
     "TomTom": {
       "name": "TomTom",
