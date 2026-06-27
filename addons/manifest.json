@@ -29,11 +29,11 @@
     },
     "LittleWigs": {
       "name": "LittleWigs",
-      "version": "v12.0.56",
+      "version": "v12.0.57",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-06-26",
+      "installed": "2026-06-27",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -48,7 +48,7 @@
         "LittleWigs_WarlordsOfDraenor",
         "LittleWigs_WrathOfTheLichKing"
       ],
-      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-06-26 v12.0.55->v12.0.56 via /aggiorna-addon (workflow) forgecdn files/8319/147. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle."
+      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-06-27 v12.0.56->v12.0.57 (manuale: BigWigs in-game segnalava LittleWigs OOD, uscita dopo l'audit del mattino) forgecdn files/8324/954. Installato con WoW APERTO (file Lua, effetto al /reload o relog). TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle."
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
