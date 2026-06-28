@@ -189,16 +189,6 @@
       "installed": "2026-06-19",
       "folders": ["SimpleItemLevel"],
       "notes": "Mostra item level su character/inspect/bag, su unit frame e nameplate. Reinstallato 2026-06-18 (rimosso 2026-06-17). Aggiornato 2026-06-19 v65->v66 via /aggiorna-addon (workflow) forgecdn files/8282/890. TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date)."
-    },
-    "Aurora": {
-      "name": "Aurora",
-      "version": "12.0.7.0",
-      "interface": "120007",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/aurora",
-      "installed": "2026-06-21",
-      "folders": ["Aurora"],
-      "notes": "Reskin minimalista flat/scuro dei frame nativi Blizzard (accent class-colored), per uniformare la UI sul dark in linea con le finestre addon gia scure (Baganator/Ace3). NON rimpiazza la UI (a differenza di ElvUI) -> lascia intatti Baganator/Leatrix/ecc. Author Haleth (wowinterface info18589). Skinna anche un set di addon supportati (Skin/Interface/AddOns). Installato 2026-06-21 12.0.7.0 via forgecdn files/8262/302 (Aurora-12.0.7.0.zip). TOC 120007 match build 12.0.7. Config in-game con /aurora. 12.0.7.0 e' l'ULTIMA release ufficiale (confermato vs repo Gethe/Aurora). PATCH LOCALE 2026-06-28: la build Midnight 12.0.7.68235 NON risolve i moduli Blizzard_Deprecated* (mostrati rossi in lista addon) che Aurora dichiara come RequiredDeps -> safe mode + msg 'Critical dependency', interfacce skinnate male. Fix: (1) Aurora_Mainline.toc -> spostati i Blizzard_Deprecated* da ## RequiredDeps a ## OptionalDeps (no blocco/flag); (2) compatibility.lua -> svuotata Compatibility.dependencies (no safe mode/messaggio). DA RI-APPLICARE a ogni update. NB modifica al TOC richiede RESTART COMPLETO del client (non basta /reload)."
     }
   }
 }

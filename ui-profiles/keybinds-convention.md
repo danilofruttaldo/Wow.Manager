@@ -23,11 +23,12 @@ Due barre sovrapposte, 12 colonne. Colonna N = Bar1 slotN (sopra) + Bar2 slotN (
 | 8 | `F` | `Shift+F` |
 | 9 | `\` | `Alt+\` |
 | 10 | `X` | `Shift+X` |
-| 11 | `Mi…` ⚠️ | `Shift+…` ⚠️ |
-| 12 | `M…` ⚠️ | `M…` ⚠️ |
+| 11 | Tasto laterale mouse 1 | Shift + tasto laterale mouse 1 |
+| 12 | Tasto laterale mouse 2 | Shift + tasto laterale mouse 2 |
 
-⚠️ = label troncata/illeggibile dallo screenshot (slot 11–12, probabilmente tasti mouse o
-macro). Da confermare in-game (Game Menu → Keybindings).
+Le colonne 11–12 (gli ultimi due slot a destra) sono mappate sui **tasti laterali del mouse**:
+riga sopra = tasto laterale, riga sotto = Shift + tasto laterale. (La label "Mi…"/"M…" troncata
+negli screenshot era "Mouse…".)
 
 > **Nota Bartender:** sui pulsanti macro è attivo "mostra nome macro" → il testo piccolo in
 > basso negli slot è il **nome della macro** (es. `HL`, `CT`, `AMZ`, `DaD`). Utile per mappare
@@ -48,14 +49,40 @@ screenshot; ❓ = proposto, da confermare.
 | Tasto | Ruolo | Stato |
 |---|---|---|
 | `G` | Healthstone / consumabile cura (icona erbe verdi, stack visibile su tutti) | ✔ tutti i pg |
-| `Alt+\` | Macro dispel di classe (Decurse, Cleanse Spirit, ecc.) | ❓ da confermare per classe |
-| `?` | **Interrupt** (Pummel/Mind Freeze/Wind Shear/Counterspell/Rebuke/Skull Bash) | ❓ da decidere tasto comune |
-| `?` | **Difensivo personale** maggiore | ❓ da decidere tasto comune |
-| `?` | **Pozione** (combat potion) | ❓ da confermare |
+| `Alt+\` | **Dispel** di classe (dps) **/ Taunt** (tank) — secondo ruolo | ✔ regola utente |
+| `\` | **Interrupt** (Pummel/Mind Freeze/Wind Shear/Counterspell/Rebuke/Skull Bash) | ✔ regola utente |
+| `X` | **Stun / rallentamento** (CC di controllo) | ✔ regola utente |
+| `F` | **Difensivo / mitigation** | ✔ regola utente |
+| `Shift+F` | **Difensivo / mitigation** (secondo) | ✔ regola utente |
+| `Shift+G` | **Self-heal** / cura personale (se la classe ce l'ha) | ✔ regola utente |
+| `Shift+R` | **Difensivo / vita** personale (se la classe ce l'ha) | ✔ regola utente |
+| `Shift+B` | **Pozione di cura** (healing potion) | ✔ regola utente |
+| `Shift+C` | **Pozione di mana** (per healer) | ✔ regola utente |
 
-> **Da fare con l'utente:** scegliere _un_ tasto fisso per Interrupt e _uno_ per il difensivo
-> personale, e verificare che su ogni classe l'abilità giusta sia in quello slot. È il cuore
-> dell'allineamento "ruoli equivalenti tra classi".
+> **Cluster difensivi:** `F`, `Shift+F` e `Shift+R` sono tutti slot difensivi/mitigation
+> (più `Shift+G` self-heal). Se una classe ha pochi difensivi, alcuni di questi slot restano
+> vuoti senza essere "buchi".
+
+> **Ancore decise (regola utente):**
+> - `\` = **interrupt** su ogni classe (Pummel/Mind Freeze/Wind Shear/Counterspell/Rebuke/Skull Bash).
+> - `Alt+\` = **dispel** sui dps, **taunt/grip** sui tank (es. Hand of Reckoning, Death Grip).
+> - `X` = **stun / rallentamento** (CC di controllo) su ogni classe.
+> - `Shift+G` = **self-heal** personale (se la classe ce l'ha).
+> - `F`, `Shift+F`, `Shift+R` = **difensivi / mitigation** (cluster); `Shift+G` = self-heal.
+>
+> Se uno slot è vuoto, la classe **non ha** quell'abilità — oppure è un buco da riempire.
+> - `Shift+B` = **pozione di cura**, `Shift+C` = **pozione di mana** (per healer).
+
+## Tasti funzione (utility cross-class, regola utente)
+
+Fuori dalle due barre principali, sui tasti F:
+
+| Tasto | Ruolo |
+|---|---|
+| `F1`, `F2` | **Buff di classe** (Arcane Intellect, Battle Shout, Mark of the Wild, ecc.) |
+| `F4` | **Invisibilità / stealth** o simile, se la classe ce l'ha |
+| `F8` | **Res / Combat Res** (battle res o res normale) |
+| `F12` | **Bloodlust / Heroism / Time Warp / Drums / ecc.** |
 
 ## Personaggi tracciati
 
@@ -70,3 +97,9 @@ screenshot; ❓ = proposto, da confermare.
 
 > Gli alt sono mono-spec ma scambiano qualche pulsante tra M+ e raid → i file per classe
 > segnano la colonna M+ vs raid dove serve.
+
+> **Come si giocano gli alt (importante per l'allineamento):** slot `1` = **one-button**
+> (rotazione automatica), poi solo qualche **binding strategico** per stun, interrupt e utility.
+> → Per gli alt l'allineamento riguarda **solo i tasti strategici/ancore** (`\`, `X`, `Alt+\`,
+> `G`, `Shift+G`, `Shift+R`, pozione), **non** i filler rotazionali. Le ipotesi `?` sui filler di
+> Bar 1 sono quindi secondarie: non serve sistemarle.
