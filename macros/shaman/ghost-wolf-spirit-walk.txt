@@ -1,2 +1,0 @@
-#showtooltip
-/use [mod,known:Spirit Walk] Spirit Walk; [mod,known:Spiritwalker's Grace] Spiritwalker's Grace; Ghost Wolf
