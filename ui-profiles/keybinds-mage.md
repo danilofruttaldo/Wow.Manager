@@ -8,18 +8,18 @@
 
 | Slot | Tasto | Abilità (indovinata) | Note |
 |---|---|---|---|
-| 1 | `1` | Frostbolt ? | icona blu |
+| 1 | `1` | **One-button** (rotazione automatica) | non da allineare |
 | 2 | `2` | Ice Lance ? | dardo blu, stack "2" |
 | 3 | `3` | Frozen Orb ? | anello/orb blu (spesso evidenziato = proc) |
 | 4 | `4` | **Polymorph** ? | gatto nero su luna |
 | 5 | `Q` | Flurry ? | scheggia blu |
 | 6 | `E` | Glacial Spike / Ice Lance ? | raggio blu, stack "2" |
 | 7 | `R` | Ice Block ? | volto in ghiaccio |
-| 8 | `F` | Frostfire Bolt ? | fiamma blu, stack "2" |
-| 9 | `\` | ? | vortice viola |
-| 10 | `X` | Ice Barrier ? | ghiaccio bianco/blu |
-| 11 | `Mi…` | ? | stella viola "2" |
-| 12 | `M…` | ? | raggio blu |
+| 8 | `F` | **Ice Barrier / Ice Block** (difensivo) ? ✔ ancora | `F` = difensivo |
+| 9 | `\` | **Counterspell** (interrupt) ✔ ancora | vortice viola → coerente con `\` = interrupt |
+| 10 | `X` | **Frost Nova (root) / Ring of Frost** ? ✔ ancora | `X` = stun/slow; icona ghiaccio coerente |
+| 11 | Mouse laterale 1 | ? | stella viola "2" |
+| 12 | Mouse laterale 2 | ? | raggio blu |
 
 ## Bar 2 (riga sotto)
 
@@ -28,18 +28,18 @@
 | 1 | `T` | ? | teschio/figura |
 | 2 | `Shift+T` | Fire Blast ? | fiamma arancio |
 | 3 | `G` | **Healthstone** | ancora cross-class (stack 0) ✔ |
-| 4 | `Shift+G` | **VUOTO** ⚠️ | |
+| 4 | `Shift+G` | **VUOTO** (ok) | il Mage non ha self-heal → slot correttamente libero ✔ |
 | 5 | `Shift+Q` | Cone of Cold ? | esplosione bianca |
 | 6 | `Shift+E` | ? | esplosione rosa/viola |
-| 7 | `Shift+R` | **VUOTO** ⚠️ | |
-| 8 | `Shift+F` | Mirror Image ? | figura viola |
+| 7 | `Shift+R` | **VUOTO** | ok se i difensivi sono già su `F`/`Shift+F` (Ice Barrier/Block, Mirror Image) |
+| 8 | `Shift+F` | **Mirror Image** (difensivo) ? ✔ ancora | `Shift+F` = difensivo |
 | 9 | `Alt+\` | **`RC|S`** = Remove Curse / Spellsteal (dispel) | ancora dispel cross-class ✔ |
 | 10 | `Shift+X` | Frost Nova / Ice spike ? | scheggia blu |
-| 11 | `Shift+…` | Alter Time ? | fenice/oro |
-| 12 | `M…` | ? | teschio teal "2" |
+| 11 | Shift+mouse laterale 1 | Alter Time ? | fenice/oro |
+| 12 | Shift+mouse laterale 2 | ? | teschio teal "2" |
 
 ## Da confermare con l'utente
-- `Alt+\` `RC|S` = conferma (Remove Curse + Spellsteal) → coerente con ancora dispel ✔
+- `\` = Counterspell (interrupt) ✔ — coerente con l'ancora.
+- `Alt+\` `RC|S` = dispel (Remove Curse + Spellsteal) ✔ — coerente con l'ancora.
 - Slot `4` = Polymorph? (CC) — utile come ancora CC cross-class se vuoi.
-- Interrupt = Counterspell: in quale slot? (non identificato dalle icone)
-- Slot `Shift+G` e `Shift+R` vuoti: liberi apposta?
+- `Shift+G` vuoto = ok (Mage senza self-heal). `Shift+R` vuoto = ok se i difensivi sono su `F`/`Shift+F`.
