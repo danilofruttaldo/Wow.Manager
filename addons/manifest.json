@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-06-27"
+    "last_sync": "2026-06-28"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v417.6",
+      "version": "v417.7",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-06-27",
+      "installed": "2026-06-28",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -25,7 +25,7 @@
         "BigWigs_MarchOnQuelDanas",
         "BigWigs_TheVenomousAbyss"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-27 v417.4->v417.6 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1551): RI-APPLICATA il 2026-06-27 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-06-28 v417.6->v417.7 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1551): RI-APPLICATA il 2026-06-28 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
     },
     "LittleWigs": {
       "name": "LittleWigs",
