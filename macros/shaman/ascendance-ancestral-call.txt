@@ -1,0 +1,5 @@
+#showtooltip
+/cast Ascendance
+/cast [known:Ancestral Call] Ancestral Call
+/use 13
+/use 14

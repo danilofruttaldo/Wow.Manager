@@ -252,13 +252,13 @@
       "name": "Purge/Cleanse",
       "scope": "account",
       "class": "shaman",
-      "spec": "elemental",
+      "spec": null,
       "character": null,
       "slot": null,
       "icon": null,
-      "body_file": "shaman/elemental/purge-cleanse-spirit.txt",
+      "body_file": "shaman/purge-cleanse-spirit.txt",
       "body": null,
-      "notes": "Fornita dall'utente verbatim 2026-06-20 ('macro per elemental'). Dispel a doppio ruolo: mouseover su alleato vivo (@mouseover,help,nodead) → Cleanse Spirit (dispella Curse dall'alleato senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) → Purge (dispel offensivo magia sul target corrente). Il ramo default NON ha @mouseover → Purge va sul target attuale, non sul mouseover nemico. nodead evita il cleanse su alleato morto. spec:elemental perché Cleanse Spirit è il dispel Curse di Elemental/Enhancement (la Restoration usa invece Purify Spirit, che dispella anche Magic) → su Resto il ramo cleanse darebbe 'spell sconosciuta'. Funziona identica anche su Enhancement (Cleanse Spirit baseline Enh). Purge è cross-spec (tutte le spec). #showtooltip nudo dinamico mostra l'icona del ramo attivo."
+      "notes": "Fornita dall'utente verbatim 2026-06-20 ('macro per elemental'). RICLASSIFICATA spec:null 2026-06-28: l'utente la usa ora anche su Enhancement (nuovo pg) — stesso body byte-identico, Cleanse Spirit è baseline sia Elemental sia Enhancement → unificata invece di duplicare (stesso principio di chain-heal-chain-lightning). File spostato in shaman/purge-cleanse-spirit.txt (root classe = convenzione spec:null). CAVEAT: spec:null qui significa 'tutte le spec TRANNE Restoration': Cleanse Spirit è il dispel Curse di Elemental/Enhancement, la Resto usa invece Purify Spirit (dispella anche Magic) → su Resto il ramo cleanse darebbe 'spell sconosciuta'. Purge è cross-spec (tutte le spec). Dispel a doppio ruolo: mouseover su alleato vivo (@mouseover,help,nodead) → Cleanse Spirit (dispella Curse dall'alleato senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) → Purge (dispel offensivo magia sul target corrente). Il ramo default NON ha @mouseover → Purge va sul target attuale, non sul mouseover nemico. nodead evita il cleanse su alleato morto. #showtooltip nudo dinamico mostra l'icona del ramo attivo."
     },
     "shaman-earthquake": {
       "name": "Earthquake @cur",
@@ -307,6 +307,30 @@
       "body_file": "shaman/wind-rush-totem.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-20. Piazza Wind Rush Totem sulla posizione del mouse (@cursor): totem che dà uno scatto di velocità movimento agli alleati che lo attraversano. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem / shaman-earthbind-totem). Wind Rush Totem è TALENTO albero classe → disponibile a tutte le spec shaman se talentato, per questo spec:null (root classe). CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo mostra Wind Rush Totem."
+    },
+    "shaman-ascendance-ancestral-call": {
+      "name": "Ascendance+Racial",
+      "scope": "account",
+      "class": "shaman",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/ascendance-ancestral-call.txt",
+      "body": null,
+      "notes": "Creata 2026-06-28 su richiesta utente (nuovo pg Enhancement, 'shared macro'). Burst opener in un press, stesso schema di warrior-reck-trinket / death-knight-frost-pillar-erw-trinket: Ascendance (CD maggiore) + Ancestral Call (razziale Mag'har Orc, guardato da known: → inerte su altre razze, nessun errore 'spell sconosciuta') + trinket 13/14. Ancestral Call e i trinket sono off-GCD → partono insieme ad Ascendance in un colpo solo. spec:null (root classe): Ascendance è talento disponibile a tutte e 3 le spec shaman (offensivo su Enh/Elem, healing CD su Resto) → davvero cross-spec. CAVEAT: se Ascendance non è talentata nel loadout corrente la macro non casta il CD (resta solo racial+trinket). /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. known:Ancestral Call = stesso pattern dei discriminatori known: warrior/mago: la riga del racial scatta solo se quel racial è effettivamente posseduto. #showtooltip nudo (rettifica utente 2026-06-28): risolve sulla prima azione disponibile, cioè /cast Ascendance → mostra l'icona del CD principale."
+    },
+    "shaman-ghost-wolf-spirit-walk": {
+      "name": "GhostWolf/Walk",
+      "scope": "account",
+      "class": "shaman",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/ghost-wolf-spirit-walk.txt",
+      "body": null,
+      "notes": "Creata 2026-06-28 su richiesta utente ('macro per il ghostwolf', shared). Stile allineato a druid-travel-wild-charge (verbo /use, formato compatto '[mod] A; B'): la macro druido ha una sola abilità sul [mod] e non serve known:; qui invece il [mod] deve scegliere tra due abilità spec-specifiche → servono i discriminatori known:. Mobilità a doppio ramo via [mod] + known: (un solo bind cross-spec): nudo → Ghost Wolf (forma lupo, +velocità); [mod] su Enhancement (known:Spirit Walk) → Spirit Walk (rimuove movement-impairing + velocità, off-GCD); [mod] su Elemental (known:Spiritwalker's Grace) → Spiritwalker's Grace (cast in movimento, off-GCD). Qualsiasi modifier (shift/ctrl/alt). I due rami [mod] sono mutuamente esclusivi per spec (Spirit Walk = Enh, Spiritwalker's Grace = Elem/Resto) → known: evita 'spell sconosciuta' sulla spec che non possiede l'abilità; se nessuna delle due è disponibile il [mod] ricade comunque su Ghost Wolf. spec:null (root classe): Ghost Wolf è baseline su tutte le spec → davvero cross-spec; su Resto il [mod] tende a Spiritwalker's Grace (se talentata) o Ghost Wolf. #showtooltip nudo dinamico: mostra Ghost Wolf senza modifier, l'abilità del ramo attivo col modifier tenuto."
     },
     "druid-rebirth-revitalize-revive": {
       "name": "Res druido",
