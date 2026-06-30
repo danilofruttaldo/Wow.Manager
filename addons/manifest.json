@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-06-28"
+    "last_sync": "2026-06-30"
   },
   "addons": {
     "BigWigs": {
@@ -122,13 +122,13 @@
     },
     "Syndicator": {
       "name": "Syndicator",
-      "version": "271",
+      "version": "272",
       "interface": "120007, 120005, 50504, 38001, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/syndicator",
-      "installed": "2026-06-17",
+      "installed": "2026-06-30",
       "folders": ["Syndicator"],
-      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-06-17 270->271 via forgecdn files/8257/257 (Syndicator-271.zip); TOC ora include 120007 (build 12.0.7)."
+      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-06-30 271->272 via /aggiorna-addon (workflow) forgecdn files/8336/972 (Syndicator-272.zip); TOC include 120007 (build 12.0.7)."
     },
     "WIM": {
       "name": "WIM (WoW Instant Messenger) v3",
