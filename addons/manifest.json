@@ -172,13 +172,13 @@
     },
     "Molinari": {
       "name": "Molinari",
-      "version": "120000.144-Release",
-      "interface": "120001, 120005, 50503, 38001, 20505, 11508",
+      "version": "120000.145-Release",
+      "interface": "120007, 120100, 50504, 38001, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/molinari",
-      "installed": "2026-06-08",
+      "installed": "2026-06-30",
       "folders": ["Molinari"],
-      "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. TOC 120005 match build, niente 'Load out of date'. Download forgecdn files/7940/854"
+      "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. Aggiornato 2026-06-30 120000.144->120000.145 via /aggiorna-addon (workflow) forgecdn files/8346/985. TOC ora include 120007/120100 match build 12.0.7."
     },
     "SimpleItemLevel": {
       "name": "Simple Item Level",
