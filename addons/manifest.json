@@ -189,16 +189,6 @@
       "installed": "2026-06-19",
       "folders": ["SimpleItemLevel"],
       "notes": "Mostra item level su character/inspect/bag, su unit frame e nameplate. Reinstallato 2026-06-18 (rimosso 2026-06-17). Aggiornato 2026-06-19 v65->v66 via /aggiorna-addon (workflow) forgecdn files/8282/890. TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date)."
-    },
-    "Skinner": {
-      "name": "Skinner",
-      "version": "beta12.68317.1",
-      "interface": "120007, 50504, 20505, 11508, 120100",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/skinner",
-      "installed": "2026-06-28",
-      "folders": ["Skinner"],
-      "notes": "Reskin/scurisce la UI Blizzard di default SENZA rimpiazzarla (stessa filosofia di Aurora, che e' stato rimosso il 2026-06-28 perche' incompatibile con la build Midnight: richiedeva i moduli Blizzard_Deprecated* inesistenti -> 1222 azioni tainted). Author jncl, ~3.3M download, attivamente mantenuto (release solo come beta). Config in-game con /skinner o /skin. Installato 2026-06-28 beta12.68317.1 da GitHub release jncl/Skinner (asset Skinner-beta12.68317.1.zip; pubblicata 2026-06-27). NB su CurseForge slug 'skinner' ma cfwidget spesso rate-limita -> usare GitHub releases per il download. TOC 120007 match build 12.0.7, nessun RequiredDeps (a differenza di Aurora). Cartella singola Skinner. OptionalDeps Ace3/LibSharedMedia."
     }
   }
 }
