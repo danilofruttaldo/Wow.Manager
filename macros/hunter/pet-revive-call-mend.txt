@@ -1,0 +1,5 @@
+#showtooltip
+/use [@pet,dead]Revive Pet
+/use [nopet]Call Pet 1
+/use [mod]Dismiss Pet
+/use Mend Pet

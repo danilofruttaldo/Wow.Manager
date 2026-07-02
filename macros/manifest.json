@@ -439,6 +439,54 @@
       "body_file": "druid/ursols-vortex.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-18 ('shared' → spec:null, cross-spec). Piazza Ursol's Vortex sulla posizione del mouse (@cursor): area che rallenta i nemici e, se provano a uscirne, li ricentra (pseudo-grip AoE). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem e degli altri @cursor druido). VERIFICATO: Ursol's Vortex è talento albero classe → disponibile a tutte le spec druido se talentato (per questo spec:null shared). CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo dinamico mostra Ursol's Vortex."
+    },
+    "hunter-flare": {
+      "name": "Flare @cursor",
+      "scope": "account",
+      "class": "hunter",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "hunter/flare.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg BM Arconauta, 'shared per il momento' → spec:null). PRIMA macro Hunter del repertorio. Piazza Flare sulla posizione del mouse (@cursor): area che rivela stealth/invisibili e infligge un po' di danno. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema dei @cursor shaman/druido/dk). Flare è baseline su tutte le spec hunter → davvero cross-spec, per questo spec:null. #showtooltip nudo mostra Flare. NB 'per il momento': l'utente potrebbe riclassificarla per spec in futuro."
+    },
+    "hunter-freezing-trap": {
+      "name": "FreezeTrap @cur",
+      "scope": "account",
+      "class": "hunter",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "hunter/freezing-trap.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg BM Arconauta, 'shared per il momento' → spec:null). Piazza Freezing Trap sulla posizione del mouse (@cursor): trappola che congela (CC) il primo nemico che la calpesta. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di hunter-flare e degli altri @cursor). Freezing Trap è baseline su tutte le spec hunter → cross-spec, per questo spec:null. #showtooltip nudo mostra Freezing Trap."
+    },
+    "hunter-pet-revive-call-mend": {
+      "name": "Pet manager",
+      "scope": "account",
+      "class": "hunter",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "hunter/pet-revive-call-mend.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg BM Arconauta, 'shared per il momento' → spec:null). Gestione pet un-bottone a righe /use sequenziali con condizionali (NON castsequence: ogni press valuta le righe dall'alto e casta la prima abilità la cui condizione passa; le righe con condizione falsa vengono saltate): [@pet,dead] → Revive Pet (pet presente ma morto); [nopet] → Call Pet 1 (nessun pet evocato); [mod] → Dismiss Pet (con qualsiasi modifier tenuto, congeda il pet); default → Mend Pet (pet vivo, nessun modifier → cura). Casi coperti: pet morto→Revive, niente pet→Call, mod→Dismiss, pet vivo→Mend. Tutte baseline su tutte le spec hunter → cross-spec, spec:null. #showtooltip nudo dinamico mostra l'abilità del ramo attivo. CAVEAT: 'Call Pet 1' evoca lo slot stabile 1 (il primo pet salvato); Dismiss richiede il [mod]."
+    },
+    "hunter-misdirection-tranquilizing-shot": {
+      "name": "Misdir/Tranq",
+      "scope": "account",
+      "class": "hunter",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "hunter/misdirection-tranquilizing-shot.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg BM Arconauta, 'shared per il momento' → spec:null). Doppio ruolo un-bottone: mouseover su alleato vivo (@mouseover,help,nodead) → Misdirection (redirige la minaccia sull'alleato sotto il mouse senza cambiare target — di solito il tank); altrimenti (nessun mouseover / mouseover nemico) → Tranquilizing Shot (dispel offensivo: rimuove Enrage/Magic dal target nemico corrente). Il ramo default NON ha @mouseover → Tranq va sul target attuale. nodead evita la Misdirection su alleato morto. Entrambe baseline su tutte le spec hunter → cross-spec, spec:null. #showtooltip nudo dinamico mostra l'icona del ramo attivo (Misdirection col mouse su alleato, Tranquilizing Shot altrimenti). Stesso schema delle hybrid shaman/paladino a doppio ruolo mouseover."
     }
   }
 }
