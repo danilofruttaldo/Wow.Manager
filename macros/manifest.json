@@ -499,6 +499,18 @@
       "body_file": "hunter/binding-shot.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-28 (hunter shared → spec:null). Piazza Binding Shot sulla posizione del mouse (@cursor): area che stordisce i nemici che si allontanano troppo dal centro (AoE root/stun-on-leave). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di hunter-flare / hunter-freezing-trap e degli altri @cursor). Binding Shot è talento albero classe → disponibile a tutte le spec hunter se talentato, per questo spec:null. CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo mostra Binding Shot."
+    },
+    "shared-racial-burst": {
+      "name": "Racial burst",
+      "scope": "account",
+      "class": null,
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shared/racial-burst.txt",
+      "body": null,
+      "notes": "Creata 2026-06-28 su richiesta utente ('macro shared fra tutti i pg perché razziale'). PRIMA macro class:null del repertorio (casella shared/ cross-classe: i razziali sono legati alla RAZZA, non a classe/spec → class:null, spec:null, file in shared/). Burst razziale UNIVERSALE race-adattivo via cascata known:: ogni pg casta il razziale on-use che possiede — Troll → Berserking (haste), Orc → Blood Fury (AP/SP), Mag'har Orc → Ancestral Call (secondaria random) — + trinket 13/14, tutto in un press. known: rende inerti i rami del razziale non posseduto (niente 'spell sconosciuta') → una sola macro valida su QUALSIASI personaggio, qualunque razza. Righe /use multiple: i razziali e i trinket sono off-GCD → partono insieme. #showtooltip nudo risolve sul primo /use disponibile → mostra il razziale del pg corrente. SOVRAPPOSIZIONE: shaman-ascendance-ancestral-call e warrior-reck-trinket / dk-frost-pillar-erw-trinket già castano trinket (e Ancestral Call nel caso shaman) nel loro burst di classe; se questa universale sta sulla stessa barra i trinket sono ridondanti (innocuo, /use trinket non fa danno a vuoto). Pensata per i pg SENZA una macro burst di classe dedicata (la maggioranza) → bottone burst completo su ogni personaggio. Estendibile con altri razziali on-use (es. Fireblood, Light's Judgment) aggiungendo righe [known:X]."
     }
   }
 }
