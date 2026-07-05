@@ -511,6 +511,30 @@
       "body_file": "shared/racial-burst.txt",
       "body": null,
       "notes": "Creata 2026-06-28 su richiesta utente ('macro shared fra tutti i pg perché razziale'). PRIMA macro class:null del repertorio (casella shared/ cross-classe: i razziali sono legati alla RAZZA, non a classe/spec → class:null, spec:null, file in shared/). Burst razziale UNIVERSALE race-adattivo via cascata known:: ogni pg casta il razziale on-use che possiede — Troll → Berserking (haste), Orc → Blood Fury (AP/SP), Mag'har Orc → Ancestral Call (secondaria random) — + trinket 13/14, tutto in un press. known: rende inerti i rami del razziale non posseduto (niente 'spell sconosciuta') → una sola macro valida su QUALSIASI personaggio, qualunque razza. Righe /use multiple: i razziali e i trinket sono off-GCD → partono insieme. #showtooltip nudo risolve sul primo /use disponibile → mostra il razziale del pg corrente. SOVRAPPOSIZIONE: shaman-ascendance-ancestral-call e warrior-reck-trinket / dk-frost-pillar-erw-trinket già castano trinket (e Ancestral Call nel caso shaman) nel loro burst di classe; se questa universale sta sulla stessa barra i trinket sono ridondanti (innocuo, /use trinket non fa danno a vuoto). Pensata per i pg SENZA una macro burst di classe dedicata (la maggioranza) → bottone burst completo su ogni personaggio. Estendibile con altri razziali on-use (es. Fireblood, Light's Judgment) aggiungendo righe [known:X]."
+    },
+    "demon-hunter-sigil-of-misery": {
+      "name": "Misery @cursor",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/sigil-of-misery.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg DH Devourer Illidanielle, 'shared' → spec:null). PRIMA macro Demon Hunter del repertorio. Piazza Sigil of Misery sulla posizione del mouse (@cursor): sigillo che dopo l'attivazione atterrisce (fear AoE) i nemici nell'area. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema dei @cursor shaman/druido/dk/hunter). Sigil of Misery è abilità/talento albero classe DH → disponibile a tutte le spec (Havoc/Vengeance/Devourer), per questo spec:null. #showtooltip nudo mostra Sigil of Misery. CAVEAT: se non talentato nel loadout corrente la macro è inerte."
+    },
+    "demon-hunter-shift": {
+      "name": "Shift @cursor",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "devourer",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/devourer/shift.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg DH Devourer Illidanielle). Piazza/esegue Shift sulla posizione del mouse (@cursor): dash a terra della spec Devourer che rimpiazza Fel Rush — target il punto col cursore e ci zippi quasi istantaneamente (~30y range, ~20s CD, 1-3 cariche a seconda dei talenti, può salire il terreno). VERIFICATO Wowhead/Icy Veins Midnight 12.0.7: è mobilità SPECIFICA Devourer (Havoc usa Fel Rush, Vengeance Infernal Strike) → spec:devourer, file in demon-hunter/devourer/. NON è un vero teleport: attraversa gli effetti a terra. Ground-target esplicito via @cursor → niente prompt di targeting verde. Uso proattivo per assicurarsi cast lunghi (Void Ray/Collapsing Star) da caster ~25y. #showtooltip nudo mostra Shift."
     }
   }
 }
