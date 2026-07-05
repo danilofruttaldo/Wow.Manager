@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-07-03"
+    "last_sync": "2026-07-05"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v418",
+      "version": "v418.1",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-07-03",
+      "installed": "2026-07-05",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -25,7 +25,7 @@
         "BigWigs_MarchOnQuelDanas",
         "BigWigs_TheVenomousAbyss"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-03 v417.7->v418 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1561): RI-APPLICATA il 2026-07-03 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-05 v418->v418.1 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1561): RI-APPLICATA il 2026-07-05 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -52,13 +52,13 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
-      "version": "6.1.19",
+      "version": "6.1.20",
       "interface": "120007, 120001, 50504",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
-      "installed": "2026-06-17",
+      "installed": "2026-07-05",
       "folders": ["MythicDungeonTools"],
-      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-06-23 6.1.18->6.1.19 via /aggiorna-addon (audit workflow) GitHub release Nnoggie/MythicDungeonTools (cfwidget rotto per MDT). Installato con WoW APERTO (file non lockati, effetto al /reload). TOC include 120007 match build 12.0.7."
+      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-07-05 6.1.19->6.1.20 via /aggiorna-addon (workflow) GitHub release Nnoggie/MythicDungeonTools (cfwidget rotto per MDT). TOC include 120007 match build 12.0.7."
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
