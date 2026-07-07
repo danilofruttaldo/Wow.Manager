@@ -15,6 +15,7 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 | [ui-profiles/](ui-profiles/) | Profili addon (Plater, Details, ecc.) | `ui-profiles/manifest.json` |
 | [fonts/](fonts/) | Override font UI Blizzard (nomi-override in `Fonts/`) | `fonts/manifest.json` |
 | [builds/](builds/) | Talent/gear build per char/spec/contenuto | un `.md` per build |
+| [roster.md](roster.md) | Tracker PG Horde per razza × classe (copertura combo) | `SavedVariables/Syndicator.lua` |
 
 ## Regole operative
 
