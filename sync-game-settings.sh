@@ -9,7 +9,7 @@ SRC="$ACC/Pozzo dell'Eternità/Stantu/config-cache.wtf"
 
 # Chiavi = vere opzioni di gioco da sincronizzare
 KEYS=(
-  enableMouseoverCast autoLootDefault AutoPushSpellToActionBar enableMultiActionBars
+  enableMouseoverCast autoLootDefault AutoPushSpellToActionBar enableMultiActionBars SoftTargetEnemy
   assistedCombatHighlight cooldownViewerEnabled damageMeterEnabled damageMeterResetOnNewInstance
   raidFramesDisplayClassColor raidFramesDisplayPowerBars
   nameplateSelectedScale nameplateSelectedAlpha nameplateMaxDistance
