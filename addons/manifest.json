@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-07-05"
+    "last_sync": "2026-07-08"
   },
   "addons": {
     "BigWigs": {
@@ -112,13 +112,13 @@
     },
     "Baganator": {
       "name": "Baganator",
-      "version": "810",
+      "version": "811",
       "interface": "120007, 120005, 50504, 38001, 20505, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/baganator",
-      "installed": "2026-07-05",
+      "installed": "2026-07-08",
       "folders": ["Baganator"],
-      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-05 809->810 via /aggiorna-addon (workflow) forgecdn files/8364/710 (Baganator-810.zip); TOC 120007 match build 12.0.7."
+      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-08 810->811 via /aggiorna-addon (workflow) forgecdn files/8393/222 (Baganator-811.zip); TOC 120007 match build 12.0.7."
     },
     "Syndicator": {
       "name": "Syndicator",
