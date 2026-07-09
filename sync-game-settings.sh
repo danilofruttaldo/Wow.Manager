@@ -34,9 +34,11 @@ echo "Valori sorgente (Stantu):"
 for k in "${KEYS[@]}"; do [[ -v VAL[$k] ]] && printf '  %-32s = %s\n' "$k" "${VAL[$k]}"; done
 echo
 
-# Applica a ogni config-cache.wtf tranne Stantu e backup
+# Applica a ogni config-cache.wtf tranne Stantu, backup e il file account-level.
+# Quello di account contiene solo CVar account-wide: il gioco scarta le chiavi per-PG.
 find "$ACC" -path '*/_backup-*' -prune -o -name config-cache.wtf -print | while read -r f; do
   [[ "$f" == "$SRC" ]] && continue
+  [[ "$f" == "$ACC/config-cache.wtf" ]] && continue
   for k in "${KEYS[@]}"; do
     [[ -v VAL[$k] ]] || continue
     v="${VAL[$k]}"
