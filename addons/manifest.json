@@ -88,7 +88,17 @@
       "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
       "installed": "2026-06-26",
       "folders": ["HandyNotes_Midnight"],
-      "notes": "Plugin kemayo per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-06-26 v144->v145 via /aggiorna-addon (workflow) forgecdn files/8321/842. NB il .toc NON ha riga '## Interface' (nessuna dichiarazione di build) -> dipende da HandyNotes per il versioning, niente OOD."
+      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-06-26 v144->v145 via /aggiorna-addon (workflow) forgecdn files/8321/842. NB il .toc NON ha riga '## Interface' (nessuna dichiarazione di build) -> dipende da HandyNotes per il versioning, niente OOD. Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita."
+    },
+    "HandyNotes_BattleForAzeroth": {
+      "name": "HandyNotes: Battle for Azeroth",
+      "version": "v145",
+      "interface": "",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-battle-for-azeroth",
+      "installed": "2026-07-10",
+      "folders": ["HandyNotes_BattleForAzeroth"],
+      "notes": "Plugin Zarillion per BfA: rare, tesori, battle pet, PoI. Stessa famiglia di [[HandyNotes_Midnight]] (monorepo zarillion/handynotes-plugins, versionati insieme -> stesso tag v145). Installato 2026-07-10 v145 da GitHub release (asset HandyNotes_BattleForAzeroth-v145.zip; cfwidget era rate-limited). RequiredDeps: HandyNotes (presente). Il .toc NON ha riga '## Interface' -> niente OOD. CurseForge dichiara supporto 12.0.7. NB da NON confondere con 'HandyNotes: BfA Treasures and Rares' di kemayo (slug ...-treasures), che copre solo tesori/rare. Addon NUOVO -> serve restart completo del client per caricarlo."
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
