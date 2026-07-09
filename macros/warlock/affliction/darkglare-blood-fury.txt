@@ -1,0 +1,5 @@
+#showtooltip
+/cast Summon Darkglare
+/cast [known:Blood Fury] Blood Fury
+/use 13
+/use 14

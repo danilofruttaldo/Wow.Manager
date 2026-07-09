@@ -535,6 +535,54 @@
       "body_file": "demon-hunter/devourer/shift.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg DH Devourer Illidanielle). Piazza/esegue Shift sulla posizione del mouse (@cursor): dash a terra della spec Devourer che rimpiazza Fel Rush — target il punto col cursore e ci zippi quasi istantaneamente (~30y range, ~20s CD, 1-3 cariche a seconda dei talenti, può salire il terreno). VERIFICATO Wowhead/Icy Veins Midnight 12.0.7: è mobilità SPECIFICA Devourer (Havoc usa Fel Rush, Vengeance Infernal Strike) → spec:devourer, file in demon-hunter/devourer/. NON è un vero teleport: attraversa gli effetti a terra. Ground-target esplicito via @cursor → niente prompt di targeting verde. Uso proattivo per assicurarsi cast lunghi (Void Ray/Collapsing Star) da caster ~25y. #showtooltip nudo mostra Shift."
+    },
+    "warlock-shadowfury": {
+      "name": "Shadowfury @cursor",
+      "scope": "account",
+      "class": "warlock",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warlock/shadowfury.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-09 ('shared warlock' → shared = cross-SPEC, non cross-classe: la casella shared/ del repo è riservata a class:null). PRIMA macro Warlock del repertorio. Piazza Shadowfury sulla posizione del mouse (@cursor): stun AoE a terra, 4s di stun sui nemici nel raggio (8y base). VERIFICATO Warcraft Wiki: dalla 10.0 è talento dell'albero CLASSE (riga 6) e tutte le spec lo conoscono a lv60 (Affliction/Demonology/Destruction) → spec:null, file in warlock/ root. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di demon-hunter-sigil-of-misery e dei @cursor shaman/druido/dk/hunter). I talenti di classe Darkfury e Oppressive Darkness ne ampliano il raggio; Oppressive Darkness ne riduce anche il CD. Ancora keybind: X = stun/slow (vedi ui-profiles/keybinds-convention.md). L'utente scrive /cast (il DH usa /use: per le spell sono equivalenti) → tenuto verbatim. CAVEAT: se Shadowfury non è talentato nel loadout corrente la macro è inerte."
+    },
+    "warlock-soulwell-healthstone": {
+      "name": "Soulwell/Healthstone",
+      "scope": "account",
+      "class": "warlock",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warlock/soulwell-healthstone.txt",
+      "body": null,
+      "notes": "Richiesta utente 2026-07-09 ('quando sono in gruppo o raid casta Create Soulwell, altrimenti Create Healthstone'; 'warlock shared' → cross-spec, spec:null). Un solo bottone context-aware: in party o in raid crea il Soulwell (pozzo condiviso da cui TUTTO il gruppo pesca la propria healthstone), da solo crea la singola Healthstone per sé. Condizionale [group]: vera sia in party SIA in raid → copre entrambi i casi richiesti con una sola clausola (per il solo-raid servirebbe [group:raid], per la sola party [group:party]). Il ramo dopo il ';' è privo di condizioni = fallback quando non si è in gruppo. #showtooltip nudo risolve sul ramo attivo → mostra icona/cooldown di Soulwell in gruppo e di Healthstone da solo, senza doverlo specificare. Entrambe le spell sono baseline warlock su tutte le spec → spec:null, file in warlock/ root. NB: è una macro di CREAZIONE, non di uso — l'ancora G = usa Healthstone (cross-class) resta cosa distinta."
+    },
+    "warlock-darkglare-blood-fury": {
+      "name": "Darkglare+Blood Fury",
+      "scope": "account",
+      "class": "warlock",
+      "spec": "affliction",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warlock/affliction/darkglare-blood-fury.txt",
+      "body": null,
+      "notes": "Richiesta utente 2026-07-09 ('ho la razziale Blood Fury da mettere nel cd', spec scelta: Affliction). Bottone burst: CD maggiore + razziale + trinket in un press. Stesso schema di shaman-ascendance-ancestral-call. VERIFICATO Icy Veins/Maxroll 12.0.7: Summon Darkglare è il CD maggiore di Affliction — CD portato a 2 min (era 1 min), dura 20s, aumenta del 20% il danno di Agony/Corruption(Wither)/Unstable Affliction e colpisce più forte per ogni DoT attivo sul bersaglio → spec:affliction (Demonology usa Summon Demonic Tyrant, Destruction Summon Infernal), file in warlock/affliction/. Blood Fury è razziale ORCO: guardato da [known:Blood Fury] → su un warlock non-orco il ramo è inerte (niente 'spell sconosciuta'), quindi la macro resta valida a livello classe/spec senza legarla a un personaggio. Blood Fury e i trinket sono off-GCD → partono insieme a Darkglare, che è l'unico sul GCD. #showtooltip nudo risolve sul primo /cast → mostra icona e cooldown di Darkglare. SOVRAPPOSIZIONE: shared-racial-burst casta già Blood Fury + trinket 13/14 in modo race-adattivo; se entrambe stanno sulle barre i trinket/razziale sono ridondanti (innocuo). Questa serve a legare il razziale al CD di spec invece che premere due bottoni."
+    },
+    "warlock-demonic-gateway": {
+      "name": "Gateway @cursor",
+      "scope": "account",
+      "class": "warlock",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warlock/demonic-gateway.txt",
+      "body": null,
+      "notes": "Richiesta utente 2026-07-09 ('macro shared anche per il demonic gateway' → shared = cross-spec). Piazza Demonic Gateway sulla posizione del mouse (@cursor): nasce la COPPIA di portali, uno alla posizione del warlock e uno al punto puntato; chi ci passa viene teletrasportato all'altro capo (utile a party/raid, non solo al lock). VERIFICATO Wowhead/Warcraft Wiki: è talento dell'albero CLASSE disponibile a tutte le spec → spec:null, file in warlock/ root (come warlock-shadowfury). Range 10-40y, cast 3s, CD 10s sull'abilità; ogni GIOCATORE può attraversare un gateway solo una volta ogni 90s. I talenti Gateway Mastery (+20y range, -30% cast, -30s tra un uso e l'altro) e Frequent Traveler (-0.5s cast, due usi prima del CD) lo migliorano. Ground-target esplicito via @cursor → niente prompt di targeting verde (stesso schema di warlock-shadowfury e demon-hunter-sigil-of-misery). CAVEAT: c'è un range MINIMO di 10y — se il cursore è troppo vicino al lock il cast fallisce; per il piazzamento fine conviene comunque mirare col cursore lontano. Se il talento non è preso nel loadout corrente la macro è inerte."
     }
   }
 }
