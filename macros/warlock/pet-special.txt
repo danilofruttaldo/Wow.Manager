@@ -1,0 +1,2 @@
+#showtooltip
+/cast [pet:Imp] Flee; [pet:Felhunter] Devour Magic; [pet:Felguard] Axe Toss
