@@ -1,0 +1,3 @@
+#showtooltip [group] Summon Felhunter; Summon Voidwalker
+/cast Fel Domination
+/cast [group] Summon Felhunter; Summon Voidwalker
