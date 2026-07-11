@@ -199,6 +199,16 @@
       "installed": "2026-06-19",
       "folders": ["SimpleItemLevel"],
       "notes": "Mostra item level su character/inspect/bag, su unit frame e nameplate. Reinstallato 2026-06-18 (rimosso 2026-06-17). Aggiornato 2026-06-19 v65->v66 via /aggiorna-addon (workflow) forgecdn files/8282/890. TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date)."
+    },
+    "AllTheThings": {
+      "name": "All The Things",
+      "version": "5.2.9",
+      "interface": "11508, 11509, 20505, 20506, 38001, 40402, 50504, 120007, 120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/all-the-things",
+      "installed": "2026-07-11",
+      "folders": ["AllTheThings"],
+      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Release stabile 5.2.9 da forgecdn files/8389/415 (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
     }
   }
 }
