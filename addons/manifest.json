@@ -3,16 +3,16 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-07-08"
+    "last_sync": "2026-07-10"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
-      "version": "v418.1",
+      "version": "v418.3",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-07-05",
+      "installed": "2026-07-10",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -25,15 +25,15 @@
         "BigWigs_MarchOnQuelDanas",
         "BigWigs_TheVenomousAbyss"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-05 v418->v418.1 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1561): RI-APPLICATA il 2026-07-05 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-10 v418.1->v418.3 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1561): RI-APPLICATA il 2026-07-10 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
     },
     "LittleWigs": {
       "name": "LittleWigs",
-      "version": "v12.0.59",
+      "version": "v12.0.61",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-07-03",
+      "installed": "2026-07-10",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -48,7 +48,7 @@
         "LittleWigs_WarlordsOfDraenor",
         "LittleWigs_WrathOfTheLichKing"
       ],
-      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-03 v12.0.58->v12.0.59 via /aggiorna-addon (workflow) forgecdn files/8359/407. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione)."
+      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-10 v12.0.59->v12.0.61 via /aggiorna-addon (workflow) forgecdn files/8406/510. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione)."
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
@@ -62,13 +62,13 @@
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
-      "version": "12.0.25",
+      "version": "12.0.26",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-07-02",
+      "installed": "2026-07-10",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-02 12.0.24->12.0.25 via /aggiorna-addon (workflow) forgecdn files/8351/176 (Leatrix_Plus-12.0.25.zip). TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-10 12.0.25->12.0.26 via /aggiorna-addon (workflow) forgecdn files/8398/822 (Leatrix_Plus-12.0.26.zip). TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
     },
     "HandyNotes": {
       "name": "HandyNotes",
@@ -122,23 +122,23 @@
     },
     "Baganator": {
       "name": "Baganator",
-      "version": "811",
-      "interface": "120007, 120005, 50504, 38001, 20505, 11508",
+      "version": "812",
+      "interface": "120007, 50504, 38001, 20506, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/baganator",
-      "installed": "2026-07-08",
+      "installed": "2026-07-10",
       "folders": ["Baganator"],
-      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-08 810->811 via /aggiorna-addon (workflow) forgecdn files/8393/222 (Baganator-811.zip); TOC 120007 match build 12.0.7."
+      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-10 811->812 via /aggiorna-addon (workflow) forgecdn files/8396/974 (Baganator-812.zip); TOC 120007 match build 12.0.7."
     },
     "Syndicator": {
       "name": "Syndicator",
-      "version": "272",
-      "interface": "120007, 120005, 50504, 38001, 20505, 11508",
+      "version": "273",
+      "interface": "120007, 50504, 38001, 20506, 11508",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/syndicator",
-      "installed": "2026-06-30",
+      "installed": "2026-07-10",
       "folders": ["Syndicator"],
-      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-06-30 271->272 via /aggiorna-addon (workflow) forgecdn files/8336/972 (Syndicator-272.zip); TOC include 120007 (build 12.0.7)."
+      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-07-10 272->273 via /aggiorna-addon (workflow) forgecdn files/8396/976 (Syndicator-273.zip); TOC include 120007 (build 12.0.7)."
     },
     "WIM": {
       "name": "WIM (WoW Instant Messenger) v3",
