@@ -1,3 +1,0 @@
-#showtooltip [group:party] Summon Felhunter; [group:raid] Summon Imp; Summon Voidwalker
-/cast Fel Domination
-/cast [group:party] Summon Felhunter; [group:raid] Summon Imp; Summon Voidwalker

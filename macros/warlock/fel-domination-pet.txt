@@ -1,0 +1,3 @@
+#showtooltip [known:Summon Felguard] Summon Felguard; [group:party] Summon Felhunter; [group:raid] Summon Imp; Summon Voidwalker
+/cast Fel Domination
+/cast [known:Summon Felguard] Summon Felguard; [group:party] Summon Felhunter; [group:raid] Summon Imp; Summon Voidwalker
