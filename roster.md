@@ -2,7 +2,7 @@
 
 Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndicator.lua` incrociato con le cartelle `WTF/.../<realm>/`.
 
-**Legenda:** **X** = combinazione non creabile nel gioco (retail, Midnight 12.0) · `nome·realm` = PG esistente · vuoto = possibile ma nessun PG. Realm: **N** = Nemesis, **P** = Pozzo dell'Eternità. Nomi multipli nella stessa cella separati da a-capo. Aggiorno quando segnali recuperi o nuovi PG.
+**Legenda:** **X** = combinazione non creabile nel gioco (retail, Midnight 12.0) · `nome·realm` = PG esistente · vuoto = possibile ma nessun PG. Realm: **N** = Nemesis, **P** = Pozzo dell'Eternità, **R** = Ravencrest, **S** = Silvermoon. Nomi multipli nella stessa cella separati da a-capo. Aggiorno quando segnali recuperi o nuovi PG.
 
 ## Orda (razze condivise incluse)
 
@@ -24,21 +24,21 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Earthen | | X | Rockbiter·P | | | X | | | | | X | X | X |
 | Haranir | | X | | | | X | | | | | Catatonic·N | X | X |
 
-## Alleanza (solo capacità — nessun PG nel roster)
+## Alleanza
 
 | Razza | War | Pal | Hun | Rog | Pri | DK | Sha | Mag | Loc | Mon | Dru | DH | Evo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Human | | | | | | | X | | | | X | X | X |
-| Dwarf | | | | | | | | | | | X | X | X |
-| Night Elf | | X | | | | | X | | | | | | X |
-| Gnome | | X | | | | | X | | | | X | X | X |
-| Draenei | | | | | | | | | | | X | X | X |
+| Human | | | | | | | X | Spellstill·P | | | X | X | X |
+| Dwarf | Dwarfnought·R | Proctolodin·S | | | | | Shockolat·N | | | | X | X | X |
+| Night Elf | | X | | | | Dayandknight·P | X | | | Ipelf·R | Hadruidken·S | Demongear·R<br>Demonstrate·S | X |
+| Gnome | Tinytank·P | X | | Gnomorrage·P | | | X | Blinkette·S | | | X | X | X |
+| Draenei | | | | | Holytude·N | | | | | | X | X | X |
 | Worgen | | X | | | | Furricane | X | | | | | X | X |
-| Void Elf | | X | | | | | X | | | | X | | X |
-| Lightforged Draenei | | | | | | | X | | | | X | X | X |
-| Dark Iron Dwarf | | | | | | | | | | | X | X | X |
-| Kul Tiran | | X | | | | | | | | | | X | X |
-| Mechagnome | | X | | | | | X | | | | X | X | X |
+| Void Elf | | X | | | Discoteque·S | | X | | Dotnetcore·N | | X | Vanillidan·N | X |
+| Lightforged Draenei | Periodrage·S | | | | | | X | | | | X | X | X |
+| Dark Iron Dwarf | | Plateatico·P | | | | | | | | | X | X | X |
+| Kul Tiran | | X | | | | | Totemizer·S | | | | | X | X |
+| Mechagnome | | X | Shottini·P | | | | X | | | | X | X | X |
 
 ## Note sulle X (verificato su Warcraft Wiki / Wowhead, retail Midnight 12.0)
 
