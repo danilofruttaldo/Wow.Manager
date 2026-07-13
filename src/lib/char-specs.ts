@@ -35,6 +35,27 @@ export const CHAR_SPEC: Record<string, string> = {
   catatonic: 'balance',
   shiftzord: 'restoration',
   demoversion: 'vengeance',
+  // Alleanza (nuovi PG). Spec note; il resto è '?' finché non confermate.
+  spellstill: 'arcane',
+  gnomorrage: 'assassination',
+  dwarfnought: 'protection',
+  ipelf: 'windwalker',
+  discoteque: 'discipline',
+  holytude: '?',
+  shockolat: '?',
+  dotnetcore: '?',
+  vanillidan: '?',
+  tinytank: '?',
+  plateatico: '?',
+  shottini: '?',
+  dayandknight: '?',
+  demongear: '?',
+  proctolodin: '?',
+  blinkette: '?',
+  hadruidken: '?',
+  totemizer: '?',
+  periodrage: '?',
+  demonstrate: '?',
 };
 
 // Disambiguazione per PG omonimi: chiave `nome|razza` (minuscolo). Ha precedenza su CHAR_SPEC.

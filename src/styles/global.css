@@ -77,6 +77,10 @@ a.tile:hover { border-color: var(--accent); background: var(--surface-2); }
 /* ── Icone (classe / razza) ────────────────────── */
 .ico { display: inline-block; width: 26px; height: 26px; max-width: none; min-width: 26px; border-radius: 5px; vertical-align: middle; border: 1px solid var(--border); background: var(--surface); flex-shrink: 0; object-fit: cover; aspect-ratio: 1 / 1; }
 .ico-sm { width: 20px; height: 20px; min-width: 20px; border-radius: 4px; }
+/* Icona spec inline accanto al nome PG nel roster */
+.ico-spec { width: 16px; height: 16px; min-width: 16px; border-radius: 3px; vertical-align: -3px; margin-left: 2px; }
+/* Segnaposto "spec da confermare" (?) */
+.spec-q { display: inline-block; width: 16px; height: 16px; min-width: 16px; line-height: 16px; text-align: center; font-size: 0.68rem; font-weight: 700; color: var(--text-subtle); background: var(--border-light); border: 1px solid var(--border); border-radius: 3px; vertical-align: -3px; margin-left: 2px; }
 
 /* ── Tabelle dense ─────────────────────────────── */
 .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }

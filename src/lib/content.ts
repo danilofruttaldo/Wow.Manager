@@ -145,15 +145,41 @@ function raceIcon(name: string): string {
   return `<img class="ico ico-race" src="/icons/race/${slug}.jpg" alt="${name}" title="${name}" width="26" height="26">`;
 }
 
-// Accanto a ogni nome PG mette la prima lettera della spec fra parentesi, se nota.
+// Specializzazioni valide per classe (slug classe -> spec). Ogni combo ha un'icona in
+// public/icons/spec/<classe>-<spec>.jpg. La chiave per classe disambigua le spec omonime
+// tra classi diverse (es. Mage Frost vs Death Knight Frost, Paladin Holy vs Priest Holy).
+const SPEC_ICON: Record<string, string[]> = {
+  warrior: ['arms', 'fury', 'protection'],
+  paladin: ['holy', 'protection', 'retribution'],
+  hunter: ['beastmastery', 'marksmanship', 'survival'],
+  rogue: ['assassination', 'outlaw', 'subtlety'],
+  priest: ['discipline', 'holy', 'shadow'],
+  deathknight: ['blood', 'frost', 'unholy'],
+  shaman: ['elemental', 'enhancement', 'restoration'],
+  mage: ['arcane', 'fire', 'frost'],
+  warlock: ['affliction', 'demonology', 'destruction'],
+  monk: ['brewmaster', 'mistweaver', 'windwalker'],
+  druid: ['balance', 'feral', 'guardian', 'restoration'],
+  demonhunter: ['havoc', 'vengeance', 'devourer'],
+  evoker: ['devastation', 'preservation', 'augmentation'],
+};
+
+// Accanto a ogni nome PG mette l'ICONA della spec (se nota) o "?" se da confermare.
 // Disambigua i PG omonimi via `nome|razza` (CHAR_SPEC_BY_RACE), altrimenti CHAR_SPEC.
+// classSlug = classe della colonna: serve a scegliere l'icona giusta per le spec omonime.
 // Una cella può contenere più nomi separati da <br>.
-function annotateSpec(cell: string, race: string): string {
+function annotateSpec(cell: string, race: string, classSlug: string): string {
   const out = cell.split(/<br\s*\/?>/i).map((seg) => {
     const name = seg.trim();
     if (!name) return seg;
     const spec = CHAR_SPEC_BY_RACE[`${name}|${race}`.toLowerCase()] ?? CHAR_SPEC[name.toLowerCase()];
-    return spec ? `${name} (${spec[0].toUpperCase()})` : name;
+    if (!spec) return name;
+    if (spec === '?') return `${name} <span class="spec-q" title="spec da confermare">?</span>`;
+    if (SPEC_ICON[classSlug]?.includes(spec)) {
+      const label = titleCase(spec);
+      return `${name} <img class="ico ico-spec" src="/icons/spec/${classSlug}-${spec}.jpg" alt="${label}" title="${label}" width="16" height="16">`;
+    }
+    return `${name} (${spec[0].toUpperCase()})`; // fallback se manca l'icona
   });
   return ` ${out.join('<br>')} `;
 }
@@ -179,8 +205,9 @@ function extractRosterTable(raw: string, section: string): string[][] | null {
   return rows.length ? rows : null;
 }
 
-// Costruisce le <tr> del corpo: icona razza in prima colonna, casella scura per X, spec fra parentesi.
-function rosterBodyRows(rows: string[][], rowClass: string): { html: string; races: Set<string> } {
+// Costruisce le <tr> del corpo: icona razza in prima colonna, casella scura per X, icona spec.
+// header = riga di intestazione (abbreviazioni classe) per ricavare la classe di ogni colonna.
+function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): { html: string; races: Set<string> } {
   const races = new Set<string>();
   const html = rows.map((cells) => {
     const race = stripRealm(cells[0] ?? '').trim();
@@ -192,7 +219,8 @@ function rosterBodyRows(rows: string[][], rowClass: string): { html: string; rac
       }
       if (t === 'X') return '<td><span class="na" title="Combinazione non creabile in gioco"></span></td>';
       if (t === '') return '<td></td>';
-      return `<td>${annotateSpec(stripRealm(cell), race)}</td>`;
+      const classSlug = CLASS_ABBR[(header[i] ?? '').trim()]?.[0] ?? '';
+      return `<td>${annotateSpec(stripRealm(cell), race, classSlug)}</td>`;
     }).join('');
     return `<tr class="${rowClass}">${tds}</tr>`;
   }).join('');
@@ -229,14 +257,14 @@ export function getRosterHtml(): string {
   ).join('') + '</tr></thead>';
 
   const band = (text: string, cls: string) => `<tr class="rsep ${cls}"><td colspan="${ncols}">${text}</td></tr>`;
-  const horde = rosterBodyRows(orda.slice(1), 'fac-horde');
+  const horde = rosterBodyRows(orda.slice(1), 'fac-horde', header);
   let body = band('Orda', 'rsep--horde') + horde.html;
 
   const ally = extractRosterTable(raw, 'Alleanza');
   if (ally) {
     // Razze condivise (già nel blocco Orda) restano solo lì: qui le saltiamo.
     const allyRows = ally.slice(1).filter((cells) => !horde.races.has(stripRealm(cells[0]).trim()));
-    if (allyRows.length) body += band('Alleanza', 'rsep--alliance') + rosterBodyRows(allyRows, 'fac-alliance').html;
+    if (allyRows.length) body += band('Alleanza', 'rsep--alliance') + rosterBodyRows(allyRows, 'fac-alliance', header).html;
   }
 
   return `<div class="table-scroll"><table>${thead}<tbody>${body}</tbody></table></div>`;
