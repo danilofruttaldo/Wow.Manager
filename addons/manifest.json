@@ -8,6 +8,7 @@
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
+      "desc": "Boss mod per raid: mostra timer, barre e avvisi sonori e visivi sulle abilità dei boss, così sai in anticipo cosa sta per arrivare e quando reagire. Include la suite di moduli della Season 1 di Midnight ed è configurabile avviso per avviso, dai suoni agli emphasize a schermo.",
       "version": "v418.4",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
@@ -29,6 +30,7 @@
     },
     "LittleWigs": {
       "name": "LittleWigs",
+      "desc": "L’equivalente di BigWigs fuori dai raid: boss mod per dungeon normali ed eroici, Mitica+ e scenari. Copre tutte le espansioni con moduli separati e si appoggia allo stesso motore di BigWigs, quindi avvisi e timer funzionano allo stesso modo anche in chiave.",
       "version": "v12.0.61",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
@@ -52,6 +54,7 @@
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
+      "desc": "Planner completo per Mitica+: disegni le route sulla mappa del dungeon, pianifichi i singoli pull e vedi il conteggio dei nemici necessario a raggiungere la percentuale. Simula la corsa, evidenzia abilità e affissi pericolosi e permette di esportare e condividere le route col gruppo.",
       "version": "6.1.20",
       "interface": "120007, 120001, 50504",
       "source": "curseforge",
@@ -62,6 +65,7 @@
     },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
+      "desc": "Grande raccolta di comodità in un unico addon: accetta e consegna quest in automatico, ripara e svuota le cianfrusaglie all’apertura del vendor, salta le cinematiche, accelera il testo e aggiunge decine di altri ritocchi all’interfaccia. Ogni opzione è attivabile singolarmente, così prendi solo ciò che ti serve.",
       "version": "12.0.26",
       "interface": "120007, 120100",
       "source": "curseforge",
@@ -72,6 +76,7 @@
     },
     "HandyNotes": {
       "name": "HandyNotes",
+      "desc": "Framework che disegna note e pin su mappa e minimappa. Da solo non mostra nulla: è la base su cui girano i plugin HandyNotes (tesori, rare, raccolti, ecc.), che installi separatamente e che appoggiano qui i propri dati.",
       "version": "v1.6.29",
       "interface": "120007,11508,20505,50504",
       "source": "curseforge",
@@ -82,6 +87,7 @@
     },
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
+      "desc": "Plugin HandyNotes dedicato a Midnight: piazza sulla mappa tesori, mob rari, mascotte da battaglia e altri punti d’interesse della nuova espansione. Spunta automaticamente ciò che hai già raccolto e mostra i requisiti di ogni nodo al passaggio del mouse.",
       "version": "v146",
       "interface": "120007",
       "source": "curseforge",
@@ -92,6 +98,7 @@
     },
     "HandyNotes_BattleForAzeroth": {
       "name": "HandyNotes: Battle for Azeroth",
+      "desc": "Plugin HandyNotes per le zone di Battle for Azeroth: rare, tesori, mascotte e punti d’interesse su tutta la mappa. Comodo per completare esplorazione, collezioni e achievement rimasti indietro nella vecchia espansione.",
       "version": "v146",
       "interface": "120007",
       "source": "curseforge",
@@ -102,6 +109,7 @@
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
+      "desc": "Aggiunge una fila di bottoni per teletrasporti e Pietra del ritorno direttamente nel menu di gioco che si apre con ESC. Viaggi con un solo click, senza aprire il libro degli incantesimi né rovistare tra i giocattoli, e mostra i cooldown di ciascuna destinazione.",
       "version": "v12.6",
       "interface": "120005, 120007",
       "source": "curseforge",
@@ -112,6 +120,7 @@
     },
     "TomTom": {
       "name": "TomTom",
+      "desc": "Mette a schermo una freccia di navigazione che punta verso il waypoint attivo, con distanza e coordinate, più i pin corrispondenti sulla mappa. Si integra con HandyNotes: click destro su un nodo e TomTom ti guida passo passo fino a lì.",
       "version": "v4.3.5-release",
       "interface": "120007",
       "source": "curseforge",
@@ -122,6 +131,7 @@
     },
     "Baganator": {
       "name": "Baganator",
+      "desc": "Sostituisce le borse con un inventario unico e ordinato: auto-categorie, categorie personalizzate, ricerca istantanea e overlay dell’item level su ogni oggetto. Aggiunge viste di banca, warband bank e banca di gilda consultabili da qualsiasi personaggio, anche offline.",
       "version": "812",
       "interface": "120007, 50504, 38001, 20506, 11508",
       "source": "curseforge",
@@ -132,6 +142,7 @@
     },
     "Syndicator": {
       "name": "Syndicator",
+      "desc": "Data layer invisibile che indicizza gli oggetti di tutti i tuoi personaggi (borse, banca, warband, banca di gilda) e alimenta la ricerca cross-personaggio. Non ha un’interfaccia propria: è la dipendenza tecnica richiesta da Baganator, dello stesso autore, che senza di lui va in errore.",
       "version": "273",
       "interface": "120007, 50504, 38001, 20506, 11508",
       "source": "curseforge",
@@ -142,6 +153,7 @@
     },
     "WIM": {
       "name": "WIM (WoW Instant Messenger) v3",
+      "desc": "Trasforma i whisper in vere finestre di chat con tab, in stile messaggistica istantanea. Conserva lo storico delle conversazioni tra le sessioni, notifica i nuovi messaggi e offre filtri, suoni e temi per gestire meglio le comunicazioni in gioco.",
       "version": "3.16.14",
       "interface": "11508, 20505, 30405, 40402, 50503, 120000, 120001, 120005",
       "source": "curseforge",
@@ -152,6 +164,7 @@
     },
     "RCLootCouncil": {
       "name": "RCLootCouncil",
+      "desc": "Struttura la distribuzione del bottino in raid tramite Loot Council: annuncia gli oggetti droppati, raccoglie voti, note e risposte dei membri del consiglio e assegna il loot tenendo traccia di chi ha ricevuto cosa. Riduce discussioni e tempi morti sul momento del loot.",
       "version": "3.22.0",
       "interface": "120005, 120007",
       "source": "curseforge",
@@ -162,6 +175,7 @@
     },
     "MethodRaidTools": {
       "name": "Method Raid Tools",
+      "desc": "Suite di strumenti per il raid organizzato: editor di note condivise (MRT), timer e barre di cooldown del gruppo, assegnazioni e avvisi tipo WeakAura sulle meccaniche dei boss. È lo standard di fatto usato dai team per coordinare le fasi di combattimento.",
       "version": "5315",
       "interface": "120007",
       "source": "curseforge",
@@ -172,6 +186,7 @@
     },
     "CursorRing": {
       "name": "Cursor Ring",
+      "desc": "Disegna un anello colorato in base alla classe attorno al cursore, con animazioni per cast in corso, global cooldown e stato di combattimento. Serve sia a non perdere di vista il puntatore nelle mischie affollate sia come tracker visivo del GCD durante la rotazione.",
       "version": "1.5.3",
       "interface": "120005, 120007",
       "source": "curseforge",
@@ -182,6 +197,7 @@
     },
     "Molinari": {
       "name": "Molinari",
+      "desc": "Aggiunge sugli oggetti i pulsanti contestuali per macinare (milling), prospettare (prospecting) e disincantare (disenchant) in massa. I bottoni compaiono sull’oggetto solo quando l’azione è effettivamente possibile, evitando click a vuoto ed errori.",
       "version": "120000.145-Release",
       "interface": "120007, 120100, 50504, 38001, 20505, 11508",
       "source": "curseforge",
@@ -192,6 +208,7 @@
     },
     "SimpleItemLevel": {
       "name": "Simple Item Level",
+      "desc": "Mostra l’item level ovunque possa servire: schermata del personaggio e finestra di inspect, singoli oggetti nelle borse, unit frame e nameplate dei giocatori. Utile per valutare a colpo d’occhio l’equipaggiamento tuo e degli altri, in città come in dungeon.",
       "version": "v66",
       "interface": "120007, 50504, 30405, 20505, 11508",
       "source": "curseforge",
@@ -202,6 +219,7 @@
     },
     "AllTheThings": {
       "name": "All The Things",
+      "desc": "Tracker enciclopedico per completisti: transmog, cavalcature, mascotte, giocattoli, achievement e molto altro in un unico database. Per ogni collezione elenca i pezzi che ti mancano e indica la fonte esatta — istanza, boss, vendor o mob — da cui provengono, così sai sempre dove andare a farmare.",
       "version": "5.2.10",
       "interface": "11508, 11509, 20505, 20506, 38001, 40402, 50504, 120007, 120100",
       "source": "curseforge",

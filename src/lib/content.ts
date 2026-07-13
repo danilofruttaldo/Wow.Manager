@@ -1,6 +1,7 @@
 // Accesso ai dati della repo Wow.Manager (manifest JSON + markdown).
 // I file vivono fuori da src/: sono la fonte di verità, il sito li legge in sola lettura.
 import { execSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { marked } from 'marked';
 
 import { CHAR_SPEC, CHAR_SPEC_BY_RACE } from './char-specs';
@@ -16,13 +17,15 @@ marked.setOptions({ gfm: true, breaks: false });
 export interface Addon {
   key: string;
   name: string;
+  icon?: string;          // path icona addon (avatar CurseForge in public/icons/addon/)
+  desc?: string;          // riga breve mostrata sul sito (cosa fa l'addon)
   version: string;
   interface: string;
   source: string;
   url?: string;
   installed?: string;
   folders: string[];
-  notes?: string;
+  notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
 }
 
 export interface Macro {
@@ -65,10 +68,18 @@ export function sourceDate(relPath = '.'): string {
 
 // ── Addon ─────────────────────────────────────────
 export const addonsMeta = (addonsManifest as any)._meta;
+// Icona addon (avatar CurseForge scaricato in public/icons/addon/<key>.<ext>).
+// Estensioni miste (png/jpg/jpeg) → risolvo a build-time il file che esiste per quella chiave.
+function addonIcon(key: string): string | undefined {
+  for (const ext of ['png', 'jpg', 'jpeg']) {
+    if (existsSync(`public/icons/addon/${key}.${ext}`)) return `/icons/addon/${key}.${ext}`;
+  }
+  return undefined;
+}
 export function getAddons(): Addon[] {
   const raw = (addonsManifest as any).addons ?? {};
   return Object.entries(raw)
-    .map(([key, v]: [string, any]) => ({ key, folders: [], ...v }))
+    .map(([key, v]: [string, any]) => ({ key, folders: [], ...v, icon: v.icon ?? addonIcon(key) }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 

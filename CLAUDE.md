@@ -28,9 +28,13 @@ npm run dev            # dev server; oppure F5 in VS Code -> "Sito locale (dev)"
 Dopo ogni modifica: `npm run build` per verificare, poi **commit + push** (il push pubblica e aggiorna anche la data "sync" — vedi sotto).
 
 ### Addon → [addons/manifest.json](addons/manifest.json)
-Oggetto `addons` con chiave = slug addon. Campi: `name, version, interface, source, url, installed, folders[], notes`.
+Oggetto `addons` con chiave = slug addon. Campi: `name, desc, version, interface, source, url, installed, folders[], notes`.
+- **`desc` = testo mostrato sul sito**: una riga breve, "cosa fa l'addon". Concisa, niente storia/update.
+- **`notes` = memoria interna di manutenzione, NON mostrata sul sito**: storia update, `DA RI-APPLICARE`, URL/id download, patch locali, caveat. La pagina `/addons` non la legge.
+- La pagina `/addons` è una **griglia di card con ricerca live** (masonry, come `/macros`): icona + nome (link a `source`/`url`), badge versione, `desc`, n. cartelle, data `installed`. La ricerca filtra su nome/desc/versione/source/cartelle.
+- **Icone**: avatar CurseForge in [public/icons/addon/](public/icons/addon/) come `<chiave>.<ext>` (png/jpg/jpeg, la **chiave** dell'oggetto `addons`, case-sensitive). Risolte a build-time in [content.ts](src/lib/content.ts) (`addonIcon`), niente campo nel manifest; se il file manca la card mostra un monogramma con l'iniziale. **Nuovo addon** → scarica l'`og:image` dalla pagina CurseForge (`https://media.forgecdn.net/avatars/...`) e salvalo con la chiave esatta.
 - **Aggiungi/rimuovi**: aggiungi/togli la voce nell'oggetto `addons`.
-- **Modifica**: cambia i campi (es. `version`, `notes`). La tabella `/addons` si aggiorna da sola.
+- **Modifica**: cambia i campi (es. `version`, `desc`, `notes`). La pagina si aggiorna da sola.
 
 ### Macro → [macros/manifest.json](macros/manifest.json)
 Oggetto `macros` con chiave = slug. Campi: `name, desc, scope, class, spec, character, slot, icon, body_file, body, notes`.
