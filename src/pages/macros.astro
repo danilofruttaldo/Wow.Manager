@@ -77,16 +77,12 @@ for (const c of classes) c.specs.sort();
               </div>
             </div>
             {m.desc && <p class="mcard-desc">{m.desc}</p>}
-            {m.body && (() => {
-              const collapsible = m.body.split(/\r?\n/).length > 2;  // clamp solo se >2 righe reali
-              return (
-                <div class:list={['mcard-code', { 'is-collapsed': collapsible }]}>
-                  <button class="copy" type="button" aria-label="Copia la macro">Copia</button>
-                  <pre><code>{m.body}</code></pre>
-                  {collapsible && <button class="expand" type="button">Espandi</button>}
-                </div>
-              );
-            })()}
+            {m.body && (
+              <div class="mcard-code">
+                <button class="copy" type="button" aria-label="Copia la macro">Copia</button>
+                <pre><code>{m.body}</code></pre>
+              </div>
+            )}
           </article>
         );
       })}
@@ -117,22 +113,22 @@ for (const c of classes) c.specs.sort();
 
 /* 3 colonne fisse (2 su schermi medi, 1 su mobile). minmax(0,1fr) evita che una riga
    lunga di macro allarghi la colonna oltre la pagina: è il <pre> a scrollare. */
-.macro-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; padding-top: 0.6rem; }
-@media (max-width: 1000px) { .macro-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.mcard { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.8rem 0.9rem; }
+/* Masonry via multi-column: le card si impilano in verticale riempiendo i vuoti (niente
+   allineamento per righe, così non restano spazi morti sotto le card più corte). */
+.macro-grid { column-count: 3; column-gap: 0.7rem; padding-top: 0.6rem; }
+@media (max-width: 1000px) { .macro-grid { column-count: 2; } }
+.mcard { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: 0.7rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.8rem 0.9rem; }
 .mcard-head { display: flex; align-items: center; gap: 0.6rem; }
 .mcard-icons { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; }
 .ico-spec--card { width: 18px; height: 18px; min-width: 18px; border-radius: 4px; }
 .mcard-title { min-width: 0; }
 .mcard-title strong { font-size: 0.95rem; line-height: 1.25; }
 .mcard-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.45; margin: 0; }
-.mcard-code { position: relative; margin-top: auto; }
-.mcard-code pre { background: var(--surface-2); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.6rem 0.7rem; overflow-x: auto; }
-.mcard-code code { font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.5; background: none; padding: 0; color: var(--text); white-space: pre; }
-/* Macro >2 righe: mostra 2 righe piene + un accenno della 3ª sfumata, il resto si apre con "Espandi". */
-.mcard-code.is-collapsed pre { max-height: 4em; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent); mask-image: linear-gradient(to bottom, #000 70%, transparent); }
-.expand { display: block; width: 100%; margin-top: 0.3rem; font-family: inherit; font-size: 0.7rem; font-weight: 600; color: var(--text-subtle); background: none; border: none; text-align: left; padding: 0.1rem 0; cursor: pointer; }
-.expand:hover { color: var(--accent); }
+.mcard-code { position: relative; }
+.mcard-code pre { background: var(--surface-2); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.6rem 0.7rem; overflow: hidden; }
+/* Wrap invece di scroll: rientro pendente = ogni riga a capo (continuazione) resta indentata,
+   marcatore visivo che quella riga prosegue la precedente. */
+.mcard-code code { display: block; font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.5; background: none; padding: 0; color: var(--text); white-space: pre-wrap; overflow-wrap: anywhere; padding-left: 1.5em; text-indent: -1.5em; }
 .copy { position: absolute; top: 0.35rem; right: 0.35rem; font-family: inherit; font-size: 0.68rem; font-weight: 600; color: var(--text-subtle); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.12rem 0.42rem; cursor: pointer; opacity: 0; transition: opacity var(--transition), color var(--transition), border-color var(--transition); }
 .mcard-code:hover .copy, .copy:focus-visible { opacity: 1; }
 .copy:hover { color: var(--accent); border-color: var(--accent); }
@@ -140,7 +136,7 @@ for (const c of classes) c.specs.sort();
 .empty { color: var(--text-subtle); font-size: 0.9rem; padding: 2rem 0; text-align: center; }
 
 @media (max-width: 600px) {
-  .macro-grid { grid-template-columns: 1fr; }
+  .macro-grid { column-count: 1; }
   .filters { top: 0; }
 }
 </style>
@@ -215,15 +211,6 @@ for (const c of classes) c.specs.sort();
         // allinea tutte le chip con lo stesso nome spec (possono essercene più d'una nascosta)
         for (const x of specOpts) if ((x.dataset.spec || '') === s) x.classList.toggle('is-active', activeSpecs.has(s));
         apply();
-      });
-    }
-
-    // Il bottone "Espandi" esiste solo sulle macro >2 righe (deciso lato server): basta collegarlo.
-    for (const expand of Array.from(document.querySelectorAll('.expand')) as HTMLButtonElement[]) {
-      const block = expand.closest('.mcard-code') as HTMLElement;
-      expand.addEventListener('click', () => {
-        const collapsed = block.classList.toggle('is-collapsed');
-        expand.textContent = collapsed ? 'Espandi' : 'Comprimi';
       });
     }
 
