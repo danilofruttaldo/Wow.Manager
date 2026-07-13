@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-07-12"
+    "last_sync": "2026-07-13"
   },
   "addons": {
     "BigWigs": {
@@ -82,23 +82,23 @@
     },
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
-      "version": "v145",
-      "interface": "",
+      "version": "v146",
+      "interface": "120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
-      "installed": "2026-06-26",
+      "installed": "2026-07-13",
       "folders": ["HandyNotes_Midnight"],
-      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-06-26 v144->v145 via /aggiorna-addon (workflow) forgecdn files/8321/842. NB il .toc NON ha riga '## Interface' (nessuna dichiarazione di build) -> dipende da HandyNotes per il versioning, niente OOD. Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita."
+      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita."
     },
     "HandyNotes_BattleForAzeroth": {
       "name": "HandyNotes: Battle for Azeroth",
-      "version": "v145",
-      "interface": "",
+      "version": "v146",
+      "interface": "120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-battle-for-azeroth",
-      "installed": "2026-07-10",
+      "installed": "2026-07-13",
       "folders": ["HandyNotes_BattleForAzeroth"],
-      "notes": "Plugin Zarillion per BfA: rare, tesori, battle pet, PoI. Stessa famiglia di [[HandyNotes_Midnight]] (monorepo zarillion/handynotes-plugins, versionati insieme -> stesso tag v145). Installato 2026-07-10 v145 da GitHub release (asset HandyNotes_BattleForAzeroth-v145.zip; cfwidget era rate-limited). RequiredDeps: HandyNotes (presente). Il .toc NON ha riga '## Interface' -> niente OOD. CurseForge dichiara supporto 12.0.7. NB da NON confondere con 'HandyNotes: BfA Treasures and Rares' di kemayo (slug ...-treasures), che copre solo tesori/rare. Addon NUOVO -> serve restart completo del client per caricarlo."
+      "notes": "Plugin Zarillion per BfA: rare, tesori, battle pet, PoI. Stessa famiglia di [[HandyNotes_Midnight]] (monorepo zarillion/handynotes-plugins, versionati insieme -> stesso tag). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/36. RequiredDeps: HandyNotes (presente). Dalla v146 il .toc ha '## Interface: 120007'. NB da NON confondere con 'HandyNotes: BfA Treasures and Rares' di kemayo (slug ...-treasures), che copre solo tesori/rare."
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
@@ -202,13 +202,13 @@
     },
     "AllTheThings": {
       "name": "All The Things",
-      "version": "5.2.9",
+      "version": "5.2.10",
       "interface": "11508, 11509, 20505, 20506, 38001, 40402, 50504, 120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/all-the-things",
-      "installed": "2026-07-11",
+      "installed": "2026-07-13",
       "folders": ["AllTheThings"],
-      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Release stabile 5.2.9 da forgecdn files/8389/415 (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
+      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Aggiornato 2026-07-13 5.2.9->5.2.10 via /aggiorna-addon (workflow) forgecdn files/8418/228 (release stabile) (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
     }
   }
 }
