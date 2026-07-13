@@ -1,2 +1,0 @@
-#showtooltip
-/use [@mouseover,nodead,help]Riptide;Flame Shock

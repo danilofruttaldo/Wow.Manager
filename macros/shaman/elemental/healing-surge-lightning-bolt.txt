@@ -1,2 +1,0 @@
-#showtooltip
-/use [@mouseover,help,nodead]Healing Surge;Lightning Bolt
