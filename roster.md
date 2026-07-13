@@ -33,7 +33,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Night Elf | | X | | | | | X | | | | | | X |
 | Gnome | | X | | | | | X | | | | X | X | X |
 | Draenei | | | | | | | | | | | X | X | X |
-| Worgen | | X | | | | | X | | | | | X | X |
+| Worgen | | X | | | | Furricane | X | | | | | X | X |
 | Void Elf | | X | | | | | X | | | | X | X | X |
 | Lightforged Draenei | | | | | | | X | | | | X | X | X |
 | Dark Iron Dwarf | | | | | | | | | | | X | X | X |
