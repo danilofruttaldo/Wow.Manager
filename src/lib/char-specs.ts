@@ -2,7 +2,7 @@
 // Nel roster mostriamo la PRIMA LETTERA della spec fra parentesi accanto al nome.
 // Fonte iniziale: i 7 screenshot (filename classe-spec-nome). Il resto lo compila l'utente.
 export const CHAR_SPEC: Record<string, string> = {
-  stantu: 'fury',
+  stantu: 'arms*', // wildcard: gioca tutte le spec Warrior
   furricane: 'brewmaster', // fallback; vedi CHAR_SPEC_BY_RACE per la disambiguazione
   snowwipe: 'frost',
   mustaina: 'feral',

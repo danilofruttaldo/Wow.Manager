@@ -11,38 +11,59 @@ const html = getRosterHtml();
 </Base>
 
 <style>
-  /* Il roster sfrutta quasi tutta la larghezza della pagina. */
   .roster-wrap { max-width: min(1720px, 96vw); }
 
   /* Matrice: table-layout fixed + width 100% -> colonne adattive, testo a capo, MAI scroll. */
-  .roster-prose :global(table) { font-size: 0.72rem; width: 100%; table-layout: fixed; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .roster-prose :global(table) {
+    font-size: 0.74rem; width: 100%; table-layout: fixed;
+    border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface);
+  }
   .roster-prose :global(th), .roster-prose :global(td) {
-    padding: 0.28rem 0.2rem; text-align: center; vertical-align: middle;
-    white-space: normal; overflow-wrap: anywhere; line-height: 1.2;
+    padding: 0.32rem 0.28rem; text-align: center; vertical-align: middle;
+    white-space: normal; overflow-wrap: anywhere; line-height: 1.25;
     border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);
   }
-  .roster-prose :global(th:first-child), .roster-prose :global(td:first-child) { width: 40px; }
-  .roster-prose :global(thead th) { background: var(--surface-2); }
+  .roster-prose :global(th:first-child), .roster-prose :global(td:first-child) { width: 42px; }
+  .roster-prose :global(thead th) { background: var(--surface-2); padding: 0.4rem 0.2rem; }
   .roster-prose :global(.ico) { width: 24px; height: 24px; }
   .roster-prose :global(.race-txt) { font-size: 0.6rem; font-weight: 600; }
+  /* Nome + icone: inline-flex centrato -> scritte e icone allineate verticalmente, sempre in riga */
+  .roster-prose :global(.pg) { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; vertical-align: middle; line-height: 1; }
+  .roster-prose :global(.pg .ico-spec) { width: 18px; height: 18px; margin: 0; }
+  .roster-prose :global(.pg .spec-q) { margin: 0; }
+  .roster-prose :global(.pg .spec-l) { color: var(--text-muted); font-weight: 600; }
+  /* Marcatore wildcard (gioca tutte le spec) accanto all'icona */
+  .roster-prose :global(.pg .wild) { color: var(--accent); font-size: 0.85em; font-weight: 700; margin-left: -1px; }
 
-  /* ── Colore faction: Orda tende al rosso, Alleanza al blu ── */
-  .roster-prose :global(tr.fac-horde)    { background: color-mix(in srgb, #C0202A 8%, var(--surface)); }
-  .roster-prose :global(tr.fac-alliance) { background: color-mix(in srgb, #1E6FD0 8%, var(--surface)); }
-  .roster-prose :global(tr.fac-horde:hover)    { background: color-mix(in srgb, #C0202A 15%, var(--surface)); }
-  .roster-prose :global(tr.fac-alliance:hover) { background: color-mix(in srgb, #1E6FD0 15%, var(--surface)); }
+  /* Tinta fazione tenue e uniforme per riga (identità Orda/Alleanza) */
+  .roster-prose :global(tr.fac-horde)    { background: color-mix(in srgb, #C0202A 6%, var(--surface)); }
+  .roster-prose :global(tr.fac-alliance) { background: color-mix(in srgb, #1E6FD0 6%, var(--surface)); }
+
+  /* Colonna razza: neutra, staccata dalla tinta */
+  .roster-prose :global(td.rhead) { background: var(--surface-2); }
+
+  /* Celle con un PG: bianche e in evidenza (risaltano sulle vuote tinte) */
+  .roster-prose :global(tbody tr:not(.rsep) td:not(.rhead):not(:empty):not(:has(.na))) {
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--border);
+    font-weight: 600; color: var(--text);
+  }
 
   /* Bande separatrici Orda / Alleanza */
-  .roster-prose :global(tr.rsep td) { text-align: left; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.66rem; padding: 0.35rem 0.6rem; }
-  .roster-prose :global(tr.rsep--horde td)    { background: color-mix(in srgb, #C0202A 26%, var(--surface)); color: #7c1720; }
-  .roster-prose :global(tr.rsep--alliance td) { background: color-mix(in srgb, #1E6FD0 26%, var(--surface)); color: #14477f; }
+  .roster-prose :global(tr.rsep td) { text-align: left; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; padding: 0.42rem 0.65rem; }
+  .roster-prose :global(tr.rsep--horde td)    { background: color-mix(in srgb, #C0202A 20%, var(--surface)); color: #7c1720; }
+  .roster-prose :global(tr.rsep--alliance td) { background: color-mix(in srgb, #1E6FD0 20%, var(--surface)); color: #14477f; }
 
-  /* Combinazione non ottenibile: casella scura, tratteggiata in obliquo */
+  /* Combinazione non ottenibile: tratteggio LEGGERO che recede in secondo piano */
   .roster-prose :global(td:has(.na)) {
-    background-color: #3b3f45;
+    background-color: color-mix(in srgb, var(--text) 4%, var(--surface));
     background-image: repeating-linear-gradient(45deg,
-      rgba(255,255,255,0.13) 0, rgba(255,255,255,0.13) 1.5px,
-      transparent 1.5px, transparent 6px);
+      color-mix(in srgb, var(--text) 10%, transparent) 0 1px,
+      transparent 1px 7px);
   }
-  .roster-prose :global(.na) { display: block; width: 100%; height: 100%; min-height: 1.4em; }
+  .roster-prose :global(.na) { display: block; width: 100%; height: 100%; min-height: 1.5em; }
+
+  /* Hover: evidenzia la riga senza coprire i PG bianchi */
+  .roster-prose :global(tbody tr.fac-horde:hover)    { background: color-mix(in srgb, #C0202A 13%, var(--surface)); }
+  .roster-prose :global(tbody tr.fac-alliance:hover) { background: color-mix(in srgb, #1E6FD0 13%, var(--surface)); }
 </style>

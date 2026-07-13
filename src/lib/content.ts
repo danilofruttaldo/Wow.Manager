@@ -172,14 +172,24 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
   const out = cell.split(/<br\s*\/?>/i).map((seg) => {
     const name = seg.trim();
     if (!name) return seg;
-    const spec = CHAR_SPEC_BY_RACE[`${name}|${race}`.toLowerCase()] ?? CHAR_SPEC[name.toLowerCase()];
-    if (!spec) return name;
-    if (spec === '?') return `${name} <span class="spec-q" title="spec da confermare">?</span>`;
-    if (SPEC_ICON[classSlug]?.includes(spec)) {
-      const label = titleCase(spec);
-      return `${name} <img class="ico ico-spec" src="/icons/spec/${classSlug}-${spec}.jpg" alt="${label}" title="${label}" width="16" height="16">`;
-    }
-    return `${name} (${spec[0].toUpperCase()})`; // fallback se manca l'icona
+    // Il valore spec può essere una lista separata da virgole (es. "arms,fury,protection").
+    const raw = CHAR_SPEC_BY_RACE[`${name}|${race}`.toLowerCase()] ?? CHAR_SPEC[name.toLowerCase()];
+    const specs = raw ? String(raw).split(',').map((s) => s.trim()).filter(Boolean) : [];
+    const tail = specs.map((raw2) => {
+      // Suffisso "*" = wildcard: gioca tutte le spec (mostra l'icona base + ✦).
+      const wild = raw2.endsWith('*');
+      const spec = wild ? raw2.slice(0, -1) : raw2;
+      if (spec === '?') return '<span class="spec-q" title="spec da confermare">?</span>';
+      if (SPEC_ICON[classSlug]?.includes(spec)) {
+        const label = titleCase(spec);
+        const title = wild ? `${label} · wildcard (gioca tutte le spec)` : label;
+        const star = wild ? '<span class="wild" title="wildcard — tutte le spec">✦</span>' : '';
+        return `<img class="ico ico-spec" src="/icons/spec/${classSlug}-${spec}.jpg" alt="${title}" title="${title}" width="16" height="16">${star}`;
+      }
+      return `<span class="spec-l">(${spec[0].toUpperCase()})</span>`; // fallback se manca l'icona
+    }).join('');
+    // "nome + icone" = inline-flex centrato: scritte e icone allineate verticalmente.
+    return `<span class="pg"><span class="pg-name">${name}</span>${tail}</span>`;
   });
   return ` ${out.join('<br>')} `;
 }
