@@ -34,7 +34,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Gnome | | X | | | | | X | | | | X | X | X |
 | Draenei | | | | | | | | | | | X | X | X |
 | Worgen | | X | | | | Furricane | X | | | | | X | X |
-| Void Elf | | X | | | | | X | | | | X | X | X |
+| Void Elf | | X | | | | | X | | | | X | | X |
 | Lightforged Draenei | | | | | | | X | | | | X | X | X |
 | Dark Iron Dwarf | | | | | | | | | | | X | X | X |
 | Kul Tiran | | X | | | | | | | | | | X | X |
@@ -48,5 +48,5 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 - **Shaman**: Orc, Troll, Tauren, Goblin, Mag'har, Zandalari, Highmountain, Vulpera, Pandaren, Earthen, Haranir (+ Draenei, Dwarf, Dark Iron, Kul Tiran lato Alleanza).
 - **Paladin**: Blood Elf, Tauren, Zandalari (+ Human, Dwarf, Dark Iron, Draenei, Lightforged).
 - **Druid**: Tauren, Troll, Highmountain, Zandalari, Haranir (+ Night Elf, Worgen, Kul Tiran).
-- **Demon Hunter**: solo Blood Elf / Night Elf.
+- **Demon Hunter**: solo Blood Elf / Night Elf / Void Elf.
 - **Evoker**: solo Dracthyr.
