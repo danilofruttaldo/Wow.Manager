@@ -34,6 +34,8 @@ for (const c of classes) c.specs.sort();
 <Base title="Macro" description="Macro WoW per account/character, filtrabili per classe e spec: cosa fanno e il codice pronto da copiare.">
   <div class="wrap">
     <div class="filters">
+      <input id="macro-search" class="search" type="search" inputmode="search" autocomplete="off"
+             placeholder="Cerca macro, abilità, spec…" aria-label="Cerca macro" />
       <div class="chips" id="class-chips" role="group" aria-label="Filtra per classe">
         {classes.map(c => (
           <button class="chip" data-class={c.slug} type="button">
@@ -61,7 +63,8 @@ for (const c of classes) c.specs.sort();
         const cIcon = classIcon(m.class);
         const sIcon = specIcon(m.class, m.spec);
         return (
-          <article class="mcard" data-class={m.class ?? 'shared'} data-spec={m.spec ?? ''}>
+          <article class="mcard" data-class={m.class ?? 'shared'} data-spec={m.spec ?? ''}
+                   data-search={`${m.name} ${m.desc ?? ''} ${m.spec ?? ''} ${m.class ?? ''} ${m.body ?? ''}`.toLowerCase()}>
             <div class="mcard-head">
               <div class="mcard-icons">
                 {cIcon
@@ -71,20 +74,19 @@ for (const c of classes) c.specs.sort();
               </div>
               <div class="mcard-title">
                 <strong>{m.name}</strong>
-                <span class="mcard-tags">
-                  {m.spec
-                    ? <span class="badge badge--accent">{titleCase(m.spec)}</span>
-                    : <span class="badge">cross-spec</span>}
-                </span>
               </div>
             </div>
             {m.desc && <p class="mcard-desc">{m.desc}</p>}
-            {m.body && (
-              <div class="mcard-code">
-                <button class="copy" type="button" aria-label="Copia la macro">Copia</button>
-                <pre><code>{m.body}</code></pre>
-              </div>
-            )}
+            {m.body && (() => {
+              const collapsible = m.body.split(/\r?\n/).length > 2;  // clamp solo se >2 righe reali
+              return (
+                <div class:list={['mcard-code', { 'is-collapsed': collapsible }]}>
+                  <button class="copy" type="button" aria-label="Copia la macro">Copia</button>
+                  <pre><code>{m.body}</code></pre>
+                  {collapsible && <button class="expand" type="button">Espandi</button>}
+                </div>
+              );
+            })()}
           </article>
         );
       })}
@@ -95,6 +97,9 @@ for (const c of classes) c.specs.sort();
 
 <style>
 .filters { position: sticky; top: var(--header-height); z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 0.7rem 0 0.6rem; margin-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+.search { display: block; width: 100%; max-width: 420px; margin-bottom: 0.6rem; font-family: inherit; font-size: 0.88rem; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.4rem 0.9rem; transition: border-color var(--transition), box-shadow var(--transition); }
+.search::placeholder { color: var(--text-subtle); }
+.search:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .chips--spec { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border); }
 .chip { display: inline-flex; align-items: center; gap: 0.4rem; font-family: inherit; font-size: 0.82rem; font-weight: 500; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.7rem; cursor: pointer; transition: color var(--transition), background var(--transition), border-color var(--transition); }
@@ -110,18 +115,24 @@ for (const c of classes) c.specs.sort();
 /* `display:flex/grid` sulle card/chip vince sull'attributo [hidden] (regola autore > UA): forziamo il nascondere. */
 .mcard[hidden], .chip[hidden], .chips[hidden] { display: none !important; }
 
-.macro-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.7rem; padding-top: 0.6rem; }
-.mcard { display: flex; flex-direction: column; gap: 0.55rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.8rem 0.9rem; }
-.mcard-head { display: flex; align-items: flex-start; gap: 0.6rem; }
+/* 3 colonne fisse (2 su schermi medi, 1 su mobile). minmax(0,1fr) evita che una riga
+   lunga di macro allarghi la colonna oltre la pagina: è il <pre> a scrollare. */
+.macro-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; padding-top: 0.6rem; }
+@media (max-width: 1000px) { .macro-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mcard { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.8rem 0.9rem; }
+.mcard-head { display: flex; align-items: center; gap: 0.6rem; }
 .mcard-icons { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; }
 .ico-spec--card { width: 18px; height: 18px; min-width: 18px; border-radius: 4px; }
-.mcard-title { display: flex; flex-direction: column; gap: 0.28rem; min-width: 0; }
+.mcard-title { min-width: 0; }
 .mcard-title strong { font-size: 0.95rem; line-height: 1.25; }
-.mcard-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .mcard-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.45; margin: 0; }
 .mcard-code { position: relative; margin-top: auto; }
 .mcard-code pre { background: var(--surface-2); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.6rem 0.7rem; overflow-x: auto; }
 .mcard-code code { font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.5; background: none; padding: 0; color: var(--text); white-space: pre; }
+/* Macro >2 righe: mostra 2 righe piene + un accenno della 3ª sfumata, il resto si apre con "Espandi". */
+.mcard-code.is-collapsed pre { max-height: 4em; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent); mask-image: linear-gradient(to bottom, #000 70%, transparent); }
+.expand { display: block; width: 100%; margin-top: 0.3rem; font-family: inherit; font-size: 0.7rem; font-weight: 600; color: var(--text-subtle); background: none; border: none; text-align: left; padding: 0.1rem 0; cursor: pointer; }
+.expand:hover { color: var(--accent); }
 .copy { position: absolute; top: 0.35rem; right: 0.35rem; font-family: inherit; font-size: 0.68rem; font-weight: 600; color: var(--text-subtle); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.12rem 0.42rem; cursor: pointer; opacity: 0; transition: opacity var(--transition), color var(--transition), border-color var(--transition); }
 .mcard-code:hover .copy, .copy:focus-visible { opacity: 1; }
 .copy:hover { color: var(--accent); border-color: var(--accent); }
@@ -144,57 +155,75 @@ for (const c of classes) c.specs.sort();
     const cards = Array.from(grid.querySelectorAll('.mcard')) as HTMLElement[];
     const empty = document.getElementById('empty') as HTMLElement;
 
-    // 'all' = nessun filtro attivo (mostra tutto). Le chip fanno da toggle: ri-cliccare deseleziona.
-    let activeClass = 'all';
-    let activeSpec = 'all';
+    // Multi-selezione su entrambi i filtri (unione). Set vuoto = nessun filtro su quell'asse.
+    const activeClasses = new Set<string>();
+    const activeSpecs = new Set<string>();
+    const search = document.getElementById('macro-search') as HTMLInputElement;
+    let query = '';
 
     const apply = () => {
       let shown = 0;
       for (const card of cards) {
-        const okClass = activeClass === 'all' || card.dataset.class === activeClass;
-        // spec 'all' o card cross-spec (data-spec vuoto) sempre visibili nella classe scelta
-        const okSpec = activeSpec === 'all' || card.dataset.spec === activeSpec || card.dataset.spec === '';
-        const show = okClass && okSpec;
+        const okClass = activeClasses.size === 0 || activeClasses.has(card.dataset.class || '');
+        // nessuna spec scelta, spec fra quelle scelte, o card cross-spec (data-spec vuoto = sempre visibile)
+        const okSpec = activeSpecs.size === 0 || activeSpecs.has(card.dataset.spec || '') || card.dataset.spec === '';
+        const okText = query === '' || (card.dataset.search || '').includes(query);
+        const show = okClass && okSpec && okText;
         card.hidden = !show;
         if (show) shown++;
       }
       if (empty) empty.hidden = shown > 0;
     };
 
-    // Mostra/nasconde la barra spec in base alla classe attiva e azzera la spec scelta.
-    const resetSpecBar = () => {
-      activeSpec = 'all';
-      const opts = specOpts.filter(o => o.dataset.parent === activeClass);
-      for (const o of specOpts) { o.hidden = o.dataset.parent !== activeClass; o.classList.remove('is-active'); }
-      specBar.hidden = activeClass === 'all' || opts.length === 0;
+    if (search) {
+      search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); apply(); });
+    }
+
+    // La barra spec mostra le spec delle classi selezionate (dedupe per nome). Appare con >=1 classe attiva.
+    const updateSpecBar = () => {
+      // togli dalla selezione le spec non più offerte dalle classi attive
+      const available = new Set(specOpts.filter(o => activeClasses.has(o.dataset.parent || '')).map(o => o.dataset.spec || ''));
+      for (const s of [...activeSpecs]) if (!available.has(s)) activeSpecs.delete(s);
+      const seen = new Set<string>();
+      let any = false;
+      for (const o of specOpts) {
+        const spec = o.dataset.spec || '';
+        const showChip = activeClasses.has(o.dataset.parent || '') && !seen.has(spec);
+        if (showChip) { seen.add(spec); any = true; }
+        o.hidden = !showChip;
+        o.classList.toggle('is-active', showChip && activeSpecs.has(spec));
+      }
+      specBar.hidden = !any;
     };
 
     for (const chip of classChips) {
       chip.addEventListener('click', () => {
-        const c = chip.dataset.class || 'all';
-        if (activeClass === c) {           // ri-click sulla classe attiva -> deseleziona, mostra tutto
-          activeClass = 'all';
-          chip.classList.remove('is-active');
-        } else {
-          activeClass = c;
-          for (const x of classChips) x.classList.toggle('is-active', x === chip);
-        }
-        resetSpecBar();
+        const c = chip.dataset.class || '';
+        if (activeClasses.has(c)) activeClasses.delete(c);   // toggle: ri-click deseleziona
+        else activeClasses.add(c);
+        chip.classList.toggle('is-active', activeClasses.has(c));
+        updateSpecBar();
         apply();
       });
     }
 
     for (const chip of specOpts) {
       chip.addEventListener('click', () => {
-        const s = chip.dataset.spec || 'all';
-        if (activeSpec === s) {             // ri-click sulla spec attiva -> deseleziona (tutte le spec)
-          activeSpec = 'all';
-          chip.classList.remove('is-active');
-        } else {
-          activeSpec = s;
-          for (const x of specOpts) x.classList.toggle('is-active', x === chip);
-        }
+        const s = chip.dataset.spec || '';
+        if (activeSpecs.has(s)) activeSpecs.delete(s);       // toggle multi: ri-click deseleziona
+        else activeSpecs.add(s);
+        // allinea tutte le chip con lo stesso nome spec (possono essercene più d'una nascosta)
+        for (const x of specOpts) if ((x.dataset.spec || '') === s) x.classList.toggle('is-active', activeSpecs.has(s));
         apply();
+      });
+    }
+
+    // Il bottone "Espandi" esiste solo sulle macro >2 righe (deciso lato server): basta collegarlo.
+    for (const expand of Array.from(document.querySelectorAll('.expand')) as HTMLButtonElement[]) {
+      const block = expand.closest('.mcard-code') as HTMLElement;
+      expand.addEventListener('click', () => {
+        const collapsed = block.classList.toggle('is-collapsed');
+        expand.textContent = collapsed ? 'Espandi' : 'Comprimi';
       });
     }
 

@@ -9,7 +9,7 @@
   },
   "macros": {
     "warrior-heroic-leap-cursor": {
-      "name": "Leap @cursor",
+      "name": "Heroic Leap",
       "desc": "Heroic Leap sulla posizione del mouse.",
       "scope": "account",
       "class": "warrior",
@@ -22,7 +22,7 @@
       "notes": "Salta sulla posizione del mouse. `!` previene il reset dell'indicator se ripremi prima del cast (spam-safe). Standard QoL warrior."
     },
     "warrior-charge-intervene": {
-      "name": "Charge/Intervene",
+      "name": "Charge / Intervene",
       "desc": "Gap-closer: Intervene su un alleato, Shield Charge in Prot col modifier, altrimenti Charge.",
       "scope": "account",
       "class": "warrior",
@@ -35,7 +35,7 @@
       "notes": "Cross-spec gap-closer: friendly target → Intervene, modifier+Prot → Shield Charge, fallback → Charge. Usa known: per safety cross-spec."
     },
     "warrior-ravager-bladestorm": {
-      "name": "Ravager/Bladestorm",
+      "name": "Ravager / Bladestorm",
       "desc": "AoE channel Arms: Ravager a terra sul cursore se talentato, altrimenti Bladestorm sul posto.",
       "scope": "account",
       "class": "warrior",
@@ -48,7 +48,7 @@
       "notes": "ARMS ONLY (riclassificata 2026-06-08). Ruolo 'AoE channel' di Arms, auto-adattiva via known:Ravager: Ravager talentato (Arms M+) → ground-target su cursor; altrimenti (Arms raid) → Bladestorm sul posto (@cursor innocuo, BS self-centered). In FURY questa macro NON si usa: lì Bladestorm e Avatar sono lo stesso nodo di scelta (raid Slayer = Bladestorm, M+ MT = Avatar) e si mettono raw sulla barra per-loadout (nessuna macro: in raid Slayer ST Bladestorm quasi non si usa). Premere al GCD successivo all'opener."
     },
     "warrior-shockwave-howl": {
-      "name": "Shockwave/Howl",
+      "name": "Shockwave / Piercing Howl",
       "desc": "Control AoE: Shockwave se talentato, altrimenti Piercing Howl.",
       "scope": "account",
       "class": "warrior",
@@ -61,7 +61,7 @@
       "notes": "AoE CC auto-adattiva su talent loadout: Shockwave talentato → stun cono frontale istantaneo nella direzione in cui sei girato (NON ground-target: Shockwave usa il facing, non il cursore — niente @cursor); altrimenti → Piercing Howl slow centrato su player. Stesso pattern `known:` di Ravager/Bladestorm — un bind solo per il control AoE."
     },
     "warrior-sweeping-cleave": {
-      "name": "Sweep+Cleave/WW",
+      "name": "Sweeping Strikes + Cleave / Whirlwind",
       "desc": "Castsequence Sweeping Strikes + filler (Cleave in M+, Whirlwind in raid).",
       "scope": "account",
       "class": "warrior",
@@ -74,7 +74,7 @@
       "notes": "Castsequence auto-adattiva su talent loadout via known:Cleave. Cleave talentato (build M+) → seq 'Sweeping Strikes + 8x Cleave'; altrimenti (build raid) → seq 'Sweeping Strikes + 8x Whirlwind'. La castsequence avanza oltre lo step SS dopo un cast, quindi SS non monopolizza i press (problema della vecchia versione a due /cast: SS è on-GCD + cariche → castava solo SS, mai il filler). SS castabile quasi sempre (cariche) → quando la seq wrappa sullo step SS trova una carica e avanza, niente stuck in nessuna build. reset=29 = reset dopo 29s idle. 8 filler/lato è il max nei 255 char (245). Conteggi indipendenti per lato: si possono ritoccare (meno Cleave = SS più frequente in M+; più Whirlwind = meno spreco SS in raid)."
     },
     "warrior-cs-rend": {
-      "name": "CS+Rend",
+      "name": "Colossus Smash + Rend",
       "desc": "Castsequence Colossus Smash + Rend, cadenzata sul cooldown di Colossus Smash.",
       "scope": "account",
       "class": "warrior",
@@ -87,7 +87,7 @@
       "notes": "Castsequence stile SS+Cleave, cadenzata dal CD di Rend (6s): Colossus Smash poi 7x Rend a coprire i 45s di CD di CS (7 Rend × 6s ≈ 42s ≈ CD CS). Come sweeping-cleave è cadenzata dal CD di Cleave: ogni step Rend avanza solo quando Rend è off-CD, quindi NON si spamma/clippa, lo paga il suo CD. known:Rend via due sequenze: Rend talentato → 'CS + 7 Rend'; build no-Rend → fallback 'Colossus Smash' (solo CS). reset=44 → dopo 44s di idle (no-press) la sequenza riparte da CS, allineato al CD di CS (45s) così dopo una pausa riprende fresco da Colossus Smash. 7 step = ~7 Rend tra un CS e l'altro (45÷6≈7.5); per ridurre la finestra 'stuck su CS' al wrap si può salire a 8."
     },
     "warrior-reck-trinket": {
-      "name": "Reck+Trinket",
+      "name": "Recklessness + Trinket",
       "desc": "Burst: Recklessness + trinket 13/14 in un press.",
       "scope": "account",
       "class": "warrior",
@@ -100,7 +100,7 @@
       "notes": "Burst Fury off-GCD: Recklessness + trinket 13/14 in un press (tutto off-GCD, Reck GCD 0). spec=fury perché Recklessness è solo-Fury (riclassificata 2026-06-08: prima era null/shared, ma l'identità è il burst Fury). Avatar (M+) e Bladestorm (raid) sono il nodo di scelta Fury, si usano raw sulla barra per-loadout (niente macro dedicata). #showtooltip nudo mostra Recklessness. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. NB: i trinket /use partirebbero anche su Arms/Prot, ma lì Reck non c'è e la macro non è pensata per quelle spec."
     },
     "warrior-rend-whirlwind": {
-      "name": "Rend+WW / TC",
+      "name": "Rend + Whirlwind / Thunder Clap",
       "desc": "Applica il cleave: Thunder Clap in M+, sequenza Rend + Whirlwind in raid.",
       "scope": "account",
       "class": "warrior",
@@ -113,7 +113,7 @@
       "notes": "Cleave applier FURY (rinominata 2026-06-08 da whirlwind-cleave: quel nome è da Arms perché 'Cleave' è un'abilità Arms; questa è Rend+Whirlwind → rend-whirlwind). Auto-adattiva su build via known:Thunder Clap (un solo bind, B1/Q). M+ (Mountain Thane, ha Thunder Clap) → known:Thunder Clap → Thunder Clap singolo (alimenta il loop Thunder Blast). RAID (Slayer, niente Thunder Clap) → noknown:Thunder Clap → castsequence 'Rend, Whirlwind x4' (rapporto 1 Rend : 4 Whirlwind, reset=5s idle: Rend rientra ogni 5 press, no clip del DoT). Rami mutuamente esclusivi (TC vs noTC) → niente doppio-cast. Discriminatore = known:Thunder Clap (scelta utente 2026-06-08): VALIDO perché confermato che Fury raid = Slayer (NO Thunder Clap) e Fury M+ = Mountain Thane (Thunder Clap). Se in futuro il raid passasse a Mountain Thane entrambi i build avrebbero Thunder Clap → spostare il discriminatore su known:Rend (Rend resta solo-raid). ATTENZIONE typo: ogni step deve essere esattamente 'Whirlwind' (un nome errato inchioda la sequence su quello step). reset=5 può ripartire da Rend dopo pause >5s in combat (movimento) — alzare se dà fastidio. NOTA Prot: Protection ha Thunder Clap baseline → known:Thunder Clap → casta sempre Thunder Clap (ok, ridondante con la rotazione)."
     },
     "warrior-prot-intimidating-howl": {
-      "name": "IntShout/Howl",
+      "name": "Intimidating Shout / Piercing Howl",
       "desc": "Control AoE: Intimidating Shout se talentato, altrimenti Piercing Howl.",
       "scope": "account",
       "class": "warrior",
@@ -126,7 +126,7 @@
       "notes": "AoE control auto-adattivo via known:Intimidating Shout, stesso pattern di warrior-shockwave-howl: Intimidating Shout talentato → fear AoE 8s (hard CC, si rompe a danno sui target secondari); altrimenti → Piercing Howl (slow AoE). Nessun modifier. #showtooltip dinamico mostra l'icona giusta in base al loadout. NB: Piercing Howl compare anche come fallback in warrior-shockwave-howl — slot/ruoli diversi, nessun conflitto. Raggruppata nel kit Prot ma le ability sono cross-spec."
     },
     "mage-decurse-spellsteal": {
-      "name": "Decurse/Spellsteal",
+      "name": "Remove Curse / Spellsteal",
       "desc": "Mouseover su alleato → Remove Curse; sul nemico → Spellsteal (se talentato).",
       "scope": "account",
       "class": "mage",
@@ -139,7 +139,7 @@
       "notes": "Mage-wide, spec:null, auto-adattiva via known:Spellsteal (stesso pattern delle macro warrior known:). Cascata: 1) mouseover amichevole vivo → Remove Curse (decurse alleato senza cambiare target); 2) Spellsteal talentato → Spellsteal sul target nemico (ruba buff); 3) build raid (Spellsteal NON talentato) → Remove Curse su @player. Discriminatore = known:Spellsteal perché in spec raid Spellsteal non viene preso (conferma utente 2026-06-09): in raid la macro è puro decurse, niente errore 'spell sconosciuta'. nodead evita il decurse su alleato morto. #showtooltip nudo dinamico: mostra Remove Curse in raid, Spellsteal con target nemico nelle altre build."
     },
     "paladin-cleanse-taunt": {
-      "name": "Cleanse/Taunt",
+      "name": "Cleanse Toxins / Hand of Reckoning",
       "desc": "Mouseover su alleato → Cleanse Toxins; altrimenti Hand of Reckoning (taunt).",
       "scope": "account",
       "class": "paladin",
@@ -152,7 +152,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-09 (richiesta 'entrambe shared' → spec:null). Un bottone a doppio ruolo: mouseover su alleato vivo (help,nodead) → Cleanse Toxins (dispel poison/disease); altrimenti (mouseover nemico o nessun mouseover) → Hand of Reckoning (taunt sul target corrente). #showtooltip nudo dinamico mostra l'icona giusta in base a cosa c'è sotto il mouse. CAVEAT spec: Cleanse Toxins è il dispel di Prot/Ret; HOLY ha invece 'Cleanse' (dispella anche magia) → su Holy il ramo dispel darebbe 'spell sconosciuta'. Se in futuro si gioca Holy, rendere il primo ramo auto-adattivo: [@mouseover,help,nodead,known:Cleanse]Cleanse;[@mouseover,help,nodead]Cleanse Toxins;Hand of Reckoning. Hand of Reckoning (taunt) è baseline su tutte le spec."
     },
     "paladin-intercession-redemption": {
-      "name": "Res (combat)",
+      "name": "Intercession / Redemption",
       "desc": "Resurrezione: Intercession in combattimento, Redemption fuori.",
       "scope": "account",
       "class": "paladin",
@@ -165,7 +165,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-09 (spec:null, cross-spec). Battle-res auto-adattiva sullo stato di combattimento: [combat] → Intercession (combat res del paladino, charge sull'alleato morto + rez); fuori combat → Redemption (rez normale, lunga). Un solo bind copre entrambi i casi. Entrambe le spell sono baseline su tutte le spec del paladino → davvero cross-spec senza caveat. Target = il bersaglio corrente (alleato morto): usare con target di un cadavere alleato."
     },
     "shaman-ancestral-vision-spirit": {
-      "name": "Rez AoE/ST",
+      "name": "Ancestral Vision / Ancestral Spirit",
       "desc": "Resurrezione: modifier → Ancestral Vision (di massa), tap → Ancestral Spirit (singolo).",
       "scope": "account",
       "class": "shaman",
@@ -178,7 +178,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-09 ('resto' → spec:restoration). Rez a doppio ramo via [mod] (qualsiasi modifier shift/ctrl/alt): modifier tenuto → Ancestral Vision (rez di MASSA, riporta in vita TUTTI i party member morti a 35% HP/mana, solo fuori combat — VERIFICATO Wowhead spell=212048); tap nudo → Ancestral Spirit (rez singolo target, baseline tutte le spec). CAVEAT spec: Ancestral Vision è SOLO Restoration → su Elemental/Enhancement il ramo [mod] dà 'spell sconosciuta', resta valido solo il ramo Ancestral Spirit di default. Per questo spec:restoration. NB da Shadowlands il Resto impara Ancestral Vision prima di Ancestral Spirit → su Resto il tap singolo è quasi sempre sostituibile dal mod di massa. #showtooltip nudo dinamico mostra l'icona del ramo attivo (Ancestral Spirit default, Ancestral Vision col modifier). Target = cadavere alleato corrente."
     },
     "shaman-capacitor-totem": {
-      "name": "Capacitor @cursor",
+      "name": "Capacitor Totem",
       "desc": "Capacitor Totem sul cursore (stun AoE ritardato).",
       "scope": "account",
       "class": "shaman",
@@ -191,7 +191,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-09 ('shared' → spec:null, cross-spec). Piazza Capacitor Totem sulla posizione del mouse (@cursor): totem che dopo ~2s emette uno stun AoE ai nemici vicini. Ground-target esplicito via @cursor (è un totem piazzato, niente soft-target nativo). Disponibile a tutte le spec shaman se talentato (talento albero classe condiviso). #showtooltip nudo dinamico mostra Capacitor Totem. CAVEAT: se Capacitor Totem non è talentato nel loadout corrente la macro è inerte (spell non disponibile)."
     },
     "shaman-spirit-link-totem": {
-      "name": "SpiritLink @cur",
+      "name": "Spirit Link Totem",
       "desc": "Spirit Link Totem sul cursore (redistribuisce gli HP + riduzione danni).",
       "scope": "account",
       "class": "shaman",
@@ -204,7 +204,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-09 (spec:restoration). Piazza Spirit Link Totem sul cursore (@cursor): CD difensivo Resto che redistribuisce gli HP tra i membri del gruppo nel raggio + ~10% riduzione danni. @cursor evita il prompt di targeting → piazzamento immediato sotto il mouse. spec:restoration: è un totem Resto. #showtooltip nudo mostra Spirit Link Totem."
     },
     "shaman-purge-cleanse-spirit": {
-      "name": "Purge/Cleanse",
+      "name": "Purge / Cleanse Spirit",
       "desc": "Mouseover su alleato → Cleanse Spirit; altrimenti Purge sul nemico.",
       "scope": "account",
       "class": "shaman",
@@ -217,7 +217,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-20 ('macro per elemental'). RICLASSIFICATA spec:null 2026-06-28: l'utente la usa ora anche su Enhancement (nuovo pg) — stesso body byte-identico, Cleanse Spirit è baseline sia Elemental sia Enhancement → unificata invece di duplicare (stesso principio di chain-heal-chain-lightning). File spostato in shaman/purge-cleanse-spirit.txt (root classe = convenzione spec:null). CAVEAT: spec:null qui significa 'tutte le spec TRANNE Restoration': Cleanse Spirit è il dispel Curse di Elemental/Enhancement, la Resto usa invece Purify Spirit (dispella anche Magic) → su Resto il ramo cleanse darebbe 'spell sconosciuta'. Purge è cross-spec (tutte le spec). Dispel a doppio ruolo: mouseover su alleato vivo (@mouseover,help,nodead) → Cleanse Spirit (dispella Curse dall'alleato senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) → Purge (dispel offensivo magia sul target corrente). Il ramo default NON ha @mouseover → Purge va sul target attuale, non sul mouseover nemico. nodead evita il cleanse su alleato morto. #showtooltip nudo dinamico mostra l'icona del ramo attivo."
     },
     "shaman-earthbind-totem": {
-      "name": "Earthbind @cur",
+      "name": "Earthbind Totem",
       "desc": "Earthbind Totem sul cursore (slow AoE).",
       "scope": "account",
       "class": "shaman",
@@ -230,7 +230,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-20 (nel set Elemental, ma classificata spec:null su scelta utente). Piazza Earthbind Totem sulla posizione del mouse (@cursor): totem che rallenta i nemici nel raggio. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem). Earthbind Totem è baseline su TUTTE le spec shaman → cross-spec come Capacitor, per questo spec:null (root classe). #showtooltip nudo mostra Earthbind Totem."
     },
     "shaman-wind-rush-totem": {
-      "name": "Wind Rush @cur",
+      "name": "Wind Rush Totem",
       "desc": "Wind Rush Totem sul cursore (scatto di velocità agli alleati).",
       "scope": "account",
       "class": "shaman",
@@ -243,7 +243,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-20. Piazza Wind Rush Totem sulla posizione del mouse (@cursor): totem che dà uno scatto di velocità movimento agli alleati che lo attraversano. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem / shaman-earthbind-totem). Wind Rush Totem è TALENTO albero classe → disponibile a tutte le spec shaman se talentato, per questo spec:null (root classe). CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo mostra Wind Rush Totem."
     },
     "shaman-ascendance-ancestral-call": {
-      "name": "Ascendance+Racial",
+      "name": "Ascendance + Ancestral Call",
       "desc": "Burst: Ascendance + racial Ancestral Call + trinket 13/14.",
       "scope": "account",
       "class": "shaman",
@@ -256,7 +256,7 @@
       "notes": "Creata 2026-06-28 su richiesta utente (nuovo pg Enhancement, 'shared macro'). Burst opener in un press, stesso schema di warrior-reck-trinket / death-knight-frost-pillar-erw-trinket: Ascendance (CD maggiore) + Ancestral Call (razziale Mag'har Orc, guardato da known: → inerte su altre razze, nessun errore 'spell sconosciuta') + trinket 13/14. Ancestral Call e i trinket sono off-GCD → partono insieme ad Ascendance in un colpo solo. spec:null (root classe): Ascendance è talento disponibile a tutte e 3 le spec shaman (offensivo su Enh/Elem, healing CD su Resto) → davvero cross-spec. CAVEAT: se Ascendance non è talentata nel loadout corrente la macro non casta il CD (resta solo racial+trinket). /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. known:Ancestral Call = stesso pattern dei discriminatori known: warrior/mago: la riga del racial scatta solo se quel racial è effettivamente posseduto. #showtooltip nudo (rettifica utente 2026-06-28): risolve sulla prima azione disponibile, cioè /cast Ascendance → mostra l'icona del CD principale."
     },
     "shaman-ghost-wolf-feral-lunge": {
-      "name": "GhostWolf/Lunge (Enh)",
+      "name": "Ghost Wolf / Feral Lunge",
       "desc": "Ghost Wolf; col modifier → Feral Lunge (gap-closer verso il nemico).",
       "scope": "account",
       "class": "shaman",
@@ -269,7 +269,7 @@
       "notes": "Split 2026-07-13 dalla ex spec:null shaman-ghost-wolf-feral-lunge (cross-spec Enh+Elem): l'utente ha fornito il body Enhancement dedicato, senza il ramo Spiritwalker's Grace. Mobilità Enh a doppio ramo via [mod]: nudo → Ghost Wolf (forma lupo, +velocità); [mod] con known:Feral Lunge → Feral Lunge (balzo/gap-closer verso il target nemico, spec tree Enhancement). known: evita 'spell sconosciuta' se Feral Lunge non è talentato → il [mod] ricade su Ghost Wolf. CAVEAT: Feral Lunge richiede un target nemico. Controparte Elemental: shaman-ghost-wolf-spiritwalkers-grace. #showtooltip nudo dinamico: Ghost Wolf senza modifier, Feral Lunge col modifier tenuto."
     },
     "shaman-ghost-wolf-spiritwalkers-grace": {
-      "name": "GhostWolf/SWG (Elem)",
+      "name": "Ghost Wolf / Spiritwalker's Grace",
       "desc": "Ghost Wolf; col modifier → Spiritwalker's Grace (cast in movimento).",
       "scope": "account",
       "class": "shaman",
@@ -282,7 +282,7 @@
       "notes": "Split 2026-07-13 dalla ex spec:null shaman-ghost-wolf-feral-lunge: ramo Elemental della mobilità Ghost Wolf. Nudo → Ghost Wolf (forma lupo, +velocità); [mod] con known:Spiritwalker's Grace → Spiritwalker's Grace (consente il cast in movimento, off-GCD). Stesso schema known: della controparte Enhancement (shaman-ghost-wolf-feral-lunge); se non disponibile il [mod] ricade su Ghost Wolf. #showtooltip nudo dinamico mostra il ramo attivo."
     },
     "druid-rebirth-revitalize-revive": {
-      "name": "Res druido",
+      "name": "Rebirth / Revitalize / Revive",
       "desc": "Resurrezione: Rebirth in combattimento, Revitalize (di massa in Resto) o Revive fuori.",
       "scope": "account",
       "class": "druid",
@@ -295,7 +295,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-12, versione UNIFICATA auto-adattiva; 2026-06-12 aggiunto @mouseover ai rami single-target su richiesta utente. 5 clausole: [@mouseover,help,dead,combat]Rebirth + [combat]Rebirth → battle res in combat (preferisce il cadavere alleato sotto il mouse, altrimenti il target corrente — spell=20484); [nocombat,mod,known:Revitalize] → Revitalize (mass-res Resto, NESSUN target: rianima tutti i party morti, fuori combat — spell=212040); [@mouseover,help,dead]Revive + Revive → rez singolo fuori combat (mouseover-cadavere o target — spell=50769). Il qualificatore @mouseover,help,dead fa scattare il rez sul cadavere alleato sotto il mouse senza cambiare target, con fallback pulito al target corrente. Revitalize resta SENZA @mouseover perché è mass (nessun bersaglio). Il discriminatore known:Revitalize rende UNA macro valida per TUTTE le spec: su Resto il modifier dà il mass-res; su Balance/Feral/Guardian il ramo [mod] fallisce known: e ricade su Revive. spec:null (cross-spec). Stesso pattern known: delle macro warrior/mago e schema mass-res-su-modifier del rez shaman. #showtooltip nudo dinamico mostra il ramo attivo."
     },
     "druid-travel-wild-charge": {
-      "name": "Travel/Charge",
+      "name": "Travel Form / Wild Charge",
       "desc": "Modifier → Travel Form; altrimenti Wild Charge (scatto che varia per forma).",
       "scope": "account",
       "class": "druid",
@@ -308,7 +308,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-12. Movimento a doppio ramo via [mod]: modifier tenuto → Travel Form (shapeshift forma viaggio, +velocità, baseline); altrimenti → Wild Charge (talento: scatto direzionale che varia per forma — Cat balzo al nemico, Bear carica, Moonkin/no-forma disengage all'indietro, Aquatic guizzo). spec:null cross-spec. CAVEAT: Wild Charge è un TALENTO (albero classe) → se non talentato il ramo di default è inerte; Travel Form via [mod] resta sempre valida. Nessun @cursor/@unit: Wild Charge usa target/forma correnti."
     },
     "druid-soothe-remove-corruption": {
-      "name": "RemCorr/Soothe",
+      "name": "Remove Corruption / Soothe",
       "desc": "Mouseover su alleato → Remove Corruption; sul nemico → Soothe.",
       "scope": "account",
       "class": "druid",
@@ -321,7 +321,7 @@
       "notes": "Creata 2026-06-12 su richiesta utente come analogo druido di mage-decurse-spellsteal ('macro druido feral come spellsteal/decurse ma con soothe/remove corruption'). Stessa cascata a 3 rami: 1) mouseover alleato vivo (@mouseover,nodead,help) → Remove Corruption (dispel Curse+Poison sull'alleato senza cambiare target); 2) known:Soothe → Soothe sul target nemico (dispel Enrage, range 40y, usabile in Cat Form); 3) fallback @player → Remove Corruption su se stesso. Discriminatore known:Soothe = analogo di known:Spellsteal del mago: senza Soothe talentato la macro è puro dispel amichevole, niente 'spell sconosciuta' sul ramo offensivo. VERIFICATO 12.0.5 (Icy Veins/Method): Soothe e Remove Corruption sono ENTRAMBI talenti albero classe (Remove Corruption disponibile a Balance/Feral/Guardian, NON Resto che usa Nature's Cure con dispel anche Magic). CAVEAT diverso dal mago: lì Remove Curse è baseline (fallback sempre valido), qui Remove Corruption è un talento → se non talentato i rami 1 e 3 sono inerti; in pratica su Feral M+ entrambi sono talentati (Soothe richiesto per pathing). spec:feral ma le ability valgono anche Balance/Guardian → si può rendere shared. #showtooltip nudo dinamico mostra il ramo attivo."
     },
     "druid-moonkin-flap": {
-      "name": "Moonkin/Flap",
+      "name": "Moonkin Form / Flap",
       "desc": "Fuori forma → Moonkin Form; già in Moonkin → Flap (planata).",
       "scope": "account",
       "class": "druid",
@@ -334,7 +334,7 @@
       "notes": "Creata 2026-06-12 su richiesta utente (macro shared druido). Una riga: [noform:4] → Moonkin Form (entra in forma boomkin se non ci sei già); altrimenti (già in Moonkin) → Flap (glide/slow-fall da boomkin). Sistema a 2 press: 1ª pressione shifta in Moonkin se serve, le successive castano Flap. Indice forma 4 = Moonkin Form (VERIFICATO 2026-06-12: forum Blizzard + Icy Veins Balance, entrambi [noform:4]/[nostance:4]). VERIFICATO 12.0.5: Moonkin Form è nell'albero classe → disponibile a tutte le spec se talentata (per questo spec:null shared); Flap è il glide utilizzabile in Moonkin Form. CAVEAT: Moonkin Form è un talento → senza, la macro non può shiftare (inerte). #showtooltip nudo dinamico mostra Moonkin Form quando sei fuori forma, Flap quando sei in Moonkin."
     },
     "druid-prowl-cat-form": {
-      "name": "Prowl/Cat",
+      "name": "Prowl / Cat Form",
       "desc": "Fuori combattimento → Prowl (stealth); in combattimento → Cat Form.",
       "scope": "account",
       "class": "druid",
@@ -347,7 +347,7 @@
       "notes": "Sostituisce druid-motw-cat-form 2026-06-12 (Mark of the Wild spostato dall'utente su un bottone separato; questa resta solo Prowl/Cat Form). spec:feral. Logica combat-based 2 rami: [nocombat] → Prowl (stealth); altrimenti (in combat) → !Cat Form (entra in forma cat). VERIFICATO Warcraft Wiki: Prowl AUTO-SHIFTA in Cat Form ('Shift into Cat Form and enter stealth') → fuori combat parte da QUALSIASI forma, cat+stealth in un press; e Prowl NON è usabile in combat. Per questo l'orientamento è nocombat→Prowl/combat→Cat (il viceversa è impossibile: niente Prowl in combat). Il prefisso ! su Cat Form impedisce di USCIRE di forma se premi in combat mentre sei già in Cat (senza !, ri-casteresti Cat Form uscendo). #showtooltip nudo dinamico mostra Prowl fuori combat, Cat Form in combat."
     },
     "death-knight-anti-magic-zone": {
-      "name": "AMZ @cursor",
+      "name": "Anti-Magic Zone",
       "desc": "Anti-Magic Zone sulla posizione del mouse.",
       "scope": "account",
       "class": "death-knight",
@@ -360,7 +360,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-24 ('dk shared' -> spec:null, cross-spec). Piazza Anti-Magic Zone sulla posizione del mouse (@cursor): zona a terra che riduce il danno magico subito dal gruppo nel raggio. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema dei totem @cursor shaman e degli altri ground-target). Anti-Magic Zone e' pick di classe quasi universale nelle build Frost/Unholy/Blood (vedi builds/death-knight/frost/mplus.md) -> disponibile a tutte le spec DK se talentato, per questo spec:null (root classe). CAVEAT: se non talentato nel loadout corrente la macro e' inerte (spell non disponibile). #showtooltip nudo mostra Anti-Magic Zone. Prima macro Death Knight del repertorio."
     },
     "death-knight-death-and-decay": {
-      "name": "DnD @cursor",
+      "name": "Death and Decay",
       "desc": "Death and Decay sulla posizione del mouse.",
       "scope": "account",
       "class": "death-knight",
@@ -373,7 +373,7 @@
       "notes": "Creata 2026-06-24 su richiesta utente ('macro death and decay'). Piazza Death and Decay sulla posizione del mouse (@cursor): zona a terra che infligge danno AoE. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema di death-knight-anti-magic-zone e dei totem @cursor shaman). Death and Decay e' BASELINE su tutte le spec DK (Blood/Frost/Unholy) -> davvero cross-spec, per questo spec:null (root classe), nessun caveat 'se talentato' a differenza di AMZ. USO Frost: solo in AoE 3+ bersagli per abilitare Cleaving Strikes (rende Obliterate/Frostscythe e Glacial Advance ad area); in single target NON si usa (spreca GCD) -- vedi builds/death-knight/frost. In Blood e' invece staple della rotazione/mitigazione, in Unholy filler AoE. #showtooltip nudo mostra Death and Decay."
     },
     "death-knight-frost-pillar-erw-trinket": {
-      "name": "Pillar+ERW+Trinket",
+      "name": "Pillar of Frost + Empower Rune Weapon",
       "desc": "Burst Frost: Pillar of Frost + Empower Rune Weapon + trinket 13/14.",
       "scope": "account",
       "class": "death-knight",
@@ -386,7 +386,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-24 ('dk frost' -> spec:frost). Burst opener Frost off-GCD in un press, analogo esatto di warrior-reck-trinket: Pillar of Frost (CD danno Frost, off-GCD) + Empower Rune Weapon (genera rune+RP, off-GCD) + trinket 13/14 in un colpo solo. Tutto off-GCD -> niente conflitti, parte tutto insieme e puoi castare subito dopo. #showtooltip nudo mostra Pillar of Frost. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. spec:frost perche' Pillar of Frost ed Empower Rune Weapon sono abilita' Frost (su Unholy/Blood la macro darebbe spell non disponibile)."
     },
     "druid-ursols-vortex": {
-      "name": "Vortex @cursor",
+      "name": "Ursol’s Vortex",
       "desc": "Ursol’s Vortex sulla posizione del mouse.",
       "scope": "account",
       "class": "druid",
@@ -399,7 +399,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-18 ('shared' → spec:null, cross-spec). Piazza Ursol's Vortex sulla posizione del mouse (@cursor): area che rallenta i nemici e, se provano a uscirne, li ricentra (pseudo-grip AoE). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem e degli altri @cursor druido). VERIFICATO: Ursol's Vortex è talento albero classe → disponibile a tutte le spec druido se talentato (per questo spec:null shared). CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo dinamico mostra Ursol's Vortex."
     },
     "hunter-flare": {
-      "name": "Flare @cursor",
+      "name": "Flare",
       "desc": "Flare sulla posizione del mouse.",
       "scope": "account",
       "class": "hunter",
@@ -412,7 +412,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg BM Arconauta, 'shared per il momento' → spec:null). PRIMA macro Hunter del repertorio. Piazza Flare sulla posizione del mouse (@cursor): area che rivela stealth/invisibili e infligge un po' di danno. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema dei @cursor shaman/druido/dk). Flare è baseline su tutte le spec hunter → davvero cross-spec, per questo spec:null. #showtooltip nudo mostra Flare. NB 'per il momento': l'utente potrebbe riclassificarla per spec in futuro."
     },
     "hunter-freezing-trap": {
-      "name": "FreezeTrap @cur",
+      "name": "Freezing Trap",
       "desc": "Freezing Trap sulla posizione del mouse.",
       "scope": "account",
       "class": "hunter",
@@ -425,7 +425,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg BM Arconauta, 'shared per il momento' → spec:null). Piazza Freezing Trap sulla posizione del mouse (@cursor): trappola che congela (CC) il primo nemico che la calpesta. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di hunter-flare e degli altri @cursor). Freezing Trap è baseline su tutte le spec hunter → cross-spec, per questo spec:null. #showtooltip nudo mostra Freezing Trap."
     },
     "hunter-pet-revive-call-mend": {
-      "name": "Pet manager",
+      "name": "Revive / Call / Mend Pet",
       "desc": "Gestione pet: rianima, evoca, congeda (modifier) o cura in base allo stato del pet.",
       "scope": "account",
       "class": "hunter",
@@ -438,7 +438,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg BM Arconauta, 'shared per il momento' → spec:null). Gestione pet un-bottone a righe /use sequenziali con condizionali (NON castsequence: ogni press valuta le righe dall'alto e casta la prima abilità la cui condizione passa; le righe con condizione falsa vengono saltate): [@pet,dead] → Revive Pet (pet presente ma morto); [nopet] → Call Pet 1 (nessun pet evocato); [mod] → Dismiss Pet (con qualsiasi modifier tenuto, congeda il pet); default → Mend Pet (pet vivo, nessun modifier → cura). Casi coperti: pet morto→Revive, niente pet→Call, mod→Dismiss, pet vivo→Mend. Tutte baseline su tutte le spec hunter → cross-spec, spec:null. #showtooltip nudo dinamico mostra l'abilità del ramo attivo. CAVEAT: 'Call Pet 1' evoca lo slot stabile 1 (il primo pet salvato); Dismiss richiede il [mod]."
     },
     "hunter-misdirection-tranquilizing-shot": {
-      "name": "Misdir/Tranq",
+      "name": "Misdirection / Tranquilizing Shot",
       "desc": "Mouseover su alleato → Misdirection; altrimenti Tranquilizing Shot sul nemico.",
       "scope": "account",
       "class": "hunter",
@@ -451,7 +451,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg BM Arconauta, 'shared per il momento' → spec:null). Doppio ruolo un-bottone: mouseover su alleato vivo (@mouseover,help,nodead) → Misdirection (redirige la minaccia sull'alleato sotto il mouse senza cambiare target — di solito il tank); altrimenti (nessun mouseover / mouseover nemico) → Tranquilizing Shot (dispel offensivo: rimuove Enrage/Magic dal target nemico corrente). Il ramo default NON ha @mouseover → Tranq va sul target attuale. nodead evita la Misdirection su alleato morto. Entrambe baseline su tutte le spec hunter → cross-spec, spec:null. #showtooltip nudo dinamico mostra l'icona del ramo attivo (Misdirection col mouse su alleato, Tranquilizing Shot altrimenti). Stesso schema delle hybrid shaman/paladino a doppio ruolo mouseover."
     },
     "hunter-binding-shot": {
-      "name": "BindingShot @cur",
+      "name": "Binding Shot",
       "desc": "Binding Shot sulla posizione del mouse.",
       "scope": "account",
       "class": "hunter",
@@ -464,7 +464,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-28 (hunter shared → spec:null). Piazza Binding Shot sulla posizione del mouse (@cursor): area che stordisce i nemici che si allontanano troppo dal centro (AoE root/stun-on-leave). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di hunter-flare / hunter-freezing-trap e degli altri @cursor). Binding Shot è talento albero classe → disponibile a tutte le spec hunter se talentato, per questo spec:null. CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo mostra Binding Shot."
     },
     "demon-hunter-sigil-of-misery": {
-      "name": "Misery @cursor",
+      "name": "Sigil of Misery",
       "desc": "Sigil of Misery sulla posizione del mouse (fear AoE).",
       "scope": "account",
       "class": "demon-hunter",
@@ -477,7 +477,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg DH Devourer Illidanielle, 'shared' → spec:null). PRIMA macro Demon Hunter del repertorio. Piazza Sigil of Misery sulla posizione del mouse (@cursor): sigillo che dopo l'attivazione atterrisce (fear AoE) i nemici nell'area. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema dei @cursor shaman/druido/dk/hunter). Sigil of Misery è abilità/talento albero classe DH → disponibile a tutte le spec (Havoc/Vengeance/Devourer), per questo spec:null. #showtooltip nudo mostra Sigil of Misery. CAVEAT: se non talentato nel loadout corrente la macro è inerte."
     },
     "demon-hunter-shift": {
-      "name": "Shift @cursor",
+      "name": "Shift",
       "desc": "Shift sulla posizione del mouse (dash Devourer).",
       "scope": "account",
       "class": "demon-hunter",
@@ -490,7 +490,7 @@
       "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg DH Devourer Illidanielle). Piazza/esegue Shift sulla posizione del mouse (@cursor): dash a terra della spec Devourer che rimpiazza Fel Rush — target il punto col cursore e ci zippi quasi istantaneamente (~30y range, ~20s CD, 1-3 cariche a seconda dei talenti, può salire il terreno). VERIFICATO Wowhead/Icy Veins Midnight 12.0.7: è mobilità SPECIFICA Devourer (Havoc usa Fel Rush, Vengeance Infernal Strike) → spec:devourer, file in demon-hunter/devourer/. NON è un vero teleport: attraversa gli effetti a terra. Ground-target esplicito via @cursor → niente prompt di targeting verde. Uso proattivo per assicurarsi cast lunghi (Void Ray/Collapsing Star) da caster ~25y. #showtooltip nudo mostra Shift."
     },
     "warlock-shadowfury": {
-      "name": "Shadowfury @cursor",
+      "name": "Shadowfury",
       "desc": "Shadowfury sulla posizione del mouse (stun AoE).",
       "scope": "account",
       "class": "warlock",
@@ -503,7 +503,7 @@
       "notes": "Fornita dall'utente verbatim 2026-07-09 ('shared warlock' → shared = cross-SPEC, non cross-classe: la casella shared/ del repo è riservata a class:null). PRIMA macro Warlock del repertorio. Piazza Shadowfury sulla posizione del mouse (@cursor): stun AoE a terra, 4s di stun sui nemici nel raggio (8y base). VERIFICATO Warcraft Wiki: dalla 10.0 è talento dell'albero CLASSE (riga 6) e tutte le spec lo conoscono a lv60 (Affliction/Demonology/Destruction) → spec:null, file in warlock/ root. Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di demon-hunter-sigil-of-misery e dei @cursor shaman/druido/dk/hunter). I talenti di classe Darkfury e Oppressive Darkness ne ampliano il raggio; Oppressive Darkness ne riduce anche il CD. Ancora keybind: X = stun/slow (vedi ui-profiles/keybinds-convention.md). L'utente scrive /cast (il DH usa /use: per le spell sono equivalenti) → tenuto verbatim. CAVEAT: se Shadowfury non è talentato nel loadout corrente la macro è inerte."
     },
     "warlock-soulwell-healthstone": {
-      "name": "Soulwell/Healthstone",
+      "name": "Create Soulwell / Healthstone",
       "desc": "In gruppo → Create Soulwell; da solo → Create Healthstone.",
       "scope": "account",
       "class": "warlock",
@@ -516,7 +516,7 @@
       "notes": "Richiesta utente 2026-07-09 ('quando sono in gruppo o raid casta Create Soulwell, altrimenti Create Healthstone'; 'warlock shared' → cross-spec, spec:null). Un solo bottone context-aware: in party o in raid crea il Soulwell (pozzo condiviso da cui TUTTO il gruppo pesca la propria healthstone), da solo crea la singola Healthstone per sé. Condizionale [group]: vera sia in party SIA in raid → copre entrambi i casi richiesti con una sola clausola (per il solo-raid servirebbe [group:raid], per la sola party [group:party]). Il ramo dopo il ';' è privo di condizioni = fallback quando non si è in gruppo. #showtooltip nudo risolve sul ramo attivo → mostra icona/cooldown di Soulwell in gruppo e di Healthstone da solo, senza doverlo specificare. Entrambe le spell sono baseline warlock su tutte le spec → spec:null, file in warlock/ root. NB: è una macro di CREAZIONE, non di uso — l'ancora G = usa Healthstone (cross-class) resta cosa distinta."
     },
     "warlock-darkglare-blood-fury": {
-      "name": "Darkglare+Blood Fury",
+      "name": "Summon Darkglare + Blood Fury",
       "desc": "Burst: Summon Darkglare + racial Blood Fury + trinket 13/14.",
       "scope": "account",
       "class": "warlock",
@@ -529,7 +529,7 @@
       "notes": "Richiesta utente 2026-07-09 ('ho la razziale Blood Fury da mettere nel cd', spec scelta: Affliction). Bottone burst: CD maggiore + razziale + trinket in un press. Stesso schema di shaman-ascendance-ancestral-call. VERIFICATO Icy Veins/Maxroll 12.0.7: Summon Darkglare è il CD maggiore di Affliction — CD portato a 2 min (era 1 min), dura 20s, aumenta del 20% il danno di Agony/Corruption(Wither)/Unstable Affliction e colpisce più forte per ogni DoT attivo sul bersaglio → spec:affliction (Demonology usa Summon Demonic Tyrant, Destruction Summon Infernal), file in warlock/affliction/. Blood Fury è razziale ORCO: guardato da [known:Blood Fury] → su un warlock non-orco il ramo è inerte (niente 'spell sconosciuta'), quindi la macro resta valida a livello classe/spec senza legarla a un personaggio. Blood Fury e i trinket sono off-GCD → partono insieme a Darkglare, che è l'unico sul GCD. #showtooltip nudo risolve sul primo /cast → mostra icona e cooldown di Darkglare. SOVRAPPOSIZIONE: shared-racial-burst casta già Blood Fury + trinket 13/14 in modo race-adattivo; se entrambe stanno sulle barre i trinket/razziale sono ridondanti (innocuo). Questa serve a legare il razziale al CD di spec invece che premere due bottoni."
     },
     "warlock-fel-domination-pet": {
-      "name": "FelDom+Pet",
+      "name": "Fel Domination + Summon Pet",
       "desc": "Fel Domination + il pet giusto per il contesto (Felguard/Felhunter/Imp/Voidwalker).",
       "scope": "account",
       "class": "warlock",
@@ -542,7 +542,7 @@
       "notes": "Richiesta utente 2026-07-09 ('macro per warlock affliction: cast fel domination, se in gruppo -> felhunter, altrimenti voidwalker'); body finale fornito verbatim dall'utente 2026-07-09 con lo #showtooltip condizionale. Evocazione pet context-aware in un press: Fel Domination (talento albero CLASSE: rende istantaneo e gratuito il prossimo Summon Demon) + il pet giusto per il contesto. AGGIORNATA 2026-07-09 a 3 pet per contesto ('group felhunter, raid imp, altrimenti voidwalker'), allineata alla meta Affliction 12.0.7 (VERIFICATO Icy Veins/Maxroll): [group:party] -> Summon Felhunter (party/M+: Spell Lock = interrupt prezioso in dungeon, Devour Magic = purge); [group:raid] -> Summon Imp (raid: Singe Magic e comodo sui target swap); ramo finale senza condizioni = solo -> Summon Voidwalker (survivability/questing). ORDINE CRITICO: [group:party] va PRIMA di [group:raid] e soprattutto NON si usa [group] nudo — [group] e' vero anche in raid, quindi intercetterebbe il caso raid e l'Imp non uscirebbe mai; [group:party] e' vero solo in party NON-raid, [group:raid] solo in raid, nessun overlap. Fel Domination e' OFF-GCD -> parte insieme al summon nello stesso press (stesso principio di warlock-darkglare-blood-fury, dove razziale e trinket off-GCD accompagnano Darkglare, unico sul GCD). #showtooltip CONDIZIONALE (non nudo, scelta utente): ripete le stesse clausole del /cast -> l'icona sul bottone e' il PET che verra' evocato (Felhunter in party, Imp in raid, Voidwalker da solo), non Fel Domination. Rinuncia a vedere il CD di Fel Domination in cambio del feedback su quale pet uscira': utile perche' il ramo dipende dal contesto e cambia da solo entrando/uscendo dal gruppo. Se in futuro si preferisce vedere il CD, basta uno #showtooltip nudo (risolve sul primo /cast = Fel Domination). CAVEAT 1: se Fel Domination non e' talentato nel loadout corrente la riga 2 e' inerte ma la macro FUNZIONA lo stesso — il summon parte col suo cast time normale (nessun 'spell sconosciuta' che blocchi il resto). CAVEAT 2: se hai gia' un pet evocato, premere consuma comunque Fel Domination per rievocare lo stesso pet: per non sprecarlo si puo' guardare la riga con [nopet] (`/cast [nopet] Fel Domination`), a costo di perdere l'instant sui cambi pet in combat. CLASSIFICAZIONE: RESA SHARED (cross-spec) 2026-07-09 su richiesta utente ('la macro diventa shared') -> spec:null, file spostato da warlock/affliction/ alla root warlock/ (convenzione: spec:null = root della classe). Coerente: NESSUNA delle spell e' affliction-only -> Fel Domination e' albero classe, Summon Felhunter/Imp/Voidwalker sono baseline su tutte le spec. RAMO DEMO 2026-07-09 su richiesta utente ('se c'e' la felguard evoca la felguard come prima scelta'): primo ramo [known:Summon Felguard] Summon Felguard -> su Demonology evoca il Felguard, il suo pet di spec, PRIMA di ogni altra logica. Scelto [known:] e non [spec:2]: VERIFICATO Wowhead/Icy Veins che nella 12.0.7 Summon Felguard e' passato all'ALBERO TALENTI Demo (non piu' baseline) -> [known:Summon Felguard] e' vero solo se sei Demo E l'hai talentata; se non talentata (o altra spec) il ramo cade da solo sulla logica party/raid/solo, senza rompersi. Ordine finale: Felguard (Demo) > party Felhunter > raid Imp > solo Voidwalker. Cosi' la macro ha senso su TUTTE le spec: Demo prende il Felguard, Affliction/Destruction il pet-per-contesto. Le Summon degli altri pet restano baseline su tutte le spec."
     },
     "warlock-demonic-gateway": {
-      "name": "Gateway @cursor",
+      "name": "Demonic Gateway",
       "desc": "Demonic Gateway sulla posizione del mouse.",
       "scope": "account",
       "class": "warlock",
@@ -555,7 +555,7 @@
       "notes": "Richiesta utente 2026-07-09 ('macro shared anche per il demonic gateway' → shared = cross-spec). Piazza Demonic Gateway sulla posizione del mouse (@cursor): nasce la COPPIA di portali, uno alla posizione del warlock e uno al punto puntato; chi ci passa viene teletrasportato all'altro capo (utile a party/raid, non solo al lock). VERIFICATO Wowhead/Warcraft Wiki: è talento dell'albero CLASSE disponibile a tutte le spec → spec:null, file in warlock/ root (come warlock-shadowfury). Range 10-40y, cast 3s, CD 10s sull'abilità; ogni GIOCATORE può attraversare un gateway solo una volta ogni 90s. I talenti Gateway Mastery (+20y range, -30% cast, -30s tra un uso e l'altro) e Frequent Traveler (-0.5s cast, due usi prima del CD) lo migliorano. Ground-target esplicito via @cursor → niente prompt di targeting verde (stesso schema di warlock-shadowfury e demon-hunter-sigil-of-misery). CAVEAT: c'è un range MINIMO di 10y — se il cursore è troppo vicino al lock il cast fallisce; per il piazzamento fine conviene comunque mirare col cursore lontano. Se il talento non è preso nel loadout corrente la macro è inerte. NB 2026-07-09: valutata e SCARTATA su scelta utente l'aggiunta di /cast Soulburn (renderebbe il Gateway istantaneo) — nessuna macro Soulburn nel repertorio."
     },
     "warlock-pet-special": {
-      "name": "Pet Special",
+      "name": "Flee / Devour Magic / Axe Toss",
       "desc": "Seconda abilità del demone attivo (Flee/Devour Magic/Axe Toss).",
       "scope": "account",
       "class": "warlock",

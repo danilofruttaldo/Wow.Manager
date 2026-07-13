@@ -87,7 +87,7 @@ export function getMacros(): Macro[] {
   const raw = (macrosManifest as any).macros ?? {};
   return Object.entries(raw)
     .map(([key, v]: [string, any]) => ({ key, ...v, body: v.body ?? macroBody(v.body_file) }))
-    .sort((a, b) => (a.class ?? '').localeCompare(b.class ?? '') || a.name.localeCompare(b.name));
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // ── Fonts ─────────────────────────────────────────
