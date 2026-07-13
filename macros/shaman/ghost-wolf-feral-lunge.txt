@@ -1,2 +1,0 @@
-#showtooltip
-/use [mod,known:Feral Lunge] Feral Lunge; [mod,known:Spiritwalker's Grace] Spiritwalker's Grace; Ghost Wolf

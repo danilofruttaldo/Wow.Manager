@@ -1,0 +1,2 @@
+#showtooltip
+/use [mod,known:Feral Lunge] Feral Lunge; Ghost Wolf

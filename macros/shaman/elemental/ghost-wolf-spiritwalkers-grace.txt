@@ -1,0 +1,2 @@
+#showtooltip
+/use [mod,known:Spiritwalker's Grace] Spiritwalker's Grace; Ghost Wolf
