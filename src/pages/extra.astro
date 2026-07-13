@@ -1,0 +1,162 @@
+---
+import Base from '../layouts/Base.astro';
+import { getExtra } from '../lib/content';
+
+const items = getExtra();
+const lineCount = (body?: string) => (body ? body.split('\n').length : 0);
+---
+<Base title="Extra" description="Script di manutenzione, link e appunti tecnici del setup WoW: contenuti pronti da copiare.">
+  <div class="wrap">
+    <div class="filters row">
+      <input id="extra-search" class="search" type="search" inputmode="search" autocomplete="off"
+             placeholder="Cerca script, contenuto…" aria-label="Cerca contenuti extra" />
+    </div>
+
+    <div class="extra-grid">
+      {items.map(it => {
+        const openable = it.kind !== 'link' && !!it.body;
+        const Tag = it.kind === 'link' && it.url ? 'a' : (openable ? 'button' : 'div');
+        const props: Record<string, any> = it.kind === 'link' && it.url
+          ? { href: it.url, target: '_blank', rel: 'noopener noreferrer' }
+          : openable
+            ? { type: 'button', 'data-title': it.name, 'data-lang': it.lang ?? '' }
+            : {};
+        return (
+          <article class="xcard-wrap" data-kind={it.kind}
+                   data-search={`${it.name} ${it.desc ?? ''} ${it.lang ?? ''} ${it.when ?? ''} ${it.warn ?? ''} ${it.body ?? ''}`.toLowerCase()}>
+            <Tag class:list={['xcard', { 'xcard--open': openable }]} {...props}>
+              <div class="xcard-head">
+                <img class="xico" src={it.kind === 'script' ? '/icons/section/extra.jpg' : '/icons/ui/shared.jpg'} alt="" width="30" height="30" loading="lazy" />
+                <div class="xcard-title">
+                  <strong class="xname">{it.name}{it.kind === 'link' && it.url ? ' ↗' : ''}</strong>
+                  {it.lang && <span class="badge badge--accent xlang">{it.lang}</span>}
+                </div>
+              </div>
+              {it.desc && <p class="xdesc">{it.desc}</p>}
+              {(it.when || it.warn) && (
+                <div class="xmeta">
+                  {it.when && <span class="xwhen"><strong>Quando:</strong> {it.when}</span>}
+                  {it.warn && <span class="xwarn"><img class="stat-ico" src="/icons/ui/warn.jpg" alt="Attenzione" width="14" height="14" /> {it.warn}</span>}
+                </div>
+              )}
+              {openable && <span class="xopen">Apri · {lineCount(it.body)} righe</span>}
+            </Tag>
+            {openable && <pre class="xsrc" hidden set:text={it.body} />}
+          </article>
+        );
+      })}
+    </div>
+    <p class="empty" id="extra-empty" hidden={items.length > 0}>Ancora nessun contenuto extra.</p>
+  </div>
+
+  <div class="xlb" id="xlb" role="dialog" aria-modal="true" aria-label="Contenuto">
+    <div class="xlb-panel">
+      <div class="xlb-head">
+        <strong id="xlb-title"></strong>
+        <span class="badge badge--accent xlb-lang" id="xlb-lang" hidden></span>
+        <button class="copy" id="xlb-copy" type="button" aria-label="Copia">Copia</button>
+        <button class="xlb-close" id="xlb-close" aria-label="Chiudi">&times;</button>
+      </div>
+      <pre><code id="xlb-code"></code></pre>
+    </div>
+  </div>
+</Base>
+
+<style>
+.extra-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; padding-top: 0.6rem; }
+@media (max-width: 1100px) { .extra-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .extra-grid { grid-template-columns: 1fr; } }
+
+.xcard-wrap { display: flex; }
+.xcard-wrap[hidden] { display: none !important; }  /* display:flex vince su [hidden]: forziamo */
+.xcard { flex: 1; min-width: 0; text-align: left; font: inherit; color: inherit; display: flex; flex-direction: column; gap: 0.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.85rem 1rem; }
+.xcard--open { cursor: pointer; transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition); }
+.xcard--open:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+a.xcard:hover { border-color: var(--accent); }
+.xcard-head { display: flex; align-items: center; gap: 0.6rem; }
+.xico { flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); object-fit: cover; max-width: none; }
+.xcard-title { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; min-width: 0; }
+.xname { font-weight: 600; font-size: 1rem; line-height: 1.2; color: var(--text); }
+.xdesc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+.xmeta { display: flex; flex-direction: column; gap: 0.28rem; font-size: 0.8rem; }
+.xwhen { color: var(--text-muted); }
+.xwhen strong { color: var(--text); }
+.xwarn { color: var(--warn); font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem; }
+.stat-ico { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; object-fit: cover; max-width: none; }
+.xopen { margin-top: auto; padding-top: 0.55rem; border-top: 1px solid var(--border-light); font-size: 0.74rem; color: var(--accent); font-weight: 600; }
+.xsrc { display: none; }
+
+/* ── Modale contenuto (pattern lightbox della pagina UI) ── */
+.xlb { position: fixed; inset: 0; z-index: 100; background: rgba(10,12,16,0.94); display: none; align-items: center; justify-content: center; padding: 1rem; }
+.xlb.open { display: flex; }
+.xlb-panel { display: flex; flex-direction: column; width: min(880px, 96vw); max-height: 92vh; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.xlb-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); }
+.xlb-head #xlb-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; min-width: 0; }
+.xlb-head .copy { margin-left: auto; font-family: inherit; font-size: 0.74rem; font-weight: 600; color: var(--text-subtle); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.2rem 0.55rem; cursor: pointer; transition: color var(--transition), border-color var(--transition); }
+.xlb-head .copy:hover { color: var(--accent); border-color: var(--accent); }
+.xlb-head .copy.done { color: var(--ok); border-color: var(--ok); }
+.xlb-close { background: none; border: 0; color: var(--text-subtle); font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 0 0.2rem; }
+.xlb-close:hover { color: var(--text); }
+.xlb-panel pre { margin: 0; overflow: auto; background: var(--surface-2); padding: 0.85rem 1rem; flex: 1; }
+.xlb-panel code { display: block; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.55; color: var(--text); white-space: pre; background: none; padding: 0; }
+</style>
+
+<script>
+  function initExtra() {
+    const lb = document.getElementById('xlb');
+    if (!lb) return;
+    const title = document.getElementById('xlb-title')!;
+    const lang = document.getElementById('xlb-lang') as HTMLElement;
+    const code = document.getElementById('xlb-code')!;
+    const copy = document.getElementById('xlb-copy') as HTMLButtonElement;
+
+    // Ricerca live: filtra le card su nome/desc/lang/when/warn/corpo.
+    const search = document.getElementById('extra-search') as HTMLInputElement;
+    const wraps = Array.from(document.querySelectorAll('.xcard-wrap')) as HTMLElement[];
+    const empty = document.getElementById('extra-empty') as HTMLElement;
+    if (search) {
+      search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        let shown = 0;
+        for (const w of wraps) {
+          const show = q === '' || (w.dataset.search || '').includes(q);
+          w.hidden = !show;
+          if (show) shown++;
+        }
+        if (empty) { empty.hidden = shown > 0; empty.textContent = 'Nessun contenuto per questa ricerca.'; }
+      });
+    }
+
+    const open = (card: HTMLElement) => {
+      const wrap = card.closest('.xcard-wrap');
+      const body = wrap?.querySelector('.xsrc')?.textContent ?? '';
+      title.textContent = card.dataset.title || '';
+      const lg = card.dataset.lang || '';
+      lang.textContent = lg; lang.hidden = !lg;
+      code.textContent = body;
+      copy.textContent = 'Copia'; copy.classList.remove('done');
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+
+    for (const btn of Array.from(document.querySelectorAll('.xcard--open')) as HTMLButtonElement[]) {
+      btn.addEventListener('click', () => open(btn));
+    }
+    document.getElementById('xlb-close')!.addEventListener('click', close);
+    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (lb.classList.contains('open') && e.key === 'Escape') close();
+    });
+
+    copy.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code.textContent ?? '');
+        copy.textContent = 'Copiato'; copy.classList.add('done');
+        setTimeout(() => { copy.textContent = 'Copia'; copy.classList.remove('done'); }, 1400);
+      } catch { /* clipboard non disponibile */ }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initExtra);
+</script>

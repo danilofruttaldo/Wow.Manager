@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "note": "Sezione 'Extra': contenitore libero per script di manutenzione, link e appunti tecnici. Ogni voce ha una `kind`: 'script' (corpo copiabile letto da body_file), 'link' (url esterno), 'note' (solo testo). Il sito mostra `name`, `desc` e, per gli script, il corpo reale; `notes` resta memoria interna e NON viene mostrata."
+  },
+  "extra": {
+    "backup-restore": {
+      "kind": "script",
+      "name": "Backup & restore setup",
+      "desc": "Crea uno .zip datato di WTF (impostazioni, keybind, macro, SavedVariables) e Interface (addon), o ripristina da uno .zip con -Restore. Utile prima di modifiche, per reinstalli o cambio PC.",
+      "lang": "powershell",
+      "when": "Con WoW chiuso. Prima di modifiche rischiose, o per migrare a un altro PC.",
+      "warn": "Il ripristino (-Restore) sovrascrive WTF e Interface: chiede conferma.",
+      "body_file": "backup-restore.ps1",
+      "notes": "Adattato dai tool community smashedr/wow-backup e eTzmNcbkrng/Backup-WTF. Usa Compress-Archive/Expand-Archive nativi (niente 7-zip). Salva in _retail_\\Backups\\wow-<data>.zip. Generico: dipende solo da $WowRoot. Blocca se Wow/WowClassic è in esecuzione."
+    },
+    "apply-fonts": {
+      "kind": "script",
+      "name": "Applica override font UI",
+      "desc": "Copia un unico .ttf sotto i nomi-override che WoW carica da Fonts/, così tutta la UI base usa quel font. Nomi e percorsi presi da fonts/manifest.json. Usa -Revert per rimuoverli.",
+      "lang": "powershell",
+      "when": "Esegui dalla cartella del repo. Richiede il RIAVVIO del client (non basta /reload).",
+      "body_file": "apply-fonts.ps1",
+      "notes": "Legge fonts/manifest.json (override.source_file, override.files, _meta.wow_fonts_dir): nessun elenco hardcoded, segue il manifest. Il .ttf sorgente è un font di sistema Windows, non versionato. Addon con font proprio (Details/BigWigs/MRT) non seguono l'override. Revert: -Revert oppure cancella i .TTF da Fonts/."
+    },
+    "sync-game-settings": {
+      "kind": "script",
+      "name": "Sync impostazioni di gioco",
+      "desc": "Allinea le impostazioni di gioco di tutti i personaggi a quelle di Stantu: copia solo le chiavi nell'allowlist, lo stato per-PG resta intatto.",
+      "lang": "powershell",
+      "when": "Con WoW completamente chiuso.",
+      "warn": "Sovrascrive i config-cache.wtf: esegui a gioco chiuso o perdi le modifiche.",
+      "body_file": "sync-game-settings.ps1",
+      "notes": "Allowlist di CVar in testa allo script (KEYS). Prende i valori dal config-cache.wtf di Stantu (Pozzo dell'Eternità). Salta il file account-level e le cartelle _backup-*. Aggiorna KEYS quando vuoi propagare nuove opzioni."
+    }
+  }
+}

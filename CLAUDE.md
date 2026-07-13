@@ -6,10 +6,10 @@ Come lavorare a questo repo con Claude Code **da qualsiasi postazione**, per agg
 
 Due nature nello stesso repo:
 
-1. **Dati** = fonte di verità: [addons/](addons/), [macros/](macros/), [professions/](professions/), [roster.md](roster.md), [ui-profiles/](ui-profiles/), [fonts/](fonts/). Manifest JSON + markdown, mantenuti a mano.
+1. **Dati** = fonte di verità: [addons/](addons/), [macros/](macros/), [professions/](professions/), [roster.md](roster.md), [ui-profiles/](ui-profiles/), [fonts/](fonts/), [scripts/](scripts/). Manifest JSON + markdown, mantenuti a mano.
 2. **Sito statico** ([src/](src/), Astro) che presenta i dati su <https://wow.danilofruttaldo.com>. Il sito legge i dati in **sola lettura**: non li modifica mai. Ogni pagina si allinea da sola quando cambi il dato corrispondente.
 
-Pagine del sito: **Home** (5 card), **Addon**, **Macro**, **Professioni**, **Roster**, **UI** (screenshot).
+Pagine del sito: **Home** (6 card), **Addon**, **Macro**, **Professioni**, **Roster**, **UI** (screenshot), **Extra** (script/link/note).
 
 ## Setup su una postazione nuova
 
@@ -62,6 +62,16 @@ Due tabelle markdown: `## Orda (...)` e `## Alleanza (...)`. Colonne = classi (W
 - `CHAR_SPEC`: chiave = **nome PG minuscolo** → nome spec. Il sito mostra la **prima lettera** fra parentesi (es. `stantu: 'fury'` → `Stantu (F)`).
 - **PG omonimi** (stesso nome, PG diversi): usa `CHAR_SPEC_BY_RACE`, chiave `nome|razza` minuscolo (ha precedenza). Es. `furricane|vulpera: 'brewmaster'` e `furricane|worgen: 'frost'`.
 - PG "in sospeso" (da recuperare): non metterli in `char-specs.ts` → restano senza lettera.
+
+### Extra → [scripts/manifest.json](scripts/manifest.json)
+Sezione contenitore libero: script di manutenzione, link, appunti tecnici. Oggetto `extra` con chiave = slug. Ogni voce ha `kind`:
+- **`script`**: `name, desc, lang, when, warn, body_file, notes`. Il **corpo reale** vive in un file dentro [scripts/](scripts/) (es. `sync-game-settings.ps1`) e viene letto a build-time (glob `*.{sh,txt,lua,ps1,bat,py}`); la card mostra `desc`, `when` (quando eseguirlo), `warn` (avvertenza, con icona `warn.jpg`) e il corpo con bottone "Copia".
+- **Windows/WoW → script in PowerShell** (`.ps1`): il gioco gira su Windows, quindi gli script di manutenzione si scrivono in PowerShell, non bash.
+- **`link`**: `name, desc, url` → card con link esterno.
+- **`note`**: `name, desc` → solo testo.
+- **`desc` = testo mostrato sul sito** (riga breve). **`notes` = memoria interna, NON mostrata** (allowlist, caveat, storia).
+- La pagina `/extra` è una **griglia di card compatte** (3 col, responsive). La card mostra icona, nome, `lang`, `desc`, `when`/`warn` e un hint "Apri · N righe"; **al click apre una modale** (pattern lightbox della pagina UI, overlay + `×`) col corpo completo e bottone "Copia". Le card `link` sono invece un `<a>` esterno (nessuna modale). Icona card: `section/extra.jpg` per gli script, `ui/shared.jpg` per link/note.
+- **Aggiungi uno script**: metti il file in `scripts/` + voce in `extra` con `kind: "script"` e `body_file`. La card compare da sola.
 
 ### UI / screenshot → [public/screenshots/](public/screenshots/)
 - **Aggiungi**: metti un file `<classe>-<spec>-<nome>.jpg` (es. `warrior-fury-stantu.jpg`). La pagina `/ui` lo raggruppa **per classe** leggendo classe/spec dal **nome file**.

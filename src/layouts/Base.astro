@@ -18,6 +18,7 @@ const SOURCE_BY_PATH: Record<string, string> = {
   '/professioni': 'professions/manifest.json',
   '/roster': 'roster.md',
   '/ui': 'public/screenshots',
+  '/extra': 'scripts',
 };
 const updated = sourceDate(SOURCE_BY_PATH[currentPath] ?? '.');
 
@@ -33,6 +34,7 @@ const nav = [
   { href: '/professioni', label: 'Professioni' },
   { href: '/roster', label: 'Roster' },
   { href: '/ui', label: 'UI' },
+  { href: '/extra', label: 'Extra' },
 ];
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
 ---

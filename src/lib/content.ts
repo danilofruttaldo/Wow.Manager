@@ -10,6 +10,7 @@ import addonsManifest from '../../addons/manifest.json';
 import macrosManifest from '../../macros/manifest.json';
 import fontsManifest from '../../fonts/manifest.json';
 import professionsManifest from '../../professions/manifest.json';
+import extraManifest from '../../scripts/manifest.json';
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -54,6 +55,20 @@ export interface Profession {
   second: ProfStep | null; // 2ª spec + 2º ramo
   third: ProfStep | null;  // 3ª spec + 3º ramo
   notes?: string;
+}
+
+// Voce della sezione "Extra": contenitore libero (script / link / appunto).
+export interface Extra {
+  key: string;
+  kind: 'script' | 'link' | 'note';
+  name: string;
+  desc?: string;          // riga breve mostrata sul sito
+  lang?: string;          // solo script: linguaggio del corpo (es. 'bash')
+  when?: string;          // solo script: quando eseguirlo
+  warn?: string;          // solo script: avvertenza importante
+  body?: string;          // solo script: corpo reale letto da body_file
+  url?: string;           // solo link: destinazione
+  notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
 }
 
 // ── Meta build + data aggiornamento (git) ─────────
@@ -112,6 +127,22 @@ export const professionsMeta = {
 };
 export function getProfessions(): Profession[] {
   return ((professionsManifest as any).professions ?? []) as Profession[];
+}
+
+// ── Extra (script / link / appunti) ───────────────
+export const extraMeta = (extraManifest as any)._meta;
+// Corpi degli script (file eseguibili fuori da src/, letti a build-time in sola lettura).
+const extraBodies = import.meta.glob('../../scripts/**/*.{sh,txt,lua,ps1,bat,py}', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+function extraBody(bodyFile?: string | null): string | undefined {
+  if (!bodyFile) return undefined;
+  const hit = Object.entries(extraBodies).find(([p]) => p.endsWith('/' + bodyFile));
+  return hit ? hit[1].replace(/\s+$/, '') : undefined;
+}
+export function getExtra(): Extra[] {
+  const raw = (extraManifest as any).extra ?? {};
+  return Object.entries(raw)
+    .map(([key, v]: [string, any]) => ({ key, ...v, body: v.body ?? extraBody(v.body_file) }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // ── Markdown raw (fuori da src) ───────────────────

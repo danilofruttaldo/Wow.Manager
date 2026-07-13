@@ -1,11 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getAddons, getMacros, getProfessions, getRosterCount } from '../lib/content';
+import { getAddons, getMacros, getProfessions, getRosterCount, getExtra } from '../lib/content';
 
 const addons = getAddons();
 const macros = getMacros();
 const professions = getProfessions();
 const rosterCount = getRosterCount();
+const extra = getExtra();
 
 const sections = [
   { href: '/addons',      name: 'Addon',       sub: 'addon installati e versioni', count: `${addons.length}`,     icon: '/icons/section/addon.jpg',  color: '#2E68D8' },
@@ -13,19 +14,18 @@ const sections = [
   { href: '/professioni', name: 'Professioni', sub: 'specializzazioni e rami',     count: `${professions.length}`, icon: '/icons/section/prof.jpg',  color: '#C77D0A' },
   { href: '/roster',      name: 'Roster',      sub: 'personaggi Orda e Alleanza',  count: `${rosterCount}`,       icon: '/icons/section/roster.jpg', color: '#C0202A' },
   { href: '/ui',          name: 'UI',          sub: 'screenshot dell’interfaccia', count: '12',                   icon: '/icons/section/ui.jpg',     color: '#159A8C' },
+  { href: '/extra',       name: 'Extra',       sub: 'script di manutenzione e note', count: `${extra.length}`,    icon: '/icons/section/extra.jpg',  color: '#5B6470' },
 ];
 ---
 <Base title="WoW Manager">
   <div class="wrap">
-    <div class="home-cards">
+    <div class="home-grid">
       {sections.map(s => (
-        <a class="home-card" href={s.href} style={`--hc: ${s.color}`}>
-          <img class="hc-icon" src={s.icon} alt="" width="46" height="46" />
-          <span class="hc-text">
-            <span class="hc-title">{s.name}</span>
-            <span class="hc-sub">{s.sub}</span>
-          </span>
-          {s.count && <span class="hc-count">{s.count}</span>}
+        <a class="home-btn" href={s.href} style={`--hc: ${s.color}`}>
+          <img class="hb-icon" src={s.icon} alt="" width="56" height="56" />
+          <span class="hb-title">{s.name}</span>
+          <span class="hb-sub">{s.sub}</span>
+          {s.count && <span class="hb-count">{s.count}</span>}
         </a>
       ))}
     </div>
@@ -33,26 +33,34 @@ const sections = [
 </Base>
 
 <style>
-.home-cards { display: flex; flex-direction: column; gap: 0.7rem; max-width: 680px; margin: 0.25rem auto 0; }
-.home-card {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 1rem 1.15rem; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+/* Home a "pulsantoni": griglia di grossi tasti a tessera, uno per sezione. */
+.home-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; max-width: 1000px; margin: 0.5rem auto 0; }
+/* Sempre 2 o 3 colonne: sotto i 760px scende a 2, mai a colonna singola. */
+@media (max-width: 760px) { .home-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; } }
+
+.home-btn {
+  position: relative; display: flex; flex-direction: column; gap: 0.3rem;
+  padding: 1.1rem 1.15rem; min-height: 116px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background var(--transition);
 }
-.home-card:hover { border-color: var(--hc); box-shadow: var(--shadow-md); transform: translateY(-1px); }
-.hc-icon {
-  width: 46px; height: 46px; flex-shrink: 0; border-radius: 10px;
+/* Sottile barra colore sezione in cima al pulsante */
+.home-btn::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--hc); }
+.home-btn:hover { border-color: var(--hc); box-shadow: var(--shadow-md); transform: translateY(-1px); background: color-mix(in srgb, var(--hc) 5%, var(--surface)); }
+.hb-icon {
+  width: 42px; height: 42px; border-radius: 10px; margin-bottom: 0.35rem;
   border: 1px solid var(--border); object-fit: cover; max-width: none;
 }
-.hc-text { display: flex; flex-direction: column; min-width: 0; gap: 0.1rem; }
-.hc-title { font-weight: 700; font-size: 1.08rem; letter-spacing: -0.01em; }
-.hc-sub { font-size: 0.85rem; color: var(--text-subtle); }
-.hc-count {
-  margin-left: auto; font-size: 0.95rem; font-weight: 700; color: var(--hc);
-  font-variant-numeric: tabular-nums;
+.hb-title { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; line-height: 1.15; }
+.hb-sub { font-size: 0.83rem; color: var(--text-subtle); line-height: 1.3; }
+.hb-count {
+  position: absolute; top: 0.95rem; right: 1rem;
+  font-size: 0.92rem; font-weight: 700; color: var(--hc);
+  font-variant-numeric: tabular-nums; min-width: 1.6rem; text-align: center;
   background: color-mix(in srgb, var(--hc) 12%, var(--surface));
-  padding: 0.1rem 0.55rem; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--hc) 28%, var(--border));
+  padding: 0.1rem 0.5rem; border-radius: 999px;
 }
 </style>
