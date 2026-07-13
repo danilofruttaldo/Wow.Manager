@@ -1,13 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getAddons, getMacros, addonsMeta } from '../lib/content';
+import { getAddons, getMacros, getProfessions, addonsMeta } from '../lib/content';
 
 const addons = getAddons();
 const macros = getMacros();
+const professions = getProfessions();
 
 const sections = [
   { href: '/addons', name: 'Addon', sub: 'versioni, source, note', count: `${addons.length}` },
   { href: '/macros', name: 'Macro', sub: 'per account/character', count: `${macros.length}` },
+  { href: '/professioni', name: 'Professioni', sub: 'specializzazioni e ramo da maxare', count: `${professions.length}` },
   { href: '/roster', name: 'Roster', sub: 'matrice razza × classe', count: '' },
   { href: '/ui', name: 'UI', sub: 'screenshot in gioco per classe', count: '7' },
 ];

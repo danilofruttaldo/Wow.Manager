@@ -7,6 +7,7 @@ import { CHAR_SPEC, CHAR_SPEC_BY_RACE } from './char-specs';
 import addonsManifest from '../../addons/manifest.json';
 import macrosManifest from '../../macros/manifest.json';
 import fontsManifest from '../../fonts/manifest.json';
+import professionsManifest from '../../professions/manifest.json';
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -35,6 +36,15 @@ export interface Macro {
   notes?: string;
 }
 
+export interface Profession {
+  key: string;
+  name: string;
+  type: 'crafting' | 'gathering' | 'secondary';
+  specializations: string[];
+  maxBranch: string | null;
+  notes?: string;
+}
+
 // ── Addon ─────────────────────────────────────────
 export const addonsMeta = (addonsManifest as any)._meta;
 export function getAddons(): Addon[] {
@@ -55,6 +65,15 @@ export function getMacros(): Macro[] {
 
 // ── Fonts ─────────────────────────────────────────
 export const fontsOverride = (fontsManifest as any).override;
+
+// ── Professioni ───────────────────────────────────
+export const professionsMeta = {
+  expansion: (professionsManifest as any).expansion as string,
+  note: (professionsManifest as any).note as string,
+};
+export function getProfessions(): Profession[] {
+  return ((professionsManifest as any).professions ?? []) as Profession[];
+}
 
 // ── Markdown raw (fuori da src) ───────────────────
 const rosterFile = import.meta.glob('/roster.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;

@@ -1,0 +1,110 @@
+{
+  "expansion": "Midnight (12.0)",
+  "note": "Alberi di specializzazione basati sul framework moderno (Dragonflight → The War Within) adattato a Midnight: i nomi definitivi dei rami possono cambiare in fase di rilascio. \"Ramo da maxare\" è la priorità consigliata: aggiorna qui i dati, la pagina si allinea da sola.",
+  "professions": [
+    {
+      "key": "alchemy",
+      "name": "Alchemy",
+      "type": "crafting",
+      "specializations": ["Potion Mastery", "Phial Mastery", "Transmutation Mastery"],
+      "maxBranch": "Phial Mastery",
+      "notes": "Phial per i buff da raid; passa a Potion Mastery se vendi pozioni da combattimento."
+    },
+    {
+      "key": "blacksmithing",
+      "name": "Blacksmithing",
+      "type": "crafting",
+      "specializations": ["Armorsmithing", "Weaponsmithing", "Specialty Smithing"],
+      "maxBranch": "Armorsmithing",
+      "notes": "Armor per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate."
+    },
+    {
+      "key": "enchanting",
+      "name": "Enchanting",
+      "type": "crafting",
+      "specializations": ["Weapon Enchantments", "Armor Enchantments", "Rod Crafting & Disenchanting"],
+      "maxBranch": "Armor Enchantments",
+      "notes": "Enchant su anelli/polsi sono i più richiesti; Rod & DE se ti serve il farming di materiali."
+    },
+    {
+      "key": "engineering",
+      "name": "Engineering",
+      "type": "crafting",
+      "specializations": ["Devices & Gadgets", "Explosives", "Gizmos"],
+      "maxBranch": "Devices & Gadgets",
+      "notes": "Devices per utility e tinker sugli equip; Explosives è di nicchia."
+    },
+    {
+      "key": "inscription",
+      "name": "Inscription",
+      "type": "crafting",
+      "specializations": ["Runecarving", "Darkmoon", "Books & Scrolls"],
+      "maxBranch": "Runecarving",
+      "notes": "Le rune per le armi sono un consumabile richiesto ogni patch; Darkmoon per le carte."
+    },
+    {
+      "key": "jewelcrafting",
+      "name": "Jewelcrafting",
+      "type": "crafting",
+      "specializations": ["Faceting (Gemme)", "Jewelry (Anelli/Collane)", "Ornaments"],
+      "maxBranch": "Faceting (Gemme)",
+      "notes": "Gemme = domanda costante; taglia le gemme epiche end-game per massimizzare il valore."
+    },
+    {
+      "key": "leatherworking",
+      "name": "Leatherworking",
+      "type": "crafting",
+      "specializations": ["Leather Armor", "Mail Armor", "Refining & Toolcraft"],
+      "maxBranch": "Leather Armor",
+      "notes": "Scegli Leather o Mail in base alle classi che rifornisci; Refining per produrre materiali."
+    },
+    {
+      "key": "tailoring",
+      "name": "Tailoring",
+      "type": "crafting",
+      "specializations": ["Garment Crafting", "Textiles", "Bags & Embroidery"],
+      "maxBranch": "Garment Crafting",
+      "notes": "Armor di stoffa end-game; Textiles se vuoi produrre panno extra da rivendere."
+    },
+    {
+      "key": "herbalism",
+      "name": "Herbalism",
+      "type": "gathering",
+      "specializations": ["Botany", "Wildercraft", "Cultivation"],
+      "maxBranch": "Wildercraft",
+      "notes": "Massimizza materiali rari e bonus di raccolta sulle erbe di zona."
+    },
+    {
+      "key": "mining",
+      "name": "Mining",
+      "type": "gathering",
+      "specializations": ["Metallurgy", "Ore Mastery", "Elements"],
+      "maxBranch": "Ore Mastery",
+      "notes": "Rendimento e qualità del minerale raccolto; Elements per i materiali elementali."
+    },
+    {
+      "key": "skinning",
+      "name": "Skinning",
+      "type": "gathering",
+      "specializations": ["Skinning Mastery", "Hides & Leather", "Scales & Elements"],
+      "maxBranch": "Skinning Mastery",
+      "notes": "Velocità e resa dello skinning; poi specializza sul materiale più richiesto."
+    },
+    {
+      "key": "cooking",
+      "name": "Cooking",
+      "type": "secondary",
+      "specializations": [],
+      "maxBranch": null,
+      "notes": "Professione secondaria: nessun albero di specializzazione. Punta a feast e food buff della patch."
+    },
+    {
+      "key": "fishing",
+      "name": "Fishing",
+      "type": "secondary",
+      "specializations": [],
+      "maxBranch": null,
+      "notes": "Professione secondaria: nessun albero di specializzazione. Serve materiali per Cooking."
+    }
+  ]
+}
