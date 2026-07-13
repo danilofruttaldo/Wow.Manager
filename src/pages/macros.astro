@@ -15,9 +15,14 @@ const classIcon = (cls: string | null) => {
 const specIcon = (cls: string | null, spec: string | null) =>
   cls && spec ? `/icons/spec/${nodash(cls)}-${spec}.jpg` : null;
 
-// Classi presenti (con conteggio e spec 'proprie'), in ordine alfabetico di etichetta.
+// Tutte le classi WoW: il filtro le mostra SEMPRE, anche quelle senza macro (count 0).
+const ALL_CLASSES = ['warrior','paladin','hunter','rogue','priest','death-knight','shaman','mage','warlock','monk','druid','demon-hunter','evoker'];
+
+// Classi con conteggio e spec 'proprie', in ordine alfabetico di etichetta (Shared in fondo).
 interface ClassInfo { slug: string; label: string; icon: string | null; count: number; specs: string[]; }
-const classes: ClassInfo[] = [];
+const classes: ClassInfo[] = ALL_CLASSES.map(slug => ({
+  slug, label: classLabel(slug), icon: classIcon(slug), count: 0, specs: [],
+}));
 for (const m of macros) {
   const slug = m.class ?? 'shared';
   let info = classes.find(c => c.slug === slug);
@@ -33,28 +38,16 @@ for (const c of classes) c.specs.sort();
 ---
 <Base title="Macro" description="Macro WoW per account/character, filtrabili per classe e spec: cosa fanno e il codice pronto da copiare.">
   <div class="wrap">
-    <div class="filters">
+    <div class="filters row">
       <input id="macro-search" class="search" type="search" inputmode="search" autocomplete="off"
              placeholder="Cerca macro, abilità, spec…" aria-label="Cerca macro" />
       <div class="chips" id="class-chips" role="group" aria-label="Filtra per classe">
         {classes.map(c => (
-          <button class="chip" data-class={c.slug} type="button">
-            {c.icon
-              ? <img class="ico ico-sm" src={c.icon} alt="" width="18" height="18" />
-              : <span class="chip-dot" aria-hidden="true"></span>}
+          <button class:list={['chip', { 'is-empty': c.count === 0 }]} data-class={c.slug} type="button">
+            <img class="chip-ico" src={c.icon ?? '/icons/ui/shared.jpg'} alt="" width="18" height="18" />
             {c.label}<span class="c">{c.count}</span>
           </button>
         ))}
-      </div>
-      <div class="chips chips--spec" id="spec-chips" hidden>
-        {classes.filter(c => c.specs.length).flatMap(c =>
-          c.specs.map(spec => (
-            <button class="chip chip--sm spec-opt" data-parent={c.slug} data-spec={spec} type="button" hidden>
-              {specIcon(c.slug, spec) && <img class="ico ico-spec" src={specIcon(c.slug, spec)} alt="" width="16" height="16" />}
-              {titleCase(spec)}
-            </button>
-          )),
-        )}
       </div>
     </div>
 
@@ -69,7 +62,7 @@ for (const c of classes) c.specs.sort();
               <div class="mcard-icons">
                 {cIcon
                   ? <img class="ico ico-sm" src={cIcon} alt={m.class ? classLabel(m.class) : ''} title={m.class ? classLabel(m.class) : ''} width="24" height="24" />
-                  : <span class="chip-dot chip-dot--lg" title="Cross-classe" aria-hidden="true"></span>}
+                  : <img class="ico ico-sm" src="/icons/ui/shared.jpg" alt="Cross-classe" title="Cross-classe" width="24" height="24" />}
                 {sIcon && <img class="ico ico-spec ico-spec--card" src={sIcon} alt={titleCase(m.spec ?? '')} title={titleCase(m.spec ?? '')} width="18" height="18" />}
               </div>
               <div class="mcard-title">
@@ -92,24 +85,13 @@ for (const c of classes) c.specs.sort();
 </Base>
 
 <style>
-.filters { position: sticky; top: var(--header-height); z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 0.7rem 0 0.6rem; margin-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
-.search { display: block; width: 100%; max-width: 420px; margin-bottom: 0.6rem; font-family: inherit; font-size: 0.88rem; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.4rem 0.9rem; transition: border-color var(--transition), box-shadow var(--transition); }
-.search::placeholder { color: var(--text-subtle); }
-.search:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.chips--spec { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border); }
-.chip { display: inline-flex; align-items: center; gap: 0.4rem; font-family: inherit; font-size: 0.82rem; font-weight: 500; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.7rem; cursor: pointer; transition: color var(--transition), background var(--transition), border-color var(--transition); }
-.chip:hover { border-color: var(--accent); color: var(--text); }
-.chip.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.chip.is-active .c { color: #fff; opacity: 0.85; }
-.chip .c { font-size: 0.72rem; font-variant-numeric: tabular-nums; color: var(--text-subtle); }
-.chip--sm { font-size: 0.78rem; padding: 0.2rem 0.6rem; }
-.chip .ico-sm { width: 18px; height: 18px; min-width: 18px; }
-.chip-dot { width: 14px; height: 14px; border-radius: 50%; background: linear-gradient(135deg, var(--text-subtle), var(--border)); }
-.chip-dot--lg { width: 24px; height: 24px; border: 1px solid var(--border); }
+/* Search e chip classe nello stesso flusso: la search apre la prima riga, le chip la
+   completano e riempiono le righe successive (display:contents scioglie il contenitore
+   così le chip diventano sorelle flex della search). */
+.filters.row #class-chips { display: contents; }
 
-/* `display:flex/grid` sulle card/chip vince sull'attributo [hidden] (regola autore > UA): forziamo il nascondere. */
-.mcard[hidden], .chip[hidden], .chips[hidden] { display: none !important; }
+/* `display:flex/grid` sulle card/chips vince sull'attributo [hidden] (regola autore > UA): forziamo il nascondere. */
+.mcard[hidden], .chips[hidden] { display: none !important; }
 
 /* 3 colonne fisse (2 su schermi medi, 1 su mobile). minmax(0,1fr) evita che una riga
    lunga di macro allarghi la colonna oltre la pagina: è il <pre> a scrollare. */
@@ -132,12 +114,10 @@ for (const c of classes) c.specs.sort();
 .copy { position: absolute; top: 0.35rem; right: 0.35rem; font-family: inherit; font-size: 0.68rem; font-weight: 600; color: var(--text-subtle); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.12rem 0.42rem; cursor: pointer; opacity: 0; transition: opacity var(--transition), color var(--transition), border-color var(--transition); }
 .mcard-code:hover .copy, .copy:focus-visible { opacity: 1; }
 .copy:hover { color: var(--accent); border-color: var(--accent); }
-.copy.done { opacity: 1; color: var(--c-monk); border-color: var(--c-monk); }
-.empty { color: var(--text-subtle); font-size: 0.9rem; padding: 2rem 0; text-align: center; }
+.copy.done { opacity: 1; color: var(--ok); border-color: var(--ok); }
 
 @media (max-width: 600px) {
   .macro-grid { column-count: 1; }
-  .filters { top: 0; }
 }
 </style>
 
@@ -146,14 +126,11 @@ for (const c of classes) c.specs.sort();
     const grid = document.getElementById('macro-grid');
     if (!grid) return;
     const classChips = Array.from(document.querySelectorAll('#class-chips .chip')) as HTMLButtonElement[];
-    const specBar = document.getElementById('spec-chips') as HTMLElement;
-    const specOpts = Array.from(document.querySelectorAll('.spec-opt')) as HTMLButtonElement[];
     const cards = Array.from(grid.querySelectorAll('.mcard')) as HTMLElement[];
     const empty = document.getElementById('empty') as HTMLElement;
 
-    // Multi-selezione su entrambi i filtri (unione). Set vuoto = nessun filtro su quell'asse.
+    // Filtro classe multi-selezione (unione). Set vuoto = nessun filtro.
     const activeClasses = new Set<string>();
-    const activeSpecs = new Set<string>();
     const search = document.getElementById('macro-search') as HTMLInputElement;
     let query = '';
 
@@ -161,10 +138,8 @@ for (const c of classes) c.specs.sort();
       let shown = 0;
       for (const card of cards) {
         const okClass = activeClasses.size === 0 || activeClasses.has(card.dataset.class || '');
-        // nessuna spec scelta, spec fra quelle scelte, o card cross-spec (data-spec vuoto = sempre visibile)
-        const okSpec = activeSpecs.size === 0 || activeSpecs.has(card.dataset.spec || '') || card.dataset.spec === '';
         const okText = query === '' || (card.dataset.search || '').includes(query);
-        const show = okClass && okSpec && okText;
+        const show = okClass && okText;
         card.hidden = !show;
         if (show) shown++;
       }
@@ -175,41 +150,12 @@ for (const c of classes) c.specs.sort();
       search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); apply(); });
     }
 
-    // La barra spec mostra le spec delle classi selezionate (dedupe per nome). Appare con >=1 classe attiva.
-    const updateSpecBar = () => {
-      // togli dalla selezione le spec non più offerte dalle classi attive
-      const available = new Set(specOpts.filter(o => activeClasses.has(o.dataset.parent || '')).map(o => o.dataset.spec || ''));
-      for (const s of [...activeSpecs]) if (!available.has(s)) activeSpecs.delete(s);
-      const seen = new Set<string>();
-      let any = false;
-      for (const o of specOpts) {
-        const spec = o.dataset.spec || '';
-        const showChip = activeClasses.has(o.dataset.parent || '') && !seen.has(spec);
-        if (showChip) { seen.add(spec); any = true; }
-        o.hidden = !showChip;
-        o.classList.toggle('is-active', showChip && activeSpecs.has(spec));
-      }
-      specBar.hidden = !any;
-    };
-
     for (const chip of classChips) {
       chip.addEventListener('click', () => {
         const c = chip.dataset.class || '';
         if (activeClasses.has(c)) activeClasses.delete(c);   // toggle: ri-click deseleziona
         else activeClasses.add(c);
         chip.classList.toggle('is-active', activeClasses.has(c));
-        updateSpecBar();
-        apply();
-      });
-    }
-
-    for (const chip of specOpts) {
-      chip.addEventListener('click', () => {
-        const s = chip.dataset.spec || '';
-        if (activeSpecs.has(s)) activeSpecs.delete(s);       // toggle multi: ri-click deseleziona
-        else activeSpecs.add(s);
-        // allinea tutte le chip con lo stesso nome spec (possono essercene più d'una nascosta)
-        for (const x of specOpts) if ((x.dataset.spec || '') === s) x.classList.toggle('is-active', activeSpecs.has(s));
         apply();
       });
     }

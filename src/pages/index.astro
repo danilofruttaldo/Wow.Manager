@@ -26,7 +26,6 @@ const sections = [
             <span class="hc-sub">{s.sub}</span>
           </span>
           {s.count && <span class="hc-count">{s.count}</span>}
-          <svg class="hc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
       ))}
     </div>
@@ -56,7 +55,4 @@ const sections = [
   background: color-mix(in srgb, var(--hc) 12%, var(--surface));
   padding: 0.1rem 0.55rem; border-radius: 999px;
 }
-.hc-arrow { width: 18px; height: 18px; color: var(--text-subtle); flex-shrink: 0; transition: transform var(--transition), color var(--transition); }
-.home-card:hover .hc-arrow { transform: translateX(3px); color: var(--hc); }
-.home-card:not(:has(.hc-count)) .hc-arrow { margin-left: auto; }
 </style>

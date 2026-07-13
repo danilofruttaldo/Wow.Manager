@@ -27,19 +27,40 @@ const groups = [...byClass.entries()]
   .sort((a, b) => classLabel(a[0]).localeCompare(classLabel(b[0])));
 
 const iconFor = (cls: string) => `/icons/class/${cls.replace(/-/g, '')}.jpg`;
+
+// Chip filtro: TUTTE le 13 classi WoW, anche senza screenshot (count 0 → chip attenuata).
+const ALL_CLASSES = ['warrior','paladin','hunter','rogue','priest','death-knight','shaman','mage','warlock','monk','druid','demon-hunter','evoker'];
+const shotCountByClass = new Map(groups.map(([cls, list]) => [cls, list.length] as const));
+const classChips = ALL_CLASSES
+  .map((cls) => ({ cls, count: shotCountByClass.get(cls) ?? 0 }))
+  .sort((a, b) => classLabel(a.cls).localeCompare(classLabel(b.cls)));
+
 // indice globale per il lightbox (ordine = ordine di render)
 let gi = 0;
 ---
 <Base title="UI" description="La UI reale in gioco di ogni personaggio, per classe.">
   <div class="wrap">
+    <div class="filters row">
+      <input id="ui-search" class="search" type="search" inputmode="search" autocomplete="off"
+             placeholder="Cerca PG, classe, spec…" aria-label="Cerca screenshot" />
+      <div class="chips" id="ui-filters" role="group" aria-label="Filtra per classe">
+        {classChips.map(({ cls, count }) => (
+          <button class:list={['chip', { 'is-empty': count === 0 }]} data-class={cls} type="button">
+            <img class="chip-ico" src={iconFor(cls)} alt="" width="18" height="18" />
+            {classLabel(cls)}<span class="c">{count}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
     {groups.map(([cls, list]) => (
-      <>
+      <section class="class-group" data-class={cls}>
         <h2 class="group"><img class="ico ico-sm" src={iconFor(cls)} alt="" width="20" height="20" /> {classLabel(cls)}</h2>
         <div class="gallery">
           {list.map((s) => {
             const i = gi++;
             return (
-              <button class="shot" style={`--pc: var(--c-${s.className})`} data-i={i} data-src={s.src} data-char={titleCase(s.char)} data-who={`${classLabel(s.className)} · ${titleCase(s.spec)}`}>
+              <button class="shot" style={`--pc: var(--c-${s.className})`} data-i={i} data-class={s.className} data-search={`${s.char} ${classLabel(s.className)} ${s.spec}`.toLowerCase()} data-src={s.src} data-char={titleCase(s.char)} data-who={`${classLabel(s.className)} · ${titleCase(s.spec)}`}>
                 <span class="imgwrap"><img src={s.src} alt={`UI di ${titleCase(s.char)}`} loading="lazy" width="640" height="360" /></span>
                 <span class="cap">
                   <span class="cap-txt"><span class="ch">{titleCase(s.char)}</span><span class="wh">{classLabel(s.className)}</span></span>
@@ -49,8 +70,9 @@ let gi = 0;
             );
           })}
         </div>
-      </>
+      </section>
     ))}
+    <p class="empty" id="empty" hidden>Nessuno screenshot per questo filtro.</p>
   </div>
 
   <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Screenshot ingrandito">
@@ -62,9 +84,16 @@ let gi = 0;
 </Base>
 
 <style>
+/* Search e chip classe nello stesso flusso: display:contents scioglie il contenitore
+   così le chip diventano sorelle flex della search e ne completano la riga. */
+.filters.row #ui-filters { display: contents; }
+
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.75rem; margin-bottom: 0.5rem; }
 .shot { --pc: var(--accent); text-align: left; padding: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: border-color var(--transition), box-shadow var(--transition); font: inherit; color: inherit; display: block; width: 100%; }
 .shot:hover { border-color: var(--pc); box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+/* `display:block` vince sull'attributo [hidden] (regola autore > UA): forziamo il nascondere. */
+.shot[hidden] { display: none !important; }
+.class-group[hidden] { display: none !important; }
 .imgwrap { display: block; aspect-ratio: 16 / 9; background: #0a0a0a; }
 .imgwrap img { width: 100%; height: 100%; object-fit: cover; }
 .cap { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.65rem; border-top: 3px solid var(--pc); }
@@ -92,19 +121,60 @@ document.addEventListener('astro:page-load', () => {
   if (!lb) return;
   const img = document.getElementById('lb-img') as HTMLImageElement;
   const cap = document.getElementById('lb-cap')!;
-  const shots = Array.from(document.querySelectorAll<HTMLButtonElement>('.shot'));
-  if (!shots.length) return;
+  const allShots = Array.from(document.querySelectorAll<HTMLButtonElement>('.shot'));
+  if (!allShots.length) return;
+
+  // ── Filtri: search (testo) + chip classe (multi-selezione, unione) ──
+  const search = document.getElementById('ui-search') as HTMLInputElement;
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('#ui-filters .chip'));
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('.class-group'));
+  const empty = document.getElementById('empty');
+  const activeClasses = new Set<string>();
+  let query = '';
+
+  const applyFilter = () => {
+    let shown = 0;
+    for (const el of allShots) {
+      const okClass = activeClasses.size === 0 || activeClasses.has(el.dataset.class || '');
+      const okText = query === '' || (el.dataset.search || '').includes(query);
+      const show = okClass && okText;
+      el.hidden = !show;
+      if (show) shown++;
+    }
+    // nascondi le sezioni classe senza screenshot visibili
+    for (const sec of sections) {
+      sec.hidden = !sec.querySelector('.shot:not([hidden])');
+    }
+    if (empty) empty.hidden = shown > 0;
+  };
+
+  if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); applyFilter(); });
+  for (const chip of chips) {
+    chip.addEventListener('click', () => {
+      const c = chip.dataset.class || '';
+      if (activeClasses.has(c)) activeClasses.delete(c); else activeClasses.add(c);
+      chip.classList.toggle('is-active', activeClasses.has(c));
+      applyFilter();
+    });
+  }
+
+  // ── Lightbox: naviga solo tra gli screenshot visibili ──
+  let list = allShots;
   let idx = 0;
   function show(i: number) {
-    idx = (i + shots.length) % shots.length;
-    const el = shots[idx];
+    idx = (i + list.length) % list.length;
+    const el = list[idx];
     img.src = el.dataset.src || '';
     img.alt = el.dataset.char || '';
     cap.innerHTML = `<b>${el.dataset.char}</b><span>${el.dataset.who}</span>`;
   }
-  function open(i: number) { show(i); lb!.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function open(el: HTMLButtonElement) {
+    list = allShots.filter((s) => !s.hidden);
+    show(Math.max(0, list.indexOf(el)));
+    lb!.classList.add('open'); document.body.style.overflow = 'hidden';
+  }
   function close() { lb!.classList.remove('open'); document.body.style.overflow = ''; }
-  shots.forEach((el, i) => el.addEventListener('click', () => open(i)));
+  allShots.forEach((el) => el.addEventListener('click', () => open(el)));
   document.getElementById('lb-close')!.addEventListener('click', close);
   document.getElementById('lb-prev')!.addEventListener('click', (e) => { e.stopPropagation(); show(idx - 1); });
   document.getElementById('lb-next')!.addEventListener('click', (e) => { e.stopPropagation(); show(idx + 1); });

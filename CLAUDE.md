@@ -73,6 +73,8 @@ Immagini WoW dal CDN Wowhead: `https://wow.zamimg.com/images/wow/icons/large/<sl
 - Classi: `classicon_<slug>.jpg`. Razze: `race_<slug>_male.jpg`. Professioni: icone trade skill (es. `trade_alchemy`, `trade_blacksmithing`).
 - Salvale in `public/icons/{class,race,prof}/` e mappa lo slug in [src/lib/content.ts](src/lib/content.ts): `CLASS_ABBR`, `RACE_ICON` (razza→file), o per le prof il file `<key>.jpg`.
 - ⚠️ Alcuni slug interni differiscono dal nome: Undead→`scourge`, Haranir→scaricata da `race_harronir_male` ma salvata `haranir.jpg`, Earthen→`earthendwarf`, Lightforged Draenei→`lightforgeddraenei`.
+- **Icone di stato / categoria** in [public/icons/ui/](public/icons/ui/): `ok.jpg` (aggiornato), `warn.jpg` (da aggiornare), `crafting.jpg`, `gathering.jpg` (chip Professioni), `shared.jpg` (macro cross-classe). Sono icone WoW rinominate in modo semantico (sorgenti: `inv_misc_gem_emerald_01`, `inv_misc_pocketwatch_01`, `inv_hammer_20`, `inv_misc_flower_02`, `inv_misc_note_02`).
+- **Regola ferma: sul sito solo icone WoW.** Niente glifi Unicode (✓/⚠) o SVG disegnati come icone: se serve un simbolo, scarica l'icona WoW dal CDN e mettila in `public/icons/…`. Fanno eccezione i soli controlli del lightbox UI (× ‹ ›), che non sono icone di contenuto.
 
 ---
 
