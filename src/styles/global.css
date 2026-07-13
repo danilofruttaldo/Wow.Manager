@@ -88,6 +88,8 @@ a.tile:hover { border-color: var(--accent); background: var(--surface-2); }
 .ico-spec { width: 16px; height: 16px; min-width: 16px; border-radius: 3px; vertical-align: -3px; margin-left: 2px; }
 /* Segnaposto "spec da confermare" (?) */
 .spec-q { display: inline-block; width: 16px; height: 16px; min-width: 16px; line-height: 16px; text-align: center; font-size: 0.68rem; font-weight: 700; color: var(--text-subtle); background: var(--border-light); border: 1px solid var(--border); border-radius: 3px; vertical-align: -3px; margin-left: 2px; }
+/* PG pianificato (TODO, non ancora creato): nome smorzato in corsivo + sottolineatura punteggiata */
+.pg--todo .pg-name { color: var(--text-subtle); font-style: italic; text-decoration: underline dotted var(--border); text-underline-offset: 2px; }
 
 /* ── Tabelle dense ─────────────────────────────── */
 .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }

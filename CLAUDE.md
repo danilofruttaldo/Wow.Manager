@@ -54,6 +54,7 @@ Array `professions`. Ogni voce: `key, name, type` (`crafting`|`gathering`|`secon
 Due tabelle markdown: `## Orda (...)` e `## Alleanza (...)`. Colonne = classi (War, Pal, …, Evo), righe = razze.
 - **Aggiungi un PG**: scrivi il nome nella cella `razza × classe` del blocco giusto (Orda o Alleanza). Più nomi nella stessa cella → separali con `<br>`.
 - **Combinazione non creabile**: `X` (resa come casella scura tratteggiata).
+- **PG pianificato (TODO), non ancora creato**: prefisso `*` sul nome (es. `*Backstabbath`). Sul sito è reso in stile «da creare» (nome smorzato in corsivo + sottolineatura punteggiata, tooltip esplicativo) e **non entra nel conteggio** PG. Quando lo crei davvero, togli il `*`.
 - **Suffisso realm** opzionale `·N`/`·P` accanto al nome: viene rimosso in visualizzazione, tienilo pure per i tuoi appunti.
 - **Poi assegna la spec** del PG in `char-specs.ts` (sotto), altrimenti compare senza la lettera fra parentesi.
 - **Sezioni nascoste**: `## Note sulle X` e i titoli/legende non compaiono sul sito (restano nel file). Le **razze condivise** (Pandaren, Dracthyr, Earthen, Haranir) vanno **solo** nel blocco Orda: se sono anche in Alleanza vengono saltate.

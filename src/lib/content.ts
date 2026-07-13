@@ -224,8 +224,12 @@ const SPEC_ICON: Record<string, string[]> = {
 // Una cella può contenere più nomi separati da <br>.
 function annotateSpec(cell: string, race: string, classSlug: string): string {
   const out = cell.split(/<br\s*\/?>/i).map((seg) => {
-    const name = seg.trim();
+    let name = seg.trim();
     if (!name) return seg;
+    // Prefisso "*" = PG pianificato (TODO): non ancora creato. Lo togliamo dal nome,
+    // lo rendiamo in stile "da creare" e NON lo contiamo (vedi getRosterCount).
+    const todo = name.startsWith('*');
+    if (todo) name = name.slice(1).trim();
     // Il valore spec può essere una lista separata da virgole (es. "arms,fury,protection").
     const raw = CHAR_SPEC_BY_RACE[`${name}|${race}`.toLowerCase()] ?? CHAR_SPEC[name.toLowerCase()];
     const specs = raw ? String(raw).split(',').map((s) => s.trim()).filter(Boolean) : [];
@@ -243,7 +247,9 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
       return `<span class="spec-l">(${spec[0].toUpperCase()})</span>`; // fallback se manca l'icona
     }).join('');
     // "nome + icone" = inline-flex centrato: scritte e icone allineate verticalmente.
-    return `<span class="pg"><span class="pg-name">${name}</span>${tail}</span>`;
+    // PG pianificato: nessun tag testuale (sborderebbe dalla cella); solo stile + tooltip.
+    const nameAttr = todo ? ' title="Personaggio pianificato, non ancora creato (TODO)"' : '';
+    return `<span class="pg${todo ? ' pg--todo' : ''}"><span class="pg-name"${nameAttr}>${name}</span>${tail}</span>`;
   });
   return ` ${out.join('<br>')} `;
 }
@@ -302,7 +308,8 @@ export function getRosterCount(): number {
       for (let i = 1; i < cells.length; i++) {
         const t = stripRealm(cells[i] ?? '').trim();
         if (!t || t === 'X') continue;
-        count += t.split(/<br\s*\/?>/i).map((s) => s.trim()).filter(Boolean).length;
+        // I PG pianificati (prefisso "*") non sono ancora creati: non si contano.
+        count += t.split(/<br\s*\/?>/i).map((s) => s.trim()).filter((s) => s && !s.startsWith('*')).length;
       }
     }
   }
