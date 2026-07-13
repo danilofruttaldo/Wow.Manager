@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import { getRosterHtml } from '../lib/content';
+
+const html = getRosterHtml();
+---
+<Base title="Roster" description="Matrice razza × classe: copertura combinazioni e PG esistenti (Orda + Alleanza).">
+  <div class="wrap roster-wrap">
+    <div class="phead">
+      <h1>Roster</h1>
+      <span class="meta"><code>nome (X)</code> = PG + lettera spec · casella tratteggiata = combo non ottenibile · vuoto = possibile, nessun PG</span>
+    </div>
+    <article class="roster-prose" set:html={html}></article>
+  </div>
+</Base>
+
+<style>
+  /* Il roster sfrutta quasi tutta la larghezza della pagina. */
+  .roster-wrap { max-width: min(1720px, 96vw); }
+
+  /* Matrice: table-layout fixed + width 100% -> colonne adattive, testo a capo, MAI scroll. */
+  .roster-prose :global(table) { font-size: 0.72rem; width: 100%; table-layout: fixed; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .roster-prose :global(th), .roster-prose :global(td) {
+    padding: 0.28rem 0.2rem; text-align: center; vertical-align: middle;
+    white-space: normal; overflow-wrap: anywhere; line-height: 1.2;
+    border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);
+  }
+  .roster-prose :global(th:first-child), .roster-prose :global(td:first-child) { width: 40px; }
+  .roster-prose :global(thead th) { background: var(--surface-2); }
+  .roster-prose :global(.ico) { width: 24px; height: 24px; }
+  .roster-prose :global(.race-txt) { font-size: 0.6rem; font-weight: 600; }
+
+  /* ── Colore faction: Orda tende al rosso, Alleanza al blu ── */
+  .roster-prose :global(tr.fac-horde)    { background: color-mix(in srgb, #C0202A 8%, var(--surface)); }
+  .roster-prose :global(tr.fac-alliance) { background: color-mix(in srgb, #1E6FD0 8%, var(--surface)); }
+  .roster-prose :global(tr.fac-horde:hover)    { background: color-mix(in srgb, #C0202A 15%, var(--surface)); }
+  .roster-prose :global(tr.fac-alliance:hover) { background: color-mix(in srgb, #1E6FD0 15%, var(--surface)); }
+
+  /* Bande separatrici Orda / Alleanza */
+  .roster-prose :global(tr.rsep td) { text-align: left; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.66rem; padding: 0.35rem 0.6rem; }
+  .roster-prose :global(tr.rsep--horde td)    { background: color-mix(in srgb, #C0202A 26%, var(--surface)); color: #7c1720; }
+  .roster-prose :global(tr.rsep--alliance td) { background: color-mix(in srgb, #1E6FD0 26%, var(--surface)); color: #14477f; }
+
+  /* Combinazione non ottenibile: casella scura, tratteggiata in obliquo */
+  .roster-prose :global(td:has(.na)) {
+    background-color: #3b3f45;
+    background-image: repeating-linear-gradient(45deg,
+      rgba(255,255,255,0.13) 0, rgba(255,255,255,0.13) 1.5px,
+      transparent 1.5px, transparent 6px);
+  }
+  .roster-prose :global(.na) { display: block; width: 100%; height: 100%; min-height: 1.4em; }
+</style>

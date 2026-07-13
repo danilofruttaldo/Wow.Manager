@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { getAddons, addonsMeta } from '../lib/content';
+
+const addons = getAddons();
+---
+<Base title="Addon" description="Addon WoW Retail installati: versione, source, interface, note di sync.">
+  <div class="wrap">
+    <div class="phead">
+      <h1>Addon</h1>
+      <span class="meta">{addons.length} installati · build <code>{addonsMeta?.wow_build}</code> · sync <code>{addonsMeta?.last_sync}</code></span>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Addon</th><th>Versione</th><th>Interface</th><th>Source</th><th class="num">Cart.</th></tr>
+        </thead>
+        <tbody>
+          {addons.map(a => (
+            <tr>
+              <td>
+                {a.url ? <a href={a.url} target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600">{a.name}</a> : <strong>{a.name}</strong>}
+                {a.notes && <div class="cell-note">{a.notes}</div>}
+              </td>
+              <td><span class="badge badge--accent">{a.version}</span></td>
+              <td><code>{a.interface}</code></td>
+              <td>{a.source}</td>
+              <td class="num">{a.folders?.length ?? 0}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,124 @@
+---
+import Base from '../layouts/Base.astro';
+import { classLabel, titleCase } from '../lib/content';
+
+const files = Object.keys(
+  import.meta.glob('/public/screenshots/*.jpg', { eager: true }),
+).map((p) => p.replace('/public', ''));
+
+const ALIAS: Record<string, string> = { deathknight: 'death-knight', demonhunter: 'demon-hunter' };
+const shots = files.map((src) => {
+  const stem = src.split('/').pop()!.replace(/\.[^.]+$/, '');
+  const parts = stem.split('-');
+  const className = ALIAS[parts[0]] ?? parts[0];
+  const spec = parts[1] ?? '';
+  const char = parts.slice(2).join('-') || parts[parts.length - 1];
+  return { src, className, spec, char };
+});
+
+// Raggruppa per classe
+const byClass = new Map<string, typeof shots>();
+for (const s of shots) {
+  if (!byClass.has(s.className)) byClass.set(s.className, []);
+  byClass.get(s.className)!.push(s);
+}
+const groups = [...byClass.entries()]
+  .map(([cls, list]) => [cls, list.sort((a, b) => a.char.localeCompare(b.char))] as const)
+  .sort((a, b) => classLabel(a[0]).localeCompare(classLabel(b[0])));
+
+const iconFor = (cls: string) => `/icons/class/${cls.replace(/-/g, '')}.jpg`;
+// indice globale per il lightbox (ordine = ordine di render)
+let gi = 0;
+---
+<Base title="UI" description="La UI reale in gioco di ogni personaggio, per classe.">
+  <div class="wrap">
+    <div class="phead">
+      <h1>UI</h1>
+      <span class="meta">{shots.length} screenshot · UI in gioco per classe · clic per ingrandire</span>
+    </div>
+
+    {groups.map(([cls, list]) => (
+      <>
+        <h2 class="group"><img class="ico ico-sm" src={iconFor(cls)} alt="" width="20" height="20" /> {classLabel(cls)}</h2>
+        <div class="gallery">
+          {list.map((s) => {
+            const i = gi++;
+            return (
+              <button class="shot" style={`--pc: var(--c-${s.className})`} data-i={i} data-src={s.src} data-char={titleCase(s.char)} data-who={`${classLabel(s.className)} · ${titleCase(s.spec)}`}>
+                <span class="imgwrap"><img src={s.src} alt={`UI di ${titleCase(s.char)}`} loading="lazy" width="640" height="360" /></span>
+                <span class="cap">
+                  <span class="cap-txt"><span class="ch">{titleCase(s.char)}</span><span class="wh">{classLabel(s.className)}</span></span>
+                  <span class="sp">{titleCase(s.spec)}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </>
+    ))}
+  </div>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Screenshot ingrandito">
+    <button class="lb-close" id="lb-close" aria-label="Chiudi">&times;</button>
+    <button class="lb-nav lb-prev" id="lb-prev" aria-label="Precedente">&lsaquo;</button>
+    <figure><img id="lb-img" alt="" /><figcaption id="lb-cap"></figcaption></figure>
+    <button class="lb-nav lb-next" id="lb-next" aria-label="Successivo">&rsaquo;</button>
+  </div>
+</Base>
+
+<style>
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.75rem; margin-bottom: 0.5rem; }
+.shot { --pc: var(--accent); text-align: left; padding: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: border-color var(--transition), box-shadow var(--transition); font: inherit; color: inherit; display: block; width: 100%; }
+.shot:hover { border-color: var(--pc); box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.imgwrap { display: block; aspect-ratio: 16 / 9; background: #0a0a0a; }
+.imgwrap img { width: 100%; height: 100%; object-fit: cover; }
+.cap { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.65rem; border-top: 3px solid var(--pc); }
+.cap-txt { display: flex; flex-direction: column; min-width: 0; }
+.ch { font-weight: 600; font-size: 0.92rem; }
+.wh { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-subtle); }
+.sp { margin-left: auto; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); background: color-mix(in srgb, var(--pc) 14%, transparent); border: 1px solid color-mix(in srgb, var(--pc) 40%, var(--border)); padding: 0.15rem 0.4rem; border-radius: var(--radius-sm); white-space: nowrap; }
+
+.lb { position: fixed; inset: 0; z-index: 100; background: rgba(10,12,16,0.94); display: none; align-items: center; justify-content: center; padding: 0.5rem; }
+.lb.open { display: flex; }
+.lb figure { position: relative; margin: 0; max-width: 96vw; max-height: 94vh; display: flex; }
+.lb img { max-width: 100%; max-height: 94vh; object-fit: contain; border-radius: 5px; }
+.lb figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 0.75rem; color: #e8eaed; padding: 2rem 1rem 0.9rem; background: linear-gradient(transparent, rgba(10,12,16,0.85)); font-family: var(--font-mono); font-size: 0.78rem; }
+.lb figcaption b { font-family: var(--font-sans); font-weight: 600; }
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: #fff; width: 42px; height: 42px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.lb-nav:hover { background: rgba(255,255,255,0.16); }
+.lb-prev { left: 1rem; } .lb-next { right: 1rem; }
+.lb-close { position: absolute; top: 1rem; right: 1.25rem; z-index: 2; background: none; border: 0; color: #fff; font-size: 1.6rem; cursor: pointer; opacity: 0.85; }
+.lb-close:hover { opacity: 1; }
+</style>
+
+<script>
+document.addEventListener('astro:page-load', () => {
+  const lb = document.getElementById('lb');
+  if (!lb) return;
+  const img = document.getElementById('lb-img') as HTMLImageElement;
+  const cap = document.getElementById('lb-cap')!;
+  const shots = Array.from(document.querySelectorAll<HTMLButtonElement>('.shot'));
+  if (!shots.length) return;
+  let idx = 0;
+  function show(i: number) {
+    idx = (i + shots.length) % shots.length;
+    const el = shots[idx];
+    img.src = el.dataset.src || '';
+    img.alt = el.dataset.char || '';
+    cap.innerHTML = `<b>${el.dataset.char}</b><span>${el.dataset.who}</span>`;
+  }
+  function open(i: number) { show(i); lb!.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function close() { lb!.classList.remove('open'); document.body.style.overflow = ''; }
+  shots.forEach((el, i) => el.addEventListener('click', () => open(i)));
+  document.getElementById('lb-close')!.addEventListener('click', close);
+  document.getElementById('lb-prev')!.addEventListener('click', (e) => { e.stopPropagation(); show(idx - 1); });
+  document.getElementById('lb-next')!.addEventListener('click', (e) => { e.stopPropagation(); show(idx + 1); });
+  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') show(idx - 1);
+    else if (e.key === 'ArrowRight') show(idx + 1);
+  });
+});
+</script>

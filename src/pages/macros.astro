@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { getMacros, macrosMeta, titleCase } from '../lib/content';
+
+const macros = getMacros();
+
+// icona classe (i file sono senza trattino: death-knight -> deathknight)
+const KNOWN = new Set(['warrior','paladin','hunter','rogue','priest','deathknight','shaman','mage','warlock','monk','druid','demonhunter','evoker']);
+const iconFor = (cls: string | null) => {
+  if (!cls) return null;
+  const slug = cls.replace(/-/g, '');
+  return KNOWN.has(slug) ? `/icons/class/${slug}.jpg` : null;
+};
+---
+<Base title="Macro" description="Macro WoW per account/character: scope, spec, razionale.">
+  <div class="wrap">
+    <div class="phead">
+      <h1>Macro</h1>
+      <span class="meta">{macros.length} macro · spec attiva <code>{macrosMeta?.active_spec}</code></span>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th style="width:34px"></th><th>Macro</th><th>Scope</th><th>Spec</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          {macros.map(m => {
+            const icon = iconFor(m.class);
+            return (
+              <tr>
+                <td>{icon
+                  ? <img class="ico ico-sm" src={icon} alt={titleCase(m.class ?? '')} title={titleCase(m.class ?? '')} width="20" height="20" />
+                  : <span class="badge">{m.class ?? '—'}</span>}
+                </td>
+                <td><strong>{m.name}</strong></td>
+                <td><span class="badge">{m.scope}</span></td>
+                <td>{m.spec ? <span class="badge">{m.spec}</span> : <span style="color:var(--text-subtle)">—</span>}</td>
+                <td style="max-width:52ch"><span class="cell-note" style="margin:0">{m.notes}</span></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Base>

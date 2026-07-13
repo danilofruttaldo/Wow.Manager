@@ -4,10 +4,17 @@ desktop.ini
 .DS_Store
 
 # Editors
-.vscode/
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
 .idea/
 *.swp
 *~
+
+# Sito Astro (build/deps ricostruibili)
+node_modules/
+dist/
+.astro/
 
 # Binari / archivi grandi non versionati
 *.zip
