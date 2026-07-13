@@ -463,6 +463,19 @@
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-28 (hunter shared → spec:null). Piazza Binding Shot sulla posizione del mouse (@cursor): area che stordisce i nemici che si allontanano troppo dal centro (AoE root/stun-on-leave). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di hunter-flare / hunter-freezing-trap e degli altri @cursor). Binding Shot è talento albero classe → disponibile a tutte le spec hunter se talentato, per questo spec:null. CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo mostra Binding Shot."
     },
+    "hunter-volley": {
+      "name": "Volley",
+      "desc": "Volley sulla posizione del mouse.",
+      "scope": "account",
+      "class": "hunter",
+      "spec": "marksmanship",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "hunter/marksmanship/volley.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-13 ('nuova macro hunter marksmanship'). Piazza Volley sulla posizione del mouse (@cursor): incanala una pioggia di frecce ad area a terra (danno AoE; in MM alimenta/interagisce con Trick Shots). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di flare/binding-shot e degli altri @cursor). spec:marksmanship: Volley è abilità/talento della spec MM. #showtooltip nudo mostra Volley."
+    },
     "demon-hunter-sigil-of-misery": {
       "name": "Sigil of Misery",
       "desc": "Sigil of Misery sulla posizione del mouse (fear AoE).",
