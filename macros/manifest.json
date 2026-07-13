@@ -10,6 +10,7 @@
   "macros": {
     "warrior-heroic-leap-cursor": {
       "name": "Leap @cursor",
+      "desc": "Heroic Leap sulla posizione del mouse.",
       "scope": "account",
       "class": "warrior",
       "spec": null,
@@ -22,6 +23,7 @@
     },
     "warrior-charge-intervene": {
       "name": "Charge/Intervene",
+      "desc": "Gap-closer: Intervene su un alleato, Shield Charge in Prot col modifier, altrimenti Charge.",
       "scope": "account",
       "class": "warrior",
       "spec": null,
@@ -34,6 +36,7 @@
     },
     "warrior-ravager-bladestorm": {
       "name": "Ravager/Bladestorm",
+      "desc": "AoE channel Arms: Ravager a terra sul cursore se talentato, altrimenti Bladestorm sul posto.",
       "scope": "account",
       "class": "warrior",
       "spec": "arms",
@@ -46,6 +49,7 @@
     },
     "warrior-shockwave-howl": {
       "name": "Shockwave/Howl",
+      "desc": "Control AoE: Shockwave se talentato, altrimenti Piercing Howl.",
       "scope": "account",
       "class": "warrior",
       "spec": null,
@@ -58,6 +62,7 @@
     },
     "warrior-sweeping-cleave": {
       "name": "Sweep+Cleave/WW",
+      "desc": "Castsequence Sweeping Strikes + filler (Cleave in M+, Whirlwind in raid).",
       "scope": "account",
       "class": "warrior",
       "spec": "arms",
@@ -70,6 +75,7 @@
     },
     "warrior-cs-rend": {
       "name": "CS+Rend",
+      "desc": "Castsequence Colossus Smash + Rend, cadenzata sul cooldown di Colossus Smash.",
       "scope": "account",
       "class": "warrior",
       "spec": "arms",
@@ -82,6 +88,7 @@
     },
     "warrior-reck-trinket": {
       "name": "Reck+Trinket",
+      "desc": "Burst: Recklessness + trinket 13/14 in un press.",
       "scope": "account",
       "class": "warrior",
       "spec": "fury",
@@ -94,6 +101,7 @@
     },
     "warrior-rend-whirlwind": {
       "name": "Rend+WW / TC",
+      "desc": "Applica il cleave: Thunder Clap in M+, sequenza Rend + Whirlwind in raid.",
       "scope": "account",
       "class": "warrior",
       "spec": "fury",
@@ -106,6 +114,7 @@
     },
     "warrior-prot-intimidating-howl": {
       "name": "IntShout/Howl",
+      "desc": "Control AoE: Intimidating Shout se talentato, altrimenti Piercing Howl.",
       "scope": "account",
       "class": "warrior",
       "spec": "protection",
@@ -118,6 +127,7 @@
     },
     "mage-decurse-spellsteal": {
       "name": "Decurse/Spellsteal",
+      "desc": "Mouseover su alleato → Remove Curse; sul nemico → Spellsteal (se talentato).",
       "scope": "account",
       "class": "mage",
       "spec": null,
@@ -130,6 +140,7 @@
     },
     "paladin-cleanse-taunt": {
       "name": "Cleanse/Taunt",
+      "desc": "Mouseover su alleato → Cleanse Toxins; altrimenti Hand of Reckoning (taunt).",
       "scope": "account",
       "class": "paladin",
       "spec": null,
@@ -142,6 +153,7 @@
     },
     "paladin-intercession-redemption": {
       "name": "Res (combat)",
+      "desc": "Resurrezione: Intercession in combattimento, Redemption fuori.",
       "scope": "account",
       "class": "paladin",
       "spec": null,
@@ -154,6 +166,7 @@
     },
     "shaman-ancestral-vision-spirit": {
       "name": "Rez AoE/ST",
+      "desc": "Resurrezione: modifier → Ancestral Vision (di massa), tap → Ancestral Spirit (singolo).",
       "scope": "account",
       "class": "shaman",
       "spec": "restoration",
@@ -166,6 +179,7 @@
     },
     "shaman-capacitor-totem": {
       "name": "Capacitor @cursor",
+      "desc": "Capacitor Totem sul cursore (stun AoE ritardato).",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -178,6 +192,7 @@
     },
     "shaman-healing-wave-lightning-bolt": {
       "name": "HealWave/Bolt",
+      "desc": "Mouseover su alleato → Healing Wave; altrimenti Lightning Bolt sul nemico.",
       "scope": "account",
       "class": "shaman",
       "spec": "restoration",
@@ -190,6 +205,7 @@
     },
     "shaman-chain-heal-chain-lightning": {
       "name": "ChainHeal/CL",
+      "desc": "Mouseover su alleato → Chain Heal; altrimenti Chain Lightning.",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -202,6 +218,7 @@
     },
     "shaman-healing-surge-lava-burst": {
       "name": "HealSurge/Lava",
+      "desc": "Mouseover su alleato → Healing Surge; altrimenti Lava Burst.",
       "scope": "account",
       "class": "shaman",
       "spec": "restoration",
@@ -214,6 +231,7 @@
     },
     "shaman-riptide-flame-shock": {
       "name": "Riptide/Flame",
+      "desc": "Mouseover su alleato → Riptide; altrimenti Flame Shock.",
       "scope": "account",
       "class": "shaman",
       "spec": "restoration",
@@ -226,6 +244,7 @@
     },
     "shaman-healing-rain": {
       "name": "HealRain @cur",
+      "desc": "Healing Rain sulla posizione del mouse.",
       "scope": "account",
       "class": "shaman",
       "spec": "restoration",
@@ -238,6 +257,7 @@
     },
     "shaman-spirit-link-totem": {
       "name": "SpiritLink @cur",
+      "desc": "Spirit Link Totem sul cursore (redistribuisce gli HP + riduzione danni).",
       "scope": "account",
       "class": "shaman",
       "spec": "restoration",
@@ -250,6 +270,7 @@
     },
     "shaman-purge-cleanse-spirit": {
       "name": "Purge/Cleanse",
+      "desc": "Mouseover su alleato → Cleanse Spirit; altrimenti Purge sul nemico.",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -262,6 +283,7 @@
     },
     "shaman-earthquake": {
       "name": "Earthquake @cur",
+      "desc": "Earthquake sulla posizione del mouse.",
       "scope": "account",
       "class": "shaman",
       "spec": "elemental",
@@ -274,6 +296,7 @@
     },
     "shaman-healing-surge-lightning-bolt": {
       "name": "HealSurge/Bolt",
+      "desc": "Mouseover su alleato → Healing Surge; altrimenti Lightning Bolt.",
       "scope": "account",
       "class": "shaman",
       "spec": "elemental",
@@ -286,6 +309,7 @@
     },
     "shaman-earthbind-totem": {
       "name": "Earthbind @cur",
+      "desc": "Earthbind Totem sul cursore (slow AoE).",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -298,6 +322,7 @@
     },
     "shaman-wind-rush-totem": {
       "name": "Wind Rush @cur",
+      "desc": "Wind Rush Totem sul cursore (scatto di velocità agli alleati).",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -310,6 +335,7 @@
     },
     "shaman-ascendance-ancestral-call": {
       "name": "Ascendance+Racial",
+      "desc": "Burst: Ascendance + racial Ancestral Call + trinket 13/14.",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -322,6 +348,7 @@
     },
     "shaman-ghost-wolf-feral-lunge": {
       "name": "GhostWolf/Lunge",
+      "desc": "Ghost Wolf; col modifier → Feral Lunge (Enhancement) o Spiritwalker’s Grace (Elemental).",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -334,6 +361,7 @@
     },
     "druid-rebirth-revitalize-revive": {
       "name": "Res druido",
+      "desc": "Resurrezione: Rebirth in combattimento, Revitalize (di massa in Resto) o Revive fuori.",
       "scope": "account",
       "class": "druid",
       "spec": null,
@@ -346,6 +374,7 @@
     },
     "druid-travel-wild-charge": {
       "name": "Travel/Charge",
+      "desc": "Modifier → Travel Form; altrimenti Wild Charge (scatto che varia per forma).",
       "scope": "account",
       "class": "druid",
       "spec": null,
@@ -358,6 +387,7 @@
     },
     "druid-soothe-remove-corruption": {
       "name": "RemCorr/Soothe",
+      "desc": "Mouseover su alleato → Remove Corruption; sul nemico → Soothe.",
       "scope": "account",
       "class": "druid",
       "spec": "feral",
@@ -370,6 +400,7 @@
     },
     "druid-moonkin-flap": {
       "name": "Moonkin/Flap",
+      "desc": "Fuori forma → Moonkin Form; già in Moonkin → Flap (planata).",
       "scope": "account",
       "class": "druid",
       "spec": null,
@@ -382,6 +413,7 @@
     },
     "druid-prowl-cat-form": {
       "name": "Prowl/Cat",
+      "desc": "Fuori combattimento → Prowl (stealth); in combattimento → Cat Form.",
       "scope": "account",
       "class": "druid",
       "spec": "feral",
@@ -394,6 +426,7 @@
     },
     "death-knight-anti-magic-zone": {
       "name": "AMZ @cursor",
+      "desc": "Anti-Magic Zone sulla posizione del mouse.",
       "scope": "account",
       "class": "death-knight",
       "spec": null,
@@ -406,6 +439,7 @@
     },
     "death-knight-death-and-decay": {
       "name": "DnD @cursor",
+      "desc": "Death and Decay sulla posizione del mouse.",
       "scope": "account",
       "class": "death-knight",
       "spec": null,
@@ -418,6 +452,7 @@
     },
     "death-knight-frost-pillar-erw-trinket": {
       "name": "Pillar+ERW+Trinket",
+      "desc": "Burst Frost: Pillar of Frost + Empower Rune Weapon + trinket 13/14.",
       "scope": "account",
       "class": "death-knight",
       "spec": "frost",
@@ -430,6 +465,7 @@
     },
     "druid-ursols-vortex": {
       "name": "Vortex @cursor",
+      "desc": "Ursol’s Vortex sulla posizione del mouse.",
       "scope": "account",
       "class": "druid",
       "spec": null,
@@ -442,6 +478,7 @@
     },
     "hunter-flare": {
       "name": "Flare @cursor",
+      "desc": "Flare sulla posizione del mouse.",
       "scope": "account",
       "class": "hunter",
       "spec": null,
@@ -454,6 +491,7 @@
     },
     "hunter-freezing-trap": {
       "name": "FreezeTrap @cur",
+      "desc": "Freezing Trap sulla posizione del mouse.",
       "scope": "account",
       "class": "hunter",
       "spec": null,
@@ -466,6 +504,7 @@
     },
     "hunter-pet-revive-call-mend": {
       "name": "Pet manager",
+      "desc": "Gestione pet: rianima, evoca, congeda (modifier) o cura in base allo stato del pet.",
       "scope": "account",
       "class": "hunter",
       "spec": null,
@@ -478,6 +517,7 @@
     },
     "hunter-misdirection-tranquilizing-shot": {
       "name": "Misdir/Tranq",
+      "desc": "Mouseover su alleato → Misdirection; altrimenti Tranquilizing Shot sul nemico.",
       "scope": "account",
       "class": "hunter",
       "spec": null,
@@ -490,6 +530,7 @@
     },
     "hunter-binding-shot": {
       "name": "BindingShot @cur",
+      "desc": "Binding Shot sulla posizione del mouse.",
       "scope": "account",
       "class": "hunter",
       "spec": null,
@@ -500,20 +541,9 @@
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-28 (hunter shared → spec:null). Piazza Binding Shot sulla posizione del mouse (@cursor): area che stordisce i nemici che si allontanano troppo dal centro (AoE root/stun-on-leave). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di hunter-flare / hunter-freezing-trap e degli altri @cursor). Binding Shot è talento albero classe → disponibile a tutte le spec hunter se talentato, per questo spec:null. CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo mostra Binding Shot."
     },
-    "shared-racial-burst": {
-      "name": "Racial burst",
-      "scope": "account",
-      "class": null,
-      "spec": null,
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "shared/racial-burst.txt",
-      "body": null,
-      "notes": "Creata 2026-06-28 su richiesta utente ('macro shared fra tutti i pg perché razziale'). PRIMA macro class:null del repertorio (casella shared/ cross-classe: i razziali sono legati alla RAZZA, non a classe/spec → class:null, spec:null, file in shared/). Burst razziale UNIVERSALE race-adattivo via cascata known:: ogni pg casta il razziale on-use che possiede — Troll → Berserking (haste), Orc → Blood Fury (AP/SP), Mag'har Orc → Ancestral Call (secondaria random) — + trinket 13/14, tutto in un press. known: rende inerti i rami del razziale non posseduto (niente 'spell sconosciuta') → una sola macro valida su QUALSIASI personaggio, qualunque razza. Righe /use multiple: i razziali e i trinket sono off-GCD → partono insieme. #showtooltip nudo risolve sul primo /use disponibile → mostra il razziale del pg corrente. SOVRAPPOSIZIONE: shaman-ascendance-ancestral-call e warrior-reck-trinket / dk-frost-pillar-erw-trinket già castano trinket (e Ancestral Call nel caso shaman) nel loro burst di classe; se questa universale sta sulla stessa barra i trinket sono ridondanti (innocuo, /use trinket non fa danno a vuoto). Pensata per i pg SENZA una macro burst di classe dedicata (la maggioranza) → bottone burst completo su ogni personaggio. Estendibile con altri razziali on-use (es. Fireblood, Light's Judgment) aggiungendo righe [known:X]."
-    },
     "demon-hunter-sigil-of-misery": {
       "name": "Misery @cursor",
+      "desc": "Sigil of Misery sulla posizione del mouse (fear AoE).",
       "scope": "account",
       "class": "demon-hunter",
       "spec": null,
@@ -526,6 +556,7 @@
     },
     "demon-hunter-shift": {
       "name": "Shift @cursor",
+      "desc": "Shift sulla posizione del mouse (dash Devourer).",
       "scope": "account",
       "class": "demon-hunter",
       "spec": "devourer",
@@ -538,6 +569,7 @@
     },
     "warlock-shadowfury": {
       "name": "Shadowfury @cursor",
+      "desc": "Shadowfury sulla posizione del mouse (stun AoE).",
       "scope": "account",
       "class": "warlock",
       "spec": null,
@@ -550,6 +582,7 @@
     },
     "warlock-soulwell-healthstone": {
       "name": "Soulwell/Healthstone",
+      "desc": "In gruppo → Create Soulwell; da solo → Create Healthstone.",
       "scope": "account",
       "class": "warlock",
       "spec": null,
@@ -562,6 +595,7 @@
     },
     "warlock-darkglare-blood-fury": {
       "name": "Darkglare+Blood Fury",
+      "desc": "Burst: Summon Darkglare + racial Blood Fury + trinket 13/14.",
       "scope": "account",
       "class": "warlock",
       "spec": "affliction",
@@ -574,6 +608,7 @@
     },
     "warlock-fel-domination-pet": {
       "name": "FelDom+Pet",
+      "desc": "Fel Domination + il pet giusto per il contesto (Felguard/Felhunter/Imp/Voidwalker).",
       "scope": "account",
       "class": "warlock",
       "spec": null,
@@ -586,6 +621,7 @@
     },
     "warlock-demonic-gateway": {
       "name": "Gateway @cursor",
+      "desc": "Demonic Gateway sulla posizione del mouse.",
       "scope": "account",
       "class": "warlock",
       "spec": null,
@@ -598,6 +634,7 @@
     },
     "warlock-pet-special": {
       "name": "Pet Special",
+      "desc": "Seconda abilità del demone attivo (Flee/Devour Magic/Axe Toss).",
       "scope": "account",
       "class": "warlock",
       "spec": null,

@@ -28,13 +28,15 @@ export interface Addon {
 export interface Macro {
   key: string;
   name: string;
+  desc?: string;          // riga breve mostrata sul sito (cosa fa il bottone)
   scope: string;
   class: string | null;
   spec: string | null;
   character: string | null;
   slot: string | null;
   icon: string | null;
-  notes?: string;
+  body?: string;          // corpo reale della macro, letto da body_file
+  notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
 }
 
 export interface ProfStep {
@@ -72,10 +74,19 @@ export function getAddons(): Addon[] {
 
 // ── Macro ─────────────────────────────────────────
 export const macrosMeta = (macrosManifest as any)._meta;
+// Corpi reali delle macro: file .txt fuori da src/, letti a build-time (sola lettura).
+// Chiave glob = path assoluto tipo '/.../macros/warrior/charge-intervene.txt';
+// li mappo su `body_file` (es. 'warrior/charge-intervene.txt') per suffisso.
+const macroBodies = import.meta.glob('../../macros/**/*.txt', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+function macroBody(bodyFile?: string | null): string | undefined {
+  if (!bodyFile) return undefined;
+  const hit = Object.entries(macroBodies).find(([p]) => p.endsWith('/' + bodyFile));
+  return hit ? hit[1].trim() : undefined;
+}
 export function getMacros(): Macro[] {
   const raw = (macrosManifest as any).macros ?? {};
   return Object.entries(raw)
-    .map(([key, v]: [string, any]) => ({ key, ...v }))
+    .map(([key, v]: [string, any]) => ({ key, ...v, body: v.body ?? macroBody(v.body_file) }))
     .sort((a, b) => (a.class ?? '').localeCompare(b.class ?? '') || a.name.localeCompare(b.name));
 }
 

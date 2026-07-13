@@ -1,6 +1,0 @@
-#showtooltip
-/use [known:Berserking]Berserking
-/use [known:Blood Fury]Blood Fury
-/use [known:Ancestral Call]Ancestral Call
-/use 13
-/use 14

@@ -33,8 +33,12 @@ Oggetto `addons` con chiave = slug addon. Campi: `name, version, interface, sour
 - **Modifica**: cambia i campi (es. `version`, `notes`). La tabella `/addons` si aggiorna da sola.
 
 ### Macro → [macros/manifest.json](macros/manifest.json)
-Oggetto `macros` con chiave = slug. Campi: `name, scope, class, spec, character, slot, icon, notes`.
-- L'icona classe nella tabella `/macros` deriva da `class` (es. `warrior`, `death-knight` → `deathknight.jpg`). `class: null` → nessuna icona.
+Oggetto `macros` con chiave = slug. Campi: `name, desc, scope, class, spec, character, slot, icon, body_file, body, notes`.
+- **`desc` = testo mostrato sul sito**: una riga breve, "cosa fa il bottone" (es. «Mouseover su alleato → Remove Curse; sul nemico → Spellsteal»). Tienila concisa: niente date, storia o razionale.
+- **`notes` = memoria interna di manutenzione, NON mostrata sul sito**: qui vanno date, `VERIFICATO`, riclassificazioni, richieste utente, caveat tecnici. È il "perché" delle scelte, per te che manutieni — la pagina `/macros` non lo legge più.
+- La pagina `/macros` è una **griglia di card filtrabile per classe** (chip con icona) e, scelta una classe, **per spec** (le card `spec: null` restano visibili come cross-spec in ogni filtro spec). Ogni card mostra icona classe/spec, nome, `desc` e il **corpo reale** della macro (letto da `body_file`, con bottone "Copia").
+- L'icona classe deriva da `class` (es. `warrior`, `death-knight` → `deathknight.jpg`); `class: null` → nessuna icona, la card finisce nel gruppo **Shared**. L'icona spec (se `spec` valorizzato) da `public/icons/spec/<classe-senza-trattino>-<spec>.jpg`.
+- `body` nel JSON è quasi sempre `null`: il corpo vero sta nel file `body_file` (in [macros/](macros/), convenzione `<classe>/[<spec>/]<slug>.txt`, root classe per `spec: null`). Il sito legge il `.txt`.
 
 ### Professioni → [professions/manifest.json](professions/manifest.json)
 Array `professions`. Ogni voce: `key, name, type` (`crafting`|`gathering`|`secondary`), `first`, `second`, `notes`.
