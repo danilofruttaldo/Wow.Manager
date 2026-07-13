@@ -52,6 +52,7 @@ export interface Profession {
   type: 'crafting' | 'gathering' | 'secondary';
   first: ProfStep | null;  // 1ª spec + 1º ramo
   second: ProfStep | null; // 2ª spec + 2º ramo
+  third: ProfStep | null;  // 3ª spec + 3º ramo
   notes?: string;
 }
 

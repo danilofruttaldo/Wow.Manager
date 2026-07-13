@@ -8,6 +8,7 @@
       "type": "crafting",
       "first":  { "spec": "Fluent in Flasks", "branch": "Root node" },
       "second": { "spec": "Fluent in Flasks", "branch": "Sin'dorei Specialist" },
+      "third":  { "spec": "Fluent in Flasks", "branch": "Flask Abundance" },
       "notes": "Build Flask: massima domanda sui flask da raid. Passa a Potion Prowess se vendi pozioni da combattimento."
     },
     {
@@ -16,6 +17,7 @@
       "type": "crafting",
       "first":  { "spec": "Armorsmithing", "branch": "Root node" },
       "second": { "spec": "Armorsmithing", "branch": "Sculpted / Large Plate Armor" },
+      "third":  { "spec": "The Old Ways", "branch": "Resourceful Smith / Second Nature" },
       "notes": "Armorsmithing per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate."
     },
     {
@@ -24,6 +26,7 @@
       "type": "crafting",
       "first":  { "spec": "Spellbound Shatterer", "branch": "Infinite Ingenuity" },
       "second": { "spec": "Spellbound Shatterer", "branch": "Resourcefulness" },
+      "third":  { "spec": "Elevating Equipment", "branch": "Categoria enchant scelta" },
       "notes": "Build Concentration: massimizza Spellbound Shatterer (un enchant HQ ogni pochi giorni). Elevating Equipment per coprire più slot."
     },
     {
@@ -32,6 +35,7 @@
       "type": "crafting",
       "first":  { "spec": "Market Mobility", "branch": "Mandatory Tools" },
       "second": { "spec": "Recycling", "branch": "Root node" },
+      "third":  { "spec": "Recycling", "branch": "Core branch (30 punti)" },
       "notes": "Build Profession Gear: Recycling dà un grosso bonus skill; Market Mobility per tinker/utility sugli equip."
     },
     {
@@ -40,6 +44,7 @@
       "type": "crafting",
       "first":  { "spec": "Calm Hands", "branch": "Dextrous Diligence" },
       "second": { "spec": "Perfected Products", "branch": "Perfect Milling" },
+      "third":  { "spec": "Perfected Products", "branch": "Perfect Inks" },
       "notes": "Build Reagents (la più sicura): Calm Hands + Perfected Products per milling/multicraft. Darkmoon Curiosity per le carte."
     },
     {
@@ -48,6 +53,7 @@
       "type": "crafting",
       "first":  { "spec": "Thoughtful Throughput", "branch": "Outrageous Output" },
       "second": { "spec": "Glamorous Gems", "branch": "Gem color sub-spec" },
+      "third":  { "spec": "Thoughtful Throughput", "branch": "Skilled Savings (Resourcefulness)" },
       "notes": "Build Gemcutting: Thoughtful Throughput (Multicraft) + Glamorous Gems. Le gemme hanno domanda costante."
     },
     {
@@ -56,6 +62,7 @@
       "type": "crafting",
       "first":  { "spec": "Learned Leatherworker", "branch": "Root node" },
       "second": { "spec": "Lasting Leather", "branch": "Armor path (4 slots)" },
+      "third":  { "spec": "Safeguarding Scales", "branch": "Tipo armatura opposto (Mail)" },
       "notes": "Learned Leatherworker come base, poi Lasting Leather o Safeguarding Scales secondo le classi che rifornisci."
     },
     {
@@ -64,6 +71,7 @@
       "type": "crafting",
       "first":  { "spec": "Nimble Needlework", "branch": "Root node (bolt cooldowns)" },
       "second": { "spec": "Nimble Needlework", "branch": "Cooldown reduction" },
+      "third":  { "spec": "Fiber Arts", "branch": "Creative Efficiency" },
       "notes": "Nimble Needlework per i cooldown dei bolt e la produzione di stoffa; poi armor di stoffa end-game."
     },
     {
@@ -72,6 +80,7 @@
       "type": "gathering",
       "first":  { "spec": "Bountiful Harvests", "branch": "Root node (herb yield)" },
       "second": { "spec": "Botany", "branch": "Mounted gathering" },
+      "third":  { "spec": "Bountiful Harvests", "branch": "Nodi erbe specifiche" },
       "notes": "Bountiful Harvests per resa e skill sulle erbe; Botany per sbloccare la raccolta a cavallo (non-Druidi)."
     },
     {
@@ -80,6 +89,7 @@
       "type": "gathering",
       "first":  { "spec": "Meticulous Mining", "branch": "Root node (mounted mining)" },
       "second": { "spec": "Plentiful Ores", "branch": "Root node (ore skill)" },
+      "third":  { "spec": "Plentiful Ores", "branch": "Nodi minerali specifici" },
       "notes": "Meticulous Mining per il mining a cavallo, poi Plentiful Ores per skill e resa del minerale."
     },
     {
@@ -88,23 +98,8 @@
       "type": "gathering",
       "first":  { "spec": "Thorough Tanning", "branch": "Base leather & scales" },
       "second": { "spec": "Gainful Gathering", "branch": "Unique materials & Diffusers" },
+      "third":  { "spec": "Talented Tracker", "branch": "Majestic Lures (Renowned Beasts)" },
       "notes": "Build Farming: Thorough Tanning per i materiali base, poi Gainful Gathering. Talented Tracker per il sistema di lure/Majestic."
-    },
-    {
-      "key": "cooking",
-      "name": "Cooking",
-      "type": "secondary",
-      "first": null,
-      "second": null,
-      "notes": "Professione secondaria: nessun albero di specializzazione. Punta a feast e food buff della patch."
-    },
-    {
-      "key": "fishing",
-      "name": "Fishing",
-      "type": "secondary",
-      "first": null,
-      "second": null,
-      "notes": "Professione secondaria: nessun albero di specializzazione. Serve materiali per Cooking."
     }
   ]
 }
