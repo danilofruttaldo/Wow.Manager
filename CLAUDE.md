@@ -1,14 +1,15 @@
-# CLAUDE.md — guida per manutenere ed estendere il progetto
+# CLAUDE.md — guida operativa (manutenzione ed estensione)
 
-Istruzioni operative per lavorare a questo repo con Claude Code, **anche da una postazione nuova**.
-Vedi [README.md](README.md) per la panoramica dei domini dati.
+Come lavorare a questo repo con Claude Code **da qualsiasi postazione**, per aggiungere/modificare/rimuovere contenuti. Panoramica dei dati: [README.md](README.md).
 
 ## Cos'è
 
-Un repo con due nature:
+Due nature nello stesso repo:
 
-1. **Dati** (fonte di verità): [addons/](addons/), [macros/](macros/), [ui-profiles/](ui-profiles/), [fonts/](fonts/), [roster.md](roster.md). Sono manifest JSON + markdown.
-2. **Sito statico** (in `src/`, Astro) che presenta quei dati su <https://wow.danilofruttaldo.com>. Il sito legge i dati in **sola lettura**: non li modifica mai.
+1. **Dati** = fonte di verità: [addons/](addons/), [macros/](macros/), [professions/](professions/), [roster.md](roster.md), [ui-profiles/](ui-profiles/), [fonts/](fonts/). Manifest JSON + markdown, mantenuti a mano.
+2. **Sito statico** ([src/](src/), Astro) che presenta i dati su <https://wow.danilofruttaldo.com>. Il sito legge i dati in **sola lettura**: non li modifica mai. Ogni pagina si allinea da sola quando cambi il dato corrispondente.
+
+Pagine del sito: **Home** (5 card), **Addon**, **Macro**, **Professioni**, **Roster**, **UI** (screenshot).
 
 ## Setup su una postazione nuova
 
@@ -18,59 +19,81 @@ npm install            # richiede Node >= 22.12
 npm run dev            # dev server; oppure F5 in VS Code -> "Sito locale (dev)"
 ```
 
-`node_modules/`, `dist/`, `.astro/` sono generati e git-ignored: **non committarli**. Dopo un `npm run build` di verifica, ripulisci con `rm -rf .astro dist`.
+`node_modules/`, `dist/`, `.astro/` sono generati e git-ignored: **mai committarli**.
 
-## Architettura del sito
+---
 
-- **Layout**: [src/layouts/Base.astro](src/layouts/Base.astro) — header/nav/footer, tema chiaro unico (niente toggle), font Inter.
-- **Stili**: [src/styles/global.css](src/styles/global.css) — token neutri + componenti densi (tabelle, tiles). Palette "tool", non fantasy.
-- **Accesso ai dati**: [src/lib/content.ts](src/lib/content.ts) — legge i manifest/markdown *fuori da `src/`* via import JSON e `import.meta.glob(..., '?raw')`. Espone `getAddons`, `getMacros`, `getRosterHtml`, ecc.
-- **Pagine**: [src/pages/](src/pages/) — `index`, `addons`, `macros`, `roster`, `ui`, `404`.
-- **Asset**: [public/icons/](public/icons/) (classe + razza), [public/screenshots/](public/screenshots/) (UI dei PG).
+## Operazioni sui contenuti (aggiungi / modifica / rimuovi)
 
-## Convenzioni e trappole (importante)
+Dopo ogni modifica: `npm run build` per verificare, poi **commit + push** (il push pubblica e aggiorna anche la data "sync" — vedi sotto).
 
-### Roster ([src/lib/content.ts](src/lib/content.ts) + [src/pages/roster.astro](src/pages/roster.astro))
-- La tabella è **costruita in HTML** da `getRosterHtml()` a partire dalle due tabelle markdown di `roster.md` (`## Orda` e `## Alleanza`), non renderizzata direttamente da marked.
-- Sezione `## Note sulle X` di `roster.md`: **nascosta** dal sito (resta nel file).
-- **Razze condivise** (Pandaren, Dracthyr, Earthen, Haranir): stanno solo nel blocco Orda; nel blocco Alleanza vengono saltate se già presenti in Orda.
-- **Colori fazione**: Orda tende al rosso, Alleanza al blu (classi CSS `fac-horde`/`fac-alliance`, bande `rsep--horde`/`rsep--alliance`).
-- **Combo non ottenibili** (`X` nel markdown): rese come casella **scura tratteggiata** (`.na` + CSS), nessun testo.
-- **Suffisso realm** (`·N`/`·P` in `roster.md`): rimosso in visualizzazione (`stripRealm`).
+### Addon → [addons/manifest.json](addons/manifest.json)
+Oggetto `addons` con chiave = slug addon. Campi: `name, version, interface, source, url, installed, folders[], notes`.
+- **Aggiungi/rimuovi**: aggiungi/togli la voce nell'oggetto `addons`.
+- **Modifica**: cambia i campi (es. `version`, `notes`). La tabella `/addons` si aggiorna da sola.
 
-### Spec dei personaggi ([src/lib/char-specs.ts](src/lib/char-specs.ts))
-- `roster.md` contiene solo i **nomi** dei PG. La spec (mostrata come prima lettera fra parentesi, es. `Stantu (F)`) sta in `CHAR_SPEC`, chiave = nome PG minuscolo.
-- **PG omonimi**: usa `CHAR_SPEC_BY_RACE`, chiave `nome|razza` (ha precedenza). Es. Furricane è Vulpera Monk (Brewmaster) nell'Orda e Worgen DK (Frost) in Alleanza.
-- Per aggiungere una spec: aggiungi la riga in `char-specs.ts` (o in `char-specs.ts` `CHAR_SPEC_BY_RACE` se collide).
+### Macro → [macros/manifest.json](macros/manifest.json)
+Oggetto `macros` con chiave = slug. Campi: `name, scope, class, spec, character, slot, icon, notes`.
+- L'icona classe nella tabella `/macros` deriva da `class` (es. `warrior`, `death-knight` → `deathknight.jpg`). `class: null` → nessuna icona.
 
-### Icone
-- Fonte: CDN Wowhead `https://wow.zamimg.com/images/wow/icons/large/` (classi `classicon_<slug>.jpg`, razze `race_<slug>_male.jpg`).
-- Scaricate in locale (`public/icons/`) per restare self-contained. Slug razza mappati in `RACE_ICON` (attenzione: alcuni slug interni differiscono dal nome, es. Undead→`scourge`, Haranir→file `haranir.jpg` scaricato da `race_harronir_male`).
-- Per una **nuova razza/classe**: scarica l'icona in `public/icons/{race,class}/`, poi aggiorna la mappa in `content.ts`.
+### Professioni → [professions/manifest.json](professions/manifest.json)
+Array `professions`. Ogni voce: `key, name, type` (`crafting`|`gathering`|`secondary`), `first`, `second`, `notes`.
+`first`/`second` = `{ "spec": "...", "branch": "..." }` (spec da prendere + ramo da massimizzare, **nomi in inglese** come il client). Secondarie (Cooking/Fishing) → `first`/`second` = `null`.
+- **Fonte dati reali**: build consigliate su <https://www.wow-professions.com/midnight/<prof>-specialization-guide-and-builds>. Aggiorna spec/branch quando cambiano con le patch.
+- `key` deve combaciare col file icona in [public/icons/prof/](public/icons/prof/) (`<key>.jpg`).
 
-### Aggiungere contenuti
-- **Nuovo PG nel roster**: edita `roster.md` (metti il nome nella cella razza×classe giusta, blocco Orda o Alleanza) e la sua spec in `char-specs.ts`.
-- **Nuovo screenshot UI**: aggiungi `public/screenshots/<classe>-<spec>-<nome>.jpg` (la pagina `/ui` lo raggruppa per classe leggendo classe/spec dal filename; alias `deathknight`→`death-knight`, `demonhunter`→`demon-hunter`).
-- **Addon/macro**: aggiorna i rispettivi `manifest.json` (fonte di verità); il sito si aggiorna da solo.
+### Roster: personaggi → [roster.md](roster.md)
+Due tabelle markdown: `## Orda (...)` e `## Alleanza (...)`. Colonne = classi (War, Pal, …, Evo), righe = razze.
+- **Aggiungi un PG**: scrivi il nome nella cella `razza × classe` del blocco giusto (Orda o Alleanza). Più nomi nella stessa cella → separali con `<br>`.
+- **Combinazione non creabile**: `X` (resa come casella scura tratteggiata).
+- **Suffisso realm** opzionale `·N`/`·P` accanto al nome: viene rimosso in visualizzazione, tienilo pure per i tuoi appunti.
+- **Poi assegna la spec** del PG in `char-specs.ts` (sotto), altrimenti compare senza la lettera fra parentesi.
+- **Sezioni nascoste**: `## Note sulle X` e i titoli/legende non compaiono sul sito (restano nel file). Le **razze condivise** (Pandaren, Dracthyr, Earthen, Haranir) vanno **solo** nel blocco Orda: se sono anche in Alleanza vengono saltate.
 
-## Verifica prima di committare
+### Roster: spec dei PG → [src/lib/char-specs.ts](src/lib/char-specs.ts)
+- `CHAR_SPEC`: chiave = **nome PG minuscolo** → nome spec. Il sito mostra la **prima lettera** fra parentesi (es. `stantu: 'fury'` → `Stantu (F)`).
+- **PG omonimi** (stesso nome, PG diversi): usa `CHAR_SPEC_BY_RACE`, chiave `nome|razza` minuscolo (ha precedenza). Es. `furricane|vulpera: 'brewmaster'` e `furricane|worgen: 'frost'`.
+- PG "in sospeso" (da recuperare): non metterli in `char-specs.ts` → restano senza lettera.
+
+### UI / screenshot → [public/screenshots/](public/screenshots/)
+- **Aggiungi**: metti un file `<classe>-<spec>-<nome>.jpg` (es. `warrior-fury-stantu.jpg`). La pagina `/ui` lo raggruppa **per classe** leggendo classe/spec dal **nome file**.
+- Alias classe nel filename: `deathknight`→Death Knight, `demonhunter`→Demon Hunter.
+- **Rimuovi**: cancella il file. Aggiorna il conteggio "7" hardcoded in [src/pages/index.astro](src/pages/index.astro) (card UI) se cambia il numero.
+
+### Icone (classe / razza / professione) → [public/icons/](public/icons/)
+Immagini WoW dal CDN Wowhead: `https://wow.zamimg.com/images/wow/icons/large/<slug>.jpg`.
+- Classi: `classicon_<slug>.jpg`. Razze: `race_<slug>_male.jpg`. Professioni: icone trade skill (es. `trade_alchemy`, `trade_blacksmithing`).
+- Salvale in `public/icons/{class,race,prof}/` e mappa lo slug in [src/lib/content.ts](src/lib/content.ts): `CLASS_ABBR`, `RACE_ICON` (razza→file), o per le prof il file `<key>.jpg`.
+- ⚠️ Alcuni slug interni differiscono dal nome: Undead→`scourge`, Haranir→scaricata da `race_harronir_male` ma salvata `haranir.jpg`, Earthen→`earthendwarf`, Lightforged Draenei→`lightforgeddraenei`.
+
+---
+
+## Data "sync" in topbar (automatica)
+
+La topbar mostra `build <build> · sync <data>`. Il `build` = `_meta.wow_build` di `addons/manifest.json`. La **data sync è per-pagina** e vale l'**ultimo commit git del file sorgente** di quella pagina (mappa rotta→file in [Base.astro](src/layouts/Base.astro)). Non c'è nulla da mantenere a mano: **committa** il dato che hai cambiato e la data si aggiorna. Perché funzioni anche in produzione il workflow usa `fetch-depth: 0` (storia git completa).
+
+## Architettura sito (dove metto le mani)
+
+- [src/layouts/Base.astro](src/layouts/Base.astro) — header (brand + badge build/sync centrale + nav) e footer. Tema chiaro unico, font Inter.
+- [src/styles/global.css](src/styles/global.css) — token palette + componenti (`.ico`, tabelle, tiles). **`.ico` ha `max-width: none`**: NON rimuoverlo, evita che le icone si schiaccino nelle tabelle auto-layout.
+- [src/lib/content.ts](src/lib/content.ts) — lettura dati + `getAddons/getMacros/getProfessions/getRosterHtml/getRosterCount/sourceDate`, mappe icone, rendering roster.
+- [src/lib/char-specs.ts](src/lib/char-specs.ts) — spec PG.
+- [src/pages/](src/pages/) — `index` (card), `addons`, `macros`, `professioni`, `roster`, `ui`, `404`. Le pagine **non hanno titoli/sottotitoli** (scelta voluta): partono col contenuto.
+
+## Verifica e dev
 
 ```bash
-npm run build                 # deve completare senza errori
-# opzionale: screenshot headless per controllo visivo
-npx astro dev stop; (npm run dev -- --port 4321 &) ; sleep 5
-# Edge headless: msedge --headless=new --screenshot=out.png http://localhost:<porta>/roster
-rm -rf .astro dist            # pulizia artefatti generati
+npm run build      # deve completare senza errori; poi: rm -rf .astro dist
 ```
+Per il debug visivo usa **F5** (o `npm run dev`). ⚠️ **NON** eseguire `astro dev stop`: ferma il daemon dev **condiviso** di Astro, quindi ammazza anche il tuo server F5. Per test isolati usa una porta dedicata e chiudi solo quel processo.
 
 ## Deploy
 
-Push su `main` → GitHub Actions ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) builda e pubblica su GitHub Pages.
-Settings → Pages → **Source: GitHub Actions** e **Custom domain: `wow.danilofruttaldo.com`** (se il 404 torna, ricontrolla che il Custom domain non si sia svuotato).
+Push su `main` → GitHub Actions ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) builda e pubblica su GitHub Pages. Custom domain `wow.danilofruttaldo.com` (Settings → Pages → Source: **GitHub Actions**; se torna 404 controlla che il Custom domain non si sia svuotato). DNS: record **CNAME** `wow` → `danilofruttaldo.github.io`.
 
-## Vincoli git del repo (hook attivi)
+## Vincoli git del repo (hook attivi — rispettali)
 
-- **Niente** trailer `Co-Authored-By` nei messaggi di commit (l'hook lo blocca).
-- **Titolo del commit ≤ 72 caratteri** (l'hook lo blocca).
-- Si lavora **direttamente su `main`** (nessuna PR nella storia); il deploy parte da `main`.
-- `.gitignore`: usa `.vscode/*` (non `.vscode/`) così `launch.json` resta versionabile.
+- **Niente** trailer `Co-Authored-By` nei messaggi di commit (bloccato).
+- **Titolo commit ≤ 72 caratteri** (bloccato).
+- Si lavora **direttamente su `main`**; il deploy parte da lì.
+- `.gitignore` usa `.vscode/*` (non `.vscode/`) così `launch.json` resta versionabile.
