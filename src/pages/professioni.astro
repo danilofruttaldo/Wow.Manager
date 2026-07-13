@@ -11,22 +11,16 @@ const GROUPS: { type: Profession['type']; label: string }[] = [
 ];
 const byType = (t: Profession['type']) => professions.filter(p => p.type === t);
 ---
-<Base title="Professioni" description="Professioni WoW: specializzazioni e ramo da maxare per ciascuna.">
+<Base title="Professioni" description="Professioni WoW: 1ª e 2ª specializzazione da prendere e ramo da maxare.">
   <div class="wrap">
-    <div class="phead">
-      <h1>Professioni</h1>
-      <span class="meta">{professions.length} professioni · <code>{professionsMeta.expansion}</code></span>
-    </div>
-
-    <p class="note-box">{professionsMeta.note}</p>
-
     <div class="table-scroll">
       <table>
         <thead>
           <tr>
             <th style="width:40px"></th>
-            <th>Specializzazioni</th>
-            <th>Ramo da maxare</th>
+            <th style="width:12rem">Professione</th>
+            <th>1ª specializzazione · ramo da maxare</th>
+            <th>2ª specializzazione · ramo da maxare</th>
             <th>Note</th>
           </tr>
         </thead>
@@ -36,23 +30,22 @@ const byType = (t: Profession['type']) => professions.filter(p => p.type === t);
             if (!rows.length) return null;
             return (
               <Fragment>
-                <tr class="gsep"><td colspan="4">{g.label}</td></tr>
+                <tr class="gsep"><td colspan="5">{g.label}</td></tr>
                 {rows.map(p => (
                   <tr>
+                    <td><img class="ico" src={`/icons/prof/${p.key}.jpg`} alt={p.name} title={p.name} width="26" height="26" /></td>
+                    <td><strong>{p.name}</strong></td>
                     <td>
-                      <img class="ico" src={`/icons/prof/${p.key}.jpg`} alt={p.name} title={p.name} width="26" height="26" />
-                    </td>
-                    <td>
-                      {p.specializations.length
-                        ? <span class="spec-list">{p.specializations.map(s => <span class="badge">{s}</span>)}</span>
+                      {p.first
+                        ? <div class="step"><span class="badge badge--accent">{p.first.spec}</span><span class="step-branch">massimizza <strong>{p.first.branch}</strong></span></div>
                         : <span class="muted">—</span>}
                     </td>
                     <td>
-                      {p.maxBranch
-                        ? <span class="badge badge--accent">{p.maxBranch}</span>
+                      {p.second
+                        ? <div class="step"><span class="badge">{p.second.spec}</span><span class="step-branch">massimizza <strong>{p.second.branch}</strong></span></div>
                         : <span class="muted">—</span>}
                     </td>
-                    <td style="max-width:46ch"><span class="cell-note" style="margin:0">{p.notes}</span></td>
+                    <td style="max-width:44ch"><span class="cell-note" style="margin:0">{p.notes}</span></td>
                   </tr>
                 ))}
               </Fragment>
@@ -65,27 +58,13 @@ const byType = (t: Profession['type']) => professions.filter(p => p.type === t);
 </Base>
 
 <style>
-.note-box {
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--text-muted);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: var(--radius-sm);
-  padding: 0.6rem 0.8rem;
-  margin: 0 0 1.1rem;
-}
-.spec-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.step { display: flex; flex-direction: column; gap: 0.2rem; align-items: flex-start; }
+.step-branch { font-size: 0.78rem; color: var(--text-muted); }
+.step-branch strong { color: var(--text); font-weight: 600; }
 .muted { color: var(--text-subtle); }
 tr.gsep td {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-subtle);
-  background: var(--surface-2);
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-subtle); background: var(--surface-2);
+  padding-top: 0.5rem; padding-bottom: 0.5rem;
 }
 </style>

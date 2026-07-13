@@ -6,10 +6,6 @@ const html = getRosterHtml();
 ---
 <Base title="Roster" description="Matrice razza × classe: copertura combinazioni e PG esistenti (Orda + Alleanza).">
   <div class="wrap roster-wrap">
-    <div class="phead">
-      <h1>Roster</h1>
-      <span class="meta"><code>nome (X)</code> = PG + lettera spec · casella tratteggiata = combo non ottenibile · vuoto = possibile, nessun PG</span>
-    </div>
     <article class="roster-prose" set:html={html}></article>
   </div>
 </Base>

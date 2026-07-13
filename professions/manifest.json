@@ -1,109 +1,109 @@
 {
   "expansion": "Midnight (12.0)",
-  "note": "Alberi di specializzazione basati sul framework moderno (Dragonflight → The War Within) adattato a Midnight: i nomi definitivi dei rami possono cambiare in fase di rilascio. \"Ramo da maxare\" è la priorità consigliata: aggiorna qui i dati, la pagina si allinea da sola.",
+  "note": "Piano di specializzazione in due tappe per professione: 1ª spec da prendere + 1º ramo da maxare, poi 2ª spec + 2º ramo. Nomi di spec e rami in inglese (client EN). Build consigliate per vendita/uso generale (fonte: wow-professions.com, Midnight live). Aggiorna qui i dati se cambiano con le patch: la pagina si allinea da sola.",
   "professions": [
     {
       "key": "alchemy",
       "name": "Alchemy",
       "type": "crafting",
-      "specializations": ["Potion Mastery", "Phial Mastery", "Transmutation Mastery"],
-      "maxBranch": "Phial Mastery",
-      "notes": "Phial per i buff da raid; passa a Potion Mastery se vendi pozioni da combattimento."
+      "first":  { "spec": "Fluent in Flasks", "branch": "Root node" },
+      "second": { "spec": "Fluent in Flasks", "branch": "Sin'dorei Specialist" },
+      "notes": "Build Flask: massima domanda sui flask da raid. Passa a Potion Prowess se vendi pozioni da combattimento."
     },
     {
       "key": "blacksmithing",
       "name": "Blacksmithing",
       "type": "crafting",
-      "specializations": ["Armorsmithing", "Weaponsmithing", "Specialty Smithing"],
-      "maxBranch": "Armorsmithing",
-      "notes": "Armor per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate."
+      "first":  { "spec": "Armorsmithing", "branch": "Root node" },
+      "second": { "spec": "Armorsmithing", "branch": "Sculpted / Large Plate Armor" },
+      "notes": "Armorsmithing per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate."
     },
     {
       "key": "enchanting",
       "name": "Enchanting",
       "type": "crafting",
-      "specializations": ["Weapon Enchantments", "Armor Enchantments", "Rod Crafting & Disenchanting"],
-      "maxBranch": "Armor Enchantments",
-      "notes": "Enchant su anelli/polsi sono i più richiesti; Rod & DE se ti serve il farming di materiali."
+      "first":  { "spec": "Spellbound Shatterer", "branch": "Infinite Ingenuity" },
+      "second": { "spec": "Spellbound Shatterer", "branch": "Resourcefulness" },
+      "notes": "Build Concentration: massimizza Spellbound Shatterer (un enchant HQ ogni pochi giorni). Elevating Equipment per coprire più slot."
     },
     {
       "key": "engineering",
       "name": "Engineering",
       "type": "crafting",
-      "specializations": ["Devices & Gadgets", "Explosives", "Gizmos"],
-      "maxBranch": "Devices & Gadgets",
-      "notes": "Devices per utility e tinker sugli equip; Explosives è di nicchia."
+      "first":  { "spec": "Market Mobility", "branch": "Mandatory Tools" },
+      "second": { "spec": "Recycling", "branch": "Root node" },
+      "notes": "Build Profession Gear: Recycling dà un grosso bonus skill; Market Mobility per tinker/utility sugli equip."
     },
     {
       "key": "inscription",
       "name": "Inscription",
       "type": "crafting",
-      "specializations": ["Runecarving", "Darkmoon", "Books & Scrolls"],
-      "maxBranch": "Runecarving",
-      "notes": "Le rune per le armi sono un consumabile richiesto ogni patch; Darkmoon per le carte."
+      "first":  { "spec": "Calm Hands", "branch": "Dextrous Diligence" },
+      "second": { "spec": "Perfected Products", "branch": "Perfect Milling" },
+      "notes": "Build Reagents (la più sicura): Calm Hands + Perfected Products per milling/multicraft. Darkmoon Curiosity per le carte."
     },
     {
       "key": "jewelcrafting",
       "name": "Jewelcrafting",
       "type": "crafting",
-      "specializations": ["Faceting (Gemme)", "Jewelry (Anelli/Collane)", "Ornaments"],
-      "maxBranch": "Faceting (Gemme)",
-      "notes": "Gemme = domanda costante; taglia le gemme epiche end-game per massimizzare il valore."
+      "first":  { "spec": "Thoughtful Throughput", "branch": "Outrageous Output" },
+      "second": { "spec": "Glamorous Gems", "branch": "Gem color sub-spec" },
+      "notes": "Build Gemcutting: Thoughtful Throughput (Multicraft) + Glamorous Gems. Le gemme hanno domanda costante."
     },
     {
       "key": "leatherworking",
       "name": "Leatherworking",
       "type": "crafting",
-      "specializations": ["Leather Armor", "Mail Armor", "Refining & Toolcraft"],
-      "maxBranch": "Leather Armor",
-      "notes": "Scegli Leather o Mail in base alle classi che rifornisci; Refining per produrre materiali."
+      "first":  { "spec": "Learned Leatherworker", "branch": "Root node" },
+      "second": { "spec": "Lasting Leather", "branch": "Armor path (4 slots)" },
+      "notes": "Learned Leatherworker come base, poi Lasting Leather o Safeguarding Scales secondo le classi che rifornisci."
     },
     {
       "key": "tailoring",
       "name": "Tailoring",
       "type": "crafting",
-      "specializations": ["Garment Crafting", "Textiles", "Bags & Embroidery"],
-      "maxBranch": "Garment Crafting",
-      "notes": "Armor di stoffa end-game; Textiles se vuoi produrre panno extra da rivendere."
+      "first":  { "spec": "Nimble Needlework", "branch": "Root node (bolt cooldowns)" },
+      "second": { "spec": "Nimble Needlework", "branch": "Cooldown reduction" },
+      "notes": "Nimble Needlework per i cooldown dei bolt e la produzione di stoffa; poi armor di stoffa end-game."
     },
     {
       "key": "herbalism",
       "name": "Herbalism",
       "type": "gathering",
-      "specializations": ["Botany", "Wildercraft", "Cultivation"],
-      "maxBranch": "Wildercraft",
-      "notes": "Massimizza materiali rari e bonus di raccolta sulle erbe di zona."
+      "first":  { "spec": "Bountiful Harvests", "branch": "Root node (herb yield)" },
+      "second": { "spec": "Botany", "branch": "Mounted gathering" },
+      "notes": "Bountiful Harvests per resa e skill sulle erbe; Botany per sbloccare la raccolta a cavallo (non-Druidi)."
     },
     {
       "key": "mining",
       "name": "Mining",
       "type": "gathering",
-      "specializations": ["Metallurgy", "Ore Mastery", "Elements"],
-      "maxBranch": "Ore Mastery",
-      "notes": "Rendimento e qualità del minerale raccolto; Elements per i materiali elementali."
+      "first":  { "spec": "Meticulous Mining", "branch": "Root node (mounted mining)" },
+      "second": { "spec": "Plentiful Ores", "branch": "Root node (ore skill)" },
+      "notes": "Meticulous Mining per il mining a cavallo, poi Plentiful Ores per skill e resa del minerale."
     },
     {
       "key": "skinning",
       "name": "Skinning",
       "type": "gathering",
-      "specializations": ["Skinning Mastery", "Hides & Leather", "Scales & Elements"],
-      "maxBranch": "Skinning Mastery",
-      "notes": "Velocità e resa dello skinning; poi specializza sul materiale più richiesto."
+      "first":  { "spec": "Thorough Tanning", "branch": "Base leather & scales" },
+      "second": { "spec": "Gainful Gathering", "branch": "Unique materials & Diffusers" },
+      "notes": "Build Farming: Thorough Tanning per i materiali base, poi Gainful Gathering. Talented Tracker per il sistema di lure/Majestic."
     },
     {
       "key": "cooking",
       "name": "Cooking",
       "type": "secondary",
-      "specializations": [],
-      "maxBranch": null,
+      "first": null,
+      "second": null,
       "notes": "Professione secondaria: nessun albero di specializzazione. Punta a feast e food buff della patch."
     },
     {
       "key": "fishing",
       "name": "Fishing",
       "type": "secondary",
-      "specializations": [],
-      "maxBranch": null,
+      "first": null,
+      "second": null,
       "notes": "Professione secondaria: nessun albero di specializzazione. Serve materiali per Cooking."
     }
   ]

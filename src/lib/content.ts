@@ -1,5 +1,6 @@
 // Accesso ai dati della repo Wow.Manager (manifest JSON + markdown).
 // I file vivono fuori da src/: sono la fonte di verità, il sito li legge in sola lettura.
+import { execSync } from 'node:child_process';
 import { marked } from 'marked';
 
 import { CHAR_SPEC, CHAR_SPEC_BY_RACE } from './char-specs';
@@ -36,13 +37,28 @@ export interface Macro {
   notes?: string;
 }
 
+export interface ProfStep {
+  spec: string;   // specializzazione da prendere
+  branch: string; // ramo da maxare dentro quella spec
+}
 export interface Profession {
   key: string;
   name: string;
   type: 'crafting' | 'gathering' | 'secondary';
-  specializations: string[];
-  maxBranch: string | null;
+  first: ProfStep | null;  // 1ª spec + 1º ramo
+  second: ProfStep | null; // 2ª spec + 2º ramo
   notes?: string;
+}
+
+// ── Meta build + data aggiornamento (git) ─────────
+export const wowBuild: string = (addonsManifest as any)._meta?.wow_build ?? '';
+// Data dell'ultimo commit che ha toccato il file/cartella sorgente (YYYY-MM-DD).
+export function sourceDate(relPath = '.'): string {
+  try {
+    return execSync(`git log -1 --format=%cs -- "${relPath}"`, { encoding: 'utf8' }).trim();
+  } catch {
+    return '';
+  }
 }
 
 // ── Addon ─────────────────────────────────────────
@@ -181,6 +197,24 @@ function rosterBodyRows(rows: string[][], rowClass: string): { html: string; rac
     return `<tr class="${rowClass}">${tds}</tr>`;
   }).join('');
   return { html, races };
+}
+
+// Conta i PG presenti nel roster (Orda + Alleanza), inclusi i nomi multipli per cella.
+export function getRosterCount(): number {
+  const raw = Object.values(rosterFile)[0] ?? '';
+  let count = 0;
+  for (const section of ['Orda', 'Alleanza']) {
+    const rows = extractRosterTable(raw, section);
+    if (!rows) continue;
+    for (const cells of rows.slice(1)) {
+      for (let i = 1; i < cells.length; i++) {
+        const t = stripRealm(cells[i] ?? '').trim();
+        if (!t || t === 'X') continue;
+        count += t.split(/<br\s*\/?>/i).map((s) => s.trim()).filter(Boolean).length;
+      }
+    }
+  }
+  return count;
 }
 
 export function getRosterHtml(): string {

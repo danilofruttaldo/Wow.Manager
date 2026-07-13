@@ -32,11 +32,6 @@ let gi = 0;
 ---
 <Base title="UI" description="La UI reale in gioco di ogni personaggio, per classe.">
   <div class="wrap">
-    <div class="phead">
-      <h1>UI</h1>
-      <span class="meta">{shots.length} screenshot · UI in gioco per classe · clic per ingrandire</span>
-    </div>
-
     {groups.map(([cls, list]) => (
       <>
         <h2 class="group"><img class="ico ico-sm" src={iconFor(cls)} alt="" width="20" height="20" /> {classLabel(cls)}</h2>
