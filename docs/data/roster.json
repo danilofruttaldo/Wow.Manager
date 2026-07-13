@@ -1,0 +1,46 @@
+{
+  "_note": "Fonte dati del roster per il sito. Matrice razza×classe (ordine classi: War,Pal,Hun,Rog,Pri,DK,Sha,Mag,Loc,Mon,Dru,DH,Evo). Celle: \"\"=possibile senza PG, \"X\"=non creabile, \"Nome·R\"=PG (| separa più PG, R=realm N/P). Allineato con roster.md.",
+  "classOrder": ["warrior","paladin","hunter","rogue","priest","death-knight","shaman","mage","warlock","monk","druid","demon-hunter","evoker"],
+  "specs": {
+    "Stantu": "fury", "Axetomouth": "fury",
+    "Cowadin": "holy", "Blessismore": "protection", "Divinetroll": "retribution",
+    "Arconauta": "beast mastery",
+    "Cereanor": "assassination", "Undeadpool": "outlaw",
+    "Moneystrike": "frost", "Trollminator": "blood", "Rotandroll": "unholy", "Furricane": "frost",
+    "Totemtanz": "elemental", "Blondelust": "enhancement",
+    "Snowwipe": "frost", "Repository": "fire", "Spelling": "arcane",
+    "Dotandroll": "affliction", "Menagerie": "demonology",
+    "Mustaina": "feral", "Ecoterrorist": "guardian",
+    "Dragoncelloh": "devastation"
+  },
+  "horde": [
+    ["Orc",                 ["", "X", "Orconauta·P", "", "", "", "Shockandroll·N", "", "Dotandroll·P", "", "X", "X", "X"]],
+    ["Undead",              ["", "X", "", "Undeadpool·P", "Pretaporter·P", "", "X", "", "", "", "X", "X", "X"]],
+    ["Tauren",              ["", "Cowadin·N", "", "", "", "", "Totemtanz·N", "", "", "", "Mustaina·P", "X", "X"]],
+    ["Troll",               ["", "X", "Arconauta·N", "", "", "", "", "Snowwipe·P", "", "", "", "X", "X"]],
+    ["Goblin",              ["", "X", "", "", "", "Moneystrike·N", "", "", "Tearsforfear·N", "", "X", "X", "X"]],
+    ["Blood Elf",           ["", "Blessismore·P", "", "Cereanor·N", "", "", "X", "Repository·N", "", "", "X", "Illidanielle·N|Demoversion·P", "X"]],
+    ["Nightborne",          ["", "X", "", "", "Nightform·P", "", "X", "Spelling·P", "Menagerie·N", "", "X", "X", "X"]],
+    ["Highmountain Tauren", ["Stantu·P", "X", "", "", "", "", "", "", "", "", "Ecoterrorist·N", "X", "X"]],
+    ["Mag'har Orc",         ["Axetomouth·N", "X", "", "", "", "", "Blondelust·P", "", "", "", "X", "X", "X"]],
+    ["Zandalari Troll",     ["", "Divinetroll·P", "", "", "", "Trollminator·P", "", "", "", "", "Shiftzord·N", "X", "X"]],
+    ["Vulpera",             ["", "X", "", "", "", "Rotandroll·N|Furricane·P", "Foxlust·N", "", "", "", "X", "X", "X"]],
+    ["Pandaren",            ["", "X", "", "", "", "", "Pandacoil·P", "", "", "Windwasher·N", "X", "X", "X"]],
+    ["Dracthyr",            ["", "X", "", "", "", "X", "X", "", "", "X", "X", "X", "Dragoncelloh·P"]],
+    ["Earthen",             ["", "X", "Rockbiter·P", "", "", "X", "", "", "", "", "X", "X", "X"]],
+    ["Haranir",             ["", "X", "", "", "", "X", "", "", "", "", "Catatonic·N", "X", "X"]]
+  ],
+  "alliance": [
+    ["Human",               ["", "", "", "", "", "", "X", "", "", "", "X", "X", "X"]],
+    ["Dwarf",               ["", "", "", "", "", "", "", "", "", "", "X", "X", "X"]],
+    ["Night Elf",           ["", "X", "", "", "", "", "X", "", "", "", "", "", "X"]],
+    ["Gnome",               ["", "X", "", "", "", "", "X", "", "", "", "X", "X", "X"]],
+    ["Draenei",             ["", "", "", "", "", "", "", "", "", "", "X", "X", "X"]],
+    ["Worgen",              ["", "X", "", "", "", "", "X", "", "", "", "", "X", "X"]],
+    ["Void Elf",            ["", "X", "", "", "", "", "X", "", "", "", "X", "X", "X"]],
+    ["Lightforged Draenei", ["", "", "", "", "", "", "X", "", "", "", "X", "X", "X"]],
+    ["Dark Iron Dwarf",     ["", "", "", "", "", "", "", "", "", "", "X", "X", "X"]],
+    ["Kul Tiran",           ["", "X", "", "", "", "", "", "", "", "", "", "X", "X"]],
+    ["Mechagnome",          ["", "X", "", "", "", "", "X", "", "", "", "X", "X", "X"]]
+  ]
+}

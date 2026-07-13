@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wow.Manager — Screenshot UI</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>%E2%9A%94%EF%B8%8F</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+  .rail{display:flex;flex-wrap:wrap;gap:8px;}
+  .pill{--pc:var(--muted);display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);padding:6px 13px 6px 10px;border-radius:999px;cursor:pointer;font-size:13.5px;color:var(--ink);font-weight:500;}
+  .pill .dot{width:9px;height:9px;border-radius:50%;background:var(--pc);flex:none;}
+  .pill:hover{border-color:var(--pc);} .pill[aria-pressed="true"]{border-color:var(--pc);background:color-mix(in srgb,var(--pc) 15%,var(--surface));}
+  .pill.all{--pc:var(--accent);}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;}
+  .shot{--pc:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s,box-shadow .12s;}
+  .shot:hover{transform:translateY(-2px);box-shadow:0 2px 0 rgba(0,0,0,.3),0 16px 34px -16px rgba(0,0,0,.9);}
+  .shot .imgwrap{aspect-ratio:16/9;background:#0a0a0a;overflow:hidden;}
+  .shot img{width:100%;height:100%;object-fit:cover;display:block;}
+  .shot .cap{display:flex;align-items:center;gap:10px;padding:11px 13px;border-top:3px solid var(--pc);}
+  .cap .char{font-family:var(--serif);font-size:17px;font-weight:600;line-height:1.15;}
+  .cap .who{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.02em;}
+  .cap .spec{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:color-mix(in srgb,var(--pc) 14%,transparent);border:1px solid color-mix(in srgb,var(--pc) 40%,var(--line));padding:3px 8px;border-radius:3px;white-space:nowrap;}
+  .lb{position:fixed;inset:0;background:rgba(8,6,3,.93);display:none;align-items:center;justify-content:center;z-index:50;padding:8px;}
+  .lb.open{display:flex;}
+  .lb figure{position:relative;margin:0;max-width:99vw;max-height:99vh;display:flex;}
+  .lb img{max-width:100%;max-height:99vh;object-fit:contain;border-radius:5px;box-shadow:0 20px 60px -20px #000;}
+  .lb figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;color:#ece2cd;padding:34px 18px 14px;border-radius:0 0 5px 5px;background:linear-gradient(transparent,rgba(8,6,3,.85));}
+  .lb figcaption .char{font-family:var(--serif);font-size:20px;font-weight:600;}
+  .lb figcaption .who{font-family:var(--mono);font-size:12px;color:#a3967b;}
+  .lb figcaption .spec{margin-left:auto;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--pc);color:#fff;padding:3px 9px;border-radius:3px;}
+  .lb .nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .lb .nav-btn:hover{background:rgba(255,255,255,.16);} .lb .prev{left:20px;} .lb .next{right:20px;}
+  .lb .close{position:absolute;top:18px;right:22px;background:none;border:0;color:#fff;font-size:26px;cursor:pointer;opacity:.8;} .lb .close:hover{opacity:1;}
+  .empty{color:var(--muted);font-style:italic;padding:30px 0;grid-column:1/-1;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><span class="brand">Wow.Manager</span>
+    <a href="index.html">Home</a><a href="macro.html">Macro</a>
+    <a href="roster.html">Roster</a><a href="addons.html">Addon</a><a href="screenshots.html" class="here">Screenshot</a>
+  </nav>
+  <header class="mast"><div class="mast-row">
+    <div>
+      <p class="eyebrow">Screenshot UI</p>
+      <h1>Screenshot <span class="thin">— setup in gioco</span></h1>
+      <p class="sub">La UI reale di ogni personaggio: unit frame, barre, WeakAuras, Plater. Un colpo d'occhio per classe/spec. Clic su un'immagine per ingrandirla.</p>
+    </div>
+    <div class="meta"><b id="v-count">—</b> screenshot</div>
+  </div></header>
+  <div class="toolbar"><div class="rail" id="rail"></div></div>
+  <div class="gallery" id="gallery"><p class="empty">Carico gli screenshot…</p></div>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Screenshot ingrandito">
+  <button class="close" id="lb-close" aria-label="Chiudi">×</button>
+  <button class="nav-btn prev" id="lb-prev" aria-label="Precedente">‹</button>
+  <figure id="lb-fig"><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  <button class="nav-btn next" id="lb-next" aria-label="Successivo">›</button>
+</div>
+
+<script>
+const CLASSMAP={
+  warrior:{name:"Warrior",c:"var(--c-warrior)"},paladin:{name:"Paladin",c:"var(--c-paladin)"},
+  hunter:{name:"Hunter",c:"var(--c-hunter)"},rogue:{name:"Rogue",c:"var(--c-rogue)"},
+  priest:{name:"Priest",c:"var(--c-priest)"},"death-knight":{name:"Death Knight",c:"var(--c-death-knight)"},
+  shaman:{name:"Shaman",c:"var(--c-shaman)"},mage:{name:"Mage",c:"var(--c-mage)"},
+  warlock:{name:"Warlock",c:"var(--c-warlock)"},monk:{name:"Monk",c:"var(--c-monk)"},
+  druid:{name:"Druid",c:"var(--c-druid)"},"demon-hunter":{name:"Demon Hunter",c:"var(--c-demon-hunter)"},
+  evoker:{name:"Evoker",c:"var(--c-evoker)"}
+};
+const CLASS_ALIAS={deathknight:"death-knight",demonhunter:"demon-hunter"};
+const CLASS_ORDER=Object.keys(CLASSMAP);
+const $=s=>document.querySelector(s);
+let META=[], view=[], activeClass=null, lbIndex=0;
+
+function parseFile(file){
+  const stem=file.replace(/\.[^.]+$/,"");
+  const p=stem.split("-");
+  if(p.length<3) return {file,char:stem,cls:"warrior",spec:"",};
+  const clsTok=p[0].toLowerCase();
+  const cls=CLASS_ALIAS[clsTok]||clsTok;
+  const spec=p[1];
+  const char=p.slice(2).join("-");
+  return {file,cls,spec,char:char.charAt(0).toUpperCase()+char.slice(1)};
+}
+function buildRail(){
+  const rail=$("#rail"); rail.innerHTML="";
+  const all=document.createElement("button");
+  all.className="pill all"; all.setAttribute("aria-pressed",activeClass===null);
+  all.innerHTML=`<span class="dot"></span>Tutte <span style="font-family:var(--mono);font-size:11px;color:var(--faint)">${META.length}</span>`;
+  all.onclick=()=>{activeClass=null;render();};
+  rail.appendChild(all);
+  const present=[...new Set(META.map(m=>m.cls))].sort((a,b)=>CLASS_ORDER.indexOf(a)-CLASS_ORDER.indexOf(b));
+  present.forEach(cls=>{
+    const b=document.createElement("button");
+    b.className="pill"; b.style.setProperty("--pc",(CLASSMAP[cls]||{}).c||"var(--muted)");
+    b.setAttribute("aria-pressed",activeClass===cls);
+    b.innerHTML=`<span class="dot"></span>${(CLASSMAP[cls]||{}).name||cls}`;
+    b.onclick=()=>{activeClass=activeClass===cls?null:cls;render();};
+    rail.appendChild(b);
+  });
+}
+function render(){
+  buildRail();
+  view=META.filter(m=>!activeClass||m.cls===activeClass);
+  const g=$("#gallery"); g.innerHTML="";
+  if(!view.length){ g.innerHTML=`<p class="empty">Nessuno screenshot.</p>`; return; }
+  view.forEach((m,i)=>{
+    const cm=CLASSMAP[m.cls]||{}; const el=document.createElement("article");
+    el.className="shot"; el.style.setProperty("--pc",cm.c||"var(--muted)");
+    el.innerHTML=`
+      <div class="imgwrap"><img loading="lazy" src="screenshots/${m.file}" alt="UI di ${m.char}, ${cm.name||m.cls} ${m.spec}"></div>
+      <div class="cap"><div><div class="char">${m.char}</div><div class="who">${m.who}</div></div>
+      <span class="spec">${cm.name||m.cls} · ${m.spec}</span></div>`;
+    el.onclick=()=>openLb(i);
+    g.appendChild(el);
+  });
+}
+function openLb(i){
+  lbIndex=i; const m=view[i], cm=CLASSMAP[m.cls]||{};
+  $("#lb-img").src="screenshots/"+m.file;
+  $("#lb-fig").style.setProperty("--pc",cm.c||"var(--muted)");
+  $("#lb-cap").innerHTML=`<span class="char">${m.char}</span><span class="who">${m.who}</span><span class="spec">${cm.name||m.cls} · ${m.spec}</span>`;
+  $("#lb").classList.add("open");
+}
+function step(d){ lbIndex=(lbIndex+d+view.length)%view.length; openLb(lbIndex); }
+$("#lb-close").onclick=()=>$("#lb").classList.remove("open");
+$("#lb-prev").onclick=e=>{e.stopPropagation();step(-1);};
+$("#lb-next").onclick=e=>{e.stopPropagation();step(1);};
+$("#lb").onclick=e=>{if(e.target.id==="lb")$("#lb").classList.remove("open");};
+document.addEventListener("keydown",e=>{ if(!$("#lb").classList.contains("open"))return;
+  if(e.key==="Escape")$("#lb").classList.remove("open"); if(e.key==="ArrowLeft")step(-1); if(e.key==="ArrowRight")step(1); });
+
+(async()=>{
+  let files, roster;
+  try{ [files, roster]=await Promise.all([
+      (await fetch("data/screenshots.json")).json(),
+      fetch("data/roster.json").then(r=>r.json()).catch(()=>null)
+  ]); }catch(e){ $("#gallery").innerHTML=`<p class="empty">Impossibile caricare data/screenshots.json.</p>`; return; }
+
+  // lookup razza/realm dal roster (per nome PG, case-insensitive)
+  const pgInfo={};
+  if(roster&&roster.horde){ roster.horde.forEach(([race,cells])=>cells.forEach(c=>{
+    if(!c||c==="X")return; c.split("|").forEach(n=>{
+      const base=n.replace(/·[NP]$/,""); const realm=n.endsWith("·N")?"N":n.endsWith("·P")?"P":"";
+      pgInfo[base.toLowerCase()]={race,realm};
+    });
+  })); }
+
+  META=files.map(parseFile).map(m=>{
+    const info=pgInfo[m.char.toLowerCase()]||{};
+    m.who=info.race?`${info.race}${info.realm?" · "+info.realm:""}`:"—";
+    return m;
+  }).sort((a,b)=>CLASS_ORDER.indexOf(a.cls)-CLASS_ORDER.indexOf(b.cls));
+  $("#v-count").textContent=META.length;
+  render();
+})();
+</script>
+</body>
+</html>

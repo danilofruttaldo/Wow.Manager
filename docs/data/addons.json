@@ -1,0 +1,214 @@
+{
+  "_meta": {
+    "schema_version": 1,
+    "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
+    "wow_build": "12.0.7.68235",
+    "last_sync": "2026-07-13"
+  },
+  "addons": {
+    "BigWigs": {
+      "name": "BigWigs",
+      "version": "v418.4",
+      "interface": "120100, 120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/big-wigs",
+      "installed": "2026-07-12",
+      "folders": [
+        "BigWigs",
+        "BigWigs_Core",
+        "BigWigs_Options",
+        "BigWigs_Plugins",
+        "BigWigs_MidnightWorld",
+        "BigWigs_TheDreamrift",
+        "BigWigs_TheVoidspire",
+        "BigWigs_Sporefall",
+        "BigWigs_MarchOnQuelDanas",
+        "BigWigs_TheVenomousAbyss"
+      ],
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-12 v418.3->v418.4 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1562): RI-APPLICATA il 2026-07-12 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
+    },
+    "LittleWigs": {
+      "name": "LittleWigs",
+      "version": "v12.0.61",
+      "interface": "120100, 120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/little-wigs",
+      "installed": "2026-07-10",
+      "folders": [
+        "LittleWigs",
+        "LittleWigs_BattleForAzeroth",
+        "LittleWigs_BurningCrusade",
+        "LittleWigs_Cataclysm",
+        "LittleWigs_Classic",
+        "LittleWigs_Dragonflight",
+        "LittleWigs_Legion",
+        "LittleWigs_MistsOfPandaria",
+        "LittleWigs_Shadowlands",
+        "LittleWigs_TheWarWithin",
+        "LittleWigs_WarlordsOfDraenor",
+        "LittleWigs_WrathOfTheLichKing"
+      ],
+      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-10 v12.0.59->v12.0.61 via /aggiorna-addon (workflow) forgecdn files/8406/510. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione)."
+    },
+    "MythicDungeonTools": {
+      "name": "Mythic Dungeon Tools",
+      "version": "6.1.20",
+      "interface": "120007, 120001, 50504",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
+      "installed": "2026-07-05",
+      "folders": ["MythicDungeonTools"],
+      "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-07-05 6.1.19->6.1.20 via /aggiorna-addon (workflow) GitHub release Nnoggie/MythicDungeonTools (cfwidget rotto per MDT). TOC include 120007 match build 12.0.7."
+    },
+    "Leatrix_Plus": {
+      "name": "Leatrix Plus",
+      "version": "12.0.26",
+      "interface": "120007, 120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
+      "installed": "2026-07-10",
+      "folders": ["Leatrix_Plus"],
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-10 12.0.25->12.0.26 via /aggiorna-addon (workflow) forgecdn files/8398/822 (Leatrix_Plus-12.0.26.zip). TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
+    },
+    "HandyNotes": {
+      "name": "HandyNotes",
+      "version": "v1.6.29",
+      "interface": "120007,11508,20505,50504",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes",
+      "installed": "2026-05-24",
+      "folders": ["HandyNotes"],
+      "notes": "Core framework per plugin di mappa. Aggiornato 2026-06-22 1.6.28->v1.6.29 via /aggiorna-addon (workflow) forgecdn files/8297/983 (HandyNotes-v1.6.29.zip). TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date)."
+    },
+    "HandyNotes_Midnight": {
+      "name": "HandyNotes: Midnight",
+      "version": "v146",
+      "interface": "120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
+      "installed": "2026-07-13",
+      "folders": ["HandyNotes_Midnight"],
+      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita."
+    },
+    "HandyNotes_BattleForAzeroth": {
+      "name": "HandyNotes: Battle for Azeroth",
+      "version": "v146",
+      "interface": "120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-battle-for-azeroth",
+      "installed": "2026-07-13",
+      "folders": ["HandyNotes_BattleForAzeroth"],
+      "notes": "Plugin Zarillion per BfA: rare, tesori, battle pet, PoI. Stessa famiglia di [[HandyNotes_Midnight]] (monorepo zarillion/handynotes-plugins, versionati insieme -> stesso tag). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/36. RequiredDeps: HandyNotes (presente). Dalla v146 il .toc ha '## Interface: 120007'. NB da NON confondere con 'HandyNotes: BfA Treasures and Rares' di kemayo (slug ...-treasures), che copre solo tesori/rare."
+    },
+    "TeleportMenu": {
+      "name": "Teleport Menu",
+      "version": "v12.6",
+      "interface": "120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/teleport-me-nu",
+      "installed": "2026-06-27",
+      "folders": ["TeleportMenu"],
+      "notes": "Bottoni teleport/Hearthstone nel game menu (ESC). Versione in manifest tenuta con prefisso 'v12.6' per matchare cfwidget (era '12.6' -> l'audit la flaggava come falso positivo ogni volta, reinstall stessa versione). TOC 120005,120007 match build 12.0.7. PATCH LOCALE: spostato Lightveil Recall Beacon (toy 276371) da Data/Hearthstones.lua a tpm.ItemTeleports in Data/Items.lua -> compare come bottone teleport dedicato anziche nel pool hearthstone. NB ItemTeleports e' opt-in (richiede TeleportMenuDB[id]==true, abilitare in opzioni). RI-APPLICATA il 2026-06-27 (persa col reinstall del workflow). DA RI-APPLICARE dopo ogni update addon (va persa)."
+    },
+    "TomTom": {
+      "name": "TomTom",
+      "version": "v4.3.5-release",
+      "interface": "120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/tomtom",
+      "installed": "2026-06-19",
+      "folders": ["TomTom"],
+      "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-06-19 v4.3.4-release->v4.3.5-release via /aggiorna-addon (workflow) forgecdn files/8278/335. TOC ora 120007 puro match build 12.0.7 (prima 120005), niente piu Load out of date."
+    },
+    "Baganator": {
+      "name": "Baganator",
+      "version": "812",
+      "interface": "120007, 50504, 38001, 20506, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/baganator",
+      "installed": "2026-07-10",
+      "folders": ["Baganator"],
+      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-10 811->812 via /aggiorna-addon (workflow) forgecdn files/8396/974 (Baganator-812.zip); TOC 120007 match build 12.0.7."
+    },
+    "Syndicator": {
+      "name": "Syndicator",
+      "version": "273",
+      "interface": "120007, 50504, 38001, 20506, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/syndicator",
+      "installed": "2026-07-10",
+      "folders": ["Syndicator"],
+      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-07-10 272->273 via /aggiorna-addon (workflow) forgecdn files/8396/976 (Syndicator-273.zip); TOC include 120007 (build 12.0.7)."
+    },
+    "WIM": {
+      "name": "WIM (WoW Instant Messenger) v3",
+      "version": "3.16.14",
+      "interface": "11508, 20505, 30405, 40402, 50503, 120000, 120001, 120005",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/wim-3",
+      "installed": "2026-05-27",
+      "folders": ["WIM"],
+      "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. TOC compatibile 120005. Download via forgecdn files/8151/363"
+    },
+    "RCLootCouncil": {
+      "name": "RCLootCouncil",
+      "version": "3.22.0",
+      "interface": "120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/rclootcouncil",
+      "installed": "2026-06-16",
+      "folders": ["RCLootCouncil"],
+      "notes": "Interfaccia per gestire un Loot Council in raid (distribuzione loot con voti/note). TOC 120005,120007 match build, niente 'Load out of date'. Download forgecdn files/8256/944"
+    },
+    "MethodRaidTools": {
+      "name": "Method Raid Tools",
+      "version": "5315",
+      "interface": "120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/method-raid-tools",
+      "installed": "2026-06-18",
+      "folders": ["MRT"],
+      "notes": "Suite raid: note (MRT note editor), timer/cooldowns, weakaura-like per boss. Cartella singola MRT. TOC Mainline 120007 (lo zip ha anche MRT-Classic.toc). Aggiornato 2026-06-18 5310->5315 via forgecdn files/8268/621 (filename MRT5315.zip)."
+    },
+    "CursorRing": {
+      "name": "Cursor Ring",
+      "version": "1.5.3",
+      "interface": "120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/cursorring",
+      "installed": "2026-06-17",
+      "folders": ["CursorRing"],
+      "notes": "Anello class-colored attorno al cursore con animazioni cast/GCD/combat: migliora visibilità del cursore + funge da GCD tracker. TOC 120005,120007 match build. Scelto come miglior/più aggiornato tra i cursor addon (vs CursorTrail/Cursor Ring +). Aggiornato 2026-06-17 1.5.2->1.5.3 via forgecdn files/8261/188 (filename CursorRing-v1.5.3.zip, NB prefisso 'v'; ignorata la 1.5.3-beta più vecchia)."
+    },
+    "Molinari": {
+      "name": "Molinari",
+      "version": "120000.145-Release",
+      "interface": "120007, 120100, 50504, 38001, 20505, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/molinari",
+      "installed": "2026-06-30",
+      "folders": ["Molinari"],
+      "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. Aggiornato 2026-06-30 120000.144->120000.145 via /aggiorna-addon (workflow) forgecdn files/8346/985. TOC ora include 120007/120100 match build 12.0.7."
+    },
+    "SimpleItemLevel": {
+      "name": "Simple Item Level",
+      "version": "v66",
+      "interface": "120007, 50504, 30405, 20505, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/simple-item-level",
+      "installed": "2026-06-19",
+      "folders": ["SimpleItemLevel"],
+      "notes": "Mostra item level su character/inspect/bag, su unit frame e nameplate. Reinstallato 2026-06-18 (rimosso 2026-06-17). Aggiornato 2026-06-19 v65->v66 via /aggiorna-addon (workflow) forgecdn files/8282/890. TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date)."
+    },
+    "AllTheThings": {
+      "name": "All The Things",
+      "version": "5.2.10",
+      "interface": "11508, 11509, 20505, 20506, 38001, 40402, 50504, 120007, 120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/all-the-things",
+      "installed": "2026-07-13",
+      "folders": ["AllTheThings"],
+      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Aggiornato 2026-07-13 5.2.9->5.2.10 via /aggiorna-addon (workflow) forgecdn files/8418/228 (release stabile) (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
+    }
+  }
+}

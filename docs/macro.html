@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wow.Manager — Macro</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>%E2%9A%94%EF%B8%8F</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .toolbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+  .search{flex:1 1 260px;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:9px 13px;box-shadow:var(--shadow);}
+  .search svg{flex:none;opacity:.5;} .search input{border:0;background:transparent;color:var(--ink);font-family:var(--sans);font-size:15px;width:100%;outline:none;}
+  .search input::placeholder{color:var(--faint);}
+  .rail{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .pill{--pc:var(--muted);display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);padding:6px 13px 6px 10px;border-radius:999px;cursor:pointer;font-size:13.5px;color:var(--ink);font-weight:500;}
+  .pill .dot{width:9px;height:9px;border-radius:50%;background:var(--pc);flex:none;}
+  .pill .n{font-family:var(--mono);font-size:11px;color:var(--faint);}
+  .pill:hover{border-color:var(--pc);}
+  .pill[aria-pressed="true"]{border-color:var(--pc);background:color-mix(in srgb,var(--pc) 15%,var(--surface));}
+  .pill.all{--pc:var(--accent);}
+  .specbar{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 20px;min-height:30px;}
+  .spec{border:1px solid var(--line);background:transparent;color:var(--muted);font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;padding:4px 11px;border-radius:3px;cursor:pointer;text-transform:lowercase;}
+  .spec:hover{color:var(--ink);border-color:var(--faint);}
+  .spec[aria-pressed="true"]{color:var(--ground);background:var(--accent);border-color:var(--accent);}
+  .count{font-family:var(--mono);font-size:12px;color:var(--faint);margin:0 0 16px;}
+  .count b{color:var(--ink);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;}
+  .card{--pc:var(--muted);position:relative;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--pc);border-radius:4px;padding:15px 17px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px;}
+  .card-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+  .m-name{font-family:var(--serif);font-size:19px;font-weight:600;margin:0;line-height:1.2;}
+  .m-class{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--pc);font-weight:700;white-space:nowrap;padding-top:3px;}
+  .m-slug{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin:-3px 0 0;word-break:break-all;}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;padding:2px 8px;border-radius:3px;border:1px solid var(--line);color:var(--muted);}
+  .chip.spec{color:var(--ink);border-color:var(--pc);background:color-mix(in srgb,var(--pc) 12%,transparent);}
+  .chip.shared{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));}
+  .m-notes{font-size:13.5px;color:var(--muted);margin:0;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .card.open .m-notes{-webkit-line-clamp:unset;}
+  .m-notes code,.m-notes .kw{font-family:var(--mono);font-size:.88em;color:var(--ink);background:var(--accent-soft);padding:.5px 4px;border-radius:2px;}
+  .more{align-self:flex-start;background:none;border:0;padding:0;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);}
+  .more:hover{text-decoration:underline;}
+  .empty{color:var(--muted);font-style:italic;padding:40px 0;grid-column:1/-1;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><span class="brand">Wow.Manager</span>
+    <a href="index.html">Home</a><a href="macro.html" class="here">Macro</a>
+    <a href="roster.html">Roster</a><a href="addons.html">Addon</a><a href="screenshots.html">Screenshot</a>
+  </nav>
+  <header class="mast"><div class="mast-row">
+    <div>
+      <p class="eyebrow">Repertorio macro</p>
+      <h1>Macro <span class="thin">— per classe e spec</span></h1>
+      <p class="sub">Ogni macro tracciata per classe e spec, mai per personaggio. Le <em>shared</em> valgono su tutte le spec della classe; i condizionali <span style="font-family:var(--mono);font-size:.92em">known:</span> si auto-adattano al loadout.</p>
+    </div>
+    <div class="meta"><span id="total">—</span> macro · <span id="classes">—</span> classi</div>
+  </div></header>
+
+  <div class="toolbar">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Cerca nome, slug o nota…  (es. cursor, dispel, burst)" autocomplete="off">
+    </label>
+  </div>
+  <div class="rail" id="rail"></div>
+  <div class="specbar" id="specbar"></div>
+  <p class="count" id="count"></p>
+  <div class="grid" id="grid"><p class="loading">Carico i dati…</p></div>
+</div>
+
+<script>
+const CLASSMAP={
+  "warrior":{name:"Warrior",c:"var(--c-warrior)"},"paladin":{name:"Paladin",c:"var(--c-paladin)"},
+  "hunter":{name:"Hunter",c:"var(--c-hunter)"},"rogue":{name:"Rogue",c:"var(--c-rogue)"},
+  "priest":{name:"Priest",c:"var(--c-priest)"},"death-knight":{name:"Death Knight",c:"var(--c-death-knight)"},
+  "shaman":{name:"Shaman",c:"var(--c-shaman)"},"mage":{name:"Mage",c:"var(--c-mage)"},
+  "warlock":{name:"Warlock",c:"var(--c-warlock)"},"monk":{name:"Monk",c:"var(--c-monk)"},
+  "druid":{name:"Druid",c:"var(--c-druid)"},"demon-hunter":{name:"Demon Hunter",c:"var(--c-demon-hunter)"},
+  "evoker":{name:"Evoker",c:"var(--c-evoker)"},"shared":{name:"Shared",c:"var(--c-shared)"}
+};
+const CLASS_ORDER=Object.keys(CLASSMAP);
+const $=s=>document.querySelector(s);
+let MACROS=[], activeClass=null, activeSpec=null, query="";
+
+function cvar(cls){ return (CLASSMAP[cls]||CLASSMAP.shared).c; }
+function cname(cls){ return (CLASSMAP[cls]||CLASSMAP.shared).name; }
+
+function fmtNotes(t){
+  return (t||"").replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\b(known:[A-Za-z' ]+?|noknown:[A-Za-z' ]+?|@\w+|\[[^\]]+\])/g,'<span class="kw">$1</span>');
+}
+function matches(m){
+  if(activeClass && m.cls!==activeClass) return false;
+  if(activeSpec){ if(activeSpec==="__shared__"){ if(m.spec) return false; } else if(m.spec!==activeSpec) return false; }
+  if(query){ if(!(m.name+" "+m.slug+" "+(m.notes||"")).toLowerCase().includes(query)) return false; }
+  return true;
+}
+function buildRail(){
+  const counts={}; MACROS.forEach(m=>counts[m.cls]=(counts[m.cls]||0)+1);
+  const rail=$("#rail"); rail.innerHTML="";
+  const all=document.createElement("button");
+  all.className="pill all"; all.setAttribute("aria-pressed",activeClass===null);
+  all.innerHTML=`<span class="dot"></span>Tutte <span class="n">${MACROS.length}</span>`;
+  all.onclick=()=>{activeClass=null;activeSpec=null;render();};
+  rail.appendChild(all);
+  CLASS_ORDER.forEach(cls=>{
+    if(!counts[cls]) return;
+    const b=document.createElement("button");
+    b.className="pill"; b.style.setProperty("--pc",cvar(cls));
+    b.setAttribute("aria-pressed",activeClass===cls);
+    b.innerHTML=`<span class="dot"></span>${cname(cls)} <span class="n">${counts[cls]}</span>`;
+    b.onclick=()=>{activeClass=activeClass===cls?null:cls;activeSpec=null;render();};
+    rail.appendChild(b);
+  });
+}
+function buildSpecbar(){
+  const bar=$("#specbar"); bar.innerHTML="";
+  if(!activeClass) return;
+  const specs=[...new Set(MACROS.filter(m=>m.cls===activeClass&&m.spec).map(m=>m.spec))].sort();
+  const shared=MACROS.some(m=>m.cls===activeClass&&!m.spec);
+  const mk=(val,label)=>{const b=document.createElement("button");b.className="spec";b.setAttribute("aria-pressed",activeSpec===val);b.textContent=label;b.onclick=()=>{activeSpec=activeSpec===val?null:val;render();};return b;};
+  if(shared) bar.appendChild(mk("__shared__","shared"));
+  specs.forEach(s=>bar.appendChild(mk(s,s)));
+}
+function card(m){
+  const el=document.createElement("article"); el.className="card"; el.style.setProperty("--pc",cvar(m.cls));
+  const specChip=m.spec?`<span class="chip spec">${m.spec}</span>`:`<span class="chip shared">shared · tutte le spec</span>`;
+  el.innerHTML=`
+    <div class="card-top"><h3 class="m-name">${m.name}</h3><span class="m-class">${cname(m.cls)}</span></div>
+    <p class="m-slug">${m.slug}</p>
+    <div class="chips"><span class="chip">${m.scope||"account"}</span>${specChip}</div>
+    <p class="m-notes">${fmtNotes(m.notes)}</p>
+    <button class="more">mostra note ▾</button>`;
+  const more=el.querySelector(".more");
+  more.onclick=()=>{const o=el.classList.toggle("open");more.textContent=o?"meno ▴":"mostra note ▾";};
+  return el;
+}
+function render(){
+  buildRail(); buildSpecbar();
+  const list=MACROS.filter(matches);
+  const parts=[]; if(activeClass)parts.push(cname(activeClass)); if(activeSpec)parts.push(activeSpec==="__shared__"?"shared":activeSpec); if(query)parts.push(`“${query}”`);
+  $("#count").innerHTML=`<b>${list.length}</b> macro`+(parts.length?` · ${parts.join(" · ")}`:" · tutte le classi");
+  const g=$("#grid"); g.innerHTML="";
+  if(!list.length){ g.innerHTML=`<p class="empty">Nessuna macro corrisponde ai filtri.</p>`; return; }
+  list.forEach(m=>g.appendChild(card(m)));
+}
+
+$("#q").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();render();});
+
+(async()=>{
+  let data;
+  try{ data=await (await fetch("data/macros.json")).json(); }
+  catch(e){ $("#grid").innerHTML=`<p class="empty">Impossibile caricare data/macros.json.</p>`; return; }
+  MACROS=Object.entries(data.macros||{}).map(([slug,m])=>({
+    slug, name:m.name||slug, cls:m.class||"shared", spec:m.spec||null, scope:m.scope, notes:m.notes
+  })).sort((a,b)=>a.name.localeCompare(b.name));
+  $("#total").textContent=MACROS.length;
+  $("#classes").textContent=new Set(MACROS.map(m=>m.cls)).size;
+  render();
+})();
+</script>
+</body>
+</html>

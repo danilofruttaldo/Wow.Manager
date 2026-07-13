@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wow.Manager</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>%E2%9A%94%EF%B8%8F</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .hero{padding:30px 0 34px;border-bottom:1px solid var(--line);margin-bottom:30px;}
+  .hero h1{font-size:clamp(38px,7vw,64px);}
+  .hero .sub{font-size:17px;max-width:66ch;margin-top:16px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+  .card{--pc:var(--accent);display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--pc);border-radius:6px;padding:20px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:transform .12s,border-color .12s;}
+  .card:hover{transform:translateY(-2px);border-color:var(--pc);}
+  .card .ct{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+  .card h2{font-family:var(--serif);font-size:22px;font-weight:600;margin:0;}
+  .card .n{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--pc);font-variant-numeric:tabular-nums;}
+  .card p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5;}
+  .card .go{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-top:4px;}
+  footer{margin-top:40px;color:var(--faint);font-size:13px;line-height:1.7;border-top:1px solid var(--line);padding-top:20px;}
+  footer code{font-family:var(--mono);color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><span class="brand">Wow.Manager</span>
+    <a href="index.html" class="here">Home</a>
+    <a href="macro.html">Macro</a>
+    <a href="roster.html">Roster</a>
+    <a href="addons.html">Addon</a>
+    <a href="screenshots.html">Screenshot</a>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">Setup WoW Retail · Orda · Midnight 12.0</p>
+    <h1>Wow.Manager</h1>
+    <p class="sub">Lo stato esterno alla cartella di gioco: macro, personaggi, addon e UI. Ogni pagina legge la propria <em>fonte di verità</em> del repo — la cartella di WoW è considerata output ricostruibile da qui.</p>
+  </header>
+
+  <div class="cards" id="cards"></div>
+
+  <footer>
+    Dati serviti da <code>docs/data/</code> (rigenerati da <code>sync-site.sh</code> a partire dai manifest del repo).
+    Screenshot a piena risoluzione in <code>docs/screenshots/</code>. Sorgente: <code>github.com/danilofruttaldo/Wow.Manager</code>.
+  </footer>
+</div>
+
+<script>
+const CARDS=[
+  {key:"macro", href:"macro.html", title:"Macro", pc:"var(--c-warrior)",
+   desc:"Repertorio macro per classe e spec, con note e condizionali auto-adattivi."},
+  {key:"roster", href:"roster.html", title:"Roster", pc:"var(--c-shaman)",
+   desc:"Matrice razza×classe dell'Orda: copertura combinazioni e spec dei personaggi."},
+  {key:"addons", href:"addons.html", title:"Addon", pc:"var(--c-hunter)",
+   desc:"Addon installati con versione, compatibilità TOC e note operative."},
+  {key:"screenshots", href:"screenshots.html", title:"Screenshot", pc:"var(--c-mage)",
+   desc:"La UI reale di ogni personaggio, per classe e spec."}
+];
+
+async function jget(u){ try{ return await (await fetch(u)).json(); }catch(e){ return null; } }
+
+(async()=>{
+  const [macros, roster, addons, shots] = await Promise.all([
+    jget("data/macros.json"), jget("data/roster.json"),
+    jget("data/addons.json"), jget("data/screenshots.json")
+  ]);
+  const counts={
+    macro: macros ? Object.keys(macros.macros||{}).length : null,
+    roster: roster ? roster.horde.reduce((n,[,cells])=>n+cells.reduce((m,c)=>m+(c&&c!=="X"?c.split("|").length:0),0),0) : null,
+    addons: addons ? Object.keys(addons.addons||{}).length : null,
+    screenshots: shots ? shots.length : null
+  };
+  const box=document.getElementById("cards");
+  box.innerHTML=CARDS.map(c=>`
+    <a class="card" href="${c.href}" style="--pc:${c.pc}">
+      <div class="ct"><h2>${c.title}</h2><span class="n">${counts[c.key]??"—"}</span></div>
+      <p>${c.desc}</p>
+      <span class="go">apri →</span>
+    </a>`).join("");
+})();
+</script>
+</body>
+</html>

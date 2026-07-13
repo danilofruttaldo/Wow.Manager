@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wow.Manager — Addon</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>%E2%9A%94%EF%B8%8F</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .wrap{max-width:1000px;}
+  .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+  .search{flex:1 1 240px;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:9px 13px;box-shadow:var(--shadow);}
+  .search svg{opacity:.5;flex:none;} .search input{border:0;background:transparent;color:var(--ink);font-family:var(--sans);font-size:15px;width:100%;outline:none;}
+  .search input::placeholder{color:var(--faint);}
+  .sortlbl{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;}
+  .seg button{border:0;background:var(--surface);color:var(--muted);font-family:var(--sans);font-size:13px;padding:8px 13px;cursor:pointer;}
+  .seg button+button{border-left:1px solid var(--line);}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:var(--ground);}
+  .count{font-family:var(--mono);font-size:12px;color:var(--faint);margin:12px 0 14px;} .count b{color:var(--ink);}
+  .list{display:flex;flex-direction:column;gap:9px;}
+  .row{background:var(--surface);border:1px solid var(--line);border-radius:5px;box-shadow:var(--shadow);overflow:hidden;}
+  .row.flag{border-left:3px solid var(--warn);}
+  .rhead{display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center;padding:13px 16px;cursor:pointer;}
+  .rtitle{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0;}
+  .aname{font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.15;}
+  .ver{font-family:var(--mono);font-size:12.5px;color:var(--accent);font-weight:600;}
+  .rmeta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end;}
+  .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;padding:2px 8px;border-radius:3px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;}
+  .chip.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,var(--line));background:var(--ok-soft);}
+  .chip.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 50%,var(--line));background:var(--warn-soft);font-weight:600;}
+  .chip.src{text-transform:lowercase;}
+  .caret{color:var(--faint);font-size:12px;transition:transform .15s;}
+  .row.open .caret{transform:rotate(90deg);}
+  .rbody{display:none;padding:0 16px 15px;border-top:1px solid var(--line);}
+  .row.open .rbody{display:block;}
+  .rbody .grid2{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:12.5px;margin:13px 0 0;}
+  .rbody .grid2 dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding-top:2px;}
+  .rbody .grid2 dd{margin:0;color:var(--ink);}
+  .rbody .grid2 dd a{color:var(--accent);}
+  .folders{display:flex;flex-wrap:wrap;gap:5px;}
+  .folders code{font-family:var(--mono);font-size:11px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted);padding:1px 6px;border-radius:3px;}
+  .notes{font-size:13px;color:var(--muted);line-height:1.55;margin:13px 0 0;}
+  .notes .kw{font-family:var(--mono);font-size:.9em;color:var(--warn);font-weight:600;}
+  .notes code{font-family:var(--mono);font-size:.88em;color:var(--ink);background:var(--accent-soft);padding:.5px 4px;border-radius:2px;}
+  .empty{color:var(--muted);font-style:italic;padding:30px 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><span class="brand">Wow.Manager</span>
+    <a href="index.html">Home</a><a href="macro.html">Macro</a>
+    <a href="roster.html">Roster</a><a href="addons.html" class="here">Addon</a><a href="screenshots.html">Screenshot</a>
+  </nav>
+  <header class="mast"><div class="mast-row">
+    <div>
+      <p class="eyebrow">Addon installati</p>
+      <h1>Addon <span class="thin">— setup</span></h1>
+      <p class="sub">Addon con versione, compatibilità TOC vs build di gioco e note operative. Fonte di verità del manifest, non della cartella <span style="font-family:var(--mono);font-size:.92em">Interface/AddOns</span>.</p>
+    </div>
+    <div class="meta">aggiornato <b id="sync">—</b></div>
+  </div></header>
+
+  <div class="stats" id="stats"></div>
+  <div class="toolbar">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Cerca addon o nota…  (es. raid, M+, HandyNotes)" autocomplete="off">
+    </label>
+    <span class="sortlbl">ordina</span>
+    <div class="seg" id="sort">
+      <button data-s="name" aria-pressed="true">Nome</button>
+      <button data-s="installed" aria-pressed="false">Installato</button>
+      <button data-s="flag" aria-pressed="false">Patch da riapplicare</button>
+    </div>
+  </div>
+  <p class="count" id="count"></p>
+  <div class="list" id="list"><p class="empty">Carico i dati…</p></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+let ADDONS=[], BUILD="120007", query="", sortBy="name";
+const buildMatch=a=>a.iface.split(/[,\s]+/).includes(BUILD);
+const isFlagged=a=>/RI-APPLICARE|PATCH LOCALE/i.test(a.notes||"");
+
+function renderStats(){
+  const flagged=ADDONS.filter(isFlagged).length, nomatch=ADDONS.filter(a=>!buildMatch(a)).length;
+  const folders=ADDONS.reduce((n,a)=>n+(a.folders?a.folders.length:0),0);
+  $("#stats").innerHTML=`
+    <div class="tile"><p class="k">Addon</p><div class="v">${ADDONS.length}</div></div>
+    <div class="tile"><p class="k">TOC match build</p><div class="v">${ADDONS.length-nomatch}<small> / ${ADDONS.length}</small></div></div>
+    <div class="tile"><p class="k">Cartelle totali</p><div class="v">${folders}</div></div>
+    <div class="tile flag"><p class="k">Patch da riapplicare</p><div class="v">${flagged}</div></div>`;
+}
+function fmtNotes(t){ return (t||"").replace(/`([^`]+)`/g,'<code>$1</code>').replace(/(DA RI-APPLICARE|PATCH LOCALE|RICHIEDE [A-Za-z]+)/g,'<span class="kw">$1</span>'); }
+function card(a){
+  const el=document.createElement("div"); el.className="row"+(isFlagged(a)?" flag":"");
+  const match=buildMatch(a), nf=a.folders?a.folders.length:0;
+  el.innerHTML=`
+    <div class="rhead">
+      <div class="rtitle"><span class="aname">${a.name}</span> <span class="ver">${a.version||""}</span></div>
+      <div class="rmeta">
+        <span class="chip src">${a.source||""}</span>
+        ${match?'<span class="chip ok">TOC match '+a._buildShort+'</span>':'<span class="chip warn">TOC &lt; build</span>'}
+        <span class="chip">${nf} ${nf===1?'cartella':'cartelle'}</span>
+        ${isFlagged(a)?'<span class="chip warn">patch locale ⟳</span>':''}
+        <span class="caret">▸</span>
+      </div>
+    </div>
+    <div class="rbody">
+      <dl class="grid2">
+        <dt>Interface</dt><dd style="font-family:var(--mono);font-size:12px">${a.iface}</dd>
+        <dt>Installato</dt><dd>${a.installed||"—"}</dd>
+        ${a.url?`<dt>Source</dt><dd><a href="${a.url}" target="_blank" rel="noopener">${a.url.replace('https://www.','')}</a></dd>`:''}
+        <dt>Cartelle</dt><dd class="folders">${(a.folders||[]).map(f=>`<code>${f}</code>`).join("")}</dd>
+      </dl>
+      <p class="notes">${fmtNotes(a.notes)}</p>
+    </div>`;
+  el.querySelector(".rhead").onclick=()=>el.classList.toggle("open");
+  return el;
+}
+function sorted(list){
+  const c=[...list];
+  if(sortBy==="name") c.sort((a,b)=>a.name.localeCompare(b.name));
+  else if(sortBy==="installed") c.sort((a,b)=>(b.installed||"").localeCompare(a.installed||""));
+  else if(sortBy==="flag") c.sort((a,b)=>(isFlagged(b)-isFlagged(a))||a.name.localeCompare(b.name));
+  return c;
+}
+function render(){
+  const list=$("#list"); list.innerHTML="";
+  let items=sorted(ADDONS.filter(a=>!query||(a.name+" "+(a.notes||"")).toLowerCase().includes(query)));
+  $("#count").innerHTML=`<b>${items.length}</b> addon`+(query?` · “${query}”`:"")+` · ordinati per ${ {name:"nome",installed:"data installazione",flag:"patch da riapplicare"}[sortBy] }`;
+  if(!items.length){ list.innerHTML=`<p class="empty">Nessun addon corrisponde.</p>`; return; }
+  items.forEach(a=>list.appendChild(card(a)));
+}
+$("#q").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();render();});
+$("#sort").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;sortBy=b.dataset.s;$("#sort").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));render();});
+
+(async()=>{
+  let data;
+  try{ data=await (await fetch("data/addons.json")).json(); }
+  catch(e){ $("#list").innerHTML=`<p class="empty">Impossibile caricare data/addons.json.</p>`; return; }
+  const build=(data._meta&&data._meta.wow_build)||"12.0.7";
+  const buildShort=build.split(".").slice(0,3).join(".");            // "12.0.7"
+  BUILD=buildShort.split(".").map(n=>n.padStart(2,"0")).join("");    // "12.0.7" -> "120007" (numero TOC Interface)
+  $("#sync").textContent=(data._meta&&data._meta.last_sync)||"—";
+  ADDONS=Object.entries(data.addons||{}).map(([id,a])=>({
+    id, name:a.name||id, version:a.version, iface:a.interface||"", source:a.source, url:a.url,
+    installed:a.installed, folders:a.folders||[], notes:a.notes||"", _buildShort:buildShort
+  }));
+  renderStats(); render();
+})();
+</script>
+</body>
+</html>
