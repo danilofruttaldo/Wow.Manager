@@ -36,7 +36,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Worgen | | X | | | | Furricane | X | | | | *Furocious | X | X |
 | Void Elf | | X | | | Discoteque·S | | X | | Dotnetcore·N | | X | Vanillidan·N | X |
 | Lightforged Draenei | Periodrage·S | *Verdictorian | | | | | X | | | | X | X | X |
-| Dark Iron Dwarf | | Plateatico·P | | | | | *Lavalamp | | | | X | X | X |
+| Dark Iron Dwarf | | Plateatico·P | | | | *Dwarfenstein·S | *Lavalamp | | | | X | X | X |
 | Kul Tiran | | X | | | | | Totemizer·S | | | | *Bearnacle | X | X |
 | Mechagnome | | X | Shottini·P | | | | X | | | *Mistfits | X | X | X |
 
