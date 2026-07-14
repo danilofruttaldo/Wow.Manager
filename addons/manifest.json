@@ -31,11 +31,11 @@
     "LittleWigs": {
       "name": "LittleWigs",
       "desc": "L’equivalente di BigWigs fuori dai raid: boss mod per dungeon normali ed eroici, Mitica+ e scenari. Copre tutte le espansioni con moduli separati e si appoggia allo stesso motore di BigWigs, quindi avvisi e timer funzionano allo stesso modo anche in chiave.",
-      "version": "v12.0.61",
+      "version": "v12.0.62",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-07-10",
+      "installed": "2026-07-14",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -50,7 +50,7 @@
         "LittleWigs_WarlordsOfDraenor",
         "LittleWigs_WrathOfTheLichKing"
       ],
-      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-10 v12.0.59->v12.0.61 via /aggiorna-addon (workflow) forgecdn files/8406/510. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione)."
+      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-14 v12.0.61->v12.0.62 via /aggiorna-addon (workflow) forgecdn files/8426/6. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione)."
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
@@ -121,13 +121,13 @@
     "TomTom": {
       "name": "TomTom",
       "desc": "Mette a schermo una freccia di navigazione che punta verso il waypoint attivo, con distanza e coordinate, più i pin corrispondenti sulla mappa. Si integra con HandyNotes: click destro su un nodo e TomTom ti guida passo passo fino a lì.",
-      "version": "v4.3.5-release",
+      "version": "v4.3.6-release",
       "interface": "120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/tomtom",
-      "installed": "2026-06-19",
+      "installed": "2026-07-14",
       "folders": ["TomTom"],
-      "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-06-19 v4.3.4-release->v4.3.5-release via /aggiorna-addon (workflow) forgecdn files/8278/335. TOC ora 120007 puro match build 12.0.7 (prima 120005), niente piu Load out of date."
+      "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-07-14 v4.3.5-release->v4.3.6-release via /aggiorna-addon (workflow) forgecdn files/8426/585. TOC 120007 puro match build 12.0.7."
     },
     "Baganator": {
       "name": "Baganator",
