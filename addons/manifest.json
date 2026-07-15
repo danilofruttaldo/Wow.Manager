@@ -3,17 +3,17 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-07-13"
+    "last_sync": "2026-07-15"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
       "desc": "Boss mod per raid: mostra timer, barre e avvisi sonori e visivi sulle abilità dei boss, così sai in anticipo cosa sta per arrivare e quando reagire. Include la suite di moduli della Season 1 di Midnight ed è configurabile avviso per avviso, dai suoni agli emphasize a schermo.",
-      "version": "v418.4",
+      "version": "v419",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-07-12",
+      "installed": "2026-07-15",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -26,7 +26,7 @@
         "BigWigs_MarchOnQuelDanas",
         "BigWigs_TheVenomousAbyss"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-12 v418.3->v418.4 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1562): RI-APPLICATA il 2026-07-12 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-15 v418.4->v419 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1562): RI-APPLICATA il 2026-07-15 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE."
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -66,13 +66,13 @@
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "desc": "Grande raccolta di comodità in un unico addon: accetta e consegna quest in automatico, ripara e svuota le cianfrusaglie all’apertura del vendor, salta le cinematiche, accelera il testo e aggiunge decine di altri ritocchi all’interfaccia. Ogni opzione è attivabile singolarmente, così prendi solo ciò che ti serve.",
-      "version": "12.0.26",
+      "version": "12.0.27",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-07-10",
+      "installed": "2026-07-15",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-10 12.0.25->12.0.26 via /aggiorna-addon (workflow) forgecdn files/8398/822 (Leatrix_Plus-12.0.26.zip). TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-15 12.0.26->12.0.27 via /aggiorna-addon (workflow) forgecdn files/8435/797 (Leatrix_Plus-12.0.27.zip). TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
     },
     "HandyNotes": {
       "name": "HandyNotes",
