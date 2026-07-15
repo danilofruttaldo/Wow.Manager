@@ -55,6 +55,7 @@ Due tabelle markdown: `## Orda (...)` e `## Alleanza (...)`. Colonne = classi (W
 - **Aggiungi un PG**: scrivi il nome nella cella `razza × classe` del blocco giusto (Orda o Alleanza). Più nomi nella stessa cella → separali con `<br>`.
 - **Combinazione non creabile**: `X` (resa come casella scura tratteggiata).
 - **PG pianificato (TODO), non ancora creato**: prefisso `*` sul nome (es. `*Backstabbath`). Sul sito è reso in stile «da creare» (nome smorzato in corsivo + sottolineatura punteggiata, tooltip esplicativo) e **non entra nel conteggio** PG. Quando lo crei davvero, togli il `*`.
+- **PG esistente ma non ancora al level cap** (in leveling): prefisso `_` sul nome (es. `_Orconauta·P`). Sul sito il nome è reso in **corsivo** (classe `pg--wip`, tooltip) e **conta** come PG normale. Quando arriva al cap (90), togli il `_`. Fonte livelli: `SavedVariables/AllTheThings.lua` (chiave `lvl` per PG loggati con ATT); i PG non tracciati da ATT o omonimi non risolvibili restano senza prefisso.
 - **Suffisso realm** opzionale `·N`/`·P` accanto al nome: viene rimosso in visualizzazione, tienilo pure per i tuoi appunti.
 - **Poi assegna la spec** del PG in `char-specs.ts` (sotto), altrimenti compare senza la lettera fra parentesi.
 - **Sezioni nascoste**: `## Note sulle X` e i titoli/legende non compaiono sul sito (restano nel file). Le **razze condivise** (Pandaren, Dracthyr, Earthen, Haranir) vanno **solo** nel blocco Orda: se sono anche in Alleanza vengono saltate.

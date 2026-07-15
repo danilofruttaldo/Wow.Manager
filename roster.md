@@ -2,41 +2,41 @@
 
 Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndicator.lua` incrociato con le cartelle `WTF/.../<realm>/`.
 
-**Legenda:** **X** = combinazione non creabile nel gioco (retail, Midnight 12.0) · `nome·realm` = PG esistente · `*nome` = **PG pianificato (TODO), non ancora creato** (mostrato in stile «da creare» sul sito e non conteggiato) · vuoto = possibile ma nessun PG. Realm: **N** = Nemesis, **P** = Pozzo dell'Eternità, **R** = Ravencrest, **S** = Silvermoon. Nomi multipli nella stessa cella separati da a-capo. Aggiorno quando segnali recuperi o nuovi PG.
+**Legenda:** **X** = combinazione non creabile nel gioco (retail, Midnight 12.0) · `nome·realm` = PG esistente (al level cap 90) · `_nome` = **PG esistente ma non ancora al level cap** (in leveling; reso in *corsivo* sul sito, conta comunque come PG) · `*nome` = **PG pianificato (TODO), non ancora creato** (mostrato in stile «da creare» sul sito e non conteggiato) · vuoto = possibile ma nessun PG. Realm: **N** = Nemesis, **P** = Pozzo dell'Eternità, **R** = Ravencrest, **S** = Silvermoon. Nomi multipli nella stessa cella separati da a-capo. Aggiorno quando segnali recuperi o nuovi PG.
 
 ## Orda (razze condivise incluse)
 
 | Razza | War | Pal | Hun | Rog | Pri | DK | Sha | Mag | Loc | Mon | Dru | DH | Evo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Orc | | X | Orconauta·P | | | | Shockandroll·N | | Dotandroll·P | | X | X | X |
-| Undead | | X | | Undeadpool·P | Pretaporter·P | | X | | | | X | X | X |
-| Tauren | | Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
+| Orc | | X | _Orconauta·P | | | | _Shockandroll·N | | Dotandroll·P | | X | X | X |
+| Undead | | X | | _Undeadpool·P | _Pretaporter·P | | X | | | | X | X | X |
+| Tauren | | _Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
 | Troll | | X | Arconauta·N | | | | *Voodoochild | Snowwipe·P | | | *Bloomanjaro | X | X |
-| Goblin | | X | | | | Moneystrike·N | *Voltron | | Tearsforfear·N | | X | X | X |
-| Blood Elf | | Blessismore·P | | Cereanor·N | | | X | Repository·N | | | X | Illidanielle·N<br>Demoversion·P | X |
+| Goblin | | X | | | | _Moneystrike·N | *Voltron | | Tearsforfear·N | | X | X | X |
+| Blood Elf | | Blessismore·P | | _Cereanor·N | | | X | Repository·N | | | X | Illidanielle·N<br>_Demoversion·P | X |
 | Nightborne | | X | | | Nightform·P | | X | Spelling·P | Menagerie·N | | X | X | X |
 | Highmountain Tauren | Stantu·P | X | | | | | *Rainmaker | | | | Ecoterrorist·N | X | X |
-| Mag'har Orc | Axetomouth·N | X | | | | | Blondelust·P | | | | X | X | X |
-| Zandalari Troll | | Divinetroll·P | | | | Trollminator·P | *Stormsaurus | | | | Shiftzord·N | X | X |
+| Mag'har Orc | _Axetomouth·N | X | | | | | Blondelust·P | | | | X | X | X |
+| Zandalari Troll | | _Divinetroll·P | | | | _Trollminator·P | *Stormsaurus | | | | Shiftzord·N | X | X |
 | Vulpera | | X | | | | Rotandroll·N | Foxlust·N | | | Furricane·P | X | X | X |
-| Pandaren | | X | | | | | Pandacoil·P | | | Windwasher·N | X | X | X |
-| Dracthyr | | X | | | | X | X | | | X | X | X | Dragoncelloh·P<br>*Preservative<br>*Augmentin |
-| Earthen | | X | Rockbiter·P | | | X | *Stonestrike | | | | X | X | X |
+| Pandaren | | X | | | | | _Pandacoil·P | | | Windwasher·N | X | X | X |
+| Dracthyr | | X | | | | X | X | | | X | X | X | _Dragoncelloh·P<br>*Preservative<br>*Augmentin |
+| Earthen | | X | _Rockbiter·P | | | X | *Stonestrike | | | | X | X | X |
 | Haranir | | X | | *Backstabbath | | X | *Chlorophil | | | | Catatonic·N | X | X |
 
 ## Alleanza
 
 | Razza | War | Pal | Hun | Rog | Pri | DK | Sha | Mag | Loc | Mon | Dru | DH | Evo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Human | | *Hammertime | | | | | X | Spellstill·P | | | X | X | X |
-| Dwarf | Dwarfnought·R | Proctolodin·S | | | | | Shockolat·N | | | | X | X | X |
-| Night Elf | | X | | | | Dayandknight·P | X | | | Ipelf·R | Hadruidken·S | Demongear·R<br>Demonstrate·S | X |
-| Gnome | Tinytank·P | X | | Gnomorrage·P | | | X | Blinkette·S | | | X | X | X |
+| Human | | *Hammertime | | | | | X | _Spellstill·P | | | X | X | X |
+| Dwarf | _Dwarfnought·R | Proctolodin·S | | | | | _Shockolat·N | | | | X | X | X |
+| Night Elf | | X | | | | Dayandknight·P | X | | | Ipelf·R | Hadruidken·S | Demongear·R<br>_Demonstrate·S | X |
+| Gnome | Tinytank·P | X | | _Gnomorrage·P | | | X | Blinkette·S | | | X | X | X |
 | Draenei | | *Holytoledo | | | Holytude·N | | *Naaruto | | | | X | X | X |
 | Worgen | | X | | | | Furricane | X | | | | *Furocious | X | X |
-| Void Elf | | X | | | Discoteque·S | | X | | Dotnetcore·N | | X | Vanillidan·N | X |
+| Void Elf | | X | | | _Discoteque·S | | X | | Dotnetcore·N | | X | _Vanillidan·N | X |
 | Lightforged Draenei | Periodrage·S | *Verdictorian | | | | | X | | | | X | X | X |
-| Dark Iron Dwarf | | Plateatico·P | | | | *Dwarfenstein·S | *Lavalamp | | | | X | X | X |
+| Dark Iron Dwarf | | _Plateatico·P | | | | *Dwarfenstein·S | *Lavalamp | | | | X | X | X |
 | Kul Tiran | | X | | | | | Totemizer·S | | | | *Bearnacle | X | X |
 | Mechagnome | | X | Shottini·P | | | | X | | | *Mistfits | X | X | X |
 

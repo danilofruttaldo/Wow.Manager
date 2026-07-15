@@ -230,6 +230,10 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     // lo rendiamo in stile "da creare" e NON lo contiamo (vedi getRosterCount).
     const todo = name.startsWith('*');
     if (todo) name = name.slice(1).trim();
+    // Prefisso "_" = PG esistente ma NON ancora al level cap (in leveling). Lo togliamo
+    // dal nome e lo rendiamo in corsivo. Conta come PG normale (esiste già).
+    const wip = !todo && name.startsWith('_');
+    if (wip) name = name.slice(1).trim();
     // Il valore spec può essere una lista separata da virgole (es. "arms,fury,protection").
     const raw = CHAR_SPEC_BY_RACE[`${name}|${race}`.toLowerCase()] ?? CHAR_SPEC[name.toLowerCase()];
     const specs = raw ? String(raw).split(',').map((s) => s.trim()).filter(Boolean) : [];
@@ -248,8 +252,13 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     }).join('');
     // "nome + icone" = inline-flex centrato: scritte e icone allineate verticalmente.
     // PG pianificato: nessun tag testuale (sborderebbe dalla cella); solo stile + tooltip.
-    const nameAttr = todo ? ' title="Personaggio pianificato, non ancora creato (TODO)"' : '';
-    return `<span class="pg${todo ? ' pg--todo' : ''}"><span class="pg-name"${nameAttr}>${name}</span>${tail}</span>`;
+    const nameAttr = todo
+      ? ' title="Personaggio pianificato, non ancora creato (TODO)"'
+      : wip
+        ? ' title="Personaggio esistente ma non ancora al level cap (in leveling)"'
+        : '';
+    const pgClass = todo ? ' pg--todo' : wip ? ' pg--wip' : '';
+    return `<span class="pg${pgClass}"><span class="pg-name"${nameAttr}>${name}</span>${tail}</span>`;
   });
   return ` ${out.join('<br>')} `;
 }
