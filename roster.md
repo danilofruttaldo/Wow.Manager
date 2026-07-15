@@ -21,7 +21,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Vulpera | | X | | | | Rotandroll·N | _Foxlust·N | | | _Furricane·P | X | X | X |
 | Pandaren | | X | | | | | _Pandacoil·P | | | _Windwasher·N | X | X | X |
 | Dracthyr | | X | | | | X | X | | | X | X | X | _Dragoncelloh·P<br>*Preservative<br>*Augmentin |
-| Earthen | | X | _Rockbiter·P | | | X | *Stonestrike | | | | X | X | X |
+| Earthen | | X | Rockbiter·P | | | X | *Stonestrike | | | | X | X | X |
 | Haranir | | X | | *Backstabbath | | X | *Chlorophil | | | | _Catatonic·N | X | X |
 
 ## Alleanza
