@@ -31,7 +31,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Human | | *Hammertime | | | | | X | _Spellstill·P | | | X | X | X |
 | Dwarf | _Dwarfnought·R | *Proctolodin·S | | | | | _Shockolat·N | | | | X | X | X |
 | Night Elf | | X | | | | *Dayandknight·P | X | | | *Ipelf·R | *Hadruidken·S | *Demongear·R<br>_Demonstrate·S | X |
-| Gnome | *Tinytank·P | X | | _Gnomorrage·P | | | X | *Blinkette·S | | | X | X | X |
+| Gnome | _Tinytank·P | X | | _Gnomorrage·P | | | X | *Blinkette·S | | | X | X | X |
 | Draenei | | *Holytoledo | | | *Holytude·N | | *Naaruto | | | | X | X | X |
 | Worgen | | X | | | | Furricane | X | | | | *Furocious | X | X |
 | Void Elf | | X | | | _Discoteque·S | | X | | *Dotnetcore·N | | X | _Vanillidan·N | X |
