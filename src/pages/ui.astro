@@ -63,7 +63,7 @@ let gi = 0;
               <button class="shot" style={`--pc: var(--c-${s.className})`} data-i={i} data-class={s.className} data-search={`${s.char} ${classLabel(s.className)} ${s.spec}`.toLowerCase()} data-src={s.src} data-char={titleCase(s.char)} data-who={`${classLabel(s.className)} · ${titleCase(s.spec)}`}>
                 <span class="imgwrap"><img src={s.src} alt={`UI di ${titleCase(s.char)}`} loading="lazy" width="640" height="360" /></span>
                 <span class="cap">
-                  <span class="cap-txt"><span class="ch">{titleCase(s.char)}</span><span class="wh">{classLabel(s.className)}</span></span>
+                  <span class="cap-txt"><span class="ch">{titleCase(s.char)}</span></span>
                   <span class="sp">{titleCase(s.spec)}</span>
                 </span>
               </button>
@@ -99,7 +99,6 @@ let gi = 0;
 .cap { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.65rem; border-top: 3px solid var(--pc); }
 .cap-txt { display: flex; flex-direction: column; min-width: 0; }
 .ch { font-weight: 600; font-size: 0.92rem; }
-.wh { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-subtle); }
 .sp { margin-left: auto; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); background: color-mix(in srgb, var(--pc) 14%, transparent); border: 1px solid color-mix(in srgb, var(--pc) 40%, var(--border)); padding: 0.15rem 0.4rem; border-radius: var(--radius-sm); white-space: nowrap; }
 
 .lb { position: fixed; inset: 0; z-index: 100; background: rgba(10,12,16,0.94); display: none; align-items: center; justify-content: center; padding: 0.5rem; }
