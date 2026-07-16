@@ -1,6 +1,6 @@
 {
   "expansion": "Midnight (12.0)",
-  "note": "Piano di specializzazione in due tappe per professione: 1ª spec da prendere + 1º ramo da maxare, poi 2ª spec + 2º ramo. Nomi di spec e rami in inglese (client EN). Build consigliate per vendita/uso generale (fonte: wow-professions.com, Midnight live). Aggiorna qui i dati se cambiano con le patch: la pagina si allinea da sola.",
+  "note": "Piano di specializzazione in tre tappe per professione (first/second/third): spec da prendere + ramo da maxare, nell'ordine. Nomi di spec e rami in inglese (client EN). Solo professioni primarie: le secondarie (Cooking/Fishing) non hanno albero di specializzazione e restano fuori. Build consigliate per vendita/uso generale (fonte: wow-professions.com, Midnight live). Aggiorna qui i dati se cambiano con le patch: la pagina si allinea da sola.",
   "professions": [
     {
       "key": "alchemy",
@@ -16,27 +16,27 @@
       "name": "Blacksmithing",
       "type": "crafting",
       "first":  { "spec": "Armorsmithing", "branch": "Root node" },
-      "second": { "spec": "Armorsmithing", "branch": "Sculpted / Large Plate Armor" },
-      "third":  { "spec": "The Old Ways", "branch": "Resourceful Smith / Second Nature" },
-      "notes": "Armorsmithing per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate."
+      "second": { "spec": "Armorsmithing", "branch": "Sculpted" },
+      "third":  { "spec": "The Old Ways", "branch": "Resourceful Smith" },
+      "notes": "Armorsmithing per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate. Sotto Armorsmithing i rami sono alternativi, se ne prende UNO: Sculpted, Large Plate Armor o Articulating Armor. Sotto The Old Ways: Resourceful Smith (Resourcefulness) o Second Nature (Ingenuity)."
     },
     {
       "key": "enchanting",
       "name": "Enchanting",
       "type": "crafting",
-      "first":  { "spec": "Spellbound Shatterer", "branch": "Infinite Ingenuity" },
-      "second": { "spec": "Spellbound Shatterer", "branch": "Resourcefulness" },
-      "third":  { "spec": "Elevating Equipment", "branch": "Categoria enchant scelta" },
-      "notes": "Build Concentration: massimizza Spellbound Shatterer (un enchant HQ ogni pochi giorni). Elevating Equipment per coprire più slot."
+      "first":  { "spec": "Spellbound Shatterer", "branch": "Root node" },
+      "second": { "spec": "Spellbound Shatterer", "branch": "Infinite Ingenuity" },
+      "third":  { "spec": "Elevating Equipment", "branch": "Amani" },
+      "notes": "Build Concentration: 20 pt nel root di Spellbound Shatterer, poi 30 in Infinite Ingenuity (un enchant HQ ogni pochi giorni). Shatter Essence va preso prima di craftare. Elevating Equipment ha tre sub-spec (Amani / Haranir / Thalassian): scegli quella degli enchant che vendi."
     },
     {
       "key": "engineering",
       "name": "Engineering",
       "type": "crafting",
       "first":  { "spec": "Market Mobility", "branch": "Mandatory Tools" },
-      "second": { "spec": "Recycling", "branch": "Root node" },
-      "third":  { "spec": "Recycling", "branch": "Core branch (30 punti)" },
-      "notes": "Build Profession Gear: Recycling dà un grosso bonus skill; Market Mobility per tinker/utility sugli equip."
+      "second": { "spec": "Market Mobility", "branch": "Root node" },
+      "third":  { "spec": "Recycling", "branch": "Root node" },
+      "notes": "Build Profession Gear: 10 pt in Mandatory Tools (l'alternativa è Finishing Touches), poi 25 nel root di Market Mobility, poi 30 in Recycling per il bonus skill."
     },
     {
       "key": "inscription",
@@ -69,19 +69,19 @@
       "key": "tailoring",
       "name": "Tailoring",
       "type": "crafting",
-      "first":  { "spec": "Nimble Needlework", "branch": "Root node (bolt cooldowns)" },
-      "second": { "spec": "Nimble Needlework", "branch": "Cooldown reduction" },
-      "third":  { "spec": "Fiber Arts", "branch": "Creative Efficiency" },
-      "notes": "Nimble Needlework per i cooldown dei bolt e la produzione di stoffa; poi armor di stoffa end-game."
+      "first":  { "spec": "Nimble Needlework", "branch": "Root node" },
+      "second": { "spec": "Fiber Arts", "branch": "Creative Efficiency" },
+      "third":  { "spec": "Fiber Arts", "branch": "Textile Utilization" },
+      "notes": "Build Bolt: 20 pt nel root di Nimble Needlework (cooldown dei bolt), poi 30 in Creative Efficiency, poi root di Fiber Arts e Textile Utilization (Resourcefulness). Le sub-spec di Nimble Needlework sono Arcanoweave e Sunfire Silk, da scegliere secondo la stoffa che lavori."
     },
     {
       "key": "herbalism",
       "name": "Herbalism",
       "type": "gathering",
-      "first":  { "spec": "Bountiful Harvests", "branch": "Root node (herb yield)" },
-      "second": { "spec": "Botany", "branch": "Mounted gathering" },
-      "third":  { "spec": "Bountiful Harvests", "branch": "Nodi erbe specifiche" },
-      "notes": "Bountiful Harvests per resa e skill sulle erbe; Botany per sbloccare la raccolta a cavallo (non-Druidi)."
+      "first":  { "spec": "Botany", "branch": "Cultivation" },
+      "second": { "spec": "Bountiful Harvests", "branch": "Root node" },
+      "third":  { "spec": "Botany", "branch": "Mulching" },
+      "notes": "Ordine per non-Druidi: Botany prima, sblocca la raccolta a cavallo (i Druidi ce l'hanno già in Travel Form e possono invertire, prendendo Bountiful Harvests per primo). Poi Bountiful Harvests per resa e skill sulle erbe. Terzo albero Overloading (Lightfused/Wild/Primal/Voidbound) non ancora valutato."
     },
     {
       "key": "mining",
@@ -96,10 +96,10 @@
       "key": "skinning",
       "name": "Skinning",
       "type": "gathering",
-      "first":  { "spec": "Thorough Tanning", "branch": "Base leather & scales" },
-      "second": { "spec": "Gainful Gathering", "branch": "Unique materials & Diffusers" },
-      "third":  { "spec": "Talented Tracker", "branch": "Majestic Lures (Renowned Beasts)" },
-      "notes": "Build Farming: Thorough Tanning per i materiali base, poi Gainful Gathering. Talented Tracker per il sistema di lure/Majestic."
+      "first":  { "spec": "Thorough Tanning", "branch": "Lasting Leather" },
+      "second": { "spec": "Gainful Gathering", "branch": "Careful Carving" },
+      "third":  { "spec": "Talented Tracker", "branch": "Majestic Materials" },
+      "notes": "Build Farming: 10 pt Thorough Tanning, poi 40 nel ramo scelto (Lasting Leather o Superb Scales, secondo cosa ti serve), poi Gainful Gathering (Careful Carving o Trophy Taker). Guida NON sull'URL standard: sta su wow-professions.com/guides/wow-skinning-leveling-guide."
     }
   ]
 }

@@ -50,7 +50,7 @@ export interface ProfStep {
 export interface Profession {
   key: string;
   name: string;
-  type: 'crafting' | 'gathering' | 'secondary';
+  type: 'crafting' | 'gathering';
   first: ProfStep | null;  // 1ª spec + 1º ramo
   second: ProfStep | null; // 2ª spec + 2º ramo
   third: ProfStep | null;  // 3ª spec + 3º ramo

@@ -45,9 +45,11 @@ Oggetto `macros` con chiave = slug. Campi: `name, desc, scope, class, spec, char
 - `body` nel JSON è quasi sempre `null`: il corpo vero sta nel file `body_file` (in [macros/](macros/), convenzione `<classe>/[<spec>/]<slug>.txt`, root classe per `spec: null`). Il sito legge il `.txt`.
 
 ### Professioni → [professions/manifest.json](professions/manifest.json)
-Array `professions`. Ogni voce: `key, name, type` (`crafting`|`gathering`|`secondary`), `first`, `second`, `notes`.
-`first`/`second` = `{ "spec": "...", "branch": "..." }` (spec da prendere + ramo da massimizzare, **nomi in inglese** come il client). Secondarie (Cooking/Fishing) → `first`/`second` = `null`.
-- **Fonte dati reali**: build consigliate su <https://www.wow-professions.com/midnight/<prof>-specialization-guide-and-builds>. Aggiorna spec/branch quando cambiano con le patch.
+Array `professions`. Ogni voce: `key, name, type` (`crafting`|`gathering`), `first`, `second`, `third`, `notes`.
+`first`/`second`/`third` = `{ "spec": "...", "branch": "..." }` (spec da prendere + ramo da massimizzare, **nomi in inglese** come il client): sono le **tre tappe in ordine** rese sulla card come classifica ①→②→③. Una tappa a `null` esce come "—".
+- **Solo professioni primarie**: le secondarie (Cooking/Fishing) non hanno albero di specializzazione e stanno fuori dal manifest — la pagina è tutta costruita sulle tre tappe, una card con tre trattini non direbbe nulla.
+- **Fonte dati reali**: build consigliate su <https://www.wow-professions.com/midnight/<prof>-specialization-guide-and-builds>. Aggiorna spec/branch quando cambiano con le patch. ⚠️ **Skinning è l'eccezione**: quell'URL 404, la guida sta su `/guides/wow-skinning-leveling-guide`. Le pagine **non sono datate** (solo footer `© anno`): non si può stabilire da lì per quale patch valgano.
+- `branch` deve essere il **nome di un nodo reale** dell'albero, non una descrizione: se non lo conosci, verifica sulla guida invece di inventare un'etichetta (`Root node` è accettabile per il tronco). Se devii apposta dalla guida, scrivi il perché in `notes`.
 - `key` deve combaciare col file icona in [public/icons/prof/](public/icons/prof/) (`<key>.jpg`).
 
 ### Roster: personaggi → [roster.md](roster.md)

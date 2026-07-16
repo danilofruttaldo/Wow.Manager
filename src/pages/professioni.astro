@@ -5,7 +5,7 @@ import { getProfessions, type Profession } from '../lib/content';
 const professions = getProfessions().sort((a, b) => a.name.localeCompare(b.name));
 
 const TYPE_LABEL: Record<Profession['type'], string> = {
-  crafting: 'Craft', gathering: 'Raccolta', secondary: 'Secondaria',
+  crafting: 'Craft', gathering: 'Raccolta',
 };
 const steps = (p: Profession) => [p.first, p.second, p.third];
 const searchData = (p: Profession) =>
@@ -14,7 +14,7 @@ const searchData = (p: Profession) =>
 const craftingCount = professions.filter(p => p.type === 'crafting').length;
 const gatheringCount = professions.filter(p => p.type === 'gathering').length;
 ---
-<Base title="Professioni" description="Professioni WoW: 1ª e 2ª specializzazione da prendere e ramo da maxare.">
+<Base title="Professioni" description="Professioni WoW: specializzazioni da prendere in ordine e ramo da maxare.">
   <div class="wrap">
     <div class="filters row">
       <input id="prof-search" class="search" type="search" inputmode="search" autocomplete="off"
