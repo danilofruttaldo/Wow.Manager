@@ -14,7 +14,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Troll | | X | Arconauta·N | | | | *Voodoochild | Snowwipe·P | | | *Bloomanjaro | X | X |
 | Goblin | | X | | | | _Moneystrike·N | *Voltron | | *Tearsforfear·N | | X | X | X |
 | Blood Elf | | Blessismore·P | | _Cereanor·N | | | X | _Repository·N | | | X | Illidanielle·N<br>_Demoversion·P | X |
-| Nightborne | | X | | | _Nightform·P | | X | _Spelling·P | Menagerie·N | | X | X | X |
+| Nightborne | | X | | | _Nightform·P | | X | Spelling·P | Menagerie·N | | X | X | X |
 | Highmountain Tauren | Stantu·P | X | | | | | *Rainmaker | | | | _Ecoterrorist·N | X | X |
 | Mag'har Orc | _Axetomouth·N | X | | | | | Blondelust·P | | | | X | X | X |
 | Zandalari Troll | | _Divinetroll·P | | | | _Trollminator·P | *Stormsaurus | | | | _Shiftzord·N | X | X |
