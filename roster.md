@@ -38,7 +38,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Lightforged Draenei | *Periodrage·S | *Verdictorian | | | | | X | | | | X | X | X |
 | Dark Iron Dwarf | | _Plateatico·P | | | | *Dwarfenstein·S | *Lavalamp | | | | X | X | X |
 | Kul Tiran | | X | | | | | *Totemizer·S | | | | *Bearnacle | X | X |
-| Mechagnome | | X | *Shottini·P | | | | X | | | *Mistfits | X | X | X |
+| Mechagnome | | X | _Shottini·P | | | | X | | | *Mistfits | X | X | X |
 
 ## Note sulle X (verificato su Warcraft Wiki / Wowhead, retail Midnight 12.0)
 

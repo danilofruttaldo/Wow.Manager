@@ -50,7 +50,7 @@ export const CHAR_SPEC: Record<string, string> = {
   vanillidan: 'devourer',     // Void Elf → spec Void (Midnight); niente doppione havoc
   tinytank: 'protection',     // "tank"
   plateatico: 'protection',   // "plate" → tank in piastra
-  shottini: 'marksmanship',   // "shot" → Aimed Shot
+  shottini: 'beastmastery',
   dayandknight: 'unholy',     // "knight" notturno/oscuro; evita doppione con furricane (frost)
   demongear: 'vengeance',     // "demon…gear" → tank demoniaco
   proctolodin: 'holy',        // proctologo → medico/cura
