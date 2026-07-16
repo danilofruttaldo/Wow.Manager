@@ -579,6 +579,19 @@
       "body_file": "warlock/pet-special.txt",
       "body": null,
       "notes": "Richiesta utente 2026-07-09 ('macro shared per special ability del pet in base al pet' → shared = cross-spec, spec:null). Un bottone che casta la SECONDA abilità del demone attivo, scelta col contesto [pet:famiglia]. IMPORTANTE (chiarito dall'utente): questa è l'ABILITÀ SECONDARIA del pet, complementare al pulsante Command Demon (che l'utente ha già a parte e casta la special PRIMARIA: Imp→Singe Magic, Voidwalker→Shadow Bulwark, Felhunter→Spell Lock, Sayaad→Seduction, Felguard→Axe Toss). Per questo i rami qui DIVERGONO dai default Command Demon: Imp→Flee (fuga dall'AoE), Felhunter→Devour Magic (purge; lo Spell Lock=interrupt sta su Command Demon e sull'ancora \\), Felguard→Axe Toss. VERIFICATO Warcraft Wiki (Warlock minion): [pet:name] matcha la FAMIGLIA del pet, non il nome random del demone evocato (famiglie: Imp, Voidwalker, Sayaad, Felhunter, Felguard); i rami sono mutuamente esclusivi (un solo pet alla volta) → l'ordine è indifferente. NIENTE FALLBACK GENERICO: valutato e SCARTATO 2026-07-09 il ramo finale 'Command Demon' — duplicherebbe l'altro pulsante dell'utente. Non c'è una seconda-abilità sensata per gli altri pet: Voidwalker→Suffering e Sayaad→Seduction erano le uniche candidate e l'utente le ha ritenute non utili (la Sayaad oltre a Seduction non ha altra utility) → con Voidwalker/Sayaad attivi la macro è AZIONALMENTE inerte, per scelta. ICONA: tenuta SEMPLICE su scelta finale utente 2026-07-09 ('lasciamo stare, rimane semplice') — #showtooltip NUDO, senza fallback. Eredita i condizionali del /cast: per Imp/Felhunter/Felguard mostra l'abilità del pet e cambia da sola cambiando demone; per Voidwalker/Sayaad (nessun ramo) l'icona non risolve (accettato). Fallback icona ESPLORATI e SCARTATI, da NON reintrodurre: 'Command Demon' (rifiutato, richiamava l'altro pulsante), 'Health Funnel' (RIMOSSA dal gioco nella 12.0.0, VERIFICATO Warcraft Wiki), e la spell di evocazione per-pet nel solo #showtooltip (funzionava, ma l'utente ha preferito la versione minima). L'icona manuale (campo icon/selezione in-game) non si mischia con quella dinamica del #showtooltip. spec:null: Imp/Felhunter su tutte le spec; [pet:Felguard] innocuo fuori da Demonology (Felguard = pet permanente Demo). Nessun @target: Devour Magic e Axe Toss risolvono sul bersaglio corrente (smart), Flee è self del pet. CAVEAT: Devour Magic rimuove un buff magico da un nemico O un debuff magico dal warlock (smart) — su target ostile fa purge; Axe Toss è uno stun su bersaglio nemico."
+    },
+    "mage-meteor": {
+      "name": "Meteor",
+      "desc": "Meteor sulla posizione del mouse.",
+      "scope": "account",
+      "class": "mage",
+      "spec": "fire",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "mage/fire/meteor.txt",
+      "body": null,
+      "notes": "Creata 2026-07-16 su richiesta utente ('nuova macro mage fire'), corpo fornito dall'utente e tenuto verbatim. Piazza Meteor sulla posizione del mouse (@cursor): ground-target esplicito -> niente reticolo verde di targeting, va diretto al cursore (stesso schema di death-knight-death-and-decay e demon-hunter-devourer-shift). Meteor NON e' baseline: e' un talento dell'albero Fire -> spec:fire, non spec:null; se non talentato la macro e' inerte. #showtooltip nudo mostra Meteor (unica cast della macro). Nota roster: l'unico mago Fire a manifest e' Repository (Blood Elf, Nemesis), ancora sotto il cap."
     }
   }
 }

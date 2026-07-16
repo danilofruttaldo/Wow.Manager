@@ -1,0 +1,2 @@
+#showtooltip
+/use [@cursor]Meteor
