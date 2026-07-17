@@ -40,7 +40,18 @@ const html = getRosterHtml();
   .roster-prose :global(tr.fac-alliance) { background: color-mix(in srgb, #1E6FD0 6%, var(--surface)); }
 
   /* Colonna razza: neutra, staccata dalla tinta */
-  .roster-prose :global(td.rhead) { background: var(--surface-2); }
+  .roster-prose :global(td.rhead) { background: var(--surface-2); padding-left: 0.16rem; padding-right: 0.16rem; }
+
+  /* Contatori: totale-razza accanto all'icona + riga totali per classe in fondo */
+  .roster-prose :global(.rcell) { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+  .roster-prose :global(.rtot) {
+    font-size: 0.62rem; font-weight: 700; color: var(--text-subtle);
+    font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .roster-prose :global(tfoot tr.rtot-row td) {
+    background: var(--surface-2); font-weight: 700; color: var(--text-muted);
+    font-variant-numeric: tabular-nums; border-bottom: none;
+  }
 
   /* Celle con un PG: bianche e in evidenza (risaltano sulle vuote tinte) */
   .roster-prose :global(tbody tr:not(.rsep) td:not(.rhead):not(:empty):not(:has(.na))) {

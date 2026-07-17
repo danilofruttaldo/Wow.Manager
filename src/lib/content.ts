@@ -265,6 +265,14 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
 
 const stripRealm = (cell: string): string => cell.replace(/·[A-Z]/g, '');
 
+// PG reali in una cella: stessa regola del contatore totale (getRosterCount).
+// Esclude i pianificati "*" (non ancora creati), include i "_" in leveling; X/vuoto = 0.
+function cellCount(cell: string): number {
+  const t = stripRealm(cell).trim();
+  if (!t || t === 'X') return 0;
+  return t.split(/<br\s*\/?>/i).map((s) => s.trim()).filter((s) => s && !s.startsWith('*')).length;
+}
+
 // Estrae le righe (array di celle) della tabella markdown sotto "## <section>".
 function extractRosterTable(raw: string, section: string): string[][] | null {
   const lines = raw.split('\n');
@@ -286,15 +294,25 @@ function extractRosterTable(raw: string, section: string): string[][] | null {
 
 // Costruisce le <tr> del corpo: icona razza in prima colonna, casella scura per X, icona spec.
 // header = riga di intestazione (abbreviazioni classe) per ricavare la classe di ogni colonna.
-function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): { html: string; races: Set<string> } {
+function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): { html: string; races: Set<string>; colCounts: number[] } {
   const races = new Set<string>();
+  const colCounts: number[] = new Array(header.length).fill(0); // totale PG per classe (indice 0 inutilizzato)
   const html = rows.map((cells) => {
     const race = stripRealm(cells[0] ?? '').trim();
+    // Totale PG della razza (riga): mostrato accanto all'icona nella cella-testata.
+    let rowTotal = 0;
+    for (let j = 1; j < cells.length; j++) {
+      const n = cellCount(cells[j] ?? '');
+      rowTotal += n;
+      colCounts[j] += n;
+    }
     const tds = cells.map((cell, i) => {
       const t = stripRealm(cell).trim();
       if (i === 0) {
         races.add(t);
-        return `<td class="rhead">${t in RACE_ICON ? raceIcon(t) : t}</td>`;
+        const label = t in RACE_ICON ? raceIcon(t) : t;
+        const tot = rowTotal ? `<span class="rtot" title="PG di questa razza">${rowTotal}</span>` : '';
+        return `<td class="rhead"><span class="rcell">${label}${tot}</span></td>`;
       }
       if (t === 'X') return '<td><span class="na" title="Combinazione non creabile in gioco"></span></td>';
       if (t === '') return '<td></td>';
@@ -303,7 +321,7 @@ function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): {
     }).join('');
     return `<tr class="${rowClass}">${tds}</tr>`;
   }).join('');
-  return { html, races };
+  return { html, races, colCounts };
 }
 
 // Conta i PG presenti nel roster (Orda + Alleanza), inclusi i nomi multipli per cella.
@@ -340,12 +358,24 @@ export function getRosterHtml(): string {
   const horde = rosterBodyRows(orda.slice(1), 'fac-horde', header);
   let body = band('Orda', 'rsep--horde') + horde.html;
 
+  // Totali per classe (colonna): partono dall'Orda, poi sommo l'Alleanza.
+  const colTotals = horde.colCounts.slice();
+
   const ally = extractRosterTable(raw, 'Alleanza');
   if (ally) {
     // Razze condivise (già nel blocco Orda) restano solo lì: qui le saltiamo.
     const allyRows = ally.slice(1).filter((cells) => !horde.races.has(stripRealm(cells[0]).trim()));
-    if (allyRows.length) body += band('Alleanza', 'rsep--alliance') + rosterBodyRows(allyRows, 'fac-alliance', header).html;
+    if (allyRows.length) {
+      const allyBody = rosterBodyRows(allyRows, 'fac-alliance', header);
+      body += band('Alleanza', 'rsep--alliance') + allyBody.html;
+      for (let i = 0; i < colTotals.length; i++) colTotals[i] += allyBody.colCounts[i];
+    }
   }
 
-  return `<div class="table-scroll"><table>${thead}<tbody>${body}</tbody></table></div>`;
+  // Riga totali per classe a piè di tabella (angolo vuoto, nessun gran totale).
+  const tfoot = '<tfoot><tr class="rtot-row">' + header.map((_, i) =>
+    i === 0 ? '<td class="rhead"></td>' : `<td>${colTotals[i] || ''}</td>`,
+  ).join('') + '</tr></tfoot>';
+
+  return `<div class="table-scroll"><table>${thead}<tbody>${body}</tbody>${tfoot}</table></div>`;
 }
