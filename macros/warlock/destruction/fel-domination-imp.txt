@@ -1,0 +1,3 @@
+#showtooltip Summon Imp
+/cast Fel Domination
+/cast Summon Imp
