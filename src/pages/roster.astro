@@ -42,20 +42,6 @@ const html = getRosterHtml();
   /* Colonna razza: neutra, staccata dalla tinta */
   .roster-prose :global(td.rhead) { background: var(--surface-2); }
 
-  /* Contatori: numerino totale-razza sotto l'icona (prima colonna) + riga Σ per classe */
-  .roster-prose :global(.rtot) {
-    display: block; margin-top: 2px; line-height: 1;
-    font-size: 0.6rem; font-weight: 700; color: var(--text-subtle);
-    font-variant-numeric: tabular-nums;
-  }
-  .roster-prose :global(tfoot tr.rtot-row td) {
-    background: var(--surface-2); font-weight: 700; color: var(--text-muted);
-    font-variant-numeric: tabular-nums; border-bottom: none;
-  }
-  .roster-prose :global(tr.rtot-row td.rhead) { display: table-cell; }
-  .roster-prose :global(.rtot-sig) { color: var(--text-subtle); font-size: 0.7rem; }
-  .roster-prose :global(.rtot-grand) { display: inline; margin-left: 3px; color: var(--text); font-size: 0.72rem; }
-
   /* Celle con un PG: bianche e in evidenza (risaltano sulle vuote tinte) */
   .roster-prose :global(tbody tr:not(.rsep) td:not(.rhead):not(:empty):not(:has(.na))) {
     background: var(--surface);
