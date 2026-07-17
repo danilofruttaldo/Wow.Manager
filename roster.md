@@ -12,7 +12,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Undead | | X | | _Undeadpool·P | _Pretaporter·P | | X | | | | X | X | X |
 | Tauren | | _Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
 | Troll | | X | Arconauta·N | | | | *Voodoochild | Snowwipe·P | | | *Bloomanjaro | X | X |
-| Goblin | | X | | | | _Moneystrike·N | *Voltron | | *Tearsforfear·N | | X | X | X |
+| Goblin | | X | | | | _Moneystrike·N | *Voltron | | _Tearsforfear·N | | X | X | X |
 | Blood Elf | | Blessismore·P | | _Cereanor·N | | | X | Repository·N | | | X | Illidanielle·N<br>_Demoversion·P | X |
 | Nightborne | | X | | | _Nightform·P | | X | Spelling·P | Menagerie·N | | X | X | X |
 | Highmountain Tauren | Stantu·P | X | | | | | *Rainmaker | | | | _Ecoterrorist·N | X | X |
