@@ -311,7 +311,7 @@ function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): {
       if (i === 0) {
         races.add(t);
         const label = t in RACE_ICON ? raceIcon(t) : t;
-        const tot = rowTotal ? `<span class="rtot" title="PG di questa razza">${rowTotal}</span>` : '';
+        const tot = `<span class="rtot" title="PG di questa razza">${rowTotal}</span>`;
         return `<td class="rhead"><span class="rcell">${label}${tot}</span></td>`;
       }
       if (t === 'X') return '<td><span class="na" title="Combinazione non creabile in gioco"></span></td>';
@@ -356,26 +356,29 @@ export function getRosterHtml(): string {
 
   const band = (text: string, cls: string) => `<tr class="rsep ${cls}"><td colspan="${ncols}">${text}</td></tr>`;
   const horde = rosterBodyRows(orda.slice(1), 'fac-horde', header);
-  let body = band('Orda', 'rsep--horde') + horde.html;
 
   // Totali per classe (colonna): partono dall'Orda, poi sommo l'Alleanza.
   const colTotals = horde.colCounts.slice();
 
+  let allyHtml = '';
   const ally = extractRosterTable(raw, 'Alleanza');
   if (ally) {
     // Razze condivise (già nel blocco Orda) restano solo lì: qui le saltiamo.
     const allyRows = ally.slice(1).filter((cells) => !horde.races.has(stripRealm(cells[0]).trim()));
     if (allyRows.length) {
       const allyBody = rosterBodyRows(allyRows, 'fac-alliance', header);
-      body += band('Alleanza', 'rsep--alliance') + allyBody.html;
+      allyHtml = band('Alleanza', 'rsep--alliance') + allyBody.html;
       for (let i = 0; i < colTotals.length; i++) colTotals[i] += allyBody.colCounts[i];
     }
   }
 
-  // Riga totali per classe a piè di tabella (angolo vuoto, nessun gran totale).
-  const tfoot = '<tfoot><tr class="rtot-row">' + header.map((_, i) =>
-    i === 0 ? '<td class="rhead"></td>' : `<td>${colTotals[i] || ''}</td>`,
-  ).join('') + '</tr></tfoot>';
+  // Riga totali per classe (mostra anche gli 0); angolo vuoto, nessun gran totale.
+  // Compare sia in alto (sotto le icone classe) sia in fondo.
+  const totalsRow = (cls: string) => `<tr class="rtot-row ${cls}">` + header.map((_, i) =>
+    i === 0 ? '<td class="rhead"></td>' : `<td>${colTotals[i]}</td>`,
+  ).join('') + '</tr>';
 
-  return `<div class="table-scroll"><table>${thead}<tbody>${body}</tbody>${tfoot}</table></div>`;
+  const body = totalsRow('rtot-top') + band('Orda', 'rsep--horde') + horde.html + allyHtml;
+
+  return `<div class="table-scroll"><table>${thead}<tbody>${body}</tbody><tfoot>${totalsRow('rtot-bot')}</tfoot></table></div>`;
 }
