@@ -592,6 +592,32 @@
       "body_file": "mage/fire/meteor.txt",
       "body": null,
       "notes": "Creata 2026-07-16 su richiesta utente ('nuova macro mage fire'), corpo fornito dall'utente e tenuto verbatim. Piazza Meteor sulla posizione del mouse (@cursor): ground-target esplicito -> niente reticolo verde di targeting, va diretto al cursore (stesso schema di death-knight-death-and-decay e demon-hunter-devourer-shift). Meteor NON e' baseline: e' un talento dell'albero Fire -> spec:fire, non spec:null; se non talentato la macro e' inerte. #showtooltip nudo mostra Meteor (unica cast della macro). Nota roster: l'unico mago Fire a manifest e' Repository (Blood Elf, Nemesis), ancora sotto il cap."
+    },
+    "warlock-rain-of-fire": {
+      "name": "Rain of Fire",
+      "desc": "Rain of Fire sulla posizione del mouse.",
+      "scope": "account",
+      "class": "warlock",
+      "spec": "destruction",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warlock/destruction/rain-of-fire.txt",
+      "body": null,
+      "notes": "Creata 2026-07-17 su richiesta utente ('nuova macro warlock destruction'), corpo fornito dall'utente e tenuto verbatim. Piazza Rain of Fire sulla posizione del mouse (@cursor): ground-target esplicito -> niente reticolo verde di targeting, va diretto al cursore (stesso schema di warlock-shadowfury, mage-meteor, death-knight-death-and-decay). Rain of Fire e' AoE spendi-Soul-Shard esclusiva di Destruction -> spec:destruction, non spec:null. #showtooltip nudo mostra Rain of Fire (unica cast della macro). Nota roster: il warlock Destruction a manifest e' Tearsforfear (Goblin, Nemesis), ancora sotto il cap."
+    },
+    "warlock-summon-infernal": {
+      "name": "Summon Infernal",
+      "desc": "Infernal sulla posizione del mouse.",
+      "scope": "account",
+      "class": "warlock",
+      "spec": "destruction",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warlock/destruction/summon-infernal.txt",
+      "body": null,
+      "notes": "Creata 2026-07-17 su richiesta utente ('altra macro destruction'), corpo fornito dall'utente e tenuto verbatim. Fa atterrare l'Infernal sulla posizione del mouse (@cursor): ground-target esplicito -> niente reticolo verde di targeting (stesso schema di warlock-rain-of-fire e warlock-shadowfury). Summon Infernal e' il cooldown maggiore di Destruction -> spec:destruction, non spec:null (Demonology ha Summon Demonic Tyrant, spell diversa). #showtooltip nudo mostra Summon Infernal (unica cast della macro)."
     }
   }
 }
