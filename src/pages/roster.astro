@@ -44,6 +44,8 @@ const html = getRosterHtml();
 
   /* Contatori: totale accanto all'icona (razza in riga, classe in testata) */
   .roster-prose :global(.rcell) { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+  /* Testata classe: contatore sotto l'icona invece che di fianco */
+  .roster-prose :global(.rcell--stack) { flex-direction: column; gap: 2px; }
   .roster-prose :global(.rtot) {
     font-size: 0.72rem; font-weight: 700; color: var(--text);
     font-variant-numeric: tabular-nums; line-height: 1;

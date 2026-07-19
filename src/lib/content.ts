@@ -465,7 +465,7 @@ export function getRosterHtml(): string {
     if (i === 0) return '<th></th>';
     const label = CLASS_ABBR[c.trim()] ? classIcon(c.trim()) : c.trim();
     const tot = `<span class="rtot" title="PG di questa classe">${colTotals[i]}</span>`;
-    return `<th><span class="rcell">${label}${tot}</span></th>`;
+    return `<th><span class="rcell rcell--stack">${label}${tot}</span></th>`;
   }).join('') + '</tr></thead>';
 
   const body = band('Orda', 'rsep--horde') + horde.html + allyHtml;
