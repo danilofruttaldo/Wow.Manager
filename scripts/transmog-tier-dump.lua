@@ -216,18 +216,23 @@ local function MissingIn(setID, have, total)
             end
 
             -- Formato: "Shoulder (Ragnaros, Firelands)". Il raid serve al sito per
-            -- mostrarne la sigla; si separa sulla PRIMA virgola, perche' il nome del
-            -- raid puo' contenerne (es. "Antorus, the Burning Throne").
+            -- mostrarne la sigla; il taglio fra boss e raid NON e' sulla virgola,
+            -- perche' ne contengono entrambi: ci pensa formatMissing lato sito.
+            local testo
             if boss and instance then
-                out[#out + 1] = ("%s (%s, %s)"):format(slot, boss, instance)
+                testo = ("%s (%s, %s)"):format(slot, boss, instance)
             elseif boss then
-                out[#out + 1] = ("%s (%s)"):format(slot, boss)
+                testo = ("%s (%s)"):format(slot, boss)
             else
-                out[#out + 1] = slot
+                testo = slot
             end
+            -- L'itemID viaggia accanto al testo: serve a cercare su Wowhead i drop che
+            -- il client non conosce. Si tengono appaiati perche' l'ordinamento qui
+            -- sotto scombinerebbe due liste parallele.
+            out[#out + 1] = { testo = testo, itemID = (not boss) and info and info.itemID or nil }
         end
     end
-    table.sort(out)
+    table.sort(out, function(a, b) return a.testo < b.testo end)
 
     -- Discrepanza = elenco non fidato: meglio saperlo che pubblicare numeri diversi
     -- fra cella e tooltip.
@@ -314,42 +319,54 @@ local function Dump()
     out[#out + 1] = "  }"
 
     -- Blocco `missing`: solo i set incompleti, con l'elenco dei pezzi che mancano.
+    -- Stessa struttura per due contenuti: il testo mostrato sul sito e l'itemID dei
+    -- pezzi rimasti senza boss (0 per gli altri), che serve a cercarli su Wowhead.
+    -- Le due liste restano nello stesso ordine perche' nascono dalla stessa fonte.
     local function esc(s) return (tostring(s):gsub('[\\"]', '\\%0')) end
-    local mo = { '  "missing": {' }
-    local classLines = {}
-    for _, class in ipairs(CLASS_ORDER) do
-        if missing[class] then
-            local tiers = {}
-            for _, tier in ipairs(TIER_ORDER) do
-                local slots = missing[class][tier]
-                if slots then
-                    local parts = {}
-                    for _, slot in ipairs(SLOT_ORDER) do
-                        local list = slots[slot]
-                        if list and #list > 0 then
-                            local items = {}
-                            for i, v in ipairs(list) do items[i] = '"' .. esc(v) .. '"' end
-                            parts[#parts + 1] = ('"%s": [%s]'):format(slot, table.concat(items, ", "))
+    local function Serializza(chiave, campo)
+        local mo = { ('  "%s": {'):format(chiave) }
+        local classLines = {}
+        for _, class in ipairs(CLASS_ORDER) do
+            if missing[class] then
+                local tiers = {}
+                for _, tier in ipairs(TIER_ORDER) do
+                    local slots = missing[class][tier]
+                    if slots then
+                        local parts = {}
+                        for _, slot in ipairs(SLOT_ORDER) do
+                            local list = slots[slot]
+                            if list and #list > 0 then
+                                local items = {}
+                                for i, v in ipairs(list) do
+                                    items[i] = (campo == "itemID")
+                                        and tostring(v.itemID or 0)
+                                        or ('"' .. esc(v.testo) .. '"')
+                                end
+                                parts[#parts + 1] = ('"%s": [%s]'):format(slot, table.concat(items, ", "))
+                            end
+                        end
+                        if #parts > 0 then
+                            tiers[#tiers + 1] = ('      "%s": { %s }'):format(tier, table.concat(parts, ", "))
                         end
                     end
-                    if #parts > 0 then
-                        tiers[#tiers + 1] = ('      "%s": { %s }'):format(tier, table.concat(parts, ", "))
-                    end
+                end
+                if #tiers > 0 then
+                    classLines[#classLines + 1] = ('    "%s": {\n%s\n    }'):format(class, table.concat(tiers, ",\n"))
                 end
             end
-            if #tiers > 0 then
-                classLines[#classLines + 1] = ('    "%s": {\n%s\n    }'):format(class, table.concat(tiers, ",\n"))
-            end
         end
+        mo[#mo + 1] = table.concat(classLines, ",\n")
+        mo[#mo + 1] = "  }"
+        return table.concat(mo, "\n")
     end
-    mo[#mo + 1] = table.concat(classLines, ",\n")
-    mo[#mo + 1] = "  }"
 
     WowManagerTierDumpDB = {
         generated = date("%Y-%m-%d %H:%M:%S"),
         build = GetBuildInfo(),
         collectedJson = table.concat(out, "\n"),
-        missingJson = table.concat(mo, "\n"),
+        missingJson = Serializza("missing", "testo"),
+        -- Non va nel manifest: e' la lista di lavoro per le ricerche su Wowhead.
+        missingItemIdsJson = Serializza("missingItemIds", "itemID"),
         dropped = dropped,
         errors = errors,   -- set il cui elenco pezzi e' fallito (dump comunque valido)
         probe = probe,     -- quale API ha risposto, e con che campi
