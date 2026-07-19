@@ -350,10 +350,6 @@ export function getRosterHtml(): string {
   const header = orda[0];
   const ncols = header.length;
 
-  const thead = '<thead><tr>' + header.map((c, i) =>
-    i === 0 ? '<th></th>' : `<th>${CLASS_ABBR[c.trim()] ? classIcon(c.trim()) : c.trim()}</th>`,
-  ).join('') + '</tr></thead>';
-
   const band = (text: string, cls: string) => `<tr class="rsep ${cls}"><td colspan="${ncols}">${text}</td></tr>`;
   const horde = rosterBodyRows(orda.slice(1), 'fac-horde', header);
 
@@ -372,13 +368,16 @@ export function getRosterHtml(): string {
     }
   }
 
-  // Riga totali per classe (mostra anche gli 0); angolo vuoto, nessun gran totale.
-  // Compare sia in alto (sotto le icone classe) sia in fondo.
-  const totalsRow = (cls: string) => `<tr class="rtot-row ${cls}">` + header.map((_, i) =>
-    i === 0 ? '<td class="rhead"></td>' : `<td>${colTotals[i]}</td>`,
-  ).join('') + '</tr>';
+  // Totale PG per classe: unico contatore, accanto all'icona classe in testata
+  // (stesso pattern del totale-razza accanto all'icona razza).
+  const thead = '<thead><tr>' + header.map((c, i) => {
+    if (i === 0) return '<th></th>';
+    const label = CLASS_ABBR[c.trim()] ? classIcon(c.trim()) : c.trim();
+    const tot = `<span class="rtot" title="PG di questa classe">${colTotals[i]}</span>`;
+    return `<th><span class="rcell">${label}${tot}</span></th>`;
+  }).join('') + '</tr></thead>';
 
-  const body = totalsRow('rtot-top') + band('Orda', 'rsep--horde') + horde.html + allyHtml;
+  const body = band('Orda', 'rsep--horde') + horde.html + allyHtml;
 
-  return `<div class="table-scroll"><table>${thead}<tbody>${body}</tbody><tfoot>${totalsRow('rtot-bot')}</tfoot></table></div>`;
+  return `<div class="table-scroll"><table>${thead}<tbody>${body}</tbody></table></div>`;
 }

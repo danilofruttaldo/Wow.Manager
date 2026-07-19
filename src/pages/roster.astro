@@ -42,21 +42,15 @@ const html = getRosterHtml();
   /* Colonna razza: neutra, staccata dalla tinta */
   .roster-prose :global(td.rhead) { background: var(--surface-2); padding-left: 0.16rem; padding-right: 0.16rem; }
 
-  /* Contatori: totale-razza accanto all'icona + riga totali per classe in fondo */
+  /* Contatori: totale accanto all'icona (razza in riga, classe in testata) */
   .roster-prose :global(.rcell) { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
   .roster-prose :global(.rtot) {
     font-size: 0.62rem; font-weight: 700; color: var(--text-subtle);
     font-variant-numeric: tabular-nums; line-height: 1;
   }
-  .roster-prose :global(tr.rtot-row td) {
-    background: var(--surface-2); font-weight: 700; color: var(--text-muted);
-    font-variant-numeric: tabular-nums;
-  }
-  .roster-prose :global(tr.rtot-top td) { border-bottom: 2px solid var(--border); }
-  .roster-prose :global(tfoot tr.rtot-bot td) { border-top: 2px solid var(--border); border-bottom: none; }
 
   /* Celle con un PG: bianche e in evidenza (risaltano sulle vuote tinte) */
-  .roster-prose :global(tbody tr:not(.rsep):not(.rtot-row) td:not(.rhead):not(:empty):not(:has(.na))) {
+  .roster-prose :global(tbody tr:not(.rsep) td:not(.rhead):not(:empty):not(:has(.na))) {
     background: var(--surface);
     box-shadow: inset 0 0 0 1px var(--border);
     font-weight: 600; color: var(--text);
