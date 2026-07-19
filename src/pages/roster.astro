@@ -45,8 +45,10 @@ const html = getRosterHtml();
   /* Contatori: totale accanto all'icona (razza in riga, classe in testata) */
   .roster-prose :global(.rcell) { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
   .roster-prose :global(.rtot) {
-    font-size: 0.62rem; font-weight: 700; color: var(--text-subtle);
+    font-size: 0.72rem; font-weight: 700; color: var(--text);
     font-variant-numeric: tabular-nums; line-height: 1;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2px 3px;
   }
 
   /* Celle con un PG: bianche e in evidenza (risaltano sulle vuote tinte) */
