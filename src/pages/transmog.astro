@@ -47,7 +47,7 @@ const ncols = cols.length + 1; // + colonna del nome set
                         ? `${r.setName ?? r.name} — ${cell.label}`
                         : (r.setName ?? r.name);
                     return (
-                    <tr class:list={['trow', `trow--${r.state}`]}>
+                    <tr class="trow" style={`--pct:${r.pct}`}>
                       <td class="rhead">
                         <span class="tname">
                           <strong>{r.setName ?? r.name}</strong>
@@ -60,7 +60,8 @@ const ncols = cols.length + 1; // + colonna del nome set
                       {r.cells.map(cell => (
                         cell.state === 'na'
                           ? <td><span class="na"></span></td>
-                          : <td class:list={['cell', `cell--${cell.state}`, { 'has-tip': cell.pieces.length > 0 }]}
+                          : <td class:list={['cell', { 'has-tip': cell.pieces.length > 0 }]}
+                                style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}
                                 tabindex={cell.pieces.length > 0 ? 0 : undefined}
                                 data-tip-title={cell.pieces.length > 0 ? titolo(cell) : undefined}
                                 data-tip={cell.pieces.length > 0
@@ -129,18 +130,25 @@ const ncols = cols.length + 1; // + colonna del nome set
   .tmog-panel .frac { display: block; font-size: 0.74rem; line-height: 1.15; }
   .tmog-panel .bar { display: block; height: 3px; margin-top: 3px; border-radius: 999px; background: var(--border-light); overflow: hidden; }
   .tmog-panel .bar-fill { display: block; height: 100%; border-radius: 999px; background: currentColor; }
-  .tmog-panel td.cell--full    { color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface)); }
-  .tmog-panel td.cell--partial { color: var(--warn); background: color-mix(in srgb, var(--warn) 9%, var(--surface)); }
-  .tmog-panel td.cell--none    { color: var(--text-subtle); font-weight: 500; }
+  /* Rampa continua rosso -> giallo -> verde in funzione di --pct (0..100, unitless).
+     Due mix in cascata: il primo porta bad -> warn nella prima meta', il secondo
+     porta il risultato -> ok nella seconda. Le clamp tengono ferma la meta' che
+     non e' ancora in gioco, cosi' 0 = rosso pieno e 100 = verde pieno senza salti. */
+  .tmog-panel tr.trow, .tmog-panel td.cell {
+    --mix-warn: clamp(0%, calc(var(--pct, 0) * 2%), 100%);
+    --mix-ok:   clamp(0%, calc((var(--pct, 0) - 50) * 2%), 100%);
+    --tint: color-mix(in srgb,
+              var(--ok) var(--mix-ok),
+              color-mix(in srgb, var(--warn) var(--mix-warn), var(--bad)));
+  }
 
-  /* Sfondo riga per completamento del tier: 0 neutro, <50% rosso, >=50% giallo, 100% verde.
-     Il tint sta sulla riga; le celle con stato proprio lo coprono col loro colore. */
-  .tmog-panel tr.trow--low  td.rhead { background: color-mix(in srgb, var(--bad)  16%, var(--surface)); }
-  .tmog-panel tr.trow--good td.rhead { background: color-mix(in srgb, var(--warn) 18%, var(--surface)); }
-  .tmog-panel tr.trow--full td.rhead { background: color-mix(in srgb, var(--ok)   18%, var(--surface)); }
-  .tmog-panel tr.trow--low  { background: color-mix(in srgb, var(--bad)  7%, var(--surface)); }
-  .tmog-panel tr.trow--good { background: color-mix(in srgb, var(--warn) 8%, var(--surface)); }
-  .tmog-panel tr.trow--full { background: color-mix(in srgb, var(--ok)   8%, var(--surface)); }
+  /* Celle: frazione + barra, colorate sui pezzi sbloccati di quel blocco. */
+  .tmog-panel td.cell { color: var(--tint); background: color-mix(in srgb, var(--tint) 10%, var(--surface)); }
+
+  /* Riga: stessa rampa, ma sull'avanzamento complessivo dei blocchi del set.
+     Il tint sta sulla riga; le celle ci mettono sopra il proprio colore. */
+  .tmog-panel tr.trow { background: color-mix(in srgb, var(--tint) 8%, var(--surface)); }
+  .tmog-panel tr.trow td.rhead { background: color-mix(in srgb, var(--tint) 18%, var(--surface)); }
 
   /* Bande espansione */
   .tmog-panel tr.rsep td {

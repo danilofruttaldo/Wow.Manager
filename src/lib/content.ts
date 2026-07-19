@@ -164,8 +164,6 @@ export interface TmogCell {
   state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
   pieces: TmogPiece[];                            // TUTTI i pezzi, presi e non
 }
-// Sfondo della riga per completamento: nessun pezzo / <50% / >=50% / completo.
-export type TmogRowState = 'empty' | 'low' | 'good' | 'full';
 export interface TmogRow {
   key: string;
   tier: string;
@@ -176,8 +174,7 @@ export interface TmogRow {
   raids: [string, string][];                      // [sigla, nome completo] dei raid dove droppa
   got: number;
   total: number;
-  pct: number;
-  state: TmogRowState;
+  pct: number;                                    // guida la rampa di colore rosso -> verde della riga
   cells: TmogCell[];
 }
 export interface TmogGroup {
@@ -282,13 +279,11 @@ export function getTransmog(): TmogClass[] {
         const rowGot = cells.reduce((s, c) => s + c.got, 0);
         const rowTotal = cells.reduce((s, c) => s + c.total, 0);
         const pct = rowTotal ? (rowGot / rowTotal) * 100 : 0;
-        const state: TmogRowState =
-          !rowTotal || pct === 0 ? 'empty' : pct >= 100 ? 'full' : pct >= 50 ? 'good' : 'low';
         return {
           key: t.key, tier: t.tier, name: t.name,
           setName: t.names?.[slug], raids: (t.raids ?? []) as [string, string][],
           note: t.note, warn: t.warn,
-          got: rowGot, total: rowTotal, pct, state, cells,
+          got: rowGot, total: rowTotal, pct, cells,
         };
       });
       return { key: exp.key, name: exp.name, note: exp.note, rows };
