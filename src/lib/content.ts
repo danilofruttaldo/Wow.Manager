@@ -165,12 +165,10 @@ export interface TmogRow {
   key: string;
   tier: string;
   name: string;
-  pieces: number;
   note?: string;
   warn?: string;
   setName?: string;                               // nome del set per QUESTA classe (varia col tab)
   raids: [string, string][];                      // [sigla, nome completo] dei raid dove droppa
-  noset: boolean;                                 // true = raid senza alcun set collezionabile
   got: number;
   total: number;
   pct: number;
@@ -180,7 +178,6 @@ export interface TmogRow {
 export interface TmogGroup {
   key: string;
   name: string;
-  empty?: string;                                 // espansione senza set di classe (es. BfA)
   note?: string;
   rows: TmogRow[];
 }
@@ -189,7 +186,6 @@ export interface TmogClass {
   label: string;
   icon: string;
   groups: TmogGroup[];
-  totals: { slot: string; label: string; got: number; total: number }[];
   got: number;
   total: number;
 }
@@ -215,7 +211,7 @@ export function getTransmog(): TmogClass[] {
 
   return slugs.map((slug) => {
     const startIdx = tmogTierIndex[classStart[slug] ?? ''] ?? 0; // classe assente prima di questo tier
-    const totals = cols.map((c) => ({ slot: c.key, label: c.label, got: 0, total: 0 }));
+    let classGot = 0, classTotal = 0;   // per la percentuale nel chip della classe
 
     const groups: TmogGroup[] = (m.expansions as any[]).map((exp) => {
       // Set di classe precedenti alla classe: non li mostro affatto (il tab parte dal suo primo set).
@@ -224,8 +220,7 @@ export function getTransmog(): TmogClass[] {
       const rows: TmogRow[] = tiers
         .filter((t) => t.exp === exp.key && (t.armorType || (tmogTierIndex[t.key] ?? 0) >= startIdx))
         .map((t) => {
-        const noset = !t.versions || Object.keys(t.versions).length === 0;
-        const cells: TmogCell[] = cols.map((c, ci): TmogCell => {
+        const cells: TmogCell[] = cols.map((c): TmogCell => {
           const label = t.versions?.[c.key];
           // Versione inesistente per questo set → cella tratteggiata.
           if (!label) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na', missing: [] };
@@ -234,16 +229,14 @@ export function getTransmog(): TmogClass[] {
           const cell = collected[slug]?.[t.key]?.[c.key];
           const got = Number((Array.isArray(cell) ? cell[0] : cell) ?? 0);
           const total = Number((Array.isArray(cell) ? cell[1] : undefined) ?? t.pieces);
-          totals[ci].got += got;
-          totals[ci].total += total;
+          classGot += got;
+          classTotal += total;
           return {
             slot: c.key, label, got, total,
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
             missing: (missing[slug]?.[t.key]?.[c.key] ?? []) as string[],
           };
         });
-        // Il "N pz" della riga e' il totale reale di questa classe, non quello generico del tier.
-        const pieces = Math.max(0, ...cells.map((c) => c.total)) || (t.pieces as number);
         // Completamento della riga sulle sole versioni esistenti → tint di sfondo del tier.
         const rowGot = cells.reduce((s, c) => s + c.got, 0);
         const rowTotal = cells.reduce((s, c) => s + c.total, 0);
@@ -251,13 +244,13 @@ export function getTransmog(): TmogClass[] {
         const state: TmogRowState =
           !rowTotal || pct === 0 ? 'empty' : pct >= 100 ? 'full' : pct >= 50 ? 'good' : 'low';
         return {
-          key: t.key, tier: t.tier, name: t.name, pieces,
+          key: t.key, tier: t.tier, name: t.name,
           setName: t.names?.[slug], raids: (t.raids ?? []) as [string, string][],
-          note: t.note, warn: t.warn, noset,
+          note: t.note, warn: t.warn,
           got: rowGot, total: rowTotal, pct, state, cells,
         };
       });
-      return { key: exp.key, name: exp.name, empty: exp.empty, note: exp.note, rows };
+      return { key: exp.key, name: exp.name, note: exp.note, rows };
     }).filter((g) => g.rows.length > 0);
 
     return {
@@ -265,9 +258,8 @@ export function getTransmog(): TmogClass[] {
       label: classLabel(slug),
       icon: `/icons/class/${slug.replace(/-/g, '')}.jpg`,
       groups,
-      totals,
-      got: totals.reduce((s, t) => s + t.got, 0),
-      total: totals.reduce((s, t) => s + t.total, 0),
+      got: classGot,
+      total: classTotal,
     };
   });
 }

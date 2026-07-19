@@ -4,9 +4,9 @@ import { getTransmog, transmogColumns } from '../lib/content';
 
 const classes = getTransmog();
 const cols = transmogColumns;
-const ncols = cols.length + 1; // + colonna Tier
+const ncols = cols.length + 1; // + colonna del nome set
 ---
-<Base title="Transmog" description="Tier set transmog per classe: matrice tier × versione, raggruppata per espansione.">
+<Base title="Transmog" description="Set dei raid per classe: matrice set × versione, raggruppata per espansione.">
   <div class="wrap tmog-wrap">
     <div class="filters row">
       <div class="chips" id="tmog-chips" role="tablist" aria-label="Scegli la classe">
@@ -37,7 +37,6 @@ const ncols = cols.length + 1; // + colonna Tier
               {c.groups.map(g => (
                 <Fragment>
                   <tr class="rsep"><td colspan={ncols}>{g.name}{g.note && <em> — {g.note}</em>}</td></tr>
-                  {g.empty && <tr class="rempty"><td colspan={ncols}>{g.empty}</td></tr>}
                   {g.rows.map(r => {
                     // Senza nome del set il titolo E' gia' il nome del raid: la sigla ripeterebbe e basta.
                     const sigle = r.setName || r.raids.length > 1 ? r.raids : [];
@@ -77,7 +76,6 @@ const ncols = cols.length + 1; // + colonna Tier
 <style>
   .tmog-wrap { max-width: min(1200px, 96vw); }
 
-
   .tmog-panel[hidden] { display: none !important; }
 
   /* Matrice: colonna tier larga e a sinistra, 4 colonne versione strette e centrate. */
@@ -96,7 +94,7 @@ const ncols = cols.length + 1; // + colonna Tier
   .tmog-panel .thead-tier .ico { width: 22px; height: 22px; vertical-align: middle; margin-right: 0.35rem; }
   .tmog-panel .thead-tier span { vertical-align: middle; font-weight: 700; }
 
-  /* Etichetta di riga: tier + raid, su una riga sola che va a capo solo se serve. */
+  /* Etichetta di riga: nome del set + tier + sigle dei raid, a capo solo se serve. */
   .tmog-panel td.rhead { background: var(--surface-2); padding-left: 0.6rem; }
   .tmog-panel .tname { display: inline-flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
   .tmog-panel .tname strong { font-size: 0.78rem; font-variant-numeric: tabular-nums; }
@@ -109,8 +107,6 @@ const ncols = cols.length + 1; // + colonna Tier
     background: var(--surface); color: var(--text-subtle);
     font-size: 0.6rem; font-weight: 700; letter-spacing: 0.03em;
   }
-  /* Icone di riga: avvertenza e nota. Solo icona, il senso sta nel tooltip. */
-
   /* Celle: frazione + barra di completamento, colore per stato. */
   .tmog-panel td.cell { font-variant-numeric: tabular-nums; font-weight: 600; }
   .tmog-panel .frac { display: block; font-size: 0.74rem; line-height: 1.15; }
@@ -136,9 +132,8 @@ const ncols = cols.length + 1; // + colonna Tier
     background: color-mix(in srgb, var(--accent) 13%, var(--surface)); color: var(--accent);
   }
   .tmog-panel tr.rsep em { text-transform: none; letter-spacing: 0; font-weight: 500; opacity: 0.85; }
-  .tmog-panel tr.rempty td { text-align: left; font-size: 0.74rem; color: var(--text-subtle); font-style: italic; padding: 0.5rem 0.65rem; }
 
-  /* Versione inesistente / classe non ancora presente: tratteggio che recede (come il roster) */
+  /* Versione inesistente per questo set: tratteggio che recede (come il roster) */
   .tmog-panel td:has(.na) {
     background-color: color-mix(in srgb, var(--text) 4%, var(--surface));
     background-image: repeating-linear-gradient(45deg,
