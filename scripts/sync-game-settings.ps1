@@ -5,7 +5,14 @@
 $ErrorActionPreference = 'Stop'
 
 $Acc = 'C:\Program Files (x86)\World of Warcraft\_retail_\WTF\Account\STANTUFFO'
-$Src = Join-Path $Acc "Pozzo dell'Eternità\Stantu\config-cache.wtf"
+
+# Il realm sorgente ha una lettera accentata (Pozzo dell'Eternita'): scritta qui
+# verrebbe corrotta da Windows PowerShell 5.1, che legge come ANSI gli .ps1 senza
+# BOM. Cerchiamo la cartella del PG, cosi' il path non dipende dall'encoding.
+$SrcChar = 'Stantu'
+$Src = (Get-ChildItem -LiteralPath $Acc -Recurse -File -Filter 'config-cache.wtf' |
+  Where-Object { $_.Directory.Name -eq $SrcChar -and $_.FullName -notmatch '\\_backup-' } |
+  Select-Object -First 1).FullName
 
 # Chiavi = vere opzioni di gioco da sincronizzare
 $Keys = @(
@@ -21,7 +28,7 @@ $Keys = @(
   'miniDressUpFrame', 'showTokenFrame', 'showTamers', 'dragonRidingRacesFilter'
 )
 
-if (-not (Test-Path -LiteralPath $Src)) { throw "Sorgente (Stantu) non trovata: $Src" }
+if (-not $Src) { throw "Sorgente ($SrcChar) non trovata sotto: $Acc" }
 
 # Estrai i valori di Stantu in una hashtable
 $srcLines = @(Get-Content -LiteralPath $Src)
