@@ -210,8 +210,11 @@ export function getTransmog(): TmogClass[] {
           const label = t.versions?.[c.key];
           // Versione inesistente per questo tier, o classe non ancora esistente → cella scura.
           if (!label || na) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na' };
-          const got = Number(collected[slug]?.[t.key]?.[c.key] ?? 0);
-          const total = t.pieces as number;
+          // Dal gioco: [pezzi posseduti, pezzi totali]. Il totale varia per classe e
+          // per versione, quindi `pieces` del tier resta solo come fallback.
+          const cell = collected[slug]?.[t.key]?.[c.key];
+          const got = Number((Array.isArray(cell) ? cell[0] : cell) ?? 0);
+          const total = Number((Array.isArray(cell) ? cell[1] : undefined) ?? t.pieces);
           totals[ci].got += got;
           totals[ci].total += total;
           return {
@@ -219,7 +222,9 @@ export function getTransmog(): TmogClass[] {
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
           };
         });
-        return { key: t.key, tier: t.tier, name: t.name, pieces: t.pieces, note: t.note, warn: t.warn, na, cells };
+        // Il "N pz" della riga e' il totale reale di questa classe, non quello generico del tier.
+        const pieces = Math.max(0, ...cells.map((c) => c.total)) || (t.pieces as number);
+        return { key: t.key, tier: t.tier, name: t.name, pieces, note: t.note, warn: t.warn, na, cells };
       });
       return { key: exp.key, name: exp.name, empty: exp.empty, note: exp.note, rows };
     });
