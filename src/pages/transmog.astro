@@ -12,8 +12,7 @@ const ncols = cols.length + 1; // + colonna Tier
       <div class="chips" id="tmog-chips" role="tablist" aria-label="Scegli la classe">
         {classes.map((c, i) => (
           <button class:list={['chip', { 'is-active': i === 0 }]} data-class={c.slug} type="button"
-                  role="tab" aria-selected={i === 0 ? 'true' : 'false'}
-                  title={`${c.label}: ${c.got}/${c.total} pezzi collezionati`}>
+                  role="tab" aria-selected={i === 0 ? 'true' : 'false'}>
             <img class="chip-ico" src={c.icon} alt="" width="18" height="18" />
             {c.label}<span class="c">{Math.round((c.got / (c.total || 1)) * 100)}%</span>
           </button>
@@ -40,35 +39,24 @@ const ncols = cols.length + 1; // + colonna Tier
                   <tr class="rsep"><td colspan={ncols}>{g.name}{g.note && <em> — {g.note}</em>}</td></tr>
                   {g.empty && <tr class="rempty"><td colspan={ncols}>{g.empty}</td></tr>}
                   {g.rows.map(r => {
-                    // Set a versione unica: dire «versione Heroic inesistente» sarebbe rumore, il punto e' che ce n'e' una sola.
-                    const solaVersione = r.cells.filter(x => x.state !== 'na').length === 1;
-                    const pz = (n: number) => `${n} ${n === 1 ? 'pezzo' : 'pezzi'}`;
+                    // Senza nome del set il titolo E' gia' il nome del raid: la sigla ripeterebbe e basta.
+                    const sigle = r.setName || r.raids.length > 1 ? r.raids : [];
                     return (
-                    <tr class:list={['trow', `trow--${r.state}`, { 'trow--na': r.na }]}>
-                      <td class="rhead" title={r.na ? `${c.label}: classe non ancora esistente in questa espansione`
-                                              : r.noset ? `${r.name}: nessun set collezionabile`
-                                              : solaVersione ? `${r.name} — ${r.got}/${pz(r.total)} (${Math.round(r.pct)}%)`
-                                              : `${r.name} — ${r.got}/${pz(r.total)} in tutte le versioni (${Math.round(r.pct)}%)`}>
+                    <tr class:list={['trow', `trow--${r.state}`]}>
+                      <td class="rhead">
                         <span class="tname">
-                          <strong>{r.tier}</strong>
-                          <span class="traid">{r.name}</span>
-                          {r.warn && <span class="twarn" title={r.warn}>
-                            <img class="ico" src="/icons/ui/warn.jpg" alt="Nota importante" width="14" height="14" />
-                          </span>}
-                          {r.note && <span class="tnote" title={r.note}>
-                            <img class="ico" src="/icons/ui/shared.jpg" alt="Nota" width="14" height="14" />
+                          <strong>{r.setName ?? r.name}</strong>
+                          {r.setName && r.tier.startsWith('T') && <span class="ttier">({r.tier})</span>}
+                          {sigle.length > 0 && <span class="traid">
+                            {sigle.map(([sigla, raid]) => <abbr title={raid}>{sigla}</abbr>)}
                           </span>}
                         </span>
                       </td>
                       {r.cells.map(cell => (
                         cell.state === 'na'
-                          ? <td><span class="na" title={r.na ? `${c.label}: classe non ancora esistente in questa espansione`
-                                                        : r.noset ? `${r.name}: nessun set collezionabile`
-                                                        : solaVersione ? `${r.name}: set a versione unica`
-                                                        : `${r.name}: nessuna versione «${cols.find(x => x.key === cell.slot)?.label}»`}></span></td>
+                          ? <td><span class="na"></span></td>
                           : <td class:list={['cell', `cell--${cell.state}`]}
-                                title={solaVersione ? `${r.name} — ${cell.got}/${pz(cell.total)}`
-                                                    : `${r.name} · ${cell.label} — ${cell.got}/${pz(cell.total)}`}>
+                                title={cell.missing.length > 0 ? `Mancano: ${cell.missing.join(', ')}` : undefined}>
                               <span class="frac">{cell.got}/{cell.total}</span>
                               <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
                             </td>
@@ -112,11 +100,16 @@ const ncols = cols.length + 1; // + colonna Tier
   .tmog-panel td.rhead { background: var(--surface-2); padding-left: 0.6rem; }
   .tmog-panel .tname { display: inline-flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
   .tmog-panel .tname strong { font-size: 0.78rem; font-variant-numeric: tabular-nums; }
-  .tmog-panel .traid { color: var(--text-muted); font-size: 0.73rem; }
+  .tmog-panel .ttier { color: var(--text-subtle); font-size: 0.7rem; font-variant-numeric: tabular-nums; }
+  /* Sigle dei raid dove droppa il set: il nome per esteso sta nel tooltip dell'<abbr>. */
+  .tmog-panel .traid { display: inline-flex; gap: 0.25rem; flex-wrap: wrap; }
+  .tmog-panel .traid abbr {
+    text-decoration: none; cursor: help;
+    padding: 0.02rem 0.28rem; border: 1px solid var(--border-light); border-radius: 4px;
+    background: var(--surface); color: var(--text-subtle);
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.03em;
+  }
   /* Icone di riga: avvertenza e nota. Solo icona, il senso sta nel tooltip. */
-  .tmog-panel .twarn, .tmog-panel .tnote { display: inline-flex; align-self: center; cursor: help; }
-  .tmog-panel .twarn .ico, .tmog-panel .tnote .ico { width: 14px; height: 14px; border-radius: 3px; }
-  .tmog-panel .tnote { opacity: 0.55; }
 
   /* Celle: frazione + barra di completamento, colore per stato. */
   .tmog-panel td.cell { font-variant-numeric: tabular-nums; font-weight: 600; }

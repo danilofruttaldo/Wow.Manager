@@ -2,9 +2,10 @@
   "_meta": {
     "note": "Collezione tier set / class set transmog, per classe. Fonte di verita' mantenuta a mano.",
     "columns_note": "Le 4 colonne sono SLOT di versione, non difficolta' letterali: prima di Cataclysm gli assi erano altri (10/25 uomini, fazione, Sanctified). Ogni tier dichiara in `versions` l'etichetta REALE di ogni slot che usa; gli slot assenti sono resi come casella non applicabile. L'header mostra i nomi moderni perche' sono il caso dominante (dal T19 in poi tutti e 4 gli slot sono LFR/Normal/Heroic/Mythic).",
-    "rows_note": "Una riga per RAID, non solo per tier: i raid sono elencati in ordine cronologico. `versions` vuoto = raid senza alcun set collezionabile (riga tutta tratteggiata). Da BfA in poi, e nei set LFR di WoD, i set sono per tipo di armatura e non di classe: il sito non lo distingue, quello che conta e' il completamento.",
+    "rows_note": "Una riga per SET. `names` = nome del set per classe. `armorType: true` = set per tipo di armatura, non di classe: non e' vincolato alla classe, quindi resta visibile anche per le classi nate dopo (un Evoker puo' portare il set maglia di Uldir). Sul sito la distinzione non si vede: serve solo a non nascondere la riga.",
     "pieces_note": "Numero pezzi per versione, letto dal journal transmog del gioco (set completo: pezzi tier piu' i pezzi abbinati dello stesso raid). Puo' variare per classe e per versione: il totale reale sta nella coppia [posseduti, totale] di `collected`, `pieces` e' solo il massimo del tier.",
-    "collected_note": "collected[classe][tier][slot] = numero di pezzi posseduti in quella versione. Slot assente o mancante = 0."
+    "collected_note": "collected[classe][tier][slot] = numero di pezzi posseduti in quella versione. Slot assente o mancante = 0.",
+    "missing_note": "missing[classe][set][slot] = elenco dei pezzi NON ancora presi, es. \"Spalle (Ragnaros)\". Generato da scripts/transmog-tier-dump.lua (campo missingJson) insieme a collected: vanno aggiornati insieme, altrimenti il tooltip elenca pezzi gia' presi."
   },
   "columns": [
     {
@@ -76,7 +77,7 @@
   ],
   "classStart": {
     "death-knight": "t7",
-    "monk": "msv",
+    "monk": "t14",
     "demon-hunter": "ohall",
     "evoker": "t29"
   },
@@ -89,6 +90,23 @@
       "pieces": 8,
       "versions": {
         "normal": "Versione unica"
+      },
+      "raids": [
+        [
+          "MC",
+          "Molten Core"
+        ]
+      ],
+      "names": {
+        "druid": "Cenarion Raiment",
+        "hunter": "Giantstalker Armor",
+        "mage": "Arcanist Regalia",
+        "paladin": "Lawbringer Armor",
+        "priest": "Vestments of Prophecy",
+        "rogue": "Nightslayer Armor",
+        "shaman": "Earthfury Raiment",
+        "warlock": "Felheart Raiment",
+        "warrior": "Battlegear of Might"
       }
     },
     {
@@ -99,6 +117,31 @@
       "pieces": 8,
       "versions": {
         "normal": "Versione unica"
+      },
+      "raids": [
+        [
+          "BWL",
+          "Blackwing Lair"
+        ],
+        [
+          "ONY",
+          "Onyxia's Lair"
+        ],
+        [
+          "MC",
+          "Molten Core"
+        ]
+      ],
+      "names": {
+        "druid": "Stormrage Raiment",
+        "hunter": "Dragonstalker Armor",
+        "mage": "Netherwind Regalia",
+        "paladin": "Judgment Armor",
+        "priest": "Vestments of Transcendence",
+        "rogue": "Bloodfang Armor",
+        "shaman": "The Ten Storms",
+        "warlock": "Nemesis Raiment",
+        "warrior": "Battlegear of Wrath"
       }
     },
     {
@@ -109,6 +152,23 @@
       "pieces": 5,
       "versions": {
         "normal": "Versione unica"
+      },
+      "raids": [
+        [
+          "AQ40",
+          "Temple of Ahn'Qiraj"
+        ]
+      ],
+      "names": {
+        "druid": "Genesis Raiment",
+        "hunter": "Striker's Garb",
+        "mage": "Enigma Vestments",
+        "paladin": "Avenger's Battlegear",
+        "priest": "Garments of the Oracle",
+        "rogue": "Deathdealer's Embrace",
+        "shaman": "Stormcaller's Garb",
+        "warlock": "Doomcaller's Attire",
+        "warrior": "Conqueror's Battlegear"
       }
     },
     {
@@ -120,7 +180,23 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "note": "Primo set a 9 pezzi: aggiunge l'anello."
+      "raids": [
+        [
+          "NAXX",
+          "Naxxramas"
+        ]
+      ],
+      "names": {
+        "druid": "Dreamwalker Raiment",
+        "hunter": "Cryptstalker Armor",
+        "mage": "Frostfire Regalia",
+        "paladin": "Redemption Armor",
+        "priest": "Vestments of Faith",
+        "rogue": "Bonescythe Armor",
+        "shaman": "The Earthshatterer",
+        "warlock": "Plagueheart Raiment",
+        "warrior": "Dreadnaught's Battlegear"
+      }
     },
     {
       "key": "t4",
@@ -130,6 +206,31 @@
       "pieces": 5,
       "versions": {
         "normal": "Versione unica"
+      },
+      "raids": [
+        [
+          "KARA",
+          "Karazhan"
+        ],
+        [
+          "GRUUL",
+          "Gruul's Lair"
+        ],
+        [
+          "MAGT",
+          "Magtheridon's Lair"
+        ]
+      ],
+      "names": {
+        "druid": "Malorne Regalia",
+        "hunter": "Demon Stalker Armor",
+        "mage": "Aldor Regalia",
+        "paladin": "Justicar Armor",
+        "priest": "Incarnate Raiment",
+        "rogue": "Netherblade",
+        "shaman": "Cyclone Regalia",
+        "warlock": "Voidheart Raiment",
+        "warrior": "Warbringer Armor"
       }
     },
     {
@@ -140,6 +241,27 @@
       "pieces": 5,
       "versions": {
         "normal": "Versione unica"
+      },
+      "raids": [
+        [
+          "SSC",
+          "Serpentshrine Cavern"
+        ],
+        [
+          "TK",
+          "Tempest Keep"
+        ]
+      ],
+      "names": {
+        "druid": "Nordrassil Regalia",
+        "hunter": "Rift Stalker Armor",
+        "mage": "Tirisfal Regalia",
+        "paladin": "Crystalforge Armor",
+        "priest": "Avatar Raiment",
+        "rogue": "Deathmantle",
+        "shaman": "Cataclysm Regalia",
+        "warlock": "Corruptor Raiment",
+        "warrior": "Destroyer Armor"
       }
     },
     {
@@ -151,7 +273,32 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "note": "5 pezzi base + 3 (polsi, cintura, stivali) da Sunwell in 2.4. I 3 pezzi Sunwell non combaciano visivamente col set base."
+      "note": "5 pezzi base + 3 (polsi, cintura, stivali) da Sunwell in 2.4. I 3 pezzi Sunwell non combaciano visivamente col set base.",
+      "raids": [
+        [
+          "MH",
+          "Battle for Mount Hyjal"
+        ],
+        [
+          "BT",
+          "Black Temple"
+        ],
+        [
+          "SWP",
+          "Sunwell Plateau"
+        ]
+      ],
+      "names": {
+        "druid": "Thunderheart Regalia",
+        "hunter": "Gronnstalker's Armor",
+        "mage": "Tempest Regalia",
+        "paladin": "Lightbringer Armor",
+        "priest": "Vestments of Absolution",
+        "rogue": "Slayer's Armor",
+        "shaman": "Skyshatter Regalia",
+        "warlock": "Malefic Raiment",
+        "warrior": "Onslaught Armor"
+      }
     },
     {
       "key": "t7",
@@ -163,7 +310,29 @@
         "normal": "Heroes' (10 uomini)",
         "heroic": "Valorous (25 uomini)"
       },
-      "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale."
+      "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale.",
+      "raids": [
+        [
+          "NAXX",
+          "Naxxramas (livello 80)"
+        ],
+        [
+          "OS",
+          "Obsidian Sanctum"
+        ]
+      ],
+      "names": {
+        "death-knight": "Scourgeborne Battlegear",
+        "druid": "Dreamwalker Battlegear",
+        "hunter": "Cryptstalker Battlegear",
+        "mage": "Frostfire Garb",
+        "paladin": "Redemption Battlegear",
+        "priest": "Garb of Faith",
+        "rogue": "Bonescythe Battlegear",
+        "shaman": "Earthshatter Battlegear",
+        "warlock": "Plagueheart Garb",
+        "warrior": "Dreadnaught Battlegear"
+      }
     },
     {
       "key": "t8",
@@ -174,6 +343,24 @@
       "versions": {
         "normal": "Valorous (10 uomini)",
         "heroic": "Conqueror's (25 uomini)"
+      },
+      "raids": [
+        [
+          "ULD",
+          "Ulduar"
+        ]
+      ],
+      "names": {
+        "death-knight": "Darkruned Battlegear",
+        "druid": "Nightsong Battlegear",
+        "hunter": "Scourgestalker Battlegear",
+        "mage": "Kirin Tor Garb",
+        "paladin": "Aegis Battlegear",
+        "priest": "Sanctification Garb",
+        "rogue": "Terrorblade Battlegear",
+        "shaman": "Worldbreaker Battlegear",
+        "warlock": "Deathbringer Garb",
+        "warrior": "Siegebreaker Battlegear"
       }
     },
     {
@@ -186,7 +373,25 @@
         "normal": "Alleanza",
         "heroic": "Orda"
       },
-      "warn": "Anomalia: qui l'asse di variazione e' la FAZIONE, non la difficolta'. I 3 item level condividono lo stesso aspetto."
+      "warn": "Anomalia: qui l'asse di variazione e' la FAZIONE, non la difficolta'. I 3 item level condividono lo stesso aspetto.",
+      "raids": [
+        [
+          "TOC",
+          "Trial of the Crusader"
+        ]
+      ],
+      "names": {
+        "death-knight": "Thassarian's / Koltira's Battlegear",
+        "druid": "Malfurion's / Runetotem's Battlegear",
+        "hunter": "Windrunner's Battlegear / Pursuit",
+        "mage": "Khadgar's / Sunstrider's Regalia",
+        "paladin": "Turalyon's / Liadrin's Battlegear",
+        "priest": "Velen's / Zabra's Regalia",
+        "rogue": "VanCleef's / Garona's Battlegear",
+        "shaman": "Nobundo's / Thrall's Battlegear",
+        "warlock": "Kel'Thuzad's / Gul'dan's Regalia",
+        "warrior": "Wrynn's / Hellscream's Battlegear"
+      }
     },
     {
       "key": "t10",
@@ -198,6 +403,24 @@
         "normal": "Base",
         "heroic": "Sanctified (10)",
         "mythic": "Sanctified (25)"
+      },
+      "raids": [
+        [
+          "ICC",
+          "Icecrown Citadel"
+        ]
+      ],
+      "names": {
+        "death-knight": "Scourgelord's Battlegear",
+        "druid": "Lasherweave Battlegear",
+        "hunter": "Ahn'Kahar Blood Hunter's Battlegear",
+        "mage": "Bloodmage's Regalia",
+        "paladin": "Lightsworn Battlegear",
+        "priest": "Crimson Acolyte's Raiment",
+        "rogue": "Shadowblade's Battlegear",
+        "shaman": "Frost Witch's Battlegear",
+        "warlock": "Dark Coven's Regalia",
+        "warrior": "Ymirjar Lord's Battlegear"
       }
     },
     {
@@ -209,6 +432,32 @@
       "versions": {
         "normal": "Normal",
         "heroic": "Heroic"
+      },
+      "raids": [
+        [
+          "BWD",
+          "Blackwing Descent"
+        ],
+        [
+          "BOT",
+          "Bastion of Twilight"
+        ],
+        [
+          "TFW",
+          "Throne of the Four Winds"
+        ]
+      ],
+      "names": {
+        "death-knight": "Magma Plated Battlegear",
+        "druid": "Stormrider's Battlegarb",
+        "hunter": "Lightning-Charged Battlegear",
+        "mage": "Firelord's Vestments",
+        "paladin": "Reinforced Sapphirium Battleplate",
+        "priest": "Mercurial Regalia",
+        "rogue": "Wind Dancer's Regalia",
+        "shaman": "Battlegear of the Raging Elements",
+        "warlock": "Shadowflame Regalia",
+        "warrior": "Earthen Battleplate"
       }
     },
     {
@@ -220,6 +469,24 @@
       "versions": {
         "normal": "Normal",
         "heroic": "Heroic"
+      },
+      "raids": [
+        [
+          "FL",
+          "Firelands"
+        ]
+      ],
+      "names": {
+        "death-knight": "Elementium Deathplate Battlegear",
+        "druid": "Obsidian Arborweave Battlegarb",
+        "hunter": "Flamewaker's Battlegear",
+        "mage": "Firehawk Robes of Conflagration",
+        "paladin": "Battleplate of Immolation",
+        "priest": "Regalia of the Cleansing Flame",
+        "rogue": "Vestments of the Dark Phoenix",
+        "shaman": "Volcanic Battlegear",
+        "warlock": "Balespider's Burning Vestments",
+        "warrior": "Molten Giant Battleplate"
       }
     },
     {
@@ -233,16 +500,25 @@
         "normal": "Normal",
         "heroic": "Heroic"
       },
-      "note": "Primo tier in assoluto con versione LFR."
-    },
-    {
-      "key": "msv",
-      "tier": "5.0.4",
-      "name": "Mogu'shan Vaults",
-      "exp": "mop",
-      "pieces": 0,
-      "versions": {},
-      "note": "Nessun token tier: il T14 arriva tutto da Heart of Fear e Terrace of Endless Spring."
+      "note": "Primo tier in assoluto con versione LFR.",
+      "raids": [
+        [
+          "DS",
+          "Dragon Soul"
+        ]
+      ],
+      "names": {
+        "death-knight": "Necrotic Boneplate Battlegear",
+        "druid": "Deep Earth Battlegarb",
+        "hunter": "Wyrmstalker Battlegear",
+        "mage": "Time Lord's Regalia",
+        "paladin": "Battleplate of Radiant Glory",
+        "priest": "Regalia of Dying Light",
+        "rogue": "Blackfang Battleweave",
+        "shaman": "Spiritwalker's Battlegear",
+        "warlock": "Vestments of the Faceless Shroud",
+        "warrior": "Colossal Dragonplate Battlegear"
+      }
     },
     {
       "key": "t14",
@@ -255,7 +531,30 @@
         "normal": "Normal",
         "heroic": "Heroic"
       },
-      "note": "Mogu'shan Vaults non droppa token tier."
+      "note": "Mogu'shan Vaults non droppa token tier.",
+      "raids": [
+        [
+          "HOF",
+          "Heart of Fear"
+        ],
+        [
+          "TOES",
+          "Terrace of Endless Spring"
+        ]
+      ],
+      "names": {
+        "death-knight": "Lost Catacomb",
+        "druid": "Eternal Blossom",
+        "hunter": "Yaungol Slayer Battlegear",
+        "mage": "Regalia of the Burning Scroll",
+        "monk": "Red Crane",
+        "paladin": "White Tiger",
+        "priest": "Guardian Serpent",
+        "rogue": "Battlegear of the Thousandfold Blades",
+        "shaman": "Firebird",
+        "warlock": "Sha-Skin Regalia",
+        "warrior": "Resounding Rings"
+      }
     },
     {
       "key": "t15",
@@ -267,6 +566,25 @@
         "lfr": "Raid Finder",
         "normal": "Normal",
         "heroic": "Heroic"
+      },
+      "raids": [
+        [
+          "TOT",
+          "Throne of Thunder"
+        ]
+      ],
+      "names": {
+        "death-knight": "All-Consuming Maw",
+        "druid": "Haunted Forest",
+        "hunter": "Battlegear of the Saurok Stalker",
+        "mage": "Regalia of the Chromatic Hydra",
+        "monk": "Fire-Charm",
+        "paladin": "Lightning Emperor",
+        "priest": "Exorcist",
+        "rogue": "Nine-Tail Battlegear",
+        "shaman": "Witch Doctor",
+        "warlock": "Regalia of the Thousand Hells",
+        "warrior": "Last Mogu"
       }
     },
     {
@@ -280,16 +598,26 @@
         "normal": "Normal (ex Flex)",
         "heroic": "Heroic"
       },
-      "note": "4 item level ma 3 aspetti: Flex riusava l'aspetto Normal. La 6.0.2 ha rinominato Flex->Normal, Normal->Heroic, Heroic->Mythic."
-    },
-    {
-      "key": "hm",
-      "tier": "6.0",
-      "name": "Highmaul",
-      "exp": "wod",
-      "pieces": 0,
-      "versions": {},
-      "note": "Unico raid di WoD senza set di classe."
+      "note": "4 item level ma 3 aspetti: Flex riusava l'aspetto Normal. La 6.0.2 ha rinominato Flex->Normal, Normal->Heroic, Heroic->Mythic.",
+      "raids": [
+        [
+          "SOO",
+          "Siege of Orgrimmar"
+        ]
+      ],
+      "names": {
+        "death-knight": "Cyclopean Dread",
+        "druid": "Shattered Vale",
+        "hunter": "Battlegear of the Unblinking Vigil",
+        "mage": "Chronomancer Regalia",
+        "monk": "Seven Sacred Seals",
+        "paladin": "Winged Triumph",
+        "priest": "Ternion Glory",
+        "rogue": "Barbed Assassin Battlegear",
+        "shaman": "Celestial Harmony",
+        "warlock": "Regalia of the Horned Nightmare",
+        "warrior": "Prehistoric Marauder"
+      }
     },
     {
       "key": "t17",
@@ -301,6 +629,25 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
+      },
+      "raids": [
+        [
+          "BRF",
+          "Blackrock Foundry"
+        ]
+      ],
+      "names": {
+        "death-knight": "Ogreskull Boneplate Battlegear",
+        "druid": "Living Wood Battlegear",
+        "hunter": "Rylakstalker's Battlegear",
+        "mage": "Arcanoshatter Regalia",
+        "monk": "Battlegear of the Somber Gaze",
+        "paladin": "Battlegear of Guiding Light",
+        "priest": "Soul Priest's Raiment",
+        "rogue": "Poisoner's Battlegear",
+        "shaman": "Windspeaker's Regalia",
+        "warlock": "Shadow Council's Garb",
+        "warrior": "Blackhand's Battlegear"
       }
     },
     {
@@ -312,7 +659,29 @@
       "versions": {
         "lfr": "Raid Finder"
       },
-      "note": "In LFR non droppa il T17: al suo posto ci sono 4 set per tipo di armatura, da 6 pezzi."
+      "note": "In LFR non droppa il T17: al suo posto ci sono 4 set per tipo di armatura, da 6 pezzi.",
+      "raids": [
+        [
+          "BRF",
+          "Blackrock Foundry"
+        ]
+      ],
+      "names": {
+        "death-knight": "Blacksteel Battleplate",
+        "demon-hunter": "Sootfur Garb",
+        "druid": "Sootfur Garb",
+        "evoker": "Ashlink Armor",
+        "hunter": "Ashlink Armor",
+        "mage": "Ebonflame Raiment",
+        "monk": "Sootfur Garb",
+        "paladin": "Blacksteel Battleplate",
+        "priest": "Ebonflame Raiment",
+        "rogue": "Sootfur Garb",
+        "shaman": "Ashlink Armor",
+        "warlock": "Ebonflame Raiment",
+        "warrior": "Blacksteel Battleplate"
+      },
+      "armorType": true
     },
     {
       "key": "t18",
@@ -325,7 +694,25 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
-      "warn": "Nessuna versione LFR."
+      "raids": [
+        [
+          "HFC",
+          "Hellfire Citadel"
+        ]
+      ],
+      "names": {
+        "death-knight": "Demongaze Armor",
+        "druid": "Oathclaw Wargarb",
+        "hunter": "Battlegear of the Savage Hunt",
+        "mage": "Raiment of the Arcanic Conclave",
+        "monk": "Battlewrap of the Hurricane's Eye",
+        "paladin": "Watch of the Ceaseless Vigil",
+        "priest": "Attire of Piety",
+        "rogue": "Felblade Armor",
+        "shaman": "Embrace of the Living Mountain",
+        "warlock": "Deathrattle Regalia",
+        "warrior": "Battlegear of Iron Wrath"
+      }
     },
     {
       "key": "hfc-lfr",
@@ -336,7 +723,29 @@
       "versions": {
         "lfr": "Raid Finder"
       },
-      "note": "In LFR non droppa il T18: al suo posto ci sono 4 set per tipo di armatura, da 6 pezzi."
+      "note": "In LFR non droppa il T18: al suo posto ci sono 4 set per tipo di armatura, da 6 pezzi.",
+      "raids": [
+        [
+          "HFC",
+          "Hellfire Citadel"
+        ]
+      ],
+      "names": {
+        "death-knight": "Demonbreaker Wargear",
+        "demon-hunter": "Ironpelt Armor",
+        "druid": "Ironpelt Armor",
+        "evoker": "Rancorbite Battlegear",
+        "hunter": "Rancorbite Battlegear",
+        "mage": "Felfume Raiment",
+        "monk": "Ironpelt Armor",
+        "paladin": "Demonbreaker Wargear",
+        "priest": "Felfume Raiment",
+        "rogue": "Ironpelt Armor",
+        "shaman": "Rancorbite Battlegear",
+        "warlock": "Felfume Raiment",
+        "warrior": "Demonbreaker Wargear"
+      },
+      "armorType": true
     },
     {
       "key": "ohall",
@@ -347,28 +756,27 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "note": "Set di classe della Class Hall, colorazione unica: si compra dal quartermaster, uno slot alla volta, sbloccando un criterio diverso per pezzo."
-    },
-    {
-      "key": "en",
-      "tier": "7.0.3",
-      "name": "The Emerald Nightmare",
-      "exp": "legion",
-      "pieces": 0,
-      "versions": {}
-    },
-    {
-      "key": "tov",
-      "tier": "7.1",
-      "name": "Trial of Valor",
-      "exp": "legion",
-      "pieces": 0,
-      "versions": {}
+      "note": "Set di classe della Class Hall, colorazione unica: si compra dal quartermaster, uno slot alla volta, sbloccando un criterio diverso per pezzo.",
+      "raids": [],
+      "names": {
+        "death-knight": "Deathlord's Battleplate",
+        "demon-hunter": "Battlegear of the Shattered Abyss",
+        "druid": "Dreamgrove Raiment",
+        "hunter": "Guise of the Unseen Path",
+        "mage": "Vesture of Tirisgarde",
+        "monk": "Grandmaster's Finery",
+        "paladin": "Battleplate of the Silver Hand",
+        "priest": "Regalia of the High Priest",
+        "rogue": "Battlegear of the Uncrowned",
+        "shaman": "Raiment of the Farseer",
+        "warlock": "Vestments of the Black Harvest",
+        "warrior": "Battlelord's Plate"
+      }
     },
     {
       "key": "t19",
       "tier": "T19",
-      "name": "The Nighthold",
+      "name": "The Emerald Nightmare · Trial of Valor · The Nighthold",
       "exp": "legion",
       "pieces": 6,
       "versions": {
@@ -377,7 +785,35 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
-      "note": "Primo set a 6 pezzi dai tempi del T6: lo slot in piu' serviva a non competere con le leggendarie."
+      "note": "Il set di classe da 6 pezzi viene tutto dal Nighthold. Emerald Nightmare da' solo pezzi «lookalike» che ne riprendono l'aspetto negli slot scoperti; Trial of Valor da' il set «Chosen Dead» per tipo di armatura, 9 slot.",
+      "raids": [
+        [
+          "EN",
+          "The Emerald Nightmare"
+        ],
+        [
+          "TOV",
+          "Trial of Valor"
+        ],
+        [
+          "NH",
+          "The Nighthold"
+        ]
+      ],
+      "names": {
+        "death-knight": "Dreadwyrm Battleplate",
+        "demon-hunter": "Vestment of Second Sight",
+        "druid": "Garb of the Astral Warden",
+        "hunter": "Eagletalon Battlegear",
+        "mage": "Regalia of Everburning Knowledge",
+        "monk": "Vestments of Enveloped Dissonance",
+        "paladin": "Battleplate of the Highlord",
+        "priest": "Vestments of the Purifier",
+        "rogue": "Doomblade Battlegear",
+        "shaman": "Regalia of Bound Elements",
+        "warlock": "Legacy of Azj'Aqir",
+        "warrior": "Warplate of the Obsidian Aspect"
+      }
     },
     {
       "key": "t20",
@@ -390,6 +826,26 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
+      },
+      "raids": [
+        [
+          "TOS",
+          "Tomb of Sargeras"
+        ]
+      ],
+      "names": {
+        "death-knight": "Gravewarden Armaments",
+        "demon-hunter": "Demonbane Armor",
+        "druid": "Stormheart Raiment",
+        "hunter": "Wildstalker Armor",
+        "mage": "Regalia of the Arcane Tempest",
+        "monk": "Xuen's Battlegear",
+        "paladin": "Radiant Lightbringer Armor",
+        "priest": "Vestments of Blind Absolution",
+        "rogue": "Fanged Slayer's Armor",
+        "shaman": "Regalia of the Skybreaker",
+        "warlock": "Diabolic Raiment",
+        "warrior": "Titanic Onslaught Armor"
       }
     },
     {
@@ -403,6 +859,26 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
+      },
+      "raids": [
+        [
+          "ANT",
+          "Antorus, the Burning Throne"
+        ]
+      ],
+      "names": {
+        "death-knight": "Dreadwake Armor",
+        "demon-hunter": "Felreaper Vestments",
+        "druid": "Bearmantle Battlegear",
+        "hunter": "Serpentstalker Guise",
+        "mage": "Runebound Regalia",
+        "monk": "Chi-Ji's Battlegear",
+        "paladin": "Light's Vanguard Battleplate",
+        "priest": "Gilded Seraph's Raiment",
+        "rogue": "Regalia of the Dashing Scoundrel",
+        "shaman": "Garb of Venerated Spirits",
+        "warlock": "Grim Inquisitor's Regalia",
+        "warrior": "Juggernaut Battlegear"
       }
     },
     {
@@ -416,7 +892,29 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
-      }
+      },
+      "raids": [
+        [
+          "ULDIR",
+          "Uldir"
+        ]
+      ],
+      "names": {
+        "death-knight": "Eternal Curator's Protectorate",
+        "demon-hunter": "Eternal Curator's Garb",
+        "druid": "Eternal Curator's Garb",
+        "evoker": "Eternal Curator's Chains",
+        "hunter": "Eternal Curator's Chains",
+        "mage": "Eternal Curator's Vestment",
+        "monk": "Eternal Curator's Garb",
+        "paladin": "Eternal Curator's Protectorate",
+        "priest": "Eternal Curator's Vestment",
+        "rogue": "Eternal Curator's Garb",
+        "shaman": "Eternal Curator's Chains",
+        "warlock": "Eternal Curator's Vestment",
+        "warrior": "Eternal Curator's Protectorate"
+      },
+      "armorType": true
     },
     {
       "key": "bod",
@@ -429,16 +927,29 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
-      }
-    },
-    {
-      "key": "cos",
-      "tier": "8.1.5",
-      "name": "Crucible of Storms",
-      "exp": "bfa",
-      "pieces": 0,
-      "versions": {},
-      "note": "Mini-raid da 2 boss: solo loot sciolto, nessun set."
+      },
+      "raids": [
+        [
+          "BOD",
+          "Battle of Dazar'alor"
+        ]
+      ],
+      "names": {
+        "death-knight": "Gravelord's Direplate",
+        "demon-hunter": "Boneblade Battlegear",
+        "druid": "Boneblade Battlegear",
+        "evoker": "Death-Devourer Vestments",
+        "hunter": "Death-Devourer Vestments",
+        "mage": "Soul Reaper's Raiment",
+        "monk": "Boneblade Battlegear",
+        "paladin": "Gravelord's Direplate",
+        "priest": "Soul Reaper's Raiment",
+        "rogue": "Boneblade Battlegear",
+        "shaman": "Death-Devourer Vestments",
+        "warlock": "Soul Reaper's Raiment",
+        "warrior": "Gravelord's Direplate"
+      },
+      "armorType": true
     },
     {
       "key": "tep",
@@ -451,7 +962,29 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
-      }
+      },
+      "raids": [
+        [
+          "TEP",
+          "The Eternal Palace"
+        ]
+      ],
+      "names": {
+        "death-knight": "Naga Lord's Warplate",
+        "demon-hunter": "Razorfin Regalia",
+        "druid": "Razorfin Regalia",
+        "evoker": "Queen's Guard Scalemail",
+        "hunter": "Queen's Guard Scalemail",
+        "mage": "Frilled Harbinger's Vestments",
+        "monk": "Razorfin Regalia",
+        "paladin": "Naga Lord's Warplate",
+        "priest": "Frilled Harbinger's Vestments",
+        "rogue": "Razorfin Regalia",
+        "shaman": "Queen's Guard Scalemail",
+        "warlock": "Frilled Harbinger's Vestments",
+        "warrior": "Naga Lord's Warplate"
+      },
+      "armorType": true
     },
     {
       "key": "nya",
@@ -464,7 +997,14 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
-      }
+      },
+      "raids": [
+        [
+          "NYA",
+          "Ny'alotha, the Waking City"
+        ]
+      ],
+      "armorType": true
     },
     {
       "key": "nathria",
@@ -477,7 +1017,29 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
-      }
+      },
+      "raids": [
+        [
+          "CN",
+          "Castle Nathria"
+        ]
+      ],
+      "names": {
+        "death-knight": "Grand Sentinel's Greatplate",
+        "demon-hunter": "Sin Slayer's Leathers",
+        "druid": "Sin Slayer's Leathers",
+        "evoker": "Inexorable Castigator's Guise",
+        "hunter": "Inexorable Castigator's Guise",
+        "mage": "Depraved Beguiler's Visage",
+        "monk": "Sin Slayer's Leathers",
+        "paladin": "Grand Sentinel's Greatplate",
+        "priest": "Depraved Beguiler's Visage",
+        "rogue": "Sin Slayer's Leathers",
+        "shaman": "Inexorable Castigator's Guise",
+        "warlock": "Depraved Beguiler's Visage",
+        "warrior": "Grand Sentinel's Greatplate"
+      },
+      "armorType": true
     },
     {
       "key": "sod",
@@ -490,7 +1052,29 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
-      }
+      },
+      "raids": [
+        [
+          "SOD",
+          "Sanctum of Domination"
+        ]
+      ],
+      "names": {
+        "death-knight": "Soulforged Dreadplate",
+        "demon-hunter": "Sanctum Assailant's Trappings",
+        "druid": "Sanctum Assailant's Trappings",
+        "evoker": "Tower Ascendant's Battlegear",
+        "hunter": "Tower Ascendant's Battlegear",
+        "mage": "Dark Supplicant's Garb",
+        "monk": "Sanctum Assailant's Trappings",
+        "paladin": "Soulforged Dreadplate",
+        "priest": "Dark Supplicant's Garb",
+        "rogue": "Sanctum Assailant's Trappings",
+        "shaman": "Tower Ascendant's Battlegear",
+        "warlock": "Dark Supplicant's Garb",
+        "warrior": "Soulforged Dreadplate"
+      },
+      "armorType": true
     },
     {
       "key": "t28",
@@ -504,7 +1088,27 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
-      "note": "Ritorno dei tier set in 9.2, insieme al Creation Catalyst."
+      "note": "Ritorno dei tier set in 9.2, insieme al Creation Catalyst.",
+      "raids": [
+        [
+          "SOTFO",
+          "Sepulcher of the First Ones"
+        ]
+      ],
+      "names": {
+        "death-knight": "The First Eidolon's Soulsteel",
+        "demon-hunter": "Mercurial Punisher's Painweave",
+        "druid": "Tapestry of the Fixed Stars",
+        "hunter": "Godstalker's Battlegear",
+        "mage": "Erudite Occultist's Vestments",
+        "monk": "Garb of the Grand Upwelling",
+        "paladin": "Luminous Chevalier's Gallantry",
+        "priest": "Habiliments of the Empyrean",
+        "rogue": "Soulblade Shadowhide",
+        "shaman": "Theurgic Starspeaker's Regalia",
+        "warlock": "Shroud of the Demon Star",
+        "warrior": "Armaments of the Infinite Infantry"
+      }
     },
     {
       "key": "t29",
@@ -517,6 +1121,27 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
+      },
+      "raids": [
+        [
+          "VOTI",
+          "Vault of the Incarnates"
+        ]
+      ],
+      "names": {
+        "death-knight": "Haunted Frostbrood Remains",
+        "demon-hunter": "Skybound Avenger's Flightwear",
+        "druid": "Lost Landcaller's Vesture",
+        "evoker": "Scales of the Awakened",
+        "hunter": "Stormwing Harrier's Camouflage",
+        "mage": "Bindings of the Crystal Scholar",
+        "monk": "Wrappings of the Waking Fist",
+        "paladin": "Virtuous Silver Cataphract",
+        "priest": "Draconic Hierophant's Finery",
+        "rogue": "Vault Delver's Toolkit",
+        "shaman": "Elements of Infused Earth",
+        "warlock": "Scalesworn Cultist's Habit",
+        "warrior": "Stones of the Walking Mountain"
       }
     },
     {
@@ -530,6 +1155,27 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
+      },
+      "raids": [
+        [
+          "ABE",
+          "Aberrus, the Shadowed Crucible"
+        ]
+      ],
+      "names": {
+        "death-knight": "Lingering Phantom's Encasement",
+        "demon-hunter": "Kinslayer's Burdens",
+        "druid": "Strands of the Autumn Blaze",
+        "evoker": "Legacy of Obsidian Secrets",
+        "hunter": "Ashen Predator's Scaleform",
+        "mage": "Underlight Conjurer's Brilliance",
+        "monk": "Fangs of the Vermillion Forge",
+        "paladin": "Heartfire Sentinel's Authority",
+        "priest": "The Furnace Seraph's Verdict",
+        "rogue": "Lurking Specter's Shadeweave",
+        "shaman": "Runes of the Cinderwolf",
+        "warlock": "Sinister Savant's Cursethreads",
+        "warrior": "Irons of the Onyx Crucible"
       }
     },
     {
@@ -544,7 +1190,28 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
-      "note": "In Season 4 esistono anche le varianti 'Awakened'."
+      "note": "In Season 4 esistono anche le varianti 'Awakened'.",
+      "raids": [
+        [
+          "AMI",
+          "Amirdrassil, the Dream's Hope"
+        ]
+      ],
+      "names": {
+        "death-knight": "Risen Nightmare's Gravemantle",
+        "demon-hunter": "Screaming Torchfiend's Brutality",
+        "druid": "Benevolent Embersage's Guidance",
+        "evoker": "Weyrnkeeper's Timeless Vigil",
+        "hunter": "Blazing Dreamstalker's Trophies",
+        "mage": "Wayward Chronomancer's Clockwork",
+        "monk": "Mystic Heron's Discipline",
+        "paladin": "Zealous Pyreknight's Ardor",
+        "priest": "Blessings of Lunar Communion",
+        "rogue": "Lucid Shadewalker's Silence",
+        "shaman": "Vision of the Greatwolf Outcast",
+        "warlock": "Devout Ashdevil's Pactweave",
+        "warrior": "Molten Vanguard's Mortarplate"
+      }
     },
     {
       "key": "t32",
@@ -557,6 +1224,27 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
+      },
+      "raids": [
+        [
+          "NP",
+          "Nerub-ar Palace"
+        ]
+      ],
+      "names": {
+        "death-knight": "Exhumed Centurion's Relics",
+        "demon-hunter": "Husk of the Hypogeal Nemesis",
+        "druid": "Mane of the Greatlynx",
+        "evoker": "Destroyer's Scarred Wards",
+        "hunter": "Lightless Scavenger's Necessities",
+        "mage": "Sparks of Violet Rebirth",
+        "monk": "Gatecrasher's Fortitude",
+        "paladin": "Entombed Seraph's Radiance",
+        "priest": "Shards of Living Luster",
+        "rogue": "K'areshi Phantom's Bindings",
+        "shaman": "Waves of the Forgotten Reservoir",
+        "warlock": "Rites of the Hexflame Coven",
+        "warrior": "Warsculptor's Masterwork"
       }
     },
     {
@@ -570,6 +1258,27 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
+      },
+      "raids": [
+        [
+          "LOU",
+          "Liberation of Undermine"
+        ]
+      ],
+      "names": {
+        "death-knight": "Cauldron Champion's Encore",
+        "demon-hunter": "Fel-Dealer's Contraband",
+        "druid": "Roots of Reclaiming Blight",
+        "evoker": "Opulent Treasurescale's Hoard",
+        "hunter": "Tireless Collector's Bounties",
+        "mage": "Jewels of the Aspectral Emissary",
+        "monk": "Ageless Serpent's Foresight",
+        "paladin": "Oath of the Aureate Sentry",
+        "priest": "Confessor's Unshakable Virtue",
+        "rogue": "Spectral Gambler's Last Call",
+        "shaman": "Currents of the Gale Sovereign",
+        "warlock": "Spliced Fiendtrader's Influence",
+        "warrior": "Enforcer's Backalley Brawlplate"
       }
     },
     {
@@ -583,6 +1292,27 @@
         "normal": "Normal",
         "heroic": "Heroic",
         "mythic": "Mythic"
+      },
+      "raids": [
+        [
+          "MO",
+          "Manaforge Omega"
+        ]
+      ],
+      "names": {
+        "death-knight": "Hollow Sentinel's Wake",
+        "demon-hunter": "Charhound's Vicious Hunt",
+        "druid": "Ornaments of the Mother Eagle",
+        "evoker": "Spellweaver's Immaculate Design",
+        "hunter": "Midnight Herald's Pledge",
+        "mage": "Augur's Ephemeral Plumage",
+        "monk": "Crash of Fallen Storms",
+        "paladin": "Vows of the Lucent Battalion",
+        "priest": "Eulogy to a Dying Star",
+        "rogue": "Shroud of the Sudden Eclipse",
+        "shaman": "Howls of Channeled Fury",
+        "warlock": "Inquisitor's Feast of Madness",
+        "warrior": "Chains of the Living Weapon"
       }
     },
     {
@@ -597,15 +1327,36 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
-      "note": "Un solo set per i tre raid di lancio: 4 slot dal Voidspire, il petto dal Dreamrift, un omni-token dal boss finale di March on Quel'Danas."
-    },
-    {
-      "key": "sporefall",
-      "tier": "12.0.7",
-      "name": "Sporefall",
-      "exp": "midnight",
-      "pieces": 0,
-      "versions": {}
+      "note": "Un solo set per i tre raid di lancio: 4 slot dal Voidspire, il petto dal Dreamrift, un omni-token dal boss finale di March on Quel'Danas.",
+      "raids": [
+        [
+          "VS",
+          "The Voidspire"
+        ],
+        [
+          "DR",
+          "The Dreamrift"
+        ],
+        [
+          "MQD",
+          "March on Quel'Danas"
+        ]
+      ],
+      "names": {
+        "death-knight": "Relentless Rider's Lament",
+        "demon-hunter": "Devouring Reaver's Sheathe",
+        "druid": "Sprouts of the Luminous Bloom",
+        "evoker": "Livery of the Black Talon",
+        "hunter": "Primal Sentry's Camouflage",
+        "mage": "Voidbreaker's Accordance",
+        "monk": "Way of Ra-den's Chosen",
+        "paladin": "Luminant Verdict's Vestments",
+        "priest": "Blind Oath's Burden",
+        "rogue": "Motley of the Grim Jest",
+        "shaman": "Mantle of the Primal Core",
+        "warlock": "Reign of the Abyssal Immolator",
+        "warrior": "Rage of the Night Ender"
+      }
     }
   ],
   "collected": {
@@ -5101,5 +5852,6 @@
         ]
       }
     }
-  }
+  },
+  "missing": {}
 }

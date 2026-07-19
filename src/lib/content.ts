@@ -157,6 +157,7 @@ export interface TmogCell {
   got: number;
   total: number;
   state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
+  missing: string[];                              // pezzi non ancora presi, es. "Spalle (Ragnaros)"
 }
 // Sfondo della riga per completamento: nessun pezzo / <50% / >=50% / completo.
 export type TmogRowState = 'empty' | 'low' | 'good' | 'full';
@@ -167,8 +168,9 @@ export interface TmogRow {
   pieces: number;
   note?: string;
   warn?: string;
+  setName?: string;                               // nome del set per QUESTA classe (varia col tab)
+  raids: [string, string][];                      // [sigla, nome completo] dei raid dove droppa
   noset: boolean;                                 // true = raid senza alcun set collezionabile
-  na: boolean;                                    // true = classe non ancora esistente a questo tier
   got: number;
   total: number;
   pct: number;
@@ -205,6 +207,8 @@ export function getTransmog(): TmogClass[] {
   const tiers = m.tiers as any[];
   const classStart = (m.classStart ?? {}) as Record<string, string>;
   const collected = (m.collected ?? {}) as Record<string, any>;
+  // Dal dump: quali pezzi mancano in ogni versione (e chi li droppa, dove il gioco lo sa).
+  const missing = (m.missing ?? {}) as Record<string, any>;
 
   // Chip/pannelli in ordine alfabetico di classe, non nell'ordine del manifest.
   const slugs = Object.keys(collected).sort((a, b) => classLabel(a).localeCompare(classLabel(b), 'it'));
@@ -214,13 +218,17 @@ export function getTransmog(): TmogClass[] {
     const totals = cols.map((c) => ({ slot: c.key, label: c.label, got: 0, total: 0 }));
 
     const groups: TmogGroup[] = (m.expansions as any[]).map((exp) => {
-      const rows: TmogRow[] = tiers.filter((t) => t.exp === exp.key).map((t) => {
-        const na = (tmogTierIndex[t.key] ?? 0) < startIdx;
+      // Set di classe precedenti alla classe: non li mostro affatto (il tab parte dal suo primo set).
+      // I set per TIPO DI ARMATURA restano: non sono vincolati alla classe, quindi una classe
+      // nata dopo puo' comunque collezionarli e indossarli (un Evoker porta il maglia di Uldir).
+      const rows: TmogRow[] = tiers
+        .filter((t) => t.exp === exp.key && (t.armorType || (tmogTierIndex[t.key] ?? 0) >= startIdx))
+        .map((t) => {
         const noset = !t.versions || Object.keys(t.versions).length === 0;
         const cells: TmogCell[] = cols.map((c, ci): TmogCell => {
           const label = t.versions?.[c.key];
-          // Versione inesistente per questo tier, o classe non ancora esistente → cella scura.
-          if (!label || na) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na' };
+          // Versione inesistente per questo set → cella tratteggiata.
+          if (!label) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na', missing: [] };
           // Dal gioco: [pezzi posseduti, pezzi totali]. Il totale varia per classe e
           // per versione, quindi `pieces` del tier resta solo come fallback.
           const cell = collected[slug]?.[t.key]?.[c.key];
@@ -231,6 +239,7 @@ export function getTransmog(): TmogClass[] {
           return {
             slot: c.key, label, got, total,
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
+            missing: (missing[slug]?.[t.key]?.[c.key] ?? []) as string[],
           };
         });
         // Il "N pz" della riga e' il totale reale di questa classe, non quello generico del tier.
@@ -240,15 +249,16 @@ export function getTransmog(): TmogClass[] {
         const rowTotal = cells.reduce((s, c) => s + c.total, 0);
         const pct = rowTotal ? (rowGot / rowTotal) * 100 : 0;
         const state: TmogRowState =
-          na || !rowTotal || pct === 0 ? 'empty' : pct >= 100 ? 'full' : pct >= 50 ? 'good' : 'low';
+          !rowTotal || pct === 0 ? 'empty' : pct >= 100 ? 'full' : pct >= 50 ? 'good' : 'low';
         return {
           key: t.key, tier: t.tier, name: t.name, pieces,
-          note: t.note, warn: t.warn, noset, na,
+          setName: t.names?.[slug], raids: (t.raids ?? []) as [string, string][],
+          note: t.note, warn: t.warn, noset,
           got: rowGot, total: rowTotal, pct, state, cells,
         };
       });
       return { key: exp.key, name: exp.name, empty: exp.empty, note: exp.note, rows };
-    });
+    }).filter((g) => g.rows.length > 0);
 
     return {
       slug,

@@ -14,7 +14,9 @@
 --
 -- Uso: /wmtier (o aspetta il login), poi /reload o logout per scrivere
 --   WTF/Account/<ACC>/SavedVariables/WowManagerTierDump.lua
--- Da li' copia il campo ["collectedJson"] dentro il manifest.
+-- Da li' copia DUE campi dentro il manifest:
+--   ["collectedJson"] -> blocco `collected`  (pezzi posseduti / totali)
+--   ["missingJson"]   -> blocco `missing`    (quali pezzi mancano e chi li droppa)
 
 local CLASSES = {
     [1] = "warrior", [2] = "paladin", [3] = "hunter", [4] = "rogue", [5] = "priest",
@@ -72,8 +74,37 @@ local function CountSet(setID)
     return have, total
 end
 
+-- invType (INVTYPE_*) -> nome slot in italiano, per l'elenco dei pezzi mancanti.
+local SLOT_NAME = {
+    INVTYPE_HEAD = "Testa", INVTYPE_SHOULDER = "Spalle", INVTYPE_CHEST = "Petto",
+    INVTYPE_ROBE = "Petto", INVTYPE_WAIST = "Cintura", INVTYPE_LEGS = "Gambe",
+    INVTYPE_FEET = "Piedi", INVTYPE_WRIST = "Polsi", INVTYPE_HAND = "Mani",
+    INVTYPE_CLOAK = "Schiena", INVTYPE_NECK = "Collo", INVTYPE_FINGER = "Anello",
+    INVTYPE_TRINKET = "Monile",
+}
+
+-- Pezzi NON collezionati di un set, con il boss che li droppa quando il gioco lo sa.
+-- Restituisce una lista di stringhe tipo "Spalle (Ragnaros)".
+local function MissingIn(setID)
+    local out = {}
+    local sources = C_TransmogSets.GetSetSources(setID)
+    if not sources then return out end
+    for sourceID, collected in pairs(sources) do
+        if not collected then
+            local info = C_TransmogCollection.GetSourceInfo(sourceID)
+            local slot = info and (SLOT_NAME[info.invType] or info.invType) or "?"
+            -- Il primo drop basta: le voci extra sono le altre difficolta' dello stesso boss.
+            local drops = C_TransmogCollection.GetAppearanceSourceDrops(sourceID)
+            local boss = drops and drops[1] and drops[1].encounter
+            out[#out + 1] = boss and (slot .. " (" .. boss .. ")") or slot
+        end
+    end
+    table.sort(out)
+    return out
+end
+
 local function Dump()
-    local raw, data, dropped = {}, {}, {}
+    local raw, data, dropped, missing = {}, {}, {}, {}
     local seen = {}
 
     local function consider(info)
@@ -108,6 +139,11 @@ local function Dump()
         data[class] = data[class] or {}
         data[class][tier] = data[class][tier] or {}
         data[class][tier][slot] = { have, total }
+        if have < total then
+            missing[class] = missing[class] or {}
+            missing[class][tier] = missing[class][tier] or {}
+            missing[class][tier][slot] = MissingIn(info.setID)
+        end
     end
 
     for _, info in ipairs(C_TransmogSets.GetAllSets() or {}) do
@@ -135,10 +171,43 @@ local function Dump()
     end
     out[#out + 1] = "  }"
 
+    -- Blocco `missing`: solo i set incompleti, con l'elenco dei pezzi che mancano.
+    local function esc(s) return (tostring(s):gsub('[\\"]', '\\%0')) end
+    local mo = { '  "missing": {' }
+    local classLines = {}
+    for _, class in ipairs(CLASS_ORDER) do
+        if missing[class] then
+            local tiers = {}
+            for _, tier in ipairs(TIER_ORDER) do
+                local slots = missing[class][tier]
+                if slots then
+                    local parts = {}
+                    for _, slot in ipairs(SLOT_ORDER) do
+                        local list = slots[slot]
+                        if list and #list > 0 then
+                            local items = {}
+                            for i, v in ipairs(list) do items[i] = '"' .. esc(v) .. '"' end
+                            parts[#parts + 1] = ('"%s": [%s]'):format(slot, table.concat(items, ", "))
+                        end
+                    end
+                    if #parts > 0 then
+                        tiers[#tiers + 1] = ('      "%s": { %s }'):format(tier, table.concat(parts, ", "))
+                    end
+                end
+            end
+            if #tiers > 0 then
+                classLines[#classLines + 1] = ('    "%s": {\n%s\n    }'):format(class, table.concat(tiers, ",\n"))
+            end
+        end
+    end
+    mo[#mo + 1] = table.concat(classLines, ",\n")
+    mo[#mo + 1] = "  }"
+
     WowManagerTierDumpDB = {
         generated = date("%Y-%m-%d %H:%M:%S"),
         build = GetBuildInfo(),
         collectedJson = table.concat(out, "\n"),
+        missingJson = table.concat(mo, "\n"),
         dropped = dropped,
         sets = raw,   -- dump grezzo: serve solo se cambia la mappa TIER/SLOT
     }
