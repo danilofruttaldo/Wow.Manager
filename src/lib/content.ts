@@ -158,6 +158,8 @@ export interface TmogCell {
   total: number;
   state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
 }
+// Sfondo della riga per completamento: nessun pezzo / <50% / >=50% / completo.
+export type TmogRowState = 'empty' | 'low' | 'good' | 'full';
 export interface TmogRow {
   key: string;
   tier: string;
@@ -165,7 +167,12 @@ export interface TmogRow {
   pieces: number;
   note?: string;
   warn?: string;
+  noset: boolean;                                 // true = raid senza alcun set collezionabile
   na: boolean;                                    // true = classe non ancora esistente a questo tier
+  got: number;
+  total: number;
+  pct: number;
+  state: TmogRowState;
   cells: TmogCell[];
 }
 export interface TmogGroup {
@@ -199,13 +206,17 @@ export function getTransmog(): TmogClass[] {
   const classStart = (m.classStart ?? {}) as Record<string, string>;
   const collected = (m.collected ?? {}) as Record<string, any>;
 
-  return Object.keys(collected).map((slug) => {
+  // Chip/pannelli in ordine alfabetico di classe, non nell'ordine del manifest.
+  const slugs = Object.keys(collected).sort((a, b) => classLabel(a).localeCompare(classLabel(b), 'it'));
+
+  return slugs.map((slug) => {
     const startIdx = tmogTierIndex[classStart[slug] ?? ''] ?? 0; // classe assente prima di questo tier
     const totals = cols.map((c) => ({ slot: c.key, label: c.label, got: 0, total: 0 }));
 
     const groups: TmogGroup[] = (m.expansions as any[]).map((exp) => {
       const rows: TmogRow[] = tiers.filter((t) => t.exp === exp.key).map((t) => {
         const na = (tmogTierIndex[t.key] ?? 0) < startIdx;
+        const noset = !t.versions || Object.keys(t.versions).length === 0;
         const cells: TmogCell[] = cols.map((c, ci): TmogCell => {
           const label = t.versions?.[c.key];
           // Versione inesistente per questo tier, o classe non ancora esistente → cella scura.
@@ -219,7 +230,17 @@ export function getTransmog(): TmogClass[] {
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
           };
         });
-        return { key: t.key, tier: t.tier, name: t.name, pieces: t.pieces, note: t.note, warn: t.warn, na, cells };
+        // Completamento della riga sulle sole versioni esistenti → tint di sfondo del tier.
+        const rowGot = cells.reduce((s, c) => s + c.got, 0);
+        const rowTotal = cells.reduce((s, c) => s + c.total, 0);
+        const pct = rowTotal ? (rowGot / rowTotal) * 100 : 0;
+        const state: TmogRowState =
+          na || !rowTotal || pct === 0 ? 'empty' : pct >= 100 ? 'full' : pct >= 50 ? 'good' : 'low';
+        return {
+          key: t.key, tier: t.tier, name: t.name, pieces: t.pieces,
+          note: t.note, warn: t.warn, noset, na,
+          got: rowGot, total: rowTotal, pct, state, cells,
+        };
       });
       return { key: exp.key, name: exp.name, empty: exp.empty, note: exp.note, rows };
     });

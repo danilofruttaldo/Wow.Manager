@@ -31,6 +31,7 @@
   /* Colori di stato (leggibili su fondo chiaro) */
   --ok:   #3E8E3E;
   --warn: #B26B12;
+  --bad:  #B4382C;
 
   --header-height: 50px;
 
