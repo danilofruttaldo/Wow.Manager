@@ -40,6 +40,12 @@ const ncols = cols.length + 1; // + colonna del nome set
                   {g.rows.map(r => {
                     // Senza nome del set il titolo E' gia' il nome del raid: la sigla ripeterebbe e basta.
                     const sigle = r.setName || r.raids.length > 1 ? r.raids : [];
+                    // Intestazione del tooltip: nome del set + versione. Sui tier a
+                    // versione singola l'etichetta non distingue nulla, quindi si omette.
+                    const titolo = (cell: { label: string }) =>
+                      cell.label && cell.label !== 'Versione unica'
+                        ? `${r.setName ?? r.name} — ${cell.label}`
+                        : (r.setName ?? r.name);
                     return (
                     <tr class:list={['trow', `trow--${r.state}`]}>
                       <td class="rhead">
@@ -54,11 +60,12 @@ const ncols = cols.length + 1; // + colonna del nome set
                       {r.cells.map(cell => (
                         cell.state === 'na'
                           ? <td><span class="na"></span></td>
-                          : <td class:list={['cell', `cell--${cell.state}`, { 'has-tip': cell.missing.length > 0 }]}
-                                tabindex={cell.missing.length > 0 ? 0 : undefined}
-                                data-tip-title={cell.missing.length > 0
-                                  ? `${r.setName ?? r.name} — ${cell.label}` : undefined}
-                                data-tip={cell.missing.length > 0 ? cell.missing.join('\n') : undefined}>
+                          : <td class:list={['cell', `cell--${cell.state}`, { 'has-tip': cell.pieces.length > 0 }]}
+                                tabindex={cell.pieces.length > 0 ? 0 : undefined}
+                                data-tip-title={cell.pieces.length > 0 ? titolo(cell) : undefined}
+                                data-tip={cell.pieces.length > 0
+                                  ? cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')
+                                  : undefined}>
                               <span class="frac">{cell.got}/{cell.total}</span>
                               <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
                             </td>
@@ -177,7 +184,12 @@ const ncols = cols.length + 1; // + colonna del nome set
   .tmog-tip .tip-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.12rem; }
   /* "Shoulder - Ragnaros (FL)" -> slot in evidenza, resto smorzato accanto. */
   .tmog-tip .tip-list b { font-weight: 600; }
-  .tmog-tip .tip-list span { color: var(--text-subtle); }
+  /* Verde = gia' preso, rosso = da prendere. Il colore e' l'unico segnale: niente
+     glifi ✓/✗, che sul sito non si usano (solo icone WoW). */
+  .tmog-tip .tip-list .is-preso b { color: var(--ok); }
+  .tmog-tip .tip-list .is-manca b { color: var(--bad); }
+  .tmog-tip .tip-list .is-preso span { color: color-mix(in srgb, var(--ok) 55%, var(--text-subtle)); }
+  .tmog-tip .tip-list .is-manca span { color: color-mix(in srgb, var(--bad) 45%, var(--text-subtle)); }
 
   @media (max-width: 700px) {
     .tmog-panel th:first-child, .tmog-panel td:first-child { width: 40%; }
@@ -228,11 +240,15 @@ const ncols = cols.length + 1; // + colonna del nome set
       const list = tip.querySelector('.tip-list') as HTMLElement;
       head.textContent = cell.dataset.tipTitle || '';
       list.replaceChildren();
-      for (const raw of (cell.dataset.tip || '').split('\n')) {
-        // Gia' formattato da formatMissing: "Spalle — Ragnaros (FL)", oppure il solo
-        // slot quando il boss non e' noto.
+      for (const grezzo of (cell.dataset.tip || '').split('\n')) {
+        // Il primo carattere dice se il pezzo e' gia' preso (+) o manca (-); il resto
+        // e' gia' formattato da formatMissing: "Shoulder — Ragnaros (FL)", oppure il
+        // solo slot quando il boss non e' noto.
+        const preso = grezzo[0] === '+';
+        const raw = grezzo.slice(1);
         const i = raw.indexOf(' — ');
         const li = document.createElement('li');
+        li.className = preso ? 'is-preso' : 'is-manca';
         const b = document.createElement('b');
         b.textContent = i < 0 ? raw : raw.slice(0, i);
         li.append(b);

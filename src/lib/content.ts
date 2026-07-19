@@ -151,13 +151,18 @@ export function getExtra(): Extra[] {
 // difficoltà letterali: prima di Cataclysm gli assi erano altri (10/25 uomini, fazione,
 // Sanctified), quindi ogni tier dichiara l'etichetta reale degli slot che usa e gli slot
 // non dichiarati diventano celle "non applicabile" (stesso pattern delle combo del roster).
+// Un pezzo del set nel tooltip: testo gia' formattato + se e' gia' stato preso.
+export interface TmogPiece {
+  testo: string;                                  // es. "Shoulder — Ragnaros (FL)"
+  preso: boolean;
+}
 export interface TmogCell {
   slot: string;
   label: string;                                  // etichetta REALE della versione per quel tier
   got: number;
   total: number;
   state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
-  missing: string[];                              // non presi, es. "Shoulder (Ragnaros, Firelands)"
+  pieces: TmogPiece[];                            // TUTTI i pezzi, presi e non
 }
 // Sfondo della riga per completamento: nessun pezzo / <50% / >=50% / completo.
 export type TmogRowState = 'empty' | 'low' | 'good' | 'full';
@@ -234,8 +239,9 @@ export function getTransmog(): TmogClass[] {
   const tiers = m.tiers as any[];
   const classStart = (m.classStart ?? {}) as Record<string, string>;
   const collected = (m.collected ?? {}) as Record<string, any>;
-  // Dal dump: quali pezzi mancano in ogni versione (e chi li droppa, dove il gioco lo sa).
-  const missing = (m.missing ?? {}) as Record<string, any>;
+  // Dal dump: TUTTI i pezzi di ogni versione come [testo, preso], con il boss che li
+  // droppa dove il gioco lo sa.
+  const pieceList = (m.pieceList ?? {}) as Record<string, any>;
 
   // Chip/pannelli in ordine alfabetico di classe, non nell'ordine del manifest.
   const slugs = Object.keys(collected).sort((a, b) => classLabel(a).localeCompare(classLabel(b), 'it'));
@@ -254,9 +260,9 @@ export function getTransmog(): TmogClass[] {
         const cells: TmogCell[] = cols.map((c): TmogCell => {
           const label = t.versions?.[c.key];
           // Versione inesistente per questo set → cella tratteggiata.
-          if (!label) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na', missing: [] };
+          if (!label) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na', pieces: [] };
           // Dal gioco: [pezzi posseduti, pezzi totali]. Il totale varia per classe e
-          // per versione, quindi `pieces` del tier resta solo come fallback.
+          // per versione, quindi il `pieces` del tier resta solo come fallback.
           const cell = collected[slug]?.[t.key]?.[c.key];
           const got = Number((Array.isArray(cell) ? cell[0] : cell) ?? 0);
           const total = Number((Array.isArray(cell) ? cell[1] : undefined) ?? t.pieces);
@@ -265,8 +271,11 @@ export function getTransmog(): TmogClass[] {
           return {
             slot: c.key, label, got, total,
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
-            missing: ((missing[slug]?.[t.key]?.[c.key] ?? []) as string[])
-              .map((m) => formatMissing(m, (t.raids ?? []) as [string, string][])),
+            pieces: ((pieceList[slug]?.[t.key]?.[c.key] ?? []) as [string, number][])
+              .map(([testo, preso]) => ({
+                testo: formatMissing(testo, (t.raids ?? []) as [string, string][]),
+                preso: preso === 1,
+              })),
           };
         });
         // Completamento della riga sulle sole versioni esistenti → tint di sfondo del tier.

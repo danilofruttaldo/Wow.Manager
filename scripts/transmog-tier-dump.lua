@@ -16,7 +16,7 @@
 --   WTF/Account/<ACC>/SavedVariables/WowManagerTierDump.lua
 -- Da li' copia DUE campi dentro il manifest:
 --   ["collectedJson"] -> blocco `collected`  (pezzi posseduti / totali)
---   ["missingJson"]   -> blocco `missing`    (quali pezzi mancano e chi li droppa)
+--   ["piecesJson"]    -> blocco `pieceList`  (tutti i pezzi, presi e mancanti)
 
 local CLASSES = {
     [1] = "warrior", [2] = "paladin", [3] = "hunter", [4] = "rogue", [5] = "priest",
@@ -104,7 +104,7 @@ local stats = { viaVariante = 0 }
 -- encounterID e i flag displayAs*), e quell'itemID non e' quello dell'oggetto reale
 -- (GetItemInfoInstant lo da' come INVTYPE_NON_EQUIP_IGNORE, classe 0/8, nome nil).
 -- Su 191 indici costruiti: 0 agganci. Il boss si recupera invece dalle altre source
--- della stessa apparenza, vedi MissingIn.
+-- della stessa apparenza, vedi PiecesIn.
 
 -- Le API di transmog cambiano nome fra le espansioni (GetSetSources e' sparita in
 -- 12.0.x): elencare cosa esiste davvero evita di indovinare al giro dopo.
@@ -174,7 +174,7 @@ local mismatches = {}
 --
 -- `have`/`total` arrivano da CountSet: verifica che l'elenco combaci con la frazione
 -- mostrata nella cella, altrimenti il tooltip contraddirebbe il numero.
-local function MissingIn(setID, have, total)
+local function PiecesIn(setID, have, total)
     local out = {}
 
     -- Un'apparenza ha piu' source (le varie difficolta', e dal T28 anche il Catalyst).
@@ -190,61 +190,72 @@ local function MissingIn(setID, have, total)
     end
 
     for _, a in ipairs(C_TransmogSets.GetSetPrimaryAppearances(setID) or {}) do
-        if not a.collected then
-            local sourceID = a.appearanceID
-            local info = sourceID and C_TransmogCollection.GetSourceInfo(sourceID)
-            local invType = info and info.invType
-            local slot = SLOT_NAME[invType]
-            if not slot then
-                unmapped[tostring(invType)] = (info and info.itemID) or "?"
-                slot = "Slot " .. tostring(invType)
-            end
-            local boss, instance = nil, nil
-            if sourceID then boss, instance = BossFor(sourceID) end
-            -- Nessun drop sulla primaria: si provano le altre source dello stesso
-            -- visual (stesso aspetto, difficolta' diversa), dove il boss c'e'.
-            if not boss and info and info.visualID then
-                for _, alt in ipairs(byVisual[info.visualID] or {}) do
-                    if alt ~= sourceID then
-                        boss, instance = BossFor(alt)
-                        if boss then
-                            stats.viaVariante = stats.viaVariante + 1
-                            break
-                        end
+        local sourceID = a.appearanceID
+        local info = sourceID and C_TransmogCollection.GetSourceInfo(sourceID)
+        local invType = info and info.invType
+        local slot = SLOT_NAME[invType]
+        if not slot then
+            unmapped[tostring(invType)] = (info and info.itemID) or "?"
+            slot = "Slot " .. tostring(invType)
+        end
+        local boss, instance = nil, nil
+        if sourceID then boss, instance = BossFor(sourceID) end
+        -- Nessun drop sulla primaria: si provano le altre source dello stesso
+        -- visual (stesso aspetto, difficolta' diversa), dove il boss c'e'.
+        if not boss and info and info.visualID then
+            for _, alt in ipairs(byVisual[info.visualID] or {}) do
+                if alt ~= sourceID then
+                    boss, instance = BossFor(alt)
+                    if boss then
+                        stats.viaVariante = stats.viaVariante + 1
+                        break
                     end
                 end
             end
-
-            -- Formato: "Shoulder (Ragnaros, Firelands)". Il raid serve al sito per
-            -- mostrarne la sigla; il taglio fra boss e raid NON e' sulla virgola,
-            -- perche' ne contengono entrambi: ci pensa formatMissing lato sito.
-            local testo
-            if boss and instance then
-                testo = ("%s (%s, %s)"):format(slot, boss, instance)
-            elseif boss then
-                testo = ("%s (%s)"):format(slot, boss)
-            else
-                testo = slot
-            end
-            -- L'itemID viaggia accanto al testo: serve a cercare su Wowhead i drop che
-            -- il client non conosce. Si tengono appaiati perche' l'ordinamento qui
-            -- sotto scombinerebbe due liste parallele.
-            out[#out + 1] = { testo = testo, itemID = (not boss) and info and info.itemID or nil }
         end
+
+        -- Formato: "Shoulder (Ragnaros, Firelands)". Il raid serve al sito per
+        -- mostrarne la sigla; il taglio fra boss e raid NON e' sulla virgola,
+        -- perche' ne contengono entrambi: ci pensa formatMissing lato sito.
+        local testo
+        if boss and instance then
+            testo = ("%s (%s, %s)"):format(slot, boss, instance)
+        elseif boss then
+            testo = ("%s (%s)"):format(slot, boss)
+        else
+            testo = slot
+        end
+        -- Si emettono TUTTI i pezzi, non solo i mancanti: il tooltip li mostra tutti
+        -- e colora di verde i presi. `preso` e' 1/0 perche' nel JSON pesa meno di
+        -- true/false ed e' sommabile per la verifica contro la frazione.
+        -- L'itemID viaggia accanto: serve a cercare altrove i drop che il client non
+        -- conosce. Restano appaiati perche' l'ordinamento scombinerebbe liste parallele.
+        out[#out + 1] = {
+            testo = testo,
+            preso = a.collected and 1 or 0,
+            itemID = (not boss) and info and info.itemID or nil,
+        }
     end
-    table.sort(out, function(a, b) return a.testo < b.testo end)
+    -- Prima i mancanti, poi i presi; dentro ogni gruppo in ordine alfabetico: cosi'
+    -- il tooltip apre con quello che resta da prendere.
+    table.sort(out, function(a, b)
+        if a.preso ~= b.preso then return a.preso < b.preso end
+        return a.testo < b.testo
+    end)
 
     -- Discrepanza = elenco non fidato: meglio saperlo che pubblicare numeri diversi
     -- fra cella e tooltip.
-    if total and #out ~= (total - have) then
-        mismatches[#mismatches + 1] = ("set %d: elenco %d, atteso %d")
-            :format(setID, #out, total - have)
+    local presi = 0
+    for _, v in ipairs(out) do presi = presi + v.preso end
+    if total and (#out ~= total or presi ~= have) then
+        mismatches[#mismatches + 1] = ("set %d: elenco %d/%d presi, attesi %d/%d")
+            :format(setID, presi, #out, have, total)
     end
     return out
 end
 
 local function Dump()
-    local raw, data, dropped, missing, errors = {}, {}, {}, {}, {}
+    local raw, data, dropped, pieces, errors = {}, {}, {}, {}, {}
     local seen = {}
 
     local function consider(info)
@@ -279,17 +290,16 @@ local function Dump()
         data[class] = data[class] or {}
         data[class][tier] = data[class][tier] or {}
         data[class][tier][slot] = { have, total }
-        if have < total then
-            -- Sotto pcall: un errore qui deve degradare l'elenco dei mancanti,
-            -- non far saltare tutto il dump (e con esso `collected`).
-            local ok, list = pcall(MissingIn, info.setID, have, total)
-            if not ok then
-                errors[#errors + 1] = tier .. "/" .. class .. ": " .. tostring(list)
-            else
-                missing[class] = missing[class] or {}
-                missing[class][tier] = missing[class][tier] or {}
-                missing[class][tier][slot] = list
-            end
+        -- Anche i set completi: il tooltip li mostra tutti verdi, non vuoti.
+        -- Sotto pcall: un errore qui deve degradare il solo elenco dei pezzi,
+        -- non far saltare tutto il dump (e con esso `collected`).
+        local ok, list = pcall(PiecesIn, info.setID, have, total)
+        if not ok then
+            errors[#errors + 1] = tier .. "/" .. class .. ": " .. tostring(list)
+        else
+            pieces[class] = pieces[class] or {}
+            pieces[class][tier] = pieces[class][tier] or {}
+            pieces[class][tier][slot] = list
         end
     end
 
@@ -318,19 +328,19 @@ local function Dump()
     end
     out[#out + 1] = "  }"
 
-    -- Blocco `missing`: solo i set incompleti, con l'elenco dei pezzi che mancano.
-    -- Stessa struttura per due contenuti: il testo mostrato sul sito e l'itemID dei
-    -- pezzi rimasti senza boss (0 per gli altri), che serve a cercarli su Wowhead.
-    -- Le due liste restano nello stesso ordine perche' nascono dalla stessa fonte.
+    -- Blocco `pieceList`: TUTTI i pezzi di ogni set, come coppie [testo, preso], dove
+    -- preso e' 1 se gia' collezionato. Il sito li mostra tutti, rossi o verdi.
+    -- Stessa struttura anche per gli itemID (0 dove il boss e' noto o il pezzo e'
+    -- preso): resta nello stesso ordine perche' nasce dalla stessa lista.
     local function esc(s) return (tostring(s):gsub('[\\"]', '\\%0')) end
     local function Serializza(chiave, campo)
         local mo = { ('  "%s": {'):format(chiave) }
         local classLines = {}
         for _, class in ipairs(CLASS_ORDER) do
-            if missing[class] then
+            if pieces[class] then
                 local tiers = {}
                 for _, tier in ipairs(TIER_ORDER) do
-                    local slots = missing[class][tier]
+                    local slots = pieces[class][tier]
                     if slots then
                         local parts = {}
                         for _, slot in ipairs(SLOT_ORDER) do
@@ -340,7 +350,7 @@ local function Dump()
                                 for i, v in ipairs(list) do
                                     items[i] = (campo == "itemID")
                                         and tostring(v.itemID or 0)
-                                        or ('"' .. esc(v.testo) .. '"')
+                                        or ('["%s", %d]'):format(esc(v.testo), v.preso)
                                 end
                                 parts[#parts + 1] = ('"%s": [%s]'):format(slot, table.concat(items, ", "))
                             end
@@ -364,8 +374,8 @@ local function Dump()
         generated = date("%Y-%m-%d %H:%M:%S"),
         build = GetBuildInfo(),
         collectedJson = table.concat(out, "\n"),
-        missingJson = Serializza("missing", "testo"),
-        -- Non va nel manifest: e' la lista di lavoro per le ricerche su Wowhead.
+        piecesJson = Serializza("pieceList", "testo"),
+        -- Non va nel manifest: e' la lista di lavoro per cercare i drop mancanti.
         missingItemIdsJson = Serializza("missingItemIds", "itemID"),
         dropped = dropped,
         errors = errors,   -- set il cui elenco pezzi e' fallito (dump comunque valido)
