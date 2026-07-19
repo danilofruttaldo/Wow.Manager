@@ -22,6 +22,16 @@
       "body_file": "apply-fonts.ps1",
       "notes": "Legge fonts/manifest.json (override.source_file, override.files, _meta.wow_fonts_dir): nessun elenco hardcoded, segue il manifest. Il .ttf sorgente è un font di sistema Windows, non versionato. Addon con font proprio (Details/BigWigs/MRT) non seguono l'override. Revert: -Revert oppure cancella i .TTF da Fonts/."
     },
+    "transmog-tier-dump": {
+      "kind": "script",
+      "name": "Dump collezione tier set",
+      "desc": "Addon locale che legge dal journal transmog quanti pezzi di ogni tier set sono collezionati sull'account e genera il blocco `collected` di transmog/manifest.json, pronto da incollare.",
+      "lang": "lua",
+      "when": "Quando vuoi ri-sincronizzare la pagina Transmog. Installalo come addon (istruzioni in testa al file), poi /wmtier e /reload.",
+      "warn": "Un addon nuovo richiede il riavvio del client: il /reload non lo vede.",
+      "body_file": "transmog-tier-dump.lua",
+      "notes": "Fonte: C_TransmogSets.GetAllSets + GetVariantSets + GetSetPrimaryAppearances. Account-wide (Warband). Mappe da tenere aggiornate quando esce un raid nuovo: TIER (expansionID|label del raid -> chiave tier) e TIER_ORDER. SLOT traduce la description in-game nelle 4 colonne: prima di Cata l'asse e' 10/25 uomini, nel T9 e' la fazione (requiredFaction). Scarta i set multiclasse (non sono tier set) e le varianti Timerunning/Timewarped/Trading Post. T0 e T0.5 NON esistono nel journal: restano a mano. Il campo `sets` nel SavedVariables e' il dump grezzo, serve solo se va rifatta la mappatura."
+    },
     "sync-game-settings": {
       "kind": "script",
       "name": "Sync impostazioni di gioco",

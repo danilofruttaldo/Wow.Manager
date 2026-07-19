@@ -3,7 +3,7 @@
     "note": "Collezione tier set / class set transmog, per classe. Fonte di verita' mantenuta a mano.",
     "columns_note": "Le 4 colonne sono SLOT di versione, non difficolta' letterali: prima di Cataclysm gli assi erano altri (10/25 uomini, fazione, Sanctified). Ogni tier dichiara in `versions` l'etichetta REALE di ogni slot che usa; gli slot assenti sono resi come casella non applicabile. L'header mostra i nomi moderni perche' sono il caso dominante (dal T19 in poi tutti e 4 gli slot sono LFR/Normal/Heroic/Mythic).",
     "rows_note": "Una riga per RAID, non solo per tier: i raid sono elencati in ordine cronologico. `versions` vuoto = raid senza alcun set collezionabile (riga tutta tratteggiata). Da BfA in poi, e nei set LFR di WoD, i set sono per tipo di armatura e non di classe: il sito non lo distingue, quello che conta e' il completamento.",
-    "pieces_note": "Il numero pezzi vale per versione. Classic 8 (T3 9, T2.5 5), TBC 5 (T6 8 con i 3 pezzi Sunwell), Legion 6, set per tipo armatura di BfA/Shadowlands 8, set LFR di WoD 6, tutto il resto 5.",
+    "pieces_note": "Numero pezzi per versione, letto dal journal transmog del gioco (set completo: pezzi tier piu' i pezzi abbinati dello stesso raid). Puo' variare per classe e per versione: il totale reale sta nella coppia [posseduti, totale] di `collected`, `pieces` e' solo il massimo del tier.",
     "collected_note": "collected[classe][tier][slot] = numero di pezzi posseduti in quella versione. Slot assente o mancante = 0."
   },
   "columns": [
@@ -609,18 +609,4497 @@
     }
   ],
   "collected": {
-    "warrior": {},
-    "paladin": {},
-    "hunter": {},
-    "rogue": {},
-    "priest": {},
-    "death-knight": {},
-    "shaman": {},
-    "mage": {},
-    "warlock": {},
-    "monk": {},
-    "druid": {},
-    "demon-hunter": {},
-    "evoker": {}
+    "warrior": {
+      "t1": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t3": {
+        "normal": [
+          1,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t6": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          5,
+          5
+        ],
+        "heroic": [
+          6,
+          6
+        ]
+      },
+      "t9": {
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          6,
+          6
+        ]
+      },
+      "t11": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t12": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t13": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          6,
+          8
+        ],
+        "heroic": [
+          6,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          8,
+          9
+        ],
+        "heroic": [
+          6,
+          9
+        ],
+        "mythic": [
+          8,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          5,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          7,
+          8
+        ]
+      },
+      "t21": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          2,
+          9
+        ]
+      },
+      "t28": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          6,
+          9
+        ],
+        "heroic": [
+          8,
+          9
+        ],
+        "mythic": [
+          7,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          6,
+          9
+        ],
+        "heroic": [
+          5,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          7,
+          9
+        ],
+        "normal": [
+          6,
+          9
+        ],
+        "heroic": [
+          8,
+          9
+        ],
+        "mythic": [
+          4,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          7,
+          9
+        ],
+        "normal": [
+          5,
+          9
+        ],
+        "heroic": [
+          8,
+          9
+        ],
+        "mythic": [
+          3,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          7,
+          9
+        ],
+        "heroic": [
+          5,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          5,
+          9
+        ],
+        "mythic": [
+          5,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          5,
+          9
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          8,
+          9
+        ]
+      }
+    },
+    "paladin": {
+      "t1": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          1,
+          7
+        ]
+      },
+      "t3": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          7,
+          7
+        ]
+      },
+      "t6": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          5,
+          6
+        ],
+        "heroic": [
+          6,
+          7
+        ]
+      },
+      "t9": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t11": {
+        "normal": [
+          3,
+          8
+        ],
+        "heroic": [
+          6,
+          8
+        ]
+      },
+      "t12": {
+        "normal": [
+          4,
+          8
+        ],
+        "heroic": [
+          5,
+          7
+        ]
+      },
+      "t13": {
+        "lfr": [
+          3,
+          8
+        ],
+        "normal": [
+          6,
+          8
+        ],
+        "heroic": [
+          3,
+          8
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          4,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          5,
+          8
+        ],
+        "heroic": [
+          5,
+          8
+        ],
+        "mythic": [
+          5,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          8,
+          9
+        ],
+        "heroic": [
+          6,
+          9
+        ],
+        "mythic": [
+          8,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          5,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          6,
+          8
+        ]
+      },
+      "t21": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t28": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          7,
+          9
+        ],
+        "heroic": [
+          5,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          7,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          6,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "hunter": {
+      "t1": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          1,
+          6
+        ]
+      },
+      "t3": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          4,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t6": {
+        "normal": [
+          5,
+          5
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          0,
+          5
+        ],
+        "heroic": [
+          5,
+          6
+        ]
+      },
+      "t9": {
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          7,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t11": {
+        "normal": [
+          1,
+          8
+        ],
+        "heroic": [
+          2,
+          8
+        ]
+      },
+      "t12": {
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          6,
+          7
+        ]
+      },
+      "t13": {
+        "lfr": [
+          2,
+          8
+        ],
+        "normal": [
+          3,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          1,
+          8
+        ],
+        "mythic": [
+          1,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          3,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          6,
+          9
+        ],
+        "heroic": [
+          4,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          2,
+          9
+        ]
+      },
+      "t21": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          2,
+          9
+        ]
+      },
+      "t28": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          7,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          5,
+          9
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "rogue": {
+      "t1": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          1,
+          5
+        ]
+      },
+      "t3": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          6,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          6,
+          8
+        ]
+      },
+      "t6": {
+        "normal": [
+          6,
+          6
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          2,
+          8
+        ],
+        "heroic": [
+          5,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          0,
+          5
+        ],
+        "heroic": [
+          0,
+          5
+        ]
+      },
+      "t9": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t11": {
+        "normal": [
+          1,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t12": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          1,
+          8
+        ]
+      },
+      "t13": {
+        "lfr": [
+          2,
+          8
+        ],
+        "normal": [
+          4,
+          8
+        ],
+        "heroic": [
+          1,
+          8
+        ]
+      },
+      "t14": {
+        "lfr": [
+          0,
+          8
+        ],
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          1,
+          8
+        ],
+        "normal": [
+          2,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          0,
+          8
+        ],
+        "normal": [
+          5,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          2,
+          8
+        ],
+        "heroic": [
+          1,
+          8
+        ],
+        "mythic": [
+          3,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          3,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          7,
+          9
+        ],
+        "heroic": [
+          6,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t21": {
+        "lfr": [
+          2,
+          8
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          1,
+          8
+        ]
+      },
+      "t28": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "priest": {
+      "t1": {
+        "normal": [
+          6,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          6,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          0,
+          6
+        ]
+      },
+      "t3": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          3,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          6,
+          7
+        ]
+      },
+      "t6": {
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          7,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          4,
+          8
+        ],
+        "heroic": [
+          5,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          0,
+          5
+        ],
+        "heroic": [
+          0,
+          5
+        ]
+      },
+      "t9": {
+        "normal": [
+          4,
+          8
+        ],
+        "heroic": [
+          4,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          4,
+          8
+        ],
+        "mythic": [
+          3,
+          7
+        ]
+      },
+      "t11": {
+        "normal": [
+          2,
+          8
+        ],
+        "heroic": [
+          3,
+          8
+        ]
+      },
+      "t12": {
+        "normal": [
+          1,
+          8
+        ],
+        "heroic": [
+          1,
+          6
+        ]
+      },
+      "t13": {
+        "lfr": [
+          0,
+          5
+        ],
+        "normal": [
+          6,
+          8
+        ],
+        "heroic": [
+          0,
+          5
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          1,
+          7
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          1,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "mythic": [
+          1,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          3,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          1,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          5,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t21": {
+        "lfr": [
+          0,
+          8
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t28": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "death-knight": {
+      "t7": {
+        "normal": [
+          5,
+          5
+        ],
+        "heroic": [
+          6,
+          6
+        ]
+      },
+      "t8": {
+        "normal": [
+          5,
+          5
+        ],
+        "heroic": [
+          6,
+          6
+        ]
+      },
+      "t9": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t11": {
+        "normal": [
+          2,
+          8
+        ],
+        "heroic": [
+          3,
+          8
+        ]
+      },
+      "t12": {
+        "normal": [
+          4,
+          8
+        ],
+        "heroic": [
+          6,
+          7
+        ]
+      },
+      "t13": {
+        "lfr": [
+          3,
+          8
+        ],
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          4,
+          8
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          5,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          6,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          5,
+          8
+        ],
+        "mythic": [
+          5,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          5,
+          8
+        ],
+        "mythic": [
+          7,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          8,
+          9
+        ],
+        "heroic": [
+          5,
+          9
+        ],
+        "mythic": [
+          6,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          5,
+          9
+        ],
+        "normal": [
+          7,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          5,
+          9
+        ]
+      },
+      "t21": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          3,
+          9
+        ]
+      },
+      "t28": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          8,
+          9
+        ],
+        "heroic": [
+          3,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          8,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "shaman": {
+      "t1": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          0,
+          7
+        ]
+      },
+      "t3": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          7,
+          7
+        ]
+      },
+      "t6": {
+        "normal": [
+          5,
+          7
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          0,
+          5
+        ],
+        "heroic": [
+          4,
+          5
+        ]
+      },
+      "t9": {
+        "normal": [
+          5,
+          7
+        ],
+        "heroic": [
+          6,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t11": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          2,
+          8
+        ]
+      },
+      "t12": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          3,
+          7
+        ]
+      },
+      "t13": {
+        "lfr": [
+          0,
+          8
+        ],
+        "normal": [
+          2,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          3,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          3,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          3,
+          8
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          5,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t21": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t28": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          6,
+          9
+        ],
+        "heroic": [
+          4,
+          9
+        ],
+        "mythic": [
+          3,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          5,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          8,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          6,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "mage": {
+      "t1": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          0,
+          6
+        ]
+      },
+      "t3": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          7,
+          7
+        ]
+      },
+      "t6": {
+        "normal": [
+          5,
+          7
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          3,
+          8
+        ],
+        "heroic": [
+          5,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          3,
+          5
+        ],
+        "heroic": [
+          2,
+          5
+        ]
+      },
+      "t9": {
+        "normal": [
+          6,
+          8
+        ],
+        "heroic": [
+          6,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          5,
+          8
+        ],
+        "heroic": [
+          3,
+          8
+        ],
+        "mythic": [
+          0,
+          6
+        ]
+      },
+      "t11": {
+        "normal": [
+          6,
+          8
+        ],
+        "heroic": [
+          0,
+          7
+        ]
+      },
+      "t12": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          6,
+          6
+        ]
+      },
+      "t13": {
+        "lfr": [
+          0,
+          6
+        ],
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          0,
+          6
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          6,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          6,
+          8
+        ],
+        "mythic": [
+          1,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          3,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          5,
+          9
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          6,
+          8
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t21": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          2,
+          9
+        ]
+      },
+      "t28": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          4,
+          9
+        ],
+        "mythic": [
+          3,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          5,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          6,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "warlock": {
+      "t1": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          7,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          1,
+          5
+        ]
+      },
+      "t3": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          3,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          6,
+          7
+        ]
+      },
+      "t6": {
+        "normal": [
+          5,
+          6
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          0,
+          5
+        ],
+        "heroic": [
+          5,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          0,
+          5
+        ],
+        "heroic": [
+          2,
+          6
+        ]
+      },
+      "t9": {
+        "normal": [
+          1,
+          8
+        ],
+        "heroic": [
+          3,
+          7
+        ]
+      },
+      "t10": {
+        "normal": [
+          5,
+          5
+        ],
+        "heroic": [
+          1,
+          5
+        ],
+        "mythic": [
+          5,
+          8
+        ]
+      },
+      "t11": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          6
+        ]
+      },
+      "t12": {
+        "normal": [
+          4,
+          7
+        ],
+        "heroic": [
+          3,
+          6
+        ]
+      },
+      "t13": {
+        "lfr": [
+          1,
+          8
+        ],
+        "normal": [
+          6,
+          8
+        ],
+        "heroic": [
+          0,
+          7
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          7,
+          8
+        ],
+        "heroic": [
+          5,
+          8
+        ],
+        "mythic": [
+          2,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          1,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          3,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          5,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t21": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          3,
+          9
+        ]
+      },
+      "t28": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          9,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "monk": {
+      "t14": {
+        "lfr": [
+          0,
+          8
+        ],
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          1,
+          8
+        ],
+        "normal": [
+          1,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          0,
+          8
+        ],
+        "normal": [
+          4,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          6,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          1,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          1,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          5,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          1,
+          8
+        ],
+        "normal": [
+          3,
+          8
+        ],
+        "heroic": [
+          2,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t21": {
+        "lfr": [
+          5,
+          8
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t28": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "druid": {
+      "t1": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t2": {
+        "normal": [
+          8,
+          8
+        ]
+      },
+      "t25": {
+        "normal": [
+          1,
+          6
+        ]
+      },
+      "t3": {
+        "normal": [
+          0,
+          8
+        ]
+      },
+      "t4": {
+        "normal": [
+          7,
+          8
+        ]
+      },
+      "t5": {
+        "normal": [
+          7,
+          7
+        ]
+      },
+      "t6": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t7": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t8": {
+        "normal": [
+          6,
+          6
+        ],
+        "heroic": [
+          5,
+          5
+        ]
+      },
+      "t9": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t10": {
+        "normal": [
+          1,
+          8
+        ],
+        "heroic": [
+          4,
+          8
+        ],
+        "mythic": [
+          6,
+          7
+        ]
+      },
+      "t11": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t12": {
+        "normal": [
+          3,
+          8
+        ],
+        "heroic": [
+          3,
+          7
+        ]
+      },
+      "t13": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t14": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ]
+      },
+      "t15": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ]
+      },
+      "t16": {
+        "lfr": [
+          8,
+          8
+        ],
+        "normal": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t17": {
+        "normal": [
+          8,
+          8
+        ],
+        "heroic": [
+          8,
+          8
+        ],
+        "mythic": [
+          8,
+          8
+        ]
+      },
+      "t18": {
+        "normal": [
+          0,
+          8
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          2,
+          8
+        ]
+      },
+      "t19": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          5,
+          9
+        ],
+        "mythic": [
+          1,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          7,
+          8
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          6,
+          8
+        ],
+        "mythic": [
+          1,
+          8
+        ]
+      },
+      "t21": {
+        "lfr": [
+          3,
+          8
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          8
+        ],
+        "mythic": [
+          3,
+          8
+        ]
+      },
+      "t28": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          4,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          6,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          2,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          4,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "demon-hunter": {
+      "t19": {
+        "lfr": [
+          6,
+          9
+        ],
+        "normal": [
+          5,
+          9
+        ],
+        "heroic": [
+          3,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t20": {
+        "lfr": [
+          3,
+          8
+        ],
+        "normal": [
+          3,
+          8
+        ],
+        "heroic": [
+          2,
+          8
+        ],
+        "mythic": [
+          0,
+          8
+        ]
+      },
+      "t21": {
+        "lfr": [
+          2,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t28": {
+        "lfr": [
+          4,
+          9
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t29": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          7,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          6,
+          9
+        ],
+        "normal": [
+          5,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          5,
+          9
+        ],
+        "normal": [
+          2,
+          9
+        ],
+        "heroic": [
+          1,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    },
+    "evoker": {
+      "t29": {
+        "lfr": [
+          8,
+          9
+        ],
+        "normal": [
+          3,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t30": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t31": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t32": {
+        "lfr": [
+          3,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t33": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t34": {
+        "lfr": [
+          0,
+          9
+        ],
+        "normal": [
+          1,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      },
+      "t35": {
+        "lfr": [
+          1,
+          9
+        ],
+        "normal": [
+          0,
+          9
+        ],
+        "heroic": [
+          0,
+          9
+        ],
+        "mythic": [
+          0,
+          9
+        ]
+      }
+    }
   }
 }
