@@ -175,7 +175,7 @@ const ncols = cols.length + 1; // + colonna del nome set
     border-bottom: 1px solid var(--border-light);
   }
   .tmog-tip .tip-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.12rem; }
-  /* "Spalle (Ragnaros)" -> slot in evidenza, boss smorzato accanto. */
+  /* "Shoulder - Ragnaros (FL)" -> slot in evidenza, resto smorzato accanto. */
   .tmog-tip .tip-list b { font-weight: 600; }
   .tmog-tip .tip-list span { color: var(--text-subtle); }
 
@@ -229,15 +229,16 @@ const ncols = cols.length + 1; // + colonna del nome set
       head.textContent = cell.dataset.tipTitle || '';
       list.replaceChildren();
       for (const raw of (cell.dataset.tip || '').split('\n')) {
-        // Formato dal dump: "Spalle (Ragnaros)"; senza boss noto resta il solo slot.
-        const m = raw.match(/^(.*?) \((.*)\)$/);
+        // Gia' formattato da formatMissing: "Spalle — Ragnaros (FL)", oppure il solo
+        // slot quando il boss non e' noto.
+        const i = raw.indexOf(' — ');
         const li = document.createElement('li');
         const b = document.createElement('b');
-        b.textContent = m ? m[1] : raw;
+        b.textContent = i < 0 ? raw : raw.slice(0, i);
         li.append(b);
-        if (m) {
+        if (i >= 0) {
           const s = document.createElement('span');
-          s.textContent = ' — ' + m[2];
+          s.textContent = raw.slice(i);
           li.append(s);
         }
         list.append(li);

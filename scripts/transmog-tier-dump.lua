@@ -74,31 +74,37 @@ local function CountSet(setID)
     return have, total
 end
 
--- invType -> nome slot in italiano, per l'elenco dei pezzi mancanti.
--- GetSourceInfo restituisce `invType` NUMERICO (Enum.InventoryType), non la stringa
--- INVTYPE_*: teniamo entrambe le chiavi perche' altre API danno la forma testuale.
+-- invType -> nome dello slot, per l'elenco dei pezzi mancanti.
+-- GetSourceInfo restituisce `invType` NUMERICO, mai la stringa INVTYPE_*.
 -- ATTENZIONE alla numerazione: l'invType di GetSourceInfo e' spostato di +1 rispetto
 -- alla numerazione classica (Testa = 2, non 1). Verificato sui dati reali: il T9
 -- warrior usa {2,4,6,7,8,9,10,11}, che con questa mappa sono esattamente gli 8 slot
 -- del tier; con la numerazione classica uscivano "Anello", "Collo", "Maglietta".
+-- Nomi in INGLESE come li scrive il client, stessa convenzione delle professioni.
 local SLOT_NAME = {
-    [2] = "Testa", [3] = "Collo", [4] = "Spalle", [5] = "Maglietta", [6] = "Petto",
-    [7] = "Cintura", [8] = "Gambe", [9] = "Piedi", [10] = "Polsi", [11] = "Mani",
-    [12] = "Anello", [13] = "Monile", [17] = "Schiena", [20] = "Tabarro", [21] = "Petto",
+    [2] = "Head", [3] = "Neck", [4] = "Shoulder", [5] = "Shirt", [6] = "Chest",
+    [7] = "Waist", [8] = "Legs", [9] = "Feet", [10] = "Wrist", [11] = "Hands",
+    [12] = "Finger", [13] = "Trinket", [17] = "Back", [20] = "Tabard", [21] = "Chest",
     -- Alcuni set (soprattutto Legion in poi) includono armi.
-    [14] = "Arma", [15] = "Scudo", [16] = "Distanza", [18] = "Arma a due mani",
-    [19] = "Contenitore", [22] = "Mano principale", [23] = "Mano secondaria",
-    [24] = "Tenuto", [25] = "Munizioni", [26] = "Arma da lancio", [27] = "Distanza",
-    [28] = "Faretra", [29] = "Reliquia",
-    INVTYPE_HEAD = "Testa", INVTYPE_SHOULDER = "Spalle", INVTYPE_CHEST = "Petto",
-    INVTYPE_ROBE = "Petto", INVTYPE_WAIST = "Cintura", INVTYPE_LEGS = "Gambe",
-    INVTYPE_FEET = "Piedi", INVTYPE_WRIST = "Polsi", INVTYPE_HAND = "Mani",
-    INVTYPE_CLOAK = "Schiena", INVTYPE_NECK = "Collo", INVTYPE_FINGER = "Anello",
-    INVTYPE_TRINKET = "Monile",
+    [14] = "Weapon", [15] = "Shield", [16] = "Ranged", [18] = "Two-Hand",
+    [19] = "Bag", [22] = "Main Hand", [23] = "Off Hand", [24] = "Held In Off-hand",
+    [25] = "Ammo", [26] = "Thrown", [27] = "Ranged", [28] = "Quiver", [29] = "Relic",
 }
 
 -- Diagnostica: quale API risponde e con che forma. Finisce nel DB.
 local probe = {}
+
+-- Statistiche del recupero boss (finiscono nel DB, servono a validare il dump).
+local stats = { viaVariante = 0 }
+
+-- ⚠️ Strada dell'Encounter Journal: PROVATA E SCARTATA, non riproporla.
+-- L'idea era leggere dal journal il boss che droppa il token, visto che dal T28 e' il
+-- token a cadere e non il pezzo di classe. Non funziona: in 12.0.7
+-- C_EncounterJournal.GetLootInfoByIndex NON espone ne' nome ne' slot (solo itemID,
+-- encounterID e i flag displayAs*), e quell'itemID non e' quello dell'oggetto reale
+-- (GetItemInfoInstant lo da' come INVTYPE_NON_EQUIP_IGNORE, classe 0/8, nome nil).
+-- Su 191 indici costruiti: 0 agganci. Il boss si recupera invece dalle altre source
+-- della stessa apparenza, vedi MissingIn.
 
 -- Le API di transmog cambiano nome fra le espansioni (GetSetSources e' sparita in
 -- 12.0.x): elencare cosa esiste davvero evita di indovinare al giro dopo.
@@ -141,7 +147,7 @@ local function BossFor(sourceID)
                 return ks
             end)(), ", "))
             -- Il primo drop basta: le voci extra sono le altre difficolta' dello stesso boss.
-            if res[1].encounter then return res[1].encounter end
+            if res[1].encounter then return res[1].encounter, res[1].instance end
         else
             probe[name] = probe[name] or ("vuoto/" .. type(res))
         end
@@ -154,7 +160,7 @@ local unmapped = {}
 -- Set dove l'elenco dei mancanti non combacia con la frazione posseduti/totale.
 local mismatches = {}
 -- Pezzi NON collezionati di un set, con il boss che li droppa quando il gioco lo sa.
--- Restituisce una lista di stringhe tipo "Spalle (Ragnaros)".
+-- Restituisce una lista di stringhe tipo "Shoulder (Ragnaros, Firelands)".
 --
 -- Si itera GetSetPrimaryAppearances, la stessa lista che CountSet usa per la
 -- frazione: cosi' i mancanti sono per costruzione esattamente `total - have`.
@@ -170,6 +176,19 @@ local mismatches = {}
 -- mostrata nella cella, altrimenti il tooltip contraddirebbe il numero.
 local function MissingIn(setID, have, total)
     local out = {}
+
+    -- Un'apparenza ha piu' source (le varie difficolta', e dal T28 anche il Catalyst).
+    -- Su quella primaria GetAppearanceSourceDrops tace, ma la variante che cade in raid
+    -- il boss ce l'ha: si raggruppano le source per visual per poterle provare tutte.
+    local byVisual = {}
+    for _, sid in ipairs(C_TransmogSets.GetAllSourceIDs(setID) or {}) do
+        local si = C_TransmogCollection.GetSourceInfo(sid)
+        if si and si.visualID then
+            byVisual[si.visualID] = byVisual[si.visualID] or {}
+            table.insert(byVisual[si.visualID], sid)
+        end
+    end
+
     for _, a in ipairs(C_TransmogSets.GetSetPrimaryAppearances(setID) or {}) do
         if not a.collected then
             local sourceID = a.appearanceID
@@ -180,8 +199,32 @@ local function MissingIn(setID, have, total)
                 unmapped[tostring(invType)] = (info and info.itemID) or "?"
                 slot = "Slot " .. tostring(invType)
             end
-            local boss = sourceID and BossFor(sourceID)
-            out[#out + 1] = boss and (slot .. " (" .. boss .. ")") or slot
+            local boss, instance = nil, nil
+            if sourceID then boss, instance = BossFor(sourceID) end
+            -- Nessun drop sulla primaria: si provano le altre source dello stesso
+            -- visual (stesso aspetto, difficolta' diversa), dove il boss c'e'.
+            if not boss and info and info.visualID then
+                for _, alt in ipairs(byVisual[info.visualID] or {}) do
+                    if alt ~= sourceID then
+                        boss, instance = BossFor(alt)
+                        if boss then
+                            stats.viaVariante = stats.viaVariante + 1
+                            break
+                        end
+                    end
+                end
+            end
+
+            -- Formato: "Shoulder (Ragnaros, Firelands)". Il raid serve al sito per
+            -- mostrarne la sigla; si separa sulla PRIMA virgola, perche' il nome del
+            -- raid puo' contenerne (es. "Antorus, the Burning Throne").
+            if boss and instance then
+                out[#out + 1] = ("%s (%s, %s)"):format(slot, boss, instance)
+            elseif boss then
+                out[#out + 1] = ("%s (%s)"):format(slot, boss)
+            else
+                out[#out + 1] = slot
+            end
         end
     end
     table.sort(out)
@@ -313,6 +356,7 @@ local function Dump()
         api = ApiNames(),  -- funzioni davvero esposte: serve quando un'API sparisce
         unmapped = unmapped,  -- invType senza nome in SLOT_NAME -> un itemID d'esempio
         mismatches = mismatches,  -- set con elenco incoerente col conteggio
+        stats = stats,            -- boss recuperati dalle varianti della stessa apparenza
 
         sets = raw,   -- dump grezzo: serve solo se cambia la mappa TIER/SLOT
     }

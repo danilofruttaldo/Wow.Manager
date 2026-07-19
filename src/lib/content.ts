@@ -157,7 +157,7 @@ export interface TmogCell {
   got: number;
   total: number;
   state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
-  missing: string[];                              // pezzi non ancora presi, es. "Spalle (Ragnaros)"
+  missing: string[];                              // non presi, es. "Shoulder (Ragnaros, Firelands)"
 }
 // Sfondo della riga per completamento: nessun pezzo / <50% / >=50% / completo.
 export type TmogRowState = 'empty' | 'low' | 'good' | 'full';
@@ -197,6 +197,37 @@ export const transmogColumns = (transmogManifest as any).columns as { key: strin
 const tmogTierIndex: Record<string, number> = {};
 ((transmogManifest as any).tiers ?? []).forEach((t: any, i: number) => { tmogTierIndex[t.key] = i; });
 
+// Nomi di raid confrontabili: il gioco e il manifest non li scrivono uguali
+// ("Naxxramas" vs "Naxxramas (livello 80)", articolo iniziale incluso o meno).
+const normRaid = (s: string) =>
+  s.toLowerCase().replace(/\(.*?\)/g, '').replace(/^the /, '').replace(/[^a-z0-9]/g, '');
+
+// Da "Head (Ragnaros, Firelands)" del dump alla forma mostrata nel tooltip,
+// "Head — Ragnaros (FL)": la sigla viene dai `raids` del tier, non dal dump, che non
+// conosce le abbreviazioni usate nel repo. Senza boss noto resta il solo slot.
+//
+// ⚠️ Dove tagliare NON e' deducibile dalla posizione della virgola: ne contengono sia
+// i boss ("Baleroc, the Gatekeeper") sia i raid ("Antorus, the Burning Throne").
+// Si prova quindi ogni virgola da destra e si tiene la prima la cui coda e' un raid
+// noto del tier; solo se nessuna corrisponde si ripiega sull'ultima.
+export function formatMissing(raw: string, raids: [string, string][]): string {
+  const m = raw.match(/^(.*?) \((.*)\)$/);
+  if (!m) return raw;
+  const [, slot, detail] = m;
+
+  const tagli: number[] = [];
+  for (let i = detail.indexOf(', '); i >= 0; i = detail.indexOf(', ', i + 1)) tagli.push(i);
+  if (!tagli.length) return `${slot} — ${detail}`;
+
+  for (const i of tagli.reverse()) {
+    const coda = detail.slice(i + 2);
+    const hit = raids.find(([, full]) => normRaid(full) === normRaid(coda));
+    if (hit) return `${slot} — ${detail.slice(0, i)} (${hit[0]})`;
+  }
+  const ultimo = tagli[0];   // reverse() l'ha messo in testa
+  return `${slot} — ${detail.slice(0, ultimo)} (${detail.slice(ultimo + 2)})`;
+}
+
 export function getTransmog(): TmogClass[] {
   const m = transmogManifest as any;
   const cols = m.columns as { key: string; label: string }[];
@@ -234,7 +265,8 @@ export function getTransmog(): TmogClass[] {
           return {
             slot: c.key, label, got, total,
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
-            missing: (missing[slug]?.[t.key]?.[c.key] ?? []) as string[],
+            missing: ((missing[slug]?.[t.key]?.[c.key] ?? []) as string[])
+              .map((m) => formatMissing(m, (t.raids ?? []) as [string, string][])),
           };
         });
         // Completamento della riga sulle sole versioni esistenti → tint di sfondo del tier.
