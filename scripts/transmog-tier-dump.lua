@@ -74,8 +74,22 @@ local function CountSet(setID)
     return have, total
 end
 
--- invType (INVTYPE_*) -> nome slot in italiano, per l'elenco dei pezzi mancanti.
+-- invType -> nome slot in italiano, per l'elenco dei pezzi mancanti.
+-- GetSourceInfo restituisce `invType` NUMERICO (Enum.InventoryType), non la stringa
+-- INVTYPE_*: teniamo entrambe le chiavi perche' altre API danno la forma testuale.
+-- ATTENZIONE alla numerazione: l'invType di GetSourceInfo e' spostato di +1 rispetto
+-- alla numerazione classica (Testa = 2, non 1). Verificato sui dati reali: il T9
+-- warrior usa {2,4,6,7,8,9,10,11}, che con questa mappa sono esattamente gli 8 slot
+-- del tier; con la numerazione classica uscivano "Anello", "Collo", "Maglietta".
 local SLOT_NAME = {
+    [2] = "Testa", [3] = "Collo", [4] = "Spalle", [5] = "Maglietta", [6] = "Petto",
+    [7] = "Cintura", [8] = "Gambe", [9] = "Piedi", [10] = "Polsi", [11] = "Mani",
+    [12] = "Anello", [13] = "Monile", [17] = "Schiena", [20] = "Tabarro", [21] = "Petto",
+    -- Alcuni set (soprattutto Legion in poi) includono armi.
+    [14] = "Arma", [15] = "Scudo", [16] = "Distanza", [18] = "Arma a due mani",
+    [19] = "Contenitore", [22] = "Mano principale", [23] = "Mano secondaria",
+    [24] = "Tenuto", [25] = "Munizioni", [26] = "Arma da lancio", [27] = "Distanza",
+    [28] = "Faretra", [29] = "Reliquia",
     INVTYPE_HEAD = "Testa", INVTYPE_SHOULDER = "Spalle", INVTYPE_CHEST = "Petto",
     INVTYPE_ROBE = "Petto", INVTYPE_WAIST = "Cintura", INVTYPE_LEGS = "Gambe",
     INVTYPE_FEET = "Piedi", INVTYPE_WRIST = "Polsi", INVTYPE_HAND = "Mani",
@@ -83,28 +97,106 @@ local SLOT_NAME = {
     INVTYPE_TRINKET = "Monile",
 }
 
--- Pezzi NON collezionati di un set, con il boss che li droppa quando il gioco lo sa.
--- Restituisce una lista di stringhe tipo "Spalle (Ragnaros)".
-local function MissingIn(setID)
+-- Diagnostica: quale API risponde e con che forma. Finisce nel DB.
+local probe = {}
+
+-- Le API di transmog cambiano nome fra le espansioni (GetSetSources e' sparita in
+-- 12.0.x): elencare cosa esiste davvero evita di indovinare al giro dopo.
+local function ApiNames()
     local out = {}
-    local sources = C_TransmogSets.GetSetSources(setID)
-    if not sources then return out end
-    for sourceID, collected in pairs(sources) do
-        if not collected then
-            local info = C_TransmogCollection.GetSourceInfo(sourceID)
-            local slot = info and (SLOT_NAME[info.invType] or info.invType) or "?"
-            -- Il primo drop basta: le voci extra sono le altre difficolta' dello stesso boss.
-            local drops = C_TransmogCollection.GetAppearanceSourceDrops(sourceID)
-            local boss = drops and drops[1] and drops[1].encounter
-            out[#out + 1] = boss and (slot .. " (" .. boss .. ")") or slot
+    for _, ns in ipairs({ "C_TransmogSets", "C_TransmogCollection" }) do
+        local tbl = _G[ns]
+        if type(tbl) == "table" then
+            for k, v in pairs(tbl) do
+                if type(v) == "function" then out[#out + 1] = ns .. "." .. k end
+            end
         end
     end
     table.sort(out)
     return out
 end
 
+-- Boss che droppa una source, se il gioco lo sa. Il nome dell'API e' cambiato negli
+-- anni: proviamo i candidati noti, sotto pcall, e ricordiamo quale ha funzionato.
+local DROP_FNS = {
+    { "C_TransmogCollection.GetAppearanceSourceDrops", function(id) return C_TransmogCollection.GetAppearanceSourceDrops(id) end },
+    { "C_TransmogCollection.GetAppearanceSourceInfo", function(id)
+        -- Fallback: da qui si ricava almeno il nome dell'oggetto, non il boss.
+        local _, _, _, _, _, itemLink = C_TransmogCollection.GetAppearanceSourceInfo(id)
+        return itemLink and { { encounter = nil } } or nil
+    end },
+}
+
+local function BossFor(sourceID)
+    for _, cand in ipairs(DROP_FNS) do
+        local name, fn = cand[1], cand[2]
+        local ok, res = pcall(fn, sourceID)
+        if not ok then
+            probe[name] = probe[name] or ("errore: " .. tostring(res))
+        elseif type(res) == "table" and res[1] then
+            probe[name] = probe[name] or ("ok, campi: " .. table.concat((function()
+                local ks = {}
+                for k, v in pairs(res[1]) do ks[#ks + 1] = k .. "=" .. tostring(v) end
+                table.sort(ks)
+                return ks
+            end)(), ", "))
+            -- Il primo drop basta: le voci extra sono le altre difficolta' dello stesso boss.
+            if res[1].encounter then return res[1].encounter end
+        else
+            probe[name] = probe[name] or ("vuoto/" .. type(res))
+        end
+    end
+    return nil
+end
+
+-- Slot non ancora mappati, per correggere SLOT_NAME senza tirare a indovinare.
+local unmapped = {}
+-- Set dove l'elenco dei mancanti non combacia con la frazione posseduti/totale.
+local mismatches = {}
+-- Pezzi NON collezionati di un set, con il boss che li droppa quando il gioco lo sa.
+-- Restituisce una lista di stringhe tipo "Spalle (Ragnaros)".
+--
+-- Si itera GetSetPrimaryAppearances, la stessa lista che CountSet usa per la
+-- frazione: cosi' i mancanti sono per costruzione esattamente `total - have`.
+--
+-- ⚠️ Il campo `appearanceID` di quelle entry contiene in realta' una **sourceID**
+-- (verificato: gli id delle primarie stanno nell'intervallo delle sourceID, non dei
+-- visualID), quindi si passa dritti a GetSourceInfo/GetAppearanceSourceDrops senza
+-- alcun join. Le vie scartate: GetSetSources non esiste piu' in 12.0.x,
+-- GetAllAppearanceSources restituiva oggetti di altri set, e GetAllSourceIDs include
+-- le varianti di difficolta' (42 voci per un set da 8).
+--
+-- `have`/`total` arrivano da CountSet: verifica che l'elenco combaci con la frazione
+-- mostrata nella cella, altrimenti il tooltip contraddirebbe il numero.
+local function MissingIn(setID, have, total)
+    local out = {}
+    for _, a in ipairs(C_TransmogSets.GetSetPrimaryAppearances(setID) or {}) do
+        if not a.collected then
+            local sourceID = a.appearanceID
+            local info = sourceID and C_TransmogCollection.GetSourceInfo(sourceID)
+            local invType = info and info.invType
+            local slot = SLOT_NAME[invType]
+            if not slot then
+                unmapped[tostring(invType)] = (info and info.itemID) or "?"
+                slot = "Slot " .. tostring(invType)
+            end
+            local boss = sourceID and BossFor(sourceID)
+            out[#out + 1] = boss and (slot .. " (" .. boss .. ")") or slot
+        end
+    end
+    table.sort(out)
+
+    -- Discrepanza = elenco non fidato: meglio saperlo che pubblicare numeri diversi
+    -- fra cella e tooltip.
+    if total and #out ~= (total - have) then
+        mismatches[#mismatches + 1] = ("set %d: elenco %d, atteso %d")
+            :format(setID, #out, total - have)
+    end
+    return out
+end
+
 local function Dump()
-    local raw, data, dropped, missing = {}, {}, {}, {}
+    local raw, data, dropped, missing, errors = {}, {}, {}, {}, {}
     local seen = {}
 
     local function consider(info)
@@ -140,9 +232,16 @@ local function Dump()
         data[class][tier] = data[class][tier] or {}
         data[class][tier][slot] = { have, total }
         if have < total then
-            missing[class] = missing[class] or {}
-            missing[class][tier] = missing[class][tier] or {}
-            missing[class][tier][slot] = MissingIn(info.setID)
+            -- Sotto pcall: un errore qui deve degradare l'elenco dei mancanti,
+            -- non far saltare tutto il dump (e con esso `collected`).
+            local ok, list = pcall(MissingIn, info.setID, have, total)
+            if not ok then
+                errors[#errors + 1] = tier .. "/" .. class .. ": " .. tostring(list)
+            else
+                missing[class] = missing[class] or {}
+                missing[class][tier] = missing[class][tier] or {}
+                missing[class][tier][slot] = list
+            end
         end
     end
 
@@ -209,11 +308,17 @@ local function Dump()
         collectedJson = table.concat(out, "\n"),
         missingJson = table.concat(mo, "\n"),
         dropped = dropped,
+        errors = errors,   -- set il cui elenco pezzi e' fallito (dump comunque valido)
+        probe = probe,     -- quale API ha risposto, e con che campi
+        api = ApiNames(),  -- funzioni davvero esposte: serve quando un'API sparisce
+        unmapped = unmapped,  -- invType senza nome in SLOT_NAME -> un itemID d'esempio
+        mismatches = mismatches,  -- set con elenco incoerente col conteggio
+
         sets = raw,   -- dump grezzo: serve solo se cambia la mappa TIER/SLOT
     }
 
-    print(("|cff33ff99WowManagerTierDump|r: %d set letti, %d scartati. /reload per scrivere il file.")
-        :format(#raw, #dropped))
+    print(("|cff33ff99WowManagerTierDump|r: %d set letti, %d scartati, %d errori. /reload per scrivere il file.")
+        :format(#raw, #dropped, #errors))
 end
 
 SLASH_WMTIER1 = "/wmtier"

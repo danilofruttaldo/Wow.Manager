@@ -54,8 +54,11 @@ const ncols = cols.length + 1; // + colonna del nome set
                       {r.cells.map(cell => (
                         cell.state === 'na'
                           ? <td><span class="na"></span></td>
-                          : <td class:list={['cell', `cell--${cell.state}`]}
-                                title={cell.missing.length > 0 ? `Mancano: ${cell.missing.join(', ')}` : undefined}>
+                          : <td class:list={['cell', `cell--${cell.state}`, { 'has-tip': cell.missing.length > 0 }]}
+                                tabindex={cell.missing.length > 0 ? 0 : undefined}
+                                data-tip-title={cell.missing.length > 0
+                                  ? `${r.setName ?? r.name} — ${cell.label}` : undefined}
+                                data-tip={cell.missing.length > 0 ? cell.missing.join('\n') : undefined}>
                               <span class="frac">{cell.got}/{cell.total}</span>
                               <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
                             </td>
@@ -70,6 +73,13 @@ const ncols = cols.length + 1; // + colonna del nome set
         </div>
       </section>
     ))}
+
+    {/* Popover dei pezzi mancanti: fuori dalla tabella, altrimenti l'overflow di
+        .table-scroll lo taglierebbe. Posizionato via JS al passaggio sulla cella. */}
+    <div class="tmog-tip" id="tmog-tip" role="tooltip" hidden>
+      <div class="tip-head"></div>
+      <ul class="tip-list"></ul>
+    </div>
   </div>
 </Base>
 
@@ -146,6 +156,29 @@ const ncols = cols.length + 1; // + colonna del nome set
     background: color-mix(in srgb, var(--accent) 7%, var(--surface));
   }
 
+  /* Cella con pezzi mancanti: la frazione segnala che c'e' il dettaglio sotto. */
+  .tmog-panel td.has-tip { cursor: help; }
+  .tmog-panel td.has-tip .frac { text-decoration: underline dotted; text-underline-offset: 2px; }
+  .tmog-panel td.has-tip:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  /* Popover: fisso rispetto al viewport, cosi' non lo taglia lo scroll della tabella. */
+  .tmog-tip {
+    position: fixed; z-index: 50; pointer-events: none;
+    max-width: 22rem; padding: 0.5rem 0.65rem;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface); box-shadow: 0 8px 24px rgb(0 0 0 / 0.16);
+    font-size: 0.74rem; line-height: 1.35;
+  }
+  .tmog-tip[hidden] { display: none; }
+  .tmog-tip .tip-head {
+    font-weight: 700; margin-bottom: 0.35rem; padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .tmog-tip .tip-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.12rem; }
+  /* "Spalle (Ragnaros)" -> slot in evidenza, boss smorzato accanto. */
+  .tmog-tip .tip-list b { font-weight: 600; }
+  .tmog-tip .tip-list span { color: var(--text-subtle); }
+
   @media (max-width: 700px) {
     .tmog-panel th:first-child, .tmog-panel td:first-child { width: 40%; }
     .tmog-panel .traid { display: none; }
@@ -170,6 +203,78 @@ const ncols = cols.length + 1; // + colonna del nome set
         for (const p of panels) p.hidden = p.dataset.class !== target;
       });
     }
+
+    initTip();
+  }
+
+  // Popover dei pezzi mancanti sulle celle con `data-tip`.
+  //
+  // I listener stanno su `document` e vanno agganciati UNA volta sola: con
+  // ClientRouter `astro:page-load` rispara a ogni navigazione, e ri-registrarli
+  // lascerebbe in giro copie legate al popover della pagina precedente. Per lo
+  // stesso motivo il nodo si risolve dentro l'handler, non qui fuori.
+  function initTip() {
+    if ((window as any).__tmogTip) return;
+    (window as any).__tmogTip = true;
+
+    const el = () => document.getElementById('tmog-tip') as HTMLElement | null;
+
+    function hide() { const tip = el(); if (tip) tip.hidden = true; }
+
+    function show(cell: HTMLElement) {
+      const tip = el();
+      if (!tip) return;
+      const head = tip.querySelector('.tip-head') as HTMLElement;
+      const list = tip.querySelector('.tip-list') as HTMLElement;
+      head.textContent = cell.dataset.tipTitle || '';
+      list.replaceChildren();
+      for (const raw of (cell.dataset.tip || '').split('\n')) {
+        // Formato dal dump: "Spalle (Ragnaros)"; senza boss noto resta il solo slot.
+        const m = raw.match(/^(.*?) \((.*)\)$/);
+        const li = document.createElement('li');
+        const b = document.createElement('b');
+        b.textContent = m ? m[1] : raw;
+        li.append(b);
+        if (m) {
+          const s = document.createElement('span');
+          s.textContent = ' — ' + m[2];
+          li.append(s);
+        }
+        list.append(li);
+      }
+      tip.hidden = false;
+
+      // Posizione: sotto la cella, rientrata nel viewport se sborda.
+      const r = cell.getBoundingClientRect();
+      const t = tip.getBoundingClientRect();
+      const pad = 8;
+      let left = r.left + r.width / 2 - t.width / 2;
+      left = Math.max(pad, Math.min(left, window.innerWidth - t.width - pad));
+      let top = r.bottom + 6;
+      if (top + t.height > window.innerHeight - pad) top = r.top - t.height - 6;
+      tip.style.left = `${left}px`;
+      tip.style.top = `${Math.max(pad, top)}px`;
+    }
+
+    // Il bersaglio dell'evento e' una cella con tooltip? (null se siamo altrove)
+    const cellOf = (e: Event) => {
+      const t = e.target;
+      return t instanceof Element
+        ? (t.closest('td.has-tip') as HTMLElement | null)
+        : null;
+    };
+
+    // Delega: le celle sono tante e i pannelli cambiano con i chip.
+    document.addEventListener('mouseover', e => {
+      const cell = cellOf(e);
+      if (cell) show(cell); else hide();
+    });
+    document.addEventListener('focusin', e => {
+      const cell = cellOf(e);
+      if (cell) show(cell); else hide();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });
+    window.addEventListener('scroll', hide, true);
   }
 
   document.addEventListener('astro:page-load', initTransmog);
