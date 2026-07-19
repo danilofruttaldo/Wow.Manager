@@ -1,0 +1,145 @@
+{
+  "_meta": {
+    "note": "Collezione tier set / class set transmog, per classe. Fonte di verita' mantenuta a mano.",
+    "columns_note": "Le 4 colonne sono SLOT di versione, non difficolta' letterali: prima di Cataclysm gli assi erano altri (10/25 uomini, fazione, Sanctified). Ogni tier dichiara in `versions` l'etichetta REALE di ogni slot che usa; gli slot assenti sono resi come casella non applicabile. L'header mostra i nomi moderni perche' sono il caso dominante (dal T19 in poi tutti e 4 gli slot sono LFR/Normal/Heroic/Mythic).",
+    "pieces_note": "Il numero pezzi vale per versione. Classic 8 (T3 9, T2.5 5), TBC 5 (T6 8 con i 3 pezzi Sunwell), Legion 6, tutto il resto 5.",
+    "collected_note": "collected[classe][tier][slot] = numero di pezzi posseduti in quella versione. Slot assente o mancante = 0."
+  },
+
+  "columns": [
+    { "key": "lfr", "label": "LFR" },
+    { "key": "normal", "label": "Normal" },
+    { "key": "heroic", "label": "Heroic" },
+    { "key": "mythic", "label": "Mythic" }
+  ],
+
+  "expansions": [
+    { "key": "classic", "name": "Classic" },
+    { "key": "tbc", "name": "The Burning Crusade" },
+    { "key": "wotlk", "name": "Wrath of the Lich King" },
+    { "key": "cata", "name": "Cataclysm" },
+    { "key": "mop", "name": "Mists of Pandaria" },
+    { "key": "wod", "name": "Warlords of Draenor" },
+    { "key": "legion", "name": "Legion" },
+    { "key": "bfa", "name": "Battle for Azeroth", "empty": "Nessun set di classe: era dell'Azerite Armor." },
+    { "key": "sl", "name": "Shadowlands", "note": "Castle Nathria e Sanctum of Domination non hanno set di classe: i tier tornano in 9.2." },
+    { "key": "df", "name": "Dragonflight" },
+    { "key": "tww", "name": "The War Within" },
+    { "key": "midnight", "name": "Midnight" }
+  ],
+
+  "classStart": {
+    "death-knight": "t7",
+    "monk": "t14",
+    "demon-hunter": "t19",
+    "evoker": "t29"
+  },
+
+  "tiers": [
+    { "key": "t0",  "tier": "T0",   "name": "Dungeon Set 1", "exp": "classic", "pieces": 8,
+      "versions": { "normal": "Versione unica" } },
+    { "key": "t05", "tier": "T0.5", "name": "Dungeon Set 2", "exp": "classic", "pieces": 8,
+      "versions": { "normal": "Versione unica" },
+      "warn": "Non piu' ottenibile: la catena di quest e' stata rimossa in 4.0.3a." },
+    { "key": "t1",  "tier": "T1",   "name": "Molten Core", "exp": "classic", "pieces": 8,
+      "versions": { "normal": "Versione unica" } },
+    { "key": "t2",  "tier": "T2",   "name": "Blackwing Lair", "exp": "classic", "pieces": 8,
+      "versions": { "normal": "Versione unica" },
+      "note": "Elmo da Onyxia, gambe da Ragnaros." },
+    { "key": "t25", "tier": "T2.5", "name": "Temple of Ahn'Qiraj", "exp": "classic", "pieces": 5,
+      "versions": { "normal": "Versione unica" } },
+    { "key": "t3",  "tier": "T3",   "name": "Naxxramas", "exp": "classic", "pieces": 9,
+      "versions": { "normal": "Versione unica" },
+      "note": "Primo set a 9 pezzi: aggiunge l'anello." },
+
+    { "key": "t4", "tier": "T4", "name": "Karazhan · Gruul · Magtheridon", "exp": "tbc", "pieces": 5,
+      "versions": { "normal": "Versione unica" } },
+    { "key": "t5", "tier": "T5", "name": "Serpentshrine Cavern · Tempest Keep", "exp": "tbc", "pieces": 5,
+      "versions": { "normal": "Versione unica" } },
+    { "key": "t6", "tier": "T6", "name": "Hyjal · Black Temple · Sunwell", "exp": "tbc", "pieces": 8,
+      "versions": { "normal": "Versione unica" },
+      "note": "5 pezzi base + 3 (polsi, cintura, stivali) da Sunwell in 2.4. I 3 pezzi Sunwell non combaciano visivamente col set base." },
+
+    { "key": "t7",  "tier": "T7",  "name": "Naxxramas (80) · Obsidian Sanctum", "exp": "wotlk", "pieces": 5,
+      "versions": { "normal": "Heroes' (10 uomini)", "heroic": "Valorous (25 uomini)" },
+      "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale." },
+    { "key": "t8",  "tier": "T8",  "name": "Ulduar", "exp": "wotlk", "pieces": 5,
+      "versions": { "normal": "Valorous (10 uomini)", "heroic": "Conqueror's (25 uomini)" } },
+    { "key": "t9",  "tier": "T9",  "name": "Trial of the Crusader", "exp": "wotlk", "pieces": 5,
+      "versions": { "normal": "Alleanza", "heroic": "Orda" },
+      "warn": "Anomalia: qui l'asse di variazione e' la FAZIONE, non la difficolta'. I 3 item level condividono lo stesso aspetto." },
+    { "key": "t10", "tier": "T10", "name": "Icecrown Citadel", "exp": "wotlk", "pieces": 5,
+      "versions": { "normal": "Base", "heroic": "Sanctified (10)", "mythic": "Sanctified (25)" } },
+
+    { "key": "t11", "tier": "T11", "name": "Blackwing Descent · Bastion of Twilight · Throne of the Four Winds", "exp": "cata", "pieces": 5,
+      "versions": { "normal": "Normal", "heroic": "Heroic" } },
+    { "key": "t12", "tier": "T12", "name": "Firelands", "exp": "cata", "pieces": 5,
+      "versions": { "normal": "Normal", "heroic": "Heroic" } },
+    { "key": "t13", "tier": "T13", "name": "Dragon Soul", "exp": "cata", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic" },
+      "note": "Primo tier in assoluto con versione LFR." },
+
+    { "key": "t14", "tier": "T14", "name": "Heart of Fear · Terrace of Endless Spring", "exp": "mop", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic" },
+      "note": "Mogu'shan Vaults non droppa token tier." },
+    { "key": "t15", "tier": "T15", "name": "Throne of Thunder", "exp": "mop", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic" } },
+    { "key": "t16", "tier": "T16", "name": "Siege of Orgrimmar", "exp": "mop", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal (ex Flex)", "heroic": "Heroic" },
+      "note": "4 item level ma 3 aspetti: Flex riusava l'aspetto Normal. La 6.0.2 ha rinominato Flex->Normal, Normal->Heroic, Heroic->Mythic." },
+
+    { "key": "t17", "tier": "T17", "name": "Blackrock Foundry", "exp": "wod", "pieces": 5,
+      "versions": { "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" },
+      "warn": "Highmaul non ha set di classe. In tutta WoD non esiste tier in LFR." },
+    { "key": "t18", "tier": "T18", "name": "Hellfire Citadel", "exp": "wod", "pieces": 5,
+      "versions": { "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" },
+      "warn": "Nessuna versione LFR." },
+
+    { "key": "t19", "tier": "T19", "name": "The Nighthold", "exp": "legion", "pieces": 6,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" },
+      "warn": "Emerald Nightmare e Trial of Valor NON hanno set di classe." },
+    { "key": "t20", "tier": "T20", "name": "Tomb of Sargeras", "exp": "legion", "pieces": 6,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" } },
+    { "key": "t21", "tier": "T21", "name": "Antorus, the Burning Throne", "exp": "legion", "pieces": 6,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" } },
+
+    { "key": "t28", "tier": "T28", "name": "Sepulcher of the First Ones", "exp": "sl", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" },
+      "note": "Ritorno dei tier set in 9.2, insieme al Creation Catalyst." },
+
+    { "key": "t29", "tier": "T29", "name": "Vault of the Incarnates", "exp": "df", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" } },
+    { "key": "t30", "tier": "T30", "name": "Aberrus, the Shadowed Crucible", "exp": "df", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" } },
+    { "key": "t31", "tier": "T31", "name": "Amirdrassil, the Dream's Hope", "exp": "df", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" },
+      "note": "In Season 4 esistono anche le varianti 'Awakened'." },
+
+    { "key": "t32", "tier": "T32", "name": "Nerub-ar Palace", "exp": "tww", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" } },
+    { "key": "t33", "tier": "T33", "name": "Liberation of Undermine", "exp": "tww", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" } },
+    { "key": "t34", "tier": "T34", "name": "Manaforge Omega", "exp": "tww", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" } },
+
+    { "key": "t35", "tier": "T35", "name": "The Voidspire · The Dreamrift", "exp": "midnight", "pieces": 5,
+      "versions": { "lfr": "Raid Finder", "normal": "Normal", "heroic": "Heroic", "mythic": "Mythic" },
+      "note": "4 pezzi dal Voidspire, il petto dal Dreamrift. Quinto canale: Chiming Void Curio (omni-token) da Midnight Falls." }
+  ],
+
+  "collected": {
+    "warrior": {},
+    "paladin": {},
+    "hunter": {},
+    "rogue": {},
+    "priest": {},
+    "death-knight": {},
+    "shaman": {},
+    "mage": {},
+    "warlock": {},
+    "monk": {},
+    "druid": {},
+    "demon-hunter": {},
+    "evoker": {}
+  }
+}

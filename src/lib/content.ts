@@ -11,6 +11,7 @@ import macrosManifest from '../../macros/manifest.json';
 import fontsManifest from '../../fonts/manifest.json';
 import professionsManifest from '../../professions/manifest.json';
 import extraManifest from '../../scripts/manifest.json';
+import transmogManifest from '../../transmog/manifest.json';
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -143,6 +144,96 @@ export function getExtra(): Extra[] {
   return Object.entries(raw)
     .map(([key, v]: [string, any]) => ({ key, ...v, body: v.body ?? extraBody(v.body_file) }))
     .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// ── Transmog (tier set per classe) ────────────────
+// Matrice tier × versione, una per classe. Le 4 colonne sono SLOT di versione, non
+// difficoltà letterali: prima di Cataclysm gli assi erano altri (10/25 uomini, fazione,
+// Sanctified), quindi ogni tier dichiara l'etichetta reale degli slot che usa e gli slot
+// non dichiarati diventano celle "non applicabile" (stesso pattern delle combo del roster).
+export interface TmogCell {
+  slot: string;
+  label: string;                                  // etichetta REALE della versione per quel tier
+  got: number;
+  total: number;
+  state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
+}
+export interface TmogRow {
+  key: string;
+  tier: string;
+  name: string;
+  pieces: number;
+  note?: string;
+  warn?: string;
+  na: boolean;                                    // true = classe non ancora esistente a questo tier
+  cells: TmogCell[];
+}
+export interface TmogGroup {
+  key: string;
+  name: string;
+  empty?: string;                                 // espansione senza set di classe (es. BfA)
+  note?: string;
+  rows: TmogRow[];
+}
+export interface TmogClass {
+  slug: string;
+  label: string;
+  icon: string;
+  groups: TmogGroup[];
+  totals: { slot: string; label: string; got: number; total: number }[];
+  got: number;
+  total: number;
+}
+
+export const transmogMeta = (transmogManifest as any)._meta;
+export const transmogColumns = (transmogManifest as any).columns as { key: string; label: string }[];
+
+// Ordine dei tier: serve a stabilire da quale tier una classe "nuova" esiste (classStart).
+const tmogTierIndex: Record<string, number> = {};
+((transmogManifest as any).tiers ?? []).forEach((t: any, i: number) => { tmogTierIndex[t.key] = i; });
+
+export function getTransmog(): TmogClass[] {
+  const m = transmogManifest as any;
+  const cols = m.columns as { key: string; label: string }[];
+  const tiers = m.tiers as any[];
+  const classStart = (m.classStart ?? {}) as Record<string, string>;
+  const collected = (m.collected ?? {}) as Record<string, any>;
+
+  return Object.keys(collected).map((slug) => {
+    const startIdx = tmogTierIndex[classStart[slug] ?? ''] ?? 0; // classe assente prima di questo tier
+    const totals = cols.map((c) => ({ slot: c.key, label: c.label, got: 0, total: 0 }));
+
+    const groups: TmogGroup[] = (m.expansions as any[]).map((exp) => {
+      const rows: TmogRow[] = tiers.filter((t) => t.exp === exp.key).map((t) => {
+        const na = (tmogTierIndex[t.key] ?? 0) < startIdx;
+        const cells: TmogCell[] = cols.map((c, ci): TmogCell => {
+          const label = t.versions?.[c.key];
+          // Versione inesistente per questo tier, o classe non ancora esistente → cella scura.
+          if (!label || na) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na' };
+          const got = Number(collected[slug]?.[t.key]?.[c.key] ?? 0);
+          const total = t.pieces as number;
+          totals[ci].got += got;
+          totals[ci].total += total;
+          return {
+            slot: c.key, label, got, total,
+            state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
+          };
+        });
+        return { key: t.key, tier: t.tier, name: t.name, pieces: t.pieces, note: t.note, warn: t.warn, na, cells };
+      });
+      return { key: exp.key, name: exp.name, empty: exp.empty, note: exp.note, rows };
+    });
+
+    return {
+      slug,
+      label: classLabel(slug),
+      icon: `/icons/class/${slug.replace(/-/g, '')}.jpg`,
+      groups,
+      totals,
+      got: totals.reduce((s, t) => s + t.got, 0),
+      total: totals.reduce((s, t) => s + t.total, 0),
+    };
+  });
 }
 
 // ── Markdown raw (fuori da src) ───────────────────

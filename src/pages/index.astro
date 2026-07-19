@@ -1,18 +1,22 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getAddons, getMacros, getProfessions, getRosterCount, getExtra } from '../lib/content';
+import { getAddons, getMacros, getProfessions, getRosterCount, getExtra, getTransmog } from '../lib/content';
 
 const addons = getAddons();
 const macros = getMacros();
 const professions = getProfessions();
 const rosterCount = getRosterCount();
 const extra = getExtra();
+// Tier set tracciati: identici per ogni classe, li conto sulla prima.
+const tmog = getTransmog();
+const tmogTiers = tmog[0]?.groups.reduce((n, g) => n + g.rows.length, 0) ?? 0;
 
 const sections = [
   { href: '/addons',      name: 'Addon',       sub: 'addon installati e versioni', count: `${addons.length}`,     icon: '/icons/section/addon.jpg',  color: '#2E68D8' },
   { href: '/macros',      name: 'Macro',       sub: 'macro per account e PG',      count: `${macros.length}`,     icon: '/icons/section/macro.jpg',  color: '#7A5AF8' },
   { href: '/professioni', name: 'Professioni', sub: 'specializzazioni e rami',     count: `${professions.length}`, icon: '/icons/section/prof.jpg',  color: '#C77D0A' },
   { href: '/roster',      name: 'Roster',      sub: 'personaggi Orda e Alleanza',  count: `${rosterCount}`,       icon: '/icons/section/roster.jpg', color: '#C0202A' },
+  { href: '/transmog',    name: 'Transmog',    sub: 'tier set per classe',         count: `${tmogTiers}`,         icon: '/icons/section/transmog.jpg', color: '#9B4DCA' },
   { href: '/ui',          name: 'UI',          sub: 'screenshot dell’interfaccia', count: '15',                   icon: '/icons/section/ui.jpg',     color: '#159A8C' },
   { href: '/extra',       name: 'Extra',       sub: 'script di manutenzione e note', count: `${extra.length}`,    icon: '/icons/section/extra.jpg',  color: '#5B6470' },
 ];

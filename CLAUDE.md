@@ -6,10 +6,10 @@ Come lavorare a questo repo con Claude Code **da qualsiasi postazione**, per agg
 
 Due nature nello stesso repo:
 
-1. **Dati** = fonte di verità: [addons/](addons/), [macros/](macros/), [professions/](professions/), [roster.md](roster.md), [ui-profiles/](ui-profiles/), [fonts/](fonts/), [scripts/](scripts/). Manifest JSON + markdown, mantenuti a mano.
+1. **Dati** = fonte di verità: [addons/](addons/), [macros/](macros/), [professions/](professions/), [roster.md](roster.md), [transmog/](transmog/), [ui-profiles/](ui-profiles/), [fonts/](fonts/), [scripts/](scripts/). Manifest JSON + markdown, mantenuti a mano.
 2. **Sito statico** ([src/](src/), Astro) che presenta i dati su <https://wow.danilofruttaldo.com>. Il sito legge i dati in **sola lettura**: non li modifica mai. Ogni pagina si allinea da sola quando cambi il dato corrispondente.
 
-Pagine del sito: **Home** (6 card), **Addon**, **Macro**, **Professioni**, **Roster**, **UI** (screenshot), **Extra** (script/link/note).
+Pagine del sito: **Home** (7 card), **Addon**, **Macro**, **Professioni**, **Roster**, **Transmog** (tier set), **UI** (screenshot), **Extra** (script/link/note).
 
 ## Setup su una postazione nuova
 
@@ -67,6 +67,15 @@ Due tabelle markdown: `## Orda (...)` e `## Alleanza (...)`. Colonne = classi (W
 - **PG omonimi** (stesso nome, PG diversi): usa `CHAR_SPEC_BY_RACE`, chiave `nome|razza` minuscolo (ha precedenza). Es. `furricane|vulpera: 'brewmaster'` e `furricane|worgen: 'frost'`.
 - PG "in sospeso" (da recuperare): non metterli in `char-specs.ts` → restano senza lettera.
 
+### Transmog (tier set) → [transmog/manifest.json](transmog/manifest.json)
+Collezione dei tier set / class set, **per classe**. La pagina `/transmog` è a **tab per classe** (chip con icona, selezione singola): scelta la classe vedi la sua matrice **righe = tier** (raggruppate per espansione) × **colonne = versione**.
+- **`tiers`**: definizione dei 32 tier, una volta sola per tutte le classi. Campi: `key, tier, name` (raid), `exp`, `pieces` (pezzi per versione), `versions`, `note`, `warn`.
+- **Le 4 colonne sono SLOT di versione, non difficoltà letterali.** Prima di Cataclysm gli assi erano altri (10/25 uomini, fazione nel T9, Sanctified nel T10): ogni tier dichiara in `versions` l'**etichetta reale** di ogni slot che usa, mostrata nel tooltip della cella. Gli slot non dichiarati diventano casella tratteggiata (`.na`, stesso pattern delle combo non creabili del roster).
+- **`classStart`**: primo tier in cui una classe esiste (DK `t7`, Monk `t14`, DH `t19`, Evoker `t29`). Prima di quel tier l'intera riga è tratteggiata.
+- **`collected`**: chiave = slug classe → `{ tier: { slot: pezzi_posseduti } }`. Slot mancante = 0. **È l'unica parte da aggiornare** man mano che si collezionano i pezzi; `tiers` cambia solo quando esce un raid nuovo.
+- ⚠️ La collezione appearance è **account-wide** (Warband): i numeri valgono per l'account, non per singolo PG.
+- **Casi da non "correggere" per sbaglio**: BfA non ha set di classe (banda vuota, voluta); Shadowlands ha solo il T28 (Nathria e Sanctum non hanno set); il T19 è **solo Nighthold** (Emerald Nightmare no); in tutta WoD **non esiste tier in LFR**; T2.5 e T0.5 sono a versione unica.
+
 ### Extra → [scripts/manifest.json](scripts/manifest.json)
 Sezione contenitore libero: script di manutenzione, link, appunti tecnici. Oggetto `extra` con chiave = slug. Ogni voce ha `kind`:
 - **`script`**: `name, desc, lang, when, warn, body_file, notes`. Il **corpo reale** vive in un file dentro [scripts/](scripts/) (es. `sync-game-settings.ps1`) e viene letto a build-time (glob `*.{sh,txt,lua,ps1,bat,py}`); la card mostra `desc`, `when` (quando eseguirlo), `warn` (avvertenza, con icona `warn.jpg`) e il corpo con bottone "Copia".
@@ -102,7 +111,7 @@ La topbar mostra `build <build> · sync <data>`. Il `build` = `_meta.wow_build` 
 - [src/styles/global.css](src/styles/global.css) — token palette + componenti (`.ico`, tabelle, tiles). **`.ico` ha `max-width: none`**: NON rimuoverlo, evita che le icone si schiaccino nelle tabelle auto-layout.
 - [src/lib/content.ts](src/lib/content.ts) — lettura dati + `getAddons/getMacros/getProfessions/getRosterHtml/getRosterCount/sourceDate`, mappe icone, rendering roster.
 - [src/lib/char-specs.ts](src/lib/char-specs.ts) — spec PG.
-- [src/pages/](src/pages/) — `index` (card), `addons`, `macros`, `professioni`, `roster`, `ui`, `404`. Le pagine **non hanno titoli/sottotitoli** (scelta voluta): partono col contenuto.
+- [src/pages/](src/pages/) — `index` (card), `addons`, `macros`, `professioni`, `roster`, `transmog`, `ui`, `404`. Le pagine **non hanno titoli/sottotitoli** (scelta voluta): partono col contenuto.
 
 ## Verifica e dev
 

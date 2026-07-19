@@ -1,0 +1,189 @@
+---
+import Base from '../layouts/Base.astro';
+import { getTransmog, transmogColumns } from '../lib/content';
+
+const classes = getTransmog();
+const cols = transmogColumns;
+const ncols = cols.length + 1; // + colonna Tier
+---
+<Base title="Transmog" description="Tier set transmog per classe: matrice tier × versione, raggruppata per espansione.">
+  <div class="wrap tmog-wrap">
+    <div class="filters row">
+      <div class="chips" id="tmog-chips" role="tablist" aria-label="Scegli la classe">
+        {classes.map((c, i) => (
+          <button class:list={['chip', { 'is-active': i === 0 }]} data-class={c.slug} type="button"
+                  role="tab" aria-selected={i === 0 ? 'true' : 'false'}>
+            <img class="chip-ico" src={c.icon} alt="" width="18" height="18" />
+            {c.label}<span class="c">{Math.round((c.got / (c.total || 1)) * 100)}%</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <p class="tmog-legend">
+      Le colonne sono <strong>slot di versione</strong>: prima di Cataclysm gli assi erano altri
+      (10/25 uomini, fazione, Sanctified). Passa il mouse su una cella per leggere l'etichetta reale
+      di quella versione. La casella tratteggiata indica una versione che <strong>non esiste</strong>
+      per quel tier (o una classe non ancora presente in quell'espansione).
+    </p>
+
+    {classes.map((c, i) => (
+      <section class="tmog-panel" data-class={c.slug} hidden={i !== 0} role="tabpanel" aria-label={c.label}>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th class="thead-tier">
+                  <img class="ico" src={c.icon} alt={c.label} title={c.label} width="24" height="24" />
+                  <span>{c.label}</span>
+                </th>
+                {cols.map(col => <th>{col.label}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {c.groups.map(g => (
+                <Fragment>
+                  <tr class="rsep"><td colspan={ncols}>{g.name}{g.note && <em> — {g.note}</em>}</td></tr>
+                  {g.empty && <tr class="rempty"><td colspan={ncols}>{g.empty}</td></tr>}
+                  {g.rows.map(r => (
+                    <tr class:list={['trow', { 'trow--na': r.na }]}>
+                      <td class="rhead">
+                        <span class="tname">
+                          <strong>{r.tier}</strong>
+                          <span class="traid">{r.name}</span>
+                          <span class="tpieces">{r.pieces} pz</span>
+                          {r.warn && <span class="twarn" title={r.warn}>
+                            <img class="ico" src="/icons/ui/warn.jpg" alt="Nota importante" width="14" height="14" />
+                          </span>}
+                          {!r.warn && r.note && <span class="tnote" title={r.note}>
+                            <img class="ico" src="/icons/ui/shared.jpg" alt="Nota" width="14" height="14" />
+                          </span>}
+                        </span>
+                      </td>
+                      {r.cells.map(cell => (
+                        cell.state === 'na'
+                          ? <td><span class="na" title={r.na ? 'Classe non ancora esistente in questa espansione' : 'Versione inesistente per questo tier'}></span></td>
+                          : <td class:list={['cell', `cell--${cell.state}`]} title={`${cell.label} — ${cell.got}/${cell.total} pezzi`}>
+                              <span class="frac">{cell.got}/{cell.total}</span>
+                              <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
+                            </td>
+                      ))}
+                    </tr>
+                  ))}
+                </Fragment>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr class="rtot-row">
+                <td class="rhead">Totale</td>
+                {c.totals.map(t => <td>{t.got}/{t.total}</td>)}
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .tmog-wrap { max-width: min(1200px, 96vw); }
+
+  .tmog-legend {
+    font-size: 0.76rem; color: var(--text-muted); line-height: 1.5;
+    margin: 0.5rem 0 0.9rem; max-width: 78ch;
+  }
+
+  .tmog-panel[hidden] { display: none !important; }
+
+  /* Matrice: colonna tier larga e a sinistra, 4 colonne versione strette e centrate. */
+  .tmog-panel table {
+    font-size: 0.78rem; width: 100%; table-layout: fixed;
+    border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface);
+  }
+  .tmog-panel th, .tmog-panel td {
+    padding: 0.34rem 0.4rem; text-align: center; vertical-align: middle;
+    border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);
+    line-height: 1.25;
+  }
+  .tmog-panel thead th { background: var(--surface-2); font-size: 0.72rem; padding: 0.45rem 0.4rem; }
+  .tmog-panel th:first-child, .tmog-panel td:first-child { width: 46%; text-align: left; }
+  .tmog-panel .thead-tier { display: table-cell; }
+  .tmog-panel .thead-tier .ico { width: 22px; height: 22px; vertical-align: middle; margin-right: 0.35rem; }
+  .tmog-panel .thead-tier span { vertical-align: middle; font-weight: 700; }
+
+  /* Etichetta di riga: tier + raid + pezzi, su una riga sola che va a capo solo se serve. */
+  .tmog-panel td.rhead { background: var(--surface-2); padding-left: 0.6rem; }
+  .tmog-panel .tname { display: inline-flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
+  .tmog-panel .tname strong { font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+  .tmog-panel .traid { color: var(--text-muted); font-size: 0.73rem; }
+  .tmog-panel .tpieces { color: var(--text-subtle); font-size: 0.66rem; font-weight: 600; white-space: nowrap; }
+  .tmog-panel .twarn, .tmog-panel .tnote { display: inline-flex; align-self: center; cursor: help; }
+  .tmog-panel .twarn .ico, .tmog-panel .tnote .ico { width: 14px; height: 14px; border-radius: 3px; }
+  .tmog-panel .tnote { opacity: 0.55; }
+
+  /* Celle: frazione + barra di completamento, colore per stato. */
+  .tmog-panel td.cell { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .tmog-panel .frac { display: block; font-size: 0.74rem; line-height: 1.15; }
+  .tmog-panel .bar { display: block; height: 3px; margin-top: 3px; border-radius: 999px; background: var(--border-light); overflow: hidden; }
+  .tmog-panel .bar-fill { display: block; height: 100%; border-radius: 999px; background: currentColor; }
+  .tmog-panel td.cell--full    { color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface)); }
+  .tmog-panel td.cell--partial { color: var(--warn); background: color-mix(in srgb, var(--warn) 9%, var(--surface)); }
+  .tmog-panel td.cell--none    { color: var(--text-subtle); font-weight: 500; }
+
+  /* Bande espansione */
+  .tmog-panel tr.rsep td {
+    text-align: left; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 0.68rem; padding: 0.45rem 0.65rem;
+    background: color-mix(in srgb, var(--accent) 13%, var(--surface)); color: var(--accent);
+  }
+  .tmog-panel tr.rsep em { text-transform: none; letter-spacing: 0; font-weight: 500; opacity: 0.85; }
+  .tmog-panel tr.rempty td { text-align: left; font-size: 0.74rem; color: var(--text-subtle); font-style: italic; padding: 0.5rem 0.65rem; }
+
+  /* Riga totali */
+  .tmog-panel tfoot tr.rtot-row td {
+    background: var(--surface-2); font-weight: 700; color: var(--text-muted);
+    font-variant-numeric: tabular-nums; border-top: 2px solid var(--border); border-bottom: none;
+  }
+
+  /* Versione inesistente / classe non ancora presente: tratteggio che recede (come il roster) */
+  .tmog-panel td:has(.na) {
+    background-color: color-mix(in srgb, var(--text) 4%, var(--surface));
+    background-image: repeating-linear-gradient(45deg,
+      color-mix(in srgb, var(--text) 10%, transparent) 0 1px,
+      transparent 1px 7px);
+  }
+  .tmog-panel .na { display: block; width: 100%; height: 100%; min-height: 1.4em; }
+
+  .tmog-panel tbody tr.trow:hover td:not(.rhead):not(:has(.na)) {
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  }
+
+  @media (max-width: 700px) {
+    .tmog-panel th:first-child, .tmog-panel td:first-child { width: 40%; }
+    .tmog-panel .traid { display: none; }
+  }
+</style>
+
+<script>
+  function initTransmog() {
+    const chips = Array.from(document.querySelectorAll('#tmog-chips .chip')) as HTMLButtonElement[];
+    const panels = Array.from(document.querySelectorAll('.tmog-panel')) as HTMLElement[];
+    if (!chips.length || !panels.length) return;
+
+    // Tab a selezione singola: una classe alla volta (a differenza del filtro multi di /macros).
+    for (const chip of chips) {
+      chip.addEventListener('click', () => {
+        const target = chip.dataset.class || '';
+        for (const c of chips) {
+          const on = c === chip;
+          c.classList.toggle('is-active', on);
+          c.setAttribute('aria-selected', on ? 'true' : 'false');
+        }
+        for (const p of panels) p.hidden = p.dataset.class !== target;
+      });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initTransmog);
+</script>
