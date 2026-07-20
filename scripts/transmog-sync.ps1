@@ -1,18 +1,23 @@
-# Sincronizza transmog/manifest.json con l'ultimo dump del gioco.
+# Sincronizza la collezione transmog: aspetta il dump, aggiorna il manifest, committa.
 #
-# Prima, in gioco:  /reload  ->  /wmtier  ->  /reload
-# Poi da qui:       .\scripts\transmog-sync.ps1
-# Infine:           git add -A ; git commit ; git push
+#   .\scripts\transmog-sync.ps1
+#   -> "fai /reload in gioco", aspetta, e da li' in poi fa tutto da solo
 #
-# Sostituisce SOLO i blocchi `collected` e `pieceList`. Tutto il resto del manifest
-# (tiers, names, versions, fonte, colonna, spans) e' redazionale e non si tocca.
+#   -Subito   usa il dump gia' sul disco invece di aspettarne uno nuovo
+#   -NoGit    aggiorna il manifest e si ferma li'
 #
-# Si ferma da sola se il dump non e' affidabile: e' il punto del mestiere, perche' un
-# dump preso mentre il client non ha ancora caricato la collezione e' internamente
-# COERENTE -- ogni set a zero pezzi ma con il totale giusto -- e incollarlo azzera la
-# collezione senza che nessun controllo se ne accorga.
+# In gioco basta UN /reload: l'addon rigenera il dump su PLAYER_LOGOUT, che scatta
+# anche col reload. Il /wmtier serve solo se lo vuoi vedere subito in chat.
+# Due reload servono solo dopo aver modificato transmog-tier-dump.lua: il primo
+# scrive ancora col codice vecchio, il secondo col nuovo.
+#
+# Tocca SOLO i blocchi `collected` e `pieceList`. Il resto del manifest (tiers,
+# names, versions, fonte, colonna, spans) e' redazionale e non si tocca.
 
 param(
+    [switch]$Subito,
+    [switch]$NoGit,
+    [int]$AttesaMax = 300,
     [string]$Manifest = "transmog\manifest.json",
     [string]$Wow      = "C:\Program Files (x86)\World of Warcraft"
 )
@@ -24,43 +29,73 @@ function Errore($msg) {
     exit 1
 }
 
-# --- 1. trovare il dump -------------------------------------------------------
-# Cercato, non scritto a mano: il percorso contiene il nome dell'account, che cambia.
-$dump = Get-ChildItem -Path (Join-Path $Wow "_retail_\WTF\Account") -Recurse `
-        -Filter "WowManagerTierDump.lua" -ErrorAction SilentlyContinue |
-        Where-Object { $_.FullName -like "*SavedVariables*" } |
-        Sort-Object LastWriteTime -Descending | Select-Object -First 1
-if (-not $dump) { Errore "WowManagerTierDump.lua non trovato sotto $Wow. L'addon e' installato e hai lanciato /wmtier?" }
+function TrovaDump {
+    # Cercato, non scritto a mano: il percorso contiene il nome dell'account.
+    return Get-ChildItem -Path (Join-Path $Wow "_retail_\WTF\Account") -Recurse `
+           -Filter "WowManagerTierDump.lua" -ErrorAction SilentlyContinue |
+           Where-Object { $_.FullName -like "*SavedVariables*" } |
+           Sort-Object LastWriteTime -Descending | Select-Object -First 1
+}
+
+function PezziCollezionati($manifestPath) {
+    $m = Get-Content -Raw -Encoding UTF8 $manifestPath | ConvertFrom-Json
+    $n = 0
+    foreach ($cls in $m.collected.PSObject.Properties) {
+        foreach ($tier in $cls.Value.PSObject.Properties) {
+            foreach ($ver in $tier.Value.PSObject.Properties) { $n += $ver.Value[0] }
+        }
+    }
+    return $n
+}
+
+# --- 1. il dump ----------------------------------------------------------------
+$dump = TrovaDump
+if (-not $dump) { Errore "WowManagerTierDump.lua non trovato sotto $Wow. L'addon e' installato?" }
+
+if (-not $Subito) {
+    $prima = $dump.LastWriteTime
+    Write-Host ""
+    Write-Host "  In gioco: /reload" -ForegroundColor Cyan
+    Write-Host ("  (aspetto un dump nuovo, max {0}s - Ctrl+C per annullare)" -f $AttesaMax)
+    $scaduto = (Get-Date).AddSeconds($AttesaMax)
+    while ((Get-Date) -lt $scaduto) {
+        Start-Sleep -Seconds 2
+        $dump = TrovaDump
+        if ($dump.LastWriteTime -gt $prima) { break }
+    }
+    if ($dump.LastWriteTime -le $prima) {
+        Errore "nessun dump nuovo entro $AttesaMax secondi. Rilancia, oppure usa -Subito per prendere quello vecchio."
+    }
+    Write-Host "  dump ricevuto." -ForegroundColor Green
+}
 
 $lua = Get-Content -Raw -Encoding UTF8 $dump.FullName
-$eta = [int]((Get-Date) - $dump.LastWriteTime).TotalMinutes
-Write-Host ("dump: {0}  ({1} minuti fa)" -f $dump.LastWriteTime, $eta)
+Write-Host ("dump: {0}" -f $dump.LastWriteTime)
 
-# --- 2. guardie ---------------------------------------------------------------
-if ($lua -match '\["sospetto"\]\s*=\s*"([^"]+)"') {
-    Errore "il dump si e' auto-segnalato: $($matches[1])"
-}
+# --- 2. guardie ----------------------------------------------------------------
+# Un dump preso mentre il client non ha caricato la collezione e' internamente
+# COERENTE: ogni set a zero pezzi ma con il totale giusto, quindi mismatches resta
+# vuoto e nulla lo distingue da uno buono. Incollarlo azzererebbe la collezione.
+if ($lua -match '\["sospetto"\]\s*=\s*"([^"]+)"') { Errore "il dump si e' auto-segnalato: $($matches[1])" }
 foreach ($campo in @("mismatches", "errors")) {
     if ($lua -match ('\["' + $campo + '"\]\s*=\s*\{\s*"')) {
-        Errore "il campo $campo del dump non e' vuoto: elenco pezzi non fidato, non incollo"
+        Errore "il campo $campo del dump non e' vuoto: elenco pezzi non fidato"
     }
 }
 $presi = 0
 if ($lua -match '\["presi"\]\s*=\s*(\d+)') { $presi = [int]$matches[1] }
 if ($presi -le 0) { Errore "il dump dice $presi pezzi collezionati: collezione non caricata" }
 
-# --- 3. estrarre i due blocchi ------------------------------------------------
+# --- 3. estrarre e sostituire ---------------------------------------------------
 function Blocco($nome) {
     $re = '\["' + $nome + '"\]\s*=\s*"((?:[^"\\]|\\.)*)"'
     if ($lua -notmatch $re) { Errore "campo $nome assente dal dump" }
-    $t = $matches[1]
-    $t = $t.Replace('\n', "`n").Replace('\"', '"').Replace('\\', '\')
-    return $t
+    return $matches[1].Replace('\n', "`n").Replace('\"', '"').Replace('\\', '\')
 }
 $blocchi = @{ "collected" = (Blocco "collectedJson"); "pieceList" = (Blocco "piecesJson") }
 
-# --- 4. sostituire nel manifest ------------------------------------------------
 if (-not (Test-Path $Manifest)) { Errore "manifest non trovato: $Manifest" }
+$primaPezzi = PezziCollezionati $Manifest
 $righe = [System.Collections.ArrayList]@((Get-Content -Encoding UTF8 $Manifest))
 
 foreach ($chiave in @("collected", "pieceList")) {
@@ -82,30 +117,40 @@ foreach ($chiave in @("collected", "pieceList")) {
 
     $righe.RemoveRange($inizio, $fine - $inizio + 1)
     $righe.InsertRange($inizio, [string[]]$nuove)
-    Write-Host ("  {0,-10} {1} righe" -f $chiave, $nuove.Count)
 }
 
-# --- 5. validare PRIMA di scrivere ---------------------------------------------
+# --- 4. validare PRIMA di scrivere ----------------------------------------------
 $testo = ($righe -join "`n")
 try { $null = $testo | ConvertFrom-Json } catch { Errore "il risultato non e' JSON valido: $_" }
-
 [System.IO.File]::WriteAllText(
     (Resolve-Path $Manifest), $testo, (New-Object System.Text.UTF8Encoding($false)))
 
-# --- 6. riepilogo --------------------------------------------------------------
-$m = Get-Content -Raw -Encoding UTF8 $Manifest | ConvertFrom-Json
-$voci = 0; $conBoss = 0
-foreach ($cls in $m.pieceList.PSObject.Properties) {
-    foreach ($tier in $cls.Value.PSObject.Properties) {
-        foreach ($ver in $tier.Value.PSObject.Properties) {
-            foreach ($p in $ver.Value) {
-                $voci++
-                if ($p[0] -like "* (*") { $conBoss++ }
-            }
-        }
-    }
+$dopoPezzi = PezziCollezionati $Manifest
+$delta = $dopoPezzi - $primaPezzi
+Write-Host ("manifest: {0} pezzi collezionati ({1:+#;-#;0} rispetto a prima)" -f $dopoPezzi, $delta) -ForegroundColor Green
+
+# --- 5. git ---------------------------------------------------------------------
+if ($NoGit) {
+    Write-Host "-NoGit: mi fermo qui. Committa a mano quando vuoi."
+    exit 0
 }
-Write-Host ""
-Write-Host ("manifest aggiornato: {0} voci, {1} col boss ({2:N0}%), {3} pezzi collezionati" -f `
-    $voci, $conBoss, (100 * $conBoss / $voci), $presi) -ForegroundColor Green
-Write-Host "ora: git add -A ; git commit ; git push"
+if ($delta -eq 0) {
+    Write-Host "nessun pezzo nuovo: niente da committare." -ForegroundColor Yellow
+    git checkout -- $Manifest
+    exit 0
+}
+
+# Non si committa il lavoro altrui: se ci sono altri file modificati ci si ferma.
+$sporchi = @(git status --porcelain | ForEach-Object { $_.Substring(3) } |
+             Where-Object { $_ -ne ($Manifest -replace '\\', '/') })
+if ($sporchi.Count -gt 0) {
+    Write-Host "altri file modificati, non committo da solo:" -ForegroundColor Yellow
+    $sporchi | ForEach-Object { Write-Host "   $_" }
+    Write-Host "manifest aggiornato lo stesso: committa tu."
+    exit 0
+}
+
+git add -- $Manifest
+git commit -q -m ("Transmog: collezione aggiornata, +{0} pezzi" -f $delta)
+git push -q
+Write-Host "committato e pushato." -ForegroundColor Green

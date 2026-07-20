@@ -35,9 +35,9 @@
     "transmog-sync": {
       "kind": "script",
       "name": "Sync collezione transmog",
-      "desc": "Prende l'ultimo dump del gioco e riscrive i blocchi `collected` e `pieceList` di transmog/manifest.json, lasciando intatto tutto il resto. Si rifiuta di procedere se il dump non e' affidabile.",
+      "desc": "Aspetta il dump del gioco, riscrive i blocchi `collected` e `pieceList` di transmog/manifest.json lasciando intatto tutto il resto, poi committa e pusha. Si rifiuta di procedere se il dump non e' affidabile.",
       "lang": "powershell",
-      "when": "Dopo aver sbloccato aspetti in gioco: /reload, /wmtier, /reload, poi lancia questo e committa. E' il passo che prima si faceva a mano.",
+      "when": "Dopo aver sbloccato aspetti in gioco. Lancialo, fai un /reload quando te lo chiede, e da li' fa tutto: aspetta il dump, aggiorna il manifest, committa e pusha. Con -Subito usa il dump gia' sul disco, con -NoGit si ferma prima del commit.",
       "warn": "Non modifica mai le parti redazionali del manifest (tiers, names, versions, fonte, colonna, spans): tocca solo i due blocchi generati dal gioco.",
       "body_file": "transmog-sync.ps1",
       "notes": "Le guardie sono il motivo per cui esiste: si ferma se il dump ha `sospetto` valorizzato, se `mismatches` o `errors` non sono vuoti, o se i pezzi collezionati risultano zero. Serve perche' un dump preso mentre il client non ha ancora caricato la collezione e' internamente COERENTE -- ogni set a zero su totale giusto -- quindi nessuna verifica a valle lo distingue da uno buono, e incollarlo azzera la collezione. Caso reale: al primo test lo script si e' fermato su un dump con presi=0 su 11491 pezzi. Valida il JSON PRIMA di scrivere e cerca il SavedVariables invece di avere il percorso scritto dentro, perche' contiene il nome dell'account."

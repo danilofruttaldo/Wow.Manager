@@ -690,11 +690,27 @@ local function Dump()
             for _, v in pairs(slots) do presi = presi + v[1]; pezzi = pezzi + v[2] end
         end
     end
-    local sospetto = nil
+    -- Lettura a vuoto: NON si sovrascrive. Se c'e' gia' un dump buono lo si lascia
+    -- dov'e' e si esce -- il SavedVariables conserva quello di prima. E' il caso che
+    -- capita ricaricando troppo presto dopo il login, quando la collezione non e'
+    -- ancora arrivata: prima bastava quello per azzerare 4610 pezzi.
     if pezzi > 0 and presi == 0 then
-        sospetto = "collezione vuota: il client non aveva caricato i dati. NON incollare, rilancia /wmtier."
-        print("|cffff2020WowManagerTierDump: " .. sospetto .. "|r")
+        local avviso = "collezione non ancora caricata"
+        if WowManagerTierDumpDB and (WowManagerTierDumpDB.presi or 0) > 0 then
+            print(("|cffff2020WowManagerTierDump: %s -- tengo il dump di %s (%d pezzi). Rilancia fra un minuto.|r")
+                :format(avviso, tostring(WowManagerTierDumpDB.generated), WowManagerTierDumpDB.presi))
+            return
+        end
+        -- Nessun dump buono da difendere: si scrive, ma marcato.
+        print("|cffff2020WowManagerTierDump: " .. avviso .. ". NON incollare.|r")
+        WowManagerTierDumpDB = {
+            generated = date("%Y-%m-%d %H:%M:%S"),
+            sospetto = avviso .. ": tutti i pezzi risultano a zero. NON incollare.",
+            presi = presi, pezzi = pezzi,
+        }
+        return
     end
+    local sospetto = nil
 
     WowManagerTierDumpDB = {
         generated = date("%Y-%m-%d %H:%M:%S"),
