@@ -31,7 +31,7 @@ local TIER = {
     ["0|Molten Core"] = "t1", ["0|Blackwing Lair"] = "t2",
     ["0|Temple of Ahn'Qiraj"] = "t25", ["0|Naxxramas"] = "t3",
     ["1|Gruul's Lair"] = "t4", ["1|Serpentshrine Cavern"] = "t5",
-    ["1|Black Temple"] = "t6", ["1|Sunwell Plateau"] = "t6",
+    ["1|Black Temple"] = "t6", ["1|Sunwell Plateau"] = "t6-swp",
     ["2|Naxxramas"] = "t7", ["2|Ulduar"] = "t8",
     ["2|Trial of the Crusader"] = "t9", ["2|Icecrown Citadel"] = "t10",
     ["3|The Bastion of Twilight"] = "t11", ["3|Firelands"] = "t12",
@@ -68,7 +68,7 @@ local TIER_ARMOR = {
 }
 
 -- Ordine dei tier nel manifest (serve solo a rendere l'output ordinato).
-local TIER_ORDER = { "t0", "t05", "t1", "t2", "t25", "t3", "t4", "t5", "t6", "t7", "t8",
+local TIER_ORDER = { "t0", "t05", "t1", "t2", "t25", "t3", "t4", "t5", "t6", "t6-swp", "t7", "t8",
     "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "challenge", "t17", "t18",
     "hfc-lfr", "ohall", "tov", "t19", "t20", "t21", "uldir", "bod", "tep", "nya", "nathria",
     "sod", "t28", "t29", "t30", "t31", "t32", "t33", "t34", "t35" }
@@ -77,7 +77,7 @@ local TIER_ORDER = { "t0", "t05", "t1", "t2", "t25", "t3", "t4", "t5", "t6", "t7
 -- Challenge Mode di Pandaria sono uno solo per classe), quindi lo slot non si puo'
 -- dedurre da li' e si dichiara qui. Senza questo finivano in dropped come
 -- "slot ignoto nil" e la riga restava vuota.
-local SLOT_UNICO = { ohall = "normal", challenge = "normal" }
+local SLOT_UNICO = { ohall = "normal", challenge = "normal", ["t6-swp"] = "normal" }
 
 -- Le classi accese in un classMask. Per un set di classe e' una sola; per un set per
 -- tipo di armatura sono tutte quelle che lo portano, ed e' li' che serve: lo stesso

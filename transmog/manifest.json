@@ -267,18 +267,13 @@
     {
       "key": "t6",
       "tier": "T6",
-      "name": "Hyjal · Black Temple · Sunwell",
+      "name": "Hyjal · Black Temple",
       "exp": "tbc",
       "pieces": 8,
       "versions": {
-        "normal": "Black Temple",
-        "heroic": "Sunwell"
+        "normal": "Versione unica"
       },
-      "note": "5 pezzi base + 3 (polsi, cintura, stivali) da Sunwell in 2.4. I 3 pezzi Sunwell non combaciano visivamente col set base.",
-      "stack": true,
-      "colonna": {
-        "heroic": "normal"
-      },
+      "note": "Sunwell Plateau ha una riga sua (t6-swp): e' un set diverso, non una versione di questo. Nomi diversi in tutte e 9 le classi (Onslaught Armor contro Onslaught Battlegear).",
       "raids": [
         [
           "MH",
@@ -287,35 +282,46 @@
         [
           "BT",
           "Black Temple"
-        ],
+        ]
+      ],
+      "names": {
+        "druid": "Thunderheart Raiment",
+        "hunter": "Gronnstalker's Armor",
+        "mage": "Tempest Regalia",
+        "paladin": "Lightbringer Armor",
+        "priest": "Absolution Regalia",
+        "rogue": "Slayer's Armor",
+        "shaman": "Skyshatter Regalia",
+        "warlock": "Malefic Raiment",
+        "warrior": "Onslaught Armor"
+      }
+    },
+    {
+      "key": "t6-swp",
+      "tier": "T6",
+      "name": "Sunwell Plateau",
+      "exp": "tbc",
+      "pieces": 8,
+      "versions": {
+        "normal": "Versione unica"
+      },
+      "note": "Recolour del T6 con nomi propri, non una difficolta' del Black Temple. Il client lo espone con description 'Sunwell', mappata a colonna unica da SLOT_UNICO.",
+      "raids": [
         [
           "SWP",
           "Sunwell Plateau"
         ]
       ],
       "names": {
-        "heroic": {
-          "druid": "Thunderheart Regalia",
-          "hunter": "Gronnstalker's Battlegear",
-          "mage": "Tempest Garb",
-          "paladin": "Lightbringer Battlegear",
-          "priest": "Vestments of Absolution",
-          "rogue": "Slayer's Battlegear",
-          "shaman": "Skyshatter Raiment",
-          "warlock": "Malefic Regalia",
-          "warrior": "Onslaught Battlegear"
-        },
-        "normal": {
-          "druid": "Thunderheart Raiment",
-          "hunter": "Gronnstalker's Armor",
-          "mage": "Tempest Regalia",
-          "paladin": "Lightbringer Armor",
-          "priest": "Absolution Regalia",
-          "rogue": "Slayer's Armor",
-          "shaman": "Skyshatter Regalia",
-          "warlock": "Malefic Raiment",
-          "warrior": "Onslaught Armor"
-        }
+        "druid": "Thunderheart Regalia",
+        "hunter": "Gronnstalker's Battlegear",
+        "mage": "Tempest Garb",
+        "paladin": "Lightbringer Battlegear",
+        "priest": "Vestments of Absolution",
+        "rogue": "Slayer's Battlegear",
+        "shaman": "Skyshatter Raiment",
+        "warlock": "Malefic Regalia",
+        "warrior": "Onslaught Battlegear"
       }
     },
     {
@@ -325,8 +331,8 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "10M",
-        "heroic": "25M"
+        "normal": "10M · Heroes'",
+        "heroic": "25M · Valorous"
       },
       "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale.",
       "stack": true,
@@ -342,33 +348,7 @@
           "OS",
           "Obsidian Sanctum"
         ]
-      ],
-      "names": {
-        "heroic": {
-          "death-knight": "Valorous Scourgeborne Plate",
-          "druid": "Valorous Dreamwalker Battlegear",
-          "hunter": "Valorous Cryptstalker Battlegear",
-          "mage": "Valorous Frostfire Garb",
-          "paladin": "Valorous Redemption Plate",
-          "priest": "Valorous Regalia of Faith",
-          "rogue": "Valorous Bonescythe Battlegear",
-          "shaman": "Valorous Earthshatter Regalia",
-          "warlock": "Valorous Plagueheart Garb",
-          "warrior": "Valorous Dreadnaught Battlegear"
-        },
-        "normal": {
-          "death-knight": "Heroes' Scourgeborne Plate",
-          "druid": "Heroes' Dreamwalker Battlegear",
-          "hunter": "Heroes' Cryptstalker Battlegear",
-          "mage": "Heroes' Frostfire Garb",
-          "paladin": "Heroes' Redemption Plate",
-          "priest": "Heroes' Regalia of Faith",
-          "rogue": "Heroes' Bonescythe Battlegear",
-          "shaman": "Heroes' Earthshatter Regalia",
-          "warlock": "Heroes' Plagueheart Garb",
-          "warrior": "Heroes' Dreadnaught Battlegear"
-        }
-      }
+      ]
     },
     {
       "key": "t8",
@@ -377,8 +357,8 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "10M",
-        "heroic": "25M"
+        "normal": "10M · Valorous",
+        "heroic": "25M · Conqueror's"
       },
       "stack": true,
       "colonna": {
@@ -389,33 +369,7 @@
           "ULD",
           "Ulduar"
         ]
-      ],
-      "names": {
-        "heroic": {
-          "death-knight": "Conqueror's Darkruned Plate",
-          "druid": "Conqueror's Nightsong Battlegear",
-          "hunter": "Conqueror's Scourgestalker Battlegear",
-          "mage": "Conqueror's Kirin Tor Garb",
-          "paladin": "Conqueror's Aegis Plate",
-          "priest": "Conqueror's Sanctification Regalia",
-          "rogue": "Conqueror's Terrorblade Battlegear",
-          "shaman": "Conqueror's Worldbreaker Regalia",
-          "warlock": "Conqueror's Deathbringer Garb",
-          "warrior": "Conqueror's Siegebreaker Battlegear"
-        },
-        "normal": {
-          "death-knight": "Valorous Darkruned Plate",
-          "druid": "Valorous Nightsong Battlegear",
-          "hunter": "Valorous Scourgestalker Battlegear",
-          "mage": "Valorous Kirin Tor Garb",
-          "paladin": "Valorous Aegis Plate",
-          "priest": "Valorous Sanctification Regalia",
-          "rogue": "Valorous Terrorblade Battlegear",
-          "shaman": "Valorous Worldbreaker Regalia",
-          "warlock": "Valorous Deathbringer Garb",
-          "warrior": "Valorous Siegebreaker Battlegear"
-        }
-      }
+      ]
     },
     {
       "key": "t9",
@@ -437,33 +391,7 @@
           "TOC",
           "Trial of the Crusader"
         ]
-      ],
-      "names": {
-        "heroic": {
-          "death-knight": "Koltira's Battlegear",
-          "druid": "Runetotem's Battlegear",
-          "hunter": "Windrunner's Pursuit",
-          "mage": "Sunstrider's Regalia",
-          "paladin": "Liadrin's Plate",
-          "priest": "Zabra's Regalia",
-          "rogue": "Garona's Battlegear",
-          "shaman": "Thrall's Garb",
-          "warlock": "Gul'dan's Regalia",
-          "warrior": "Hellscream's Battlegear"
-        },
-        "normal": {
-          "death-knight": "Thassarian's Battlegear",
-          "druid": "Malfurion's Battlegear",
-          "hunter": "Windrunner's Battlegear",
-          "mage": "Khadgar's Regalia",
-          "paladin": "Turalyon's Plate",
-          "priest": "Velen's Regalia",
-          "rogue": "VanCleef's Battlegear",
-          "shaman": "Nobundo's Garb",
-          "warlock": "Kel'Thuzad's Regalia",
-          "warrior": "Wrynn's Battlegear"
-        }
-      }
+      ]
     },
     {
       "key": "t10",
@@ -473,8 +401,8 @@
       "pieces": 5,
       "versions": {
         "normal": "10M Normal",
-        "heroic": "10M Heroic",
-        "mythic": "25M Heroic"
+        "heroic": "10M Heroic · Sanctified",
+        "mythic": "25M Heroic · Sanctified"
       },
       "note": "Tre aspetti distinti, verificati sui dati: se due fossero lo stesso set i conteggi si muoverebbero insieme, e invece su 5 classi su 10 differiscono (il mago ha 3/8 sul secondo e 0/6 sul terzo). Anche i totali cambiano. Icy Veins dice due aspetti perche' confronta i NOMI degli oggetti, identici fra 264 e 277: sbagliato. Item level 251/264/277. Il client li chiama 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic); il secondo pero' si otteneva sia in 10 Heroic sia in 25 Normal, quindi l'etichetta '10 Heroic' e' vera ma parziale.",
       "stack": true,
@@ -486,45 +414,7 @@
           "ICC",
           "Icecrown Citadel"
         ]
-      ],
-      "names": {
-        "heroic": {
-          "death-knight": "Sanctified Scourgelord's Plate",
-          "druid": "Sanctified Lasherweave Battlegear",
-          "hunter": "Sanctified Ahn'Kahar Blood Hunter's Battlegear",
-          "mage": "Sanctified Bloodmage's Regalia",
-          "paladin": "Sanctified Lightsworn Plate",
-          "priest": "Sanctified Crimson Acolyte Regalia",
-          "rogue": "Sanctified Shadowblade's Battlegear",
-          "shaman": "Frost Witch's Regalia",
-          "warlock": "Sanctified Dark Coven's Regalia",
-          "warrior": "Sanctified Ymirjar Lord's Battlegear"
-        },
-        "mythic": {
-          "death-knight": "Sanctified Scourgelord's Plate",
-          "druid": "Sanctified Lasherweave Battlegear",
-          "hunter": "Sanctified Ahn'Kahar Blood Hunter's Battlegear",
-          "mage": "Sanctified Bloodmage's Regalia",
-          "paladin": "Sanctified Lightsworn Plate",
-          "priest": "Sanctified Crimson Acolyte Regalia",
-          "rogue": "Sanctified Shadowblade's Battlegear",
-          "shaman": "Frost Witch's Regalia",
-          "warlock": "Sanctified Dark Coven's Regalia",
-          "warrior": "Sanctified Ymirjar Lord's Battlegear"
-        },
-        "normal": {
-          "death-knight": "Scourgelord's Plate",
-          "druid": "Lasherweave Battlegear",
-          "hunter": "Ahn'Kahar Blood Hunter's Battlegear",
-          "mage": "Bloodmage's Regalia",
-          "paladin": "Lightsworn Plate",
-          "priest": "Crimson Acolyte Regalia",
-          "rogue": "Shadowblade's Battlegear",
-          "shaman": "Frost Witch's Regalia",
-          "warlock": "Dark Coven's Regalia",
-          "warrior": "Ymirjar Lord's Battlegear"
-        }
-      }
+      ]
     },
     {
       "key": "t11",
