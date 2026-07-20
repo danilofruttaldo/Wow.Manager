@@ -104,7 +104,7 @@
         "paladin": "Lawbringer Armor",
         "priest": "Vestments of Prophecy",
         "rogue": "Nightslayer Armor",
-        "shaman": "Earthfury Raiment",
+        "shaman": "The Earthfury",
         "warlock": "Felheart Raiment",
         "warrior": "Battlegear of Might"
       }
@@ -222,11 +222,11 @@
         ]
       ],
       "names": {
-        "druid": "Malorne Regalia",
+        "druid": "Malorne Raiment",
         "hunter": "Demon Stalker Armor",
         "mage": "Aldor Regalia",
         "paladin": "Justicar Armor",
-        "priest": "Incarnate Raiment",
+        "priest": "Incarnate Regalia",
         "rogue": "Netherblade",
         "shaman": "Cyclone Regalia",
         "warlock": "Voidheart Raiment",
@@ -253,11 +253,11 @@
         ]
       ],
       "names": {
-        "druid": "Nordrassil Regalia",
+        "druid": "Nordrassil Raiment",
         "hunter": "Rift Stalker Armor",
         "mage": "Tirisfal Regalia",
         "paladin": "Crystalforge Armor",
-        "priest": "Avatar Raiment",
+        "priest": "Avatar Regalia",
         "rogue": "Deathmantle",
         "shaman": "Cataclysm Regalia",
         "warlock": "Corruptor Raiment",
@@ -322,14 +322,14 @@
         ]
       ],
       "names": {
-        "death-knight": "Scourgeborne Battlegear",
+        "death-knight": "Scourgeborne Plate",
         "druid": "Dreamwalker Battlegear",
         "hunter": "Cryptstalker Battlegear",
         "mage": "Frostfire Garb",
-        "paladin": "Redemption Battlegear",
-        "priest": "Garb of Faith",
+        "paladin": "Redemption Plate",
+        "priest": "Regalia of Faith",
         "rogue": "Bonescythe Battlegear",
-        "shaman": "Earthshatter Battlegear",
+        "shaman": "Earthshatter Regalia",
         "warlock": "Plagueheart Garb",
         "warrior": "Dreadnaught Battlegear"
       }
@@ -351,14 +351,14 @@
         ]
       ],
       "names": {
-        "death-knight": "Darkruned Battlegear",
+        "death-knight": "Darkruned Plate",
         "druid": "Nightsong Battlegear",
         "hunter": "Scourgestalker Battlegear",
         "mage": "Kirin Tor Garb",
-        "paladin": "Aegis Battlegear",
-        "priest": "Sanctification Garb",
+        "paladin": "Aegis Plate",
+        "priest": "Sanctification Regalia",
         "rogue": "Terrorblade Battlegear",
-        "shaman": "Worldbreaker Battlegear",
+        "shaman": "Worldbreaker Regalia",
         "warlock": "Deathbringer Garb",
         "warrior": "Siegebreaker Battlegear"
       }
@@ -411,14 +411,14 @@
         ]
       ],
       "names": {
-        "death-knight": "Scourgelord's Battlegear",
+        "death-knight": "Scourgelord's Plate",
         "druid": "Lasherweave Battlegear",
         "hunter": "Ahn'Kahar Blood Hunter's Battlegear",
         "mage": "Bloodmage's Regalia",
-        "paladin": "Lightsworn Battlegear",
-        "priest": "Crimson Acolyte's Raiment",
+        "paladin": "Lightsworn Plate",
+        "priest": "Crimson Acolyte Regalia",
         "rogue": "Shadowblade's Battlegear",
-        "shaman": "Frost Witch's Battlegear",
+        "shaman": "Frost Witch's Regalia",
         "warlock": "Dark Coven's Regalia",
         "warrior": "Ymirjar Lord's Battlegear"
       }
@@ -448,14 +448,14 @@
         ]
       ],
       "names": {
-        "death-knight": "Magma Plated Battlegear",
-        "druid": "Stormrider's Battlegarb",
+        "death-knight": "Magma Plated Battlearmor",
+        "druid": "Stormrider's Vestments",
         "hunter": "Lightning-Charged Battlegear",
         "mage": "Firelord's Vestments",
         "paladin": "Reinforced Sapphirium Battleplate",
         "priest": "Mercurial Regalia",
         "rogue": "Wind Dancer's Regalia",
-        "shaman": "Battlegear of the Raging Elements",
+        "shaman": "Regalia of the Raging Elements",
         "warlock": "Shadowflame Regalia",
         "warrior": "Earthen Battleplate"
       }
@@ -477,14 +477,14 @@
         ]
       ],
       "names": {
-        "death-knight": "Elementium Deathplate Battlegear",
-        "druid": "Obsidian Arborweave Battlegarb",
+        "death-knight": "Elementium Deathplate Battlearmor",
+        "druid": "Obsidian Arborweave Vestments",
         "hunter": "Flamewaker's Battlegear",
         "mage": "Firehawk Robes of Conflagration",
         "paladin": "Battleplate of Immolation",
         "priest": "Regalia of the Cleansing Flame",
         "rogue": "Vestments of the Dark Phoenix",
-        "shaman": "Volcanic Battlegear",
+        "shaman": "Volcanic Regalia",
         "warlock": "Balespider's Burning Vestments",
         "warrior": "Molten Giant Battleplate"
       }
@@ -508,14 +508,14 @@
         ]
       ],
       "names": {
-        "death-knight": "Necrotic Boneplate Battlegear",
-        "druid": "Deep Earth Battlegarb",
+        "death-knight": "Necrotic Boneplate Armor",
+        "druid": "Deep Earth Vestments",
         "hunter": "Wyrmstalker Battlegear",
         "mage": "Time Lord's Regalia",
         "paladin": "Battleplate of Radiant Glory",
         "priest": "Regalia of Dying Light",
         "rogue": "Blackfang Battleweave",
-        "shaman": "Spiritwalker's Battlegear",
+        "shaman": "Spiritwalker's Regalia",
         "warlock": "Vestments of the Faceless Shroud",
         "warrior": "Colossal Dragonplate Battlegear"
       }
@@ -583,7 +583,7 @@
         "priest": "Exorcist",
         "rogue": "Nine-Tail Battlegear",
         "shaman": "Witch Doctor",
-        "warlock": "Regalia of the Thousand Hells",
+        "warlock": "Regalia of the Thousandfold Hells",
         "warrior": "Last Mogu"
       }
     },
@@ -686,11 +686,11 @@
       "tier": "6.2",
       "name": "Hellfire Citadel (set LFR)",
       "exp": "wod",
-      "pieces": 6,
+      "pieces": 8,
       "versions": {
         "lfr": "Raid Finder"
       },
-      "note": "In LFR non droppa il T18: al suo posto ci sono 4 set per tipo di armatura, da 6 pezzi.",
+      "note": "In LFR non droppa il T18: al suo posto ci sono 4 set per tipo di armatura, da 8 pezzi.",
       "raids": [
         [
           "HFC",
@@ -698,19 +698,19 @@
         ]
       ],
       "names": {
-        "death-knight": "Demonbreaker Wargear",
-        "demon-hunter": "Ironpelt Armor",
-        "druid": "Ironpelt Armor",
-        "evoker": "Rancorbite Battlegear",
-        "hunter": "Rancorbite Battlegear",
+        "death-knight": "Demonbreaker Battleplate",
+        "demon-hunter": "Ironpelt Garb",
+        "druid": "Ironpelt Garb",
+        "evoker": "Rancorbite Armor",
+        "hunter": "Rancorbite Armor",
         "mage": "Felfume Raiment",
-        "monk": "Ironpelt Armor",
-        "paladin": "Demonbreaker Wargear",
+        "monk": "Ironpelt Garb",
+        "paladin": "Demonbreaker Battleplate",
         "priest": "Felfume Raiment",
-        "rogue": "Ironpelt Armor",
-        "shaman": "Rancorbite Battlegear",
+        "rogue": "Ironpelt Garb",
+        "shaman": "Rancorbite Armor",
         "warlock": "Felfume Raiment",
-        "warrior": "Demonbreaker Wargear"
+        "warrior": "Demonbreaker Battleplate"
       },
       "armorType": true
     },
@@ -751,7 +751,7 @@
         "paladin": "Battleplate of the Highlord",
         "priest": "Vestments of the Purifier",
         "rogue": "Doomblade Battlegear",
-        "shaman": "Regalia of Bound Elements",
+        "shaman": "Regalia of Shackled Elements",
         "warlock": "Legacy of Azj'Aqir",
         "warrior": "Warplate of the Obsidian Aspect"
       }
@@ -945,6 +945,21 @@
           "Ny'alotha, the Waking City"
         ]
       ],
+      "names": {
+        "death-knight": "Cosmic Aberration's Plate",
+        "demon-hunter": "Treacherous Schemer's Leathers",
+        "druid": "Treacherous Schemer's Leathers",
+        "evoker": "Lurking Defiler's Scalemail",
+        "hunter": "Lurking Defiler's Scalemail",
+        "mage": "Oblivion Cultist's Robes",
+        "monk": "Treacherous Schemer's Leathers",
+        "paladin": "Cosmic Aberration's Plate",
+        "priest": "Oblivion Cultist's Robes",
+        "rogue": "Treacherous Schemer's Leathers",
+        "shaman": "Lurking Defiler's Scalemail",
+        "warlock": "Oblivion Cultist's Robes",
+        "warrior": "Cosmic Aberration's Plate"
+      },
       "armorType": true
     },
     {
@@ -1241,7 +1256,7 @@
         ]
       ],
       "names": {
-        "death-knight": "Hollow Sentinel's Wake",
+        "death-knight": "Hollow Sentinel's Vigil",
         "demon-hunter": "Charhound's Vicious Hunt",
         "druid": "Ornaments of the Mother Eagle",
         "evoker": "Spellweaver's Immaculate Design",
