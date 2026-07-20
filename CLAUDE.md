@@ -49,8 +49,10 @@ Array `professions`. Ogni voce: `key, name, type` (`crafting`|`gathering`), `fir
 `first`/`second`/`third` = `{ "spec": "...", "branch": "..." }` (spec da prendere + ramo da massimizzare, **nomi in inglese** come il client): sono le **tre tappe in ordine** rese sulla card come classifica ①→②→③. Una tappa a `null` esce come "—".
 - **Solo professioni primarie**: le secondarie (Cooking/Fishing) non hanno albero di specializzazione e stanno fuori dal manifest — la pagina è tutta costruita sulle tre tappe, una card con tre trattini non direbbe nulla.
 - **Fonte dati reali**: build consigliate su <https://www.wow-professions.com/midnight/<prof>-specialization-guide-and-builds>. Aggiorna spec/branch quando cambiano con le patch. ⚠️ **Skinning è l'eccezione**: quell'URL 404, la guida sta su `/guides/wow-skinning-leveling-guide`. Le pagine **non sono datate** (solo footer `© anno`): non si può stabilire da lì per quale patch valgano.
-- `branch` deve essere il **nome di un nodo reale** dell'albero, non una descrizione: se non lo conosci, verifica sulla guida invece di inventare un'etichetta (`Root node` è accettabile per il tronco). Se devii apposta dalla guida, scrivi il perché in `notes`.
+- `branch` deve essere il **nome di un nodo reale** dell'albero, non una descrizione: se non lo conosci, verifica sulla guida invece di inventare un'etichetta (`Root node` è accettabile per il tronco). Se devii apposta dalla guida, scrivi il perché in `notes` — ma ricorda che `notes` qui **si vede sul sito** (punto sotto), quindi scrivilo per il lettore.
+- ⚠️ **Quattro `branch` sono ancora descrizioni, e vanno lasciati così finché non li verifichi IN GIOCO**: `jewelcrafting.second` (`Gem color sub-spec`), `leatherworking.second` e `.third` (`Armor path (4 slots)`, `Tipo armatura opposto (Mail)`), `mining.third` (`Nodi minerali specifici`). Non è una svista: la guida non nomina quei nodi — dice solo «put 25 points into your color sub-spec», o distingue i gruppi «Left/Right» di 4 slot senza dargli un nome. Sostituirli con `Root node` cambierebbe *quale* nodo si punta, non correggerebbe un'etichetta. Meglio descrittivi che inventati.
 - `key` deve combaciare col file icona in [public/icons/prof/](public/icons/prof/) (`<key>.jpg`).
+- ⚠️ **Qui `notes` È MOSTRATO sul sito**, unica eccezione nel repo: [professioni.astro](src/pages/professioni.astro) lo rende sotto le tre tappe e la ricerca lo indicizza. Quindi scrivilo **per il lettore**, non come promemoria: le note di manutenzione pura (URL di guide, «da verificare», storia delle patch) qui finiscono in pagina. Nel resto del repo vale la regola opposta — `notes` interno, `desc` pubblico.
 
 ### Roster: personaggi → [roster.md](roster.md)
 Due tabelle markdown: `## Orda (...)` e `## Alleanza (...)`. Colonne = classi (War, Pal, …, Evo), righe = razze.
@@ -91,12 +93,12 @@ Collezione dei set dei raid, **per classe**. La pagina `/transmog` è a **tab pe
 - **Colore = completamento, su una rampa continua** rosso → giallo → verde (token `--bad`/`--warn`/`--ok`): 0 pezzi = **rosso pieno**, set completo = **verde pieno**, tutte le sfumature in mezzo. Niente più soglie discrete e niente stato "neutro": un set a zero deve saltare all'occhio quanto uno completo. Due livelli, stessa rampa: la **riga** si colora sull'avanzamento complessivo di tutti i blocchi di versione (`pct`), la **singola cella** sui pezzi sbloccati di quel blocco. Implementata in CSS puro: `--pct` (0–100, unitless) inline su `<tr>`/`<td class="cell">` + due `color-mix` in cascata con `clamp` in [transmog.astro](src/pages/transmog.astro). Per cambiare i colori tocca i token, non la rampa.
 - **`classStart`**: prima riga in cui una classe esiste — DK `t7`, Monk `t14`, DH `ohall`, Evoker `t29`. È l'esistenza della **classe**, non del suo primo tier set (il DH esiste dall'inizio di Legion anche se il primo tier è il T19). Le righe precedenti **non vengono mostrate affatto** in quel tab: l'Evoker parte da Vault of the Incarnates.
 - **`armorType: true`** (BfA, Nathria/Sanctum, Trial of Valor, LFR di Hellfire Citadel) = set per tipo di armatura. Serve a **una cosa sola**: esentare la riga dal taglio di `classStart`, perché quei set non sono vincolati alla classe e un Evoker può portare il maglia di Uldir benché in BfA non esistesse. Sul sito non si vede nulla.
-- **`pieceList`** (blocco separato, come `collected`): `pieceList[classe][set][slot]` = **tutti** i pezzi di quella versione, come coppie `["Shoulder (Ragnaros, Firelands)", 1]` dove `1` = già collezionato (slot in inglese come il client, boss e raid quando il gioco li espone). Alimenta il tooltip del contatore, che li elenca **tutti**: verdi i presi, rossi i mancanti, mancanti per primi. ⚠️ Da non confondere con **`pieces` dentro ogni tier**, che è il solo *numero* di pezzi. **Va aggiornato insieme a `collected`**: li genera lo stesso dump ([scripts/transmog-tier-dump.lua](scripts/transmog-tier-dump.lua)) in due campi, `collectedJson` e `piecesJson`. Se ne copi uno solo, il tooltip contraddice la frazione della cella.
+- **`pieceList`** (blocco separato, come `collected`): `pieceList[classe][set][slot]` = **tutti** i pezzi di quella versione, come coppie `["Shoulder (Ragnaros, Firelands)", 1]` dove `1` = già collezionato (slot in inglese come il client, boss e raid quando il gioco li espone). Alimenta il tooltip del contatore, che li elenca **tutti**: verdi i presi, rossi i mancanti, in ordine di slot d'equipaggiamento come le celle (`SLOT_ORDER`). ⚠️ Da non confondere con **`pieces` dentro ogni tier**, che è il solo *numero* di pezzi. **Va aggiornato insieme a `collected`**: li genera lo stesso dump ([scripts/transmog-tier-dump.lua](scripts/transmog-tier-dump.lua)) in due campi, `collectedJson` e `piecesJson`. Se ne copi uno solo, il tooltip contraddice la frazione della cella.
 - **`collected`**: chiave = slug classe → `{ raid: { slot: pezzi_posseduti } }`. Slot mancante = 0. Insieme a `pieceList` è **l'unica parte da aggiornare** man mano che si collezionano i pezzi; `tiers` cambia solo quando esce un raid nuovo.
 
 #### Routine: aggiornare la collezione dopo aver sbloccato aspetti
 
-Lancia `.\scripts	ransmog-sync.ps1` e fai **un `/reload`** in gioco quando te lo chiede. Da lì fa tutto da solo: aspetta il dump, aggiorna il manifest, committa e pusha.
+Lancia `.\scripts\transmog-sync.ps1` e fai **un `/reload`** in gioco quando te lo chiede. Da lì fa tutto da solo: aspetta il dump, aggiorna il manifest, committa e pusha.
 
 - **Basta un reload**: l'addon rigenera il dump su `PLAYER_LOGOUT`, che scatta anche col `/reload`. Il `/wmtier` serve solo se lo vuoi vedere subito in chat. **Due** reload servono solo dopo aver modificato [transmog-tier-dump.lua](scripts/transmog-tier-dump.lua): il primo scrive ancora col codice vecchio, il secondo col nuovo.
 - Opzioni: `-Subito` usa il dump già sul disco senza aspettare, `-NoGit` si ferma dopo aver aggiornato il manifest.
@@ -137,7 +139,7 @@ Sezione contenitore libero: script di manutenzione, link, appunti tecnici. Ogget
 ### UI / screenshot → [public/screenshots/](public/screenshots/)
 - **Aggiungi**: metti un file `<classe>-<spec>-<nome>.jpg` (es. `warrior-fury-stantu.jpg`). La pagina `/ui` lo raggruppa **per classe** leggendo classe/spec dal **nome file**.
 - Alias classe nel filename: `deathknight`→Death Knight, `demonhunter`→Demon Hunter.
-- **Rimuovi**: cancella il file. Aggiorna il conteggio "7" hardcoded in [src/pages/index.astro](src/pages/index.astro) (card UI) se cambia il numero.
+- **Rimuovi**: cancella il file. Aggiorna il conteggio hardcoded in [src/pages/index.astro](src/pages/index.astro) (card UI, oggi `'16'`) se cambia il numero: è l'unico contatore della home non derivato dai dati.
 
 ### Icone (classe / razza / professione) → [public/icons/](public/icons/)
 Immagini WoW dal CDN Wowhead: `https://wow.zamimg.com/images/wow/icons/large/<slug>.jpg`.
@@ -172,9 +174,11 @@ Per il debug visivo usa **F5** (o `npm run dev`). ⚠️ **NON** eseguire `astro
 
 Push su `main` → GitHub Actions ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) builda e pubblica su GitHub Pages. Custom domain `wow.danilofruttaldo.com` (Settings → Pages → Source: **GitHub Actions**; se torna 404 controlla che il Custom domain non si sia svuotato). DNS: record **CNAME** `wow` → `danilofruttaldo.github.io`.
 
-## Vincoli git del repo (hook attivi — rispettali)
+## Vincoli git del repo (convenzioni — rispettali)
 
-- **Niente** trailer `Co-Authored-By` nei messaggi di commit (bloccato).
-- **Titolo commit ≤ 72 caratteri** (bloccato).
+⚠️ **Non sono applicate da nulla.** Il repo non ha hook: `.git/hooks` contiene solo i `.sample` e `core.hooksPath` non è impostato. Erano documentate come "bloccate", ma un commit che le viola passa liscio — quindi vanno rispettate a mano, e vale la pena ricontrollarle prima di committare.
+
+- **Niente** trailer `Co-Authored-By` nei messaggi di commit. ⚠️ Le istruzioni di default di Claude Code dicono di aggiungerlo: qui va omesso, e nessun hook lo impedisce.
+- **Titolo commit ≤ 72 caratteri.**
 - Si lavora **direttamente su `main`**; il deploy parte da lì.
 - `.gitignore` usa `.vscode/*` (non `.vscode/`) così `launch.json` resta versionabile.

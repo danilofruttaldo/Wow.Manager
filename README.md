@@ -11,8 +11,9 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 | Cartella | Cosa contiene | Fonte di verità |
 |---|---|---|
 | [addons/](addons/) | Addon installati, versioni, source, folder list | `addons/manifest.json` |
-| [macros/](macros/) | Macro per account/character con body, slot, icon | `macros/manifest.json` |
-| [professions/](professions/) | Piano specializzazioni per professione (1ª/2ª spec + ramo) | `professions/manifest.json` |
+| [macros/](macros/) | Macro per classe/spec con body, slot, icon | `macros/manifest.json` |
+| [professions/](professions/) | Piano specializzazioni per professione (tre tappe: spec + ramo) | `professions/manifest.json` |
+| [transmog/](transmog/) | Set dei raid per classe: righe tier, versioni, pezzi collezionati | `transmog/manifest.json` |
 | [ui-profiles/](ui-profiles/) | Profili addon (Plater, Details, ecc.) | `ui-profiles/manifest.json` |
 | [fonts/](fonts/) | Override font UI Blizzard (nomi-override in `Fonts/`) | `fonts/manifest.json` |
 | [roster.md](roster.md) | Tracker PG per razza × classe, Orda + Alleanza (copertura combo) | `SavedVariables/Syndicator.lua` |
@@ -28,12 +29,12 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 ## Workflow tipici
 
 - **Install addon**: verifica compat → estrai in `_retail_/Interface/AddOns/` → entry in `addons/manifest.json` → log in `addons/installs.log`.
-- **Backup macro**: copia testo macro in-game → file in `macros/exports/<char>-<slot>.txt` → entry in `macros/manifest.json`.
+- **Backup macro**: copia testo macro in-game → file in `macros/<classe>/[<spec>/]<slug>.txt` → entry in `macros/manifest.json` con `body_file` che punta a quel file.
 - **Sync/audit**: confronta manifest vs filesystem reale per detect drift.
 
 ## Sito
 
-Il repo pubblica anche un sito statico che presenta i dati (addon, macro, roster, UI):
+Il repo pubblica anche un sito statico che presenta i dati (addon, macro, professioni, roster, transmog, UI, extra):
 
 - **URL**: <https://wow.danilofruttaldo.com>
 - **Stack**: [Astro](https://astro.build) (statico), sorgente in `src/`, dati letti dai manifest/markdown del repo.

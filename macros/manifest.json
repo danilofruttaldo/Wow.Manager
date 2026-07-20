@@ -36,7 +36,7 @@
     },
     "warrior-ravager-bladestorm": {
       "name": "Ravager / Bladestorm",
-      "desc": "AoE channel Arms: Ravager a terra sul cursore se talentato, altrimenti Bladestorm sul posto.",
+      "desc": "AoE channel Arms: Ravager a terra sulla posizione del mouse se talentato, altrimenti Bladestorm sul posto.",
       "scope": "account",
       "class": "warrior",
       "spec": "arms",
@@ -179,7 +179,7 @@
     },
     "shaman-capacitor-totem": {
       "name": "Capacitor Totem",
-      "desc": "Capacitor Totem sul cursore (stun AoE ritardato).",
+      "desc": "Capacitor Totem sulla posizione del mouse (stun AoE ritardato).",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -192,7 +192,7 @@
     },
     "shaman-spirit-link-totem": {
       "name": "Spirit Link Totem",
-      "desc": "Spirit Link Totem sul cursore (redistribuisce gli HP + riduzione danni).",
+      "desc": "Spirit Link Totem sulla posizione del mouse (redistribuisce gli HP + riduzione danni).",
       "scope": "account",
       "class": "shaman",
       "spec": "restoration",
@@ -218,7 +218,7 @@
     },
     "shaman-earthbind-totem": {
       "name": "Earthbind Totem",
-      "desc": "Earthbind Totem sul cursore (slow AoE).",
+      "desc": "Earthbind Totem sulla posizione del mouse (slow AoE).",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -231,7 +231,7 @@
     },
     "shaman-wind-rush-totem": {
       "name": "Wind Rush Totem",
-      "desc": "Wind Rush Totem sul cursore (scatto di velocità agli alleati).",
+      "desc": "Wind Rush Totem sulla posizione del mouse (scatto di velocità agli alleati).",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -244,7 +244,7 @@
     },
     "shaman-ascendance-ancestral-call": {
       "name": "Ascendance + Ancestral Call",
-      "desc": "Burst: Ascendance + racial Ancestral Call + trinket 13/14.",
+      "desc": "Burst: Ascendance + razziale Ancestral Call + trinket 13/14.",
       "scope": "account",
       "class": "shaman",
       "spec": null,
@@ -530,7 +530,7 @@
     },
     "warlock-darkglare-blood-fury": {
       "name": "Summon Darkglare + Blood Fury",
-      "desc": "Burst: Summon Darkglare + racial Blood Fury + trinket 13/14.",
+      "desc": "Burst: Summon Darkglare + razziale Blood Fury + trinket 13/14.",
       "scope": "account",
       "class": "warlock",
       "spec": "affliction",
@@ -608,7 +608,7 @@
     },
     "warlock-summon-infernal": {
       "name": "Summon Infernal",
-      "desc": "Infernal sulla posizione del mouse.",
+      "desc": "Summon Infernal sulla posizione del mouse.",
       "scope": "account",
       "class": "warlock",
       "spec": "destruction",
@@ -647,7 +647,7 @@
     },
     "rogue-tricks-shiv": {
       "name": "Tricks / Shiv",
-      "desc": "Mouseover su alleato → Tricks of the Trade; altrimenti Shiv sul bersaglio.",
+      "desc": "Mouseover su alleato → Tricks of the Trade; altrimenti Shiv sul nemico.",
       "scope": "account",
       "class": "rogue",
       "spec": null,
@@ -656,7 +656,7 @@
       "icon": null,
       "body_file": "rogue/tricks-shiv.txt",
       "body": null,
-      "notes": "Creata 2026-07-20 su richiesta utente ('nuova macro rogue shared'), corpo fornito verbatim. PRIMA macro rogue del repertorio: le cartelle macros/rogue/{assassination,outlaw,subtlety} esistevano gia' vuote. Pattern mouseover-fallback identico a mage-remove-curse-spellsteal: [@mouseover,help,nodead] instrada Tricks sull'alleato sotto il cursore senza cambiare bersaglio, il fallback dopo il `;` copre il caso 'nessun alleato sotto il mouse' con Shiv sul target corrente. Entrambe baseline per le tre spec (Shiv e' condiviso da Dragonflight in poi, in Assassination diffonde i veleni) -> spec:null, cross-spec. #showtooltip nudo: l'icona segue il ramo che si risolverebbe premendo ora, quindi mostra Tricks col mouse sull'alleato e Shiv altrimenti — nominarne una fisserebbe l'icona sbagliata meta' delle volte. CAVEAT: senza mouseover ALLEATO la macro fa Shiv, non Tricks sul focus/party1 — se serve un Tricks 'fisso' sul tank va un secondo bottone."
+      "notes": "Creata 2026-07-20 su richiesta utente ('nuova macro rogue shared'), corpo fornito verbatim. PRIMA macro rogue del repertorio: le cartelle macros/rogue/{assassination,outlaw,subtlety} esistevano gia' vuote. Pattern mouseover-fallback identico a mage-decurse-spellsteal: [@mouseover,help,nodead] instrada Tricks sull'alleato sotto il cursore senza cambiare bersaglio, il fallback dopo il `;` copre il caso 'nessun alleato sotto il mouse' con Shiv sul target corrente. Entrambe baseline per le tre spec (Shiv e' condiviso da Dragonflight in poi, in Assassination diffonde i veleni) -> spec:null, cross-spec. #showtooltip nudo: l'icona segue il ramo che si risolverebbe premendo ora, quindi mostra Tricks col mouse sull'alleato e Shiv altrimenti — nominarne una fisserebbe l'icona sbagliata meta' delle volte. CAVEAT: senza mouseover ALLEATO la macro fa Shiv, non Tricks sul focus/party1 — se serve un Tricks 'fisso' sul tank va un secondo bottone."
     }
   }
 }

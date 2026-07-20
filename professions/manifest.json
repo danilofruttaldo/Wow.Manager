@@ -16,9 +16,9 @@
       "name": "Blacksmithing",
       "type": "crafting",
       "first":  { "spec": "Armorsmithing", "branch": "Root node" },
-      "second": { "spec": "Armorsmithing", "branch": "Sculpted" },
+      "second": { "spec": "Armorsmithing", "branch": "Sculpted Armor" },
       "third":  { "spec": "The Old Ways", "branch": "Resourceful Smith" },
-      "notes": "Armorsmithing per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate. Sotto Armorsmithing i rami sono alternativi, se ne prende UNO: Sculpted, Large Plate Armor o Articulating Armor. Sotto The Old Ways: Resourceful Smith (Resourcefulness) o Second Nature (Ingenuity)."
+      "notes": "Armorsmithing per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate. Sotto Armorsmithing i rami sono alternativi, se ne prende UNO: Sculpted Armor, Large Plate Armor o Articulating Armor. Sotto The Old Ways: Resourceful Smith (Resourcefulness) o Second Nature (Ingenuity)."
     },
     {
       "key": "enchanting",
@@ -26,7 +26,7 @@
       "type": "crafting",
       "first":  { "spec": "Spellbound Shatterer", "branch": "Root node" },
       "second": { "spec": "Spellbound Shatterer", "branch": "Infinite Ingenuity" },
-      "third":  { "spec": "Elevating Equipment", "branch": "Amani" },
+      "third":  { "spec": "Elevating Equipment", "branch": "Amani Augments" },
       "notes": "Build Concentration: 20 pt nel root di Spellbound Shatterer, poi 30 in Infinite Ingenuity (un enchant HQ ogni pochi giorni). Shatter Essence va preso prima di craftare. Elevating Equipment ha tre sub-spec (Amani / Haranir / Thalassian): scegli quella degli enchant che vendi."
     },
     {
@@ -53,8 +53,8 @@
       "type": "crafting",
       "first":  { "spec": "Thoughtful Throughput", "branch": "Outrageous Output" },
       "second": { "spec": "Glamorous Gems", "branch": "Gem color sub-spec" },
-      "third":  { "spec": "Thoughtful Throughput", "branch": "Skilled Savings (Resourcefulness)" },
-      "notes": "Build Gemcutting: Thoughtful Throughput (Multicraft) + Glamorous Gems. Le gemme hanno domanda costante."
+      "third":  { "spec": "Thoughtful Throughput", "branch": "Skilled Savings" },
+      "notes": "Build Gemcutting: Thoughtful Throughput (Multicraft) + Glamorous Gems, poi Skilled Savings per la Resourcefulness. Le gemme hanno domanda costante. Nella seconda tappa i punti vanno nella sub-spec del colore che lavori."
     },
     {
       "key": "leatherworking",
@@ -63,7 +63,7 @@
       "first":  { "spec": "Learned Leatherworker", "branch": "Root node" },
       "second": { "spec": "Lasting Leather", "branch": "Armor path (4 slots)" },
       "third":  { "spec": "Safeguarding Scales", "branch": "Tipo armatura opposto (Mail)" },
-      "notes": "Learned Leatherworker come base, poi Lasting Leather o Safeguarding Scales secondo le classi che rifornisci."
+      "notes": "Learned Leatherworker come base, poi Lasting Leather o Safeguarding Scales secondo le classi che rifornisci (Lasting Leather = cuoio, Safeguarding Scales = maglia; strutture identiche). I punti di seconda e terza tappa vanno sui quattro slot di un gruppo: Head/Chest/Shoulder/Wrist da un lato, Legs/Hands/Waist/Feet dall'altro."
     },
     {
       "key": "tailoring",
@@ -87,10 +87,10 @@
       "key": "mining",
       "name": "Mining",
       "type": "gathering",
-      "first":  { "spec": "Meticulous Mining", "branch": "Root node (mounted mining)" },
-      "second": { "spec": "Plentiful Ores", "branch": "Root node (ore skill)" },
+      "first":  { "spec": "Meticulous Mining", "branch": "Root node" },
+      "second": { "spec": "Plentiful Ores", "branch": "Root node" },
       "third":  { "spec": "Plentiful Ores", "branch": "Nodi minerali specifici" },
-      "notes": "Meticulous Mining per il mining a cavallo, poi Plentiful Ores per skill e resa del minerale."
+      "notes": "Meticulous Mining per il mining a cavallo, poi Plentiful Ores per skill e resa del minerale: 40 pt nel primo root (lì sta il mining a cavallo), 50 nel secondo. Terza tappa sui nodi del minerale che estrai più spesso."
     },
     {
       "key": "skinning",
@@ -99,7 +99,7 @@
       "first":  { "spec": "Thorough Tanning", "branch": "Lasting Leather" },
       "second": { "spec": "Gainful Gathering", "branch": "Careful Carving" },
       "third":  { "spec": "Talented Tracker", "branch": "Majestic Materials" },
-      "notes": "Build Farming: 10 pt Thorough Tanning, poi 40 nel ramo scelto (Lasting Leather o Superb Scales, secondo cosa ti serve), poi Gainful Gathering (Careful Carving o Trophy Taker). Guida NON sull'URL standard: sta su wow-professions.com/guides/wow-skinning-leveling-guide."
+      "notes": "Build Farming: 10 pt Thorough Tanning, poi 40 nel ramo scelto (Lasting Leather o Superb Scales, secondo cosa ti serve), poi Gainful Gathering (Careful Carving o Trophy Taker)."
     }
   ]
 }
