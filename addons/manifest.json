@@ -220,13 +220,13 @@
     "AllTheThings": {
       "name": "All The Things",
       "desc": "Tracker enciclopedico per completisti: transmog, cavalcature, mascotte, giocattoli, achievement e molto altro in un unico database. Per ogni collezione elenca i pezzi che ti mancano e indica la fonte esatta — istanza, boss, vendor o mob — da cui provengono, così sai sempre dove andare a farmare.",
-      "version": "5.2.10",
-      "interface": "11508, 11509, 20505, 20506, 38001, 40402, 50504, 120007, 120100",
+      "version": "5.2.11",
+      "interface": "11508, 11509, 20506, 30405, 38001, 40402, 50504, 120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/all-the-things",
-      "installed": "2026-07-13",
+      "installed": "2026-07-20",
       "folders": ["AllTheThings"],
-      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Aggiornato 2026-07-13 5.2.9->5.2.10 via /aggiorna-addon (workflow) forgecdn files/8418/228 (release stabile) (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
+      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Aggiornato 2026-07-13 5.2.9->5.2.10 via /aggiorna-addon (workflow) forgecdn files/8418/228 (release stabile) (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). Aggiornato 2026-07-20 5.2.10->5.2.11 via /aggiorna-addon (workflow) forgecdn files/8465/698 (release stabile). TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
     }
   }
 }
