@@ -17,7 +17,7 @@ const etichettaCol = Object.fromEntries(cols.map(c => [c.key, c.label]));
 // Si tace anche dove l'etichetta non aggiunge nulla, altrimenti il rumore seppellisce
 // il segnale: "Raid Finder" e' l'intestazione LFR detta con altre parole (24 righe), e
 // "Versione unica" dice solo che la riga ha una colonna sola (8 righe). Restano scritte
-// le sole 13 celle che dicono davvero qualcosa di diverso: Sunwell, Alleanza/Orda,
+// le sole 12 celle che dicono davvero qualcosa di diverso: Sunwell, Alleanza/Orda,
 // 10/25 uomini, i tre item level del T10.
 const MUTE = new Set(['Versione unica', 'Raid Finder']);
 const spoglia = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -87,6 +87,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                         cell.state === 'na'
                           ? <td><span class="na"></span></td>
                           : <td class="cell has-tip"
+                                colspan={cell.span > 1 ? cell.span : undefined}
                                 style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}
                                 tabindex={0}
                                 data-tip-title={titolo(cell)}

@@ -162,6 +162,7 @@ export interface TmogCell {
   got: number;
   total: number;
   state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
+  span: number;                                   // colonne occupate: >1 se un aspetto ne copre più d'una
   pieces: TmogPiece[];                            // TUTTI i pezzi, presi e non
 }
 export interface TmogRow {
@@ -266,7 +267,7 @@ export function getTransmog(): TmogClass[] {
         const cells: TmogCell[] = cols.map((c): TmogCell => {
           const label = t.versions?.[c.key];
           // Versione inesistente per questo set → cella tratteggiata.
-          if (!label) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na', pieces: [] };
+          if (!label) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na', span: 1, pieces: [] };
           // Dal gioco: [pezzi posseduti, pezzi totali]. Il totale varia per classe e
           // per versione, quindi il `pieces` del tier resta solo come fallback.
           const cell = collected[slug]?.[t.key]?.[c.key];
@@ -275,7 +276,7 @@ export function getTransmog(): TmogClass[] {
           classGot += got;
           classTotal += total;
           return {
-            slot: c.key, label, got, total,
+            slot: c.key, label, got, total, span: 1,
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
             pieces: ((pieceList[slug]?.[t.key]?.[c.key] ?? []) as [string, number][])
               .map(([testo, preso]) => ({
@@ -285,15 +286,32 @@ export function getTransmog(): TmogClass[] {
               .sort((a, b) => slotRank(a.testo) - slotRank(b.testo)),
           };
         });
+        // Un aspetto solo che vale per piu' difficolta': la cella si allarga invece di
+        // lasciare accanto un buco tratteggiato. Il T16 e' il caso: Normal e Heroic
+        // sono lo stesso set e il journal lo elenca una volta.
+        //
+        // ⚠️ Deve essere DICHIARATO in `spans`, non dedotto dal buco fra le colonne:
+        // nel T9 mancano LFR e Mythic perche' quelle difficolta' non esistevano, e li'
+        // il tratteggio e' la risposta giusta.
+        const spans = ((t as any).spans ?? {}) as Record<string, number>;
+        const coperte = new Set<string>();
+        for (const [key, n] of Object.entries(spans)) {
+          const i = cols.findIndex((c) => c.key === key);
+          if (i < 0 || !(n > 1)) continue;
+          cells[i].span = n;
+          for (let k = 1; k < n && cols[i + k]; k++) coperte.add(cols[i + k].key);
+        }
+        const celle = cells.filter((c) => !coperte.has(c.slot));
+
         // Completamento della riga sulle sole versioni esistenti → tint di sfondo del tier.
-        const rowGot = cells.reduce((s, c) => s + c.got, 0);
-        const rowTotal = cells.reduce((s, c) => s + c.total, 0);
+        const rowGot = celle.reduce((s, c) => s + c.got, 0);
+        const rowTotal = celle.reduce((s, c) => s + c.total, 0);
         const pct = rowTotal ? (rowGot / rowTotal) * 100 : 0;
         return {
           key: t.key, tier: t.tier, name: t.name,
           setName: t.names?.[slug], raids: (t.raids ?? []) as [string, string][],
           note: t.note, warn: t.warn,
-          got: rowGot, total: rowTotal, pct, cells,
+          got: rowGot, total: rowTotal, pct, cells: celle,
         };
       });
       return { key: exp.key, name: exp.name, note: exp.note, rows };
