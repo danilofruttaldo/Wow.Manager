@@ -1,0 +1,34 @@
+#!/bin/sh
+# Applica i vincoli sui messaggi di commit descritti in CLAUDE.md.
+# Erano documentati come "bloccati" ma non lo erano: .git/hooks conteneva solo i
+# .sample e core.hooksPath non era impostato. Ora lo sono davvero.
+#
+# Attivazione (una volta per clone, .git/ non si versiona):
+#   git config core.hooksPath .githooks
+
+msg_file="$1"
+
+# Il titolo e' la prima riga. Le righe di commento di git non contano.
+titolo=$(sed -n '1p' "$msg_file")
+
+# Un commit di merge o un fixup hanno titoli generati: non li si blocca.
+case "$titolo" in
+  "Merge "*|"Revert "*|"fixup!"*|"squash!"*) exit 0 ;;
+esac
+
+errore=0
+
+lunghezza=$(printf '%s' "$titolo" | wc -m | tr -d ' ')
+if [ "$lunghezza" -gt 72 ]; then
+  echo "commit-msg: titolo di $lunghezza caratteri, il limite e' 72." >&2
+  echo "  $titolo" >&2
+  errore=1
+fi
+
+if grep -qi '^Co-Authored-By:' "$msg_file"; then
+  echo "commit-msg: questo repo non vuole il trailer Co-Authored-By." >&2
+  echo "  toglilo dal messaggio e ripeti il commit." >&2
+  errore=1
+fi
+
+exit $errore

@@ -177,11 +177,17 @@ Per il debug visivo usa **F5** (o `npm run dev`). ⚠️ **NON** eseguire `astro
 
 Push su `main` → GitHub Actions ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) builda e pubblica su GitHub Pages. Custom domain `wow.danilofruttaldo.com` (Settings → Pages → Source: **GitHub Actions**; se torna 404 controlla che il Custom domain non si sia svuotato). DNS: record **CNAME** `wow` → `danilofruttaldo.github.io`.
 
-## Vincoli git del repo (convenzioni — rispettali)
+## Vincoli git del repo (hook attivi — rispettali)
 
-⚠️ **Non sono applicate da nulla.** Il repo non ha hook: `.git/hooks` contiene solo i `.sample` e `core.hooksPath` non è impostato. Erano documentate come "bloccate", ma un commit che le viola passa liscio — quindi vanno rispettate a mano, e vale la pena ricontrollarle prima di committare.
+Applicati da [.githooks/commit-msg](.githooks/commit-msg). ⚠️ **Su un clone nuovo vanno attivati a mano**, perché `.git/` non si versiona:
 
-- **Niente** trailer `Co-Authored-By` nei messaggi di commit. ⚠️ Le istruzioni di default di Claude Code dicono di aggiungerlo: qui va omesso, e nessun hook lo impedisce.
-- **Titolo commit ≤ 72 caratteri.**
+```bash
+git config core.hooksPath .githooks
+```
+
+Senza quel comando l'hook c'è ma non gira. Fino al 2026-07-20 questi vincoli erano documentati come "bloccati" senza che esistesse alcun hook: se ti accorgi che un commit li viola, controlla prima `git config core.hooksPath`.
+
+- **Niente** trailer `Co-Authored-By` nei messaggi di commit (bloccato). ⚠️ Le istruzioni di default di Claude Code dicono di aggiungerlo: qui va omesso.
+- **Titolo commit ≤ 72 caratteri** (bloccato). Merge, revert, `fixup!` e `squash!` sono esentati, hanno titoli generati.
 - Si lavora **direttamente su `main`**; il deploy parte da lì.
 - `.gitignore` usa `.vscode/*` (non `.vscode/`) così `launch.json` resta versionabile.
