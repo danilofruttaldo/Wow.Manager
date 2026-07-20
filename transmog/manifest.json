@@ -410,6 +410,7 @@
       "colonna": {
         "heroic": "normal"
       },
+      "fonte": { "Head": "Vendor · oro", "Shoulder": "Vendor · oro", "Chest": "Vendor · oro" },
       "raids": [
         [
           "TOC",
@@ -445,6 +446,7 @@
       "colonna": {
         "mythic": "heroic"
       },
+      "fonte": { "Head": "Vendor · oro", "Shoulder": "Vendor · oro", "Chest": "Vendor · oro" },
       "raids": [
         [
           "ICC",
@@ -474,6 +476,7 @@
         "normal": "Normal",
         "heroic": "Heroic"
       },
+      "fonte": { "Chest": { "normal": "Vendor · oro" } },
       "raids": [
         [
           "BWD",
@@ -511,6 +514,7 @@
         "normal": "Normal",
         "heroic": "Heroic"
       },
+      "fonte": { "Chest": { "normal": "Vendor · oro" } },
       "raids": [
         [
           "FL",
@@ -673,6 +677,7 @@
         "normal": "Versione unica"
       },
       "note": "Set di classe delle Challenge Mode, non da raid: si ottenevano col tempo d'oro nei dungeon di Pandaria e non sono piu' disponibili. Nessuna description dal gioco, slot da SLOT_UNICO.",
+      "fonte": "Non più ottenibile",
       "raids": [],
       "names": {
         "death-knight": "Lich Lord Plate",
@@ -793,6 +798,7 @@
         "normal": "Versione unica"
       },
       "note": "Set di classe della Class Hall, colorazione unica: si compra dal quartermaster, uno slot alla volta, sbloccando un criterio diverso per pezzo. Il gioco non gli da' description, quindi lo slot arriva da SLOT_UNICO nel dump.",
+      "fonte": "Quartermaster · oro",
       "raids": [],
       "names": {
         "death-knight": "Deathlord's Battleplate",
@@ -822,6 +828,7 @@
         "mythic": "Mythic"
       },
       "note": "Set per tipo di armatura, non di classe: il T19 di classe viene dal Nighthold. La variante Trading Post e' esclusa come le altre.",
+      "fonte": "Quest · The Lost Army",
       "raids": [
         [
           "TOV",

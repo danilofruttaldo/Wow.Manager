@@ -278,6 +278,22 @@ export function getTransmog(): TmogClass[] {
         // "Slayer's Battlegear" a Sunwell, e un nome solo in testa alla riga ne
         // spaccerebbe uno per entrambi. Li' il titolo della riga resta il nome del
         // tier e ogni cella porta il proprio.
+        // Provenienza dichiarata per i pezzi che un boss non ce l'hanno. Serve a
+        // distinguere due cose che sul sito si vedono uguali — la cella vuota:
+        // "so come si prende e non e' un boss" (quest, vendor, non piu' ottenibile)
+        // contro "non lo so" (contenuto vecchio dove l'API tace, che resta vuoto).
+        //
+        // ⚠️ Il testo NON deve contenere virgole: `formatMissing` taglia li' per
+        // separare boss e raid, e una virgola farebbe comparire una sigla inventata.
+        // Tre forme: stringa per tutta la riga, {slot: testo}, {slot: {versione: testo}}.
+        const fonteDi = (testo: string, versione: string): string | undefined => {
+          const f = (t as any).fonte;
+          if (!f || testo.includes(' (')) return undefined;   // il boss c'e' gia'
+          if (typeof f === 'string') return f;
+          const perSlot = f[testo];
+          if (!perSlot) return undefined;
+          return typeof perSlot === 'string' ? perSlot : perSlot[versione];
+        };
         const nomi = ((t as any).names ?? {}) as Record<string, any>;
         const perVersione = Object.values(nomi).some((v) => v && typeof v === 'object');
         const cells: TmogCell[] = cols.map((c): TmogCell => {
@@ -296,10 +312,13 @@ export function getTransmog(): TmogClass[] {
             setName: perVersione ? nomi[c.key]?.[slug] : undefined,
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
             pieces: ((pieceList[slug]?.[t.key]?.[c.key] ?? []) as [string, number][])
-              .map(([testo, preso]) => ({
-                testo: formatMissing(testo, (t.raids ?? []) as [string, string][]),
-                preso: preso === 1,
-              }))
+              .map(([testo, preso]) => {
+                const fonte = fonteDi(testo, c.key);
+                return {
+                  testo: fonte ? `${testo} — ${fonte}` : formatMissing(testo, (t.raids ?? []) as [string, string][]),
+                  preso: preso === 1,
+                };
+              })
               .sort((a, b) => slotRank(a.testo) - slotRank(b.testo)),
           };
         });
