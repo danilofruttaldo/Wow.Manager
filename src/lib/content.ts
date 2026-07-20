@@ -572,6 +572,19 @@ export function getRosterCount(): number {
   return count;
 }
 
+// ── Screenshot UI ─────────────────────────────────
+// Quanti screenshot ha la pagina /ui. Serve alla card della home, che fino al
+// 2026-07-20 portava il numero scritto a mano e andava ritoccato a ogni file
+// aggiunto o tolto. Stesso glob di ui.astro: `*` non attraversa lo slash, quindi
+// prende solo la radice e NON le miniature in thumb/, che raddoppierebbero il conto.
+// `eager` come in ui.astro: servirebbero solo le chiavi, ma quella e' la forma gia'
+// in produzione qui, e una variante piu' magra non compilata in locale non vale il
+// rischio su un conteggio da una riga.
+const screenshotFiles = import.meta.glob('/public/screenshots/*.jpg', { eager: true });
+export function getScreenshotCount(): number {
+  return Object.keys(screenshotFiles).length;
+}
+
 export function getRosterHtml(): string {
   const raw = Object.values(rosterFile)[0] ?? '';
   const orda = extractRosterTable(raw, 'Orda');

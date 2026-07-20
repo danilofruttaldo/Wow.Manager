@@ -142,7 +142,8 @@ Sezione contenitore libero: script di manutenzione, link, appunti tecnici. Ogget
 ### UI / screenshot → [public/screenshots/](public/screenshots/)
 - **Aggiungi**: metti un file `<classe>-<spec>-<nome>.jpg` (es. `warrior-fury-stantu.jpg`). La pagina `/ui` lo raggruppa **per classe** leggendo classe/spec dal **nome file**.
 - Alias classe nel filename: `deathknight`→Death Knight, `demonhunter`→Demon Hunter.
-- **Rimuovi**: cancella il file. Aggiorna il conteggio hardcoded in [src/pages/index.astro](src/pages/index.astro) (card UI, oggi `'16'`) se cambia il numero: è l'unico contatore della home non derivato dai dati.
+- **Rimuovi**: cancella il file. Non c'è nessun conteggio da aggiornare: la card UI in home legge `getScreenshotCount()` ([content.ts](src/lib/content.ts)), che conta i file. Fino al 2026-07-20 quel numero era scritto a mano — ora **tutti** i contatori della home derivano dai dati.
+- ⚠️ Le **miniature** stanno in `public/screenshots/thumb/` e il glob del conteggio (`*.jpg`, che non attraversa lo slash) le esclude apposta: se le sposti nella radice il numero raddoppia.
 
 ### Icone (classe / razza / professione) → [public/icons/](public/icons/)
 Immagini WoW dal CDN Wowhead: `https://wow.zamimg.com/images/wow/icons/large/<slug>.jpg`.
