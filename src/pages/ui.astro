@@ -2,9 +2,19 @@
 import Base from '../layouts/Base.astro';
 import { classLabel, titleCase } from '../lib/content';
 
+// `*` non attraversa lo slash: questo glob prende solo la radice, non thumb/.
 const files = Object.keys(
   import.meta.glob('/public/screenshots/*.jpg', { eager: true }),
 ).map((p) => p.replace('/public', ''));
+
+// Miniature a 640px generate da scripts/make-thumbs.ps1 (stesso nome file).
+// Le originali restano la sorgente del lightbox: in griglia sarebbero 2560px
+// resi a ~300, cioe' ~9 MB scaricati per niente. Se la miniatura manca (script
+// non ancora rilanciato dopo un nuovo screenshot) si ripiega sull'originale.
+const thumbs = new Set(
+  Object.keys(import.meta.glob('/public/screenshots/thumb/*.jpg', { eager: true }))
+    .map((p) => p.replace('/public', '')),
+);
 
 const ALIAS: Record<string, string> = { deathknight: 'death-knight', demonhunter: 'demon-hunter' };
 const shots = files.map((src) => {
@@ -13,7 +23,9 @@ const shots = files.map((src) => {
   const className = ALIAS[parts[0]] ?? parts[0];
   const spec = parts[1] ?? '';
   const char = parts.slice(2).join('-') || parts[parts.length - 1];
-  return { src, className, spec, char };
+  const thumbPath = `/screenshots/thumb/${stem}.jpg`;
+  const thumb = thumbs.has(thumbPath) ? thumbPath : src;
+  return { src, thumb, className, spec, char };
 });
 
 // Raggruppa per classe
@@ -61,7 +73,7 @@ let gi = 0;
             const i = gi++;
             return (
               <button class="shot" style={`--pc: var(--c-${s.className})`} data-i={i} data-class={s.className} data-search={`${s.char} ${classLabel(s.className)} ${s.spec}`.toLowerCase()} data-src={s.src} data-char={titleCase(s.char)} data-who={`${classLabel(s.className)} · ${titleCase(s.spec)}`}>
-                <span class="imgwrap"><img src={s.src} alt={`UI di ${titleCase(s.char)}`} loading="lazy" width="640" height="360" /></span>
+                <span class="imgwrap"><img src={s.thumb} alt={`UI di ${titleCase(s.char)}`} loading="lazy" decoding="async" width="640" height="360" /></span>
                 <span class="cap">
                   <span class="cap-txt"><span class="ch">{titleCase(s.char)}</span></span>
                   <span class="sp">{titleCase(s.spec)}</span>

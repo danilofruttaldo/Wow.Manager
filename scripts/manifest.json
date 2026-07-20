@@ -22,6 +22,16 @@
       "body_file": "apply-fonts.ps1",
       "notes": "Legge fonts/manifest.json (override.source_file, override.files, _meta.wow_fonts_dir): nessun elenco hardcoded, segue il manifest. Il .ttf sorgente è un font di sistema Windows, non versionato. Addon con font proprio (Details/BigWigs/MRT) non seguono l'override. Revert: -Revert oppure cancella i .TTF da Fonts/."
     },
+    "fetch-fonts": {
+      "kind": "script",
+      "name": "Font self-hostati",
+      "desc": "Riscarica Inter e JetBrains Mono in public/fonts/ e rigenera fonts.css, così il sito non chiede nulla a Google.",
+      "lang": "powershell",
+      "when": "Solo quando cambi i font o i pesi usati: i file scaricati stanno nel repo e non servono a ogni build.",
+      "warn": "Senza uno User-Agent da browser Google risponde con i .ttf invece dei .woff2, molto più pesanti: lo script lo imposta già.",
+      "body_file": "fetch-fonts.ps1",
+      "notes": "Nasce da un rilievo di privacy: caricare i font da fonts.googleapis.com manda a Google l'IP di ogni visitatore ed era l'unico host esterno del sito, quindi anche l'ostacolo a una CSP restrittiva. Inter e JetBrains Mono sono font VARIABILI: lo stesso woff2 copre tutti i pesi, per questo i 12 blocchi @font-face puntano a 4 file soli (deduplicati per hash MD5) e il totale sta in 172 KB invece di 605. Tenuti i soli subset latin e latin-ext, gli unici utili all'italiano: erano 40 blocchi con cirillico, greco e vietnamita."
+    },
     "transmog-tier-dump": {
       "kind": "script",
       "name": "Dump collezione tier set",
@@ -41,6 +51,16 @@
       "warn": "Non modifica mai le parti redazionali del manifest (tiers, names, versions, fonte, colonna, spans): tocca solo i due blocchi generati dal gioco.",
       "body_file": "transmog-sync.ps1",
       "notes": "Le guardie sono il motivo per cui esiste: si ferma se il dump ha `sospetto` valorizzato, se `mismatches` o `errors` non sono vuoti, o se i pezzi collezionati risultano zero. Serve perche' un dump preso mentre il client non ha ancora caricato la collezione e' internamente COERENTE -- ogni set a zero su totale giusto -- quindi nessuna verifica a valle lo distingue da uno buono, e incollarlo azzera la collezione. Caso reale: al primo test lo script si e' fermato su un dump con presi=0 su 11491 pezzi. Valida il JSON PRIMA di scrivere e cerca il SavedVariables invece di avere il percorso scritto dentro, perche' contiene il nome dell'account."
+    },
+    "make-thumbs": {
+      "kind": "script",
+      "name": "Miniature screenshot UI",
+      "desc": "Genera in public/screenshots/thumb/ una copia a 640px di ogni screenshot, che la griglia della pagina UI usa al posto dell'originale da 2560px. Gli originali restano intatti: il lightbox continua a usare quelli.",
+      "lang": "powershell",
+      "when": "Ogni volta che aggiungi o sostituisci uno screenshot in public/screenshots/. Esegui dalla cartella del repo; rigenera solo le miniature piu' vecchie dell'originale.",
+      "warn": "Le miniature vanno committate insieme agli screenshot: senza, la griglia ripiega sull'originale e la pagina torna a pesare ~9 MB.",
+      "body_file": "make-thumbs.ps1",
+      "notes": "Niente ImageMagick e niente Node su questa macchina: usa System.Drawing di .NET (presente in PS 5.1) con InterpolationMode HighQualityBicubic e qualita' JPEG 82 via EncoderParameter. Dispose() di Graphics/Bitmap/Image e' obbligatorio, altrimenti FromFile tiene il .jpg lockato e la riesecuzione fallisce. 640px = il doppio della card da ~300px, cosi' resta nitida sui display retina. Il glob della pagina (/public/screenshots/*.jpg) non attraversa lo slash, quindi thumb/ non finisce nella griglia come screenshot a se'; lo script a sua volta legge solo la radice e non rimpicciolisce le proprie miniature. Parametri: -Larghezza, -Qualita, -Forza. Misurato al primo giro: 9.16 MB -> 0.63 MB su 16 file (-93%)."
     },
     "sync-game-settings": {
       "kind": "script",
