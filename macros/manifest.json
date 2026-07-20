@@ -631,6 +631,19 @@
       "body_file": "warlock/destruction/fel-domination-imp.txt",
       "body": null,
       "notes": "Creata 2026-07-17 su richiesta utente ('fammi macro con fel domination e imp, per destruction'), corpo fornito verbatim dall'utente. Fel Domination (albero CLASSE, off-GCD: rende istantaneo e gratuito il prossimo Summon Demon) + Summon Imp fisso, senza condizionali. SCELTA PET: Imp deciso dall'utente 2026-07-17 dopo verifica guide Midnight 12.0.7 (Maxroll raid + M+): il Destruction NON sacrifica il pet (Grimoire of Sacrifice esiste, spostato a riga 7 nella 12.0.0, ma NON e' nelle build consigliate) e la regola delle guide e' 'Succubus sul single-target con pet fermo, altrimenti Imp' -> l'utente ha scelto Imp fisso (Firebolt a distanza, nessuna perdita di uptime sui target swap). Se in futuro vuole la Succubus sul monobersaglio, serve un secondo bottone o un ramo condizionale. #showtooltip ESPLICITO 'Summon Imp' (non nudo, scelta utente): NON e' ridondante perche' nomina una spell DIVERSA dalla prima cast -> senza di esso l'icona risolverebbe su Fel Domination e mostrerebbe il suo CD; cosi' invece il bottone mostra l'Imp. Stessa preferenza gia' espressa su warlock-fel-domination-pet (li' #showtooltip condizionale = icona del pet per contesto): sui bottoni Fel Domination l'utente vuole vedere IL PET, non il cooldown. SOVRAPPOSIZIONE VOLUTA con warlock-fel-domination-pet (shared, spec:null): quella e' context-aware e su Destruction darebbe Felhunter in party ([group:party]) e Imp solo in raid ([group:raid]); questa forza l'Imp sempre. Su Destruction i due bottoni coesistono e DIVERGONO in party/M+ -> tenere questa se si vuole l'Imp anche in dungeon. CAVEAT 1: se Fel Domination non e' talentato la riga 2 e' inerte ma la macro FUNZIONA -> il summon parte col cast time normale. CAVEAT 2: con un pet gia' evocato, premere consuma comunque Fel Domination per rievocare lo stesso Imp; per non sprecarlo si puo' guardare la riga con [nopet] (`/cast [nopet] Fel Domination`), a costo di perdere l'instant sui cambi pet in combat (stesso trade-off di warlock-fel-domination-pet)."
+    },
+    "warlock-cataclysm": {
+      "name": "Cataclysm",
+      "desc": "Cataclysm sulla posizione del mouse.",
+      "scope": "account",
+      "class": "warlock",
+      "spec": "destruction",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warlock/destruction/cataclysm.txt",
+      "body": null,
+      "notes": "Creata 2026-07-20 su richiesta utente ('nuova macro warlock destruction'), corpo fornito verbatim dall'utente. Ground-target esplicito (@cursor): niente reticolo verde, l'area va diretta al cursore (stesso schema di warlock-rain-of-fire, warlock-summon-infernal, warlock-shadowfury, mage-meteor). Cataclysm e' talento di Destruction (applica Immolate a tutti i bersagli colpiti) -> spec:destruction, non spec:null. #showtooltip nudo: la macro ha una sola cast, nominarla sarebbe ridondante. /use invece di /cast e' quello che ha scritto l'utente e sono alias esatti -> tenuto verbatim (il repo usa entrambi)."
     }
   }
 }
