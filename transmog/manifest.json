@@ -401,11 +401,11 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "10 uomini",
-        "heroic": "25 uomini (Sanctified)",
-        "mythic": "25 uomini Heroic (Sanctified)"
+        "normal": "Base (251)",
+        "heroic": "Sanctified (264)",
+        "mythic": "Sanctified Heroic (277)"
       },
-      "note": "L'asse NON e' la difficolta' moderna: in WotLK il Mythic non esisteva. Le tre colonne sono 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic), come le chiama il client. Il prefisso Sanctified ce l'hanno ENTRAMBE le versioni da 25, quindi non distingue le colonne: a distinguerle e' Normal contro Heroic. Etichette precedenti (Base / Sanctified (10) / Sanctified (25)) sbagliate.",
+      "note": "Tre ASPETTI distinti, uno per item level: 251 (comprato con gli Emblemi di Gelo), 264 e 277, le due varianti Sanctified. Confermato da Icy Veins e dal client, che li espone come 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic) -- ma quella e' la difficolta' dove cadevano i Mark, non l'aspetto. Non e' 10m contro 25m e in WotLK il Mythic non esisteva: la colonna e' uno slot, non una difficolta'.",
       "raids": [
         [
           "ICC",

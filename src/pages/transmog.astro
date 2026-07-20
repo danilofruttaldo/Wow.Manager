@@ -5,6 +5,25 @@ import { getTransmog, transmogColumns } from '../lib/content';
 const classes = getTransmog();
 const cols = transmogColumns;
 const ncols = cols.length + 1; // + colonna del nome set
+
+// Le intestazioni (LFR/Normal/Heroic/Mythic) sono SLOT, non difficolta' letterali:
+// su un terzo delle righe l'asse e' un altro -- Black Temple contro Sunwell, 10
+// contro 25 uomini, Alleanza contro Orda, i tre item level del T10. Quello che
+// conta e' l'aspetto del set, quindi dove l'etichetta della riga dice qualcosa di
+// diverso dall'intestazione la si scrive nella cella. Dove coincide si tace, per
+// non ripetere "Normal" sotto "Normal" su tutti i tier moderni.
+const etichettaCol = Object.fromEntries(cols.map(c => [c.key, c.label]));
+
+// Si tace anche dove l'etichetta non aggiunge nulla, altrimenti il rumore seppellisce
+// il segnale: "Raid Finder" e' l'intestazione LFR detta con altre parole (24 righe), e
+// "Versione unica" dice solo che la riga ha una colonna sola (8 righe). Restano scritte
+// le sole 13 celle che dicono davvero qualcosa di diverso: Sunwell, Alleanza/Orda,
+// 10/25 uomini, i tre item level del T10.
+const MUTE = new Set(['Versione unica', 'Raid Finder']);
+const spoglia = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+const daScrivere = (cell: { slot: string; label: string }) =>
+  !!cell.label && !MUTE.has(cell.label) &&
+  spoglia(cell.label) !== spoglia(etichettaCol[cell.slot] ?? '');
 ---
 <Base title="Transmog" description="Set dei raid per classe: matrice set × versione, raggruppata per espansione.">
   <div class="wrap tmog-wrap">
@@ -73,6 +92,7 @@ const ncols = cols.length + 1; // + colonna del nome set
                                 data-tip-title={titolo(cell)}
                                 data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')}>
                               <span class="frac">{cell.got}/{cell.total}</span>
+                              {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
                               <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
                             </td>
                       ))}
@@ -133,6 +153,12 @@ const ncols = cols.length + 1; // + colonna del nome set
   /* Celle: frazione + barra di completamento, colore per stato. */
   .tmog-panel td.cell { font-variant-numeric: tabular-nums; font-weight: 600; }
   .tmog-panel .frac { display: block; font-size: 0.74rem; line-height: 1.15; }
+  /* Etichetta della versione, scritta solo dove differisce dall'intestazione: e' il
+     nome dell'ASPETTO (Sunwell, Sanctified (264), Alleanza), non della difficolta'. */
+  .tmog-panel .vlab {
+    display: block; font-size: 0.6rem; line-height: 1.2; opacity: 0.7;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
   .tmog-panel .bar { display: block; height: 3px; margin-top: 3px; border-radius: 999px; background: var(--border-light); overflow: hidden; }
   .tmog-panel .bar-fill { display: block; height: 100%; border-radius: 999px; background: currentColor; }
   /* Rampa continua rosso -> giallo -> verde in funzione di --pct (0..100, unitless).

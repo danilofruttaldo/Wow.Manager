@@ -647,8 +647,29 @@ local function Dump()
         return table.concat(mo, "\n")
     end
 
+    -- ⚠️ GUARDIA: se il client non ha ancora caricato la collezione transmog, ogni
+    -- set risulta a zero pezzi presi ma con il totale giusto. Il dump resta
+    -- internamente COERENTE -- mismatches ed errors restano vuoti -- quindi nulla
+    -- lo distingue da un dump buono, e incollarlo azzera la collezione nel manifest.
+    -- Successo davvero: 4610 pezzi diventati 0 su tutte e 13 le classi.
+    -- L'addon parte 5 secondi dopo il login e a volte non basta: qui si conta quanto
+    -- si e' collezionato e, se e' zero mentre i pezzi esistono, si urla.
+    local presi, pezzi = 0, 0
+    for _, tiers in pairs(data) do
+        for _, slots in pairs(tiers) do
+            for _, v in pairs(slots) do presi = presi + v[1]; pezzi = pezzi + v[2] end
+        end
+    end
+    local sospetto = nil
+    if pezzi > 0 and presi == 0 then
+        sospetto = "collezione vuota: il client non aveva caricato i dati. NON incollare, rilancia /wmtier."
+        print("|cffff2020WowManagerTierDump: " .. sospetto .. "|r")
+    end
+
     WowManagerTierDumpDB = {
         generated = date("%Y-%m-%d %H:%M:%S"),
+        sospetto = sospetto,   -- nil = dump buono. Se valorizzato, NON incollare.
+        presi = presi, pezzi = pezzi,
         build = GetBuildInfo(),
         collectedJson = table.concat(out, "\n"),
         piecesJson = Serializza("pieceList", "testo"),
