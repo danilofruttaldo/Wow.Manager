@@ -275,6 +275,10 @@
         "heroic": "Sunwell"
       },
       "note": "5 pezzi base + 3 (polsi, cintura, stivali) da Sunwell in 2.4. I 3 pezzi Sunwell non combaciano visivamente col set base.",
+      "stack": true,
+      "colonna": {
+        "heroic": "normal"
+      },
       "raids": [
         [
           "MH",
@@ -312,6 +316,10 @@
         "heroic": "25"
       },
       "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale.",
+      "stack": true,
+      "colonna": {
+        "heroic": "normal"
+      },
       "raids": [
         [
           "NAXX",
@@ -344,6 +352,10 @@
       "versions": {
         "normal": "10",
         "heroic": "25"
+      },
+      "stack": true,
+      "colonna": {
+        "heroic": "normal"
       },
       "raids": [
         [
