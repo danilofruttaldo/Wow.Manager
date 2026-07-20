@@ -190,14 +190,25 @@ const ncols = cols.length + 1; // + colonna del nome set
     border-bottom: 1px solid var(--border-light);
   }
   .tmog-tip .tip-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.12rem; }
-  /* "Shoulder - Ragnaros (FL)" -> slot in evidenza, resto smorzato accanto. */
-  .tmog-tip .tip-list b { font-weight: 600; }
-  /* Verde = gia' preso, rosso = da prendere. Il colore e' l'unico segnale: niente
-     glifi ✓/✗, che sul sito non si usano (solo icone WoW). */
-  .tmog-tip .tip-list .is-preso b { color: var(--ok); }
-  .tmog-tip .tip-list .is-manca b { color: var(--bad); }
-  .tmog-tip .tip-list .is-preso span { color: color-mix(in srgb, var(--ok) 55%, var(--text-subtle)); }
-  .tmog-tip .tip-list .is-manca span { color: color-mix(in srgb, var(--bad) 45%, var(--text-subtle)); }
+  /* ⚠️ Le voci della lista le crea il JS a runtime, quindi NON hanno l'attributo
+     [data-astro-cid-…] con cui Astro scopa gli stili: senza :global() queste regole
+     non le colpiscono e il tooltip resta grigio. Il compilatore lascia cadere il
+     `.tmog-tip` davanti, quindi queste finiscono globali: `.tip-list` esiste solo
+     qui, ma se la riusi altrove ricordati che non sono piu' isolate.
+
+     Ogni voce porta la sua barretta di stato a sinistra: rosso = manca, verde = preso.
+     Nessuna etichetta di testo, nessun glifo — la riga si legge a colpo d'occhio. */
+  .tmog-tip :global(.tip-list li) {
+    padding: 0.06rem 0.3rem 0.06rem 0.4rem; border-radius: 3px;
+    border-left: 3px solid currentColor;
+  }
+  .tmog-tip :global(.tip-list .is-preso) { color: var(--ok); background: color-mix(in srgb, var(--ok) 9%, var(--surface)); }
+  .tmog-tip :global(.tip-list .is-manca) { color: var(--bad); background: color-mix(in srgb, var(--bad) 9%, var(--surface)); }
+  /* "Shoulder - Ragnaros (FL)" -> slot in evidenza (eredita il colore di stato dalla
+     voce), boss smorzato accanto. */
+  .tmog-tip :global(.tip-list b) { font-weight: 600; }
+  .tmog-tip :global(.tip-list .is-preso span) { color: color-mix(in srgb, var(--ok) 55%, var(--text-subtle)); }
+  .tmog-tip :global(.tip-list .is-manca span) { color: color-mix(in srgb, var(--bad) 45%, var(--text-subtle)); }
 
   @media (max-width: 700px) {
     .tmog-panel th:first-child, .tmog-panel td:first-child { width: 40%; }
@@ -248,10 +259,11 @@ const ncols = cols.length + 1; // + colonna del nome set
       const list = tip.querySelector('.tip-list') as HTMLElement;
       head.textContent = cell.dataset.tipTitle || '';
       list.replaceChildren();
-      for (const grezzo of (cell.dataset.tip || '').split('\n')) {
-        // Il primo carattere dice se il pezzo e' gia' preso (+) o manca (-); il resto
-        // e' gia' formattato da formatMissing: "Shoulder — Ragnaros (FL)", oppure il
-        // solo slot quando il boss non e' noto.
+
+      // Il primo carattere dice se il pezzo e' gia' preso (+) o manca (-); il resto
+      // e' gia' formattato da formatMissing: "Shoulder — Ragnaros (FL)", oppure il
+      // solo slot quando il boss non e' noto.
+      for (const grezzo of (cell.dataset.tip || '').split('\n').filter(Boolean)) {
         const preso = grezzo[0] === '+';
         const raw = grezzo.slice(1);
         const i = raw.indexOf(' — ');

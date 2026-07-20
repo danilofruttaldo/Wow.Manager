@@ -204,6 +204,15 @@ const tmogTierIndex: Record<string, number> = {};
 const normRaid = (s: string) =>
   s.toLowerCase().replace(/\(.*?\)/g, '').replace(/^the /, '').replace(/[^a-z0-9]/g, '');
 
+// Ordine degli slot come li mostra il personaggio in gioco (id di equipaggiamento),
+// non l'alfabetico in cui arrivano dal dump: nel tooltip i pezzi devono scorrere
+// dalla testa ai piedi come sul paper doll.
+const SLOT_ORDER = ['Head', 'Shoulder', 'Back', 'Chest', 'Waist', 'Legs', 'Feet', 'Wrist', 'Hands'];
+const slotRank = (testo: string) => {
+  const i = SLOT_ORDER.indexOf(testo.replace(/ [—(].*/, ''));
+  return i < 0 ? SLOT_ORDER.length : i;   // slot ignoto in coda, senza far saltare l'ordine
+};
+
 // Da "Head (Ragnaros, Firelands)" del dump alla forma mostrata nel tooltip,
 // "Head — Ragnaros (FL)": la sigla viene dai `raids` del tier, non dal dump, che non
 // conosce le abbreviazioni usate nel repo. Senza boss noto resta il solo slot.
@@ -272,7 +281,8 @@ export function getTransmog(): TmogClass[] {
               .map(([testo, preso]) => ({
                 testo: formatMissing(testo, (t.raids ?? []) as [string, string][]),
                 preso: preso === 1,
-              })),
+              }))
+              .sort((a, b) => slotRank(a.testo) - slotRank(b.testo)),
           };
         });
         // Completamento della riga sulle sole versioni esistenti → tint di sfondo del tier.
