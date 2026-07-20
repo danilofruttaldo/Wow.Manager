@@ -644,6 +644,19 @@
       "body_file": "warlock/destruction/cataclysm.txt",
       "body": null,
       "notes": "Creata 2026-07-20 su richiesta utente ('nuova macro warlock destruction'), corpo fornito verbatim dall'utente. Ground-target esplicito (@cursor): niente reticolo verde, l'area va diretta al cursore (stesso schema di warlock-rain-of-fire, warlock-summon-infernal, warlock-shadowfury, mage-meteor). Cataclysm e' talento di Destruction (applica Immolate a tutti i bersagli colpiti) -> spec:destruction, non spec:null. #showtooltip nudo: la macro ha una sola cast, nominarla sarebbe ridondante. CORPO: l'utente l'aveva scritto con /use, ma subito dopo (2026-07-20) ha chiesto di uniformare TUTTO il repertorio su /cast -> convertite 24 voci con `^/use ` seguito da non-cifra. ⚠️ ECCEZIONE DA NON TOCCARE: le righe `/use 13` / `/use 14` (trinket slot sup/inf, in warrior-reck-trinket, dk-pillar-erw-trinket, shaman-ascendance-ancestral-call, warlock-darkglare-blood-fury) restano /use: sulle SPELL i due comandi sono alias esatti, ma /cast NON accetta i numeri di slot e quelle righe diventerebbero inerti."
+    },
+    "rogue-tricks-shiv": {
+      "name": "Tricks / Shiv",
+      "desc": "Mouseover su alleato → Tricks of the Trade; altrimenti Shiv sul bersaglio.",
+      "scope": "account",
+      "class": "rogue",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "rogue/tricks-shiv.txt",
+      "body": null,
+      "notes": "Creata 2026-07-20 su richiesta utente ('nuova macro rogue shared'), corpo fornito verbatim. PRIMA macro rogue del repertorio: le cartelle macros/rogue/{assassination,outlaw,subtlety} esistevano gia' vuote. Pattern mouseover-fallback identico a mage-remove-curse-spellsteal: [@mouseover,help,nodead] instrada Tricks sull'alleato sotto il cursore senza cambiare bersaglio, il fallback dopo il `;` copre il caso 'nessun alleato sotto il mouse' con Shiv sul target corrente. Entrambe baseline per le tre spec (Shiv e' condiviso da Dragonflight in poi, in Assassination diffonde i veleni) -> spec:null, cross-spec. #showtooltip nudo: l'icona segue il ramo che si risolverebbe premendo ora, quindi mostra Tricks col mouse sull'alleato e Shiv altrimenti — nominarne una fisserebbe l'icona sbagliata meta' delle volte. CAVEAT: senza mouseover ALLEATO la macro fa Shiv, non Tricks sul focus/party1 — se serve un Tricks 'fisso' sul tank va un secondo bottone."
     }
   }
 }
