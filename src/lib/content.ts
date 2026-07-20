@@ -178,7 +178,6 @@ export interface TmogRow {
   got: number;
   total: number;
   pct: number;                                    // guida la rampa di colore rosso -> verde della riga
-  stack: boolean;                                 // versioni impilate in sotto-righe invece che in colonne
   cells: TmogCell[];
 }
 export interface TmogGroup {
@@ -337,7 +336,7 @@ export function getTransmog(): TmogClass[] {
           cells[i].span = n;
           for (let k = 1; k < n && cols[i + k]; k++) coperte.add(cols[i + k].key);
         }
-        let celle = cells.filter((c) => !coperte.has(c.slot));
+        const celle = cells.filter((c) => !coperte.has(c.slot));
 
         // Righe "impilate": le versioni non sono un progresso ordinato ma alternative
         // parallele, quindi non stanno nelle colonne della difficolta'. Il T9 e' il
@@ -347,8 +346,6 @@ export function getTransmog(): TmogClass[] {
         // Diventano una sotto-riga ciascuna, larga quanto tutta la tabella, col nome
         // del set condiviso via rowspan. Qui si tolgono le celle inesistenti: senza
         // colonne da rispettare, una casella tratteggiata non vorrebbe dire nulla.
-        const stack = (t as any).stack === true;
-        if (stack) celle = celle.filter((c) => c.state !== 'na');
 
         // Completamento della riga sulle sole versioni esistenti → tint di sfondo del tier.
         const rowGot = celle.reduce((s, c) => s + c.got, 0);
@@ -358,7 +355,7 @@ export function getTransmog(): TmogClass[] {
           key: t.key, tier: t.tier, name: t.name,
           setName: perVersione ? undefined : t.names?.[slug], raids: (t.raids ?? []) as [string, string][],
           note: t.note, warn: t.warn,
-          got: rowGot, total: rowTotal, pct, stack, cells: celle,
+          got: rowGot, total: rowTotal, pct, cells: celle,
         };
       });
       return { key: exp.key, name: exp.name, note: exp.note, rows };

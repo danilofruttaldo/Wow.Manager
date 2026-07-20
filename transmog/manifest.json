@@ -335,7 +335,6 @@
         "heroic": "Valorous 25M"
       },
       "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale.",
-      "stack": true,
       "colonna": {
         "heroic": "normal"
       },
@@ -372,7 +371,6 @@
         "normal": "Valorous 10M",
         "heroic": "Conqueror 25M"
       },
-      "stack": true,
       "colonna": {
         "heroic": "normal"
       },
@@ -406,7 +404,6 @@
         "heroic": "Horde"
       },
       "warn": "Anomalia: qui l'asse di variazione e' la FAZIONE, non la difficolta'. I 3 item level condividono lo stesso aspetto.",
-      "stack": true,
       "colonna": {
         "heroic": "normal"
       },
@@ -442,7 +439,6 @@
         "mythic": "Sanctified 25M"
       },
       "note": "Tre aspetti distinti, verificati sui dati: se due fossero lo stesso set i conteggi si muoverebbero insieme, e invece su 5 classi su 10 differiscono (il mago ha 3/8 sul secondo e 0/6 sul terzo). Anche i totali cambiano. Icy Veins dice due aspetti perche' confronta i NOMI degli oggetti, identici fra 264 e 277: sbagliato. Item level 251/264/277. Il client li chiama 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic); il secondo pero' si otteneva sia in 10 Heroic sia in 25 Normal, quindi l'etichetta '10 Heroic' e' vera ma parziale.",
-      "stack": true,
       "colonna": {
         "mythic": "heroic"
       },
