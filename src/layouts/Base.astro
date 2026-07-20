@@ -21,7 +21,10 @@ const SOURCE_BY_PATH: Record<string, string> = {
   '/ui': 'public/screenshots',
   '/extra': 'scripts',
 };
-const updated = sourceDate(SOURCE_BY_PATH[currentPath] ?? '.');
+// Il build statico emette /professioni/ con lo slash finale, le chiavi qui sopra no:
+// senza normalizzare, il lookup manca sempre e ogni pagina mostra la data del repo.
+const pathKey = currentPath.replace(/\/+$/, '') || '/';
+const updated = sourceDate(SOURCE_BY_PATH[pathKey] ?? '.');
 
 const SITE_NAME = 'wow.danilofruttaldo.com'; // dominio (footer, canonical)
 const SITE_TITLE = 'WoW Manager';            // nome nel titolo del tab
