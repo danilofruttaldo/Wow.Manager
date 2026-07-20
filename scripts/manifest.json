@@ -32,6 +32,16 @@
       "body_file": "transmog-tier-dump.lua",
       "notes": "Fonte: C_TransmogSets.GetAllSets + GetVariantSets + GetSetPrimaryAppearances. Account-wide (Warband). Mappe da aggiornare quando esce un raid nuovo: TIER (expansionID|label -> chiave tier), TIER_ARMOR (set per tipo di armatura, che hanno una riga loro) e TIER_ORDER. SLOT traduce la description in-game nelle 4 colonne: prima di Cata l'asse e' 10/25 uomini, nel T9 e' la fazione (requiredFaction), e SLOT_UNICO copre le righe senza asse (Order Hall, Challenge Mode, Sunwell) a cui il gioco non da' description. I set MULTICLASSE non si scartano piu': hanno il classMask con piu' bit (400 stoffa, 3592 cuoio, 4164 maglia, 35 piastre) e ClassiIn li scrive sotto ogni classe che porta quel tipo -- prima finivano in dropped e le righe di BfA, Nathria, Sanctum e l'LFR di WoD restavano vuote. Restano scartate solo le varianti Timerunning/Timewarped/Trading Post. Sui 5 slot da token dei tier moderni il boss NON si chiede al gioco, che risponde sbagliato: lo da' TOKEN_BOSS, e TOKEN_SENZA_FONTE sopprime dove una fonte da boss non esiste (set da vendor). GUARDIA: se la collezione non e' ancora caricata ogni set esce a zero pezzi ma internamente coerente, quindi mismatches resta vuoto e nulla lo distingue da un dump buono -- per questo c'e' il campo `sospetto`, piu' `presi` e `pezzi` come totali di controllo. Diagnostica: `senzaBoss` elenca i set in cui nessun pezzo ha un boss e `sondaSenzaBoss` mostra cosa rispondono le API sul primo di quelli (e' cosi' che si e' accertato che i set di Trial of Valor vengono da una quest, non da un drop). T0 e T0.5 NON esistono nel journal. Il campo `sets` nel SavedVariables e' il dump grezzo, serve se va rifatta la mappatura."
     },
+    "transmog-sync": {
+      "kind": "script",
+      "name": "Sync collezione transmog",
+      "desc": "Prende l'ultimo dump del gioco e riscrive i blocchi `collected` e `pieceList` di transmog/manifest.json, lasciando intatto tutto il resto. Si rifiuta di procedere se il dump non e' affidabile.",
+      "lang": "powershell",
+      "when": "Dopo aver sbloccato aspetti in gioco: /reload, /wmtier, /reload, poi lancia questo e committa. E' il passo che prima si faceva a mano.",
+      "warn": "Non modifica mai le parti redazionali del manifest (tiers, names, versions, fonte, colonna, spans): tocca solo i due blocchi generati dal gioco.",
+      "body_file": "transmog-sync.ps1",
+      "notes": "Le guardie sono il motivo per cui esiste: si ferma se il dump ha `sospetto` valorizzato, se `mismatches` o `errors` non sono vuoti, o se i pezzi collezionati risultano zero. Serve perche' un dump preso mentre il client non ha ancora caricato la collezione e' internamente COERENTE -- ogni set a zero su totale giusto -- quindi nessuna verifica a valle lo distingue da uno buono, e incollarlo azzera la collezione. Caso reale: al primo test lo script si e' fermato su un dump con presi=0 su 11491 pezzi. Valida il JSON PRIMA di scrivere e cerca il SavedVariables invece di avere il percorso scritto dentro, perche' contiene il nome dell'account."
+    },
     "sync-game-settings": {
       "kind": "script",
       "name": "Sync impostazioni di gioco",
