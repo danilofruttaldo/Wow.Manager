@@ -1,2 +1,2 @@
 #showtooltip
-/use [@cursor]Earthbind Totem
+/cast [@cursor]Earthbind Totem

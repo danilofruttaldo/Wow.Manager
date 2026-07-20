@@ -1,2 +1,2 @@
 #showtooltip
-/use [combat]Intercession;Redemption
+/cast [combat]Intercession;Redemption

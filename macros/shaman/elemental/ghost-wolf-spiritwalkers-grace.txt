@@ -1,2 +1,2 @@
 #showtooltip
-/use [mod,known:Spiritwalker's Grace] Spiritwalker's Grace; Ghost Wolf
+/cast [mod,known:Spiritwalker's Grace] Spiritwalker's Grace; Ghost Wolf

@@ -1,2 +1,2 @@
 #showtooltip
-/use [mod]Ancestral Vision;Ancestral Spirit
+/cast [mod]Ancestral Vision;Ancestral Spirit

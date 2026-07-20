@@ -1,2 +1,2 @@
 #showtooltip
-/use [@cursor]Freezing Trap
+/cast [@cursor]Freezing Trap

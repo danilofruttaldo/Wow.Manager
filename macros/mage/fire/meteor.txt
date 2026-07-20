@@ -1,2 +1,2 @@
 #showtooltip
-/use [@cursor]Meteor
+/cast [@cursor]Meteor

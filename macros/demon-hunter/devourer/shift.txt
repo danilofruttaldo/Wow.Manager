@@ -1,2 +1,2 @@
 #showtooltip
-/use [@cursor]Shift
+/cast [@cursor]Shift

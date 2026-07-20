@@ -1,2 +1,2 @@
 #showtooltip
-/use [@mouseover,help,nodead]Cleanse Spirit;Purge
+/cast [@mouseover,help,nodead]Cleanse Spirit;Purge
