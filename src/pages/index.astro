@@ -9,10 +9,13 @@ const rosterCount = getRosterCount();
 const extra = getExtra();
 // Righe tracciate sulla pagina Transmog. NON sono identiche per ogni classe: il
 // `classStart` taglia quelle precedenti alla nascita della classe (il DK parte dal
-// T7, l'Evoker dal T29). Si contano sulla PRIMA classe, il guerriero, che non ha
-// classStart e quindi le vede tutte: e' il totale, non un numero per classe.
+// T7, l'Evoker dal T29). Serve il guerriero, l'unica classe senza classStart, che
+// le vede tutte: e' il totale, non un numero per classe. Preso per slug e non per
+// posizione, perche' getTransmog() ordina le classi alfabeticamente e tmog[0] e'
+// il Death Knight, che di righe ne vede 33 su 41.
 const tmog = getTransmog();
-const tmogTiers = tmog[0]?.groups.reduce((n, g) => n + g.rows.length, 0) ?? 0;
+const tmogAll = tmog.find((c) => c.slug === 'warrior') ?? tmog[0];
+const tmogTiers = tmogAll?.groups.reduce((n, g) => n + g.rows.length, 0) ?? 0;
 
 const sections = [
   { href: '/addons',      name: 'Addon',       sub: 'addon installati e versioni', count: `${addons.length}`,     icon: '/icons/section/addon.jpg',  color: '#2E68D8' },
