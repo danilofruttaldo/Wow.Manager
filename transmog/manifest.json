@@ -401,10 +401,11 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "Base",
-        "heroic": "Sanctified (10)",
-        "mythic": "Sanctified (25)"
+        "normal": "10 uomini",
+        "heroic": "25 uomini (Sanctified)",
+        "mythic": "25 uomini Heroic (Sanctified)"
       },
+      "note": "L'asse NON e' la difficolta' moderna: in WotLK il Mythic non esisteva. Le tre colonne sono 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic), come le chiama il client. Il prefisso Sanctified ce l'hanno ENTRAMBE le versioni da 25, quindi non distingue le colonne: a distinguerle e' Normal contro Heroic. Etichette precedenti (Base / Sanctified (10) / Sanctified (25)) sbagliate.",
       "raids": [
         [
           "ICC",
@@ -596,10 +597,10 @@
       "pieces": 5,
       "versions": {
         "lfr": "Raid Finder",
-        "normal": "Normal (ex Flex)",
-        "mythic": "Mythic (ex Heroic)"
+        "normal": "Normal e Heroic",
+        "mythic": "Mythic"
       },
-      "note": "4 item level ma 3 aspetti: Flex riusava l'aspetto Normal. La 6.0.2 ha rinominato Flex->Normal, Normal->Heroic, Heroic->Mythic.",
+      "note": "4 item level ma 3 aspetti, quindi NON esiste un set Heroic: Normal (540) e Heroic (553) sono visivamente identici e il journal li elenca una volta sola. Verificato su Icy Veins per mago, stregone, ladro e guerriero, oltre che sul client. La 6.0.2 ha rinominato Flex->Normal, Normal->Heroic, Heroic->Mythic, per questo il set di punta sta in Mythic mentre in Heart of Fear e Throne of Thunder sta in Heroic. Se qualcuno segnala l'Heroic mancante, e' questo: non e' un buco nei dati.",
       "raids": [
         [
           "SOO",
