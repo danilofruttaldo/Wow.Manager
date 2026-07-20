@@ -3,13 +3,11 @@
 -- tier set / class set sono collezionati sull'account (Warband) e genera il
 -- blocco `collected` di transmog/manifest.json, gia' pronto da incollare.
 --
--- Installazione: copia questo file in
---   _retail_/Interface/AddOns/WowManagerTierDump/WowManagerTierDump.lua
--- con accanto un WowManagerTierDump.toc:
---   ## Interface: 120007
---   ## Title: WowManager Tier Dump
---   ## SavedVariables: WowManagerTierDumpDB
---   WowManagerTierDump.lua
+-- Installazione: crea _retail_/Interface/AddOns/WowManagerTierDump/ e copiaci
+--   questo file, rinominato   -> WowManagerTierDump.lua
+--   scripts/WowManagerTierDump.toc -> WowManagerTierDump.toc  (invariato)
+-- Il .toc sta nel repo accanto a questo file: prima era solo trascritto qui in
+-- forma abbreviata, quindi una reinstallazione da zero lo perdeva.
 -- Un addon nuovo richiede il RIAVVIO del client (il /reload non lo vede).
 --
 -- Uso: /wmtier (o aspetta il login), poi /reload o logout per scrivere

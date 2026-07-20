@@ -1,0 +1,7 @@
+## Interface: 120007
+## Title: WowManager Tier Dump
+## Notes: Dumps transmog class/tier set collection progress to SavedVariables.
+## Version: 1.0
+## SavedVariables: WowManagerTierDumpDB
+
+WowManagerTierDump.lua

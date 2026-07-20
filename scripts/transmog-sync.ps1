@@ -18,11 +18,14 @@ param(
     [switch]$Subito,
     [switch]$NoGit,
     [int]$AttesaMax = 300,
-    [string]$Manifest = "transmog\manifest.json",
+    # Ancorati alla posizione dello script, non alla cwd: lanciato da scripts\ il
+    # path relativo non risolveva e le chiamate a git finivano sul repo della cwd.
+    [string]$Manifest = (Join-Path (Split-Path $PSScriptRoot -Parent) "transmog\manifest.json"),
     [string]$Wow      = "C:\Program Files (x86)\World of Warcraft"
 )
 
 $ErrorActionPreference = "Stop"
+$RepoRoot = Split-Path $PSScriptRoot -Parent
 
 function Errore($msg) {
     Write-Host "STOP: $msg" -ForegroundColor Red
@@ -90,7 +93,17 @@ if ($presi -le 0) { Errore "il dump dice $presi pezzi collezionati: collezione n
 function Blocco($nome) {
     $re = '\["' + $nome + '"\]\s*=\s*"((?:[^"\\]|\\.)*)"'
     if ($lua -notmatch $re) { Errore "campo $nome assente dal dump" }
-    return $matches[1].Replace('\n', "`n").Replace('\"', '"').Replace('\\', '\')
+    # Un passaggio solo, non tre Replace in cascata: con '\\' trattato per ultimo un
+    # backslash escapato seguito da n diventava un a capo invece di \ + n.
+    return [regex]::Replace($matches[1], '\\(.)', {
+        param($m)
+        switch ($m.Groups[1].Value) {
+            'n'     { "`n" }
+            't'     { "`t" }
+            'r'     { "`r" }
+            default { $m.Groups[1].Value }
+        }
+    })
 }
 $blocchi = @{ "collected" = (Blocco "collectedJson"); "pieceList" = (Blocco "piecesJson") }
 
@@ -134,15 +147,29 @@ if ($NoGit) {
     Write-Host "-NoGit: mi fermo qui. Committa a mano quando vuoi."
     exit 0
 }
-if ($delta -eq 0) {
-    Write-Host "nessun pezzo nuovo: niente da committare." -ForegroundColor Yellow
-    git checkout -- $Manifest
+
+Push-Location $RepoRoot
+try {
+
+# Il conteggio dei pezzi NON basta a dire se c'e' qualcosa da salvare: pieceList
+# cambia anche a parita' di pezzi (boss appena attribuiti, copertura fonte migliore
+# dopo una modifica al dump). Prima si guardava solo $delta e un `git checkout`
+# buttava via quelle modifiche in silenzio. Ora decide git: se il file non e'
+# cambiato davvero, non c'e' niente da fare e non serve nemmeno ripristinarlo.
+git diff --quiet -- $Manifest
+$immutato = ($LASTEXITCODE -eq 0)
+if ($immutato) {
+    Write-Host "manifest identico a quello committato: niente da fare." -ForegroundColor Yellow
     exit 0
 }
 
 # Non si committa il lavoro altrui: se ci sono altri file modificati ci si ferma.
+# A mano, non con GetRelativePath: quello e' .NET Core, PS 5.1 gira su Framework.
+$pieno = (Resolve-Path $Manifest).Path
+$radice = (Resolve-Path $RepoRoot).Path.TrimEnd('\') + '\'
+$relManifest = $pieno.Substring($radice.Length) -replace '\\', '/'
 $sporchi = @(git status --porcelain | ForEach-Object { $_.Substring(3) } |
-             Where-Object { $_ -ne ($Manifest -replace '\\', '/') })
+             Where-Object { $_ -ne $relManifest })
 if ($sporchi.Count -gt 0) {
     Write-Host "altri file modificati, non committo da solo:" -ForegroundColor Yellow
     $sporchi | ForEach-Object { Write-Host "   $_" }
@@ -151,6 +178,13 @@ if ($sporchi.Count -gt 0) {
 }
 
 git add -- $Manifest
-git commit -q -m ("Transmog: collezione aggiornata, +{0} pezzi" -f $delta)
+if ($delta -eq 0) {
+    # Il file e' cambiato ma i pezzi no: e' pieceList, cioe' provenienze migliorate.
+    git commit -q -m "Transmog: provenienze dei pezzi aggiornate"
+} else {
+    git commit -q -m ("Transmog: collezione aggiornata, +{0} pezzi" -f $delta)
+}
 git push -q
 Write-Host "committato e pushato." -ForegroundColor Green
+
+} finally { Pop-Location }
