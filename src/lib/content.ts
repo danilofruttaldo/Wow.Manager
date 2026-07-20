@@ -164,6 +164,7 @@ export interface TmogCell {
   state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
   span: number;                                   // colonne occupate: >1 se un aspetto ne copre più d'una
   colonna: string;                                // colonna in cui mostrarla: puo' non essere la sua chiave
+  setName?: string;                               // nome del set di QUESTA versione (righe a piu' aspetti)
   pieces: TmogPiece[];                            // TUTTI i pezzi, presi e non
 }
 export interface TmogRow {
@@ -271,6 +272,14 @@ export function getTransmog(): TmogClass[] {
         // nel T9 le due fazioni stanno entrambe a 10 Player (Normal). Le chiavi restano
         // distinte perche' sono set diversi, ma la colonna in cui si mostrano no.
         const colonnaDi = ((t as any).colonna ?? {}) as Record<string, string>;
+        // `names` ha due forme. Piatta {classe: nome} quando la riga e' un set solo.
+        // Annidata {versione: {classe: nome}} quando gli aspetti sono piu' d'uno e
+        // hanno nomi DIVERSI: nel T6 il rogue ha "Slayer's Armor" a Black Temple e
+        // "Slayer's Battlegear" a Sunwell, e un nome solo in testa alla riga ne
+        // spaccerebbe uno per entrambi. Li' il titolo della riga resta il nome del
+        // tier e ogni cella porta il proprio.
+        const nomi = ((t as any).names ?? {}) as Record<string, any>;
+        const perVersione = Object.values(nomi).some((v) => v && typeof v === 'object');
         const cells: TmogCell[] = cols.map((c): TmogCell => {
           const label = t.versions?.[c.key];
           // Versione inesistente per questo set → cella tratteggiata.
@@ -284,6 +293,7 @@ export function getTransmog(): TmogClass[] {
           classTotal += total;
           return {
             slot: c.key, label, got, total, span: 1, colonna: colonnaDi[c.key] ?? c.key,
+            setName: perVersione ? nomi[c.key]?.[slug] : undefined,
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
             pieces: ((pieceList[slug]?.[t.key]?.[c.key] ?? []) as [string, number][])
               .map(([testo, preso]) => ({
@@ -327,7 +337,7 @@ export function getTransmog(): TmogClass[] {
         const pct = rowTotal ? (rowGot / rowTotal) * 100 : 0;
         return {
           key: t.key, tier: t.tier, name: t.name,
-          setName: t.names?.[slug], raids: (t.raids ?? []) as [string, string][],
+          setName: perVersione ? undefined : t.names?.[slug], raids: (t.raids ?? []) as [string, string][],
           note: t.note, warn: t.warn,
           got: rowGot, total: rowTotal, pct, stack, cells: celle,
         };

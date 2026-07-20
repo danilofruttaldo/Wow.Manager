@@ -294,15 +294,28 @@
         ]
       ],
       "names": {
-        "druid": "Thunderheart Regalia",
-        "hunter": "Gronnstalker's Armor",
-        "mage": "Tempest Regalia",
-        "paladin": "Lightbringer Armor",
-        "priest": "Vestments of Absolution",
-        "rogue": "Slayer's Armor",
-        "shaman": "Skyshatter Regalia",
-        "warlock": "Malefic Raiment",
-        "warrior": "Onslaught Armor"
+        "heroic": {
+          "druid": "Thunderheart Regalia",
+          "hunter": "Gronnstalker's Battlegear",
+          "mage": "Tempest Garb",
+          "paladin": "Lightbringer Battlegear",
+          "priest": "Vestments of Absolution",
+          "rogue": "Slayer's Battlegear",
+          "shaman": "Skyshatter Raiment",
+          "warlock": "Malefic Regalia",
+          "warrior": "Onslaught Battlegear"
+        },
+        "normal": {
+          "druid": "Thunderheart Raiment",
+          "hunter": "Gronnstalker's Armor",
+          "mage": "Tempest Regalia",
+          "paladin": "Lightbringer Armor",
+          "priest": "Absolution Regalia",
+          "rogue": "Slayer's Armor",
+          "shaman": "Skyshatter Regalia",
+          "warlock": "Malefic Raiment",
+          "warrior": "Onslaught Armor"
+        }
       }
     },
     {
@@ -312,8 +325,8 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "10",
-        "heroic": "25"
+        "normal": "10M",
+        "heroic": "25M"
       },
       "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale.",
       "stack": true,
@@ -331,16 +344,30 @@
         ]
       ],
       "names": {
-        "death-knight": "Scourgeborne Plate",
-        "druid": "Dreamwalker Battlegear",
-        "hunter": "Cryptstalker Battlegear",
-        "mage": "Frostfire Garb",
-        "paladin": "Redemption Plate",
-        "priest": "Regalia of Faith",
-        "rogue": "Bonescythe Battlegear",
-        "shaman": "Earthshatter Regalia",
-        "warlock": "Plagueheart Garb",
-        "warrior": "Dreadnaught Battlegear"
+        "heroic": {
+          "death-knight": "Valorous Scourgeborne Plate",
+          "druid": "Valorous Dreamwalker Battlegear",
+          "hunter": "Valorous Cryptstalker Battlegear",
+          "mage": "Valorous Frostfire Garb",
+          "paladin": "Valorous Redemption Plate",
+          "priest": "Valorous Regalia of Faith",
+          "rogue": "Valorous Bonescythe Battlegear",
+          "shaman": "Valorous Earthshatter Regalia",
+          "warlock": "Valorous Plagueheart Garb",
+          "warrior": "Valorous Dreadnaught Battlegear"
+        },
+        "normal": {
+          "death-knight": "Heroes' Scourgeborne Plate",
+          "druid": "Heroes' Dreamwalker Battlegear",
+          "hunter": "Heroes' Cryptstalker Battlegear",
+          "mage": "Heroes' Frostfire Garb",
+          "paladin": "Heroes' Redemption Plate",
+          "priest": "Heroes' Regalia of Faith",
+          "rogue": "Heroes' Bonescythe Battlegear",
+          "shaman": "Heroes' Earthshatter Regalia",
+          "warlock": "Heroes' Plagueheart Garb",
+          "warrior": "Heroes' Dreadnaught Battlegear"
+        }
       }
     },
     {
@@ -350,8 +377,8 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "10",
-        "heroic": "25"
+        "normal": "10M",
+        "heroic": "25M"
       },
       "stack": true,
       "colonna": {
@@ -364,16 +391,30 @@
         ]
       ],
       "names": {
-        "death-knight": "Darkruned Plate",
-        "druid": "Nightsong Battlegear",
-        "hunter": "Scourgestalker Battlegear",
-        "mage": "Kirin Tor Garb",
-        "paladin": "Aegis Plate",
-        "priest": "Sanctification Regalia",
-        "rogue": "Terrorblade Battlegear",
-        "shaman": "Worldbreaker Regalia",
-        "warlock": "Deathbringer Garb",
-        "warrior": "Siegebreaker Battlegear"
+        "heroic": {
+          "death-knight": "Conqueror's Darkruned Plate",
+          "druid": "Conqueror's Nightsong Battlegear",
+          "hunter": "Conqueror's Scourgestalker Battlegear",
+          "mage": "Conqueror's Kirin Tor Garb",
+          "paladin": "Conqueror's Aegis Plate",
+          "priest": "Conqueror's Sanctification Regalia",
+          "rogue": "Conqueror's Terrorblade Battlegear",
+          "shaman": "Conqueror's Worldbreaker Regalia",
+          "warlock": "Conqueror's Deathbringer Garb",
+          "warrior": "Conqueror's Siegebreaker Battlegear"
+        },
+        "normal": {
+          "death-knight": "Valorous Darkruned Plate",
+          "druid": "Valorous Nightsong Battlegear",
+          "hunter": "Valorous Scourgestalker Battlegear",
+          "mage": "Valorous Kirin Tor Garb",
+          "paladin": "Valorous Aegis Plate",
+          "priest": "Valorous Sanctification Regalia",
+          "rogue": "Valorous Terrorblade Battlegear",
+          "shaman": "Valorous Worldbreaker Regalia",
+          "warlock": "Valorous Deathbringer Garb",
+          "warrior": "Valorous Siegebreaker Battlegear"
+        }
       }
     },
     {
@@ -383,8 +424,8 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "Alleanza",
-        "heroic": "Orda"
+        "normal": "Alliance",
+        "heroic": "Horde"
       },
       "warn": "Anomalia: qui l'asse di variazione e' la FAZIONE, non la difficolta'. I 3 item level condividono lo stesso aspetto.",
       "stack": true,
@@ -398,16 +439,30 @@
         ]
       ],
       "names": {
-        "death-knight": "Thassarian's / Koltira's Battlegear",
-        "druid": "Malfurion's / Runetotem's Battlegear",
-        "hunter": "Windrunner's Battlegear / Pursuit",
-        "mage": "Khadgar's / Sunstrider's Regalia",
-        "paladin": "Turalyon's / Liadrin's Battlegear",
-        "priest": "Velen's / Zabra's Regalia",
-        "rogue": "VanCleef's / Garona's Battlegear",
-        "shaman": "Nobundo's / Thrall's Battlegear",
-        "warlock": "Kel'Thuzad's / Gul'dan's Regalia",
-        "warrior": "Wrynn's / Hellscream's Battlegear"
+        "heroic": {
+          "death-knight": "Koltira's Battlegear",
+          "druid": "Runetotem's Battlegear",
+          "hunter": "Windrunner's Pursuit",
+          "mage": "Sunstrider's Regalia",
+          "paladin": "Liadrin's Plate",
+          "priest": "Zabra's Regalia",
+          "rogue": "Garona's Battlegear",
+          "shaman": "Thrall's Garb",
+          "warlock": "Gul'dan's Regalia",
+          "warrior": "Hellscream's Battlegear"
+        },
+        "normal": {
+          "death-knight": "Thassarian's Battlegear",
+          "druid": "Malfurion's Battlegear",
+          "hunter": "Windrunner's Battlegear",
+          "mage": "Khadgar's Regalia",
+          "paladin": "Turalyon's Plate",
+          "priest": "Velen's Regalia",
+          "rogue": "VanCleef's Battlegear",
+          "shaman": "Nobundo's Garb",
+          "warlock": "Kel'Thuzad's Regalia",
+          "warrior": "Wrynn's Battlegear"
+        }
       }
     },
     {
@@ -417,9 +472,9 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "10 Normal",
-        "heroic": "10 Heroic",
-        "mythic": "25 Heroic"
+        "normal": "10M Normal",
+        "heroic": "10M Heroic",
+        "mythic": "25M Heroic"
       },
       "note": "Tre aspetti distinti, verificati sui dati: se due fossero lo stesso set i conteggi si muoverebbero insieme, e invece su 5 classi su 10 differiscono (il mago ha 3/8 sul secondo e 0/6 sul terzo). Anche i totali cambiano. Icy Veins dice due aspetti perche' confronta i NOMI degli oggetti, identici fra 264 e 277: sbagliato. Item level 251/264/277. Il client li chiama 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic); il secondo pero' si otteneva sia in 10 Heroic sia in 25 Normal, quindi l'etichetta '10 Heroic' e' vera ma parziale.",
       "stack": true,
@@ -433,16 +488,42 @@
         ]
       ],
       "names": {
-        "death-knight": "Scourgelord's Plate",
-        "druid": "Lasherweave Battlegear",
-        "hunter": "Ahn'Kahar Blood Hunter's Battlegear",
-        "mage": "Bloodmage's Regalia",
-        "paladin": "Lightsworn Plate",
-        "priest": "Crimson Acolyte Regalia",
-        "rogue": "Shadowblade's Battlegear",
-        "shaman": "Frost Witch's Regalia",
-        "warlock": "Dark Coven's Regalia",
-        "warrior": "Ymirjar Lord's Battlegear"
+        "heroic": {
+          "death-knight": "Sanctified Scourgelord's Plate",
+          "druid": "Sanctified Lasherweave Battlegear",
+          "hunter": "Sanctified Ahn'Kahar Blood Hunter's Battlegear",
+          "mage": "Sanctified Bloodmage's Regalia",
+          "paladin": "Sanctified Lightsworn Plate",
+          "priest": "Sanctified Crimson Acolyte Regalia",
+          "rogue": "Sanctified Shadowblade's Battlegear",
+          "shaman": "Frost Witch's Regalia",
+          "warlock": "Sanctified Dark Coven's Regalia",
+          "warrior": "Sanctified Ymirjar Lord's Battlegear"
+        },
+        "mythic": {
+          "death-knight": "Sanctified Scourgelord's Plate",
+          "druid": "Sanctified Lasherweave Battlegear",
+          "hunter": "Sanctified Ahn'Kahar Blood Hunter's Battlegear",
+          "mage": "Sanctified Bloodmage's Regalia",
+          "paladin": "Sanctified Lightsworn Plate",
+          "priest": "Sanctified Crimson Acolyte Regalia",
+          "rogue": "Sanctified Shadowblade's Battlegear",
+          "shaman": "Frost Witch's Regalia",
+          "warlock": "Sanctified Dark Coven's Regalia",
+          "warrior": "Sanctified Ymirjar Lord's Battlegear"
+        },
+        "normal": {
+          "death-knight": "Scourgelord's Plate",
+          "druid": "Lasherweave Battlegear",
+          "hunter": "Ahn'Kahar Blood Hunter's Battlegear",
+          "mage": "Bloodmage's Regalia",
+          "paladin": "Lightsworn Plate",
+          "priest": "Crimson Acolyte Regalia",
+          "rogue": "Shadowblade's Battlegear",
+          "shaman": "Frost Witch's Regalia",
+          "warlock": "Dark Coven's Regalia",
+          "warrior": "Ymirjar Lord's Battlegear"
+        }
       }
     },
     {
@@ -617,7 +698,7 @@
       "pieces": 5,
       "versions": {
         "lfr": "Raid Finder",
-        "normal": "Normal e Heroic",
+        "normal": "Normal",
         "mythic": "Mythic"
       },
       "spans": {

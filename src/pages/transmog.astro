@@ -64,10 +64,11 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                     const sigle = r.setName || r.raids.length > 1 ? r.raids : [];
                     // Intestazione del tooltip: nome del set + versione. Sui tier a
                     // versione singola l'etichetta non distingue nulla, quindi si omette.
-                    const titolo = (cell: { label: string }) =>
-                      cell.label && cell.label !== 'Versione unica'
-                        ? `${r.setName ?? r.name} — ${cell.label}`
-                        : (r.setName ?? r.name);
+                    const titolo = (cell: { label: string; setName?: string }) => {
+                      const nome = cell.setName ?? r.setName ?? r.name;
+                      return cell.label && cell.label !== 'Versione unica'
+                        ? `${nome} — ${cell.label}` : nome;
+                    };
                     // Nome del set. `alte` = quante sotto-righe deve scavalcare: serve
                     // solo alle righe impilate, dove il nome sta a sinistra una volta
                     // sola e le versioni gli scorrono accanto.
@@ -96,6 +97,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                               data-tip-title={titolo(cell)}
                               data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')}>
                             <span class="frac">{cell.got}/{cell.total}</span>
+                            {cell.setName && <span class="vname">{cell.setName}</span>}
                             {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
                             <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
                           </td>
@@ -190,6 +192,13 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   .tmog-panel .frac { display: block; font-size: 0.74rem; line-height: 1.15; }
   /* Etichetta della versione, scritta solo dove differisce dall'intestazione: e' il
      nome dell'ASPETTO (Sunwell, Sanctified (264), Alleanza), non della difficolta'. */
+  /* Nome del set di questa versione: sulle righe a piu' aspetti ogni cella ha il
+     suo, perche' i nomi differiscono davvero (T6 rogue: Slayer's Armor a Black
+     Temple, Slayer's Battlegear a Sunwell). */
+  .tmog-panel .vname {
+    display: block; font-size: 0.66rem; line-height: 1.2; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
   .tmog-panel .vlab {
     display: block; font-size: 0.6rem; line-height: 1.2; opacity: 0.7;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -199,6 +208,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
      come una colonna normale e centrato. Senza questo la barra si stira per tutta la
      tabella e sembra una sottolineatura invece che un indicatore di avanzamento. */
   .tmog-panel td.cell[colspan] .frac,
+  .tmog-panel td.cell[colspan] .vname,
   .tmog-panel td.cell[colspan] .vlab,
   .tmog-panel td.cell[colspan] .bar { max-width: 150px; margin-left: auto; margin-right: auto; }
   .tmog-panel .bar-fill { display: block; height: 100%; border-radius: 999px; background: currentColor; }
