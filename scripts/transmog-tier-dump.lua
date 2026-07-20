@@ -517,6 +517,11 @@ end
 
 local function Dump()
     local raw, data, dropped, pieces, errors = {}, {}, {}, {}, {}
+    -- Set in cui NESSUN pezzo ottiene un boss. Una riga di raid a copertura zero e'
+    -- anomala: Trial of Valor ha 468 voci e nemmeno un boss, mentre Tomb of Sargeras
+    -- sta al 95% e Uldir al 100%. Qui si registra quali set sono, e per il primo di
+    -- ognuno cosa rispondono davvero le API sulle sue source.
+    local senzaBoss, sondaSenzaBoss = {}, {}
     local seen = {}
     -- Dump() gira piu' volte per sessione (login, /wmtier, logout): senza azzerare,
     -- i contatori si sommano fra una passata e l'altra e sembrano il triplo.
@@ -567,6 +572,31 @@ local function Dump()
             errors[#errors + 1] = tier .. "/" .. classi[1] .. ": " .. tostring(list)
             list = nil
         end
+
+        -- Nessun pezzo con un boss: si annota il set, e sul PRIMO che capita si
+        -- guarda source per source cosa risponde l'API. Serve a distinguere "il
+        -- gioco non lo sa" da "lo chiediamo male".
+        if list and #list > 0 then
+            local conBoss = 0
+            for _, v in ipairs(list) do
+                if v.testo:find(" %(") then conBoss = conBoss + 1 end
+            end
+            if conBoss == 0 then
+                senzaBoss[#senzaBoss + 1] = ("%s | setID %d | %s | %s | %s"):format(
+                    tier, info.setID, tostring(info.name), tostring(info.label),
+                    tostring(info.description))
+                if #sondaSenzaBoss == 0 then
+                    for _, sid in ipairs(C_TransmogSets.GetAllSourceIDs(info.setID) or {}) do
+                        local si = C_TransmogCollection.GetSourceInfo(sid)
+                        local okd, drops = pcall(C_TransmogCollection.GetAppearanceSourceDrops, sid)
+                        sondaSenzaBoss[#sondaSenzaBoss + 1] = ("src %d | item %s | visual %s | drops %s"):format(
+                            sid, tostring(si and si.itemID), tostring(si and si.visualID),
+                            okd and (type(drops) == "table" and #drops or tostring(drops)) or "errore")
+                    end
+                end
+            end
+        end
+
         for _, class in ipairs(classi) do
             data[class] = data[class] or {}
             data[class][tier] = data[class][tier] or {}
@@ -681,6 +711,8 @@ local function Dump()
         api = ApiNames(),  -- funzioni davvero esposte: serve quando un'API sparisce
         unmapped = unmapped,  -- invType senza nome in SLOT_NAME -> un itemID d'esempio
         mismatches = mismatches,  -- set con elenco incoerente col conteggio
+        senzaBoss = senzaBoss,        -- set in cui nessun pezzo ha un boss
+        sondaSenzaBoss = sondaSenzaBoss,  -- cosa rispondono le API sul primo di quelli
         stats = stats,            -- boss recuperati dalle varianti della stessa apparenza
 
         sets = raw,   -- dump grezzo: serve solo se cambia la mappa TIER/SLOT
