@@ -436,9 +436,9 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "10M Normal",
-        "heroic": "Sanctified 10M Heroic",
-        "mythic": "Sanctified 25M Heroic"
+        "normal": "10M",
+        "heroic": "Sanctified 10M",
+        "mythic": "Sanctified 25M"
       },
       "note": "Tre aspetti distinti, verificati sui dati: se due fossero lo stesso set i conteggi si muoverebbero insieme, e invece su 5 classi su 10 differiscono (il mago ha 3/8 sul secondo e 0/6 sul terzo). Anche i totali cambiano. Icy Veins dice due aspetti perche' confronta i NOMI degli oggetti, identici fra 264 e 277: sbagliato. Item level 251/264/277. Il client li chiama 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic); il secondo pero' si otteneva sia in 10 Heroic sia in 25 Normal, quindi l'etichetta '10 Heroic' e' vera ma parziale.",
       "stack": true,
