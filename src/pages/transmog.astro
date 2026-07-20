@@ -91,10 +91,20 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                     // di tabella per tre numeri.
                     const varianti = (chiave: string) =>
                       r.cells.filter(c => c.colonna === chiave && c.state !== 'na');
+                    // Colonne gia' occupate da una cella che si allarga (il T16 ne copre
+                    // due): vanno saltate, altrimenti si disegna anche la casella sotto
+                    // il colspan e la riga esce dalla tabella con una colonna di troppo.
+                    const coperte = new Set<string>();
+                    for (const c of r.cells) {
+                      if (c.span < 2) continue;
+                      const i = cols.findIndex(x => x.key === c.colonna);
+                      for (let k = 1; k < c.span && cols[i + k]; k++) coperte.add(cols[i + k].key);
+                    }
                     return (
                       <tr class="trow fine" style={`--pct:${r.pct}`}>
                         {intestazione()}
                         {cols.map(col => {
+                          if (coperte.has(col.key)) return null;
                           const dentro = varianti(col.key);
                           if (dentro.length === 0) return <td><span class="na"></span></td>;
                           const tot = dentro.reduce((s, c) => s + c.total, 0);
