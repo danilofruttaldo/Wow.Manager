@@ -18,7 +18,7 @@ $Folders   = @('WTF', 'Interface')   # cosa salviamo/ripristiniamo
 
 # Non operare col client aperto: i file sono in uso.
 if (Get-Process -Name 'Wow', 'WowClassic' -ErrorAction SilentlyContinue) {
-  throw "WoW è in esecuzione: chiudi il client prima di backup/ripristino."
+  throw "WoW e' in esecuzione: chiudi il client prima di backup/ripristino."
 }
 
 if ($Restore) {
@@ -32,7 +32,7 @@ if ($Restore) {
   return
 }
 
-# ── Backup ──
+# --- Backup ---
 $sources = $Folders | ForEach-Object { Join-Path $WowRoot $_ } | Where-Object { Test-Path -LiteralPath $_ }
 if (-not $sources) { throw "Niente da salvare: WTF/Interface non trovate in $WowRoot." }
 

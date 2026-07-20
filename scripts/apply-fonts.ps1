@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 # Applica l'override del font base di WoW: copia un unico .ttf sotto i nomi-override
-# che il client carica da _retail_/Fonts/, così tutta la UI Blizzard usa quel font.
+# che il client carica da _retail_/Fonts/, cosi' tutta la UI Blizzard usa quel font.
 # Nomi/percorsi presi da fonts/manifest.json (nessun elenco hardcoded: segue il manifest).
 # Si carica all'AVVIO del client, non basta /reload.  Usa -Revert per rimuoverli.
 [CmdletBinding()]

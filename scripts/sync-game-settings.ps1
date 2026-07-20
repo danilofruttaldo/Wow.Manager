@@ -4,7 +4,13 @@
 # IMPORTANTE: eseguire con WoW COMPLETAMENTE CHIUSO.
 $ErrorActionPreference = 'Stop'
 
-$Acc = 'C:\Program Files (x86)\World of Warcraft\_retail_\WTF\Account\STANTUFFO'
+# Cercata, non scritta a mano: la cartella porta il nome dell'account Battle.net,
+# che non va pubblicato (questo script e' reso per intero sulla pagina Extra).
+$AccRoot = 'C:\Program Files (x86)\World of Warcraft\_retail_\WTF\Account'
+$Acc = (Get-ChildItem -LiteralPath $AccRoot -Directory |
+  Where-Object { $_.Name -ne 'SavedVariables' } |
+  Select-Object -First 1).FullName
+if (-not $Acc) { throw "Nessuna cartella account sotto: $AccRoot" }
 
 # Il realm sorgente ha una lettera accentata (Pozzo dell'Eternita'): scritta qui
 # verrebbe corrotta da Windows PowerShell 5.1, che legge come ANSI gli .ps1 senza
