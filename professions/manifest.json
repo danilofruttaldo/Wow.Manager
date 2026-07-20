@@ -1,6 +1,6 @@
 {
   "expansion": "Midnight (12.0)",
-  "note": "Piano di specializzazione in tre tappe per professione (first/second/third): spec da prendere + ramo da maxare, nell'ordine. Nomi di spec e rami in inglese (client EN). Solo professioni primarie: le secondarie (Cooking/Fishing) non hanno albero di specializzazione e restano fuori. Build consigliate per vendita/uso generale (fonte: wow-professions.com, Midnight live). Aggiorna qui i dati se cambiano con le patch: la pagina si allinea da sola.",
+  "note": "Piano di specializzazione in tre tappe per professione (first/second/third): spec da prendere + ramo da maxare, nell'ordine. Nomi di spec e rami in inglese (client EN). Solo professioni primarie: le secondarie (Cooking/Fishing) non hanno albero di specializzazione e restano fuori. Build consigliate per vendita/uso generale. Fonti: method.gg e Icy Veins (datate), Wowhead per i nomi dei nodi; wow-professions.com solo dove le altre tacciono. Aggiorna qui i dati se cambiano con le patch: la pagina si allinea da sola.",
   "professions": [
     {
       "key": "alchemy",
@@ -15,10 +15,10 @@
       "key": "blacksmithing",
       "name": "Blacksmithing",
       "type": "crafting",
-      "first":  { "spec": "Armorsmithing", "branch": "Root node" },
-      "second": { "spec": "Armorsmithing", "branch": "Sculpted Armor" },
-      "third":  { "spec": "The Old Ways", "branch": "Resourceful Smith" },
-      "notes": "Armorsmithing per i pezzi plate end-game; scegli Weaponsmithing se punti alle armi craftate. Sotto Armorsmithing i rami sono alternativi, se ne prende UNO: Sculpted Armor, Large Plate Armor o Articulating Armor. Sotto The Old Ways: Resourceful Smith (Resourcefulness) o Second Nature (Ingenuity)."
+      "first":  { "spec": "The Old Ways", "branch": "Resourceful Smith" },
+      "second": { "spec": "Armorsmithing", "branch": "Root node" },
+      "third":  { "spec": "Armorsmithing", "branch": "Sculpted Armor" },
+      "notes": "The Old Ways per prima: i suoi nodi valgono su TUTTI i craft di Blacksmithing, non su un solo ramo. Poi Armorsmithing per i pezzi plate end-game, o Weaponsmithing se punti alle armi. Sotto Armorsmithing i rami sono alternativi, se ne prende UNO: Sculpted Armor, Large Plate Armor o Articulating Armor. Sotto The Old Ways: Resourceful Smith (Resourcefulness) o Second Nature (Ingenuity)."
     },
     {
       "key": "enchanting",
@@ -35,8 +35,8 @@
       "type": "crafting",
       "first":  { "spec": "Market Mobility", "branch": "Mandatory Tools" },
       "second": { "spec": "Market Mobility", "branch": "Root node" },
-      "third":  { "spec": "Recycling", "branch": "Root node" },
-      "notes": "Build Profession Gear: 10 pt in Mandatory Tools (l'alternativa è Finishing Touches), poi 25 nel root di Market Mobility, poi 30 in Recycling per il bonus skill."
+      "third":  { "spec": "Market Mobility", "branch": "Finishing Touches" },
+      "notes": "Build Profession Gear, tutta dentro Market Mobility: 10 pt in Mandatory Tools, che sblocca anche gli attrezzi di Tailoring e Jewelcrafting, poi 25 nel root, poi Finishing Touches per accessori da engineering/mining e canne da pesca. Se invece punti a gadget e munizioni, la strada è Bits and Bots seguita da Recycling."
     },
     {
       "key": "inscription",
@@ -78,7 +78,7 @@
       "key": "herbalism",
       "name": "Herbalism",
       "type": "gathering",
-      "first":  { "spec": "Botany", "branch": "Cultivation" },
+      "first":  { "spec": "Botany", "branch": "Root node" },
       "second": { "spec": "Bountiful Harvests", "branch": "Root node" },
       "third":  { "spec": "Botany", "branch": "Mulching" },
       "notes": "Ordine per non-Druidi: Botany prima, sblocca la raccolta a cavallo (i Druidi ce l'hanno già in Travel Form e possono invertire, prendendo Bountiful Harvests per primo). Poi Bountiful Harvests per resa e skill sulle erbe. Terzo albero Overloading (Lightfused/Wild/Primal/Voidbound) non ancora valutato."
@@ -89,8 +89,8 @@
       "type": "gathering",
       "first":  { "spec": "Meticulous Mining", "branch": "Root node" },
       "second": { "spec": "Plentiful Ores", "branch": "Root node" },
-      "third":  { "spec": "Plentiful Ores", "branch": "Nodi minerali specifici" },
-      "notes": "Meticulous Mining per il mining a cavallo, poi Plentiful Ores per skill e resa del minerale: 40 pt nel primo root (lì sta il mining a cavallo), 50 nel secondo. Terza tappa sui nodi del minerale che estrai più spesso."
+      "third":  { "spec": "Plentiful Ores", "branch": "Refulgent Copper" },
+      "notes": "Meticulous Mining per il mining a cavallo, poi Plentiful Ores per skill e resa del minerale: 40 pt nel primo root (lì sta il mining a cavallo), 50 nel secondo. Terza tappa su un nodo per singolo minerale: Refulgent Copper è il più richiesto, in alternativa Umbral Tin o Brilliant Silver."
     },
     {
       "key": "skinning",
