@@ -91,7 +91,6 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "stack": true,
       "raids": [
         [
           "MC",
@@ -119,7 +118,6 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "stack": true,
       "raids": [
         [
           "BWL",
@@ -155,7 +153,6 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "stack": true,
       "raids": [
         [
           "AQ40",
@@ -183,7 +180,6 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "stack": true,
       "raids": [
         [
           "NAXX",
@@ -211,7 +207,6 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "stack": true,
       "raids": [
         [
           "KARA",
@@ -247,7 +242,6 @@
       "versions": {
         "normal": "Versione unica"
       },
-      "stack": true,
       "raids": [
         [
           "SSC",
@@ -281,7 +275,6 @@
         "heroic": "Sunwell"
       },
       "note": "5 pezzi base + 3 (polsi, cintura, stivali) da Sunwell in 2.4. I 3 pezzi Sunwell non combaciano visivamente col set base.",
-      "stack": true,
       "raids": [
         [
           "MH",
@@ -319,7 +312,6 @@
         "heroic": "25"
       },
       "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale.",
-      "stack": true,
       "raids": [
         [
           "NAXX",
@@ -353,7 +345,6 @@
         "normal": "10",
         "heroic": "25"
       },
-      "stack": true,
       "raids": [
         [
           "ULD",
@@ -416,7 +407,6 @@
         "mythic": "25 Heroic"
       },
       "note": "Tre aspetti distinti, verificati sui dati: se due fossero lo stesso set i conteggi si muoverebbero insieme, e invece su 5 classi su 10 differiscono (il mago ha 3/8 sul secondo e 0/6 sul terzo). Anche i totali cambiano. Icy Veins dice due aspetti perche' confronta i NOMI degli oggetti, identici fra 264 e 277: sbagliato. Item level 251/264/277. Il client li chiama 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic); il secondo pero' si otteneva sia in 10 Heroic sia in 25 Normal, quindi l'etichetta '10 Heroic' e' vera ma parziale.",
-      "stack": true,
       "raids": [
         [
           "ICC",
@@ -645,7 +635,6 @@
         "normal": "Versione unica"
       },
       "note": "Set di classe delle Challenge Mode, non da raid: si ottenevano col tempo d'oro nei dungeon di Pandaria e non sono piu' disponibili. Nessuna description dal gioco, slot da SLOT_UNICO.",
-      "stack": true,
       "raids": [],
       "names": {
         "death-knight": "Lich Lord Plate",
@@ -766,7 +755,6 @@
         "normal": "Versione unica"
       },
       "note": "Set di classe della Class Hall, colorazione unica: si compra dal quartermaster, uno slot alla volta, sbloccando un criterio diverso per pezzo. Il gioco non gli da' description, quindi lo slot arriva da SLOT_UNICO nel dump.",
-      "stack": true,
       "raids": [],
       "names": {
         "death-knight": "Deathlord's Battleplate",
