@@ -411,11 +411,11 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "Base (251)",
-        "heroic": "Sanctified (264)",
-        "mythic": "Sanctified Heroic (277)"
+        "normal": "10 Normal",
+        "heroic": "10 Heroic",
+        "mythic": "25 Heroic"
       },
-      "note": "Tre ASPETTI distinti, uno per item level: 251 (comprato con gli Emblemi di Gelo), 264 e 277, le due varianti Sanctified. Confermato da Icy Veins e dal client, che li espone come 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic) -- ma quella e' la difficolta' dove cadevano i Mark, non l'aspetto. Non e' 10m contro 25m e in WotLK il Mythic non esisteva: la colonna e' uno slot, non una difficolta'.",
+      "note": "Tre aspetti distinti, verificati sui dati: se due fossero lo stesso set i conteggi si muoverebbero insieme, e invece su 5 classi su 10 differiscono (il mago ha 3/8 sul secondo e 0/6 sul terzo). Anche i totali cambiano. Icy Veins dice due aspetti perche' confronta i NOMI degli oggetti, identici fra 264 e 277: sbagliato. Item level 251/264/277. Il client li chiama 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic); il secondo pero' si otteneva sia in 10 Heroic sia in 25 Normal, quindi l'etichetta '10 Heroic' e' vera ma parziale.",
       "stack": true,
       "raids": [
         [
