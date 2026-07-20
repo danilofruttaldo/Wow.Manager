@@ -182,6 +182,12 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .tmog-panel .bar { display: block; height: 3px; margin-top: 3px; border-radius: 999px; background: var(--border-light); overflow: hidden; }
+  /* Cella che copre piu' colonne (righe impilate e T16): il contenuto resta largo
+     come una colonna normale e centrato. Senza questo la barra si stira per tutta la
+     tabella e sembra una sottolineatura invece che un indicatore di avanzamento. */
+  .tmog-panel td.cell[colspan] .frac,
+  .tmog-panel td.cell[colspan] .vlab,
+  .tmog-panel td.cell[colspan] .bar { max-width: 150px; margin-left: auto; margin-right: auto; }
   .tmog-panel .bar-fill { display: block; height: 100%; border-radius: 999px; background: currentColor; }
   /* Rampa continua rosso -> giallo -> verde in funzione di --pct (0..100, unitless).
      Due mix in cascata: il primo porta bad -> warn nella prima meta', il secondo
