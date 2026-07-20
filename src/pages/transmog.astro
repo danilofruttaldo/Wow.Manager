@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getTransmog, transmogColumns, type TmogCell } from '../lib/content';
+import { getTransmog, transmogColumns } from '../lib/content';
 
 const classes = getTransmog();
 const cols = transmogColumns;
@@ -107,8 +107,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                               {dentro.map(cell => (
                                 <span class="var has-tip" tabindex={0}
                                       data-tip-title={titolo(cell)}
-                                      data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('
-')}>
+                                      data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')}>
                                   <span class="frac">{cell.got}/{cell.total}</span>
                                   {cell.setName && <span class="vname">{cell.setName}</span>}
                                   {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
