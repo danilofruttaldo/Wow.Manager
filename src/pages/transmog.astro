@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getTransmog, transmogColumns } from '../lib/content';
+import { getTransmog, transmogColumns, type TmogCell } from '../lib/content';
 
 const classes = getTransmog();
 const cols = transmogColumns;
@@ -68,9 +68,11 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                       cell.label && cell.label !== 'Versione unica'
                         ? `${r.setName ?? r.name} — ${cell.label}`
                         : (r.setName ?? r.name);
-                    return (
-                    <tr class="trow" style={`--pct:${r.pct}`}>
-                      <td class="rhead">
+                    // Nome del set. `alte` = quante sotto-righe deve scavalcare: serve
+                    // solo alle righe impilate, dove il nome sta a sinistra una volta
+                    // sola e le versioni gli scorrono accanto.
+                    const intestazione = (alte?: number) => (
+                      <td class="rhead" rowspan={alte}>
                         <span class="tname">
                           <strong>{r.setName ?? r.name}</strong>
                           {r.setName && r.tier.startsWith('T') && <span class="ttier">({r.tier})</span>}
@@ -79,26 +81,41 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                           </span>}
                         </span>
                       </td>
-                      {/* Il tooltip c'e' SEMPRE dove c'e' un contatore: se l'elenco pezzi
-                          manca resta almeno il titolo, invece di una cella muta. Legarlo
-                          a `pieces.length > 0` lo faceva sparire proprio dove i dati
-                          erano incompleti, cioe' dove serviva accorgersene. */}
-                      {r.cells.map(cell => (
-                        cell.state === 'na'
-                          ? <td><span class="na"></span></td>
-                          : <td class="cell has-tip"
-                                colspan={cell.span > 1 ? cell.span : undefined}
-                                style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}
-                                tabindex={0}
-                                data-tip-title={titolo(cell)}
-                                data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')}>
-                              <span class="frac">{cell.got}/{cell.total}</span>
-                              {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
-                              <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
-                            </td>
-                      ))}
-                    </tr>
                     );
+                    // Il tooltip c'e' SEMPRE dove c'e' un contatore: se l'elenco pezzi
+                    // manca resta almeno il titolo, invece di una cella muta. Legarlo
+                    // a `pieces.length > 0` lo faceva sparire proprio dove i dati erano
+                    // incompleti, cioe' dove serviva accorgersene.
+                    const cella = (cell: TmogCell, larga?: number) => (
+                      cell.state === 'na'
+                        ? <td><span class="na"></span></td>
+                        : <td class="cell has-tip"
+                              colspan={larga ?? (cell.span > 1 ? cell.span : undefined)}
+                              style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}
+                              tabindex={0}
+                              data-tip-title={titolo(cell)}
+                              data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')}>
+                            <span class="frac">{cell.got}/{cell.total}</span>
+                            {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
+                            <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
+                          </td>
+                    );
+                    // Impilata: una sotto-riga per versione, larga quanto tutte le
+                    // colonne, e il tint segue il completamento della singola versione
+                    // invece che quello complessivo della riga.
+                    return r.stack
+                      ? r.cells.map((cell, k) => (
+                          <tr class="trow" style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}>
+                            {k === 0 && intestazione(r.cells.length)}
+                            {cella(cell, cols.length)}
+                          </tr>
+                        ))
+                      : (
+                        <tr class="trow" style={`--pct:${r.pct}`}>
+                          {intestazione()}
+                          {r.cells.map(cell => cella(cell))}
+                        </tr>
+                      );
                   })}
                 </Fragment>
               ))}
@@ -134,6 +151,10 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   }
   .tmog-panel thead th { background: var(--surface-2); font-size: 0.72rem; padding: 0.45rem 0.4rem; }
   .tmog-panel th:first-child, .tmog-panel td:first-child { width: 46%; text-align: left; }
+  /* Nelle righe impilate (T9) il nome sta a sinistra con un rowspan, quindi dalla
+     seconda sotto-riga in poi la cella dei dati diventa il primo td: senza questo si
+     prenderebbe l'allineamento a sinistra della colonna del nome. */
+  .tmog-panel td.cell { text-align: center; }
   .tmog-panel .thead-tier { display: table-cell; }
   .tmog-panel .thead-tier .ico { width: 22px; height: 22px; vertical-align: middle; margin-right: 0.35rem; }
   .tmog-panel .thead-tier span { vertical-align: middle; font-weight: 700; }

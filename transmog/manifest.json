@@ -375,6 +375,7 @@
         "heroic": "Orda"
       },
       "warn": "Anomalia: qui l'asse di variazione e' la FAZIONE, non la difficolta'. I 3 item level condividono lo stesso aspetto.",
+      "stack": true,
       "raids": [
         [
           "TOC",
