@@ -14,7 +14,10 @@ const ncols = cols.length + 1; // + colonna del nome set
           <button class:list={['chip', { 'is-active': i === 0 }]} data-class={c.slug} type="button"
                   role="tab" aria-selected={i === 0 ? 'true' : 'false'}>
             <img class="chip-ico" src={c.icon} alt="" width="18" height="18" />
-            {c.label}<span class="c">{Math.round((c.got / (c.total || 1)) * 100)}%</span>
+            {/* Anche questo e' un contatore, e da solo dice una percentuale senza
+                denominatore: il title scioglie in quanti pezzi su quanti. */}
+            {c.label}<span class="c" title={`${c.got}/${c.total} pezzi collezionati`}
+              >{Math.round((c.got / (c.total || 1)) * 100)}%</span>
           </button>
         ))}
       </div>
@@ -57,16 +60,18 @@ const ncols = cols.length + 1; // + colonna del nome set
                           </span>}
                         </span>
                       </td>
+                      {/* Il tooltip c'e' SEMPRE dove c'e' un contatore: se l'elenco pezzi
+                          manca resta almeno il titolo, invece di una cella muta. Legarlo
+                          a `pieces.length > 0` lo faceva sparire proprio dove i dati
+                          erano incompleti, cioe' dove serviva accorgersene. */}
                       {r.cells.map(cell => (
                         cell.state === 'na'
                           ? <td><span class="na"></span></td>
-                          : <td class:list={['cell', { 'has-tip': cell.pieces.length > 0 }]}
+                          : <td class="cell has-tip"
                                 style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}
-                                tabindex={cell.pieces.length > 0 ? 0 : undefined}
-                                data-tip-title={cell.pieces.length > 0 ? titolo(cell) : undefined}
-                                data-tip={cell.pieces.length > 0
-                                  ? cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')
-                                  : undefined}>
+                                tabindex={0}
+                                data-tip-title={titolo(cell)}
+                                data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')}>
                               <span class="frac">{cell.got}/{cell.total}</span>
                               <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
                             </td>

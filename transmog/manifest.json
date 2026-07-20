@@ -596,7 +596,7 @@
       "versions": {
         "lfr": "Raid Finder",
         "normal": "Normal (ex Flex)",
-        "heroic": "Heroic"
+        "mythic": "Mythic (ex Heroic)"
       },
       "note": "4 item level ma 3 aspetti: Flex riusava l'aspetto Normal. La 6.0.2 ha rinominato Flex->Normal, Normal->Heroic, Heroic->Mythic.",
       "raids": [
