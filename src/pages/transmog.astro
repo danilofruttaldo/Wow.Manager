@@ -105,13 +105,14 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                     // invece che quello complessivo della riga.
                     return r.stack
                       ? r.cells.map((cell, k) => (
-                          <tr class="trow" style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}>
+                          <tr class:list={['trow', { fine: k === r.cells.length - 1 }]}
+                              style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}>
                             {k === 0 && intestazione(r.cells.length)}
                             {cella(cell, cols.length)}
                           </tr>
                         ))
                       : (
-                        <tr class="trow" style={`--pct:${r.pct}`}>
+                        <tr class="trow fine" style={`--pct:${r.pct}`}>
                           {intestazione()}
                           {r.cells.map(cell => cella(cell))}
                         </tr>
@@ -150,6 +151,12 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     line-height: 1.25;
   }
   .tmog-panel thead th { background: var(--surface-2); font-size: 0.72rem; padding: 0.45rem 0.4rem; }
+  /* Con le righe impilate un set puo' occupare piu' <tr>: senza un confine piu' marcato
+     non si capisce dove finisce un set e comincia il successivo. `fine` sta sull'ultima
+     sotto-riga di ogni set; fra le sotto-righe dello stesso set il bordo resta appena
+     accennato, cosi' le versioni si leggono come un blocco solo. */
+  .tmog-panel tr.trow:not(.fine) > td { border-bottom-color: transparent; }
+  .tmog-panel tr.trow.fine > td { border-bottom: 2px solid var(--border); }
   .tmog-panel th:first-child, .tmog-panel td:first-child { width: 46%; text-align: left; }
   /* Nelle righe impilate (T9) il nome sta a sinistra con un rowspan, quindi dalla
      seconda sotto-riga in poi la cella dei dati diventa il primo td: senza questo si
