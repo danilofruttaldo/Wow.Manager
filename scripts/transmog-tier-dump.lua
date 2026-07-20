@@ -119,6 +119,48 @@ local SLOT_NAME = {
 -- boss. I nomi sono nella grafia dell'Encounter Journal: ognuno e' stato ricontrollato
 -- contro i nomi che il client stesso ha gia' scritto nel dump per gli altri slot.
 local TOKEN_BOSS = {
+    -- WotLK e Cataclysm: qui il set si COMPRAVA (Emblemi, poi Valor Point), quindi per
+    -- molti slot un boss non esiste proprio e la voce giusta e' vuota: vedi
+    -- TOKEN_SENZA_FONTE. Il T9 e il T10 non compaiono affatto qui sotto -- erano
+    -- interamente da vendor e restano senza boss su tutti e cinque gli slot.
+    --
+    -- ⚠️ Guanti e gambali di T9/T10/T11/T12 cadevano davvero, ma dai raid PvP da un
+    -- boss solo (Koralon e Toravon a Vault of Archavon, Argaloth e Occu'thar a Baradin
+    -- Hold). Sono esclusi per scelta: quei boss droppano i pezzi di TUTTE le classi, e
+    -- indicarli non aiuta a farmare. Non e' una svista, non rimetterli. Nei dati
+    -- toccavano solo Hands e Legs, mai gli altri slot -- se un giorno ricompaiono
+    -- altrove, allora e' un errore vero da guardare.
+    --
+    -- T11 e T12 sono ibridi: elmo e spalle avevano il token da boss in entrambe le
+    -- difficolta', il resto si comprava in normal e diventava token solo in heroic.
+    t11 = { raid = "Blackwing Descent",
+        Head = "Nefarian's End",
+        Shoulder = { "Cho'gall", "The Bastion of Twilight" },
+        Chest = { heroic = { "Halfus Wyrmbreaker", "The Bastion of Twilight" } },
+        Hands = { heroic = "Magmaw" },
+        Legs  = { heroic = "Maloriak" } },
+    t12 = { raid = "Firelands",
+        Head = "Ragnaros", Shoulder = "Majordomo Staghelm",
+        Chest = { heroic = "Alysrazor" },
+        Hands = { heroic = "Baleroc, the Gatekeeper" },
+        Legs  = { heroic = "Shannox" } },
+    -- Pandaria: stessa struttura dei moderni, un boss per slot valido per tutti e tre i
+    -- gruppi (Conqueror/Protector/Vanquisher). Verificato aprendo le pagine dei singoli
+    -- token: le tre varianti dello stesso slot nominano lo stesso boss.
+    t14 = { raid = "Heart of Fear",
+        Head = { "Sha of Fear", "Terrace of Endless Spring" },
+        Shoulder = { "Lei Shi", "Terrace of Endless Spring" },
+        Chest = "Grand Empress Shek'zeer", Hands = "Wind Lord Mel'jarak",
+        Legs = "Amber-Shaper Un'sok" },
+    -- ⚠️ Head: il client chiama quell'incontro "Twin Empyreans", le guide "Twin
+    -- Consorts". Vale la grafia del client, che e' quella usata ovunque nel manifest.
+    t15 = { raid = "Throne of Thunder",
+        Head = "Twin Empyreans", Shoulder = "Iron Qon", Chest = "Dark Animus",
+        Hands = "Council of Elders", Legs = "Ji-Kun" },
+    t16 = { raid = "Siege of Orgrimmar",
+        Head = "Thok the Bloodthirsty", Shoulder = "Siegecrafter Blackfuse",
+        Chest = "Sha of Pride", Hands = "General Nazgrim",
+        Legs = "Paragons of the Klaxxi" },
     t28 = { raid = "Sepulcher of the First Ones",
         Head = "Anduin Wrynn", Shoulder = "Lords of Dread", Chest = "Rygelon",
         Hands = "Lihuvim, Principal Architect", Legs = "Halondrus the Reclaimer" },
@@ -153,20 +195,90 @@ local TOKEN_BOSS = {
         Hands = "Vorasius", Legs = "Vaelgor & Ezzorak" },
 }
 
--- Boss e raid del token di uno slot, se quel tier ne ha. Nil = il gioco resta l'autorita'.
-local function TokenBossFor(tier, slot)
+-- Boss e raid del token di uno slot, se quel tier ne ha. Nil = il gioco resta
+-- l'autorita'. Il valore di uno slot puo' avere tre forme, in ordine di complessita':
+--   "Boss"                        -- boss nel raid di default del tier
+--   { "Boss", "Raid" }            -- boss in un altro raid (T35: il Chest sta nel Dreamrift)
+--   { normal = <una delle due>, heroic = ... }   -- cambia con la versione
+-- L'ultima serve dal T12, dove il set normal si comprava coi Valor Point e solo
+-- l'heroic aveva i token dai boss: stesso slot, provenienza diversa per difficolta'.
+local function TokenBossFor(tier, slot, versione)
     local t = tier and TOKEN_BOSS[tier]
     local v = t and t[slot]
+    -- Mappa per versione: si riconosce perche' NON e' la coppia {boss, raid}, che
+    -- ha una stringa in posizione 1.
+    if type(v) == "table" and type(v[1]) ~= "string" then v = versione and v[versione] end
     if not v then return nil end
     if type(v) == "table" then return v[1], v[2] end
     return v, t.raid
+end
+
+-- I 5 slot che nei tier a token non cadono dal boss ma nascono dalla conversione:
+-- sono i soli su cui il fallback per visualID sbaglia, e i soli che TOKEN_BOSS e
+-- TOKEN_SENZA_FONTE possono toccare.
+local SLOT_TOKEN = { Head = true, Shoulder = true, Chest = true, Hands = true, Legs = true }
+
+-- Tier dove sui 5 slot da token il gioco risponde con un boss inaffidabile e la
+-- ricerca NON ha trovato quello vero (o non esiste: set da vendor, token generico
+-- non legato allo slot). Li' si lascia il solo slot.
+--
+-- Come si riconoscono: dentro una stessa cella (tier, slot, difficolta') le classi
+-- devono convergere su uno stesso boss -- al massimo tre, uno per gruppo di token.
+-- Dove invece se ne contano 5-13, tutti dentro il raid del tier, e' la firma del
+-- fallback per visualID, la stessa misurata su Manaforge Omega.
+--
+-- ⚠️ NON usare come criterio "un boss che compare su molti slot": e' sbagliato e
+-- cancellerebbe i dati buoni. Un boss di raid droppa legittimamente piu' pezzi
+-- dello stesso set -- Forgeweaver Araz da' l'elmo come token e anche cintura,
+-- stivali e polsi come loot normale, e infatti risulta su 3 slot pur essendo
+-- corretto. Misurato: anche i tier sani (T17-T21) hanno 2-4 slot per boss.
+-- Il valore e' `true` (tutti e 5 gli slot) oppure l'elenco dei soli slot da
+-- sopprimere: serve la granularita' per slot perche' un tier puo' essere misto. Il
+-- T9 e' il caso tipico -- set da vendor, quindi Head/Shoulder/Chest non li droppa
+-- nessuno, ma Hands e Legs cadono davvero da Koralon a Vault of Archavon e li' il
+-- gioco ha ragione (20 voci su 20 corrette).
+local TOKEN_SENZA_FONTE = {
+    -- ⚠️ "Vendor" da solo non basta a decidere: ci sono TRE casi diversi, e solo due
+    -- vanno soppressi. Non collassarli, e' l'errore facile da fare qui.
+    --   1. Token dal boss, convertito dal vendor -- tutta Pandaria (T14-T16): il
+    --      vendor e' solo un banco di scambio, la fonte resta il boss. Il boss SI
+    --      TIENE, infatti quei tier stanno in TOKEN_BOSS.
+    --   2. Acquisto puro con valuta, nessun boss coinvolto -- T9/T10 base, e petto,
+    --      guanti, gambali del T11/T12 in normal.
+    --   3. Token dal boss ma GENERICO: cade davvero (Trophy of the Crusade da ogni
+    --      boss del Trial, Mark of Sanctification da cinque boss di ICC) pero' vale
+    --      per uno slot QUALSIASI. E' il caso che sembra un errore e non lo e': un
+    --      boss c'e', ma non si puo' dire quale slot dia, quindi la mappa boss->slot
+    --      non esiste lo stesso.
+    -- T9 e T10 stanno nel 2 e nel 3, mai nell'1: si sopprimono tutti e cinque gli
+    -- slot. Guanti e gambali cadevano a Vault of Archavon, ma quel boss e' escluso
+    -- per scelta (vedi TOKEN_BOSS).
+    t9  = true,
+    t10 = true,
+    -- T11 e T12: in normal petto, guanti e gambali si compravano coi Valor Point.
+    -- Cadevano anche a Baradin Hold, boss pure lui escluso per scelta. In heroic
+    -- invece il token c'era davvero, e sta in TOKEN_BOSS.
+    t11 = { Chest = { normal = true }, Hands = { normal = true }, Legs = { normal = true } },
+    t12 = { Chest = { normal = true }, Hands = { normal = true }, Legs = { normal = true } },
+}
+
+-- Il boss di questo slot va soppresso? Vale solo sui 5 slot da token. Come sopra, la
+-- soppressione puo' dipendere dalla versione: `true` (sempre) o l'elenco delle sole
+-- versioni in cui il pezzo non aveva una provenienza da boss.
+local function BossInaffidabile(tier, slot, versione)
+    local v = tier and TOKEN_SENZA_FONTE[tier]
+    if not v or not SLOT_TOKEN[slot] then return false end
+    if v == true then return true end
+    local s = v[slot]
+    if s == nil then return false end
+    return s == true or (versione ~= nil and s[versione] == true)
 end
 
 -- Diagnostica: quale API risponde e con che forma. Finisce nel DB.
 local probe = {}
 
 -- Statistiche del recupero boss (finiscono nel DB, servono a validare il dump).
-local stats = { viaVariante = 0, daToken = 0 }
+local stats = { viaVariante = 0, daToken = 0, soppressi = 0 }
 
 -- ⚠️ Strada dell'Encounter Journal: PROVATA E SCARTATA, non riproporla.
 -- L'idea era leggere dal journal il boss che droppa il token, visto che dal T28 e' il
@@ -266,7 +378,7 @@ local mismatches = {}
 --
 -- `have`/`total` arrivano da CountSet: verifica che l'elenco combaci con la frazione
 -- mostrata nella cella, altrimenti il tooltip contraddirebbe il numero.
-local function PiecesIn(setID, have, total, tier)
+local function PiecesIn(setID, have, total, tier, versione)
     local out = {}
 
     -- Un'apparenza ha piu' source (le varie difficolta', e dal T28 anche il Catalyst).
@@ -293,12 +405,24 @@ local function PiecesIn(setID, have, total, tier)
         -- Slot da token di un tier moderno: la risposta la da' TOKEN_BOSS, non il
         -- gioco. Va PRIMA di BossFor, non dopo come fallback: il giro per visualID
         -- una risposta la trova quasi sempre, solo che e' quella sbagliata.
-        local boss, instance = TokenBossFor(tier, slot)
+        local boss, instance = TokenBossFor(tier, slot, versione)
         if boss then stats.daToken = stats.daToken + 1 end
-        if not boss and sourceID then boss, instance = BossFor(sourceID) end
+        -- Niente fonte attendibile per questo slot: si sopprime invece di chiedere al
+        -- gioco, che risponderebbe col boss sbagliato. Resta il solo slot.
+        --
+        -- ⚠️ `sopprimi` deve spegnere ENTRAMBE le vie, non solo la prima: la seconda
+        -- e' il giro per visualID poco sotto, che una risposta la trova quasi sempre.
+        -- Proteggendo solo BossFor la voce veniva soppressa e subito ripescata li',
+        -- e il contatore diceva 310 soppressioni mentre nei dati non cambiava nulla.
+        local sopprimi = not boss and BossInaffidabile(tier, slot, versione)
+        if sopprimi then
+            stats.soppressi = stats.soppressi + 1
+        elseif not boss and sourceID then
+            boss, instance = BossFor(sourceID)
+        end
         -- Nessun drop sulla primaria: si provano le altre source dello stesso
         -- visual (stesso aspetto, difficolta' diversa), dove il boss c'e'.
-        if not boss and info and info.visualID then
+        if not sopprimi and not boss and info and info.visualID then
             for _, alt in ipairs(byVisual[info.visualID] or {}) do
                 if alt ~= sourceID then
                     boss, instance = BossFor(alt)
@@ -355,7 +479,7 @@ local function Dump()
     local seen = {}
     -- Dump() gira piu' volte per sessione (login, /wmtier, logout): senza azzerare,
     -- i contatori si sommano fra una passata e l'altra e sembrano il triplo.
-    stats.viaVariante, stats.daToken = 0, 0
+    stats.viaVariante, stats.daToken, stats.soppressi = 0, 0, 0
 
     local function consider(info)
         if not info or seen[info.setID] then return end
@@ -392,7 +516,7 @@ local function Dump()
         -- Anche i set completi: il tooltip li mostra tutti verdi, non vuoti.
         -- Sotto pcall: un errore qui deve degradare il solo elenco dei pezzi,
         -- non far saltare tutto il dump (e con esso `collected`).
-        local ok, list = pcall(PiecesIn, info.setID, have, total, tier)
+        local ok, list = pcall(PiecesIn, info.setID, have, total, tier, slot)
         if not ok then
             errors[#errors + 1] = tier .. "/" .. class .. ": " .. tostring(list)
         else
