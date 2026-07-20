@@ -7,7 +7,10 @@ const macros = getMacros();
 const professions = getProfessions();
 const rosterCount = getRosterCount();
 const extra = getExtra();
-// Tier set tracciati: identici per ogni classe, li conto sulla prima.
+// Righe tracciate sulla pagina Transmog. NON sono identiche per ogni classe: il
+// `classStart` taglia quelle precedenti alla nascita della classe (il DK parte dal
+// T7, l'Evoker dal T29). Si contano sulla PRIMA classe, il guerriero, che non ha
+// classStart e quindi le vede tutte: e' il totale, non un numero per classe.
 const tmog = getTransmog();
 const tmogTiers = tmog[0]?.groups.reduce((n, g) => n + g.rows.length, 0) ?? 0;
 
