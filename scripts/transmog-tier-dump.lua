@@ -45,6 +45,9 @@ local TIER = {
     ["9|Amirdrassil, the Dream's Hope"] = "t31",
     ["10|Nerub-ar Palace"] = "t32", ["10|Liberation of Undermine"] = "t33",
     ["10|Manaforge Omega"] = "t34", ["11|The Voidspire"] = "t35",
+    -- Righe senza asse di difficolta': un set solo per classe.
+    ["6|Legion Order Hall"] = "ohall",
+    ["4|Pandaria Challenge Dungeons"] = "challenge",
 }
 
 -- Set per TIPO DI ARMATURA: uno solo per stoffa/cuoio/maglia/piastre, condiviso da
@@ -58,7 +61,7 @@ local TIER = {
 -- il tier di classe non esisteva. Con una mappa sola le quattro varianti LFR
 -- finivano su t18 e venivano buttate come "multiclasse".
 local TIER_ARMOR = {
-    ["5|Hellfire Citadel"] = "hfc-lfr",
+    ["5|Hellfire Citadel"] = "hfc-lfr", ["6|Trial of Valor"] = "tov",
     ["7|Uldir"] = "uldir", ["7|Battle of Dazar'alor"] = "bod",
     ["7|The Eternal Palace"] = "tep", ["7|Ny'alotha, the Waking City"] = "nya",
     ["8|Castle Nathria"] = "nathria", ["8|Sanctum of Domination"] = "sod",
@@ -66,9 +69,15 @@ local TIER_ARMOR = {
 
 -- Ordine dei tier nel manifest (serve solo a rendere l'output ordinato).
 local TIER_ORDER = { "t0", "t05", "t1", "t2", "t25", "t3", "t4", "t5", "t6", "t7", "t8",
-    "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "brf-lfr", "t18",
-    "hfc-lfr", "t19", "t20", "t21", "uldir", "bod", "tep", "nya", "nathria",
+    "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "challenge", "t17", "t18",
+    "hfc-lfr", "ohall", "tov", "t19", "t20", "t21", "uldir", "bod", "tep", "nya", "nathria",
     "sod", "t28", "t29", "t30", "t31", "t32", "t33", "t34", "t35" }
+
+-- Righe senza asse: il gioco non da' `description` (l'Order Hall e i set delle
+-- Challenge Mode di Pandaria sono uno solo per classe), quindi lo slot non si puo'
+-- dedurre da li' e si dichiara qui. Senza questo finivano in dropped come
+-- "slot ignoto nil" e la riga restava vuota.
+local SLOT_UNICO = { ohall = "normal", challenge = "normal" }
 
 -- Le classi accese in un classMask. Per un set di classe e' una sola; per un set per
 -- tipo di armatura sono tutte quelle che lo portano, ed e' li' che serve: lo stesso
@@ -154,26 +163,29 @@ local TOKEN_BOSS = {
     -- TOKEN_SENZA_FONTE. Il T9 e il T10 non compaiono affatto qui sotto -- erano
     -- interamente da vendor e restano senza boss su tutti e cinque gli slot.
     --
-    -- ⚠️ Guanti e gambali di T9/T10/T11/T12 cadevano davvero, ma dai raid PvP da un
-    -- boss solo (Koralon e Toravon a Vault of Archavon, Argaloth e Occu'thar a Baradin
-    -- Hold). Sono esclusi per scelta: quei boss droppano i pezzi di TUTTE le classi, e
-    -- indicarli non aiuta a farmare. Non e' una svista, non rimetterli. Nei dati
-    -- toccavano solo Hands e Legs, mai gli altri slot -- se un giorno ricompaiono
-    -- altrove, allora e' un errore vero da guardare.
+    -- Guanti e gambali di T9/T10/T11/T12 cadono dai raid PvP da un boss solo (Koralon
+    -- e Toravon a Vault of Archavon, Argaloth e Occu'thar a Baradin Hold). Sono
+    -- boss "generici" -- droppano i pezzi di tutte le classi -- ma il journal li
+    -- conosce e la regola qui e' stare aderenti al journal, quindi si scrivono. Nei
+    -- dati toccano solo Hands e Legs: se compaiono su altri slot, quello e' un errore.
     --
+    t9 = { raid = "Vault of Archavon",
+        Hands = "Koralon the Flame Watcher", Legs = "Koralon the Flame Watcher" },
+    t10 = { raid = "Vault of Archavon",
+        Hands = "Toravon the Ice Watcher", Legs = "Toravon the Ice Watcher" },
     -- T11 e T12 sono ibridi: elmo e spalle avevano il token da boss in entrambe le
     -- difficolta', il resto si comprava in normal e diventava token solo in heroic.
     t11 = { raid = "Blackwing Descent",
         Head = "Nefarian's End",
         Shoulder = { "Cho'gall", "The Bastion of Twilight" },
         Chest = { heroic = { "Halfus Wyrmbreaker", "The Bastion of Twilight" } },
-        Hands = { heroic = "Magmaw" },
-        Legs  = { heroic = "Maloriak" } },
+        Hands = { normal = { "Argaloth", "Baradin Hold" }, heroic = "Magmaw" },
+        Legs  = { normal = { "Argaloth", "Baradin Hold" }, heroic = "Maloriak" } },
     t12 = { raid = "Firelands",
         Head = "Ragnaros", Shoulder = "Majordomo Staghelm",
         Chest = { heroic = "Alysrazor" },
-        Hands = { heroic = "Baleroc, the Gatekeeper" },
-        Legs  = { heroic = "Shannox" } },
+        Hands = { normal = { "Occu'thar", "Baradin Hold" }, heroic = "Baleroc, the Gatekeeper" },
+        Legs  = { normal = { "Occu'thar", "Baradin Hold" }, heroic = "Shannox" } },
     -- Pandaria: stessa struttura dei moderni, un boss per slot valido per tutti e tre i
     -- gruppi (Conqueror/Protector/Vanquisher). Verificato aprendo le pagine dei singoli
     -- token: le tre varianti dello stesso slot nominano lo stesso boss.
@@ -280,16 +292,15 @@ local TOKEN_SENZA_FONTE = {
     --      per uno slot QUALSIASI. E' il caso che sembra un errore e non lo e': un
     --      boss c'e', ma non si puo' dire quale slot dia, quindi la mappa boss->slot
     --      non esiste lo stesso.
-    -- T9 e T10 stanno nel 2 e nel 3, mai nell'1: si sopprimono tutti e cinque gli
-    -- slot. Guanti e gambali cadevano a Vault of Archavon, ma quel boss e' escluso
-    -- per scelta (vedi TOKEN_BOSS).
-    t9  = true,
-    t10 = true,
-    -- T11 e T12: in normal petto, guanti e gambali si compravano coi Valor Point.
-    -- Cadevano anche a Baradin Hold, boss pure lui escluso per scelta. In heroic
-    -- invece il token c'era davvero, e sta in TOKEN_BOSS.
-    t11 = { Chest = { normal = true }, Hands = { normal = true }, Legs = { normal = true } },
-    t12 = { Chest = { normal = true }, Hands = { normal = true }, Legs = { normal = true } },
+    -- T9 e T10 stanno nel 2 e nel 3, mai nell'1: elmo, spalle e petto non li droppa
+    -- nessuno. Guanti e gambali invece cadono a Vault of Archavon e stanno in
+    -- TOKEN_BOSS: il journal li conosce, quindi si riportano.
+    t9  = { Head = true, Shoulder = true, Chest = true },
+    t10 = { Head = true, Shoulder = true, Chest = true },
+    -- T11 e T12: in normal il petto si comprava coi Valor Point e basta. Guanti e
+    -- gambali no, quelli cadevano a Baradin Hold.
+    t11 = { Chest = { normal = true } },
+    t12 = { Chest = { normal = true } },
 }
 
 -- Il boss di questo slot va soppresso? Vale solo sui 5 slot da token. Come sopra, la
@@ -540,7 +551,9 @@ local function Dump()
             dropped[#dropped + 1] = tier .. ": classMask vuoto"
             return
         end
-        local slot = (tier == "t9") and FACTION_SLOT[info.requiredFaction] or SLOT[info.description]
+        local slot = SLOT_UNICO[tier]
+            or ((tier == "t9") and FACTION_SLOT[info.requiredFaction])
+            or SLOT[info.description]
         if not slot then
             dropped[#dropped + 1] = tier .. ": slot ignoto " .. tostring(info.description)
             return
