@@ -315,8 +315,8 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "Heroes' (10 uomini)",
-        "heroic": "Valorous (25 uomini)"
+        "normal": "10",
+        "heroic": "25"
       },
       "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale.",
       "stack": true,
@@ -350,8 +350,8 @@
       "exp": "wotlk",
       "pieces": 5,
       "versions": {
-        "normal": "Valorous (10 uomini)",
-        "heroic": "Conqueror's (25 uomini)"
+        "normal": "10",
+        "heroic": "25"
       },
       "stack": true,
       "raids": [
