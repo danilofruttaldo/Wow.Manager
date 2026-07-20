@@ -319,6 +319,7 @@
         "heroic": "Valorous (25 uomini)"
       },
       "note": "Recolor dei modelli T3, tranne il set Death Knight che e' un design originale.",
+      "stack": true,
       "raids": [
         [
           "NAXX",
@@ -352,6 +353,7 @@
         "normal": "Valorous (10 uomini)",
         "heroic": "Conqueror's (25 uomini)"
       },
+      "stack": true,
       "raids": [
         [
           "ULD",
@@ -414,6 +416,7 @@
         "mythic": "Sanctified Heroic (277)"
       },
       "note": "Tre ASPETTI distinti, uno per item level: 251 (comprato con gli Emblemi di Gelo), 264 e 277, le due varianti Sanctified. Confermato da Icy Veins e dal client, che li espone come 10 Player (Normal), 25 Player (Normal) e 25 Player (Heroic) -- ma quella e' la difficolta' dove cadevano i Mark, non l'aspetto. Non e' 10m contro 25m e in WotLK il Mythic non esisteva: la colonna e' uno slot, non una difficolta'.",
+      "stack": true,
       "raids": [
         [
           "ICC",
