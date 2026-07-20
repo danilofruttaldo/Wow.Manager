@@ -72,7 +72,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                     // solo alle righe impilate, dove il nome sta a sinistra una volta
                     // sola e le versioni gli scorrono accanto.
                     const intestazione = (alte?: number) => (
-                      <td class="rhead" rowspan={alte}>
+                      <td class="rhead" rowspan={alte && alte > 1 ? alte : undefined}>
                         <span class="tname">
                           <strong>{r.setName ?? r.name}</strong>
                           {r.setName && r.tier.startsWith('T') && <span class="ttier">({r.tier})</span>}
