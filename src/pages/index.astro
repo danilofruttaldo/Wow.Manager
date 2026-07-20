@@ -7,22 +7,24 @@ const macros = getMacros();
 const professions = getProfessions();
 const rosterCount = getRosterCount();
 const extra = getExtra();
-// Righe tracciate sulla pagina Transmog. NON sono identiche per ogni classe: il
-// `classStart` taglia quelle precedenti alla nascita della classe (il DK parte dal
-// T7, l'Evoker dal T29). Serve il guerriero, l'unica classe senza classStart, che
-// le vede tutte: e' il totale, non un numero per classe. Preso per slug e non per
-// posizione, perche' getTransmog() ordina le classi alfabeticamente e tmog[0] e'
-// il Death Knight, che di righe ne vede 33 su 41.
+// Completamento dei tier set, la stessa metrica dei chip per classe su /transmog ma
+// su tutte le classi insieme. Contare invece le RIGHE della griglia non direbbe nulla
+// sulla collezione, e sarebbe pure ambiguo: quante righe si vedono dipende dalla
+// classe (`classStart` taglia quelle precedenti alla sua nascita, l'Evoker ne vede 15
+// contro le 41 del guerriero). I set per tipo di armatura stanno sotto ogni classe che
+// porta quel tipo, quindi pesano una volta per classe: e' il completamento della
+// griglia del sito, non un inventario di apparenze distinte.
 const tmog = getTransmog();
-const tmogAll = tmog.find((c) => c.slug === 'warrior') ?? tmog[0];
-const tmogTiers = tmogAll?.groups.reduce((n, g) => n + g.rows.length, 0) ?? 0;
+const tmogGot = tmog.reduce((n, c) => n + c.got, 0);
+const tmogTotal = tmog.reduce((n, c) => n + c.total, 0);
+const tmogPct = tmogTotal ? Math.round((tmogGot / tmogTotal) * 100) : 0;
 
 const sections = [
   { href: '/addons',      name: 'Addon',       sub: 'addon installati e versioni', count: `${addons.length}`,     icon: '/icons/section/addon.jpg',  color: '#2E68D8' },
   { href: '/macros',      name: 'Macro',       sub: 'macro per account e PG',      count: `${macros.length}`,     icon: '/icons/section/macro.jpg',  color: '#7A5AF8' },
   { href: '/professioni', name: 'Professioni', sub: 'specializzazioni e rami',     count: `${professions.length}`, icon: '/icons/section/prof.jpg',  color: '#C77D0A' },
   { href: '/roster',      name: 'Roster',      sub: 'personaggi Orda e Alleanza',  count: `${rosterCount}`,       icon: '/icons/section/roster.jpg', color: '#C0202A' },
-  { href: '/transmog',    name: 'Transmog',    sub: 'tier set per classe',         count: `${tmogTiers}`,         icon: '/icons/section/transmog.jpg', color: '#9B4DCA' },
+  { href: '/transmog',    name: 'Transmog',    sub: 'pezzi dei tier set collezionati', count: `${tmogPct}%`,      icon: '/icons/section/transmog.jpg', color: '#9B4DCA' },
   { href: '/ui',          name: 'UI',          sub: 'screenshot dell’interfaccia', count: '16',                   icon: '/icons/section/ui.jpg',     color: '#159A8C' },
   { href: '/extra',       name: 'Extra',       sub: 'script di manutenzione e note', count: `${extra.length}`,    icon: '/icons/section/extra.jpg',  color: '#5B6470' },
 ];
