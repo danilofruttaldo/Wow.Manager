@@ -48,11 +48,11 @@ const daScrivere = (cell: { slot: string; label: string }) =>
           <table>
             <thead>
               <tr>
-                <th class="thead-tier">
+                <th class="thead-tier" scope="col">
                   <img class="ico" src={c.icon} alt="" width="24" height="24" />
                   <span>{c.label}</span>
                 </th>
-                {cols.map(col => <th>{col.label}</th>)}
+                {cols.map(col => <th scope="col">{col.label}</th>)}
               </tr>
             </thead>
             <tbody>
@@ -69,9 +69,12 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                       return cell.label && cell.label !== 'Versione unica'
                         ? `${nome} — ${cell.label}` : nome;
                     };
-                    // Nome del set, a sinistra, una riga per set.
+                    // Nome del set, a sinistra, una riga per set. E' l'intestazione
+                    // della riga, non un dato: <th scope="row"> perche' uno screen
+                    // reader possa annunciarlo leggendo le celle. La resa non cambia
+                    // (il font-weight lo riporta il CSS su th.rhead).
                     const intestazione = () => (
-                      <td class="rhead">
+                      <th class="rhead" scope="row">
                         <span class="tname">
                           <strong>{r.setName ?? r.name}</strong>
                           {r.setName && r.tier.startsWith('T') && <span class="ttier">({r.tier})</span>}
@@ -79,7 +82,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                             {sigle.map(([sigla, raid]) => <abbr title={raid}>{sigla}</abbr>)}
                           </span>}
                         </span>
-                      </td>
+                      </th>
                     );
                     // Il tooltip c'e' SEMPRE dove c'e' un contatore: se l'elenco pezzi
                     // manca resta almeno il titolo, invece di una cella muta.
@@ -167,8 +170,10 @@ const daScrivere = (cell: { slot: string; label: string }) =>
      non si capisce dove finisce un set e comincia il successivo. `fine` sta sull'ultima
      sotto-riga di ogni set; fra le sotto-righe dello stesso set il bordo resta appena
      accennato, cosi' le versioni si leggono come un blocco solo. */
-  .tmog-panel tr.trow:not(.fine) > td { border-bottom-color: transparent; }
-  .tmog-panel tr.trow.fine > td { border-bottom: 2px solid var(--border); }
+  /* `th` accanto a `td`: la prima cella della riga e' <th scope="row"> (l'etichetta
+     del set), quindi ogni regola di bordo deve nominarlo o quel bordo salta. */
+  .tmog-panel tr.trow:not(.fine) > td, .tmog-panel tr.trow:not(.fine) > th { border-bottom-color: transparent; }
+  .tmog-panel tr.trow.fine > td, .tmog-panel tr.trow.fine > th { border-bottom: 2px solid var(--border); }
   .tmog-panel th:first-child, .tmog-panel td:first-child { width: 46%; text-align: left; }
   /* Nelle righe impilate (T9) il nome sta a sinistra con un rowspan, quindi dalla
      seconda sotto-riga in poi la cella dei dati diventa il primo td: senza questo si
@@ -179,7 +184,9 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   .tmog-panel .thead-tier span { vertical-align: middle; font-weight: 700; }
 
   /* Etichetta di riga: nome del set + tier + sigle dei raid, a capo solo se serve. */
-  .tmog-panel td.rhead { background: var(--surface-2); padding-left: 0.6rem; }
+  /* `font-weight: 400` annulla il grassetto di default di <th>: il nome del set e'
+     gia' dentro uno <strong>, il tier e le sigle devono restare smorzati. */
+  .tmog-panel th.rhead { background: var(--surface-2); padding-left: 0.6rem; font-weight: 400; }
   .tmog-panel .tname { display: inline-flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
   .tmog-panel .tname strong { font-size: 0.78rem; font-variant-numeric: tabular-nums; }
   .tmog-panel .ttier { color: var(--text-subtle); font-size: 0.7rem; font-variant-numeric: tabular-nums; }
@@ -231,7 +238,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   /* Riga: stessa rampa, ma sull'avanzamento complessivo dei blocchi del set.
      Il tint sta sulla riga; le celle ci mettono sopra il proprio colore. */
   .tmog-panel tr.trow { background: color-mix(in srgb, var(--tint) 8%, var(--surface)); }
-  .tmog-panel tr.trow td.rhead { background: color-mix(in srgb, var(--tint) 18%, var(--surface)); }
+  .tmog-panel tr.trow th.rhead { background: color-mix(in srgb, var(--tint) 18%, var(--surface)); }
 
   /* Bande espansione */
   .tmog-panel tr.rsep td {
@@ -265,7 +272,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   .tmog-tip {
     position: fixed; z-index: 50; pointer-events: none;
     max-width: 22rem; padding: 0.5rem 0.65rem;
-    border: 1px solid var(--border); border-radius: var(--radius);
+    border: 1px solid var(--border); border-radius: var(--radius-md);
     background: var(--surface); box-shadow: 0 8px 24px rgb(0 0 0 / 0.16);
     font-size: 0.74rem; line-height: 1.35;
   }

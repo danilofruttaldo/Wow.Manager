@@ -46,7 +46,11 @@ const lineCount = (body?: string) => (body ? body.split('\n').length : 0);
         );
       })}
     </div>
-    <p class="empty" id="extra-empty" hidden={items.length > 0}>Ancora nessun contenuto extra.</p>
+    {/* Due messaggi distinti: "non c'e' niente" e "la ricerca non trova niente" non
+        sono la stessa cosa, e il primo non va perso alla prima battuta sulla search. */}
+    <p class="empty" id="extra-empty" role="status" hidden={items.length > 0}
+       data-msg-vuoto="Ancora nessun contenuto extra."
+       data-msg-ricerca="Nessun contenuto per questa ricerca.">Ancora nessun contenuto extra.</p>
   </div>
 
   <div class="xlb" id="xlb" role="dialog" aria-modal="true" aria-label="Contenuto">
@@ -92,9 +96,8 @@ a.xcard:hover { border-color: var(--accent); }
 .xlb-panel { display: flex; flex-direction: column; width: min(880px, 96vw); max-height: 92vh; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
 .xlb-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); }
 .xlb-head #xlb-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; min-width: 0; }
-.xlb-head .copy { margin-left: auto; font-family: inherit; font-size: 0.74rem; font-weight: 600; color: var(--text-subtle); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.2rem 0.55rem; cursor: pointer; transition: color var(--transition), border-color var(--transition); }
-.xlb-head .copy:hover { color: var(--accent); border-color: var(--accent); }
-.xlb-head .copy.done { color: var(--ok); border-color: var(--ok); }
+/* Aspetto base in global.css (`.copy`): qui solo posizione e misura. */
+.xlb-head .copy { margin-left: auto; font-size: 0.74rem; padding: 0.2rem 0.55rem; }
 .xlb-close { background: none; border: 0; color: var(--text-subtle); font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 0 0.2rem; }
 .xlb-close:hover { color: var(--text); }
 .xlb-panel pre { margin: 0; overflow: auto; background: var(--surface-2); padding: 0.85rem 1rem; flex: 1; }
@@ -102,6 +105,46 @@ a.xcard:hover { border-color: var(--accent); }
 </style>
 
 <script>
+  // Da dove si era arrivati alla modale, per restituire il focus alla chiusura.
+  let xlbLastFocus: HTMLElement | null = null;
+
+  // Il nodo si risolve a ogni chiamata: con ClientRouter la pagina viene sostituita
+  // ma questo modulo resta, quindi un riferimento catturato una volta sola sarebbe
+  // quello della pagina precedente.
+  const closeXlb = () => {
+    const lb = document.getElementById('xlb');
+    if (!lb) return;
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    xlbLastFocus?.focus();
+    xlbLastFocus = null;
+  };
+
+  // I listener su `document` vanno agganciati UNA volta sola: `astro:page-load`
+  // rispara a ogni navigazione e ne accumulerebbe una copia per visita.
+  // Stessa guardia di transmog.astro (`window.__tmogTip`).
+  function initXlbKeys() {
+    if ((window as any).__extraKeys) return;
+    (window as any).__extraKeys = true;
+
+    document.addEventListener('keydown', (e) => {
+      const lb = document.getElementById('xlb');
+      if (!lb || !lb.classList.contains('open')) return;
+      if (e.key === 'Escape') { closeXlb(); return; }
+      if (e.key !== 'Tab') return;
+
+      // Trappola del focus: dentro un dialog modale il Tab non deve uscire
+      // sui contenuti della pagina, che restano inerti dietro l'overlay.
+      const f = Array.from(lb.querySelectorAll<HTMLElement>('button'));
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
+      const cur = document.activeElement;
+      if (e.shiftKey && (cur === first || !lb.contains(cur))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (cur === last || !lb.contains(cur))) { e.preventDefault(); first.focus(); }
+    });
+  }
+
   function initExtra() {
     const lb = document.getElementById('xlb');
     if (!lb) return;
@@ -123,11 +166,17 @@ a.xcard:hover { border-color: var(--accent); }
           w.hidden = !show;
           if (show) shown++;
         }
-        if (empty) { empty.hidden = shown > 0; empty.textContent = 'Nessun contenuto per questa ricerca.'; }
+        if (empty) {
+          empty.hidden = shown > 0;
+          empty.textContent = (q === '' ? empty.dataset.msgVuoto : empty.dataset.msgRicerca) ?? '';
+        }
       });
     }
 
+    const closeBtn = document.getElementById('xlb-close') as HTMLButtonElement;
+
     const open = (card: HTMLElement) => {
+      xlbLastFocus = document.activeElement as HTMLElement | null;
       const wrap = card.closest('.xcard-wrap');
       const body = wrap?.querySelector('.xsrc')?.textContent ?? '';
       title.textContent = card.dataset.title || '';
@@ -137,17 +186,15 @@ a.xcard:hover { border-color: var(--accent); }
       copy.textContent = 'Copia'; copy.classList.remove('done');
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
+      closeBtn?.focus();
     };
-    const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
 
     for (const btn of Array.from(document.querySelectorAll('.xcard--open')) as HTMLButtonElement[]) {
       btn.addEventListener('click', () => open(btn));
     }
-    document.getElementById('xlb-close')!.addEventListener('click', close);
-    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
-    document.addEventListener('keydown', (e) => {
-      if (lb.classList.contains('open') && e.key === 'Escape') close();
-    });
+    closeBtn?.addEventListener('click', closeXlb);
+    lb.addEventListener('click', (e) => { if (e.target === lb) closeXlb(); });
+    initXlbKeys();
 
     copy.addEventListener('click', async () => {
       try {

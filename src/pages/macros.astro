@@ -43,7 +43,7 @@ for (const c of classes) c.specs.sort();
              placeholder="Cerca macro, abilità, spec…" aria-label="Cerca macro" />
       <div class="chips" id="class-chips" role="group" aria-label="Filtra per classe">
         {classes.map(c => (
-          <button class:list={['chip', { 'is-empty': c.count === 0 }]} data-class={c.slug} type="button">
+          <button class:list={['chip', { 'is-empty': c.count === 0 }]} data-class={c.slug} type="button" aria-pressed="false">
             <img class="chip-ico" src={c.icon ?? '/icons/ui/shared.jpg'} alt="" width="18" height="18" />
             {c.label}<span class="c">{c.count}</span>
           </button>
@@ -80,7 +80,7 @@ for (const c of classes) c.specs.sort();
         );
       })}
     </div>
-    <p class="empty" id="empty" hidden>Nessuna macro per questo filtro.</p>
+    <p class="empty" id="empty" role="status" hidden>Nessuna macro per questo filtro.</p>
   </div>
 </Base>
 
@@ -111,10 +111,15 @@ for (const c of classes) c.specs.sort();
 /* Wrap invece di scroll: rientro pendente = ogni riga a capo (continuazione) resta indentata,
    marcatore visivo che quella riga prosegue la precedente. */
 .mcard-code code { display: block; font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.5; background: none; padding: 0; color: var(--text); white-space: pre-wrap; overflow-wrap: anywhere; padding-left: 1.5em; text-indent: -1.5em; }
-.copy { position: absolute; top: 0.35rem; right: 0.35rem; font-family: inherit; font-size: 0.68rem; font-weight: 600; color: var(--text-subtle); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.12rem 0.42rem; cursor: pointer; opacity: 0; transition: opacity var(--transition), color var(--transition), border-color var(--transition); }
+/* Aspetto base in global.css (`.copy`): qui solo posizione, misura e la comparsa
+   in hover. */
+.copy { position: absolute; top: 0.35rem; right: 0.35rem; font-size: 0.68rem; padding: 0.12rem 0.42rem; opacity: 0; }
 .mcard-code:hover .copy, .copy:focus-visible { opacity: 1; }
-.copy:hover { color: var(--accent); border-color: var(--accent); }
-.copy.done { opacity: 1; color: var(--ok); border-color: var(--ok); }
+.copy.done { opacity: 1; }
+/* Su touch non esiste hover: se resta a opacity 0 il bottone non e' scopribile. */
+@media (hover: none) {
+  .copy { opacity: 1; }
+}
 
 @media (max-width: 600px) {
   .macro-grid { column-count: 1; }
@@ -155,20 +160,27 @@ for (const c of classes) c.specs.sort();
         const c = chip.dataset.class || '';
         if (activeClasses.has(c)) activeClasses.delete(c);   // toggle: ri-click deseleziona
         else activeClasses.add(c);
-        chip.classList.toggle('is-active', activeClasses.has(c));
+        // `aria-pressed` va tenuto in sync con `is-active`: e' l'unico stato che
+        // uno screen reader puo' leggere.
+        const on = activeClasses.has(c);
+        chip.classList.toggle('is-active', on);
+        chip.setAttribute('aria-pressed', on ? 'true' : 'false');
         apply();
       });
     }
 
+    // L'etichetta di riposo e' una costante, non il testo letto dal bottone: leggendolo
+    // due click ravvicinati catturavano 'Copiato' come "precedente" e il bottone ci
+    // restava per sempre. Stessa scelta gia' fatta in /extra.
+    const COPY_LABEL = 'Copia';
     for (const btn of Array.from(document.querySelectorAll('.copy')) as HTMLButtonElement[]) {
       btn.addEventListener('click', async () => {
         const code = btn.parentElement?.querySelector('code')?.textContent ?? '';
         try {
           await navigator.clipboard.writeText(code);
-          const prev = btn.textContent;
           btn.textContent = 'Copiato';
           btn.classList.add('done');
-          setTimeout(() => { btn.textContent = prev; btn.classList.remove('done'); }, 1400);
+          setTimeout(() => { btn.textContent = COPY_LABEL; btn.classList.remove('done'); }, 1400);
         } catch { /* clipboard non disponibile */ }
       });
     }

@@ -40,7 +40,12 @@ const html = getRosterHtml();
   .roster-prose :global(tr.fac-alliance) { background: color-mix(in srgb, #1E6FD0 6%, var(--surface)); }
 
   /* Colonna razza: neutra, staccata dalla tinta */
-  .roster-prose :global(td.rhead) { background: var(--surface-2); padding-left: 0.16rem; padding-right: 0.16rem; }
+  /* .rhead e' un <th scope="row"> (lega le celle alla razza per gli screen reader):
+     il font-weight normale annulla il grassetto di default del th e tiene la resa
+     identica a quando era un <td>. */
+  .roster-prose :global(th.rhead) { background: var(--surface-2); padding-left: 0.16rem; padding-right: 0.16rem; font-weight: 400; }
+  /* `tbody tr:last-child td` in global.css non raggiunge piu' la cella-razza, che ora e' un th */
+  .roster-prose :global(tbody tr:last-child th) { border-bottom: none; }
 
   /* Contatori: totale accanto all'icona (razza in riga, classe in testata) */
   .roster-prose :global(.rcell) { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }

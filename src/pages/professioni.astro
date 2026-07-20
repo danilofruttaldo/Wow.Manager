@@ -13,6 +13,15 @@ const searchData = (p: Profession) =>
 
 const craftingCount = professions.filter(p => p.type === 'crafting').length;
 const gatheringCount = professions.filter(p => p.type === 'gathering').length;
+
+// `key` DEVE combaciare col file in public/icons/prof/, ma e' una convenzione tenuta
+// a mano: se il file manca, l'URL costruito alla cieca darebbe un'immagine rotta.
+// Risolviamo a build-time e ripieghiamo sul monogramma, come fa /addons.
+const PROF_ICONS = new Set(
+  Object.keys(import.meta.glob('/public/icons/prof/*.jpg', { eager: true }))
+    .map(p => p.split('/').pop()!.replace(/\.jpg$/, '')),
+);
+const profIcon = (key: string) => (PROF_ICONS.has(key) ? `/icons/prof/${key}.jpg` : null);
 ---
 <Base title="Professioni" description="Professioni WoW: specializzazioni da prendere in ordine e ramo da maxare.">
   <div class="wrap">
@@ -20,16 +29,20 @@ const gatheringCount = professions.filter(p => p.type === 'gathering').length;
       <input id="prof-search" class="search" type="search" inputmode="search" autocomplete="off"
              placeholder="Cerca professione…" aria-label="Cerca professione" />
       <div class="chips" id="prof-filters" role="group" aria-label="Filtra per tipo">
-        <button class="chip" data-filter="crafting" type="button"><img class="chip-ico" src="/icons/ui/crafting.jpg" alt="" width="18" height="18" />Crafting<span class="c">{craftingCount}</span></button>
-        <button class="chip" data-filter="gathering" type="button"><img class="chip-ico" src="/icons/ui/gathering.jpg" alt="" width="18" height="18" />Raccolta<span class="c">{gatheringCount}</span></button>
+        <button class="chip" data-filter="crafting" type="button" aria-pressed="false"><img class="chip-ico" src="/icons/ui/crafting.jpg" alt="" width="18" height="18" />Crafting<span class="c">{craftingCount}</span></button>
+        <button class="chip" data-filter="gathering" type="button" aria-pressed="false"><img class="chip-ico" src="/icons/ui/gathering.jpg" alt="" width="18" height="18" />Raccolta<span class="c">{gatheringCount}</span></button>
       </div>
     </div>
 
     <div class="prof-grid" id="prof-grid">
-      {professions.map(p => (
+      {professions.map(p => {
+        const icon = profIcon(p.key);
+        return (
         <article class={`pcard pcard--${p.type}`} data-type={p.type} data-search={searchData(p)}>
           <header class="pcard-head">
-            <img class="pico" src={`/icons/prof/${p.key}.jpg`} alt="" width="40" height="40" loading="lazy" />
+            {icon
+              ? <img class="pico" src={icon} alt="" width="40" height="40" loading="lazy" />
+              : <span class="pmono" aria-hidden="true">{p.name.charAt(0).toUpperCase()}</span>}
             <span class="pcard-name">{p.name}</span>
             <span class={`badge ptype ptype--${p.type}`}>{TYPE_LABEL[p.type]}</span>
           </header>
@@ -46,9 +59,10 @@ const gatheringCount = professions.filter(p => p.type === 'gathering').length;
           </ol>
           <p class="pcard-note">{p.notes}</p>
         </article>
-      ))}
+        );
+      })}
     </div>
-    <p class="empty" id="empty" hidden>Nessuna professione trovata.</p>
+    <p class="empty" id="empty" role="status" hidden>Nessuna professione trovata.</p>
   </div>
 </Base>
 
@@ -64,6 +78,8 @@ const gatheringCount = professions.filter(p => p.type === 'gathering').length;
 
 .pcard-head { display: flex; align-items: center; gap: 0.65rem; }
 .pico { flex-shrink: 0; width: 38px; height: 38px; min-width: 38px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); object-fit: cover; }
+/* Fallback quando manca il file icona per quella `key` (stesso monogramma di /addons). */
+.pmono { flex-shrink: 0; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 1.1rem; }
 .pcard-name { font-weight: 600; font-size: 1rem; line-height: 1.2; color: var(--text); }
 .ptype { margin-left: auto; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.64rem; }
 .ptype--crafting  { background: var(--accent-soft); color: var(--accent); }
@@ -115,7 +131,13 @@ const gatheringCount = professions.filter(p => p.type === 'gathering').length;
       chip.addEventListener('click', () => {
         const f = chip.dataset.filter || '';
         filter = filter === f ? '' : f;              // toggle: ri-click deseleziona
-        for (const c of chips) c.classList.toggle('is-active', c === chip && filter !== '');
+        // `aria-pressed` va tenuto in sync con `is-active`: e' l'unico stato che
+        // uno screen reader puo' leggere.
+        for (const c of chips) {
+          const on = c === chip && filter !== '';
+          c.classList.toggle('is-active', on);
+          c.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
         apply();
       });
     }

@@ -539,7 +539,9 @@ function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): {
         races.add(t);
         const label = t in RACE_ICON ? raceIcon(t) : t;
         const tot = `<span class="rtot" title="PG di questa razza">${rowTotal}</span>`;
-        return `<td class="rhead"><span class="rcell">${label}${tot}</span></td>`;
+        // <th scope="row">, non <td>: e' l'intestazione di riga della matrice, ed e'
+        // cio' che lega ogni cella alla sua razza per chi usa uno screen reader.
+        return `<th scope="row" class="rhead"><span class="rcell">${label}${tot}</span></th>`;
       }
       if (t === 'X') return '<td><span class="na" title="Combinazione non creabile in gioco"></span></td>';
       if (t === '') return '<td></td>';
@@ -598,10 +600,12 @@ export function getRosterHtml(): string {
   // Totale PG per classe: unico contatore, accanto all'icona classe in testata
   // (stesso pattern del totale-razza accanto all'icona razza).
   const thead = '<thead><tr>' + header.map((c, i) => {
+    // Angolo vuoto: resta <th> (valido in una riga di testata) perche' e' `thead th`
+    // a dargli lo sfondo dell'intestazione. Come <td> restava una tacca bianca.
     if (i === 0) return '<th></th>';
     const label = CLASS_ABBR[c.trim()] ? classIcon(c.trim()) : c.trim();
     const tot = `<span class="rtot" title="PG di questa classe">${colTotals[i]}</span>`;
-    return `<th><span class="rcell rcell--stack">${label}${tot}</span></th>`;
+    return `<th scope="col"><span class="rcell rcell--stack">${label}${tot}</span></th>`;
   }).join('') + '</tr></thead>';
 
   const body = band('Orda', 'rsep--horde') + horde.html + allyHtml;
