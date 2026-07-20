@@ -162,28 +162,6 @@
       "folders": ["WIM"],
       "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. TOC compatibile 120005. Download via forgecdn files/8151/363"
     },
-    "RCLootCouncil": {
-      "name": "RCLootCouncil",
-      "desc": "Struttura la distribuzione del bottino in raid tramite Loot Council: annuncia gli oggetti droppati, raccoglie voti, note e risposte dei membri del consiglio e assegna il loot tenendo traccia di chi ha ricevuto cosa. Riduce discussioni e tempi morti sul momento del loot.",
-      "version": "3.22.0",
-      "interface": "120005, 120007",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/rclootcouncil",
-      "installed": "2026-06-16",
-      "folders": ["RCLootCouncil"],
-      "notes": "Interfaccia per gestire un Loot Council in raid (distribuzione loot con voti/note). TOC 120005,120007 match build, niente 'Load out of date'. Download forgecdn files/8256/944"
-    },
-    "MethodRaidTools": {
-      "name": "Method Raid Tools",
-      "desc": "Suite di strumenti per il raid organizzato: editor di note condivise (MRT), timer e barre di cooldown del gruppo, assegnazioni e avvisi tipo WeakAura sulle meccaniche dei boss. È lo standard di fatto usato dai team per coordinare le fasi di combattimento.",
-      "version": "5315",
-      "interface": "120007",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/method-raid-tools",
-      "installed": "2026-06-18",
-      "folders": ["MRT"],
-      "notes": "Suite raid: note (MRT note editor), timer/cooldowns, weakaura-like per boss. Cartella singola MRT. TOC Mainline 120007 (lo zip ha anche MRT-Classic.toc). Aggiornato 2026-06-18 5310->5315 via forgecdn files/8268/621 (filename MRT5315.zip)."
-    },
     "CursorRing": {
       "name": "Cursor Ring",
       "desc": "Disegna un anello colorato in base alla classe attorno al cursore, con animazioni per cast in corso, global cooldown e stato di combattimento. Serve sia a non perdere di vista il puntatore nelle mischie affollate sia come tracker visivo del GCD durante la rotazione.",
