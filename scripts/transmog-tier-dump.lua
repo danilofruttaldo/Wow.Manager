@@ -91,20 +91,112 @@ local SLOT_NAME = {
     [25] = "Ammo", [26] = "Thrown", [27] = "Ranged", [28] = "Quiver", [29] = "Relic",
 }
 
+-- Dal T28 il pezzo di classe non cade: dal boss cade un TOKEN che lo crea. Le API di
+-- transmog non conoscono quel legame, e il fallback per visualID (vedi PiecesIn)
+-- risponde col boss di un'altra source della stessa famiglia visuale: plausibile e
+-- sbagliato. Misurato su Manaforge Omega, sulle 84 voci che un boss ce l'avevano: 64
+-- indicavano un altro boss dello stesso raid, 4 un world boss di un'altra zona
+-- (Reshanor), e nessuna il boss che droppa davvero quel token. Le 16 buone
+-- nominavano l'ultimo boss, ma per caso: droppa un omni-token valido per ogni slot.
+--
+-- Quindi per i 5 slot da token di questi tier il boss NON si chiede al gioco, si
+-- legge da qui. La struttura reale e' semplice: un boss droppa il token di UNO slot
+-- per tutte le classi -- i quattro tipi (Dreadful/Mystic/Venerated/Zenith) cadono
+-- dallo stesso boss -- quindi bastano cinque righe per raid.
+--
+-- ⚠️ Gli altri slot del set (Back, Feet, Waist, Wrist) NON sono token: quelli cadono
+-- davvero dal boss, il gioco li sa e vanno lasciati stare. Per questo l'override e'
+-- limitato ai cinque slot elencati e non all'intero set.
+--
+-- Non e' registrato l'omni-token dell'ultimo boss (Sarkareth, Fyrakk, Gallywix,
+-- Ansurek, Dimensius, Midnight Falls...), che vale per qualunque slot: la voce
+-- mostra un boss solo, e quello specifico dello slot e' la risposta utile a chi
+-- deve farmare. Nemmeno i primi boss di ogni raid, che token non ne droppano.
+--
+-- Fonti: due indipendenti e concordi per raid (icy-veins.com, warcraft.wiki.gg,
+-- method.gg, maxroll.gg); per il T29 verificato a livello di item sui token
+-- "Forgestone", uno per slot, con tutti e quattro i tipi nella loot table di ogni
+-- boss. I nomi sono nella grafia dell'Encounter Journal: ognuno e' stato ricontrollato
+-- contro i nomi che il client stesso ha gia' scritto nel dump per gli altri slot.
+local TOKEN_BOSS = {
+    t28 = { raid = "Sepulcher of the First Ones",
+        Head = "Anduin Wrynn", Shoulder = "Lords of Dread", Chest = "Rygelon",
+        Hands = "Lihuvim, Principal Architect", Legs = "Halondrus the Reclaimer" },
+    t29 = { raid = "Vault of the Incarnates",
+        Head = "Raszageth the Storm-Eater", Shoulder = "Broodkeeper Diurna",
+        Chest = "Kurog Grimtotem", Hands = "Dathea, Ascended",
+        Legs = "Sennarth, the Cold Breath" },
+    t30 = { raid = "Aberrus, the Shadowed Crucible",
+        Head = "Magmorax", Shoulder = "Echo of Neltharion",
+        Chest = "The Vigilant Steward, Zskarn", Hands = "The Forgotten Experiments",
+        Legs = "Rashok, the Elder" },
+    t31 = { raid = "Amirdrassil, the Dream's Hope",
+        Head = "Tindral Sageswift, Seer of the Flame", Shoulder = "Smolderon",
+        Chest = "Nymue, Weaver of the Cycle", Hands = "Igira the Cruel",
+        Legs = "Larodar, Keeper of the Flame" },
+    t32 = { raid = "Nerub-ar Palace",
+        Head = "The Silken Court", Shoulder = "Rasha'nan",
+        Chest = "Broodtwister Ovi'nax", Hands = "Sikran, Captain of the Sureki",
+        Legs = "Nexus-Princess Ky'veza" },
+    t33 = { raid = "Liberation of Undermine",
+        Head = "The One-Armed Bandit", Shoulder = "Rik Reverb",
+        Chest = "Sprocketmonger Lockenstock", Hands = "Cauldron of Carnage",
+        Legs = "Stix Bunkjunker" },
+    t34 = { raid = "Manaforge Omega",
+        Head = "Forgeweaver Araz", Shoulder = "The Soul Hunters", Chest = "Fractillus",
+        Hands = "Soulbinder Naazindhri", Legs = "Loom'ithar" },
+    -- Il T35 e' l'unico sparso su piu' raid: il Chest viene dal Dreamrift, non dal
+    -- Voidspire. Quando il raid non e' quello di `raid`, si scrive accanto al boss.
+    t35 = { raid = "The Voidspire",
+        Head = "Lightblinded Vanguard", Shoulder = "Fallen-King Salhadaar",
+        Chest = { "Chimaerus the Undreamt God", "The Dreamrift" },
+        Hands = "Vorasius", Legs = "Vaelgor & Ezzorak" },
+}
+
+-- Boss e raid del token di uno slot, se quel tier ne ha. Nil = il gioco resta l'autorita'.
+local function TokenBossFor(tier, slot)
+    local t = tier and TOKEN_BOSS[tier]
+    local v = t and t[slot]
+    if not v then return nil end
+    if type(v) == "table" then return v[1], v[2] end
+    return v, t.raid
+end
+
 -- Diagnostica: quale API risponde e con che forma. Finisce nel DB.
 local probe = {}
 
 -- Statistiche del recupero boss (finiscono nel DB, servono a validare il dump).
-local stats = { viaVariante = 0 }
+local stats = { viaVariante = 0, daToken = 0 }
 
 -- ⚠️ Strada dell'Encounter Journal: PROVATA E SCARTATA, non riproporla.
 -- L'idea era leggere dal journal il boss che droppa il token, visto che dal T28 e' il
--- token a cadere e non il pezzo di classe. Non funziona: in 12.0.7
--- C_EncounterJournal.GetLootInfoByIndex NON espone ne' nome ne' slot (solo itemID,
--- encounterID e i flag displayAs*), e quell'itemID non e' quello dell'oggetto reale
--- (GetItemInfoInstant lo da' come INVTYPE_NON_EQUIP_IGNORE, classe 0/8, nome nil).
--- Su 191 indici costruiti: 0 agganci. Il boss si recupera invece dalle altre source
--- della stessa apparenza, vedi PiecesIn.
+-- token a cadere e non il pezzo di classe.
+--
+-- Misurata due volte, la seconda con una sonda che ha spazzato TUTTO il journal (73
+-- raid, 493 boss, ogni difficolta', 80.899 indici di loot) contro i 1315 itemID che
+-- il dump lascia senza boss: 20 agganci, l'1,5%. E nessuno dei venti viene dal raid
+-- del proprio tier -- sono tutti sorgenti alternative (Vault of Archavon per il T10,
+-- Baradin Hold per l'T11, Sha of Anger e Chi-Ji per T14/T16, M'uru a Sunwell per il
+-- T6), cioe' i casi "luogo fuori dal raid del tier". Valgono 20 voci su 2975: 0,7%.
+--
+-- Il motivo e' strutturale, non un difetto di come si interroga: nelle liste di loot
+-- del journal c'e' il TOKEN, il pezzo di classe non compare proprio. Tre scuse
+-- plausibili gia' escluse, per non rifarle:
+--   * NON e' il load-on-demand: Blizzard_EncounterJournal si carica senza problemi e
+--     le EJ_* rispondono (raidSenzaLoot e' uscito vuoto, tutti i raid espongono loot);
+--   * NON e' il filtro: EJ_SetLootFilter(classID, spec) e' un no-op in 12.0.7, con e
+--     senza filtro escono le stesse voci nello stesso ordine;
+--   * NON sono itemID falsi: GetLootInfoByIndex restituisce itemID reali e usabili
+--     (una nota precedente diceva il contrario, era sbagliata). Espone solo itemID,
+--     encounterID e i flag displayAs*: name e slot mancano perche' arrivano a item
+--     caricato, ma per una mappa itemID -> boss non servono.
+-- Se ci si torna, serve un'API nuova che leghi pezzo e token, non un giro diverso su
+-- queste. Nota di metodo: enumerare i boss e chiamare EJ_SetDifficulty nello stesso
+-- giro non funziona -- una difficolta' inesistente per quel raid fa perdere al
+-- journal il contesto dell'istanza e l'enumerazione muore al primo raid (84 boss
+-- invece di 493). Vanno tenuti in due passate separate.
+--
+-- Il boss si recupera invece dalle altre source della stessa apparenza, vedi PiecesIn.
 
 -- Le API di transmog cambiano nome fra le espansioni (GetSetSources e' sparita in
 -- 12.0.x): elencare cosa esiste davvero evita di indovinare al giro dopo.
@@ -174,7 +266,7 @@ local mismatches = {}
 --
 -- `have`/`total` arrivano da CountSet: verifica che l'elenco combaci con la frazione
 -- mostrata nella cella, altrimenti il tooltip contraddirebbe il numero.
-local function PiecesIn(setID, have, total)
+local function PiecesIn(setID, have, total, tier)
     local out = {}
 
     -- Un'apparenza ha piu' source (le varie difficolta', e dal T28 anche il Catalyst).
@@ -198,8 +290,12 @@ local function PiecesIn(setID, have, total)
             unmapped[tostring(invType)] = (info and info.itemID) or "?"
             slot = "Slot " .. tostring(invType)
         end
-        local boss, instance = nil, nil
-        if sourceID then boss, instance = BossFor(sourceID) end
+        -- Slot da token di un tier moderno: la risposta la da' TOKEN_BOSS, non il
+        -- gioco. Va PRIMA di BossFor, non dopo come fallback: il giro per visualID
+        -- una risposta la trova quasi sempre, solo che e' quella sbagliata.
+        local boss, instance = TokenBossFor(tier, slot)
+        if boss then stats.daToken = stats.daToken + 1 end
+        if not boss and sourceID then boss, instance = BossFor(sourceID) end
         -- Nessun drop sulla primaria: si provano le altre source dello stesso
         -- visual (stesso aspetto, difficolta' diversa), dove il boss c'e'.
         if not boss and info and info.visualID then
@@ -257,6 +353,9 @@ end
 local function Dump()
     local raw, data, dropped, pieces, errors = {}, {}, {}, {}, {}
     local seen = {}
+    -- Dump() gira piu' volte per sessione (login, /wmtier, logout): senza azzerare,
+    -- i contatori si sommano fra una passata e l'altra e sembrano il triplo.
+    stats.viaVariante, stats.daToken = 0, 0
 
     local function consider(info)
         if not info or seen[info.setID] then return end
@@ -293,7 +392,7 @@ local function Dump()
         -- Anche i set completi: il tooltip li mostra tutti verdi, non vuoti.
         -- Sotto pcall: un errore qui deve degradare il solo elenco dei pezzi,
         -- non far saltare tutto il dump (e con esso `collected`).
-        local ok, list = pcall(PiecesIn, info.setID, have, total)
+        local ok, list = pcall(PiecesIn, info.setID, have, total, tier)
         if not ok then
             errors[#errors + 1] = tier .. "/" .. class .. ": " .. tostring(list)
         else
