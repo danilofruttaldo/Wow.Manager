@@ -45,10 +45,29 @@ const sections = [
 </Base>
 
 <style>
-/* Home a "pulsantoni": griglia di grossi tasti a tessera, uno per sezione. */
-.home-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; max-width: 1000px; margin: 0.5rem auto 0; }
+/* Home a "pulsantoni": griglia di grossi tasti a tessera, uno per sezione.
+   Le colonne dichiarate sono il DOPPIO di quelle visibili (6 per 3, 4 per 2) e ogni
+   card ne occupa due: serve a mezza colonna di gioco per centrare l'ultima riga
+   quando resta incompleta (sotto), cosa che con 3 colonne secche non si puo' fare. */
+.home-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.9rem; max-width: 1000px; margin: 0.5rem auto 0; }
+.home-btn { grid-column: auto / span 2; }
+
+/* Ultima riga spaiata: le sezioni sono 7, quindi su 3 colonne l'ultima card resterebbe
+   sola a sinistra con due colonne di vuoto accanto. Spostandola al centro la griglia
+   torna simmetrica. Le regole guardano la POSIZIONE (nth-child), non il 7 di oggi:
+   aggiungere o togliere una sezione non le rompe, e con 9 card non scattano affatto. */
+.home-btn:last-child:nth-child(3n + 1)      { grid-column: 3 / span 2; }  /* 1 sola in coda */
+.home-btn:nth-last-child(2):nth-child(3n + 1) { grid-column: 2 / span 2; }  /* 2 in coda */
+
 /* Sempre 2 o 3 colonne: sotto i 760px scende a 2, mai a colonna singola. */
-@media (max-width: 760px) { .home-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; } }
+@media (max-width: 760px) {
+  .home-grid { grid-template-columns: repeat(4, 1fr); gap: 0.7rem; }
+  /* Su 2 colonne le righe si spezzano altrove: le regole del 3 vanno spente, o
+     centrerebbero una card che sta gia' in una riga piena. */
+  .home-btn:last-child:nth-child(3n + 1),
+  .home-btn:nth-last-child(2):nth-child(3n + 1) { grid-column: auto / span 2; }
+  .home-btn:last-child:nth-child(2n + 1)        { grid-column: 2 / span 2; }
+}
 
 .home-btn {
   position: relative; display: flex; flex-direction: column; gap: 0.3rem;
