@@ -163,6 +163,7 @@ export interface TmogCell {
   total: number;
   state: 'na' | 'none' | 'partial' | 'full';      // na = versione inesistente per questo tier
   span: number;                                   // colonne occupate: >1 se un aspetto ne copre più d'una
+  colonna: string;                                // colonna in cui mostrarla: puo' non essere la sua chiave
   pieces: TmogPiece[];                            // TUTTI i pezzi, presi e non
 }
 export interface TmogRow {
@@ -265,10 +266,15 @@ export function getTransmog(): TmogClass[] {
       const rows: TmogRow[] = tiers
         .filter((t) => t.exp === exp.key && (t.armorType || (tmogTierIndex[t.key] ?? 0) >= startIdx))
         .map((t) => {
+        // Una versione puo' vivere in una colonna diversa dalla sua chiave: nel T10
+        // sia "10 Heroic" sia "25 Heroic" sono heroic e vanno nella stessa casella,
+        // nel T9 le due fazioni stanno entrambe a 10 Player (Normal). Le chiavi restano
+        // distinte perche' sono set diversi, ma la colonna in cui si mostrano no.
+        const colonnaDi = ((t as any).colonna ?? {}) as Record<string, string>;
         const cells: TmogCell[] = cols.map((c): TmogCell => {
           const label = t.versions?.[c.key];
           // Versione inesistente per questo set → cella tratteggiata.
-          if (!label) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na', span: 1, pieces: [] };
+          if (!label) return { slot: c.key, label: label ?? '', got: 0, total: 0, state: 'na', span: 1, colonna: c.key, pieces: [] };
           // Dal gioco: [pezzi posseduti, pezzi totali]. Il totale varia per classe e
           // per versione, quindi il `pieces` del tier resta solo come fallback.
           const cell = collected[slug]?.[t.key]?.[c.key];
@@ -277,7 +283,7 @@ export function getTransmog(): TmogClass[] {
           classGot += got;
           classTotal += total;
           return {
-            slot: c.key, label, got, total, span: 1,
+            slot: c.key, label, got, total, span: 1, colonna: colonnaDi[c.key] ?? c.key,
             state: got >= total ? 'full' : got > 0 ? 'partial' : 'none',
             pieces: ((pieceList[slug]?.[t.key]?.[c.key] ?? []) as [string, number][])
               .map(([testo, preso]) => ({

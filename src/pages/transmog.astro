@@ -108,7 +108,13 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                           <tr class:list={['trow', { fine: k === r.cells.length - 1 }]}
                               style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}>
                             {k === 0 && intestazione(r.cells.length)}
-                            {cella(cell, cols.length)}
+                            {/* La sotto-riga resta incolonnata: il valore cade nella colonna
+                                dichiarata da `stackCol` e le altre restano tratteggiate. Il
+                                tratteggio dice "questa versione non esiste per questo tier"
+                                ed e' informazione voluta, non un buco da togliere. */}
+                            {cols.map(col => col.key === cell.colonna
+                              ? cella(cell)
+                              : <td><span class="na"></span></td>)}
                           </tr>
                         ))
                       : (
