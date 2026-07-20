@@ -651,39 +651,6 @@
       }
     },
     {
-      "key": "brf-lfr",
-      "tier": "6.0",
-      "name": "Blackrock Foundry (set LFR)",
-      "exp": "wod",
-      "pieces": 6,
-      "versions": {
-        "lfr": "Raid Finder"
-      },
-      "note": "In LFR non droppa il T17: al suo posto ci sono 4 set per tipo di armatura, da 6 pezzi.",
-      "raids": [
-        [
-          "BRF",
-          "Blackrock Foundry"
-        ]
-      ],
-      "names": {
-        "death-knight": "Blacksteel Battleplate",
-        "demon-hunter": "Sootfur Garb",
-        "druid": "Sootfur Garb",
-        "evoker": "Ashlink Armor",
-        "hunter": "Ashlink Armor",
-        "mage": "Ebonflame Raiment",
-        "monk": "Sootfur Garb",
-        "paladin": "Blacksteel Battleplate",
-        "priest": "Ebonflame Raiment",
-        "rogue": "Sootfur Garb",
-        "shaman": "Ashlink Armor",
-        "warlock": "Ebonflame Raiment",
-        "warrior": "Blacksteel Battleplate"
-      },
-      "armorType": true
-    },
-    {
       "key": "t18",
       "tier": "T18",
       "name": "Hellfire Citadel",
