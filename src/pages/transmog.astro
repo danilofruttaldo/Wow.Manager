@@ -69,11 +69,9 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                       return cell.label && cell.label !== 'Versione unica'
                         ? `${nome} — ${cell.label}` : nome;
                     };
-                    // Nome del set. `alte` = quante sotto-righe deve scavalcare: serve
-                    // solo alle righe impilate, dove il nome sta a sinistra una volta
-                    // sola e le versioni gli scorrono accanto.
-                    const intestazione = (alte?: number) => (
-                      <td class="rhead" rowspan={alte && alte > 1 ? alte : undefined}>
+                    // Nome del set, a sinistra, una riga per set.
+                    const intestazione = () => (
+                      <td class="rhead">
                         <span class="tname">
                           <strong>{r.setName ?? r.name}</strong>
                           {r.setName && r.tier.startsWith('T') && <span class="ttier">({r.tier})</span>}
@@ -84,47 +82,44 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                       </td>
                     );
                     // Il tooltip c'e' SEMPRE dove c'e' un contatore: se l'elenco pezzi
-                    // manca resta almeno il titolo, invece di una cella muta. Legarlo
-                    // a `pieces.length > 0` lo faceva sparire proprio dove i dati erano
-                    // incompleti, cioe' dove serviva accorgersene.
-                    const cella = (cell: TmogCell, larga?: number) => (
-                      cell.state === 'na'
-                        ? <td><span class="na"></span></td>
-                        : <td class="cell has-tip"
-                              colspan={larga ?? (cell.span > 1 ? cell.span : undefined)}
-                              style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}
-                              tabindex={0}
-                              data-tip-title={titolo(cell)}
-                              data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')}>
-                            <span class="frac">{cell.got}/{cell.total}</span>
-                            {cell.setName && <span class="vname">{cell.setName}</span>}
-                            {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
-                            <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
-                          </td>
+                    // manca resta almeno il titolo, invece di una cella muta.
+                    //
+                    // Le varianti che cadono nella STESSA colonna stanno dentro la
+                    // stessa cella, una sotto l'altra: il T10 ha due Sanctified in
+                    // Heroic e il T9 due fazioni in Normal. Prima erano sotto-righe
+                    // separate, ognuna con tre caselle tratteggiate accanto: tre righe
+                    // di tabella per tre numeri.
+                    const varianti = (chiave: string) =>
+                      r.cells.filter(c => c.colonna === chiave && c.state !== 'na');
+                    return (
+                      <tr class="trow fine" style={`--pct:${r.pct}`}>
+                        {intestazione()}
+                        {cols.map(col => {
+                          const dentro = varianti(col.key);
+                          if (dentro.length === 0) return <td><span class="na"></span></td>;
+                          const tot = dentro.reduce((s, c) => s + c.total, 0);
+                          const got = dentro.reduce((s, c) => s + c.got, 0);
+                          return (
+                            <td class="cell" colspan={dentro[0].span > 1 ? dentro[0].span : undefined}
+                                style={`--pct:${tot ? (got / tot) * 100 : 0}`}>
+                              {/* Il tooltip sta sulla singola variante, non sulla cella:
+                                  in una cella possono essercene due, con pezzi diversi. */}
+                              {dentro.map(cell => (
+                                <span class="var has-tip" tabindex={0}
+                                      data-tip-title={titolo(cell)}
+                                      data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('
+')}>
+                                  <span class="frac">{cell.got}/{cell.total}</span>
+                                  {cell.setName && <span class="vname">{cell.setName}</span>}
+                                  {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
+                                  <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
+                                </span>
+                              ))}
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
-                    // Impilata: una sotto-riga per versione, larga quanto tutte le
-                    // colonne, e il tint segue il completamento della singola versione
-                    // invece che quello complessivo della riga.
-                    return r.stack
-                      ? r.cells.map((cell, k) => (
-                          <tr class:list={['trow', { fine: k === r.cells.length - 1 }]}
-                              style={`--pct:${cell.total ? (cell.got / cell.total) * 100 : 0}`}>
-                            {k === 0 && intestazione(r.cells.length)}
-                            {/* La sotto-riga resta incolonnata: il valore cade nella colonna
-                                dichiarata da `stackCol` e le altre restano tratteggiate. Il
-                                tratteggio dice "questa versione non esiste per questo tier"
-                                ed e' informazione voluta, non un buco da togliere. */}
-                            {cols.map(col => col.key === cell.colonna
-                              ? cella(cell)
-                              : <td><span class="na"></span></td>)}
-                          </tr>
-                        ))
-                      : (
-                        <tr class="trow fine" style={`--pct:${r.pct}`}>
-                          {intestazione()}
-                          {r.cells.map(cell => cella(cell))}
-                        </tr>
-                      );
                   })}
                 </Fragment>
               ))}
@@ -207,10 +202,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   /* Cella che copre piu' colonne (righe impilate e T16): il contenuto resta largo
      come una colonna normale e centrato. Senza questo la barra si stira per tutta la
      tabella e sembra una sottolineatura invece che un indicatore di avanzamento. */
-  .tmog-panel td.cell[colspan] .frac,
-  .tmog-panel td.cell[colspan] .vname,
-  .tmog-panel td.cell[colspan] .vlab,
-  .tmog-panel td.cell[colspan] .bar { max-width: 150px; margin-left: auto; margin-right: auto; }
+  .tmog-panel td.cell[colspan] .var { max-width: 150px; margin-left: auto; margin-right: auto; }
   .tmog-panel .bar-fill { display: block; height: 100%; border-radius: 999px; background: currentColor; }
   /* Rampa continua rosso -> giallo -> verde in funzione di --pct (0..100, unitless).
      Due mix in cascata: il primo porta bad -> warn nella prima meta', il secondo
@@ -254,9 +246,11 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   }
 
   /* Cella con pezzi mancanti: la frazione segnala che c'e' il dettaglio sotto. */
-  .tmog-panel td.has-tip { cursor: help; }
-  .tmog-panel td.has-tip .frac { text-decoration: underline dotted; text-underline-offset: 2px; }
-  .tmog-panel td.has-tip:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  /* Una cella puo' contenere piu' varianti: il tooltip e il focus stanno su ognuna. */
+  .tmog-panel .var { display: block; cursor: help; }
+  .tmog-panel .var + .var { margin-top: 0.28rem; padding-top: 0.28rem; border-top: 1px dashed var(--border-light); }
+  .tmog-panel .var .frac { text-decoration: underline dotted; text-underline-offset: 2px; }
+  .tmog-panel .var:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
   /* Popover: fisso rispetto al viewport, cosi' non lo taglia lo scroll della tabella. */
   .tmog-tip {
@@ -379,7 +373,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     const cellOf = (e: Event) => {
       const t = e.target;
       return t instanceof Element
-        ? (t.closest('td.has-tip') as HTMLElement | null)
+        ? (t.closest('[data-tip]') as HTMLElement | null)
         : null;
     };
 
