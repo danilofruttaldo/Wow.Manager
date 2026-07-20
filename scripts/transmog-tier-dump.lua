@@ -46,10 +46,40 @@ local TIER = {
     ["10|Nerub-ar Palace"] = "t32", ["10|Liberation of Undermine"] = "t33",
     ["10|Manaforge Omega"] = "t34", ["11|The Voidspire"] = "t35",
 }
+
+-- Set per TIPO DI ARMATURA: uno solo per stoffa/cuoio/maglia/piastre, condiviso da
+-- tutte le classi che portano quel tipo. Si riconoscono dal classMask con piu' bit
+-- accesi -- 400 stoffa, 3592 cuoio, 4164 maglia, 35 piastre -- e vanno su una riga
+-- loro, distinta da quella dei set di classe dello stesso raid.
+--
+-- ⚠️ Per questo la mappa e' separata da TIER invece di stare li' dentro: Hellfire
+-- Citadel compare in tutte e due. Le difficolta' normali danno il tier di classe
+-- (t18), il solo Raid Finder da' il set condiviso (hfc-lfr), perche' in WoD in LFR
+-- il tier di classe non esisteva. Con una mappa sola le quattro varianti LFR
+-- finivano su t18 e venivano buttate come "multiclasse".
+local TIER_ARMOR = {
+    ["5|Hellfire Citadel"] = "hfc-lfr",
+    ["7|Uldir"] = "uldir", ["7|Battle of Dazar'alor"] = "bod",
+    ["7|The Eternal Palace"] = "tep", ["7|Ny'alotha, the Waking City"] = "nya",
+    ["8|Castle Nathria"] = "nathria", ["8|Sanctum of Domination"] = "sod",
+}
+
 -- Ordine dei tier nel manifest (serve solo a rendere l'output ordinato).
 local TIER_ORDER = { "t0", "t05", "t1", "t2", "t25", "t3", "t4", "t5", "t6", "t7", "t8",
-    "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18", "t19", "t20",
-    "t21", "t28", "t29", "t30", "t31", "t32", "t33", "t34", "t35" }
+    "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "brf-lfr", "t18",
+    "hfc-lfr", "t19", "t20", "t21", "uldir", "bod", "tep", "nya", "nathria",
+    "sod", "t28", "t29", "t30", "t31", "t32", "t33", "t34", "t35" }
+
+-- Le classi accese in un classMask. Per un set di classe e' una sola; per un set per
+-- tipo di armatura sono tutte quelle che lo portano, ed e' li' che serve: lo stesso
+-- set va scritto sotto ognuna, altrimenti la riga resta vuota per tutti.
+local function ClassiIn(mask)
+    local out = {}
+    for i = 1, 13 do
+        if bit.band(mask or 0, bit.lshift(1, i - 1)) ~= 0 then out[#out + 1] = CLASSES[i] end
+    end
+    return out
+end
 
 -- description in-game -> slot colonna. Le 4 colonne sono SLOT, non difficolta'
 -- letterali: prima di Cataclysm l'asse era 10/25 uomini o la fazione.
@@ -493,16 +523,21 @@ local function Dump()
             collected = have, total = total,
         }
 
-        local tier = TIER[(info.expansionID or -1) .. "|" .. (info.label or "")]
+        local chiave = (info.expansionID or -1) .. "|" .. (info.label or "")
+        local mask = info.classMask or 0
+        -- Piu' bit accesi = set per tipo di armatura, che ha una riga sua. Non e' piu'
+        -- motivo di scarto: prima finiva in dropped come "multiclasse" e le righe di
+        -- BfA, Nathria, Sanctum e l'LFR di WoD restavano vuote per tutti.
+        local condiviso = bit.band(mask, mask - 1) ~= 0
+        local tier = condiviso and TIER_ARMOR[chiave] or TIER[chiave]
         if not tier then return end
         if IGNORE[info.description] then
             dropped[#dropped + 1] = tier .. ": " .. tostring(info.description)
             return
         end
-        -- I set di raid non specifici di classe (classMask con piu' bit) non sono tier set.
-        local class = CLASSES[select(2, math.frexp(info.classMask or 0))]
-        if not class or bit.band(info.classMask, info.classMask - 1) ~= 0 then
-            dropped[#dropped + 1] = tier .. ": multiclasse"
+        local classi = ClassiIn(mask)
+        if #classi == 0 then
+            dropped[#dropped + 1] = tier .. ": classMask vuoto"
             return
         end
         local slot = (tier == "t9") and FACTION_SLOT[info.requiredFaction] or SLOT[info.description]
@@ -510,19 +545,25 @@ local function Dump()
             dropped[#dropped + 1] = tier .. ": slot ignoto " .. tostring(info.description)
             return
         end
-        data[class] = data[class] or {}
-        data[class][tier] = data[class][tier] or {}
-        data[class][tier][slot] = { have, total }
-        -- Anche i set completi: il tooltip li mostra tutti verdi, non vuoti.
+        -- L'elenco dei pezzi si calcola UNA volta: e' lo stesso set, e per un set
+        -- condiviso rifarlo per ognuna delle classi sarebbe solo lavoro ripetuto.
         -- Sotto pcall: un errore qui deve degradare il solo elenco dei pezzi,
         -- non far saltare tutto il dump (e con esso `collected`).
         local ok, list = pcall(PiecesIn, info.setID, have, total, tier, slot)
         if not ok then
-            errors[#errors + 1] = tier .. "/" .. class .. ": " .. tostring(list)
-        else
-            pieces[class] = pieces[class] or {}
-            pieces[class][tier] = pieces[class][tier] or {}
-            pieces[class][tier][slot] = list
+            errors[#errors + 1] = tier .. "/" .. classi[1] .. ": " .. tostring(list)
+            list = nil
+        end
+        for _, class in ipairs(classi) do
+            data[class] = data[class] or {}
+            data[class][tier] = data[class][tier] or {}
+            data[class][tier][slot] = { have, total }
+            -- Anche i set completi: il tooltip li mostra tutti verdi, non vuoti.
+            if list then
+                pieces[class] = pieces[class] or {}
+                pieces[class][tier] = pieces[class][tier] or {}
+                pieces[class][tier][slot] = list
+            end
         end
     end
 
