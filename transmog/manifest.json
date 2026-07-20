@@ -1179,6 +1179,7 @@
         "mythic": "Mythic"
       },
       "note": "Ritorno dei tier set in 9.2, insieme al Creation Catalyst.",
+      "fonte": { "Back": "Catalyst" },
       "raids": [
         [
           "SOTFO",
@@ -1212,6 +1213,7 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
+      "fonte": { "Back": "Catalyst" },
       "raids": [
         [
           "VOTI",
@@ -1246,6 +1248,7 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
+      "fonte": { "Back": "Catalyst" },
       "raids": [
         [
           "ABE",
@@ -1281,6 +1284,7 @@
         "mythic": "Mythic"
       },
       "note": "In Season 4 esistono anche le varianti 'Awakened'.",
+      "fonte": { "Back": "Catalyst" },
       "raids": [
         [
           "AMI",
@@ -1315,6 +1319,7 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
+      "fonte": { "Back": "Catalyst" },
       "raids": [
         [
           "NP",
@@ -1349,6 +1354,7 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
+      "fonte": { "Back": "Catalyst" },
       "raids": [
         [
           "LOU",
@@ -1383,6 +1389,7 @@
         "heroic": "Heroic",
         "mythic": "Mythic"
       },
+      "fonte": { "Back": "Vendor · Loombeast Silk" },
       "raids": [
         [
           "MO",
@@ -1418,6 +1425,7 @@
         "mythic": "Mythic"
       },
       "note": "Un solo set per i tre raid di lancio: 4 slot dal Voidspire, il petto dal Dreamrift, un omni-token dal boss finale di March on Quel'Danas.",
+      "fonte": { "Back": "Catalyst" },
       "raids": [
         [
           "VS",
