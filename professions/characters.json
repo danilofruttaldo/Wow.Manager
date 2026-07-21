@@ -246,6 +246,174 @@
                                          "midnightSpecs":  [
 
                                                            ]
-                                     }
+                                     },
+                       "Dotandroll":  {
+                                          "realm":  "Pozzo dell\u0027Eternità",
+                                          "race":  "orc",
+                                          "class":  "warlock",
+                                          "professions":  [
+                                                              "Tailoring",
+                                                              "Enchanting"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Tearsforfear":  {
+                                            "realm":  "Nemesis",
+                                            "race":  "goblin",
+                                            "class":  "warlock",
+                                            "professions":  [
+                                                                "Alchemy",
+                                                                "Engineering"
+                                                            ],
+                                            "midnightSpecs":  [
+
+                                                              ]
+                                        },
+                       "Menagerie":  {
+                                         "realm":  "Nemesis",
+                                         "race":  "nightborne",
+                                         "class":  "warlock",
+                                         "professions":  [
+                                                             "Enchanting",
+                                                             "Tailoring"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Mustaina":  {
+                                        "realm":  "Pozzo dell\u0027Eternità",
+                                        "race":  "tauren",
+                                        "class":  "druid",
+                                        "professions":  [
+                                                            "Alchemy",
+                                                            "Engineering"
+                                                        ],
+                                        "midnightSpecs":  [
+
+                                                          ]
+                                    },
+                       "Ecoterrorist":  {
+                                            "realm":  "Nemesis",
+                                            "race":  "highmountain-tauren",
+                                            "class":  "druid",
+                                            "professions":  [
+                                                                "Engineering",
+                                                                "Mining"
+                                                            ],
+                                            "midnightSpecs":  [
+
+                                                              ]
+                                        },
+                       "Shiftzord":  {
+                                         "realm":  "Nemesis",
+                                         "race":  "zandalari-troll",
+                                         "class":  "druid",
+                                         "professions":  [
+                                                             "Mining",
+                                                             "Jewelcrafting"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Catatonic":  {
+                                         "realm":  "Nemesis",
+                                         "race":  "haranir",
+                                         "class":  "druid",
+                                         "professions":  [
+                                                             "Herbalism",
+                                                             "Enchanting"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Repository":  {
+                                          "realm":  "Nemesis",
+                                          "race":  "blood-elf",
+                                          "class":  "mage",
+                                          "professions":  [
+                                                              "Tailoring",
+                                                              "Enchanting"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Spelling":  {
+                                        "realm":  "Pozzo dell\u0027Eternità",
+                                        "race":  "nightborne",
+                                        "class":  "mage",
+                                        "professions":  [
+                                                            "Engineering",
+                                                            "Enchanting"
+                                                        ],
+                                        "midnightSpecs":  [
+
+                                                          ]
+                                    },
+                       "Moneystrike":  {
+                                           "realm":  "Nemesis",
+                                           "race":  "goblin",
+                                           "class":  "death-knight",
+                                           "professions":  [
+                                                               "Mining",
+                                                               "Blacksmithing"
+                                                           ],
+                                           "midnightSpecs":  [
+
+                                                             ]
+                                       },
+                       "Demoversion":  {
+                                           "realm":  "Pozzo dell\u0027Eternità",
+                                           "race":  "blood-elf",
+                                           "class":  "demon-hunter",
+                                           "professions":  [
+                                                               "Herbalism",
+                                                               "Inscription"
+                                                           ],
+                                           "midnightSpecs":  [
+
+                                                             ]
+                                       },
+                       "Nightform":  {
+                                         "realm":  "Pozzo dell\u0027Eternità",
+                                         "race":  "nightborne",
+                                         "class":  "priest",
+                                         "professions":  [
+                                                             "Engineering",
+                                                             "Mining"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Windwasher":  {
+                                          "realm":  "Nemesis",
+                                          "race":  "pandaren",
+                                          "class":  "monk",
+                                          "professions":  [
+                                                              "Skinning",
+                                                              "Leatherworking"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Dragoncelloh":  {
+                                            "realm":  "Pozzo dell\u0027Eternità",
+                                            "race":  "dracthyr",
+                                            "class":  "evoker",
+                                            "professions":  [
+                                                                "Skinning",
+                                                                "Leatherworking"
+                                                            ],
+                                            "midnightSpecs":  [
+
+                                                              ]
+                                        }
                    }
 }
