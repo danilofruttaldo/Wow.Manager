@@ -12,6 +12,7 @@ import fontsManifest from '../../fonts/manifest.json';
 import professionsManifest from '../../professions/manifest.json';
 import extraManifest from '../../scripts/manifest.json';
 import transmogManifest from '../../transmog/manifest.json';
+import profTreesManifest from '../../professions/trees.json';
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -128,6 +129,24 @@ export const professionsMeta = {
 };
 export function getProfessions(): Profession[] {
   return ((professionsManifest as any).professions ?? []) as Profession[];
+}
+
+// Alberi di specializzazione estratti dal CLIENT (scripts/prof-spec-dump.lua), non
+// dalle guide web -- che sui nomi sbagliano e i rank massimi non li pubblicano.
+// File separato da manifest.json apposta: e' dato macchina-generato, non redazionale.
+// `cap` = rank massimo del nodo, cioe' quanti punti conoscenza vi entrano.
+export interface ProfNode {
+  name: string;
+  cap: number;
+  desc?: string;
+  children?: ProfNode[];
+}
+export interface ProfTree {
+  skillLine: number;
+  specs: ProfNode[];
+}
+export function getProfessionTrees(): Record<string, ProfTree> {
+  return ((profTreesManifest as any).professions ?? {}) as Record<string, ProfTree>;
 }
 
 // ── Extra (script / link / appunti) ───────────────
