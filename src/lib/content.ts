@@ -549,11 +549,13 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     // 90 al cap): i numeri reali vivono in AllTheThings.lua (chiave `lvl`) e si agganciano
     // a parte, gestendo gli omonimi per realm. Le professioni vengono dal tracker
     // characters.json, popolato durante il grind (quindi ancora parziale).
-    const info0 = CHAR_INFO[name.toLowerCase()];
-    const realmName = realmCode ? (REALM_ABBR[realmCode] ?? realmCode) : info0?.realm;
-    // Omonimi (Furricane vulpera·P vs worgen·N): le professioni del tracker valgono solo
-    // se il realm combacia, altrimenti un omonimo erediterebbe quelle dell'altro. La spec
-    // e' gia' disambiguata per razza (CHAR_SPEC_BY_RACE); qui disambiguo per realm.
+    const realmCandidate = realmCode ? (REALM_ABBR[realmCode] ?? realmCode) : undefined;
+    // Omonimi (Furricane vulpera·P vs worgen·N): la chiave "nome|realm" vince sul nome nudo,
+    // come CHAR_SPEC_BY_RACE fa per la spec. Difesa extra: le professioni valgono solo se il
+    // realm combacia, cosi' un omonimo senza chiave dedicata non eredita quelle dell'altro.
+    const info0 = (realmCandidate ? CHAR_INFO[`${name}|${realmCandidate}`.toLowerCase()] : undefined)
+      ?? CHAR_INFO[name.toLowerCase()];
+    const realmName = realmCandidate ?? info0?.realm;
     const info = (info0 && realmName && info0.realm && info0.realm !== realmName) ? undefined : info0;
     const level = todo ? '0 · non creato' : wip ? 'in leveling (<90)' : '90';
     const tipLines = [name];

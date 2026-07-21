@@ -414,6 +414,162 @@
                                             "midnightSpecs":  [
 
                                                               ]
-                                        }
+                                        },
+                       "Dwarfnought":  {
+                                           "realm":  "Ravencrest",
+                                           "race":  "dwarf",
+                                           "class":  "warrior",
+                                           "professions":  [
+                                                               "Engineering",
+                                                               "Mining"
+                                                           ],
+                                           "midnightSpecs":  [
+
+                                                             ]
+                                       },
+                       "Tinytank":  {
+                                        "realm":  "Pozzo dell\u0027Eternità",
+                                        "race":  "gnome",
+                                        "class":  "warrior",
+                                        "professions":  [
+                                                            "Alchemy",
+                                                            "Engineering"
+                                                        ],
+                                        "midnightSpecs":  [
+
+                                                          ]
+                                    },
+                       "Plateatico":  {
+                                          "realm":  "Pozzo dell\u0027Eternità",
+                                          "race":  "dark-iron-dwarf",
+                                          "class":  "paladin",
+                                          "professions":  [
+                                                              "Blacksmithing",
+                                                              "Engineering"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Shottini":  {
+                                        "realm":  "Pozzo dell\u0027Eternità",
+                                        "race":  "mechagnome",
+                                        "class":  "hunter",
+                                        "professions":  [
+                                                            "Engineering",
+                                                            "Enchanting"
+                                                        ],
+                                        "midnightSpecs":  [
+
+                                                          ]
+                                    },
+                       "Gnomorrage":  {
+                                          "realm":  "Pozzo dell\u0027Eternità",
+                                          "race":  "gnome",
+                                          "class":  "rogue",
+                                          "professions":  [
+                                                              "Engineering",
+                                                              "Mining"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Holytude":  {
+                                        "realm":  "Nemesis",
+                                        "race":  "draenei",
+                                        "class":  "priest",
+                                        "professions":  [
+                                                            "Jewelcrafting",
+                                                            "Engineering"
+                                                        ],
+                                        "midnightSpecs":  [
+
+                                                          ]
+                                    },
+                       "Discoteque":  {
+                                          "realm":  "Silvermoon",
+                                          "race":  "void-elf",
+                                          "class":  "priest",
+                                          "professions":  [
+                                                              "Herbalism",
+                                                              "Alchemy"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Furricane|Nemesis":  {
+                                                 "realm":  "Nemesis",
+                                                 "race":  "worgen",
+                                                 "class":  "death-knight",
+                                                 "professions":  [
+                                                                     "Engineering",
+                                                                     "Skinning"
+                                                                 ],
+                                                 "midnightSpecs":  [
+
+                                                                   ]
+                                             },
+                       "Shockolat":  {
+                                         "realm":  "Nemesis",
+                                         "race":  "dwarf",
+                                         "class":  "shaman",
+                                         "professions":  [
+                                                             "Engineering",
+                                                             "Mining"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Spellstill":  {
+                                          "realm":  "Pozzo dell\u0027Eternità",
+                                          "race":  "human",
+                                          "class":  "mage",
+                                          "professions":  [
+                                                              "Engineering",
+                                                              "Tailoring"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Dotnetcore":  {
+                                          "realm":  "Nemesis",
+                                          "race":  "void-elf",
+                                          "class":  "warlock",
+                                          "professions":  [
+                                                              "Engineering",
+                                                              "Tailoring"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Demonstrate":  {
+                                           "realm":  "Silvermoon",
+                                           "race":  "night-elf",
+                                           "class":  "demon-hunter",
+                                           "professions":  [
+                                                               "Herbalism",
+                                                               "Inscription"
+                                                           ],
+                                           "midnightSpecs":  [
+
+                                                             ]
+                                       },
+                       "Vanillidan":  {
+                                          "realm":  "Nemesis",
+                                          "race":  "void-elf",
+                                          "class":  "demon-hunter",
+                                          "professions":  [
+                                                              "Engineering",
+                                                              "Herbalism"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      }
                    }
 }
