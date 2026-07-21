@@ -657,6 +657,19 @@
       "body_file": "rogue/tricks-shiv.txt",
       "body": null,
       "notes": "Creata 2026-07-20 su richiesta utente ('nuova macro rogue shared'), corpo fornito verbatim. PRIMA macro rogue del repertorio: le cartelle macros/rogue/{assassination,outlaw,subtlety} esistevano gia' vuote. Pattern mouseover-fallback identico a mage-decurse-spellsteal: [@mouseover,help,nodead] instrada Tricks sull'alleato sotto il cursore senza cambiare bersaglio, il fallback dopo il `;` copre il caso 'nessun alleato sotto il mouse' con Shiv sul target corrente. Entrambe baseline per le tre spec (Shiv e' condiviso da Dragonflight in poi, in Assassination diffonde i veleni) -> spec:null, cross-spec. #showtooltip nudo: l'icona segue il ramo che si risolverebbe premendo ora, quindi mostra Tricks col mouse sull'alleato e Shiv altrimenti — nominarne una fisserebbe l'icona sbagliata meta' delle volte. CAVEAT: senza mouseover ALLEATO la macro fa Shiv, non Tricks sul focus/party1 — se serve un Tricks 'fisso' sul tank va un secondo bottone."
+    },
+    "rogue-outlaw-grappling-hook": {
+      "name": "Grappling Hook",
+      "desc": "Grappling Hook sulla posizione del mouse (rampino di movimento).",
+      "scope": "account",
+      "class": "rogue",
+      "spec": "outlaw",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "rogue/outlaw/grappling-hook.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-21 ('nuova macro rogue', utente incerto shared vs Outlaw). VERIFICATO spec:outlaw (Wowpedia + ricerca guide Midnight/TWW): Grappling Hook NON e' baseline ne' talento di classe condiviso — dalla 10.0.0 e' un talento dell'ALBERO Outlaw (row 2), assente da Assassination e Subtlety. Su quelle due spec la macro darebbe 'spell sconosciuta', per questo spec:outlaw e non spec:null come rogue-tricks-shiv. NB il talento di classe Thrill Seeking (aggiunge 1 carica) e' condiviso ma agisce solo su chi ha gia' Grappling Hook, cioe' Outlaw. Piazza Grappling Hook sulla posizione del mouse (@cursor): rampino che ti tira al punto bersagliato (mobilita', stesso schema ground-target @cursor delle altre classi). #showtooltip nudo mostra Grappling Hook. SECONDA macro rogue del repertorio, prima Outlaw-specific."
     }
   }
 }
