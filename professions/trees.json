@@ -271,6 +271,142 @@
                                                                          ]
                                                            }
                                           },
+                        "enchanting":  {
+                                           "Midnight":  {
+                                                            "skillLine":  2909,
+                                                            "specs":  [
+                                                                          {
+                                                                              "name":  "Elevating Equipment",
+                                                                              "cap":  30,
+                                                                              "desc":  "Empower your ability to magically enhance equipment, improving your talents at creating permanent equipment enchantments.",
+                                                                              "children":  [
+                                                                                               {
+                                                                                                   "name":  "Haranir Heightening",
+                                                                                                   "cap":  20,
+                                                                                                   "children":  [
+                                                                                                                    {
+                                                                                                                        "name":  "Nature\u0027s Novelties",
+                                                                                                                        "cap":  20
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name":  "Worldsoul Wards",
+                                                                                                                        "cap":  20
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name":  "Azerothian Arms",
+                                                                                                                        "cap":  20
+                                                                                                                    }
+                                                                                                                ]
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "Amani Augments",
+                                                                                                   "cap":  20,
+                                                                                                   "children":  [
+                                                                                                                    {
+                                                                                                                        "name":  "Trollish Tools",
+                                                                                                                        "cap":  20
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name":  "Berserker Brawn",
+                                                                                                                        "cap":  20
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name":  "Zul\u0027Aman Zeal",
+                                                                                                                        "cap":  20
+                                                                                                                    }
+                                                                                                                ]
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "Thalassian Talents",
+                                                                                                   "cap":  20,
+                                                                                                   "children":  [
+                                                                                                                    {
+                                                                                                                        "name":  "Quel\u0027Thalas Quality",
+                                                                                                                        "cap":  20
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name":  "Eversong Empowerments",
+                                                                                                                        "cap":  20
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name":  "Silvermoon\u0027s Spellpower",
+                                                                                                                        "cap":  20
+                                                                                                                    }
+                                                                                                                ]
+                                                                                               }
+                                                                                           ]
+                                                                          },
+                                                                          {
+                                                                              "name":  "Transitories, Tonics, and Tools",
+                                                                              "cap":  30,
+                                                                              "desc":  "Perfect the art of temporary illusions, equipment, and mana oils.",
+                                                                              "children":  [
+                                                                                               {
+                                                                                                   "name":  "Excellent Expendables",
+                                                                                                   "cap":  30
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "Outstanding Outfits",
+                                                                                                   "cap":  20,
+                                                                                                   "children":  [
+                                                                                                                    {
+                                                                                                                        "name":  "Worthy Wands",
+                                                                                                                        "cap":  20
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name":  "Reputable Rods",
+                                                                                                                        "cap":  20
+                                                                                                                    }
+                                                                                                                ]
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "Mastering Mirages",
+                                                                                                   "cap":  20
+                                                                                               }
+                                                                                           ]
+                                                                          },
+                                                                          {
+                                                                              "name":  "Disenchanting Delegate",
+                                                                              "cap":  30,
+                                                                              "desc":  "Master your disenchanting capabilities, maximizing the quality of reagents you receive when destroying items.",
+                                                                              "children":  [
+                                                                                               {
+                                                                                                   "name":  "Crystal Collector",
+                                                                                                   "cap":  30,
+                                                                                                   "desc":  "Improve your understanding of complex Disenchanting rituals, improving the quality of materials you receive when breaking down Epic items."
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "Shard Supplier",
+                                                                                                   "cap":  30
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "Dust Deliverer",
+                                                                                                   "cap":  30
+                                                                                               }
+                                                                                           ]
+                                                                          },
+                                                                          {
+                                                                              "name":  "Spellbound Shatterer",
+                                                                              "cap":  30,
+                                                                              "desc":  "Specialize in shattering the magical essences of Midnight, gleaning fleeting but increasingly potent crafting bonuses from the magic within. Your studies will also benefit your Concentration!",
+                                                                              "children":  [
+                                                                                               {
+                                                                                                   "name":  "Multicrafting Meticulously",
+                                                                                                   "cap":  30
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "Infinite Ingenuity",
+                                                                                                   "cap":  30
+                                                                                               },
+                                                                                               {
+                                                                                                   "name":  "Responsible Resources",
+                                                                                                   "cap":  30
+                                                                                               }
+                                                                                           ]
+                                                                          }
+                                                                      ]
+                                                        }
+                                       },
                         "engineering":  {
                                             "Midnight":  {
                                                              "skillLine":  2910,
@@ -726,6 +862,139 @@
                                                                         }
                                                                     ]
                                                       }
-                                     }
+                                     },
+                        "tailoring":  {
+                                          "Midnight":  {
+                                                           "skillLine":  2918,
+                                                           "specs":  [
+                                                                         {
+                                                                             "name":  "Sin\u0027dorei Finery",
+                                                                             "cap":  30,
+                                                                             "desc":  "Specialize in the techniques necessary to outfit adventurers in Silvermoon\u0027s latest fashion trends.",
+                                                                             "children":  [
+                                                                                              {
+                                                                                                  "name":  "Outfit Essentials",
+                                                                                                  "cap":  30,
+                                                                                                  "children":  [
+                                                                                                                   {
+                                                                                                                       "name":  "Cloaks",
+                                                                                                                       "cap":  20
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "name":  "Trousers",
+                                                                                                                       "cap":  20
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "name":  "Robes",
+                                                                                                                       "cap":  20
+                                                                                                                   }
+                                                                                                               ]
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Elegant Accessories",
+                                                                                                  "cap":  30,
+                                                                                                  "children":  [
+                                                                                                                   {
+                                                                                                                       "name":  "Shoulders",
+                                                                                                                       "cap":  20
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "name":  "Bracers",
+                                                                                                                       "cap":  20
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "name":  "Belts",
+                                                                                                                       "cap":  20
+                                                                                                                   }
+                                                                                                               ]
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Head-to-Toes",
+                                                                                                  "cap":  30,
+                                                                                                  "children":  [
+                                                                                                                   {
+                                                                                                                       "name":  "Hats",
+                                                                                                                       "cap":  20
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "name":  "Gloves",
+                                                                                                                       "cap":  20
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "name":  "Boots",
+                                                                                                                       "cap":  20
+                                                                                                                   }
+                                                                                                               ]
+                                                                                              }
+                                                                                          ]
+                                                                         },
+                                                                         {
+                                                                             "name":  "Nimble Needlework",
+                                                                             "cap":  30,
+                                                                             "desc":  "Empower your techniques that work with Sunfire and Arcanoweave to create wondrous garments and materials.",
+                                                                             "children":  [
+                                                                                              {
+                                                                                                  "name":  "Arcanoweaving",
+                                                                                                  "cap":  30,
+                                                                                                  "children":  [
+                                                                                                                   {
+                                                                                                                       "name":  "Arcanoweave Expertise",
+                                                                                                                       "cap":  20
+                                                                                                                   }
+                                                                                                               ]
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Sunfire Silk Weaving",
+                                                                                                  "cap":  30,
+                                                                                                  "children":  [
+                                                                                                                   {
+                                                                                                                       "name":  "Sunfire Expertise",
+                                                                                                                       "cap":  20
+                                                                                                                   }
+                                                                                                               ]
+                                                                                              }
+                                                                                          ]
+                                                                         },
+                                                                         {
+                                                                             "name":  "Fabric Specialist",
+                                                                             "cap":  30,
+                                                                             "desc":  "Attune yourself to the cloth used in the various Midnight societies, improving your ability to find cloth and increase the quality.",
+                                                                             "children":  [
+                                                                                              {
+                                                                                                  "name":  "Otherworldly Cloth",
+                                                                                                  "cap":  25
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Eastern Kingdoms Cloth",
+                                                                                                  "cap":  25
+                                                                                              }
+                                                                                          ]
+                                                                         },
+                                                                         {
+                                                                             "name":  "Fiber Arts",
+                                                                             "cap":  30,
+                                                                             "desc":  "Learn how to utilize your resources as efficiently as possible.",
+                                                                             "children":  [
+                                                                                              {
+                                                                                                  "name":  "Textile Utilization",
+                                                                                                  "cap":  30
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Embroidery",
+                                                                                                  "cap":  30
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Fashion Genius",
+                                                                                                  "cap":  30
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Creative Efficiency",
+                                                                                                  "cap":  30
+                                                                                              }
+                                                                                          ]
+                                                                         }
+                                                                     ]
+                                                       }
+                                      }
                     }
 }

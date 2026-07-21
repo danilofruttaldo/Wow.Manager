@@ -30,6 +30,13 @@
       "class": "demon-hunter",
       "professions": ["Leatherworking", "Skinning"],
       "midnightSpecs": ["Leatherworking", "Skinning"]
+    },
+    "Snowwipe": {
+      "realm": "Pozzo dell'Eternità",
+      "race": "troll",
+      "class": "mage",
+      "professions": ["Tailoring", "Enchanting"],
+      "midnightSpecs": ["Tailoring", "Enchanting"]
     }
   }
 }
