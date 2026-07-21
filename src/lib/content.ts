@@ -47,17 +47,14 @@ export interface Macro {
   notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
 }
 
-export interface ProfStep {
-  spec: string;   // specializzazione da prendere
-  branch: string; // ramo da maxare dentro quella spec
-}
+// Voce dell'ELENCO professioni (manifest.json): la pagina la usa per i chip + la nota
+// editoriale. L'albero vero e il leveling stanno in ProfTree/LevelGuide (trees.json /
+// leveling.json). Il vecchio modello a 3 tappe (first/second/third/ProfStep) e' stato
+// rimosso: era dati morti, non piu' renderizzato da quando la pagina mostra l'albero.
 export interface Profession {
   key: string;
   name: string;
   type: 'crafting' | 'gathering';
-  first: ProfStep | null;  // 1ª spec + 1º ramo
-  second: ProfStep | null; // 2ª spec + 2º ramo
-  third: ProfStep | null;  // 3ª spec + 3º ramo
   notes?: string;
 }
 

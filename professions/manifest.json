@@ -1,104 +1,71 @@
 {
   "expansion": "Midnight (12.0)",
-  "note": "Piano di specializzazione in tre tappe per professione (first/second/third): spec da prendere + ramo da maxare, nell'ordine. Nomi di spec e rami in inglese (client EN). Solo professioni primarie: le secondarie (Cooking/Fishing) non hanno albero di specializzazione e restano fuori. Build consigliate per vendita/uso generale. Fonti: method.gg e Icy Veins (datate), Wowhead per i nomi dei nodi; wow-professions.com solo dove le altre tacciono. Aggiorna qui i dati se cambiano con le patch: la pagina si allinea da sola.",
+  "note": "ELENCO delle professioni primarie (key/name/type) + `notes` editoriali di build, mostrate sotto l'albero nella pagina /professioni. NON contiene piu' l'albero di specializzazione: quello vive in professions/trees.json (estratto dal CLIENT, non a mano) e il leveling della skill in professions/leveling.json. Le secondarie (Cooking/Fishing/Archaeology) restano fuori. `key` deve combaciare col file icona in public/icons/prof/<key>.jpg e con le chiavi di trees.json/leveling.json.",
   "professions": [
     {
       "key": "alchemy",
       "name": "Alchemy",
       "type": "crafting",
-      "first":  { "spec": "Fluent in Flasks", "branch": "Root node" },
-      "second": { "spec": "Fluent in Flasks", "branch": "Sin'dorei Specialist" },
-      "third":  { "spec": "Fluent in Flasks", "branch": "Flask Abundance" },
       "notes": "Build Flask: massima domanda sui flask da raid. Passa a Potion Prowess se vendi pozioni da combattimento."
     },
     {
       "key": "blacksmithing",
       "name": "Blacksmithing",
       "type": "crafting",
-      "first":  { "spec": "The Old Ways", "branch": "Resourceful Smith" },
-      "second": { "spec": "Armorsmithing", "branch": "Root node" },
-      "third":  { "spec": "Armorsmithing", "branch": "Sculpted Armor" },
       "notes": "The Old Ways per prima: i suoi nodi valgono su TUTTI i craft di Blacksmithing, non su un solo ramo. Poi Armorsmithing per i pezzi plate end-game, o Weaponsmithing se punti alle armi. Sotto Armorsmithing i rami sono alternativi, se ne prende UNO: Sculpted Armor, Large Plate Armor o Articulating Armor. Sotto The Old Ways: Resourceful Smith (Resourcefulness) o Second Nature (Ingenuity)."
     },
     {
       "key": "enchanting",
       "name": "Enchanting",
       "type": "crafting",
-      "first":  { "spec": "Spellbound Shatterer", "branch": "Root node" },
-      "second": { "spec": "Spellbound Shatterer", "branch": "Infinite Ingenuity" },
-      "third":  { "spec": "Elevating Equipment", "branch": "Amani Augments" },
       "notes": "Build Concentration: 20 pt nel root di Spellbound Shatterer, poi 30 in Infinite Ingenuity (un enchant HQ ogni pochi giorni). Shatter Essence va preso prima di craftare. Elevating Equipment ha tre sub-spec (Amani / Haranir / Thalassian): scegli quella degli enchant che vendi."
     },
     {
       "key": "engineering",
       "name": "Engineering",
       "type": "crafting",
-      "first":  { "spec": "Market Mobility", "branch": "Mandatory Tools" },
-      "second": { "spec": "Market Mobility", "branch": "Root node" },
-      "third":  { "spec": "Market Mobility", "branch": "Finishing Touches" },
       "notes": "Build Profession Gear, tutta dentro Market Mobility: 10 pt in Mandatory Tools, che sblocca anche gli attrezzi di Tailoring e Jewelcrafting, poi 25 nel root, poi Finishing Touches per accessori da engineering/mining e canne da pesca. Se invece punti a gadget e munizioni, la strada è Bits and Bots seguita da Recycling."
     },
     {
       "key": "inscription",
       "name": "Inscription",
       "type": "crafting",
-      "first":  { "spec": "Calm Hands", "branch": "Dextrous Diligence" },
-      "second": { "spec": "Perfected Products", "branch": "Perfect Milling" },
-      "third":  { "spec": "Perfected Products", "branch": "Perfect Inks" },
       "notes": "Build Reagents (la più sicura): Calm Hands + Perfected Products per milling/multicraft. Darkmoon Curiosity per le carte."
     },
     {
       "key": "jewelcrafting",
       "name": "Jewelcrafting",
       "type": "crafting",
-      "first":  { "spec": "Thoughtful Throughput", "branch": "Outrageous Output" },
-      "second": { "spec": "Glamorous Gems", "branch": "Gem color sub-spec" },
-      "third":  { "spec": "Thoughtful Throughput", "branch": "Skilled Savings" },
       "notes": "Build Gemcutting: Thoughtful Throughput (Multicraft) + Glamorous Gems, poi Skilled Savings per la Resourcefulness. Le gemme hanno domanda costante. Nella seconda tappa i punti vanno nella sub-spec del colore che lavori."
     },
     {
       "key": "leatherworking",
       "name": "Leatherworking",
       "type": "crafting",
-      "first":  { "spec": "Learned Leatherworker", "branch": "Root node" },
-      "second": { "spec": "Lasting Leather", "branch": "Armor path (4 slots)" },
-      "third":  { "spec": "Safeguarding Scales", "branch": "Tipo armatura opposto (Mail)" },
       "notes": "Learned Leatherworker come base, poi Lasting Leather o Safeguarding Scales secondo le classi che rifornisci (Lasting Leather = cuoio, Safeguarding Scales = maglia; strutture identiche). I punti di seconda e terza tappa vanno sui quattro slot di un gruppo: Head/Chest/Shoulder/Wrist da un lato, Legs/Hands/Waist/Feet dall'altro."
     },
     {
       "key": "tailoring",
       "name": "Tailoring",
       "type": "crafting",
-      "first":  { "spec": "Nimble Needlework", "branch": "Root node" },
-      "second": { "spec": "Fiber Arts", "branch": "Creative Efficiency" },
-      "third":  { "spec": "Fiber Arts", "branch": "Textile Utilization" },
       "notes": "Build Bolt: 20 pt nel root di Nimble Needlework (cooldown dei bolt), poi 30 in Creative Efficiency, poi root di Fiber Arts e Textile Utilization (Resourcefulness). Le sub-spec di Nimble Needlework sono Arcanoweave e Sunfire Silk, da scegliere secondo la stoffa che lavori."
     },
     {
       "key": "herbalism",
       "name": "Herbalism",
       "type": "gathering",
-      "first":  { "spec": "Botany", "branch": "Root node" },
-      "second": { "spec": "Bountiful Harvests", "branch": "Root node" },
-      "third":  { "spec": "Botany", "branch": "Mulching" },
       "notes": "Ordine per non-Druidi: Botany prima, sblocca la raccolta a cavallo (i Druidi ce l'hanno già in Travel Form e possono invertire, prendendo Bountiful Harvests per primo). Poi Bountiful Harvests per resa e skill sulle erbe. Terzo albero Overloading (Lightfused/Wild/Primal/Voidbound) non ancora valutato."
     },
     {
       "key": "mining",
       "name": "Mining",
       "type": "gathering",
-      "first":  { "spec": "Meticulous Mining", "branch": "Root node" },
-      "second": { "spec": "Plentiful Ores", "branch": "Root node" },
-      "third":  { "spec": "Plentiful Ores", "branch": "Refulgent Copper" },
       "notes": "Meticulous Mining per il mining a cavallo, poi Plentiful Ores per skill e resa del minerale: 40 pt nel primo root (lì sta il mining a cavallo), 50 nel secondo. Terza tappa su un nodo per singolo minerale: Refulgent Copper è il più richiesto, in alternativa Umbral Tin o Brilliant Silver."
     },
     {
       "key": "skinning",
       "name": "Skinning",
       "type": "gathering",
-      "first":  { "spec": "Thorough Tanning", "branch": "Lasting Leather" },
-      "second": { "spec": "Gainful Gathering", "branch": "Careful Carving" },
-      "third":  { "spec": "Talented Tracker", "branch": "Majestic Materials" },
       "notes": "Build Farming: 10 pt Thorough Tanning, poi 40 nel ramo scelto (Lasting Leather o Superb Scales, secondo cosa ti serve), poi Gainful Gathering (Careful Carving o Trophy Taker)."
     }
   ]
