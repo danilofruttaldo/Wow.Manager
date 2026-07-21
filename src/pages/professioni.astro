@@ -1,14 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getProfessions, getProfessionTrees, getProfExpansions, type Profession, type ProfNode } from '../lib/content';
+import { getProfessions, getProfessionTrees, getProfessionLeveling, getProfExpansions,
+         type Profession, type ProfNode } from '../lib/content';
 
-// Tab per professione, come /transmog e' a tab per classe. Dentro ogni tab l'albero
-// di specializzazione estratto dal CLIENT (professions/trees.json), non dalle guide:
-// spec di primo livello, sotto-nodi e -- il dato che il web non ha -- i punti massimi.
-// Una tendina sceglie l'espansione: oggi c'e' solo Midnight, ma la struttura (dati +
-// controllo) e' gia' pronta per aggiungere le passate.
+// Tab per professione, come /transmog e' a tab per classe. Dentro ogni tab DUE parti:
+//   1. Specializzazioni da prendere -- l'albero estratto dal CLIENT (trees.json): spec,
+//      sotto-nodi e i punti massimi, il dato che il web non ha.
+//   2. Skill-up 1 -> max -- la guida di leveling della skill (leveling.json), web-sourced.
+// Una tendina sceglie l'espansione: oggi solo Midnight, ma struttura e controllo sono
+// gia' pronti per aggiungere le passate.
 const professions = getProfessions().sort((a, b) => a.name.localeCompare(b.name));
 const trees = getProfessionTrees();          // key -> espansione -> albero
+const leveling = getProfessionLeveling();    // key -> espansione -> guida skill
 const expansions = getProfExpansions();      // ordinate; oggi ["Midnight"]
 const defaultExp = expansions[0] ?? 'Midnight';
 
@@ -21,10 +24,14 @@ const PROF_ICONS = new Set(
 const profIcon = (key: string) => (PROF_ICONS.has(key) ? `/icons/prof/${key}.jpg` : null);
 
 const treeFor = (key: string, exp: string) => trees[key]?.[exp];
+const levelFor = (key: string, exp: string) => leveling[key]?.[exp];
 const hasTree = (key: string, exp: string) => !!treeFor(key, exp)?.specs?.length;
-// Tab attivo di default: la prima professione (alfabetica) con l'albero dell'espansione
-// di default, cosi' all'apertura si vede contenuto reale e non un segnaposto.
-const defaultKey = (professions.find(p => hasTree(p.key, defaultExp)) ?? professions[0])?.key;
+const hasLevel = (key: string, exp: string) => !!levelFor(key, exp)?.steps?.length;
+// Un tab e' "vuoto" (chip spenta) solo se NESSUNA delle due parti ha dati per quell'espansione.
+const hasAny = (key: string, exp: string) => hasTree(key, exp) || hasLevel(key, exp);
+// Tab attivo di default: la prima professione (alfabetica) con qualcosa nell'espansione
+// di default, cosi' all'apertura si vede contenuto reale e non due segnaposto.
+const defaultKey = (professions.find(p => hasAny(p.key, defaultExp)) ?? professions[0])?.key;
 
 // L'albero e' generato da dati JSON nostri (fidati), ma passa da set:html: scappiamo
 // comunque i metacaratteri; i `cap` sono numeri.
@@ -40,13 +47,13 @@ function renderNode(n: ProfNode, depth = 0): string {
     + `${desc}${kids}</div>`;
 }
 ---
-<Base title="Professioni" description="Alberi di specializzazione WoW per professione: spec, sotto-nodi e punti massimi, dal client.">
+<Base title="Professioni" description="Alberi di specializzazione e leveling WoW per professione: spec, punti massimi e skill-up, dal client.">
   <div class="wrap">
     <div class="filters row">
       <div class="chips" id="prof-chips" role="tablist" aria-label="Scegli la professione">
         {professions.map(p => {
           const icon = profIcon(p.key);
-          const empty = !hasTree(p.key, defaultExp);
+          const empty = !hasAny(p.key, defaultExp);
           return (
             <button class:list={['chip', { 'is-active': p.key === defaultKey, 'is-empty': empty }]}
                     data-prof={p.key} type="button" role="tab"
@@ -79,24 +86,48 @@ function renderNode(n: ProfNode, depth = 0): string {
 
         {expansions.map(exp => {
           const tree = treeFor(p.key, exp);
-          const ok = !!tree?.specs?.length;
+          const guide = levelFor(p.key, exp);
+          const okTree = !!tree?.specs?.length;
+          const okLevel = !!guide?.steps?.length;
           return (
-            <div class="prof-exp" data-exp={exp} data-has={ok ? '1' : '0'} hidden={exp !== defaultExp}>
-              {ok
-                ? <div class="spec-grid">
-                    {tree!.specs.map(spec => (
-                      <article class="spec">
-                        <div class="pnode-head spec-head">
-                          <span class="pnode-name">{spec.name}</span>
-                          <span class="pnode-cap" title={`Rank massimo: ${spec.cap} punti conoscenza`}>{spec.cap}</span>
-                        </div>
-                        {spec.desc && <p class="pnode-desc">{spec.desc}</p>}
-                        {spec.children && spec.children.length > 0 &&
-                          <div class="pnode-kids" set:html={spec.children.map(c => renderNode(c, 1)).join('')} />}
-                      </article>
-                    ))}
-                  </div>
-                : <p class="prof-empty">Albero <strong>{exp}</strong> non ancora estratto dal client per <strong>{p.name}</strong>. Serve loggare un PG con questa professione e rilanciare il dump.</p>}
+            <div class="prof-exp" data-exp={exp} data-has={okTree || okLevel ? '1' : '0'} hidden={exp !== defaultExp}>
+              {/* Parte 1: specializzazioni da prendere */}
+              <section class="prof-sec">
+                <h2 class="sec-title"><span class="sec-num">1</span>Specializzazioni da prendere</h2>
+                {okTree
+                  ? <div class="spec-grid">
+                      {tree!.specs.map(spec => (
+                        <article class="spec">
+                          <div class="pnode-head spec-head">
+                            <span class="pnode-name">{spec.name}</span>
+                            <span class="pnode-cap" title={`Rank massimo: ${spec.cap} punti conoscenza`}>{spec.cap}</span>
+                          </div>
+                          {spec.desc && <p class="pnode-desc">{spec.desc}</p>}
+                          {spec.children && spec.children.length > 0 &&
+                            <div class="pnode-kids" set:html={spec.children.map(c => renderNode(c, 1)).join('')} />}
+                        </article>
+                      ))}
+                    </div>
+                  : <p class="prof-empty">Albero <strong>{exp}</strong> non ancora estratto dal client. Serve loggare un PG con <strong>{p.name}</strong> e rilanciare il dump.</p>}
+              </section>
+
+              {/* Parte 2: skill-up 1 -> max */}
+              <section class="prof-sec">
+                <h2 class="sec-title">
+                  <span class="sec-num">2</span>Skill-up
+                  {guide?.maxSkill && <span class="sec-range">1 → {guide.maxSkill}</span>}
+                </h2>
+                {okLevel
+                  ? <ol class="lvl">
+                      {guide!.steps.map(s => (
+                        <li class="lvl-step">
+                          <span class="lvl-range">{s.from}–{s.to}</span>
+                          <span class="lvl-action">{s.action}{s.note && <em class="lvl-note"> — {s.note}</em>}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  : <p class="prof-empty">Guida di leveling <strong>{exp}</strong> non ancora inserita.</p>}
+              </section>
             </div>
           );
         })}
@@ -108,13 +139,10 @@ function renderNode(n: ProfNode, depth = 0): string {
 </Base>
 
 <style>
-/* Il numero accanto a ogni nodo e' un RANK MASSIMO (punti conoscenza), non un conteggio. */
 .prof-panel { padding-top: 0.4rem; }
 .prof-panel[hidden] { display: none !important; }
 .prof-exp[hidden] { display: none !important; }
 
-/* Tendina espansione, a destra dei chip. Oggi ha una voce sola (Midnight): resta
-   comunque un controllo vero, guidato da professions/trees.json (`expansions`). */
 .exp-pick { margin-left: auto; display: inline-flex; align-items: center; gap: 0.4rem; }
 .exp-pick-lbl { font-size: 0.78rem; color: var(--text-subtle); }
 #prof-exp {
@@ -131,21 +159,24 @@ function renderNode(n: ProfNode, depth = 0): string {
 .ptype--crafting  { background: var(--accent-soft); color: var(--accent); }
 .ptype--gathering { background: color-mix(in srgb, var(--c-hunter) 14%, transparent); color: var(--c-hunter); }
 
-/* Le spec di primo livello, affiancate in colonne: una per colonna, come il gioco le
-   mostra in cima all'albero. */
+/* Le due parti (Specializzazioni / Skill-up), separate da un titolo numerato. */
+.prof-sec { margin-top: 0.6rem; }
+.prof-sec + .prof-sec { margin-top: 1.6rem; }
+.sec-title { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 0 0 0.7rem; }
+.sec-num { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+.sec-range { margin-left: 0.3rem; font-size: 0.78rem; font-weight: 600; color: var(--text-subtle); font-variant-numeric: tabular-nums; }
+
+/* Parte 1: spec di primo livello affiancate in colonne. */
 .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.7rem; }
 .spec { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.85rem 0.95rem; }
 .spec-head { border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
 .spec-head .pnode-name { font-size: 1rem; font-weight: 700; }
 
-/* Un nodo dell'albero: nome a sinistra, pastiglia del cap a destra.
-   ⚠️ I nodi FIGLI li produce renderNode via set:html, quindi NON hanno l'attributo
+/* ⚠️ I nodi FIGLI li produce renderNode via set:html, quindi NON hanno l'attributo
    [data-astro-cid-…] con cui Astro scopa gli stili: le loro regole DEVONO stare in
-   :global(), altrimenti lo scope non le colpisce e il cap resta un numero nudo
-   incollato al nome invece di una pastiglia a destra. Stesso motivo per cui transmog
-   e roster usano :global sulle voci create a runtime. Le stesse classi le usa la
-   testata della spec nel template, e :global le stila comunque. Le classi .pnode-*
-   sono uniche di questa pagina, quindi il global non tocca il resto del sito. */
+   :global(), altrimenti il cap resta un numero nudo incollato al nome invece che una
+   pastiglia a destra. Stesso motivo per cui transmog e roster usano :global sulle voci
+   create a runtime. Le classi .pnode-* sono uniche di questa pagina: il global non esce. */
 :global(.pnode-head) { display: flex; align-items: baseline; gap: 0.5rem; }
 :global(.pnode-name) { font-weight: 600; color: var(--text); line-height: 1.3; min-width: 0; }
 :global(.pnode-cap) {
@@ -154,18 +185,28 @@ function renderNode(n: ProfNode, depth = 0): string {
   padding: 0.05rem 0.5rem; font-variant-numeric: tabular-nums;
 }
 :global(.pnode-desc) { font-size: 0.76rem; color: var(--text-subtle); line-height: 1.4; margin: 0.2rem 0 0; }
-
-/* I figli rientrano sotto il genitore, con una guida verticale come lo spine del roster. */
 :global(.pnode-kids) { margin: 0.45rem 0 0 0.3rem; padding-left: 0.7rem; border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem; }
 :global(.pnode) { min-width: 0; }
 :global(.pnode .pnode-head) { font-size: 0.9rem; }
+
+/* Parte 2: skill-up, una tappa per riga con la fascia "da-a" a sinistra. */
+.lvl { list-style: none; display: flex; flex-direction: column; gap: 0; max-width: 620px; }
+.lvl-step { display: flex; gap: 0.75rem; align-items: baseline; padding: 0.45rem 0; border-bottom: 1px solid var(--border-light); }
+.lvl-step:last-child { border-bottom: none; }
+.lvl-range {
+  flex-shrink: 0; min-width: 4.2rem; text-align: center; font-size: 0.76rem; font-weight: 700;
+  color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 0.1rem 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+.lvl-action { font-size: 0.9rem; color: var(--text); line-height: 1.35; }
+.lvl-note { color: var(--text-subtle); font-style: italic; }
 
 .prof-empty { color: var(--text-subtle); font-size: 0.9rem; padding: 1rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-lg); }
 .prof-empty strong { color: var(--text); }
 
 /* Nota editoriale della professione: sul sito le note delle professioni SI vedono
-   (unica eccezione nel repo), quindi restano sotto l'albero. */
-.prof-note { margin-top: 1rem; padding-top: 0.7rem; border-top: 1px solid var(--border-light); font-size: 0.8rem; color: var(--text-subtle); line-height: 1.5; }
+   (unica eccezione nel repo), quindi restano in fondo. */
+.prof-note { margin-top: 1.6rem; padding-top: 0.7rem; border-top: 1px solid var(--border-light); font-size: 0.8rem; color: var(--text-subtle); line-height: 1.5; }
 
 .chip-mono { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 0.7rem; }
 </style>
@@ -190,9 +231,8 @@ function renderNode(n: ProfNode, depth = 0): string {
       });
     }
 
-    // Tendina espansione: mostra il blocco [data-exp] scelto in ogni pannello, e
-    // aggiorna lo spegnimento dei chip (una professione e' "vuota" se non ha l'albero
-    // dell'espansione scelta). Oggi c'e' solo Midnight, ma il giro e' gia' completo.
+    // Tendina espansione: mostra il blocco [data-exp] scelto in ogni pannello e aggiorna
+    // lo spegnimento dei chip. Oggi c'e' solo Midnight, ma il giro e' gia' completo.
     const applyExp = () => {
       const exp = expSel?.value || '';
       for (const panel of panels) {

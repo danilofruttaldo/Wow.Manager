@@ -13,6 +13,7 @@ import professionsManifest from '../../professions/manifest.json';
 import extraManifest from '../../scripts/manifest.json';
 import transmogManifest from '../../transmog/manifest.json';
 import profTreesManifest from '../../professions/trees.json';
+import profLevelingManifest from '../../professions/leveling.json';
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -153,6 +154,25 @@ export function getProfExpansions(): string[] {
 }
 export function getProfessionTrees(): Record<string, Record<string, ProfTree>> {
   return ((profTreesManifest as any).professions ?? {}) as Record<string, Record<string, ProfTree>>;
+}
+
+// Guida di LEVELING della skill (1 -> max): "da X a Y fai questo". A differenza degli
+// alberi (dump del client), questo dato NON e' nel gioco in forma strutturata -- sono
+// ricette/nodi per fascia di skill -- quindi e' web-sourced e verificato, e vive in un
+// file suo (professions/leveling.json) per non essere sovrascritto dalla rigenerazione
+// di trees.json. Stessa chiave doppia: professione -> espansione.
+export interface LevelStep {
+  from: number;
+  to: number;
+  action: string;   // es. "Mina Refulgent Copper" / "Craft 20x Handful of Bits"
+  note?: string;
+}
+export interface LevelGuide {
+  maxSkill?: number;
+  steps: LevelStep[];
+}
+export function getProfessionLeveling(): Record<string, Record<string, LevelGuide>> {
+  return ((profLevelingManifest as any).professions ?? {}) as Record<string, Record<string, LevelGuide>>;
 }
 
 // ── Extra (script / link / appunti) ───────────────

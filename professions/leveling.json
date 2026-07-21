@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "note": "Guida di leveling della SKILL (1 -> max), per fascia 'da X a Y'. Web-sourced e verificata (ricerca + verifica avversariale), NON dal client: separata da trees.json (macchina-generato dal dump) perche' editoriale e verrebbe sovrascritta. Chiave: professione -> espansione -> { maxSkill, steps[] }. Fonti principali: wow-professions.com, conquestcapped, Icy Veins, method.gg. Le quantita' con ~ sono approssimate e dipendono da quali ricette hai scoperto via Recycling."
+  },
+  "expansions": ["Midnight"],
+  "professions": {
+    "engineering": {
+      "Midnight": {
+        "maxSkill": 100,
+        "steps": [
+          { "from": 1, "to": 16, "action": "Impara Midnight Engineering a Silvermoon (Danwe/Gloresse). Metti subito 10 punti in Recycling, poi craft 8x Song Gear e usa Recycling ~7 volte.", "note": "Senza i 10 punti in Recycling non scopri le ricette che servono dopo." },
+          { "from": 16, "to": 20, "action": "Craft 1x Evercore Shade e 1x Evercore Vision Guard (ricette scoperte via Recycling)." },
+          { "from": 20, "to": 25, "action": "Craft 1x Evercore Dome Dinger, 1x Evercore Zoomshroud e 1x Evercore Reconnaissance." },
+          { "from": 25, "to": 39, "action": "A skill 25 si sbloccano le specializzazioni. Craft 10x Soul Sprocket, le 4 ricette Cogwheel e ogni ricetta del trainer una volta.", "note": "Ogni ricetta al primo craft da skill: falle tutte una volta per il bonus." },
+          { "from": 39, "to": 45, "action": "Usa Recycling ~20 volte (Bright Linen Bolt / Refulgent Copper Ingot / Powder Pigment) e craft ogni nuova ricetta del trainer." },
+          { "from": 45, "to": 80, "action": "Craft in serie la Quel'dorei gear scoperta via Recycling (es. ~60x Quel'dorei Guards): e' il grosso del leveling in questa fascia.", "note": "Il pezzo e il conteggio esatto dipendono da quale ricetta hai scoperto via Recycling." },
+          { "from": 80, "to": 100, "action": "Percorso variabile: le 7 ricette Housing Decor (gialle fino a 92), oppure tool/accessori rari via Market Mobility, oppure Crafting Orders con tool epici.", "note": "I tool epici richiedono Fused Vitality, a fornitura settimanale. Dopo 80 le ricette del trainer non danno piu' skill." }
+        ]
+      }
+    },
+    "mining": {
+      "Midnight": {
+        "maxSkill": 100,
+        "steps": [
+          { "from": 1, "to": 30, "action": "Raccogli qualsiasi deposito: in questa fascia danno skill tutti i tipi di nodo (base, Rich, Seam, Infused).", "note": "I tre minerali (Refulgent Copper, Umbral Tin, Brilliant Silver) sono in tutte le zone: non serve spostarsi per tipo." },
+          { "from": 30, "to": 60, "action": "I depositi base ingialliscono a 30 e diventano grigi a 60. Priorita' ai nodi speciali (Rich, Seam, Infused), che rendono skill anche qui." },
+          { "from": 60, "to": 100, "action": "Solo i nodi speciali danno ancora skill (Rich, Seam, Infused). Le varianti Infused sono quattro: Lightfused, Wild, Primal, Voidbound.", "note": "In pratica sono gli special di Umbral Tin e Brilliant Silver a portarti fino a 100." }
+        ]
+      }
+    }
+  }
+}
