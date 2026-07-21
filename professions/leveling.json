@@ -114,6 +114,37 @@
           { "from": 90, "to": 100, "action": "Craft ~13x Elegant Artisan's Cooking Hat (o ricetta equivalente della linea Elegant Artisan). In alternativa: borse premium, spellthread high-end o Crafting Orders.", "note": "L'item preciso dell'ultimo tratto non e' certo: le alternative (borse premium / spellthread / Crafting Orders) vanno bene uguale." }
         ]
       }
+    },
+    "enchanting": {
+      "Midnight": {
+        "maxSkill": 100,
+        "steps": [
+          { "from": 1, "to": 25, "action": "Disincanta oggetti di scarto (gear da quest/dungeon/WQ), oppure craft e disincanta 30x Runed Refulgent Copper Rod (30x Refulgent Copper Rod + 150x Eversinging Dust). Il disincanto da' skill garantita fino a ~25." },
+          { "from": 25, "to": 27, "action": "A skill 25 si sblocca la prima specializzazione. Craft 1x Enchant Helm - Rune of Avoidance e 1x Thalassian Phoenix Oil." },
+          { "from": 27, "to": 38, "action": "Craft 1x di ogni nuova ricetta per il bonus primo-craft (es. Enchant Ring - Nature's Wrath, Illusory Adornment - Blooming Light), poi ~14x della piu' economica che resta arancione (es. Nature's Wrath)." },
+          { "from": 38, "to": 40, "action": "Craft 1x Enchant Shoulders - Flight of the Eagle e 1x Enchant Helm - Hex of Leeching." },
+          { "from": 40, "to": 52, "action": "Craft 4x Thalassian Spellweaver's Wand (~60x Eversinging Dust + 12x Radiant Shard)." },
+          { "from": 52, "to": 55, "action": "Craft 1x Enchant Ring - Amani Mastery, 1x Enchant Helm - Blessing of Speed, 1x Enchant Shoulders - Thalassian Recovery." },
+          { "from": 55, "to": 62, "action": "Craft 9x Enchant Ring - Amani Mastery (~45x Eversinging Dust).", "note": "Le ricette Gleeful Glamours dal vendor danno Knowledge Points ma NON skill: non contano per il leveling." },
+          { "from": 62, "to": 80, "action": "Craft 1x di ogni ricetta arancione disponibile, vendile in AH, poi produci in massa la piu' economica finche' resta arancione. Fallback: Enchant Weapon - Worldsoul Aegis, arancione fino a 100." },
+          { "from": 80, "to": 90, "action": "Gli anelli diventano gialli (niente skill): restano arancioni gli enchant di elmo, spalle e arma. Craft quelli." },
+          { "from": 90, "to": 100, "action": "Solo gli enchant ARMA restano arancioni: craftali (es. Enchant Weapon - Worldsoul Aegis) finche' arrivi a 100." }
+        ]
+      }
+    },
+    "inscription": {
+      "Midnight": {
+        "maxSkill": 100,
+        "steps": [
+          { "from": 1, "to": 20, "action": "Macina (Midnight Milling) le erbe di Midnight per i pigmenti (Standard + Luminous). Erbe: Tranquility Bloom, Argentleaf, Mana Lily, Sanguithorn." },
+          { "from": 20, "to": 30, "action": "Due vie equivalenti fino a 30: craft inchiostri (~11x Munsell Ink, ~12x Sienna Ink), oppure ~7x Faunatender's Baton." },
+          { "from": 30, "to": 35, "action": "Primo-craft (bonus prima-volta), 1x ciascuno: Faunatender's Baton, Floratender's Crutch, Rootwarden's Lamp, Soul Cipher." },
+          { "from": 35, "to": 42, "action": "Primo-craft delle ricette restanti, 1x ciascuna: Codified Azeroot, Faunatender's Trust, i 3 Hobbyist tools (Scribe's Quill, Alchemist's Mixing Rod, Rolling Pin) e 3 Missives." },
+          { "from": 42, "to": 45, "action": "Craft 3x Thalassian Treatise on Inscription.", "note": "Prerequisito: a skill 25 sblocca la spec Calm Hands, che insegna la ricetta del treatise (~1 skill/craft, economico)." },
+          { "from": 45, "to": 50, "action": "Craft 1x Missive of the Peerless, 1x Missive of the Quickblade e altri 3x Thalassian Treatise on Inscription." },
+          { "from": 50, "to": 100, "action": "Craft in serie Thalassian Treatise on Inscription (~70, ~1 skill/craft); passa ai treatise specifici di professione man mano che li scopri.", "note": "In cima (85-100) puoi anche usare nuove ricette del trainer, Darkmoon Cards o Crafting Orders." }
+        ]
+      }
     }
   }
 }
