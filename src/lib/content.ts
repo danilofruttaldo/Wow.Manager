@@ -498,8 +498,12 @@ const CHAR_INFO: Record<string, { realm?: string; professions?: string[]; class?
     Object.entries(((charactersManifest as any).characters ?? {}) as Record<string, any>)
       .map(([n, v]) => [n.toLowerCase(), v]),
   );
-// Suffisso realm nel roster (·N/·P) -> nome esteso. Da estendere se compaiono altri realm.
-const REALM_ABBR: Record<string, string> = { N: 'Nemesis', P: "Pozzo dell'Eternità" };
+// Suffisso realm nel roster -> nome esteso. Devono esserci TUTTI i codici della legenda
+// di roster.md (N/P/R/S): se ne manca uno, per quei PG realmCandidate resta la lettera
+// grezza, la guardia realm-match scatta a vuoto e il tooltip perde le professioni.
+const REALM_ABBR: Record<string, string> = {
+  N: 'Nemesis', P: "Pozzo dell'Eternità", R: 'Ravencrest', S: 'Silvermoon',
+};
 // Escape per il contenuto di un attributo HTML (title). Gli a-capo diventano &#10;,
 // che il tooltip nativo rende su piu' righe.
 const escAttr = (s: string) =>

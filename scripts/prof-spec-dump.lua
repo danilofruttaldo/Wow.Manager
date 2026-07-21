@@ -178,7 +178,10 @@ local function Dump()
         notes = {},
     }
 
-    for _, idx in ipairs({ GetProfessions() }) do
+    -- GetProfessions() ritorna nil negli slot vuoti: `ipairs` si fermerebbe al primo nil
+    -- saltando le professioni negli slot successivi. Si scandisce per indice con select.
+    for i = 1, select('#', GetProfessions()) do
+        local idx = select(i, GetProfessions())
         if idx then
             local name, _, _, _, _, _, skillLine = GetProfessionInfo(idx)
             if skillLine then

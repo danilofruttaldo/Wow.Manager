@@ -1,6 +1,6 @@
 ﻿{
     "_meta":  {
-                  "note":  "Professioni PRIMARIE note per personaggio, dal campo knownProfessions del dump WowManagerProfDump. Le secondarie (Cooking, Fishing, Archaeology) sono ESCLUSE di proposito. Raccolto durante il grind degli alberi. `midnightSpecs` elenca le professioni per cui QUESTO pg ha sbloccato le specializzazioni di Midnight (configID valido): sono le sole da cui si estrae l\u0027albero coi cap. Visualizzazione sul sito: da decidere."
+                  "note":  "Professioni PRIMARIE note per personaggio, dal campo knownProfessions del dump WowManagerProfDump. Le secondarie (Cooking, Fishing, Archaeology) sono ESCLUSE di proposito. Raccolto durante il grind degli alberi. `midnightSpecs` elenca le professioni per cui QUESTO pg ha sbloccato le specializzazioni di Midnight (configID valido): sono le sole da cui si estrae l\u0027albero coi cap. Mostrato nel tooltip nativo sopra ogni nome PG nel roster (annotateSpec in content.ts): realm + livello + professioni primarie."
               },
     "characters":  {
                        "Furricane":  {
