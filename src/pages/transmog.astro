@@ -31,7 +31,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
       <div class="chips" id="tmog-chips" role="tablist" aria-label="Scegli la classe">
         {classes.map((c, i) => (
           <button class:list={['chip', { 'is-active': i === 0 }]} data-class={c.slug} type="button"
-                  role="tab" aria-selected={i === 0 ? 'true' : 'false'}>
+                  role="tab" id={`ttab-${c.slug}`} aria-controls={`tpanel-${c.slug}`} aria-selected={i === 0 ? 'true' : 'false'}>
             <img class="chip-ico" src={c.icon} alt="" width="18" height="18" />
             {/* Anche questo e' un contatore, e da solo dice una percentuale senza
                 denominatore: il title scioglie in quanti pezzi su quanti. */}
@@ -43,7 +43,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     </div>
 
     {classes.map((c, i) => (
-      <section class="tmog-panel" data-class={c.slug} hidden={i !== 0} role="tabpanel" aria-label={c.label}>
+      <section class="tmog-panel" data-class={c.slug} hidden={i !== 0} role="tabpanel" id={`tpanel-${c.slug}`} aria-labelledby={`ttab-${c.slug}`}>
         <div class="table-scroll">
           <table>
             <thead>
