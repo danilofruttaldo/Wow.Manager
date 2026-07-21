@@ -119,8 +119,11 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                                   in una cella possono essercene due, con pezzi diversi. */}
                               {dentro.map(cell => (
                                 <span class="var has-tip" tabindex={0}
-                                      data-tip-title={titolo(cell)}
-                                      data-tip={cell.pieces.map(p => (p.preso ? '+' : '-') + p.testo).join('\n')}>
+                                      data-tier={r.key} data-ver={cell.slot}
+                                      data-tip-title={titolo(cell)}>
+                                  {/* I pezzi non sono piu' inline: il JS li prende da
+                                      /transmog/<classe>.json alla prima apertura del tab.
+                                      Restano qui solo la chiave (tier, versione) e il titolo. */}
                                   <span class="frac">{cell.got}/{cell.total}</span>
                                   {cell.setName && <span class="vname">{cell.setName}</span>}
                                   {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
@@ -309,10 +312,31 @@ const daScrivere = (cell: { slot: string; label: string }) =>
 </style>
 
 <script>
+  // Elenco pezzi per classe, caricato da /transmog/<classe>.json alla prima apertura
+  // del tab e tenuto in cache. Modulo eseguito una volta sola, quindi la cache
+  // sopravvive alle navigazioni ClientRouter (come la guardia __tmogTip).
+  const tipCache = new Map<string, any>();
+  const tipPending = new Map<string, Promise<any>>();
+  function ensureTips(slug: string): Promise<any> {
+    if (!slug) return Promise.resolve(null);
+    if (tipCache.has(slug)) return Promise.resolve(tipCache.get(slug));
+    if (tipPending.has(slug)) return tipPending.get(slug)!;
+    const p = fetch(`/transmog/${slug}.json`)
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => { if (d) tipCache.set(slug, d); tipPending.delete(slug); return d; })
+      .catch(() => { tipPending.delete(slug); return null; });
+    tipPending.set(slug, p);
+    return p;
+  }
+
   function initTransmog() {
     const chips = Array.from(document.querySelectorAll('#tmog-chips .chip')) as HTMLButtonElement[];
     const panels = Array.from(document.querySelectorAll('.tmog-panel')) as HTMLElement[];
     if (!chips.length || !panels.length) return;
+
+    // Scalda la cache della classe gia' visibile all'apertura della pagina.
+    const visibile = panels.find(p => !p.hidden);
+    if (visibile?.dataset.class) ensureTips(visibile.dataset.class);
 
     // Tab a selezione singola: una classe alla volta (a differenza del filtro multi di /macros).
     for (const chip of chips) {
@@ -324,13 +348,15 @@ const daScrivere = (cell: { slot: string; label: string }) =>
           c.setAttribute('aria-selected', on ? 'true' : 'false');
         }
         for (const p of panels) p.hidden = p.dataset.class !== target;
+        ensureTips(target); // carica i pezzi della classe appena aperta
       });
     }
 
     initTip();
   }
 
-  // Popover dei pezzi mancanti sulle celle con `data-tip`.
+  // Popover dei pezzi mancanti sulle celle con `data-ver` (i pezzi arrivano dal JSON
+  // della classe, non piu' da un attributo inline).
   //
   // I listener stanno su `document` e vanno agganciati UNA volta sola: con
   // ClientRouter `astro:page-load` rispara a ogni navigazione, e ri-registrarli
@@ -342,20 +368,22 @@ const daScrivere = (cell: { slot: string; label: string }) =>
 
     const el = () => document.getElementById('tmog-tip') as HTMLElement | null;
 
-    function hide() { const tip = el(); if (tip) tip.hidden = true; }
+    let openCell: HTMLElement | null = null;
 
-    function show(cell: HTMLElement) {
+    function hide() { openCell = null; const tip = el(); if (tip) tip.hidden = true; }
+
+    // Disegna titolo + elenco pezzi e posiziona. `pieces` puo' essere vuoto: allora
+    // resta il solo titolo, com'era per le celle senza elenco. Il primo carattere di
+    // ogni voce dice preso (+) o mancante (-); il resto e' gia' formatato da
+    // formatMissing ("Shoulder — Ragnaros (FL)", o il solo slot se il boss e' ignoto).
+    function render(cell: HTMLElement, pieces: string[]) {
       const tip = el();
       if (!tip) return;
       const head = tip.querySelector('.tip-head') as HTMLElement;
       const list = tip.querySelector('.tip-list') as HTMLElement;
       head.textContent = cell.dataset.tipTitle || '';
       list.replaceChildren();
-
-      // Il primo carattere dice se il pezzo e' gia' preso (+) o manca (-); il resto
-      // e' gia' formattato da formatMissing: "Shoulder — Ragnaros (FL)", oppure il
-      // solo slot quando il boss non e' noto.
-      for (const grezzo of (cell.dataset.tip || '').split('\n').filter(Boolean)) {
+      for (const grezzo of pieces) {
         const preso = grezzo[0] === '+';
         const raw = grezzo.slice(1);
         const i = raw.indexOf(' — ');
@@ -385,11 +413,26 @@ const daScrivere = (cell: { slot: string; label: string }) =>
       tip.style.top = `${Math.max(pad, top)}px`;
     }
 
+    function show(cell: HTMLElement) {
+      openCell = cell;
+      const slug = (cell.closest('.tmog-panel') as HTMLElement | null)?.dataset.class || '';
+      const tier = cell.dataset.tier || '', ver = cell.dataset.ver || '';
+      const data = tipCache.get(slug);
+      render(cell, data?.[tier]?.[ver] ?? []);
+      // Se i pezzi non sono ancora arrivati, mostra subito il titolo e riempi appena
+      // il fetch risolve — ma solo se il mouse e' ancora su questa cella.
+      if (!data) {
+        ensureTips(slug).then(d => {
+          if (openCell === cell) render(cell, d?.[tier]?.[ver] ?? []);
+        });
+      }
+    }
+
     // Il bersaglio dell'evento e' una cella con tooltip? (null se siamo altrove)
     const cellOf = (e: Event) => {
       const t = e.target;
       return t instanceof Element
-        ? (t.closest('[data-tip]') as HTMLElement | null)
+        ? (t.closest('[data-ver]') as HTMLElement | null)
         : null;
     };
 
