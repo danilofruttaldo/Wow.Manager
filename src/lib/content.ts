@@ -526,7 +526,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
       if (SPEC_ICON[classSlug]?.includes(spec)) {
         const label = titleCase(spec);
         const title = wild ? `${label} · wildcard (gioca tutte le spec)` : label;
-        const star = wild ? '<span class="wild" title="wildcard — tutte le spec">✦</span>' : '';
+        const star = wild ? '<img class="ico-spec" src="/icons/ui/wildcard.jpg" alt="wildcard — tutte le spec" title="wildcard — tutte le spec">' : '';
         return `<img class="ico ico-spec" src="/icons/spec/${classSlug}-${spec}.jpg" alt="${title}" title="${title}" width="16" height="16">${star}`;
       }
       // fallback se manca l'icona; spec vuota (es. wildcard "*" nuda) -> niente, per non
@@ -658,6 +658,84 @@ export function getScreenshotCount(): number {
   return Object.keys(screenshotFiles).length;
 }
 
+// ── Stats per classe (matrice della home) ─────────
+// Aggrega in una riga per classe le metriche per-classe che il repo gia' conosce:
+// quante macro, quanti PG nel roster, quanti screenshot, e il completamento transmog.
+// Tutte e 13 le classi sempre presenti, anche a zero, cosi' la matrice e' completa e
+// stabile. Le fonti sono le stesse delle rispettive pagine: nessun conteggio nuovo da
+// mantenere a mano, si allinea da se' quando cambi il dato sottostante.
+export interface ClassStat {
+  slug: string;                 // dashed (death-knight), come le chiavi di `collected`
+  label: string;
+  icon: string;
+  macros: number;
+  roster: number;
+  shots: number;
+  tmogGot: number;
+  tmogTotal: number;
+  tmogPct: number;              // 0..100
+}
+
+// icona-slug senza trattino (CLASS_ABBR, prefisso dei filename screenshot) -> slug dashed
+const toDashedSlug = (s: string): string =>
+  ({ deathknight: 'death-knight', demonhunter: 'demon-hunter' } as Record<string, string>)[s] ?? s;
+
+export function getClassStats(): ClassStat[] {
+  const slugs = Object.keys(CLASS_LABELS); // 13 classi canoniche
+
+  // Macro: il campo `class` del manifest e' gia' lo slug dashed.
+  const macroBy: Record<string, number> = {};
+  for (const m of getMacros()) if (m.class) macroBy[m.class] = (macroBy[m.class] ?? 0) + 1;
+
+  // Roster: somma per colonna-classe su Orda + Alleanza. L'header porta le abbreviazioni
+  // (War, Pal, ...) -> slug via CLASS_ABBR, con la stessa `cellCount` del totale roster,
+  // cosi' i per-classe non possono divergere dal conteggio complessivo.
+  const rosterBy: Record<string, number> = {};
+  const raw = Object.values(rosterFile)[0] ?? '';
+  for (const section of ['Orda', 'Alleanza']) {
+    const rows = extractRosterTable(raw, section);
+    if (!rows) continue;
+    const header = rows[0];
+    for (const cells of rows.slice(1)) {
+      for (let j = 1; j < header.length; j++) {
+        const iconSlug = CLASS_ABBR[(header[j] ?? '').trim()]?.[0];
+        if (!iconSlug) continue;
+        const slug = toDashedSlug(iconSlug);
+        rosterBy[slug] = (rosterBy[slug] ?? 0) + cellCount(cells[j] ?? '');
+      }
+    }
+  }
+
+  // Screenshot: la classe e' il prefisso del filename (<classe>-<spec>-<nome>.jpg).
+  const shotsBy: Record<string, number> = {};
+  for (const path of Object.keys(screenshotFiles)) {
+    const prefix = (path.split('/').pop() ?? '').split('-')[0];
+    const slug = toDashedSlug(prefix);
+    if (slug in CLASS_LABELS) shotsBy[slug] = (shotsBy[slug] ?? 0) + 1;
+  }
+
+  // Transmog: got/total per classe gia' calcolati da getTransmog (chiavi dashed).
+  const tmogBy: Record<string, { got: number; total: number }> = {};
+  for (const c of getTransmog()) tmogBy[c.slug] = { got: c.got, total: c.total };
+
+  return slugs
+    .map((slug): ClassStat => {
+      const t = tmogBy[slug] ?? { got: 0, total: 0 };
+      return {
+        slug,
+        label: classLabel(slug),
+        icon: `/icons/class/${slug.replace(/-/g, '')}.jpg`,
+        macros: macroBy[slug] ?? 0,
+        roster: rosterBy[slug] ?? 0,
+        shots: shotsBy[slug] ?? 0,
+        tmogGot: t.got,
+        tmogTotal: t.total,
+        tmogPct: t.total ? Math.round((t.got / t.total) * 100) : 0,
+      };
+    })
+    .sort((a, b) => a.label.localeCompare(b.label, 'it'));
+}
+
 export function getRosterHtml(): string {
   const raw = Object.values(rosterFile)[0] ?? '';
   const orda = extractRosterTable(raw, 'Orda');
@@ -696,5 +774,6 @@ export function getRosterHtml(): string {
 
   const body = band('Orda', 'rsep--horde') + horde.html + allyHtml;
 
-  return `<div class="table-scroll"><table>${thead}<tbody>${body}</tbody></table></div>`;
+  const caption = '<caption class="sr-only">Matrice razza × classe — PG per combinazione (Orda e Alleanza)</caption>';
+  return `<div class="table-scroll"><table>${caption}${thead}<tbody>${body}</tbody></table></div>`;
 }

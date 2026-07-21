@@ -63,6 +63,7 @@ function renderNode(n: ProfNode, depth = 0): string {
             <button class:list={['chip', { 'is-active': p.key === defaultKey, 'is-empty': empty }]}
                     data-prof={p.key} type="button" role="tab"
                     id={`ptab-${p.key}`} aria-controls={`ppanel-${p.key}`}
+                    tabindex={p.key === defaultKey ? 0 : -1}
                     aria-selected={p.key === defaultKey ? 'true' : 'false'}>
               {icon
                 ? <img class="chip-ico" src={icon} alt="" width="18" height="18" />
@@ -74,7 +75,7 @@ function renderNode(n: ProfNode, depth = 0): string {
       </div>
       <label class="exp-pick">
         <span class="exp-pick-lbl">Espansione</span>
-        <select id="prof-exp" aria-label="Scegli l'espansione" autocomplete="off">
+        <select id="prof-exp" aria-label="Scegli l'espansione" autocomplete="off" disabled={expansions.length < 2}>
           {expansions.map(exp => <option value={exp} selected={exp === defaultExp}>{exp}</option>)}
         </select>
       </label>
@@ -99,7 +100,9 @@ function renderNode(n: ProfNode, depth = 0): string {
             <div class="prof-exp" data-exp={exp} data-has={okTree || okLevel ? '1' : '0'} hidden={exp !== defaultExp}>
               {/* Parte 1: specializzazioni da prendere */}
               <section class="prof-sec">
-                <h2 class="sec-title"><span class="sec-num">1</span>Specializzazioni da prendere</h2>
+                <h2 class="sec-title"><span class="sec-num">1</span>Specializzazioni da prendere
+                  {okTree && <span class="sec-hint">i numeri = rank massimo del nodo</span>}
+                </h2>
                 {okTree
                   ? <div class="spec-grid">
                       {tree!.specs.map(spec => (
@@ -171,6 +174,9 @@ function renderNode(n: ProfNode, depth = 0): string {
 .sec-title { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 0 0 0.7rem; }
 .sec-num { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
 .sec-range { margin-left: 0.3rem; font-size: 0.78rem; font-weight: 600; color: var(--text-subtle); font-variant-numeric: tabular-nums; }
+/* Hint di sezione (NON un titolo di pagina): spiega in chiaro i numeri .pnode-cap,
+   altrimenti leggibili solo nel title in hover (invisibile su touch). */
+.sec-hint { margin-left: 0.4rem; font-size: 0.72rem; font-weight: 400; color: var(--text-subtle); font-style: italic; }
 
 /* Parte 1: spec di primo livello affiancate in colonne. */
 .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.7rem; }
@@ -225,15 +231,35 @@ function renderNode(n: ProfNode, depth = 0): string {
     if (!chips.length || !panels.length) return;
 
     // Tab a selezione singola, stesso pattern di /transmog: una professione alla volta.
+    // `focus` regola il roving tabindex + lo spostamento del focus da tastiera: 0 sul chip
+    // attivo, -1 sugli altri, cosi' TAB entra/esce dalla tablist con un solo stop e le
+    // frecce muovono la selezione dentro (pattern ARIA "tabs, automatic activation").
+    const select = (chip: HTMLButtonElement, focus = false) => {
+      const target = chip.dataset.prof || '';
+      for (const c of chips) {
+        const on = c === chip;
+        c.classList.toggle('is-active', on);
+        c.setAttribute('aria-selected', on ? 'true' : 'false');
+        c.tabIndex = on ? 0 : -1;
+      }
+      for (const p of panels) p.hidden = p.dataset.prof !== target;
+      if (focus) chip.focus();
+    };
+
     for (const chip of chips) {
-      chip.addEventListener('click', () => {
-        const target = chip.dataset.prof || '';
-        for (const c of chips) {
-          const on = c === chip;
-          c.classList.toggle('is-active', on);
-          c.setAttribute('aria-selected', on ? 'true' : 'false');
-        }
-        for (const p of panels) p.hidden = p.dataset.prof !== target;
+      chip.addEventListener('click', () => select(chip));
+      // Navigazione da tastiera nella tablist: frecce = chip precedente/successivo (con
+      // wrap), Home/End = primo/ultimo. Attiva subito e sposta il focus.
+      chip.addEventListener('keydown', (e) => {
+        const i = chips.indexOf(chip);
+        let next = -1;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % chips.length;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + chips.length) % chips.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = chips.length - 1;
+        else return;
+        e.preventDefault();
+        select(chips[next], true);
       });
     }
 

@@ -1,98 +1,167 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getAddons, getMacros, getProfessions, getRosterCount, getExtra, getTransmog, getScreenshotCount } from '../lib/content';
+import { getClassStats } from '../lib/content';
 
-const addons = getAddons();
-const macros = getMacros();
-const professions = getProfessions();
-const rosterCount = getRosterCount();
-const extra = getExtra();
-const shots = getScreenshotCount();
-// Completamento dei tier set, la stessa metrica dei chip per classe su /transmog ma
-// su tutte le classi insieme. Contare invece le RIGHE della griglia non direbbe nulla
-// sulla collezione, e sarebbe pure ambiguo: quante righe si vedono dipende dalla
-// classe (`classStart` taglia quelle precedenti alla sua nascita, l'Evoker ne vede 15
-// contro le 41 del guerriero). I set per tipo di armatura stanno sotto ogni classe che
-// porta quel tipo, quindi pesano una volta per classe: e' il completamento della
-// griglia del sito, non un inventario di apparenze distinte.
-const tmog = getTransmog();
-const tmogGot = tmog.reduce((n, c) => n + c.got, 0);
-const tmogTotal = tmog.reduce((n, c) => n + c.total, 0);
+// Matrice per classe: una riga per classe, colonne = le metriche che il repo conosce
+// per-classe (macro, PG, screenshot, transmog). Le colonne sono ordinabili (JS sotto);
+// la nav della sezione vive ora nella toolbar in header (che ha assorbito i pulsanti che
+// stavano qui), quindi la home e' solo questa tabella.
+const stats = getClassStats();
+const totMacro = stats.reduce((n, s) => n + s.macros, 0);
+const totRoster = stats.reduce((n, s) => n + s.roster, 0);
+const totShots = stats.reduce((n, s) => n + s.shots, 0);
+const tmogGot = stats.reduce((n, s) => n + s.tmogGot, 0);
+const tmogTotal = stats.reduce((n, s) => n + s.tmogTotal, 0);
 const tmogPct = tmogTotal ? Math.round((tmogGot / tmogTotal) * 100) : 0;
-
-const sections = [
-  { href: '/addons',      name: 'Addon',       sub: 'addon installati e versioni', count: `${addons.length}`,     icon: '/icons/section/addon.jpg',  color: '#2E68D8' },
-  { href: '/macros',      name: 'Macro',       sub: 'macro per account e PG',      count: `${macros.length}`,     icon: '/icons/section/macro.jpg',  color: '#7A5AF8' },
-  { href: '/professioni', name: 'Professioni', sub: 'specializzazioni e rami',     count: `${professions.length}`, icon: '/icons/section/prof.jpg',  color: '#C77D0A' },
-  { href: '/roster',      name: 'Roster',      sub: 'personaggi Orda e Alleanza',  count: `${rosterCount}`,       icon: '/icons/section/roster.jpg', color: '#C0202A' },
-  { href: '/transmog',    name: 'Transmog',    sub: 'pezzi dei tier set collezionati', count: `${tmogPct}%`,      icon: '/icons/section/transmog.jpg', color: '#9B4DCA' },
-  { href: '/ui',          name: 'UI',          sub: 'screenshot dell’interfaccia', count: `${shots}`,             icon: '/icons/section/ui.jpg',     color: '#159A8C' },
-  { href: '/extra',       name: 'Extra',       sub: 'script di manutenzione e note', count: `${extra.length}`,    icon: '/icons/section/extra.jpg',  color: '#5B6470' },
-];
 ---
 <Base title="WoW Manager">
   <div class="wrap">
-    <div class="home-grid">
-      {sections.map(s => (
-        <a class="home-btn" href={s.href} style={`--hc: ${s.color}`}>
-          <img class="hb-icon" src={s.icon} alt="" width="56" height="56" />
-          <span class="hb-title">{s.name}</span>
-          <span class="hb-sub">{s.sub}</span>
-          {s.count && <span class="hb-count">{s.count}</span>}
-        </a>
-      ))}
-    </div>
+    <section class="cstats">
+      <div class="cstats-scroll">
+        <table class="cstats-tbl">
+          <thead>
+            <tr>
+              <th scope="col" class="c-cls" aria-sort="ascending"><button type="button" class="sort-btn" data-type="text" aria-label="Ordina per classe">Classe</button></th>
+              <th scope="col"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per numero di macro">Macro</button></th>
+              <th scope="col"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per numero di PG">Roster</button></th>
+              <th scope="col"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per numero di screenshot">UI</button></th>
+              <th scope="col" class="c-tmog"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per completamento transmog">Transmog</button></th>
+            </tr>
+          </thead>
+          <tbody>
+            {stats.map(s => (
+              <tr>
+                <th scope="row" class="c-cls" data-v={s.label}>
+                  <span class="c-clswrap">
+                    <img class="c-ico" src={s.icon} alt="" width="26" height="26" />
+                    <span>{s.label}</span>
+                  </span>
+                </th>
+                <td data-v={s.macros}>{s.macros || <span class="c-zero">—</span>}</td>
+                <td data-v={s.roster}>{s.roster || <span class="c-zero">—</span>}</td>
+                <td data-v={s.shots}>{s.shots || <span class="c-zero">—</span>}</td>
+                <td class="c-tmog" data-v={s.tmogPct}>
+                  <span class="c-tcell" style={`--pct:${s.tmogPct}`}>
+                    <span class="c-bar"><span class="c-fill" style={`width:${s.tmogPct}%`}></span></span>
+                    <span class="c-val">{s.tmogPct}%</span>
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" class="c-cls">Totale</th>
+              <td>{totMacro}</td>
+              <td>{totRoster}</td>
+              <td>{totShots}</td>
+              <td class="c-tmog">
+                <span class="c-tcell" style={`--pct:${tmogPct}`}>
+                  <span class="c-bar"><span class="c-fill" style={`width:${tmogPct}%`}></span></span>
+                  <span class="c-val">{tmogPct}%</span>
+                </span>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
   </div>
 </Base>
 
+<script>
+  // Ordinamento client-side della matrice per classe. Ogni intestazione porta un <button>
+  // (il controllo vero, azionabile da AT/tastiera); il <th> resta columnheader e porta
+  // `aria-sort`. Click -> ordina per quella colonna; ri-click -> inverte. Testo A→Z al
+  // primo click, numeri dal piu' alto. Il <tfoot> (Totale) resta fuori dall'ordinamento.
+  function setupClassSort() {
+    const table = document.querySelector<HTMLTableElement>('.cstats-tbl');
+    if (!table) return;
+    const tbody = table.tBodies[0];
+    const ths = Array.from(table.tHead?.rows[0]?.cells ?? []) as HTMLTableCellElement[];
+    let curCol = -1, curDir = 1;
+
+    table.querySelectorAll<HTMLButtonElement>('.sort-btn').forEach((btn) => {
+      const th = btn.closest('th') as HTMLTableCellElement;
+      const i = th.cellIndex;
+      const type = btn.dataset.type;
+      btn.addEventListener('click', () => {
+        curDir = curCol === i ? -curDir : (type === 'num' ? -1 : 1);
+        curCol = i;
+        const rows = Array.from(tbody.rows);
+        rows.sort((a, b) => {
+          const av = a.cells[i].dataset.v ?? '';
+          const bv = b.cells[i].dataset.v ?? '';
+          const cmp = type === 'num' ? Number(av) - Number(bv) : av.localeCompare(bv, 'it');
+          return cmp * curDir;
+        });
+        rows.forEach((r) => tbody.appendChild(r));
+        ths.forEach((t) => t.removeAttribute('aria-sort'));
+        th.setAttribute('aria-sort', curDir === 1 ? 'ascending' : 'descending');
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', setupClassSort);
+</script>
+
 <style>
-/* Home a "pulsantoni": griglia di grossi tasti a tessera, uno per sezione.
-   Le colonne dichiarate sono il DOPPIO di quelle visibili (6 per 3, 4 per 2) e ogni
-   card ne occupa due: serve a mezza colonna di gioco per centrare l'ultima riga
-   quando resta incompleta (sotto), cosa che con 3 colonne secche non si puo' fare. */
-.home-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.9rem; max-width: 1000px; margin: 0.5rem auto 0; }
-.home-btn { grid-column: auto / span 2; }
+/* ── Matrice per classe ────────────────────────────
+   Le metriche che il repo conosce per-classe, in un colpo d'occhio: macro, PG,
+   screenshot e completamento transmog. Colonne ordinabili (click sull'intestazione). */
+.cstats { max-width: 1000px; margin: 0.5rem auto 0; }
+.cstats-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); background: var(--surface); }
+.cstats-tbl { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.cstats-tbl th, .cstats-tbl td { padding: 0.5rem 0.75rem; text-align: center; }
+.cstats-tbl thead th { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-subtle); border-bottom: 1px solid var(--border); padding: 0; }
+.cstats-tbl tbody tr { border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent); }
+.cstats-tbl tbody tr:hover { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+.cstats-tbl td { font-variant-numeric: tabular-nums; font-weight: 600; }
+.c-zero { color: var(--text-subtle); font-weight: 400; }
 
-/* Ultima riga spaiata: le sezioni sono 7, quindi su 3 colonne l'ultima card resterebbe
-   sola a sinistra con due colonne di vuoto accanto. Spostandola al centro la griglia
-   torna simmetrica. Le regole guardano la POSIZIONE (nth-child), non il 7 di oggi:
-   aggiungere o togliere una sezione non le rompe, e con 9 card non scattano affatto. */
-.home-btn:last-child:nth-child(3n + 1)      { grid-column: 3 / span 2; }  /* 1 sola in coda */
-.home-btn:nth-last-child(2):nth-child(3n + 1) { grid-column: 2 / span 2; }  /* 2 in coda */
+/* Intestazioni ordinabili: il controllo e' un <button> a tutta cella. Caret in CSS puro
+   (triangolo da bordi, non glifo ne' SVG), semi-visibile = ordinabile, pieno = colonna
+   attiva; ruota per asc/desc. */
+.cstats-tbl .sort-btn {
+  width: 100%; display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.1rem; padding: 0.5rem 0.75rem; font: inherit; color: inherit;
+  text-transform: inherit; letter-spacing: inherit; background: none; border: 0;
+  cursor: pointer; white-space: nowrap;
+}
+.cstats-tbl .c-cls .sort-btn { justify-content: flex-start; }
+.cstats-tbl .sort-btn:hover { color: var(--accent); }
+.cstats-tbl .sort-btn::after {
+  content: ''; display: inline-block; width: 0; height: 0; margin-left: 0.35rem; flex: none;
+  border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-bottom: 5px solid currentColor; opacity: 0.42;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.cstats-tbl th[aria-sort='ascending'] .sort-btn::after { opacity: 0.95; }
+.cstats-tbl th[aria-sort='descending'] .sort-btn::after { opacity: 0.95; transform: rotate(180deg); }
 
-/* Sempre 2 o 3 colonne: sotto i 760px scende a 2, mai a colonna singola. */
-@media (max-width: 760px) {
-  .home-grid { grid-template-columns: repeat(4, 1fr); gap: 0.7rem; }
-  /* Su 2 colonne le righe si spezzano altrove: le regole del 3 vanno spente, o
-     centrerebbero una card che sta gia' in una riga piena. */
-  .home-btn:last-child:nth-child(3n + 1),
-  .home-btn:nth-last-child(2):nth-child(3n + 1) { grid-column: auto / span 2; }
-  .home-btn:last-child:nth-child(2n + 1)        { grid-column: 2 / span 2; }
+/* Colonna classe: icona + nome, allineata a sinistra. Il flex sta in uno span INTERNO,
+   non sulla cella: `display:flex` su <th>/<td> la toglie dal table-layout e sfasa le
+   colonne fra intestazione e corpo. */
+.c-cls { text-align: left !important; white-space: nowrap; }
+thead th.c-cls, tfoot th.c-cls { font-weight: 700; }
+.c-clswrap { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; }
+.c-ico { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); object-fit: cover; max-width: none; }
+
+/* Colonna transmog: barra + percentuale, colorate sulla rampa rosso->giallo->verde. */
+.c-tmog { min-width: 180px; width: 30%; }
+.c-tcell { display: flex; align-items: center; gap: 0.6rem; }
+.c-bar { flex: 1 1 auto; height: 7px; border-radius: 999px; background: color-mix(in srgb, var(--text) 8%, var(--surface)); overflow: hidden; }
+.c-fill { display: block; height: 100%; border-radius: 999px; background: var(--tint); }
+/* La % usa una versione SCURITA della tinta (mix con --text): mantiene il segnale del
+   colore-rampa ma resta leggibile (il --tint puro sul verde/arancio e' sotto AA). */
+.c-val { flex: none; min-width: 2.8rem; text-align: right; color: color-mix(in srgb, var(--tint) 55%, var(--text)); font-weight: 700; }
+.c-tcell {
+  --mix-warn: clamp(0%, calc(var(--pct, 0) * 2%), 100%);
+  --mix-ok:   clamp(0%, calc((var(--pct, 0) - 50) * 2%), 100%);
+  --tint: color-mix(in srgb,
+            var(--ok) var(--mix-ok),
+            color-mix(in srgb, var(--warn) var(--mix-warn), var(--bad)));
 }
 
-.home-btn {
-  position: relative; display: flex; flex-direction: column; gap: 0.3rem;
-  padding: 1.1rem 1.15rem; min-height: 116px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background var(--transition);
-}
-/* Sottile barra colore sezione in cima al pulsante */
-.home-btn::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--hc); }
-.home-btn:hover { border-color: var(--hc); box-shadow: var(--shadow-md); transform: translateY(-1px); background: color-mix(in srgb, var(--hc) 5%, var(--surface)); }
-.hb-icon {
-  width: 42px; height: 42px; border-radius: 10px; margin-bottom: 0.35rem;
-  border: 1px solid var(--border); object-fit: cover; max-width: none;
-}
-.hb-title { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; line-height: 1.15; }
-.hb-sub { font-size: 0.83rem; color: var(--text-subtle); line-height: 1.3; }
-.hb-count {
-  position: absolute; top: 0.95rem; right: 1rem;
-  font-size: 0.92rem; font-weight: 700; color: var(--hc);
-  font-variant-numeric: tabular-nums; min-width: 1.6rem; text-align: center;
-  background: color-mix(in srgb, var(--hc) 12%, var(--surface));
-  border: 1px solid color-mix(in srgb, var(--hc) 28%, var(--border));
-  padding: 0.1rem 0.5rem; border-radius: 999px;
-}
+.cstats-tbl tfoot tr { border-top: 2px solid var(--border); }
+.cstats-tbl tfoot th, .cstats-tbl tfoot td { font-weight: 800; }
 </style>

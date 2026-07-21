@@ -35,6 +35,11 @@ for (const m of macros) {
 }
 classes.sort((a, b) => (a.slug === 'shared' ? 1 : b.slug === 'shared' ? -1 : a.label.localeCompare(b.label)));
 for (const c of classes) c.specs.sort();
+
+// Mappa classe→spec (solo classi con spec proprie) per la riga di chip spec lato client.
+const specMap: Record<string, string[]> = Object.fromEntries(
+  classes.filter(c => c.specs.length).map(c => [c.slug, c.specs]),
+);
 ---
 <Base title="Macro" description="Macro WoW per account/character, filtrabili per classe e spec: cosa fanno e il codice pronto da copiare.">
   <div class="wrap">
@@ -50,6 +55,10 @@ for (const c of classes) c.specs.sort();
         ))}
       </div>
     </div>
+
+    <!-- Riga chip spec: popolata dal JS solo quando è attiva UNA sola classe con spec proprie. -->
+    <div class="chips spec-chips" id="spec-chips" role="group" aria-label="Filtra per spec" hidden></div>
+    <script type="application/json" id="spec-map" set:html={JSON.stringify(specMap)}></script>
 
     <div class="macro-grid" id="macro-grid">
       {macros.map(m => {
@@ -72,7 +81,7 @@ for (const c of classes) c.specs.sort();
             {m.desc && <p class="mcard-desc">{m.desc}</p>}
             {m.body && (
               <div class="mcard-code">
-                <button class="copy" type="button" aria-label="Copia la macro">Copia</button>
+                <button class="copy" type="button" aria-label="Copia la macro" aria-live="polite">Copia</button>
                 <pre><code>{m.body}</code></pre>
               </div>
             )}
@@ -89,6 +98,9 @@ for (const c of classes) c.specs.sort();
    completano e riempiono le righe successive (display:contents scioglie il contenitore
    così le chip diventano sorelle flex della search). */
 .filters.row #class-chips { display: contents; }
+
+/* Riga spec: chip sotto la riga classe, stesso stile ma flusso proprio (non `display:contents`). */
+.spec-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
 
 /* `display:flex/grid` sulle card/chips vince sull'attributo [hidden] (regola autore > UA): forziamo il nascondere. */
 .mcard[hidden], .chips[hidden] { display: none !important; }
@@ -107,7 +119,8 @@ for (const c of classes) c.specs.sort();
 .mcard-title strong { font-size: 0.95rem; line-height: 1.25; }
 .mcard-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.45; margin: 0; }
 .mcard-code { position: relative; }
-.mcard-code pre { background: var(--surface-2); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.6rem 0.7rem; overflow: hidden; }
+/* padding-right ampio: il bottone .copy (overlay in alto a destra) non copre la prima riga del corpo. */
+.mcard-code pre { background: var(--surface-2); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.6rem 3.2rem 0.6rem 0.7rem; overflow: hidden; }
 /* Wrap invece di scroll: rientro pendente = ogni riga a capo (continuazione) resta indentata,
    marcatore visivo che quella riga prosegue la precedente. */
 .mcard-code code { display: block; font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.5; background: none; padding: 0; color: var(--text); white-space: pre-wrap; overflow-wrap: anywhere; padding-left: 1.5em; text-indent: -1.5em; }
@@ -133,9 +146,18 @@ for (const c of classes) c.specs.sort();
     const classChips = Array.from(document.querySelectorAll('#class-chips .chip')) as HTMLButtonElement[];
     const cards = Array.from(grid.querySelectorAll('.mcard')) as HTMLElement[];
     const empty = document.getElementById('empty') as HTMLElement;
+    const specChipsBox = document.getElementById('spec-chips') as HTMLElement;
+
+    // Mappa classe→spec (dal JSON renderizzato lato server): alimenta la riga di chip spec.
+    let specMap: Record<string, string[]> = {};
+    try {
+      specMap = JSON.parse(document.getElementById('spec-map')?.textContent || '{}');
+    } catch { /* mappa assente/malformata: nessuna riga spec */ }
 
     // Filtro classe multi-selezione (unione). Set vuoto = nessun filtro.
     const activeClasses = new Set<string>();
+    // Filtro spec: singola selezione, valido solo con UNA classe attiva. '' = nessun filtro.
+    let activeSpec = '';
     const search = document.getElementById('macro-search') as HTMLInputElement;
     let query = '';
 
@@ -143,12 +165,55 @@ for (const c of classes) c.specs.sort();
       let shown = 0;
       for (const card of cards) {
         const okClass = activeClasses.size === 0 || activeClasses.has(card.dataset.class || '');
+        // Le card cross-spec (data-spec vuoto) restano sempre visibili in ogni filtro spec.
+        const cardSpec = card.dataset.spec || '';
+        const okSpec = activeSpec === '' || cardSpec === '' || cardSpec === activeSpec;
         const okText = query === '' || (card.dataset.search || '').includes(query);
-        const show = okClass && okText;
+        const show = okClass && okSpec && okText;
         card.hidden = !show;
         if (show) shown++;
       }
       if (empty) empty.hidden = shown > 0;
+    };
+
+    // Etichetta leggibile per una spec (prima lettera maiuscola), come il titleCase server-side.
+    const specLabel = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+    // Ricostruisce la riga spec: compare SOLO con una singola classe attiva che ha spec proprie.
+    // Ogni ricostruzione azzera il filtro spec (cambio classe = reset).
+    const renderSpecRow = () => {
+      activeSpec = '';
+      if (!specChipsBox) return;
+      specChipsBox.replaceChildren();
+      const only = activeClasses.size === 1 ? [...activeClasses][0] : '';
+      const specs = only ? (specMap[only] || []) : [];
+      if (!specs.length) { specChipsBox.hidden = true; return; }
+      const nodash = only.replace(/-/g, '');
+      for (const spec of specs) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip';
+        btn.dataset.spec = spec;
+        btn.setAttribute('aria-pressed', 'false');
+        const img = document.createElement('img');
+        img.className = 'chip-ico';
+        img.src = `/icons/spec/${nodash}-${spec}.jpg`;
+        img.alt = '';
+        img.width = 18; img.height = 18;
+        btn.append(img, document.createTextNode(specLabel(spec)));
+        btn.addEventListener('click', () => {
+          const s = btn.dataset.spec || '';
+          activeSpec = activeSpec === s ? '' : s;   // toggle: ri-click deseleziona
+          for (const c of Array.from(specChipsBox.querySelectorAll('.chip')) as HTMLButtonElement[]) {
+            const on = c === btn && activeSpec !== '';
+            c.classList.toggle('is-active', on);
+            c.setAttribute('aria-pressed', on ? 'true' : 'false');
+          }
+          apply();
+        });
+        specChipsBox.append(btn);
+      }
+      specChipsBox.hidden = false;
     };
 
     if (search) {
@@ -165,6 +230,8 @@ for (const c of classes) c.specs.sort();
         const on = activeClasses.has(c);
         chip.classList.toggle('is-active', on);
         chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+        // La riga spec vive solo con UNA classe attiva: si aggiorna/sparisce a ogni toggle.
+        renderSpecRow();
         apply();
       });
     }

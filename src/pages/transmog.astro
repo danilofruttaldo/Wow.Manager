@@ -168,6 +168,9 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);
     line-height: 1.25;
   }
+  /* Sticky a top:0: la tabella e' dentro `.table-scroll` (contenitore-scroll proprio),
+     quindi la testata si incolla al bordo del contenitore, non al viewport — l'offset
+     globale e' 0 e qui va bene cosi'. */
   .tmog-panel thead th { background: var(--surface-2); font-size: 0.72rem; padding: 0.45rem 0.4rem; }
   /* Con le righe impilate un set puo' occupare piu' <tr>: senza un confine piu' marcato
      non si capisce dove finisce un set e comincia il successivo. `fine` sta sull'ultima
@@ -204,6 +207,10 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   /* Celle: frazione + barra di completamento, colore per stato. */
   .tmog-panel td.cell { font-variant-numeric: tabular-nums; font-weight: 600; }
   .tmog-panel .frac { display: block; font-size: 0.74rem; line-height: 1.15; }
+  /* Contrasto della frazione n/total: `td.cell { color: var(--tint) }` la tingeva col
+     colore pieno della rampa (verde/arancio ~4:1, sotto AA). La si scurisce mescolando
+     la tinta col colore del testo, cosi' resta leggibile; la barra sotto tiene la tinta piena. */
+  .tmog-panel .frac { color: color-mix(in srgb, var(--tint) 55%, var(--text)); }
   /* Etichetta della versione, scritta solo dove differisce dall'intestazione: e' il
      nome dell'ASPETTO (Sunwell, Sanctified (264), Alleanza), non della difficolta'. */
   /* Nome del set di questa versione: sulle righe a piu' aspetti ogni cella ha il
@@ -307,7 +314,10 @@ const daScrivere = (cell: { slot: string; label: string }) =>
 
   @media (max-width: 700px) {
     .tmog-panel th:first-child, .tmog-panel td:first-child { width: 40%; }
-    .tmog-panel .traid { display: none; }
+    /* Le sigle dei raid sono contenuto (eccezione documentata), non decorazione: su
+       mobile non si nascondono. `.tname` va gia' a capo (flex-wrap: wrap), quindi le
+       si lascia scendere sotto il nome del set invece di sopprimerle. */
+    .tmog-panel .traid { flex-basis: 100%; }
   }
 </style>
 
@@ -339,18 +349,40 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     if (visibile?.dataset.class) ensureTips(visibile.dataset.class);
 
     // Tab a selezione singola: una classe alla volta (a differenza del filtro multi di /macros).
-    for (const chip of chips) {
-      chip.addEventListener('click', () => {
-        const target = chip.dataset.class || '';
-        for (const c of chips) {
-          const on = c === chip;
-          c.classList.toggle('is-active', on);
-          c.setAttribute('aria-selected', on ? 'true' : 'false');
-        }
-        for (const p of panels) p.hidden = p.dataset.class !== target;
-        ensureTips(target); // carica i pezzi della classe appena aperta
-      });
+    // `focus` distingue il click (non deve rubare il focus) dalla navigazione a tastiera
+    // (deve spostarlo sul nuovo tab). Roving tabindex: solo il tab attivo e' tabbabile.
+    function select(chip: HTMLButtonElement, focus = false) {
+      const target = chip.dataset.class || '';
+      for (const c of chips) {
+        const on = c === chip;
+        c.classList.toggle('is-active', on);
+        c.setAttribute('aria-selected', on ? 'true' : 'false');
+        c.tabIndex = on ? 0 : -1;
+      }
+      for (const p of panels) p.hidden = p.dataset.class !== target;
+      if (focus) chip.focus();
+      ensureTips(target); // carica i pezzi della classe appena aperta
     }
+
+    // Stato iniziale del roving tabindex: solo il chip attivo (il primo) entra nel Tab order.
+    for (const c of chips) c.tabIndex = c.classList.contains('is-active') ? 0 : -1;
+
+    for (const chip of chips) chip.addEventListener('click', () => select(chip));
+
+    // Navigazione a tastiera del tablist (pattern WAI-ARIA APG): frecce spostano
+    // selezione+focus tra i tab, Home/End ai due capi. Non cambia cosa fa il click.
+    document.getElementById('tmog-chips')?.addEventListener('keydown', e => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+      const cur = chips.findIndex(c => c === document.activeElement);
+      if (cur < 0) return;
+      e.preventDefault();
+      let next = cur;
+      if (e.key === 'ArrowLeft') next = (cur - 1 + chips.length) % chips.length;
+      else if (e.key === 'ArrowRight') next = (cur + 1) % chips.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = chips.length - 1;
+      select(chips[next], true);
+    });
 
     initTip();
   }
@@ -370,7 +402,13 @@ const daScrivere = (cell: { slot: string; label: string }) =>
 
     let openCell: HTMLElement | null = null;
 
-    function hide() { openCell = null; const tip = el(); if (tip) tip.hidden = true; }
+    // Togliendo il popover si toglie anche l'aria-describedby dalla cella, altrimenti
+    // lo screen reader punterebbe a un tooltip nascosto/svuotato.
+    function hide() {
+      if (openCell) openCell.removeAttribute('aria-describedby');
+      openCell = null;
+      const tip = el(); if (tip) tip.hidden = true;
+    }
 
     // Disegna titolo + elenco pezzi e posiziona. `pieces` puo' essere vuoto: allora
     // resta il solo titolo, com'era per le celle senza elenco. Il primo carattere di
@@ -414,7 +452,10 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     }
 
     function show(cell: HTMLElement) {
+      if (openCell && openCell !== cell) openCell.removeAttribute('aria-describedby');
       openCell = cell;
+      // Lega la cella al popover: lo screen reader annuncia l'elenco pezzi come descrizione.
+      cell.setAttribute('aria-describedby', 'tmog-tip');
       const slug = (cell.closest('.tmog-panel') as HTMLElement | null)?.dataset.class || '';
       const tier = cell.dataset.tier || '', ver = cell.dataset.ver || '';
       const data = tipCache.get(slug);

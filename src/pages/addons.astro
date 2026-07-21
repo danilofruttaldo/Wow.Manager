@@ -49,10 +49,10 @@ const outdatedCount = addons.length - updatedCount;
               {a.desc && <p class="acard-desc">{a.desc}</p>}
               <div class="acard-meta">
                 {matchesBuild(a.interface)
-                  ? <span class="ok" title={`Interface: ${a.interface}`}><img class="stat-ico" src="/icons/ui/ok.jpg" alt="" width="14" height="14" /> {buildShort}</span>
-                  : <span class="warn" title={`Non aggiornato al build ${buildShort}. Interface: ${a.interface}`}><img class="stat-ico" src="/icons/ui/warn.jpg" alt="" width="14" height="14" /> {lastSupported(a.interface)}</span>}
+                  ? <span class="ok" title={`Interface: ${a.interface}`}><img class="stat-ico" src="/icons/ui/ok.jpg" alt="" width="14" height="14" /> <span class="sr-only">Aggiornato: </span>{buildShort}</span>
+                  : <span class="warn" title={`Non aggiornato al build ${buildShort}. Interface: ${a.interface}`}><img class="stat-ico" src="/icons/ui/warn.jpg" alt="" width="14" height="14" /> <span class="sr-only">Da aggiornare: </span>{lastSupported(a.interface)}</span>}
                 {a.installed && <span title="Ultimo aggiornamento/installazione">agg. {a.installed}</span>}
-                {a.url && <a href={a.url} target="_blank" rel="noopener noreferrer" class="acard-src">{sourceLabel(a.source)} ↗</a>}
+                {a.url && <a href={a.url} target="_blank" rel="noopener noreferrer" class="acard-src">{sourceLabel(a.source)} <img class="stat-ico" src="/icons/ui/external.jpg" alt="" width="14" height="14" /><span class="sr-only"> (apre in una nuova scheda)</span></a>}
               </div>
             </div>
           </article>

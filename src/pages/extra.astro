@@ -6,7 +6,7 @@ const items = getExtra();
 const lineCount = (body?: string) => (body ? body.split('\n').length : 0);
 ---
 <Base title="Extra" description="Script di manutenzione, link e appunti tecnici del setup WoW: contenuti pronti da copiare.">
-  <div class="wrap">
+  <div class="wrap" id="extra-main">
     <div class="filters row">
       <input id="extra-search" class="search" type="search" inputmode="search" autocomplete="off"
              placeholder="Cerca script, contenuto…" aria-label="Cerca contenuti extra" />
@@ -28,7 +28,7 @@ const lineCount = (body?: string) => (body ? body.split('\n').length : 0);
               <div class="xcard-head">
                 <img class="xico" src={it.kind === 'script' ? '/icons/section/extra.jpg' : '/icons/ui/shared.jpg'} alt="" width="30" height="30" loading="lazy" />
                 <div class="xcard-title">
-                  <strong class="xname">{it.name}{it.kind === 'link' && it.url ? ' ↗' : ''}</strong>
+                  <strong class="xname">{it.name}{it.kind === 'link' && it.url && (<><img class="stat-ico" src="/icons/ui/external.jpg" alt="" width="14" height="14" /><span class="sr-only"> (apre in una nuova scheda)</span></>)}</strong>
                   {it.lang && <span class="badge badge--accent xlang">{it.lang}</span>}
                 </div>
               </div>
@@ -61,7 +61,7 @@ const lineCount = (body?: string) => (body ? body.split('\n').length : 0);
         <button class="copy" id="xlb-copy" type="button" aria-label="Copia">Copia</button>
         <button class="xlb-close" id="xlb-close" aria-label="Chiudi">&times;</button>
       </div>
-      <pre><code id="xlb-code"></code></pre>
+      <pre tabindex="0" role="region" aria-label="Corpo dello script"><code id="xlb-code"></code></pre>
     </div>
   </div>
 </Base>
@@ -114,6 +114,9 @@ a.xcard:hover { border-color: var(--accent); }
     if (!lb) return;
     lb.classList.remove('open');
     document.body.style.overflow = '';
+    // La griglia + filtri tornano navigabili: erano inerti mentre la modale era aperta.
+    // Non tocchiamo #main, che CONTIENE la modale stessa.
+    document.getElementById('extra-main')?.removeAttribute('inert');
     xlbLastFocus?.focus();
     xlbLastFocus = null;
   };
@@ -190,6 +193,9 @@ a.xcard:hover { border-color: var(--accent); }
       copy.textContent = 'Copia'; copy.classList.remove('done');
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
+      // Sfondo inerte per lo screen reader: rendiamo inerte il contenitore della
+      // pagina, NON la modale (che vive in #main insieme alla griglia).
+      document.getElementById('extra-main')?.setAttribute('inert', '');
       closeBtn?.focus();
     };
 
