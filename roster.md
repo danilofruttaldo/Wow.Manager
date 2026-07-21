@@ -13,7 +13,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Tauren | | _Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
 | Troll | | X | Arconauta·N | | | | *Voodoochild | Snowwipe·P | | | *Bloomanjaro | X | X |
 | Goblin | | X | | | | _Moneystrike·N | *Voltron | | Tearsforfear·N | | X | X | X |
-| Blood Elf | | Blessismore·P | | _Cereanor·N | | | X | Repository·N | | | X | Illidanielle·N<br>_Demoversion·P | X |
+| Blood Elf | | Blessismore·P | | Cereanor·N | | | X | Repository·N | | | X | Illidanielle·N<br>_Demoversion·P | X |
 | Nightborne | | X | | | _Nightform·P | | X | Spelling·P | Menagerie·N | | X | X | X |
 | Highmountain Tauren | Stantu·P | X | | | | | *Rainmaker | | | | _Ecoterrorist·N | X | X |
 | Mag'har Orc | _Axetomouth·N | X | | | | | Blondelust·P | | | | X | X | X |
