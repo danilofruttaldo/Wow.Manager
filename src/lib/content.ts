@@ -543,23 +543,18 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
       return `<span class="spec-l">(${spec[0].toUpperCase()})</span>`; // fallback se manca l'icona
     }).join('');
     // "nome + icone" = inline-flex centrato: scritte e icone allineate verticalmente.
-    // Tooltip nativo (abbozzo): realm, livello, spec, professioni. Il livello e' GREZZO,
-    // derivato dai prefissi del roster (0 se non creato, "in leveling" per "_", 90 al cap):
-    // i numeri reali vivono in AllTheThings.lua (chiave `lvl`) e vanno agganciati a parte,
-    // gestendo gli omonimi per realm. Le professioni vengono dal tracker characters.json,
-    // popolato durante il grind (quindi ancora parziale).
-    const specNames = specs.map((r) => {
-      const wild = r.endsWith('*');
-      const sp = wild ? r.slice(0, -1) : r;
-      return sp === '?' ? 'da confermare' : titleCase(sp) + (wild ? ' (tutte)' : '');
-    });
+    // Tooltip nativo (abbozzo): realm, livello, professioni PRIMARIE. La spec di combat
+    // NON va nel tooltip -- e' gia' l'icona accanto al nome, sarebbe ridondante. Il
+    // livello e' GREZZO, dai prefissi del roster (0 se non creato, "in leveling" per "_",
+    // 90 al cap): i numeri reali vivono in AllTheThings.lua (chiave `lvl`) e si agganciano
+    // a parte, gestendo gli omonimi per realm. Le professioni vengono dal tracker
+    // characters.json, popolato durante il grind (quindi ancora parziale).
     const info = CHAR_INFO[name.toLowerCase()];
     const realmName = realmCode ? (REALM_ABBR[realmCode] ?? realmCode) : info?.realm;
     const level = todo ? '0 · non creato' : wip ? 'in leveling (<90)' : '90';
     const tipLines = [name];
     if (realmName) tipLines.push(`Realm: ${realmName}`);
     tipLines.push(`Livello: ${level}`);
-    if (specNames.length) tipLines.push(`Spec: ${specNames.join(', ')}`);
     const profs = info?.professions;
     if (profs?.length) tipLines.push(`Professioni: ${profs.join(', ')}`);
     const nameAttr = ` title="${escAttr(tipLines.join('\n'))}"`;
