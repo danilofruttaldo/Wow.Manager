@@ -145,8 +145,14 @@ export interface ProfTree {
   skillLine: number;
   specs: ProfNode[];
 }
-export function getProfessionTrees(): Record<string, ProfTree> {
-  return ((profTreesManifest as any).professions ?? {}) as Record<string, ProfTree>;
+// Chiave doppia: professione -> espansione -> albero. Ogni professione ha un albero
+// diverso per espansione (Midnight, TWW, Dragon Isles...); oggi il file porta solo
+// Midnight, ma la struttura e la tendina in pagina sono gia' pronte per aggiungerne.
+export function getProfExpansions(): string[] {
+  return ((profTreesManifest as any).expansions ?? []) as string[];
+}
+export function getProfessionTrees(): Record<string, Record<string, ProfTree>> {
+  return ((profTreesManifest as any).professions ?? {}) as Record<string, Record<string, ProfTree>>;
 }
 
 // ── Extra (script / link / appunti) ───────────────

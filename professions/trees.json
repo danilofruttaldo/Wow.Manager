@@ -1,175 +1,182 @@
 ﻿{
     "_meta":  {
-                  "note":  "Alberi estratti dal client via scripts/prof-spec-dump.lua. cap = rank massimo del nodo.",
+                  "note":  "Alberi estratti dal client via scripts/prof-spec-dump.lua. cap = rank massimo del nodo. Chiave: professione -\u003e espansione.",
                   "build":  "12.0.7"
               },
+    "expansions":  [
+                       "Midnight"
+                   ],
     "professions":  {
                         "engineering":  {
-                                            "skillLine":  2910,
-                                            "specs":  [
-                                                          {
-                                                              "name":  "Market Mobility",
-                                                              "cap":  25,
-                                                              "desc":  "Master the different tools and accessories used by various professions.",
-                                                              "children":  [
-                                                                               {
-                                                                                   "name":  "Mandatory Tools",
-                                                                                   "cap":  10,
-                                                                                   "children":  [
-                                                                                                    {
-                                                                                                        "name":  "Engineering Tools",
-                                                                                                        "cap":  30
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name":  "Tailoring Tools",
-                                                                                                        "cap":  30
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name":  "Jewelcrafting Tools",
-                                                                                                        "cap":  30
-                                                                                                    }
-                                                                                                ]
-                                                                               },
-                                                                               {
-                                                                                   "name":  "Finishing Touches",
-                                                                                   "cap":  10,
-                                                                                   "children":  [
-                                                                                                    {
-                                                                                                        "name":  "Fishing Rods",
-                                                                                                        "cap":  30
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name":  "Mining Accessories",
-                                                                                                        "cap":  30
-                                                                                                    },
-                                                                                                    {
-                                                                                                        "name":  "Engineering Accessories",
-                                                                                                        "cap":  30
-                                                                                                    }
-                                                                                                ]
-                                                                               }
-                                                                           ]
-                                                          },
-                                                          {
-                                                              "name":  "Combat Analytics",
-                                                              "cap":  25,
-                                                              "desc":  "Master an Engineer\u0027s adaptable augmentations.",
-                                                              "children":  [
-                                                                               {
-                                                                                   "name":  "Boots",
-                                                                                   "cap":  35
-                                                                               },
-                                                                               {
-                                                                                   "name":  "Bracers",
-                                                                                   "cap":  35
-                                                                               },
-                                                                               {
-                                                                                   "name":  "Goggles",
-                                                                                   "cap":  35
-                                                                               },
-                                                                               {
-                                                                                   "name":  "Guns",
-                                                                                   "cap":  35
-                                                                               }
-                                                                           ]
-                                                          },
-                                                          {
-                                                              "name":  "Recycling",
-                                                              "cap":  30,
-                                                              "desc":  "Master the art of recycling crafted reagents from other Midnight Professions into useful parts for Midnight Engineering!",
-                                                              "children":  [
-                                                                               {
-                                                                                   "name":  "Resourcefulness",
-                                                                                   "cap":  20
-                                                                               },
-                                                                               {
-                                                                                   "name":  "Multicraft",
-                                                                                   "cap":  20
-                                                                               },
-                                                                               {
-                                                                                   "name":  "Concentrated Effort",
-                                                                                   "cap":  20
-                                                                               }
-                                                                           ]
-                                                          },
-                                                          {
-                                                              "name":  "Bits and Bots",
-                                                              "cap":  30,
-                                                              "desc":  "Whether you need a pick-me-up, or to put your enemies down, Bits and Bots is here to help. Create and improve upon interesting gadgets, gizmos, and all the bits in between through the power of science!",
-                                                              "children":  [
-                                                                               {
-                                                                                   "name":  "Bots",
-                                                                                   "cap":  30
-                                                                               },
-                                                                               {
-                                                                                   "name":  "Bits",
-                                                                                   "cap":  30
-                                                                               }
-                                                                           ]
-                                                          }
-                                                      ]
+                                            "Midnight":  {
+                                                             "skillLine":  2910,
+                                                             "specs":  [
+                                                                           {
+                                                                               "name":  "Market Mobility",
+                                                                               "cap":  25,
+                                                                               "desc":  "Master the different tools and accessories used by various professions.",
+                                                                               "children":  [
+                                                                                                {
+                                                                                                    "name":  "Mandatory Tools",
+                                                                                                    "cap":  10,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Engineering Tools",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Tailoring Tools",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Jewelcrafting Tools",
+                                                                                                                         "cap":  30
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Finishing Touches",
+                                                                                                    "cap":  10,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Fishing Rods",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Mining Accessories",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Engineering Accessories",
+                                                                                                                         "cap":  30
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                }
+                                                                                            ]
+                                                                           },
+                                                                           {
+                                                                               "name":  "Combat Analytics",
+                                                                               "cap":  25,
+                                                                               "desc":  "Master an Engineer\u0027s adaptable augmentations.",
+                                                                               "children":  [
+                                                                                                {
+                                                                                                    "name":  "Boots",
+                                                                                                    "cap":  35
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Bracers",
+                                                                                                    "cap":  35
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Goggles",
+                                                                                                    "cap":  35
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Guns",
+                                                                                                    "cap":  35
+                                                                                                }
+                                                                                            ]
+                                                                           },
+                                                                           {
+                                                                               "name":  "Recycling",
+                                                                               "cap":  30,
+                                                                               "desc":  "Master the art of recycling crafted reagents from other Midnight Professions into useful parts for Midnight Engineering!",
+                                                                               "children":  [
+                                                                                                {
+                                                                                                    "name":  "Resourcefulness",
+                                                                                                    "cap":  20
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Multicraft",
+                                                                                                    "cap":  20
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Concentrated Effort",
+                                                                                                    "cap":  20
+                                                                                                }
+                                                                                            ]
+                                                                           },
+                                                                           {
+                                                                               "name":  "Bits and Bots",
+                                                                               "cap":  30,
+                                                                               "desc":  "Whether you need a pick-me-up, or to put your enemies down, Bits and Bots is here to help. Create and improve upon interesting gadgets, gizmos, and all the bits in between through the power of science!",
+                                                                               "children":  [
+                                                                                                {
+                                                                                                    "name":  "Bots",
+                                                                                                    "cap":  30
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Bits",
+                                                                                                    "cap":  30
+                                                                                                }
+                                                                                            ]
+                                                                           }
+                                                                       ]
+                                                         }
                                         },
                         "mining":  {
-                                       "skillLine":  2916,
-                                       "specs":  [
-                                                     {
-                                                         "name":  "Plentiful Ores",
-                                                         "cap":  50,
-                                                         "desc":  "Build your knowledge in all of the Midnight ores, learning how to make the most of each deposit.",
-                                                         "children":  [
-                                                                          {
-                                                                              "name":  "Brilliant Silver",
-                                                                              "cap":  40
-                                                                          },
-                                                                          {
-                                                                              "name":  "Umbral Tin",
-                                                                              "cap":  40
-                                                                          },
-                                                                          {
-                                                                              "name":  "Refulgent Copper",
-                                                                              "cap":  40
-                                                                          }
-                                                                      ]
-                                                     },
-                                                     {
-                                                         "name":  "Meticulous Mining",
-                                                         "cap":  40,
-                                                         "desc":  "Greatly improve at recovering ore from rich deposits and seams.",
-                                                         "children":  [
-                                                                          {
-                                                                              "name":  "Seams",
-                                                                              "cap":  35
-                                                                          },
-                                                                          {
-                                                                              "name":  "Rich Deposits",
-                                                                              "cap":  35
-                                                                          }
-                                                                      ]
-                                                     },
-                                                     {
-                                                         "name":  "Over-LODED",
-                                                         "cap":  40,
-                                                         "desc":  "Master the art of mining in unexpected circumstances.",
-                                                         "children":  [
-                                                                          {
-                                                                              "name":  "Voidbound",
-                                                                              "cap":  40
-                                                                          },
-                                                                          {
-                                                                              "name":  "Primal",
-                                                                              "cap":  40
-                                                                          },
-                                                                          {
-                                                                              "name":  "Wild",
-                                                                              "cap":  40
-                                                                          },
-                                                                          {
-                                                                              "name":  "Lightfused",
-                                                                              "cap":  40
-                                                                          }
-                                                                      ]
-                                                     }
-                                                 ]
+                                       "Midnight":  {
+                                                        "skillLine":  2916,
+                                                        "specs":  [
+                                                                      {
+                                                                          "name":  "Plentiful Ores",
+                                                                          "cap":  50,
+                                                                          "desc":  "Build your knowledge in all of the Midnight ores, learning how to make the most of each deposit.",
+                                                                          "children":  [
+                                                                                           {
+                                                                                               "name":  "Brilliant Silver",
+                                                                                               "cap":  40
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "Umbral Tin",
+                                                                                               "cap":  40
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "Refulgent Copper",
+                                                                                               "cap":  40
+                                                                                           }
+                                                                                       ]
+                                                                      },
+                                                                      {
+                                                                          "name":  "Meticulous Mining",
+                                                                          "cap":  40,
+                                                                          "desc":  "Greatly improve at recovering ore from rich deposits and seams.",
+                                                                          "children":  [
+                                                                                           {
+                                                                                               "name":  "Seams",
+                                                                                               "cap":  35
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "Rich Deposits",
+                                                                                               "cap":  35
+                                                                                           }
+                                                                                       ]
+                                                                      },
+                                                                      {
+                                                                          "name":  "Over-LODED",
+                                                                          "cap":  40,
+                                                                          "desc":  "Master the art of mining in unexpected circumstances.",
+                                                                          "children":  [
+                                                                                           {
+                                                                                               "name":  "Voidbound",
+                                                                                               "cap":  40
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "Primal",
+                                                                                               "cap":  40
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "Wild",
+                                                                                               "cap":  40
+                                                                                           },
+                                                                                           {
+                                                                                               "name":  "Lightfused",
+                                                                                               "cap":  40
+                                                                                           }
+                                                                                       ]
+                                                                      }
+                                                                  ]
+                                                    }
                                    }
                     }
 }
