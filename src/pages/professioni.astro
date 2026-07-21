@@ -138,20 +138,27 @@ function renderNode(n: ProfNode, depth = 0): string {
 .spec-head { border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
 .spec-head .pnode-name { font-size: 1rem; font-weight: 700; }
 
-/* Un nodo dell'albero: nome a sinistra, pastiglia del cap a destra. */
-.pnode-head { display: flex; align-items: baseline; gap: 0.5rem; }
-.pnode-name { font-weight: 600; color: var(--text); line-height: 1.3; min-width: 0; }
-.pnode-cap {
+/* Un nodo dell'albero: nome a sinistra, pastiglia del cap a destra.
+   ⚠️ I nodi FIGLI li produce renderNode via set:html, quindi NON hanno l'attributo
+   [data-astro-cid-…] con cui Astro scopa gli stili: le loro regole DEVONO stare in
+   :global(), altrimenti lo scope non le colpisce e il cap resta un numero nudo
+   incollato al nome invece di una pastiglia a destra. Stesso motivo per cui transmog
+   e roster usano :global sulle voci create a runtime. Le stesse classi le usa la
+   testata della spec nel template, e :global le stila comunque. Le classi .pnode-*
+   sono uniche di questa pagina, quindi il global non tocca il resto del sito. */
+:global(.pnode-head) { display: flex; align-items: baseline; gap: 0.5rem; }
+:global(.pnode-name) { font-weight: 600; color: var(--text); line-height: 1.3; min-width: 0; }
+:global(.pnode-cap) {
   margin-left: auto; flex-shrink: 0; font-size: 0.75rem; font-weight: 700;
   color: var(--accent); background: var(--accent-soft); border-radius: 999px;
   padding: 0.05rem 0.5rem; font-variant-numeric: tabular-nums;
 }
-.pnode-desc { font-size: 0.76rem; color: var(--text-subtle); line-height: 1.4; margin: 0.2rem 0 0; }
+:global(.pnode-desc) { font-size: 0.76rem; color: var(--text-subtle); line-height: 1.4; margin: 0.2rem 0 0; }
 
 /* I figli rientrano sotto il genitore, con una guida verticale come lo spine del roster. */
-.pnode-kids { margin: 0.45rem 0 0 0.3rem; padding-left: 0.7rem; border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem; }
-.pnode { min-width: 0; }
-.pnode .pnode-head { font-size: 0.9rem; }
+:global(.pnode-kids) { margin: 0.45rem 0 0 0.3rem; padding-left: 0.7rem; border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem; }
+:global(.pnode) { min-width: 0; }
+:global(.pnode .pnode-head) { font-size: 0.9rem; }
 
 .prof-empty { color: var(--text-subtle); font-size: 0.9rem; padding: 1rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-lg); }
 .prof-empty strong { color: var(--text); }
