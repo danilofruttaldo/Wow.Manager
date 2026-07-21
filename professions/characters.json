@@ -614,6 +614,18 @@
                                           "midnightSpecs":  [
 
                                                             ]
-                                      }
+                                      },
+                       "Dayandknight":  {
+                                            "realm":  "Pozzo dell'Eternità",
+                                            "race":  "night-elf",
+                                            "class":  "death-knight",
+                                            "professions":  [
+                                                                "Mining",
+                                                                "Engineering"
+                                                            ],
+                                            "midnightSpecs":  [
+
+                                                              ]
+                                        }
                    }
 }
