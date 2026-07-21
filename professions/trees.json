@@ -586,6 +586,181 @@
                                                                      ]
                                                        }
                                       },
+                        "jewelcrafting":  {
+                                              "Midnight":  {
+                                                               "skillLine":  2914,
+                                                               "specs":  [
+                                                                             {
+                                                                                 "name":  "Thoughtful Throughput",
+                                                                                 "cap":  30,
+                                                                                 "desc":  "Focus on your Jewelcrafting fundamentals to become a market powerhouse through greater efficiency.",
+                                                                                 "children":  [
+                                                                                                  {
+                                                                                                      "name":  "Calculated Concentration",
+                                                                                                      "cap":  30
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Outrageous Output",
+                                                                                                      "cap":  30
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Skilled Savings",
+                                                                                                      "cap":  30
+                                                                                                  }
+                                                                                              ]
+                                                                             },
+                                                                             {
+                                                                                 "name":  "Glamorous Gems",
+                                                                                 "cap":  30,
+                                                                                 "desc":  "Practice your gemcutting techniques, creating the most dazzling and glamorous gems available.",
+                                                                                 "children":  [
+                                                                                                  {
+                                                                                                      "name":  "Glorious Garnet",
+                                                                                                      "cap":  25,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Versatile Garnet",
+                                                                                                                           "cap":  15
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Masterful Garnet",
+                                                                                                                           "cap":  15
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Quick Garnet",
+                                                                                                                           "cap":  15
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Austere Amethyst",
+                                                                                                      "cap":  25,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Versatile Amethyst",
+                                                                                                                           "cap":  15
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Quick Amethyst",
+                                                                                                                           "cap":  15
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Deadly Amethyst",
+                                                                                                                           "cap":  15
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Lustrous Lapis",
+                                                                                                      "cap":  25,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Masterful Lapis",
+                                                                                                                           "cap":  15
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Quick Lapis",
+                                                                                                                           "cap":  15
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Deadly Lapis",
+                                                                                                                           "cap":  15
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Powerful Peridot",
+                                                                                                      "cap":  25,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Versatile Peridot",
+                                                                                                                           "cap":  15
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Masterful Peridot",
+                                                                                                                           "cap":  15
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Deadly Peridot",
+                                                                                                                           "cap":  15
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  }
+                                                                                              ]
+                                                                             },
+                                                                             {
+                                                                                 "name":  "Alluring Accessories",
+                                                                                 "cap":  30,
+                                                                                 "desc":  "Learn to create the most potent of accessories to compliment the wardrobe of any adventurer or crafter.",
+                                                                                 "children":  [
+                                                                                                  {
+                                                                                                      "name":  "Crafting Couture",
+                                                                                                      "cap":  40
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Luxurious Lockets",
+                                                                                                      "cap":  40
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Regal Rings",
+                                                                                                      "cap":  40
+                                                                                                  }
+                                                                                              ]
+                                                                             },
+                                                                             {
+                                                                                 "name":  "Proficient Processor",
+                                                                                 "cap":  30,
+                                                                                 "desc":  "Specialize in the generation of materials and gems, providing the reagents that you and other crafters need.",
+                                                                                 "children":  [
+                                                                                                  {
+                                                                                                      "name":  "Material Manufacturer",
+                                                                                                      "cap":  30,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Boldly Basic",
+                                                                                                                           "cap":  30
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Optionally Optimal",
+                                                                                                                           "cap":  30
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Crushing Connoisseur",
+                                                                                                      "cap":  40
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Prospecting Pro",
+                                                                                                      "cap":  30,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Thorium Thresher",
+                                                                                                                           "cap":  1,
+                                                                                                                           "desc":  "Learn the telltale signs of gems hiding within Dazzling Thorium, enhancing your ability to locate Eversong Diamonds while prospecting it."
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Silver Scrapper",
+                                                                                                                           "cap":  1,
+                                                                                                                           "desc":  "Prepare yourself to shine while working with Brilliant Silver, bestowing the ability to find Eversong Diamonds while prospecting it."
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Tin-vestigator",
+                                                                                                                           "cap":  1,
+                                                                                                                           "desc":  "Refuse to sleep on the importance of understanding Umbral Tin, granting you the skill to sometimes spot Eversong Diamonds while prospecting it."
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Copper Consumer",
+                                                                                                                           "cap":  1,
+                                                                                                                           "desc":  "Understand the patterns and intricacies of Refulgent Copper, learning how to spot Eversong Diamonds hiding within while prospecting it."
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  }
+                                                                                              ]
+                                                                             }
+                                                                         ]
+                                                           }
+                                          },
                         "leatherworking":  {
                                                "Midnight":  {
                                                                 "skillLine":  2915,
