@@ -7,6 +7,121 @@
                        "Midnight"
                    ],
     "professions":  {
+                        "alchemy":  {
+                                        "Midnight":  {
+                                                         "skillLine":  2906,
+                                                         "specs":  [
+                                                                       {
+                                                                           "name":  "Potion Prowess",
+                                                                           "cap":  30,
+                                                                           "desc":  "Leverage the diametric power of Light and Void to brew even more exhilirating potions.",
+                                                                           "children":  [
+                                                                                            {
+                                                                                                "name":  "Path of Void",
+                                                                                                "cap":  30,
+                                                                                                "children":  [
+                                                                                                                 {
+                                                                                                                     "name":  "Prolific Potioneer - Void",
+                                                                                                                     "cap":  20
+                                                                                                                 },
+                                                                                                                 {
+                                                                                                                     "name":  "Cunning Potioneer",
+                                                                                                                     "cap":  20
+                                                                                                                 }
+                                                                                                             ]
+                                                                                            },
+                                                                                            {
+                                                                                                "name":  "Path of Light",
+                                                                                                "cap":  30,
+                                                                                                "children":  [
+                                                                                                                 {
+                                                                                                                     "name":  "Prolific Potioneer - Light",
+                                                                                                                     "cap":  20
+                                                                                                                 },
+                                                                                                                 {
+                                                                                                                     "name":  "Brilliant Potioneer",
+                                                                                                                     "cap":  20
+                                                                                                                 }
+                                                                                                             ]
+                                                                                            }
+                                                                                        ]
+                                                                       },
+                                                                       {
+                                                                           "name":  "Fluent in Flasks",
+                                                                           "cap":  30,
+                                                                           "desc":  "Refine your techniques to make the most of flasks and phials.",
+                                                                           "children":  [
+                                                                                            {
+                                                                                                "name":  "Haranir Secrets",
+                                                                                                "cap":  30,
+                                                                                                "children":  [
+                                                                                                                 {
+                                                                                                                     "name":  "Phial Abundance",
+                                                                                                                     "cap":  20
+                                                                                                                 },
+                                                                                                                 {
+                                                                                                                     "name":  "Clever Creations",
+                                                                                                                     "cap":  20
+                                                                                                                 }
+                                                                                                             ]
+                                                                                            },
+                                                                                            {
+                                                                                                "name":  "Sin\u0027dorei Specialist",
+                                                                                                "cap":  30,
+                                                                                                "children":  [
+                                                                                                                 {
+                                                                                                                     "name":  "Flask Abundance",
+                                                                                                                     "cap":  20
+                                                                                                                 },
+                                                                                                                 {
+                                                                                                                     "name":  "Ingenious Libations",
+                                                                                                                     "cap":  20
+                                                                                                                 }
+                                                                                                             ]
+                                                                                            }
+                                                                                        ]
+                                                                       },
+                                                                       {
+                                                                           "name":  "Alchemical Mastery",
+                                                                           "cap":  30,
+                                                                           "desc":  "Focus your efforts on making the most of your reagents.",
+                                                                           "children":  [
+                                                                                            {
+                                                                                                "name":  "Recycle",
+                                                                                                "cap":  20
+                                                                                            },
+                                                                                            {
+                                                                                                "name":  "Reuse",
+                                                                                                "cap":  20
+                                                                                            },
+                                                                                            {
+                                                                                                "name":  "Reduce",
+                                                                                                "cap":  20
+                                                                                            }
+                                                                                        ]
+                                                                       },
+                                                                       {
+                                                                           "name":  "Transmutation Authority",
+                                                                           "cap":  30,
+                                                                           "desc":  "Turn one reagent into another!",
+                                                                           "children":  [
+                                                                                            {
+                                                                                                "name":  "Metamorphic Mastery",
+                                                                                                "cap":  20
+                                                                                            },
+                                                                                            {
+                                                                                                "name":  "Synthesis Synergy",
+                                                                                                "cap":  20
+                                                                                            },
+                                                                                            {
+                                                                                                "name":  "Inspired Transmutation",
+                                                                                                "cap":  20
+                                                                                            }
+                                                                                        ]
+                                                                       }
+                                                                   ]
+                                                     }
+                                    },
                         "blacksmithing":  {
                                               "Midnight":  {
                                                                "skillLine":  2907,
@@ -263,6 +378,78 @@
                                                                        ]
                                                          }
                                         },
+                        "herbalism":  {
+                                          "Midnight":  {
+                                                           "skillLine":  2912,
+                                                           "specs":  [
+                                                                         {
+                                                                             "name":  "Bountiful Harvests",
+                                                                             "cap":  40,
+                                                                             "desc":  "Practice the meticulous process of spotting, harvesting, and storing your herbs more efficiently, gaining expertise focused on the various herbs found in the Midnight region.",
+                                                                             "children":  [
+                                                                                              {
+                                                                                                  "name":  "Lily Looter",
+                                                                                                  "cap":  40
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Silver Searcher",
+                                                                                                  "cap":  40
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Root Rummager",
+                                                                                                  "cap":  40
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Thorn Thresher",
+                                                                                                  "cap":  40
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Bloom Bringer",
+                                                                                                  "cap":  40
+                                                                                              }
+                                                                                          ]
+                                                                         },
+                                                                         {
+                                                                             "name":  "Botany",
+                                                                             "cap":  40,
+                                                                             "desc":  "Study the plantlife in the Midnight region, learning how to efficiently gather and grow them.",
+                                                                             "children":  [
+                                                                                              {
+                                                                                                  "name":  "Cultivation",
+                                                                                                  "cap":  40
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Mulching",
+                                                                                                  "cap":  40
+                                                                                              }
+                                                                                          ]
+                                                                         },
+                                                                         {
+                                                                             "name":  "Midnight Overload",
+                                                                             "cap":  40,
+                                                                             "desc":  "Your adventures have brought you to lands both familiar and new. The familiar has changed, and the new brings mysteries to explore. How have the lands affected some of the herbs here, and how can you better gather them?",
+                                                                             "children":  [
+                                                                                              {
+                                                                                                  "name":  "Voidbound",
+                                                                                                  "cap":  40
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Primal",
+                                                                                                  "cap":  40
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Wild",
+                                                                                                  "cap":  40
+                                                                                              },
+                                                                                              {
+                                                                                                  "name":  "Lightfused",
+                                                                                                  "cap":  40
+                                                                                              }
+                                                                                          ]
+                                                                         }
+                                                                     ]
+                                                       }
+                                      },
                         "mining":  {
                                        "Midnight":  {
                                                         "skillLine":  2916,

@@ -16,6 +16,13 @@
       "class": "warrior",
       "professions": ["Blacksmithing", "Engineering", "Archaeology", "Fishing", "Cooking"],
       "midnightSpecs": ["Blacksmithing", "Engineering"]
+    },
+    "Arconauta": {
+      "realm": "Nemesis",
+      "race": "troll",
+      "class": "hunter",
+      "professions": ["Alchemy", "Herbalism", "Archaeology", "Fishing", "Cooking"],
+      "midnightSpecs": ["Alchemy", "Herbalism"]
     }
   }
 }
