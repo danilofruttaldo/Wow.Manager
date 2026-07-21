@@ -28,6 +28,8 @@ const daScrivere = (cell: { slot: string; label: string }) =>
 <Base title="Transmog" description="Set dei raid per classe: matrice set × versione, raggruppata per espansione.">
   <div class="wrap tmog-wrap">
     <div class="filters row">
+      <input id="tmog-search" class="search" type="search" inputmode="search" autocomplete="off"
+             placeholder="Cerca set, raid, tier…" aria-label="Cerca nella classe attiva" />
       <div class="chips" id="tmog-chips" role="tablist" aria-label="Scegli la classe">
         {classes.map((c, i) => (
           <button class:list={['chip', { 'is-active': i === 0 }]} data-class={c.slug} type="button"
@@ -103,8 +105,11 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                       const i = cols.findIndex(x => x.key === c.colonna);
                       for (let k = 1; k < c.span && cols[i + k]; k++) coperte.add(cols[i + k].key);
                     }
+                    // Testo cercabile della riga: nome del set/raid, tier, espansione e
+                    // le sigle+nomi dei raid dove droppa. Alimenta la search della pagina.
+                    const cerca = `${r.setName ?? r.name} ${r.tier} ${g.name} ${r.raids.map(([s, f]) => `${s} ${f}`).join(' ')}`.toLowerCase();
                     return (
-                      <tr class="trow fine" style={`--pct:${r.pct}`}>
+                      <tr class="trow fine" data-search={cerca} style={`--pct:${r.pct}`}>
                         {intestazione()}
                         {cols.map(col => {
                           if (coperte.has(col.key)) return null;
@@ -144,6 +149,8 @@ const daScrivere = (cell: { slot: string; label: string }) =>
       </section>
     ))}
 
+    <p class="empty" id="tmog-empty" role="status" hidden>Nessun set per questa ricerca in questa classe.</p>
+
     {/* Popover dei pezzi mancanti: fuori dalla tabella, altrimenti l'overflow di
         .table-scroll lo taglierebbe. Posizionato via JS al passaggio sulla cella. */}
     <div class="tmog-tip" id="tmog-tip" role="tooltip" hidden>
@@ -154,8 +161,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
 </Base>
 
 <style>
-  .tmog-wrap { max-width: min(1200px, 96vw); }
-
+  /* Larghezza: eredita --page-max da .wrap (standard unico del sito), niente override. */
   .tmog-panel[hidden] { display: none !important; }
 
   /* Matrice: colonna tier larga e a sinistra, 4 colonne versione strette e centrate. */
@@ -348,6 +354,30 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     const visibile = panels.find(p => !p.hidden);
     if (visibile?.dataset.class) ensureTips(visibile.dataset.class);
 
+    const search = document.getElementById('tmog-search') as HTMLInputElement | null;
+    const emptyMsg = document.getElementById('tmog-empty') as HTMLElement | null;
+
+    // Filtra per testo le righe del pannello VISIBILE (una classe alla volta), e nasconde
+    // i separatori di espansione rimasti senza righe. Va ri-eseguito a ogni cambio tab
+    // perche' la ricerca vale sulla classe attiva.
+    function applySearch() {
+      const q = (search?.value || '').trim().toLowerCase();
+      const panel = panels.find(p => !p.hidden);
+      if (!panel) return;
+      const rows = Array.from(panel.querySelectorAll('tbody tr')) as HTMLElement[];
+      let sep: HTMLElement | null = null, sepHas = false, shown = 0;
+      const flush = () => { if (sep) sep.hidden = !sepHas; };
+      for (const row of rows) {
+        if (row.classList.contains('rsep')) { flush(); sep = row; sepHas = false; continue; }
+        const match = q === '' || (row.dataset.search || '').includes(q);
+        row.hidden = !match;
+        if (match) { sepHas = true; shown++; }
+      }
+      flush();
+      if (emptyMsg) emptyMsg.hidden = !(shown === 0 && q !== '');
+    }
+    if (search) search.addEventListener('input', applySearch);
+
     // Tab a selezione singola: una classe alla volta (a differenza del filtro multi di /macros).
     // `focus` distingue il click (non deve rubare il focus) dalla navigazione a tastiera
     // (deve spostarlo sul nuovo tab). Roving tabindex: solo il tab attivo e' tabbabile.
@@ -361,6 +391,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
       }
       for (const p of panels) p.hidden = p.dataset.class !== target;
       if (focus) chip.focus();
+      applySearch();      // la ricerca vale sulla classe attiva: ri-filtra il nuovo pannello
       ensureTips(target); // carica i pezzi della classe appena aperta
     }
 

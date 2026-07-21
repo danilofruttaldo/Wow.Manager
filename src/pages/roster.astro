@@ -11,8 +11,7 @@ const html = getRosterHtml();
 </Base>
 
 <style>
-  .roster-wrap { max-width: min(1720px, 96vw); }
-
+  /* Larghezza: eredita --page-max da .wrap (standard unico del sito), niente override. */
   /* Matrice: table-layout fixed + width 100% -> colonne adattive, testo a capo, MAI scroll. */
   .roster-prose :global(table) {
     font-size: 0.74rem; width: 100%; table-layout: fixed;

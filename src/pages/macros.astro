@@ -94,10 +94,8 @@ const specMap: Record<string, string[]> = Object.fromEntries(
 </Base>
 
 <style>
-/* Search e chip classe nello stesso flusso: la search apre la prima riga, le chip la
-   completano e riempiono le righe successive (display:contents scioglie il contenitore
-   così le chip diventano sorelle flex della search). */
-.filters.row #class-chips { display: contents; }
+/* Lo scioglimento del contenitore chip (display:contents) ora e' globale in global.css,
+   uguale per tutte le pagine: qui non serve piu' l'override. */
 
 /* Riga spec: chip sotto la riga classe, stesso stile ma flusso proprio (non `display:contents`). */
 .spec-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }

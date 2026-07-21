@@ -36,6 +36,11 @@ const defaultKey = (professions.find(p => hasAny(p.key, defaultExp)) ?? professi
 // L'albero e' generato da dati JSON nostri (fidati), ma passa da set:html: scappiamo
 // comunque i metacaratteri; i `cap` sono numeri.
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+// Testo cercabile di un nodo e dei suoi discendenti: nome + descrizione, ricorsivo.
+// Alimenta il `data-search` della card spec (i figli sono resi via set:html, quindi il
+// testo va raccolto qui e non e' estraibile dal DOM in modo affidabile).
+const nodeText = (n: ProfNode): string =>
+  `${n.name ?? ''} ${n.desc ?? ''} ${(n.children ?? []).map(nodeText).join(' ')}`;
 function renderNode(n: ProfNode, depth = 0): string {
   const kids = n.children?.length
     ? `<div class="pnode-kids">${n.children.map(c => renderNode(c, depth + 1)).join('')}</div>`
@@ -55,6 +60,8 @@ function renderNode(n: ProfNode, depth = 0): string {
 <Base title="Professioni" description="Alberi di specializzazione e leveling WoW per professione: spec, punti massimi e skill-up, dal client.">
   <div class="wrap">
     <div class="filters row">
+      <input id="prof-search" class="search" type="search" inputmode="search" autocomplete="off"
+             placeholder="Cerca spec, nodo, tappa…" aria-label="Cerca nella professione attiva" />
       <div class="chips" id="prof-chips" role="tablist" aria-label="Scegli la professione">
         {professions.map(p => {
           const icon = profIcon(p.key);
@@ -106,7 +113,7 @@ function renderNode(n: ProfNode, depth = 0): string {
                 {okTree
                   ? <div class="spec-grid">
                       {tree!.specs.map(spec => (
-                        <article class="spec">
+                        <article class="spec" data-search={`${spec.name} ${spec.desc ?? ''} ${(spec.children ?? []).map(nodeText).join(' ')}`.toLowerCase()}>
                           <div class="pnode-head spec-head">
                             <span class="pnode-name">{spec.name}</span>
                             <span class="pnode-cap" title={`Rank massimo: ${spec.cap} punti conoscenza`}>{spec.cap}</span>
@@ -129,7 +136,7 @@ function renderNode(n: ProfNode, depth = 0): string {
                 {okLevel
                   ? <ol class="lvl">
                       {guide!.steps.map(s => (
-                        <li class="lvl-step">
+                        <li class="lvl-step" data-search={`${s.from} ${s.to} ${s.action} ${s.note ?? ''}`.toLowerCase()}>
                           <span class="lvl-range">{s.from}–{s.to}</span>
                           <span class="lvl-action">{s.action}{s.note && <em class="lvl-note"> — {s.note}</em>}</span>
                         </li>
@@ -144,6 +151,7 @@ function renderNode(n: ProfNode, depth = 0): string {
         {p.notes && <p class="prof-note">{p.notes}</p>}
       </section>
     ))}
+    <p class="empty" id="prof-empty" role="status" hidden>Nessun risultato per questa ricerca in questa professione.</p>
   </div>
 </Base>
 
@@ -228,7 +236,26 @@ function renderNode(n: ProfNode, depth = 0): string {
     const chips = Array.from(document.querySelectorAll('#prof-chips .chip')) as HTMLButtonElement[];
     const panels = Array.from(document.querySelectorAll('.prof-panel')) as HTMLElement[];
     const expSel = document.getElementById('prof-exp') as HTMLSelectElement | null;
+    const search = document.getElementById('prof-search') as HTMLInputElement | null;
+    const emptyMsg = document.getElementById('prof-empty') as HTMLElement | null;
     if (!chips.length || !panels.length) return;
+
+    // Filtra per testo il contenuto della professione VISIBILE: nasconde le card spec e le
+    // tappe di leveling che non combaciano. Ri-eseguito a ogni cambio tab/espansione.
+    function applySearch() {
+      const q = (search?.value || '').trim().toLowerCase();
+      const panel = panels.find(p => !p.hidden);
+      if (!panel) return;
+      const items = Array.from(panel.querySelectorAll('.spec, .lvl-step')) as HTMLElement[];
+      let shown = 0;
+      for (const it of items) {
+        const match = q === '' || (it.dataset.search || '').includes(q);
+        it.hidden = !match;
+        if (match) shown++;
+      }
+      if (emptyMsg) emptyMsg.hidden = !(shown === 0 && q !== '');
+    }
+    if (search) search.addEventListener('input', applySearch);
 
     // Tab a selezione singola, stesso pattern di /transmog: una professione alla volta.
     // `focus` regola il roving tabindex + lo spostamento del focus da tastiera: 0 sul chip
@@ -244,6 +271,7 @@ function renderNode(n: ProfNode, depth = 0): string {
       }
       for (const p of panels) p.hidden = p.dataset.prof !== target;
       if (focus) chip.focus();
+      applySearch();   // la ricerca vale sulla professione attiva: ri-filtra il nuovo pannello
     };
 
     for (const chip of chips) {
@@ -274,6 +302,7 @@ function renderNode(n: ProfNode, depth = 0): string {
         const chip = chips.find(c => c.dataset.prof === panel.dataset.prof);
         if (chip) chip.classList.toggle('is-empty', active?.dataset.has !== '1');
       }
+      applySearch();   // cambiato blocco espansione: ri-filtra il contenuto ora visibile
     };
     if (expSel) expSel.addEventListener('change', applyExp);
   }

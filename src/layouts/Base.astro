@@ -162,7 +162,9 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
   background: color-mix(in srgb, var(--hc) 13%, var(--surface));
   border-color: color-mix(in srgb, var(--hc) 45%, var(--border));
 }
-.nav-link.active .nav-ico { border-color: var(--hc); box-shadow: 0 0 0 2px color-mix(in srgb, var(--hc) 22%, transparent); }
+/* Solo il colore del bordo cambia (1px come a riposo): niente anello/box-shadow, che
+   farebbe APPARIRE l'icona piu' grande e sembrare che il pulsante attivo si "gonfi". */
+.nav-link.active .nav-ico { border-color: var(--hc); }
 .nav-link.active .nav-count { color: #fff; background: var(--hc); }
 
 .site-footer { border-top: 1px solid var(--border); background: var(--surface); }

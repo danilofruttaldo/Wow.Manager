@@ -108,7 +108,8 @@ const tmogPct = tmogTotal ? Math.round((tmogGot / tmogTotal) * 100) : 0;
 /* ── Matrice per classe ────────────────────────────
    Le metriche che il repo conosce per-classe, in un colpo d'occhio: macro, PG,
    screenshot e completamento transmog. Colonne ordinabili (click sull'intestazione). */
-.cstats { max-width: 1000px; margin: 0.5rem auto 0; }
+/* Larghezza: riempie .wrap (standard unico --page-max del sito), niente cap proprio. */
+.cstats { margin: 0.5rem auto 0; }
 .cstats-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); background: var(--surface); }
 .cstats-tbl { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 .cstats-tbl th, .cstats-tbl td { padding: 0.5rem 0.75rem; text-align: center; }
