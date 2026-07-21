@@ -9,7 +9,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Razza | War | Pal | Hun | Rog | Pri | DK | Sha | Mag | Loc | Mon | Dru | DH | Evo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Orc | | X | _Orconauta·P | | | | _Shockandroll·N | | Dotandroll·P | | X | X | X |
-| Undead | | X | | _Undeadpool·P | _Pretaporter·P | | X | | | | X | X | X |
+| Undead | | X | | Undeadpool·P | _Pretaporter·P | | X | | | | X | X | X |
 | Tauren | | _Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
 | Troll | | X | Arconauta·N | | | | *Voodoochild | Snowwipe·P | | | *Bloomanjaro | X | X |
 | Goblin | | X | | | | _Moneystrike·N | *Voltron | | Tearsforfear·N | | X | X | X |
