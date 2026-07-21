@@ -2,21 +2,17 @@
 // I file vivono fuori da src/: sono la fonte di verità, il sito li legge in sola lettura.
 import { execSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
-import { marked } from 'marked';
 
 import { CHAR_SPEC, CHAR_SPEC_BY_RACE } from './char-specs';
 
 import addonsManifest from '../../addons/manifest.json';
 import macrosManifest from '../../macros/manifest.json';
-import fontsManifest from '../../fonts/manifest.json';
 import professionsManifest from '../../professions/manifest.json';
 import extraManifest from '../../scripts/manifest.json';
 import transmogManifest from '../../transmog/manifest.json';
 import profTreesManifest from '../../professions/trees.json';
 import profLevelingManifest from '../../professions/leveling.json';
 import charactersManifest from '../../professions/characters.json';
-
-marked.setOptions({ gfm: true, breaks: false });
 
 // ── Tipi ──────────────────────────────────────────
 export interface Addon {
@@ -100,9 +96,7 @@ export function getAddons(): Addon[] {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-// ── Macro ─────────────────────────────────────────
-export const macrosMeta = (macrosManifest as any)._meta;
-// Corpi reali delle macro: file .txt fuori da src/, letti a build-time (sola lettura).
+// ── Macro ─────────────────────────────────────────// Corpi reali delle macro: file .txt fuori da src/, letti a build-time (sola lettura).
 // Chiave glob = path assoluto tipo '/.../macros/warrior/charge-intervene.txt';
 // li mappo su `body_file` (es. 'warrior/charge-intervene.txt') per suffisso.
 const macroBodies = import.meta.glob('../../macros/**/*.txt', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
@@ -118,14 +112,7 @@ export function getMacros(): Macro[] {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-// ── Fonts ─────────────────────────────────────────
-export const fontsOverride = (fontsManifest as any).override;
-
 // ── Professioni ───────────────────────────────────
-export const professionsMeta = {
-  expansion: (professionsManifest as any).expansion as string,
-  note: (professionsManifest as any).note as string,
-};
 export function getProfessions(): Profession[] {
   return ((professionsManifest as any).professions ?? []) as Profession[];
 }
@@ -178,9 +165,7 @@ export function getProfessionLeveling(): Record<string, Record<string, LevelGuid
   return ((profLevelingManifest as any).professions ?? {}) as Record<string, Record<string, LevelGuide>>;
 }
 
-// ── Extra (script / link / appunti) ───────────────
-export const extraMeta = (extraManifest as any)._meta;
-// Corpi degli script (file eseguibili fuori da src/, letti a build-time in sola lettura).
+// ── Extra (script / link / appunti) ───────────────// Corpi degli script (file eseguibili fuori da src/, letti a build-time in sola lettura).
 const extraBodies = import.meta.glob('../../scripts/**/*.{sh,txt,lua,ps1,bat,py}', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 function extraBody(bodyFile?: string | null): string | undefined {
   if (!bodyFile) return undefined;
@@ -242,8 +227,6 @@ export interface TmogClass {
   got: number;
   total: number;
 }
-
-export const transmogMeta = (transmogManifest as any)._meta;
 export const transmogColumns = (transmogManifest as any).columns as { key: string; label: string }[];
 
 // Ordine dei tier: serve a stabilire da quale tier una classe "nuova" esiste (classStart).
@@ -290,7 +273,14 @@ export function formatMissing(raw: string, raids: [string, string][]): string {
   return `${slot} — ${detail.slice(0, ultimo)} (${detail.slice(ultimo + 2)})`;
 }
 
+// Memoizzata: e' una funzione PURA di import statici, ma viene chiamata ~16 volte per
+// build (home, /transmog, e l'endpoint JSON una volta per classe -> 13). Nessun chiamante
+// muta il risultato, quindi una sola istanza condivisa e' sicura e byte-identica.
+let _tmog: TmogClass[] | null = null;
 export function getTransmog(): TmogClass[] {
+  return (_tmog ??= computeTransmog());
+}
+function computeTransmog(): TmogClass[] {
   const m = transmogManifest as any;
   const cols = m.columns as { key: string; label: string }[];
   const tiers = m.tiers as any[];
@@ -434,13 +424,6 @@ export function classLabel(slug: string): string {
 }
 export function titleCase(s: string): string {
   return s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-export function renderMarkdown(md: string): string {
-  const html = marked.parse(md) as string;
-  // Avvolgi ogni tabella in un contenitore che scrolla in orizzontale,
-  // così le tabelle larghe (roster 14 colonne) non spingono la pagina fuori bordo.
-  return html.replace(/<table>/g, '<div class="table-scroll"><table>').replace(/<\/table>/g, '</table></div>');
 }
 
 // Abbreviazione classe (header roster) -> [slug icona, nome esteso]

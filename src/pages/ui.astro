@@ -73,7 +73,8 @@ let gi = 0;
             const i = gi++;
             return (
               <button class="shot" style={`--pc: var(--c-${s.className})`} data-i={i} data-class={s.className} data-search={`${s.char} ${classLabel(s.className)} ${s.spec}`.toLowerCase()} data-src={s.src} data-char={titleCase(s.char)} data-who={`${classLabel(s.className)} · ${titleCase(s.spec)}`}>
-                <span class="imgwrap"><img src={s.thumb} alt={`UI di ${titleCase(s.char)}`} loading="lazy" decoding="async" width="640" height="360" /></span>
+                {/* Le prime ~3 thumb sono sopra la piega: eager per non penalizzare l'LCP; il resto lazy. `i` e' l'indice GLOBALE (gi++). */}
+                <span class="imgwrap"><img src={s.thumb} alt={`UI di ${titleCase(s.char)}`} loading={i < 3 ? 'eager' : 'lazy'} decoding="async" width="640" height="360" /></span>
                 <span class="cap">
                   <span class="cap-txt"><span class="ch">{titleCase(s.char)}</span></span>
                   <span class="sp">{titleCase(s.spec)}</span>

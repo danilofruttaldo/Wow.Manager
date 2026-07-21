@@ -20,7 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          fetch-depth: 0  # storia completa: serve per le date "sync" (git log) nel footer
+          fetch-depth: 0        # storia completa: serve per le date "sync" (git log) nel footer
+          filter: blob:none     # clone senza blob storici (~27MB di screenshot): commit+tree bastano al git log, i blob si scaricano on-demand solo se servono
       - uses: actions/setup-node@v7
         with:
           node-version: 22

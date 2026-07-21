@@ -53,7 +53,7 @@ const lineCount = (body?: string) => (body ? body.split('\n').length : 0);
        data-msg-ricerca="Nessun contenuto per questa ricerca.">Ancora nessun contenuto extra.</p>
   </div>
 
-  <div class="xlb" id="xlb" role="dialog" aria-modal="true" aria-label="Contenuto">
+  <div class="xlb" id="xlb" role="dialog" aria-modal="true" aria-labelledby="xlb-title">
     <div class="xlb-panel">
       <div class="xlb-head">
         <strong id="xlb-title"></strong>
@@ -85,9 +85,7 @@ a.xcard:hover { border-color: var(--accent); }
 .xmeta { display: flex; flex-direction: column; gap: 0.28rem; font-size: 0.8rem; }
 .xwhen { color: var(--text-muted); }
 .xwhen strong { color: var(--text); }
-.xwarn { color: var(--warn); font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem; }
-.stat-ico { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; object-fit: cover; max-width: none; }
-.xopen { margin-top: auto; padding-top: 0.55rem; border-top: 1px solid var(--border-light); font-size: 0.74rem; color: var(--accent); font-weight: 600; }
+.xwarn { color: var(--warn); font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem; }.xopen { margin-top: auto; padding-top: 0.55rem; border-top: 1px solid var(--border-light); font-size: 0.74rem; color: var(--accent); font-weight: 600; }
 .xsrc { display: none; }
 
 /* ── Modale contenuto (pattern lightbox della pagina UI) ── */
