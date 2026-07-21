@@ -14,6 +14,7 @@ import extraManifest from '../../scripts/manifest.json';
 import transmogManifest from '../../transmog/manifest.json';
 import profTreesManifest from '../../professions/trees.json';
 import profLevelingManifest from '../../professions/leveling.json';
+import charactersManifest from '../../professions/characters.json';
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -490,14 +491,33 @@ const SPEC_ICON: Record<string, string[]> = {
   evoker: ['devastation', 'preservation', 'augmentation'],
 };
 
+// Info per-PG dal tracker (professions/characters.json): realm + professioni, raccolte
+// durante il grind degli alberi. Si uniscono per nome (minuscolo) nel tooltip.
+const CHAR_INFO: Record<string, { realm?: string; professions?: string[]; class?: string }> =
+  Object.fromEntries(
+    Object.entries(((charactersManifest as any).characters ?? {}) as Record<string, any>)
+      .map(([n, v]) => [n.toLowerCase(), v]),
+  );
+// Suffisso realm nel roster (·N/·P) -> nome esteso. Da estendere se compaiono altri realm.
+const REALM_ABBR: Record<string, string> = { N: 'Nemesis', P: "Pozzo dell'Eternità" };
+// Escape per il contenuto di un attributo HTML (title). Gli a-capo diventano &#10;,
+// che il tooltip nativo rende su piu' righe.
+const escAttr = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/\n/g, '&#10;');
+
 // Accanto a ogni nome PG mette l'ICONA della spec (se nota) o "?" se da confermare.
 // Disambigua i PG omonimi via `nome|razza` (CHAR_SPEC_BY_RACE), altrimenti CHAR_SPEC.
 // classSlug = classe della colonna: serve a scegliere l'icona giusta per le spec omonime.
 // Una cella può contenere più nomi separati da <br>.
+// ⚠️ Riceve la cella GREZZA (col suffisso realm ·N/·P), non strippata: il realm serve al
+// tooltip, ed e' per-nome. Lo si toglie qui, dopo averlo letto.
 function annotateSpec(cell: string, race: string, classSlug: string): string {
   const out = cell.split(/<br\s*\/?>/i).map((seg) => {
     let name = seg.trim();
     if (!name) return seg;
+    // Suffisso realm ·N/·P in coda al nome: lo leggo per il tooltip, poi lo tolgo.
+    const realmCode = name.match(/·([A-Z])$/)?.[1];
+    name = name.replace(/·[A-Z]$/, '').trim();
     // Prefisso "*" = PG pianificato (TODO): non ancora creato. Lo togliamo dal nome,
     // lo rendiamo in stile "da creare" e NON lo contiamo (vedi getRosterCount).
     const todo = name.startsWith('*');
@@ -523,12 +543,26 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
       return `<span class="spec-l">(${spec[0].toUpperCase()})</span>`; // fallback se manca l'icona
     }).join('');
     // "nome + icone" = inline-flex centrato: scritte e icone allineate verticalmente.
-    // PG pianificato: nessun tag testuale (sborderebbe dalla cella); solo stile + tooltip.
-    const nameAttr = todo
-      ? ' title="Personaggio pianificato, non ancora creato (TODO)"'
-      : wip
-        ? ' title="Personaggio esistente ma non ancora al level cap (in leveling)"'
-        : '';
+    // Tooltip nativo (abbozzo): realm, livello, spec, professioni. Il livello e' GREZZO,
+    // derivato dai prefissi del roster (0 se non creato, "in leveling" per "_", 90 al cap):
+    // i numeri reali vivono in AllTheThings.lua (chiave `lvl`) e vanno agganciati a parte,
+    // gestendo gli omonimi per realm. Le professioni vengono dal tracker characters.json,
+    // popolato durante il grind (quindi ancora parziale).
+    const specNames = specs.map((r) => {
+      const wild = r.endsWith('*');
+      const sp = wild ? r.slice(0, -1) : r;
+      return sp === '?' ? 'da confermare' : titleCase(sp) + (wild ? ' (tutte)' : '');
+    });
+    const info = CHAR_INFO[name.toLowerCase()];
+    const realmName = realmCode ? (REALM_ABBR[realmCode] ?? realmCode) : info?.realm;
+    const level = todo ? '0 · non creato' : wip ? 'in leveling (<90)' : '90';
+    const tipLines = [name];
+    if (realmName) tipLines.push(`Realm: ${realmName}`);
+    tipLines.push(`Livello: ${level}`);
+    if (specNames.length) tipLines.push(`Spec: ${specNames.join(', ')}`);
+    const profs = info?.professions;
+    if (profs?.length) tipLines.push(`Professioni: ${profs.join(', ')}`);
+    const nameAttr = ` title="${escAttr(tipLines.join('\n'))}"`;
     const pgClass = todo ? ' pg--todo' : wip ? ' pg--wip' : '';
     return `<span class="pg${pgClass}"><span class="pg-name"${nameAttr}>${name}</span>${tail}</span>`;
   });
@@ -591,7 +625,8 @@ function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): {
       if (t === 'X') return '<td><span class="na" title="Combinazione non creabile in gioco"></span></td>';
       if (t === '') return '<td></td>';
       const classSlug = CLASS_ABBR[(header[i] ?? '').trim()]?.[0] ?? '';
-      return `<td>${annotateSpec(stripRealm(cell), race, classSlug)}</td>`;
+      // Cella GREZZA (col suffisso realm): annotateSpec legge il realm e poi lo toglie.
+      return `<td>${annotateSpec(cell, race, classSlug)}</td>`;
     }).join('');
     return `<tr class="${rowClass}">${tds}</tr>`;
   }).join('');
