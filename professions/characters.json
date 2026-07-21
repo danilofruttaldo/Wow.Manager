@@ -1,49 +1,251 @@
-{
-  "_meta": {
-    "note": "Professioni PRIMARIE note per personaggio, dal campo knownProfessions del dump WowManagerProfDump. Le secondarie (Cooking, Fishing, Archaeology) sono ESCLUSE di proposito. Raccolto durante il grind degli alberi. `midnightSpecs` elenca le professioni per cui QUESTO pg ha sbloccato le specializzazioni di Midnight (configID valido): sono le sole da cui si estrae l'albero coi cap. Visualizzazione sul sito: da decidere."
-  },
-  "characters": {
-    "Furricane": {
-      "realm": "Pozzo dell'Eternità",
-      "race": "vulpera",
-      "class": "monk",
-      "professions": ["Alchemy", "Herbalism"],
-      "midnightSpecs": []
-    },
-    "Stantu": {
-      "realm": "Pozzo dell'Eternità",
-      "race": "highmountain-tauren",
-      "class": "warrior",
-      "professions": ["Blacksmithing", "Engineering"],
-      "midnightSpecs": ["Blacksmithing", "Engineering"]
-    },
-    "Arconauta": {
-      "realm": "Nemesis",
-      "race": "troll",
-      "class": "hunter",
-      "professions": ["Alchemy", "Herbalism"],
-      "midnightSpecs": ["Alchemy", "Herbalism"]
-    },
-    "Illidanielle": {
-      "realm": "Nemesis",
-      "race": "blood-elf",
-      "class": "demon-hunter",
-      "professions": ["Leatherworking", "Skinning"],
-      "midnightSpecs": ["Leatherworking", "Skinning"]
-    },
-    "Snowwipe": {
-      "realm": "Pozzo dell'Eternità",
-      "race": "troll",
-      "class": "mage",
-      "professions": ["Tailoring", "Enchanting"],
-      "midnightSpecs": ["Tailoring", "Enchanting"]
-    },
-    "Cereanor": {
-      "realm": "Nemesis",
-      "race": "blood-elf",
-      "class": "rogue",
-      "professions": ["Mining", "Engineering"],
-      "midnightSpecs": ["Mining", "Engineering"]
-    }
-  }
+﻿{
+    "_meta":  {
+                  "note":  "Professioni PRIMARIE note per personaggio, dal campo knownProfessions del dump WowManagerProfDump. Le secondarie (Cooking, Fishing, Archaeology) sono ESCLUSE di proposito. Raccolto durante il grind degli alberi. `midnightSpecs` elenca le professioni per cui QUESTO pg ha sbloccato le specializzazioni di Midnight (configID valido): sono le sole da cui si estrae l\u0027albero coi cap. Visualizzazione sul sito: da decidere."
+              },
+    "characters":  {
+                       "Furricane":  {
+                                         "realm":  "Pozzo dell\u0027Eternità",
+                                         "race":  "vulpera",
+                                         "class":  "monk",
+                                         "professions":  [
+                                                             "Alchemy",
+                                                             "Herbalism"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Stantu":  {
+                                      "realm":  "Pozzo dell\u0027Eternità",
+                                      "race":  "highmountain-tauren",
+                                      "class":  "warrior",
+                                      "professions":  [
+                                                          "Blacksmithing",
+                                                          "Engineering"
+                                                      ],
+                                      "midnightSpecs":  [
+                                                            "Blacksmithing",
+                                                            "Engineering"
+                                                        ]
+                                  },
+                       "Arconauta":  {
+                                         "realm":  "Nemesis",
+                                         "race":  "troll",
+                                         "class":  "hunter",
+                                         "professions":  [
+                                                             "Alchemy",
+                                                             "Herbalism"
+                                                         ],
+                                         "midnightSpecs":  [
+                                                               "Alchemy",
+                                                               "Herbalism"
+                                                           ]
+                                     },
+                       "Illidanielle":  {
+                                            "realm":  "Nemesis",
+                                            "race":  "blood-elf",
+                                            "class":  "demon-hunter",
+                                            "professions":  [
+                                                                "Leatherworking",
+                                                                "Skinning"
+                                                            ],
+                                            "midnightSpecs":  [
+                                                                  "Leatherworking",
+                                                                  "Skinning"
+                                                              ]
+                                        },
+                       "Snowwipe":  {
+                                        "realm":  "Pozzo dell\u0027Eternità",
+                                        "race":  "troll",
+                                        "class":  "mage",
+                                        "professions":  [
+                                                            "Tailoring",
+                                                            "Enchanting"
+                                                        ],
+                                        "midnightSpecs":  [
+                                                              "Tailoring",
+                                                              "Enchanting"
+                                                          ]
+                                    },
+                       "Cereanor":  {
+                                        "realm":  "Nemesis",
+                                        "race":  "blood-elf",
+                                        "class":  "rogue",
+                                        "professions":  [
+                                                            "Mining",
+                                                            "Engineering"
+                                                        ],
+                                        "midnightSpecs":  [
+                                                              "Mining",
+                                                              "Engineering"
+                                                          ]
+                                    },
+                       "Orconauta":  {
+                                         "realm":  "Pozzo dell\u0027Eternità",
+                                         "race":  "orc",
+                                         "class":  "hunter",
+                                         "professions":  [
+                                                             "Leatherworking",
+                                                             "Skinning"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Shockandroll":  {
+                                            "realm":  "Nemesis",
+                                            "race":  "orc",
+                                            "class":  "shaman",
+                                            "professions":  [
+                                                                "Engineering",
+                                                                "Inscription"
+                                                            ],
+                                            "midnightSpecs":  [
+
+                                                              ]
+                                        },
+                       "Undeadpool":  {
+                                          "realm":  "Pozzo dell\u0027Eternità",
+                                          "race":  "undead",
+                                          "class":  "rogue",
+                                          "professions":  [
+                                                              "Jewelcrafting",
+                                                              "Mining"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Pretaporter":  {
+                                           "realm":  "Pozzo dell\u0027Eternità",
+                                           "race":  "undead",
+                                           "class":  "priest",
+                                           "professions":  [
+
+                                                           ],
+                                           "midnightSpecs":  [
+
+                                                             ]
+                                       },
+                       "Cowadin":  {
+                                       "realm":  "Nemesis",
+                                       "race":  "tauren",
+                                       "class":  "paladin",
+                                       "professions":  [
+                                                           "Jewelcrafting",
+                                                           "Mining"
+                                                       ],
+                                       "midnightSpecs":  [
+
+                                                         ]
+                                   },
+                       "Totemtanz":  {
+                                         "realm":  "Nemesis",
+                                         "race":  "tauren",
+                                         "class":  "shaman",
+                                         "professions":  [
+                                                             "Herbalism",
+                                                             "Engineering"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Blessismore":  {
+                                           "realm":  "Pozzo dell\u0027Eternità",
+                                           "race":  "blood-elf",
+                                           "class":  "paladin",
+                                           "professions":  [
+                                                               "Engineering",
+                                                               "Mining"
+                                                           ],
+                                           "midnightSpecs":  [
+
+                                                             ]
+                                       },
+                       "Axetomouth":  {
+                                          "realm":  "Nemesis",
+                                          "race":  "maghar-orc",
+                                          "class":  "warrior",
+                                          "professions":  [
+                                                              "Engineering",
+                                                              "Mining"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Blondelust":  {
+                                          "realm":  "Pozzo dell\u0027Eternità",
+                                          "race":  "maghar-orc",
+                                          "class":  "shaman",
+                                          "professions":  [
+                                                              "Engineering",
+                                                              "Mining"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Divinetroll":  {
+                                           "realm":  "Pozzo dell\u0027Eternità",
+                                           "race":  "zandalari-troll",
+                                           "class":  "paladin",
+                                           "professions":  [
+                                                               "Engineering",
+                                                               "Herbalism"
+                                                           ],
+                                           "midnightSpecs":  [
+
+                                                             ]
+                                       },
+                       "Trollminator":  {
+                                            "realm":  "Pozzo dell\u0027Eternità",
+                                            "race":  "zandalari-troll",
+                                            "class":  "death-knight",
+                                            "professions":  [
+                                                                "Enchanting",
+                                                                "Mining"
+                                                            ],
+                                            "midnightSpecs":  [
+
+                                                              ]
+                                        },
+                       "Rotandroll":  {
+                                          "realm":  "Nemesis",
+                                          "race":  "vulpera",
+                                          "class":  "death-knight",
+                                          "professions":  [
+                                                              "Engineering",
+                                                              "Enchanting"
+                                                          ],
+                                          "midnightSpecs":  [
+
+                                                            ]
+                                      },
+                       "Pandacoil":  {
+                                         "realm":  "Pozzo dell\u0027Eternità",
+                                         "race":  "pandaren",
+                                         "class":  "shaman",
+                                         "professions":  [
+                                                             "Engineering",
+                                                             "Mining"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     },
+                       "Rockbiter":  {
+                                         "realm":  "Pozzo dell\u0027Eternità",
+                                         "race":  "earthen",
+                                         "class":  "hunter",
+                                         "professions":  [
+                                                             "Engineering",
+                                                             "Mining"
+                                                         ],
+                                         "midnightSpecs":  [
+
+                                                           ]
+                                     }
+                   }
 }
