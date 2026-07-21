@@ -450,6 +450,163 @@
                                                                      ]
                                                        }
                                       },
+                        "leatherworking":  {
+                                               "Midnight":  {
+                                                                "skillLine":  2915,
+                                                                "specs":  [
+                                                                              {
+                                                                                  "name":  "Learned Leatherworker",
+                                                                                  "cap":  30,
+                                                                                  "desc":  "Master your Leatherworking fundamentals to increase your reagent efficiency, ability to concentrate, general stitchwork, and production process.",
+                                                                                  "children":  [
+                                                                                                   {
+                                                                                                       "name":  "Mastering Multicraft",
+                                                                                                       "cap":  30
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "Concentrated Crafter",
+                                                                                                       "cap":  30
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "Waning Waste",
+                                                                                                       "cap":  30
+                                                                                                   }
+                                                                                               ]
+                                                                              },
+                                                                              {
+                                                                                  "name":  "Lasting Leather",
+                                                                                  "cap":  30,
+                                                                                  "desc":  "Specialize in crafting leather armor, increasing your ability to craft at a higher quality. In addition, learn new patterns and ways to customize the armor you craft!",
+                                                                                  "children":  [
+                                                                                                   {
+                                                                                                       "name":  "Embroidered Ensembles",
+                                                                                                       "cap":  30,
+                                                                                                       "children":  [
+                                                                                                                        {
+                                                                                                                            "name":  "Tasteful Treads",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Sturdy Sashes",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Grand Gloves",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Toughened Tassets",
+                                                                                                                            "cap":  20
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "Securely Shaped",
+                                                                                                       "cap":  30,
+                                                                                                       "children":  [
+                                                                                                                        {
+                                                                                                                            "name":  "Wonderful Wristguards",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Mighty Mantles",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Capable Caps",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Terrific Tunics",
+                                                                                                                            "cap":  20
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                   }
+                                                                                               ]
+                                                                              },
+                                                                              {
+                                                                                  "name":  "Safeguarding Scales",
+                                                                                  "cap":  30,
+                                                                                  "desc":  "Specialize in crafting mail armor, increasing your ability to craft at a higher quality. In addition, learn new patterns and ways to customize the armor you craft!",
+                                                                                  "children":  [
+                                                                                                   {
+                                                                                                       "name":  "Advanced Armor",
+                                                                                                       "cap":  30,
+                                                                                                       "children":  [
+                                                                                                                        {
+                                                                                                                            "name":  "Talented Talons",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Bettering Bands",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Cutting Claws",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Fantastic Faulds",
+                                                                                                                            "cap":  20
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "Bolstered Bulwarks",
+                                                                                                       "cap":  30,
+                                                                                                       "children":  [
+                                                                                                                        {
+                                                                                                                            "name":  "Balanced Bracers",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Powerful Plumes",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Versatile Visages",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Valuable Vests",
+                                                                                                                            "cap":  20
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                   }
+                                                                                               ]
+                                                                              },
+                                                                              {
+                                                                                  "name":  "Flawless Fortes",
+                                                                                  "cap":  30,
+                                                                                  "desc":  "Focus on creating more specialized crafts ranging from Professions Equipment to Reagents and Consumables! Increase the quality of these crafts to support adventurer\u0027s and fellow crafters alike.",
+                                                                                  "children":  [
+                                                                                                   {
+                                                                                                       "name":  "Commanding Commodities",
+                                                                                                       "cap":  30,
+                                                                                                       "children":  [
+                                                                                                                        {
+                                                                                                                            "name":  "Crucial Consumables",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Brimming Basics",
+                                                                                                                            "cap":  20
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "name":  "Overwhelming Optionals",
+                                                                                                                            "cap":  20
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                   },
+                                                                                                   {
+                                                                                                       "name":  "Artisanal Accessories",
+                                                                                                       "cap":  30
+                                                                                                   }
+                                                                                               ]
+                                                                              }
+                                                                          ]
+                                                            }
+                                           },
                         "mining":  {
                                        "Midnight":  {
                                                         "skillLine":  2916,
@@ -513,6 +670,62 @@
                                                                       }
                                                                   ]
                                                     }
-                                   }
+                                   },
+                        "skinning":  {
+                                         "Midnight":  {
+                                                          "skillLine":  2917,
+                                                          "specs":  [
+                                                                        {
+                                                                            "name":  "Thorough Tanning",
+                                                                            "cap":  40,
+                                                                            "desc":  "Improve at your general skinning techniques, learning how to gather, prepare, and store the various standard reagents you can gather from the creatures of Midnight.",
+                                                                            "children":  [
+                                                                                             {
+                                                                                                 "name":  "Superb Scales",
+                                                                                                 "cap":  40
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "Lasting Leather",
+                                                                                                 "cap":  40
+                                                                                             }
+                                                                                         ]
+                                                                        },
+                                                                        {
+                                                                            "name":  "Gainful Gathering",
+                                                                            "cap":  40,
+                                                                            "desc":  "Specialize in gathering unique materials beyond standard leather and scale.",
+                                                                            "children":  [
+                                                                                             {
+                                                                                                 "name":  "Dedicated Diffuser",
+                                                                                                 "cap":  40
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "Trophy Taker",
+                                                                                                 "cap":  40
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "Careful Carving",
+                                                                                                 "cap":  40
+                                                                                             }
+                                                                                         ]
+                                                                        },
+                                                                        {
+                                                                            "name":  "Talented Tracker",
+                                                                            "cap":  40,
+                                                                            "desc":  "Specialize in creating special lures that will draw out Renowned Beasts that are more valuable than standard creatures.",
+                                                                            "children":  [
+                                                                                             {
+                                                                                                 "name":  "Component Collector",
+                                                                                                 "cap":  40
+                                                                                             },
+                                                                                             {
+                                                                                                 "name":  "Majestic Materials",
+                                                                                                 "cap":  40
+                                                                                             }
+                                                                                         ]
+                                                                        }
+                                                                    ]
+                                                      }
+                                     }
                     }
 }
