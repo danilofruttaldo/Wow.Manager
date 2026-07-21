@@ -42,6 +42,16 @@
       "body_file": "transmog-tier-dump.lua",
       "notes": "Fonte: C_TransmogSets.GetAllSets + GetVariantSets + GetSetPrimaryAppearances. Account-wide (Warband). Mappe da aggiornare quando esce un raid nuovo: TIER (expansionID|label -> chiave tier), TIER_ARMOR (set per tipo di armatura, che hanno una riga loro) e TIER_ORDER. SLOT traduce la description in-game nelle 4 colonne: prima di Cata l'asse e' 10/25 uomini, nel T9 e' la fazione (requiredFaction), e SLOT_UNICO copre le righe senza asse (Order Hall, Challenge Mode, Sunwell) a cui il gioco non da' description. I set MULTICLASSE non si scartano piu': hanno il classMask con piu' bit (400 stoffa, 3592 cuoio, 4164 maglia, 35 piastre) e ClassiIn li scrive sotto ogni classe che porta quel tipo -- prima finivano in dropped e le righe di BfA, Nathria, Sanctum e l'LFR di WoD restavano vuote. Restano scartate solo le varianti Timerunning/Timewarped/Trading Post. Sui 5 slot da token dei tier moderni il boss NON si chiede al gioco, che risponde sbagliato: lo da' TOKEN_BOSS, e TOKEN_SENZA_FONTE sopprime dove una fonte da boss non esiste (set da vendor). GUARDIA: se la collezione non e' ancora caricata ogni set esce a zero pezzi ma internamente coerente, quindi mismatches resta vuoto e nulla lo distingue da un dump buono -- per questo c'e' il campo `sospetto`, piu' `presi` e `pezzi` come totali di controllo. Diagnostica: `senzaBoss` elenca i set in cui nessun pezzo ha un boss e `sondaSenzaBoss` mostra cosa rispondono le API sul primo di quelli (e' cosi' che si e' accertato che i set di Trial of Valor vengono da una quest, non da un drop). T0 e T0.5 NON esistono nel journal. Il campo `sets` nel SavedVariables e' il dump grezzo, serve se va rifatta la mappatura."
     },
+    "prof-spec-dump": {
+      "kind": "script",
+      "name": "Dump alberi professioni",
+      "desc": "Addon locale che legge in gioco gli alberi di specializzazione delle professioni: per ogni nodo il nome esatto, la descrizione e il numero di punti che accetta. Serve a scrivere le tappe della pagina Professioni con dati veri invece che dedotti dalle guide.",
+      "lang": "lua",
+      "when": "Quando serve verificare o correggere una tappa di professione: /wmprof poi /reload, e leggi il campo json da WowManagerProfDump.lua. Un dump copre le professioni del PG loggato: per le altre serve un alt che le conosca.",
+      "warn": "Addon nuovo: la prima volta riavvia il client, il /reload non lo vede. Per gli alberi COMPLETI (nomi dei nodi + cap) la professione va appresa dal PG; per le altre escono solo i nomi delle spec, non dei nodi.",
+      "body_file": "prof-spec-dump.lua",
+      "notes": "Gemello di transmog-tier-dump, ma per C_ProfSpecs / C_Traits. Nato dall'audit del 2026-07-20: le guide web non pubblicano il maxRanks (i punti da mettere in un nodo) ne' la struttura padre-figlio, il client si'. Ha gia' confermato mining.third = Refulgent Copper (nodo reale, cap 40). Restano da chiudere con un dump da alt: jewelcrafting.second (i nodi sotto Glamorous Gems), leatherworking.second/.third (sotto Lasting Leather / Safeguarding Scales) e la grafia Dextrous Diligence/Diligens sotto Calm Hands. Il .toc va accanto al .lua in Interface/AddOns/WowManagerProfDump/."
+    },
     "transmog-sync": {
       "kind": "script",
       "name": "Sync collezione transmog",
