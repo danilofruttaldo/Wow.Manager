@@ -586,6 +586,181 @@
                                                                      ]
                                                        }
                                       },
+                        "inscription":  {
+                                            "Midnight":  {
+                                                             "skillLine":  2913,
+                                                             "specs":  [
+                                                                           {
+                                                                               "name":  "Blueprints",
+                                                                               "cap":  30,
+                                                                               "desc":  "Improve the fundamentals of crafts requiring meticulous, sizeable detail.",
+                                                                               "children":  [
+                                                                                                {
+                                                                                                    "name":  "Market Research",
+                                                                                                    "cap":  30,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Chef\u0027s Rolling Pin",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Alchemist\u0027s Mixing Rod",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Scribe\u0027s Quill",
+                                                                                                                         "cap":  30
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Field Research",
+                                                                                                    "cap":  30,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Lamps and Lanterns",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Bows",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Staves",
+                                                                                                                         "cap":  30
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                }
+                                                                                            ]
+                                                                           },
+                                                                           {
+                                                                               "name":  "Calm Hands",
+                                                                               "cap":  10,
+                                                                               "desc":  "Master the fundamentals of Inscription, improving your ability to craft in general.",
+                                                                               "children":  [
+                                                                                                {
+                                                                                                    "name":  "Dextrous Diligence",
+                                                                                                    "cap":  20
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Keen Eye",
+                                                                                                    "cap":  20
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Added Flair",
+                                                                                                    "cap":  20
+                                                                                                }
+                                                                                            ]
+                                                                           },
+                                                                           {
+                                                                               "name":  "Perfected Products",
+                                                                               "cap":  30,
+                                                                               "desc":  "Master Inscription\u0027s fundamental reagents.",
+                                                                               "children":  [
+                                                                                                {
+                                                                                                    "name":  "Processing",
+                                                                                                    "cap":  30,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Perfect Ciphers",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Perfect Milling",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Perfect Inks",
+                                                                                                                         "cap":  30
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Parchment",
+                                                                                                    "cap":  30,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Perfect Vantus Runes",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Perfect Contracts",
+                                                                                                                         "cap":  30
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Perfect Missives",
+                                                                                                                         "cap":  30
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                }
+                                                                                            ]
+                                                                           },
+                                                                           {
+                                                                               "name":  "Darkmoon Curiosity",
+                                                                               "cap":  20,
+                                                                               "desc":  "Master the esoteric Darkmoon Cards, molding them into your creation.",
+                                                                               "children":  [
+                                                                                                {
+                                                                                                    "name":  "Rot",
+                                                                                                    "cap":  20,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Darkmoon Dominion: Rot",
+                                                                                                                         "cap":  20
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Darkmoon Sigil: Rot",
+                                                                                                                         "cap":  20
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Blood",
+                                                                                                    "cap":  20,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Darkmoon Dominion: Blood",
+                                                                                                                         "cap":  20
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Darkmoon Sigil: Blood",
+                                                                                                                         "cap":  20
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Hunt",
+                                                                                                    "cap":  20,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Darkmoon Dominion: Hunt",
+                                                                                                                         "cap":  20
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Darkmoon Sigil: Hunt",
+                                                                                                                         "cap":  20
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name":  "Void",
+                                                                                                    "cap":  20,
+                                                                                                    "children":  [
+                                                                                                                     {
+                                                                                                                         "name":  "Darkmoon Dominion: Void",
+                                                                                                                         "cap":  20
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "name":  "Darkmoon Sigil: Void",
+                                                                                                                         "cap":  20
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                }
+                                                                                            ]
+                                                                           }
+                                                                       ]
+                                                         }
+                                        },
                         "jewelcrafting":  {
                                               "Midnight":  {
                                                                "skillLine":  2914,
