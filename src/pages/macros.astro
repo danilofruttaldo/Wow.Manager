@@ -154,7 +154,9 @@ const specMap: Record<string, string[]> = Object.fromEntries(
       specMap = JSON.parse(document.getElementById('spec-map')?.textContent || '{}');
     } catch { /* mappa assente/malformata: nessuna riga spec */ }
 
-    // Filtro classe multi-selezione (unione). Set vuoto = nessun filtro.
+    // Filtro classe a selezione ESCLUSIVA (una sola classe alla volta). Tenuto come Set
+    // per non toccare `apply`/`renderSpecRow`, ma contiene al piu' un elemento: vuoto =
+    // nessun filtro (tutte le classi).
     const activeClasses = new Set<string>();
     // Filtro spec: singola selezione, valido solo con UNA classe attiva. '' = nessun filtro.
     let activeSpec = '';
@@ -223,14 +225,18 @@ const specMap: Record<string, string[]> = Object.fromEntries(
     for (const chip of classChips) {
       chip.addEventListener('click', () => {
         const c = chip.dataset.class || '';
-        if (activeClasses.has(c)) activeClasses.delete(c);   // toggle: ri-click deseleziona
-        else activeClasses.add(c);
-        // `aria-pressed` va tenuto in sync con `is-active`: e' l'unico stato che
-        // uno screen reader puo' leggere.
-        const on = activeClasses.has(c);
-        chip.classList.toggle('is-active', on);
-        chip.setAttribute('aria-pressed', on ? 'true' : 'false');
-        // La riga spec vive solo con UNA classe attiva: si aggiorna/sparisce a ogni toggle.
+        // Esclusivo: click su una classe -> resta solo quella; ri-click sull'attiva -> nessuna.
+        if (activeClasses.has(c)) activeClasses.clear();
+        else { activeClasses.clear(); activeClasses.add(c); }
+        // Selezione singola: aggiorno TUTTE le chip, non solo quella cliccata (l'altra
+        // eventualmente attiva va spenta). `aria-pressed` in sync con `is-active`: e'
+        // l'unico stato leggibile da uno screen reader.
+        for (const other of classChips) {
+          const on = activeClasses.has(other.dataset.class || '');
+          other.classList.toggle('is-active', on);
+          other.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+        // La riga spec vive solo con UNA classe attiva: si aggiorna/sparisce a ogni scelta.
         renderSpecRow();
         apply();
       });
