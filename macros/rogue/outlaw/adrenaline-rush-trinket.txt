@@ -1,0 +1,4 @@
+#showtooltip
+/cast Adrenaline Rush
+/use 13
+/use 14

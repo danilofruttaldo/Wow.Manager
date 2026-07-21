@@ -670,6 +670,45 @@
       "body_file": "rogue/outlaw/grappling-hook.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-07-21 ('nuova macro rogue', utente incerto shared vs Outlaw). VERIFICATO spec:outlaw (Wowpedia + ricerca guide Midnight/TWW): Grappling Hook NON e' baseline ne' talento di classe condiviso — dalla 10.0.0 e' un talento dell'ALBERO Outlaw (row 2), assente da Assassination e Subtlety. Su quelle due spec la macro darebbe 'spell sconosciuta', per questo spec:outlaw e non spec:null come rogue-tricks-shiv. NB il talento di classe Thrill Seeking (aggiunge 1 carica) e' condiviso ma agisce solo su chi ha gia' Grappling Hook, cioe' Outlaw. Piazza Grappling Hook sulla posizione del mouse (@cursor): rampino che ti tira al punto bersagliato (mobilita', stesso schema ground-target @cursor delle altre classi). #showtooltip nudo mostra Grappling Hook. SECONDA macro rogue del repertorio, prima Outlaw-specific."
+    },
+    "rogue-outlaw-adrenaline-rush-trinket": {
+      "name": "Adrenaline Rush + Trinket",
+      "desc": "Burst Outlaw: Adrenaline Rush + trinket 13/14 in un press.",
+      "scope": "account",
+      "class": "rogue",
+      "spec": "outlaw",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "rogue/outlaw/adrenaline-rush-trinket.txt",
+      "body": null,
+      "notes": "Creata 2026-07-21 su richiesta utente (proposta dal repertorio, approvata). Burst opener Outlaw in un press, stesso schema di warrior-reck-trinket / death-knight-frost-pillar-erw-trinket / shaman-ascendance-ancestral-call: Adrenaline Rush (CD maggiore Outlaw, off-GCD) + trinket 13/14 in un colpo solo. Tutto off-GCD -> parte tutto insieme, puoi castare subito dopo. spec:outlaw: Adrenaline Rush e' abilita' baseline della spec Outlaw (su Assassination/Subtlety darebbe spell non disponibile). /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. #showtooltip nudo mostra Adrenaline Rush (prima azione disponibile)."
+    },
+    "rogue-subtlety-symbols-shadow-blades-trinket": {
+      "name": "Symbols of Death + Shadow Blades + Trinket",
+      "desc": "Burst Subtlety: Symbols of Death + Shadow Blades + trinket 13/14 in un press.",
+      "scope": "account",
+      "class": "rogue",
+      "spec": "subtlety",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "rogue/subtlety/symbols-shadow-blades-trinket.txt",
+      "body": null,
+      "notes": "Creata 2026-07-21 su richiesta utente (proposta dal repertorio, approvata). Burst opener Subtlety in un press, stesso schema di warrior-reck-trinket e degli altri burst del repo: Symbols of Death + Shadow Blades + trinket 13/14. Entrambi i CD sono baseline Subtlety e OFF-GCD -> i due /cast partono insieme nello stesso press coi trinket, nessun conflitto di GCD. spec:subtlety: Symbols of Death e Shadow Blades sono abilita' baseline della spec Sub (su Outlaw/Assassination darebbero spell non disponibile). /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. #showtooltip nudo mostra Symbols of Death (prima azione disponibile). NB Shadow Dance NON e' in macro: e' un CD che si spende in finestra durante la rotazione, non un opener da stackare, quindi resta raw sulla barra."
+    },
+    "rogue-assassination-deathmark-trinket": {
+      "name": "Deathmark + Trinket",
+      "desc": "Burst Assassination: Deathmark + trinket 13/14 in un press.",
+      "scope": "account",
+      "class": "rogue",
+      "spec": "assassination",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "rogue/assassination/deathmark-trinket.txt",
+      "body": null,
+      "notes": "Creata 2026-07-21 su richiesta utente (proposta dal repertorio, approvata). Burst opener Assassination in un press, stesso schema di warrior-reck-trinket e degli altri burst del repo: Deathmark + trinket 13/14. spec:assassination. DIFFERENZA dagli altri due opener rogue: Deathmark NON e' baseline ma un TALENTO (albero Assassination), quindi guardato con [known:Deathmark] come i discriminatori known: warrior/mago/shaman -> in una build senza Deathmark la riga non casta nulla (niente 'spell sconosciuta'), la macro resta solo i due trinket. In pratica Deathmark e' quasi sempre talentato. off-GCD, parte coi trinket in un colpo. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. #showtooltip nudo mostra Deathmark quando talentato, altrimenti l'icona del trinket 13."
     }
   }
 }

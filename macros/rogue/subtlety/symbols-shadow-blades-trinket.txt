@@ -1,0 +1,5 @@
+#showtooltip
+/cast Symbols of Death
+/cast Shadow Blades
+/use 13
+/use 14
