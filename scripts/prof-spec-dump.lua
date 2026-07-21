@@ -258,6 +258,24 @@ local function Dump()
             "Nessun albero. O il PG non ha professioni con spec, o le API non combaciano: guarda `api`."
     end
 
+    -- ⚠️ Guardia anti-dump-vuoto (come il dump transmog). Se GetProfessions non ha
+    -- risposto (knownProfessions vuoto), i dati del PG non erano ancora caricati --
+    -- succede se si slogga/reloada troppo presto dopo il login: ogni config esce 0 e il
+    -- dump sembra valido-ma-vuoto. Non si sovrascrive un dump buono precedente, e si urla.
+    if #db.knownProfessions == 0 then
+        db.sospetto = "letto a vuoto: knownProfessions vuoto, dati non ancora caricati. NON incollare, rifai /wmprof."
+        if WowManagerProfDumpDB and WowManagerProfDumpDB.knownProfessions
+            and #WowManagerProfDumpDB.knownProfessions > 0 then
+            print(("|cffff2020WowManagerProfDump: letto a vuoto -- tengo il dump di %s (%d prof). Aspetta che i dati carichino e rifai /wmprof.|r")
+                :format(tostring(WowManagerProfDumpDB.character), #WowManagerProfDumpDB.knownProfessions))
+            return
+        end
+        WowManagerProfDumpDB = db
+        WowManagerProfDumpDB.json = toJson(db, "")
+        print("|cffff2020WowManagerProfDump: letto a vuoto (dati non caricati). Aspetta qualche secondo e rifai /wmprof prima del /reload.|r")
+        return
+    end
+
     WowManagerProfDumpDB = db
     WowManagerProfDumpDB.json = toJson(db, "")
 

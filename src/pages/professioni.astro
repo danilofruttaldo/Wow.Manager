@@ -41,9 +41,14 @@ function renderNode(n: ProfNode, depth = 0): string {
     ? `<div class="pnode-kids">${n.children.map(c => renderNode(c, depth + 1)).join('')}</div>`
     : '';
   const desc = n.desc ? `<p class="pnode-desc">${esc(n.desc)}</p>` : '';
+  // Difesa su dump parziale/malformato: senza questi default, un nodo senza `name`
+  // farebbe esc(undefined).replace -> crash del build; un `cap` mancante stamperebbe
+  // "undefined" nella pastiglia.
+  const name = esc(n.name ?? '?');
+  const cap = n.cap ?? '';
   return `<div class="pnode pnode--d${depth}">`
-    + `<div class="pnode-head"><span class="pnode-name">${esc(n.name)}</span>`
-    + `<span class="pnode-cap" title="Rank massimo: ${n.cap} punti conoscenza">${n.cap}</span></div>`
+    + `<div class="pnode-head"><span class="pnode-name">${name}</span>`
+    + `<span class="pnode-cap" title="Rank massimo: ${cap} punti conoscenza">${cap}</span></div>`
     + `${desc}${kids}</div>`;
 }
 ---

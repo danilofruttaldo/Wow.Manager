@@ -148,7 +148,12 @@ export interface ProfTree {
 // diverso per espansione (Midnight, TWW, Dragon Isles...); oggi il file porta solo
 // Midnight, ma la struttura e la tendina in pagina sono gia' pronte per aggiungerne.
 export function getProfExpansions(): string[] {
-  return ((profTreesManifest as any).expansions ?? []) as string[];
+  // Unione ordinata trees.json + leveling.json: un'espansione con la sola guida di leveling
+  // (o il solo albero) resta visibile nella tendina. trees.json in testa (guida defaultExp),
+  // le sole-leveling in coda -- il default non cambia e la pagina le rende gia' con grazia.
+  const t = ((profTreesManifest as any).expansions ?? []) as string[];
+  const l = ((profLevelingManifest as any).expansions ?? []) as string[];
+  return [...t, ...l.filter((e) => !t.includes(e))];
 }
 export function getProfessionTrees(): Record<string, Record<string, ProfTree>> {
   return ((profTreesManifest as any).professions ?? {}) as Record<string, Record<string, ProfTree>>;
@@ -541,7 +546,9 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
         const star = wild ? '<span class="wild" title="wildcard — tutte le spec">✦</span>' : '';
         return `<img class="ico ico-spec" src="/icons/spec/${classSlug}-${spec}.jpg" alt="${title}" title="${title}" width="16" height="16">${star}`;
       }
-      return `<span class="spec-l">(${spec[0].toUpperCase()})</span>`; // fallback se manca l'icona
+      // fallback se manca l'icona; spec vuota (es. wildcard "*" nuda) -> niente, per non
+      // chiamare spec[0] su stringa vuota e far crashare il build.
+      return spec ? `<span class="spec-l">(${spec[0].toUpperCase()})</span>` : '';
     }).join('');
     // "nome + icone" = inline-flex centrato: scritte e icone allineate verticalmente.
     // Tooltip nativo (abbozzo): realm, livello, professioni PRIMARIE. La spec di combat
@@ -557,7 +564,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     const info0 = (realmCandidate ? CHAR_INFO[`${name}|${realmCandidate}`.toLowerCase()] : undefined)
       ?? CHAR_INFO[name.toLowerCase()];
     const realmName = realmCandidate ?? info0?.realm;
-    const info = (info0 && realmName && info0.realm && info0.realm !== realmName) ? undefined : info0;
+    const info = (realmCandidate && info0?.realm && info0.realm !== realmCandidate) ? undefined : info0;
     const level = todo ? '0 · non creato' : wip ? 'in leveling (<90)' : '90';
     const tipLines = [name];
     if (realmName) tipLines.push(`Realm: ${realmName}`);
@@ -643,12 +650,9 @@ export function getRosterCount(): number {
     const rows = extractRosterTable(raw, section);
     if (!rows) continue;
     for (const cells of rows.slice(1)) {
-      for (let i = 1; i < cells.length; i++) {
-        const t = stripRealm(cells[i] ?? '').trim();
-        if (!t || t === 'X') continue;
-        // I PG pianificati (prefisso "*") non sono ancora creati: non si contano.
-        count += t.split(/<br\s*\/?>/i).map((s) => s.trim()).filter((s) => s && !s.startsWith('*')).length;
-      }
+      // Stessa regola per cella di `cellCount` (X/vuoto = 0, "*" pianificati esclusi):
+      // una sola fonte, cosi' il totale e i per-cella non possono divergere.
+      for (let i = 1; i < cells.length; i++) count += cellCount(cells[i] ?? '');
     }
   }
   return count;
