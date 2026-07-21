@@ -37,6 +37,13 @@
       "class": "mage",
       "professions": ["Tailoring", "Enchanting"],
       "midnightSpecs": ["Tailoring", "Enchanting"]
+    },
+    "Cereanor": {
+      "realm": "Nemesis",
+      "race": "blood-elf",
+      "class": "rogue",
+      "professions": ["Mining", "Engineering"],
+      "midnightSpecs": ["Mining", "Engineering"]
     }
   }
 }
