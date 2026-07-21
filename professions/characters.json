@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "note": "Professioni note per personaggio, dal campo knownProfessions del dump WowManagerProfDump. Raccolto durante il grind degli alberi. `midnightSpecs` elenca le professioni per cui QUESTO pg ha sbloccato le specializzazioni di Midnight (configID valido): sono le sole da cui si estrae l'albero coi cap. Visualizzazione sul sito: da decidere."
+  },
+  "characters": {
+    "Furricane": {
+      "realm": "Pozzo dell'Eternità",
+      "race": "vulpera",
+      "class": "monk",
+      "professions": ["Alchemy", "Herbalism", "Archaeology", "Fishing", "Cooking"],
+      "midnightSpecs": []
+    }
+  }
+}
