@@ -7,6 +7,155 @@
                        "Midnight"
                    ],
     "professions":  {
+                        "blacksmithing":  {
+                                              "Midnight":  {
+                                                               "skillLine":  2907,
+                                                               "specs":  [
+                                                                             {
+                                                                                 "name":  "Craftsmithing",
+                                                                                 "cap":  30,
+                                                                                 "desc":  "Improve your ability to support your fellow crafters with high quality tools, accessories, and tool stones.",
+                                                                                 "children":  [
+                                                                                                  {
+                                                                                                      "name":  "Tool Stones",
+                                                                                                      "cap":  25
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Trade Accessories",
+                                                                                                      "cap":  25
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Trade Tools",
+                                                                                                      "cap":  25
+                                                                                                  }
+                                                                                              ]
+                                                                             },
+                                                                             {
+                                                                                 "name":  "The Old Ways",
+                                                                                 "cap":  40,
+                                                                                 "desc":  "Gain Multicraft, Resourcefulness, Ingenuity, and additional Skill when crafting alloys.",
+                                                                                 "children":  [
+                                                                                                  {
+                                                                                                      "name":  "Alloys",
+                                                                                                      "cap":  20
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Prolific Worker",
+                                                                                                      "cap":  20
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Resourceful Smith",
+                                                                                                      "cap":  20
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Second Nature",
+                                                                                                      "cap":  20
+                                                                                                  }
+                                                                                              ]
+                                                                             },
+                                                                             {
+                                                                                 "name":  "Armorsmithing",
+                                                                                 "cap":  30,
+                                                                                 "desc":  "Improve your ability to craft plate armor and shields.",
+                                                                                 "children":  [
+                                                                                                  {
+                                                                                                      "name":  "Articulating Armor",
+                                                                                                      "cap":  30,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Gauntlets",
+                                                                                                                           "cap":  25
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Vambraces",
+                                                                                                                           "cap":  25
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Belts",
+                                                                                                                           "cap":  25
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Sculpted Armor",
+                                                                                                      "cap":  30,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Sabatons",
+                                                                                                                           "cap":  25
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Pauldrons",
+                                                                                                                           "cap":  25
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Helms",
+                                                                                                                           "cap":  25
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Large Plate Armor",
+                                                                                                      "cap":  30,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Shields",
+                                                                                                                           "cap":  25
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Greaves",
+                                                                                                                           "cap":  25
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Chestplates",
+                                                                                                                           "cap":  25
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  }
+                                                                                              ]
+                                                                             },
+                                                                             {
+                                                                                 "name":  "Weaponsmithing",
+                                                                                 "cap":  30,
+                                                                                 "desc":  "Improve your ability to craft weapons.",
+                                                                                 "children":  [
+                                                                                                  {
+                                                                                                      "name":  "Weaponstones",
+                                                                                                      "cap":  25
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Hafted Weapons",
+                                                                                                      "cap":  25,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Axes and Polearms",
+                                                                                                                           "cap":  25
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Maces",
+                                                                                                                           "cap":  25
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  },
+                                                                                                  {
+                                                                                                      "name":  "Blades",
+                                                                                                      "cap":  25,
+                                                                                                      "children":  [
+                                                                                                                       {
+                                                                                                                           "name":  "Long Blades",
+                                                                                                                           "cap":  25
+                                                                                                                       },
+                                                                                                                       {
+                                                                                                                           "name":  "Short Blades",
+                                                                                                                           "cap":  25
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                                  }
+                                                                                              ]
+                                                                             }
+                                                                         ]
+                                                           }
+                                          },
                         "engineering":  {
                                             "Midnight":  {
                                                              "skillLine":  2910,

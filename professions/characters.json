@@ -9,6 +9,13 @@
       "class": "monk",
       "professions": ["Alchemy", "Herbalism", "Archaeology", "Fishing", "Cooking"],
       "midnightSpecs": []
+    },
+    "Stantu": {
+      "realm": "Pozzo dell'Eternità",
+      "race": "highmountain-tauren",
+      "class": "warrior",
+      "professions": ["Blacksmithing", "Engineering", "Archaeology", "Fishing", "Cooking"],
+      "midnightSpecs": ["Blacksmithing", "Engineering"]
     }
   }
 }
