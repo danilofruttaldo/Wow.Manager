@@ -33,7 +33,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Night Elf | | X | | | | *Dayandknight·P | X | | | *Ipelf·R | *Hadruidken·S | *Demongear·R<br>_Demonstrate·S | X |
 | Gnome | _Tinytank·P | X | | _Gnomorrage·P | | | X | *Blinkette·S | | | X | X | X |
 | Draenei | | *Holytoledo | | | _Holytude·N | | *Naaruto | | | | X | X | X |
-| Worgen | | X | | | | Furricane | X | | | | *Furocious | X | X |
+| Worgen | | X | | | | Furricane·N | X | | | | *Furocious | X | X |
 | Void Elf | | X | | | _Discoteque·S | | X | | _Dotnetcore·N | | X | _Vanillidan·N | X |
 | Lightforged Draenei | *Periodrage·S | *Verdictorian | | | | | X | | | | X | X | X |
 | Dark Iron Dwarf | | _Plateatico·P | | | | *Dwarfenstein·S | *Lavalamp | | | | X | X | X |
