@@ -1,12 +1,13 @@
 ﻿{
     "_meta":  {
-                  "note":  "Professioni PRIMARIE note per personaggio, dal campo knownProfessions del dump WowManagerProfDump. Le secondarie (Cooking, Fishing, Archaeology) sono ESCLUSE di proposito. Raccolto durante il grind degli alberi. `midnightSpecs` elenca le professioni per cui QUESTO pg ha sbloccato le specializzazioni di Midnight (configID valido): sono le sole da cui si estrae l\u0027albero coi cap. Mostrato nel tooltip nativo sopra ogni nome PG nel roster (annotateSpec in content.ts): realm + livello + professioni primarie."
+                  "note":  "Professioni PRIMARIE note per personaggio, dal campo knownProfessions del dump WowManagerProfDump. Le secondarie (Cooking, Fishing, Archaeology) sono ESCLUSE di proposito. Raccolto durante il grind degli alberi. `midnightSpecs` elenca le professioni per cui QUESTO pg ha sbloccato le specializzazioni di Midnight (configID valido): sono le sole da cui si estrae l\u0027albero coi cap. Mostrato nel tooltip nativo sopra ogni nome PG nel roster (annotateSpec in content.ts): realm + livello + professioni primarie. Il campo `level` viene da AllTheThings.lua (chiave lvl), matchato per nome+realm; i PG non tracciati da ATT restano senza `level` e il tooltip ripiega sul livello grezzo dai prefissi del roster."
               },
     "characters":  {
                        "Furricane":  {
                                          "realm":  "Pozzo dell\u0027Eternità",
                                          "race":  "vulpera",
                                          "class":  "monk",
+                                         "level":  80,
                                          "professions":  [
                                                              "Alchemy",
                                                              "Herbalism"
@@ -19,6 +20,7 @@
                                       "realm":  "Pozzo dell\u0027Eternità",
                                       "race":  "highmountain-tauren",
                                       "class":  "warrior",
+                                      "level":  90,
                                       "professions":  [
                                                           "Blacksmithing",
                                                           "Engineering"
@@ -32,6 +34,7 @@
                                          "realm":  "Nemesis",
                                          "race":  "troll",
                                          "class":  "hunter",
+                                         "level":  90,
                                          "professions":  [
                                                              "Alchemy",
                                                              "Herbalism"
@@ -45,6 +48,7 @@
                                             "realm":  "Nemesis",
                                             "race":  "blood-elf",
                                             "class":  "demon-hunter",
+                                            "level":  90,
                                             "professions":  [
                                                                 "Leatherworking",
                                                                 "Skinning"
@@ -58,6 +62,7 @@
                                         "realm":  "Pozzo dell\u0027Eternità",
                                         "race":  "troll",
                                         "class":  "mage",
+                                        "level":  90,
                                         "professions":  [
                                                             "Tailoring",
                                                             "Enchanting"
@@ -71,6 +76,7 @@
                                         "realm":  "Nemesis",
                                         "race":  "blood-elf",
                                         "class":  "rogue",
+                                        "level":  90,
                                         "professions":  [
                                                             "Mining",
                                                             "Engineering"
@@ -84,6 +90,7 @@
                                          "realm":  "Pozzo dell\u0027Eternità",
                                          "race":  "orc",
                                          "class":  "hunter",
+                                         "level":  80,
                                          "professions":  [
                                                              "Leatherworking",
                                                              "Skinning"
@@ -96,6 +103,7 @@
                                             "realm":  "Nemesis",
                                             "race":  "orc",
                                             "class":  "shaman",
+                                            "level":  80,
                                             "professions":  [
                                                                 "Engineering",
                                                                 "Inscription"
@@ -109,6 +117,7 @@
                                           "realm":  "Pozzo dell\u0027Eternità",
                                           "race":  "undead",
                                           "class":  "rogue",
+                                          "level":  83,
                                           "professions":  [
                                                               "Jewelcrafting",
                                                               "Mining"
@@ -122,6 +131,7 @@
                                            "realm":  "Pozzo dell\u0027Eternità",
                                            "race":  "undead",
                                            "class":  "priest",
+                                           "level":  70,
                                            "professions":  [
 
                                                            ],
@@ -133,6 +143,7 @@
                                        "realm":  "Nemesis",
                                        "race":  "tauren",
                                        "class":  "paladin",
+                                       "level":  80,
                                        "professions":  [
                                                            "Jewelcrafting",
                                                            "Mining"
@@ -145,6 +156,7 @@
                                          "realm":  "Nemesis",
                                          "race":  "tauren",
                                          "class":  "shaman",
+                                         "level":  90,
                                          "professions":  [
                                                              "Herbalism",
                                                              "Engineering"
@@ -157,6 +169,7 @@
                                            "realm":  "Pozzo dell\u0027Eternità",
                                            "race":  "blood-elf",
                                            "class":  "paladin",
+                                           "level":  90,
                                            "professions":  [
                                                                "Engineering",
                                                                "Mining"
@@ -169,6 +182,7 @@
                                           "realm":  "Nemesis",
                                           "race":  "maghar-orc",
                                           "class":  "warrior",
+                                          "level":  52,
                                           "professions":  [
                                                               "Engineering",
                                                               "Mining"
@@ -181,6 +195,7 @@
                                           "realm":  "Pozzo dell\u0027Eternità",
                                           "race":  "maghar-orc",
                                           "class":  "shaman",
+                                          "level":  90,
                                           "professions":  [
                                                               "Engineering",
                                                               "Mining"
@@ -193,6 +208,7 @@
                                            "realm":  "Pozzo dell\u0027Eternità",
                                            "race":  "zandalari-troll",
                                            "class":  "paladin",
+                                           "level":  80,
                                            "professions":  [
                                                                "Engineering",
                                                                "Herbalism"
@@ -205,6 +221,7 @@
                                             "realm":  "Pozzo dell\u0027Eternità",
                                             "race":  "zandalari-troll",
                                             "class":  "death-knight",
+                                            "level":  80,
                                             "professions":  [
                                                                 "Enchanting",
                                                                 "Mining"
@@ -217,6 +234,7 @@
                                           "realm":  "Nemesis",
                                           "race":  "vulpera",
                                           "class":  "death-knight",
+                                          "level":  90,
                                           "professions":  [
                                                               "Engineering",
                                                               "Enchanting"
@@ -229,6 +247,7 @@
                                          "realm":  "Pozzo dell\u0027Eternità",
                                          "race":  "pandaren",
                                          "class":  "shaman",
+                                         "level":  80,
                                          "professions":  [
                                                              "Engineering",
                                                              "Mining"
@@ -241,6 +260,7 @@
                                          "realm":  "Pozzo dell\u0027Eternità",
                                          "race":  "earthen",
                                          "class":  "hunter",
+                                         "level":  90,
                                          "professions":  [
                                                              "Engineering",
                                                              "Mining"
@@ -253,6 +273,7 @@
                                           "realm":  "Pozzo dell\u0027Eternità",
                                           "race":  "orc",
                                           "class":  "warlock",
+                                          "level":  90,
                                           "professions":  [
                                                               "Tailoring",
                                                               "Enchanting"
@@ -265,6 +286,7 @@
                                             "realm":  "Nemesis",
                                             "race":  "goblin",
                                             "class":  "warlock",
+                                            "level":  90,
                                             "professions":  [
                                                                 "Alchemy",
                                                                 "Engineering"
@@ -277,6 +299,7 @@
                                          "realm":  "Nemesis",
                                          "race":  "nightborne",
                                          "class":  "warlock",
+                                         "level":  90,
                                          "professions":  [
                                                              "Enchanting",
                                                              "Tailoring"
@@ -289,6 +312,7 @@
                                         "realm":  "Pozzo dell\u0027Eternità",
                                         "race":  "tauren",
                                         "class":  "druid",
+                                        "level":  90,
                                         "professions":  [
                                                             "Alchemy",
                                                             "Engineering"
@@ -337,6 +361,7 @@
                                           "realm":  "Nemesis",
                                           "race":  "blood-elf",
                                           "class":  "mage",
+                                          "level":  90,
                                           "professions":  [
                                                               "Tailoring",
                                                               "Enchanting"
@@ -349,6 +374,7 @@
                                         "realm":  "Pozzo dell\u0027Eternità",
                                         "race":  "nightborne",
                                         "class":  "mage",
+                                        "level":  90,
                                         "professions":  [
                                                             "Engineering",
                                                             "Enchanting"
@@ -361,6 +387,7 @@
                                            "realm":  "Nemesis",
                                            "race":  "goblin",
                                            "class":  "death-knight",
+                                           "level":  80,
                                            "professions":  [
                                                                "Mining",
                                                                "Blacksmithing"
@@ -373,6 +400,7 @@
                                            "realm":  "Pozzo dell\u0027Eternità",
                                            "race":  "blood-elf",
                                            "class":  "demon-hunter",
+                                           "level":  76,
                                            "professions":  [
                                                                "Herbalism",
                                                                "Inscription"
@@ -409,6 +437,7 @@
                                             "realm":  "Pozzo dell\u0027Eternità",
                                             "race":  "dracthyr",
                                             "class":  "evoker",
+                                            "level":  70,
                                             "professions":  [
                                                                 "Skinning",
                                                                 "Leatherworking"
@@ -421,6 +450,7 @@
                                            "realm":  "Ravencrest",
                                            "race":  "dwarf",
                                            "class":  "warrior",
+                                           "level":  50,
                                            "professions":  [
                                                                "Engineering",
                                                                "Mining"
@@ -433,6 +463,7 @@
                                         "realm":  "Pozzo dell\u0027Eternità",
                                         "race":  "gnome",
                                         "class":  "warrior",
+                                        "level":  60,
                                         "professions":  [
                                                             "Alchemy",
                                                             "Engineering"
@@ -445,6 +476,7 @@
                                           "realm":  "Pozzo dell\u0027Eternità",
                                           "race":  "dark-iron-dwarf",
                                           "class":  "paladin",
+                                          "level":  70,
                                           "professions":  [
                                                               "Blacksmithing",
                                                               "Engineering"
@@ -457,6 +489,7 @@
                                         "realm":  "Pozzo dell\u0027Eternità",
                                         "race":  "mechagnome",
                                         "class":  "hunter",
+                                        "level":  80,
                                         "professions":  [
                                                             "Engineering",
                                                             "Enchanting"
@@ -469,6 +502,7 @@
                                           "realm":  "Pozzo dell\u0027Eternità",
                                           "race":  "gnome",
                                           "class":  "rogue",
+                                          "level":  70,
                                           "professions":  [
                                                               "Engineering",
                                                               "Mining"
@@ -481,6 +515,7 @@
                                         "realm":  "Nemesis",
                                         "race":  "draenei",
                                         "class":  "priest",
+                                        "level":  70,
                                         "professions":  [
                                                             "Jewelcrafting",
                                                             "Engineering"
@@ -493,6 +528,7 @@
                                           "realm":  "Silvermoon",
                                           "race":  "void-elf",
                                           "class":  "priest",
+                                          "level":  50,
                                           "professions":  [
                                                               "Herbalism",
                                                               "Alchemy"
@@ -505,6 +541,7 @@
                                                  "realm":  "Nemesis",
                                                  "race":  "worgen",
                                                  "class":  "death-knight",
+                                                 "level":  90,
                                                  "professions":  [
                                                                      "Engineering",
                                                                      "Skinning"
@@ -517,6 +554,7 @@
                                          "realm":  "Nemesis",
                                          "race":  "dwarf",
                                          "class":  "shaman",
+                                         "level":  70,
                                          "professions":  [
                                                              "Engineering",
                                                              "Mining"
@@ -529,6 +567,7 @@
                                           "realm":  "Pozzo dell\u0027Eternità",
                                           "race":  "human",
                                           "class":  "mage",
+                                          "level":  70,
                                           "professions":  [
                                                               "Engineering",
                                                               "Tailoring"
@@ -541,6 +580,7 @@
                                           "realm":  "Nemesis",
                                           "race":  "void-elf",
                                           "class":  "warlock",
+                                          "level":  70,
                                           "professions":  [
                                                               "Engineering",
                                                               "Tailoring"
@@ -553,6 +593,7 @@
                                            "realm":  "Silvermoon",
                                            "race":  "night-elf",
                                            "class":  "demon-hunter",
+                                           "level":  50,
                                            "professions":  [
                                                                "Herbalism",
                                                                "Inscription"
@@ -565,6 +606,7 @@
                                           "realm":  "Nemesis",
                                           "race":  "void-elf",
                                           "class":  "demon-hunter",
+                                          "level":  70,
                                           "professions":  [
                                                               "Engineering",
                                                               "Herbalism"

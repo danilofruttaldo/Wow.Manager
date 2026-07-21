@@ -478,7 +478,7 @@ const SPEC_ICON: Record<string, string[]> = {
 
 // Info per-PG dal tracker (professions/characters.json): realm + professioni, raccolte
 // durante il grind degli alberi. Si uniscono per nome (minuscolo) nel tooltip.
-const CHAR_INFO: Record<string, { realm?: string; professions?: string[]; class?: string }> =
+const CHAR_INFO: Record<string, { realm?: string; professions?: string[]; class?: string; level?: number }> =
   Object.fromEntries(
     Object.entries(((charactersManifest as any).characters ?? {}) as Record<string, any>)
       .map(([n, v]) => [n.toLowerCase(), v]),
@@ -548,7 +548,11 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
       ?? CHAR_INFO[name.toLowerCase()];
     const realmName = realmCandidate ?? info0?.realm;
     const info = (realmCandidate && info0?.realm && info0.realm !== realmCandidate) ? undefined : info0;
-    const level = todo ? '0 · non creato' : wip ? 'in leveling (<90)' : '90';
+    // Livello REALE da AllTheThings (nel tracker) se noto; altrimenti fallback grezzo
+    // dai prefissi del roster (0 se non creato, in leveling, 90 al cap).
+    const level = info?.level != null
+      ? String(info.level)
+      : (todo ? '0 · non creato' : wip ? 'in leveling (<90)' : '90');
     const tipLines = [name];
     if (realmName) tipLines.push(`Realm: ${realmName}`);
     tipLines.push(`Livello: ${level}`);
