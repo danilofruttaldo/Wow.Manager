@@ -1,32 +1,357 @@
-{
-  "_meta": {
-    "note": "Guida di leveling della SKILL (1 -> max), per fascia 'da X a Y'. Web-sourced e verificata (ricerca + verifica avversariale), NON dal client: separata da trees.json (macchina-generato dal dump) perche' editoriale e verrebbe sovrascritta. Chiave: professione -> espansione -> { maxSkill, steps[] }. Fonti principali: wow-professions.com, conquestcapped, Icy Veins, method.gg. Le quantita' con ~ sono approssimate e dipendono da quali ricette hai scoperto via Recycling."
-  },
-  "expansions": ["Midnight"],
-  "professions": {
-    "engineering": {
-      "Midnight": {
-        "maxSkill": 100,
-        "steps": [
-          { "from": 1, "to": 16, "action": "Impara Midnight Engineering a Silvermoon (Danwe/Gloresse). Metti subito 10 punti in Recycling, poi craft 8x Song Gear e usa Recycling ~7 volte.", "note": "Senza i 10 punti in Recycling non scopri le ricette che servono dopo." },
-          { "from": 16, "to": 20, "action": "Craft 1x Evercore Shade e 1x Evercore Vision Guard (ricette scoperte via Recycling)." },
-          { "from": 20, "to": 25, "action": "Craft 1x Evercore Dome Dinger, 1x Evercore Zoomshroud e 1x Evercore Reconnaissance." },
-          { "from": 25, "to": 39, "action": "A skill 25 si sbloccano le specializzazioni. Craft 10x Soul Sprocket, le 4 ricette Cogwheel e ogni ricetta del trainer una volta.", "note": "Ogni ricetta al primo craft da skill: falle tutte una volta per il bonus." },
-          { "from": 39, "to": 45, "action": "Usa Recycling ~20 volte (Bright Linen Bolt / Refulgent Copper Ingot / Powder Pigment) e craft ogni nuova ricetta del trainer." },
-          { "from": 45, "to": 80, "action": "Craft in serie la Quel'dorei gear scoperta via Recycling (es. ~60x Quel'dorei Guards): e' il grosso del leveling in questa fascia.", "note": "Il pezzo e il conteggio esatto dipendono da quale ricetta hai scoperto via Recycling." },
-          { "from": 80, "to": 100, "action": "Percorso variabile: le 7 ricette Housing Decor (gialle fino a 92), oppure tool/accessori rari via Market Mobility, oppure Crafting Orders con tool epici.", "note": "I tool epici richiedono Fused Vitality, a fornitura settimanale. Dopo 80 le ricette del trainer non danno piu' skill." }
-        ]
-      }
-    },
-    "mining": {
-      "Midnight": {
-        "maxSkill": 100,
-        "steps": [
-          { "from": 1, "to": 30, "action": "Raccogli qualsiasi deposito: in questa fascia danno skill tutti i tipi di nodo (base, Rich, Seam, Infused).", "note": "I tre minerali (Refulgent Copper, Umbral Tin, Brilliant Silver) sono in tutte le zone: non serve spostarsi per tipo." },
-          { "from": 30, "to": 60, "action": "I depositi base ingialliscono a 30 e diventano grigi a 60. Priorita' ai nodi speciali (Rich, Seam, Infused), che rendono skill anche qui." },
-          { "from": 60, "to": 100, "action": "Solo i nodi speciali danno ancora skill (Rich, Seam, Infused). Le varianti Infused sono quattro: Lightfused, Wild, Primal, Voidbound.", "note": "In pratica sono gli special di Umbral Tin e Brilliant Silver a portarti fino a 100." }
-        ]
-      }
-    }
-  }
+﻿{
+    "_meta":  {
+                  "note":  "Guida di leveling della SKILL (1 -\u003e max), per fascia \u0027da X a Y\u0027. Web-sourced e verificata (ricerca + verifica avversariale), NON dal client: separata da trees.json (macchina-generato dal dump) perche\u0027 editoriale e verrebbe sovrascritta. Chiave: professione -\u003e espansione -\u003e { maxSkill, steps[] }. Fonti principali: wow-professions.com, conquestcapped, Icy Veins, method.gg. Le quantita\u0027 con ~ sono approssimate e dipendono da quali ricette hai scoperto via Recycling."
+              },
+    "expansions":  [
+                       "Midnight"
+                   ],
+    "professions":  {
+                        "engineering":  {
+                                            "Midnight":  {
+                                                             "maxSkill":  100,
+                                                             "steps":  [
+                                                                           {
+                                                                               "from":  1,
+                                                                               "to":  16,
+                                                                               "action":  "Impara Midnight Engineering a Silvermoon (Danwe/Gloresse). Metti subito 10 punti in Recycling, poi craft 8x Song Gear e usa Recycling ~7 volte.",
+                                                                               "note":  "Senza i 10 punti in Recycling non scopri le ricette che servono dopo."
+                                                                           },
+                                                                           {
+                                                                               "from":  16,
+                                                                               "to":  20,
+                                                                               "action":  "Craft 1x Evercore Shade e 1x Evercore Vision Guard (ricette scoperte via Recycling)."
+                                                                           },
+                                                                           {
+                                                                               "from":  20,
+                                                                               "to":  25,
+                                                                               "action":  "Craft 1x Evercore Dome Dinger, 1x Evercore Zoomshroud e 1x Evercore Reconnaissance."
+                                                                           },
+                                                                           {
+                                                                               "from":  25,
+                                                                               "to":  39,
+                                                                               "action":  "A skill 25 si sbloccano le specializzazioni. Craft 10x Soul Sprocket, le 4 ricette Cogwheel e ogni ricetta del trainer una volta.",
+                                                                               "note":  "Ogni ricetta al primo craft da skill: falle tutte una volta per il bonus."
+                                                                           },
+                                                                           {
+                                                                               "from":  39,
+                                                                               "to":  45,
+                                                                               "action":  "Usa Recycling ~20 volte (Bright Linen Bolt / Refulgent Copper Ingot / Powder Pigment) e craft ogni nuova ricetta del trainer."
+                                                                           },
+                                                                           {
+                                                                               "from":  45,
+                                                                               "to":  80,
+                                                                               "action":  "Craft in serie la Quel\u0027dorei gear scoperta via Recycling (es. ~60x Quel\u0027dorei Guards): e\u0027 il grosso del leveling in questa fascia.",
+                                                                               "note":  "Il pezzo e il conteggio esatto dipendono da quale ricetta hai scoperto via Recycling."
+                                                                           },
+                                                                           {
+                                                                               "from":  80,
+                                                                               "to":  100,
+                                                                               "action":  "Percorso variabile: le 7 ricette Housing Decor (gialle fino a 92), oppure tool/accessori rari via Market Mobility, oppure Crafting Orders con tool epici.",
+                                                                               "note":  "I tool epici richiedono Fused Vitality, a fornitura settimanale. Dopo 80 le ricette del trainer non danno piu\u0027 skill."
+                                                                           }
+                                                                       ]
+                                                         }
+                                        },
+                        "mining":  {
+                                       "Midnight":  {
+                                                        "maxSkill":  100,
+                                                        "steps":  [
+                                                                      {
+                                                                          "from":  1,
+                                                                          "to":  30,
+                                                                          "action":  "Raccogli qualsiasi deposito: in questa fascia danno skill tutti i tipi di nodo (base, Rich, Seam, Infused).",
+                                                                          "note":  "I tre minerali (Refulgent Copper, Umbral Tin, Brilliant Silver) sono in tutte le zone: non serve spostarsi per tipo."
+                                                                      },
+                                                                      {
+                                                                          "from":  30,
+                                                                          "to":  60,
+                                                                          "action":  "I depositi base ingialliscono a 30 e diventano grigi a 60. Priorita\u0027 ai nodi speciali (Rich, Seam, Infused), che rendono skill anche qui."
+                                                                      },
+                                                                      {
+                                                                          "from":  60,
+                                                                          "to":  100,
+                                                                          "action":  "Solo i nodi speciali danno ancora skill (Rich, Seam, Infused). Le varianti Infused sono quattro: Lightfused, Wild, Primal, Voidbound.",
+                                                                          "note":  "In pratica sono gli special di Umbral Tin e Brilliant Silver a portarti fino a 100."
+                                                                      }
+                                                                  ]
+                                                    }
+                                   },
+                        "alchemy":  {
+                                        "Midnight":  {
+                                                         "maxSkill":  100,
+                                                         "steps":  [
+                                                                       {
+                                                                           "from":  1,
+                                                                           "to":  7,
+                                                                           "action":  "Craft 6x Silvermoon Health Potion (ricetta del trainer). Materiali dichiarati da wow-professions: 36x Tranquility Bloom, 30x Sunglass Vial. Trainer = Camberon, Silvermoon City / Eversong Woods.",
+                                                                           "note":  "Range e quantita esatte SOLO da wow-professions. La scelta della ricetta di partenza (Silvermoon Health Potion, ricetta del trainer) e corroborata da Icy Veins e method.gg -\u003e forma iniziale alta, numero esatto singola-fonte."
+                                                                       },
+                                                                       {
+                                                                           "from":  7,
+                                                                           "to":  20,
+                                                                           "action":  "Usa Recycle Potions 10 volte sulle Silvermoon Health Potion appena create: da\u0027 skill e produce Stabilized Derivate.",
+                                                                           "note":  "La valuta per sbloccare le ricette alla Camberon\u0027s Cauldron e\u0027 Artisan Alchemist\u0027s Moxie (guadagnata a parte), non lo Stabilized Derivate."
+                                                                       },
+                                                                       {
+                                                                           "from":  20,
+                                                                           "to":  27,
+                                                                           "action":  "Sblocca alla Camberon\u0027s Cauldron e fai il PRIMO CRAFT (1x ciascuna, il First Craft da skill) di: 1x Refreshing Serum, 1x Lightfused Mana Potion, 1x Primal Philosopher\u0027s Stone, 1x Transmute: Mote of Wild Magic, 1x Composite Flora, 1x Enlightenment Tonic, 1x Entropic Extract.",
+                                                                           "note":  "Elenco e range SOLO wow-professions. La logica \u0027first craft da skill/KP\u0027 e citata anche da Wowhead ma senza la stessa lista. Le singole ricette compaiono sparse anche in Icy Veins/method (Enlightenment Tonic, Entropic Extract, Lightfused Mana Potion, Composite Flora, Refreshing Serum) -\u003e nomi plausibili, ma questa esatta batteria di 7 first-craft in 20-\u003e27 e singola-fonte."
+                                                                       },
+                                                                       {
+                                                                           "from":  27,
+                                                                           "to":  32,
+                                                                           "action":  "Craft 8x Entropic Extract. Materiali dichiarati: 24x Tranquility Bloom, 40x Sunglass Vial.",
+                                                                           "note":  "Range/quantita SOLO wow-professions. Entropic Extract come ricetta di leveling e corroborata da Icy Veins (che ne mette 14 nel blocco 1-50) e method.gg."
+                                                                       },
+                                                                       {
+                                                                           "from":  32,
+                                                                           "to":  50,
+                                                                           "action":  "Craft 30x Silvermoon Health Potion. Materiali dichiarati: 180x Tranquility Bloom, 150x Sunglass Vial.",
+                                                                           "note":  "Range/quantita SOLO wow-professions. NB: method.gg per la fascia ~35-50 propone un percorso DIVERSO (Silvermoon Health Potion fino a 47, poi sblocco spec Transmutation Authority + 1x Wondrous Synergist per arrivare a 50) - framing alternativo, tenuto separato, confidence bassa."
+                                                                       },
+                                                                       {
+                                                                           "from":  50,
+                                                                           "to":  100,
+                                                                           "action":  "Spamma ~80x Light\u0027s Potential (sbloccata dalla Camberon\u0027s Cauldron) fino a 100. Meccanica skill-up: +1 garantito per craft da 50 a 80, poi gialla 80-\u003e90, verde 90-\u003e100. Alternative allo stesso range: ~45 craft di un qualsiasi flask (danno 2 punti/craft, gialli a 90, verdi a 95) oppure transmute (School of Gems / Bouquet of Herbs / Box of Rocks / Wondrous Synergist a seconda della specializzazione).",
+                                                                           "note":  "Il fatto che 50-\u003e100 si faccia con Light\u0027s Potential (o flask/transmute per spec) e corroborato da wow-professions E Icy Veins, con la stessa meccanica di soglie giallo/verde -\u003e corroborazione a 2 fonti indipendenti. Il numero preciso (~80) e di wow-professions; Icy Veins non da la quantita esatta per il tratto finale."
+                                                                       }
+                                                                   ]
+                                                     }
+                                    },
+                        "blacksmithing":  {
+                                              "Midnight":  {
+                                                               "maxSkill":  100,
+                                                               "steps":  [
+                                                                             {
+                                                                                 "from":  1,
+                                                                                 "to":  15,
+                                                                                 "action":  "Craftare 25x Refulgent Copper Ingot (l\u0027ingot di base). Materiali: ~125x Refulgent Copper Ore (+ Luminant Flux per craft). E\u0027 il primo craft della progressione ed e\u0027 l\u0027unico item che tutte le fonti concordano nel dare a skill 1.",
+                                                                                 "note":  "Identita\u0027 della ricetta (Refulgent Copper Ingot come primo craft a skill 1) = ALTA: la nominano wow-professions, Icy Veins, Method e Warcraft Wiki. La QUANTITA\u0027 25x e i 125 ore vengono solo dalla famiglia wow-professions (nexttier la ricopia quasi verbatim, non e\u0027 fonte indipendente), quindi la quantita\u0027 resta media. Icy Veins per il segmento iniziale da\u0027 numeri diversi e piu\u0027 bassi (4x Refulgent Copper Ingot dentro un blocco 1-50), non riconciliabili con questi 125 ore: vedi uncertainties."
+                                                                             },
+                                                                             {
+                                                                                 "from":  15,
+                                                                                 "to":  50,
+                                                                                 "action":  "Craftare ogni ricetta del trainer che da\u0027 ancora il bonus \u0027first-craft\u0027 (primo craft), finche\u0027 non ne restano. Le ricette coinvolte sono la serie armatura Blood-Tempered (Greaves, Bracers, Greatbelt, Gauntlets, Chestplate/Basinet/Pauldrons/Bulwark), le armi Dawnforged (Edge, Long Blade, War Mace, Ritual Knife), gli strumenti Thalassian (Pickaxe/Sickle/Skinning Knife, Blacksmith\u0027s Hammer) e i Primalforged (Knuckles, Heavy Axe). Di norma si arriva a ~47-50 skill.",
+                                                                                 "note":  "Il framing \u0027spamma i bonus di primo craft fino a ~47-50\u0027 e\u0027 di wow-professions/nexttier. Che il riempimento di questa fascia siano proprio le ricette Blood-Tempered / Dawnforged / Thalassian / Primalforged e\u0027 corroborato in modo indipendente da Method (che le elenca in ordine per 15-30 e 30-50) e da Icy Veins (Blood-Tempered + Primalforged nel blocco 1-50). NON ho una quantita\u0027 affidabile per ogni singola ricetta: Method da\u0027 un ordine ma da fonte unica (confidence bassa per l\u0027ordine esatto), e i numeri di Icy Veins sono incoerenti (duplica \u0027Blood-Tempered Greaves\u0027 con 8 e 3). Quindi: fai un craft di ognuna col bonus, non fidarti di conteggi precisi."
+                                                                             },
+                                                                             {
+                                                                                 "from":  50,
+                                                                                 "to":  70,
+                                                                                 "action":  "Craftare ~50x Sterling Alloy. Materiali: ~200x Luminant Flux, ~300x Brilliant Silver Ore, ~150x Refulgent Copper Ingot. La ricetta diventa verde negli ultimi ~10 punti, quindi possono servire alcuni craft extra.",
+                                                                                 "note":  "Sterling Alloy come grind di alloy 50-70 viene da wow-professions (ripetuto verbatim da nexttier). L\u0027esistenza della ricetta Sterling Alloy e\u0027 confermata anche da Warcraft Wiki. Fonte-famiglia unica per la fascia e le quantita\u0027 -\u003e non fondere con altri framing. La shopping list di wow-professions dichiara esplicitamente di coprire \u0027da 1 a 70\u0027, coerente col fatto che 70-100 e\u0027 separato."
+                                                                             },
+                                                                             {
+                                                                                 "from":  70,
+                                                                                 "to":  100,
+                                                                                 "action":  "NESSUNA lista fissa: la progressione dipende dalla specializzazione scelta. Tre vie possibili: (a) craftare equipaggiamento professione raro/epico (es. Sun-Blessed Blacksmith\u0027s Hammer / Toolbox); (b) via arma -\u003e Weaponsmithing (es. Spellbreaker\u0027s Warglaive); (c) via armatura -\u003e Armorsmithing (es. Spellbreaker\u0027s Bracers), oppure completare Crafting Orders. Ogni craft da\u0027 punti fino a 100.",
+                                                                                 "note":  "Come CLAIM qualitativo (\u0027gli ultimi 30 punti sono spec-dependent, niente shopping list fissa\u0027) e\u0027 concorde su wow-professions, Icy Veins e nexttier -\u003e ben supportato. Ma come step azionabile \u0027craftare N di X\u0027 e\u0027 BASSA: nessuna fonte da\u0027 quantita\u0027 per 70-100. I nomi item (Sun-Blessed Blacksmith\u0027s Hammer, Spellbreaker\u0027s Warglaive/Bracers) sono citati singolarmente, non come conteggi. Se serve un numero preciso qui, il dato NON esiste sulle fonti."
+                                                                             }
+                                                                         ]
+                                                           }
+                                          },
+                        "herbalism":  {
+                                          "Midnight":  {
+                                                           "maxSkill":  100,
+                                                           "steps":  [
+                                                                         {
+                                                                             "from":  1,
+                                                                             "to":  30,
+                                                                             "action":  "Raccogli qualsiasi erba trovi. In pratica tutti i nodi base danno skill in questa fascia. Tranquility Bloom e\u0027 quella che smette prima: diventa grigia (niente skill) a 30. Le altre continuano oltre.",
+                                                                             "note":  "Concordano tutte e 4 le fonti: Tranquility Bloom smette ~30. Icy Veins: le erbe comuni danno skill \u0027fino a 30 circa\u0027. Method: grigia a 30."
+                                                                         },
+                                                                         {
+                                                                             "from":  30,
+                                                                             "to":  60,
+                                                                             "action":  "Raccogli le quattro erbe base: Sanguithorn, Azeroot, Argentleaf, Mana Lily. Diventano gialle a 30 e grigie a 60. Anche le varianti Lush e Infused danno skill in questa fascia.",
+                                                                             "note":  "Le quattro erbe base identiche su ConquestCapped, wow-professions, Method. Le erbe sono raccoglibili in tutte le zone di Midnight (Eversong Woods, Zul\u0027Aman, Harandar, Voidstorm)."
+                                                                         },
+                                                                         {
+                                                                             "from":  60,
+                                                                             "to":  100,
+                                                                             "action":  "Tutte le erbe base sono grigie: da qui salgono skill SOLO le varianti Lush e Infused (nodi speciali). Sono i nodi modificati per zona: Lightfused (Eversong Woods), Wild (Zul\u0027Aman), Primal (Harandar), Voidbound (Voidstorm). Ruota fra le zone per trovarne di piu\u0027.",
+                                                                             "note":  "wow-professions: i nodi base si fermano a 60, gli ultimi 40 punti dipendono interamente dalle varianti Lush/Infused. ConquestCapped: Lush/Infused gialle a 60, grigie a 100. Icy Veins: \u0027special nodes continue giving skill ups all the way to 100\u0027. La transizione precisa \u0027grigia a 100\u0027 e\u0027 soprattutto di ConquestCapped."
+                                                                         }
+                                                                     ]
+                                                       }
+                                      },
+                        "jewelcrafting":  {
+                                              "Midnight":  {
+                                                               "maxSkill":  100,
+                                                               "steps":  [
+                                                                             {
+                                                                                 "from":  1,
+                                                                                 "to":  14,
+                                                                                 "action":  "Prospetta minerale grezzo economico: 12x Midnight Prospecting (5 minerali per craft = 60 minerali). Poi craft 4x Sin\u0027dorei Lens (reagente: 4x Glimmering Gemdust + 12x Crystalline Glass totali). Si impara/allena Jewelcrafting da Amin a Silvermoon City.",
+                                                                                 "note":  "conquestcapped e wow-professions riportano numeri IDENTICI (\u002712x Midnight Prospecting - 60 cheap ore\u0027, \u00274x Sin\u0027dorei Lens - 4x Glimmering Gemdust, 12x Crystalline Glass\u0027): concordano, ma la formulazione identica fa sospettare fonte condivisa, non due letture indipendenti."
+                                                                             },
+                                                                             {
+                                                                                 "from":  14,
+                                                                                 "to":  50,
+                                                                                 "action":  "Craft ogni ricetta del trainer UNA volta sfruttando il First Craft Bonus (usa il filtro \u0027first-craft bonus\u0027 nella finestra professione); torna dal trainer a prendere nuove ricette ogni ~5 punti skill. Nessun item/quantita fissi: dipende da quante ricette offre il trainer.",
+                                                                                 "note":  "Tutte le guide dedicate concordano sul meccanismo (Wowhead title + conquestcapped + wow-professions + overgear). Alta sul METODO, non su nomi di ricetta specifici (che non sono elencati)."
+                                                                             },
+                                                                             {
+                                                                                 "from":  50,
+                                                                                 "to":  65,
+                                                                                 "action":  "40x Monologuer\u0027s Chalice (reagente: 80x Crystalline Glass, cioe 2 per craft) come filler economico, craftando finche la ricetta non diventa grigia.",
+                                                                                 "note":  "Nome \u0027Monologuer\u0027s Chalice\u0027 confermato da conquestcapped, wow-professions e overgear (3 fonti). Quantita 40x e 80x Crystalline Glass da due guide con testo identico (possibile non-indipendenza)."
+                                                                             },
+                                                                             {
+                                                                                 "from":  65,
+                                                                                 "to":  100,
+                                                                                 "action":  "Tratto finale OPZIONALE e market-dependent, senza ricetta obbligatoria ne quantita fisse. Opzioni: (a) tagliare Eversong Diamonds ~2 skill per craft (varianti Powerful/Telluric/Stoic/Indecipherable); (b) Profession Equipment / loupes (es. da Gelanthis a Silvermoon City); (c) gioielli - anelli e collane; (d) reagenti opzionali (es. Prismatic Focusing Iris); (e) Patron/Crafting Orders. Le guide dicono di controllare l\u0027Auction House e di non affrettarlo se non serve la skill per gioielli gold-quality.",
+                                                                                 "note":  "Tutte le guide concordano che 65-100 e flessibile e senza passo obbligato. Eversong Diamond = 2 skill/craft riportato da due fonti (wow-professions detail + gamingcy). Nessuna fonte da un conteggio totale di craft per arrivare a 100."
+                                                                             }
+                                                                         ]
+                                                           }
+                                          },
+                        "leatherworking":  {
+                                               "Midnight":  {
+                                                                "maxSkill":  100,
+                                                                "steps":  [
+                                                                              {
+                                                                                  "from":  1,
+                                                                                  "to":  10,
+                                                                                  "action":  "Fase trainer (Talmar, Silvermoon City). Impara e crafta le prime ricette per il bonus di PRIMO CRAFT: Smuggler\u0027s Leather Wristbands (linea cuoio) e, in parallelo, Scout\u0027s Scaled Bracers (linea maglia/scaglie). Reagenti base: Void-Tempered Leather + Void-Tempered Scales.",
+                                                                                  "note":  "Confini di banda (1-10) presi da gamingcy (unica fonte con i numeri esatti); i NOMI ricetta sono corroborati da Icy Veins e wow-professions. Il conteggio esatto di craft per ricetta NON e\u0027 dato da nessuna fonte: il modello dominante e\u0027 \u0027crafta ogni ricetta una volta per il first-craft bonus\u0027."
+                                                                              },
+                                                                              {
+                                                                                  "from":  10,
+                                                                                  "to":  16,
+                                                                                  "action":  "Smuggler\u0027s Leather Footpads (dal trainer). Crafta per il first-craft bonus.",
+                                                                                  "note":  "Nome ricetta: Icy Veins + gamingcy concordano sull\u0027ordine. Banda numerica: solo gamingcy."
+                                                                              },
+                                                                              {
+                                                                                  "from":  16,
+                                                                                  "to":  22,
+                                                                                  "action":  "Smuggler\u0027s Leather Tunic (dal trainer).",
+                                                                                  "note":  "Nome ricetta corroborato da Icy Veins + gamingcy; banda solo gamingcy."
+                                                                              },
+                                                                              {
+                                                                                  "from":  22,
+                                                                                  "to":  31,
+                                                                                  "action":  "Smuggler\u0027s Reinforced Binding (dal trainer).",
+                                                                                  "note":  "Nome corroborato Icy Veins + gamingcy; banda solo gamingcy."
+                                                                              },
+                                                                              {
+                                                                                  "from":  31,
+                                                                                  "to":  37,
+                                                                                  "action":  "Smuggler\u0027s Reinforced Gloves (dal trainer). Introduce Peerless Plumage tra i reagenti.",
+                                                                                  "note":  "Nome corroborato Icy Veins + gamingcy; banda solo gamingcy."
+                                                                              },
+                                                                              {
+                                                                                  "from":  37,
+                                                                                  "to":  40,
+                                                                                  "action":  "Apprentice Jeweler\u0027s Apron (dal trainer). Usa Silverleaf Thread.",
+                                                                                  "note":  "Nome corroborato Icy Veins + gamingcy; banda solo gamingcy."
+                                                                              },
+                                                                              {
+                                                                                  "from":  40,
+                                                                                  "to":  52,
+                                                                                  "action":  "Smuggler\u0027s Reinforced Shoulderguards (dal trainer). Introduce Carving Canine.",
+                                                                                  "note":  "Nome corroborato Icy Veins + gamingcy; banda solo gamingcy."
+                                                                              },
+                                                                              {
+                                                                                  "from":  52,
+                                                                                  "to":  67,
+                                                                                  "action":  "Smuggler\u0027s Reinforced Hood (dal trainer): ultima ricetta della catena trainer della linea cuoio. A questo punto le ricette del trainer sono esaurite.",
+                                                                                  "note":  "DISCREPANZA sul punto di fine trainer: gamingcy e Icy Veins portano la catena trainer a ~67; wow-professions e Wowhead la danno a ~60/61. Ho usato 67 per continuita\u0027 con le bande dettagliate di gamingcy."
+                                                                              },
+                                                                              {
+                                                                                  "from":  67,
+                                                                                  "to":  91,
+                                                                                  "action":  "Fase \u0027grind\u0027 con ricette di specializzazione: crafta ~35 volte UNA sola tra queste (a scelta, in base alla spec e ai materiali): Blessed Pango Charm, Primal Spore Binding, Blood Knight\u0027s Armor Kit, Forest Hunter\u0027s Armor Kit, Devouring Banding.",
+                                                                                  "note":  "Le due fonti di grind (wow-professions e overgear) INQUADRANO questo tratto come 60-\u003e91 con ~35 craft; l\u0027ho spostato a 67-\u003e91 per non sovrapporre le bande trainer. Le 5 ricette sono corroborate da 2 fonti indipendenti; overgear le lega a item Wowhead reali (es. item=244603 Blessed Pango Charm, 244641 Forest Hunter\u0027s Armor Kit). \u0027Forest Hunter\u0027s Armor Kit\u0027 e\u0027 citata anche da Icy Veins."
+                                                                              },
+                                                                              {
+                                                                                  "from":  91,
+                                                                                  "to":  100,
+                                                                                  "action":  "Ultimo tratto (piu\u0027 lento): ~3 craft di ricette di armatura EPICA (\u0027Epic Armor Recipes\u0027, ~3 skill point ciascuna, restano arancioni fino a 100), oppure prosegui con le ricette di spec/embellishment e le Crafting Orders (patron orders) finche\u0027 non arrivi a 100.",
+                                                                                  "note":  "Corroborato da wow-professions + overgear (entrambi: 3 craft di armatura epica, 3 punti l\u0027uno). Icy Veins conferma il framing generale (68-100 via spec/crafting orders) ma dice che gli skill-up sono piu\u0027 RNG e non da\u0027 numeri fissi."
+                                                                              }
+                                                                          ]
+                                                            }
+                                           },
+                        "skinning":  {
+                                         "Midnight":  {
+                                                          "maxSkill":  100,
+                                                          "steps":  [
+                                                                        {
+                                                                            "from":  1,
+                                                                            "to":  25,
+                                                                            "action":  "Skinna QUALSIASI bestia uccisa in qualsiasi zona di Midnight (Eversong Woods/Tranquil Repose per leather, Sunstrider Isle per scales). Nessun nodo/materiale specifico richiesto: la skill sale skinnando ogni creatura scuoiabile (leather, scales, hide, fur, plating). A skill 25 si sblocca il PRIMO albero di specializzazione (Thorough Tanning o Gainful Gathering).",
+                                                                            "note":  "Il framing a fasce di materiale NON esiste per lo Skinning: si scuoia tutto cio\u0027 che si uccide. La fascia e\u0027 delimitata solo dallo sblocco spec a 25, confermato da Overgear (esplicito 25/50/75), Method e snippet Wowhead."
+                                                                        },
+                                                                        {
+                                                                            "from":  25,
+                                                                            "to":  50,
+                                                                            "action":  "Continua a skinnare qualsiasi bestia (stessi materiali: leather/scales/hide/fur). A skill 50 si sblocca il SECONDO albero di specializzazione (l\u0027altro tra Thorough Tanning e Gainful Gathering).",
+                                                                            "note":  "Icy Veins (verbatim non copiato ma parafrasato): skinning e\u0027 \u0027the easiest primary profession to level... no real concern for your own skill level or enemy levels and modifiers\u0027. Sblocco 50 confermato Overgear+Method."
+                                                                        },
+                                                                        {
+                                                                            "from":  50,
+                                                                            "to":  75,
+                                                                            "action":  "Continua a skinnare qualsiasi bestia. A skill 75 si sblocca il TERZO albero, Talented Tracker (il tracking/High Value Beasts sulla minimappa).",
+                                                                            "note":  "Terzo sblocco a 75 confermato da Overgear (esplicito) e Method (\u0027Once you reach 75... Talented Tracker\u0027). Un solo snippet (NextTier/Boostmatch) diceva 60: minoritario, scartato."
+                                                                        },
+                                                                        {
+                                                                            "from":  75,
+                                                                            "to":  100,
+                                                                            "action":  "Continua a skinnare qualsiasi bestia fino al cap 100. Le mob \u0027High Value Beast\u0027 (glow sulla minimappa) e le Void-Infused rendono piu\u0027 materiali ma NON sono un requisito per salire la skill. I materiali Majestic (via Lure/Renowned Beasts) sono legati alle spec, non alla progressione di skill.",
+                                                                            "note":  "Max = 100 confermato indipendentemente: Overgear (\u0027maximum skill level of 100\u0027), Boostmatch/NextTier (\u00271-100\u0027), snippet Wowhead (\u0027level 100 in Skinning\u0027)."
+                                                                        }
+                                                                    ]
+                                                      }
+                                     },
+                        "tailoring":  {
+                                          "Midnight":  {
+                                                           "maxSkill":  100,
+                                                           "steps":  [
+                                                                         {
+                                                                             "from":  1,
+                                                                             "to":  25,
+                                                                             "action":  "Craft 66x Bright Linen Bolt (da 66x Bright Linen). Ricetta base del trainer. A skill 25 si apre Nimble Needlework: metti 20 punti nella ruota per sbloccare Arcanoweave e Sunfire Silk dai mob.",
+                                                                             "note":  "Range e conteggio (66x) solo da wow-professions; l\u0027item \u0027Bright Linen Bolt\u0027 come base 1-25 e\u0027 confermato anche da Method e Icy Veins."
+                                                                         },
+                                                                         {
+                                                                             "from":  25,
+                                                                             "to":  40,
+                                                                             "action":  "Craft 14x Imbued Bright Linen Bolt (da 28x Bright Linen Bolt).",
+                                                                             "note":  "wow-professions esplicito (14x); Method conferma \u0027Imbued Bright Linen\u0027 come fascia 25-40 (ma interlaccia anche i Courtly items)."
+                                                                         },
+                                                                         {
+                                                                             "from":  40,
+                                                                             "to":  45,
+                                                                             "action":  "Craft ogni ricetta che ha ancora il \u0027First Craft Bonus\u0027 disponibile nella finestra professione (ogni ricetta nuova da\u0027 skill al primo craft); equipaggia la Bright Linen Tailoring Robe craftata.",
+                                                                             "note":  "Istruzione generica, non un item preciso; solo wow-professions."
+                                                                         },
+                                                                         {
+                                                                             "from":  45,
+                                                                             "to":  50,
+                                                                             "action":  "Craft 6x Courtly Shoulders (da 12x Bright Linen Bolt); aggiungine se non basta a 50.",
+                                                                             "note":  "Range/conteggio solo wow-professions, che etichetta la fascia \u002744-50\u0027 (il 44 e\u0027 probabilmente 45). Courtly Shoulders compare anche in Icy Veins/Method come filler, ma senza questo range."
+                                                                         },
+                                                                         {
+                                                                             "from":  50,
+                                                                             "to":  65,
+                                                                             "action":  "Craft ~30x Bright Linen Spellthread (da 60x Imbued Bright Linen Bolt + 60x Eversinging Dust).",
+                                                                             "note":  "wow-professions esplicito; lo spellthread come famiglia di leveling e\u0027 confermato da Icy Veins e Method."
+                                                                         },
+                                                                         {
+                                                                             "from":  65,
+                                                                             "to":  90,
+                                                                             "action":  "Craft ~28x di UNA fra Sunfire Silk Lining o Arcanoweave Lining (le cooldown cloth della spec Nimble Needlework). Scegli in base alla spec/materiali.",
+                                                                             "note":  "Conteggio ~28x solo wow-professions; le cooldown cloth Arcanoweave/Sunfire Silk sono confermate come percorso post-60 da Icy Veins, Method e gamingcy."
+                                                                         },
+                                                                         {
+                                                                             "from":  90,
+                                                                             "to":  100,
+                                                                             "action":  "Craft ~13x Elegant Artisan\u0027s Cooking Hat (o ricetta della linea Elegant Artisan equivalente). In alternativa: borse premium / spellthread high-end / riempire Crafting Orders.",
+                                                                             "note":  "L\u0027item preciso e\u0027 solo di wow-professions e non verificato altrove. Wowhead, Icy Veins e gamingcy indicano genericamente borse premium, spellthread di alto livello o Crafting Orders per l\u0027ultimo tratto, senza item ne\u0027 range precisi."
+                                                                         }
+                                                                     ]
+                                                       }
+                                      }
+                    }
 }
