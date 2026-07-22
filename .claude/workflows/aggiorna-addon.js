@@ -4,7 +4,7 @@ export const meta = {
   phases: [
     { title: 'Bootstrap', detail: 'legge addons/manifest.json: lista addon, versioni correnti, build' },
     { title: 'Audit', detail: 'latest vs current per ogni addon (cfwidget + GitHub fallback)' },
-    { title: 'Update', detail: 'scarica/estrai/backup/installa gli out-of-date (WoW deve essere chiuso)' },
+    { title: 'Update', detail: 'scarica/estrai/backup/installa gli out-of-date' },
   ],
 }
 
@@ -110,7 +110,7 @@ const INSTALL_SCHEMA = {
 
 phase('Update')
 const installed = await parallel(updates.map(u => () => agent(
-`Installa l'update dell'addon WoW ${u.name} (${u.current} -> ${u.latest}). WoW e' chiuso, puoi sovrascrivere i file.
+`Installa l'update dell'addon WoW ${u.name} (${u.current} -> ${u.latest}). Sovrascrivi i file: le modifiche vengono lette al prossimo /reload o riavvio, non serve che WoW sia chiuso.
 Passi (bash):
 1. mkdir -p /tmp/wow-upd/wf/bak && cd /tmp/wow-upd/wf
 2. curl -sL --max-time 180 -o "${u.fileName}" "${u.downloadUrl}"
