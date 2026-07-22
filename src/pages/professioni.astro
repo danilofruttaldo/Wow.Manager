@@ -169,8 +169,8 @@ function renderNode(n: ProfNode, depth = 0): string {
 #prof-exp:hover { border-color: var(--accent); }
 
 .prof-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.2rem 0 0.9rem; }
-.prof-ico { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border); object-fit: cover; max-width: none; }
-.prof-mono { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 1.2rem; }
+.prof-ico { width: 40px; height: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border); object-fit: cover; max-width: none; }
+.prof-mono { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius-lg); background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 1.2rem; }
 .prof-name { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; }
 .ptype { text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.64rem; }
 .ptype--crafting  { background: var(--accent-soft); color: var(--accent); }
@@ -187,8 +187,8 @@ function renderNode(n: ProfNode, depth = 0): string {
 .sec-hint { margin-left: 0.4rem; font-size: 0.72rem; font-weight: 400; color: var(--text-subtle); font-style: italic; }
 
 /* Parte 1: spec di primo livello affiancate in colonne. */
-.spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.7rem; }
-.spec { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.85rem 0.95rem; }
+.spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--grid-gap); }
+.spec { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-pad); }
 .spec-head { border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
 .spec-head .pnode-name { font-size: 1rem; font-weight: 700; }
 

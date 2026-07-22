@@ -206,9 +206,9 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   .tmog-panel .traid { display: inline-flex; gap: 0.25rem; flex-wrap: wrap; }
   .tmog-panel .traid abbr {
     text-decoration: none; cursor: help;
-    padding: 0.02rem 0.28rem; border: 1px solid var(--border-light); border-radius: 4px;
+    padding: 0.02rem 0.28rem; border: 1px solid var(--border-light); border-radius: var(--radius-sm);
     background: var(--surface); color: var(--text-subtle);
-    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.03em;
+    font-size: 0.64rem; font-weight: 700; letter-spacing: 0.03em;
   }
   /* Celle: frazione + barra di completamento, colore per stato. */
   .tmog-panel td.cell { font-variant-numeric: tabular-nums; font-weight: 600; }
@@ -225,10 +225,16 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   .tmog-panel .vname {
     display: block; font-size: 0.66rem; line-height: 1.2; font-weight: 600;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    /* Come .frac: la tinta piena della rampa (verde/giallo) e' sotto AA come testo, quindi
+       la si scurisce mescolandola col colore del testo. La barra sotto tiene la tinta piena. */
+    color: color-mix(in srgb, var(--tint) 55%, var(--text));
   }
   .tmog-panel .vlab {
-    display: block; font-size: 0.6rem; line-height: 1.2; opacity: 0.7;
+    display: block; font-size: 0.64rem; line-height: 1.2;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    /* Secondaria ma leggibile: niente piu' opacity (che sommata alla tinta piena a 9px la
+       rendeva illeggibile su celle gialle/verdi), ma un mix verso il testo smorzato. */
+    color: color-mix(in srgb, var(--tint) 40%, var(--text-muted));
   }
   .tmog-panel .bar { display: block; height: 3px; margin-top: 3px; border-radius: 999px; background: var(--border-light); overflow: hidden; }
   /* Cella che copre piu' colonne (righe impilate e T16): il contenuto resta largo

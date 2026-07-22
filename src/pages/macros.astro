@@ -107,9 +107,9 @@ const specMap: Record<string, string[]> = Object.fromEntries(
    lunga di macro allarghi la colonna oltre la pagina: è il <pre> a scrollare. */
 /* Masonry via multi-column: le card si impilano in verticale riempiendo i vuoti (niente
    allineamento per righe, così non restano spazi morti sotto le card più corte). */
-.macro-grid { column-count: 3; column-gap: 0.7rem; padding-top: 0.6rem; }
+.macro-grid { column-count: 3; column-gap: var(--grid-gap); padding-top: 0.6rem; }
 @media (max-width: 1000px) { .macro-grid { column-count: 2; } }
-.mcard { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: 0.7rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.8rem 0.9rem; }
+.mcard { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: var(--grid-gap); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-pad); }
 .mcard-head { display: flex; align-items: center; gap: 0.6rem; }
 .mcard-icons { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; }
 .ico-spec--card { width: 18px; height: 18px; min-width: 18px; border-radius: 4px; }
