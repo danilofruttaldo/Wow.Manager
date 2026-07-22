@@ -12,11 +12,11 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 |---|---|---|
 | [addons/](addons/) | Addon installati, versioni, source, folder list | `addons/manifest.json` |
 | [macros/](macros/) | Macro per classe/spec con body, slot, icon | `macros/manifest.json` |
-| [professions/](professions/) | Piano specializzazioni per professione (tre tappe: spec + ramo) | `professions/manifest.json` |
+| [professions/](professions/) | Alberi di specializzazione (dal client) + leveling 1→max (web) per professione | `professions/` (`trees.json`, `leveling.json`, `manifest.json`) |
 | [transmog/](transmog/) | Set dei raid per classe: righe tier, versioni, pezzi collezionati | `transmog/manifest.json` |
 | [ui-profiles/](ui-profiles/) | Profili addon (Plater, Details, ecc.) | `ui-profiles/manifest.json` |
 | [fonts/](fonts/) | Override font UI Blizzard (nomi-override in `Fonts/`) | `fonts/manifest.json` |
-| [roster.md](roster.md) | Tracker PG per razza × classe, Orda + Alleanza (copertura combo) | `SavedVariables/Syndicator.lua` |
+| [roster.md](roster.md) | Tracker PG per razza × classe, Orda + Alleanza (copertura combo) | `roster.md` |
 | [scripts/](scripts/) | Sezione "Extra": script di manutenzione, link e appunti tecnici | `scripts/manifest.json` |
 
 ## Regole operative

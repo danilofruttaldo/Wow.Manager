@@ -166,11 +166,11 @@ La topbar mostra `build <build> · sync <data>`. Il `build` = `_meta.wow_build` 
 
 ## Architettura sito (dove metto le mani)
 
-- [src/layouts/Base.astro](src/layouts/Base.astro) — header (brand + badge build/sync centrale + nav) e footer. Tema chiaro unico, font Inter.
-- [src/styles/global.css](src/styles/global.css) — token palette + componenti (`.ico`, tabelle, tiles). **`.ico` ha `max-width: none`**: NON rimuoverlo, evita che le icone si schiaccino nelle tabelle auto-layout.
+- [src/layouts/Base.astro](src/layouts/Base.astro) — header (brand + badge build/sync centrale + nav) e footer. Inietta anche l'`<h1>` nascosto della pagina e la tinta `--section` sul `<main>` (vedi sotto). Tema chiaro unico, font Inter.
+- [src/styles/global.css](src/styles/global.css) — **design-token** (`:root`) + componenti condivisi. I token sono la **sorgente unica** di misure e colori, da usare al posto di valori a mano: spaziatura (`--card-pad`, `--grid-gap`), scala tipografica (`--fs-2xs … --fs-xl`), raggi (`--radius-*`), altezza comune dei controlli della barra filtri (`--control-h`, come `min-height` su search/chip/select), tinta della sezione attiva (`--section`: la imposta il layout sul `<main>` in base alla pagina e la usano bordo-filtri/hover/focus — **mai** come riempimento con testo bianco, che l'arancio Prof e il teal UI non reggono per contrasto) e varianti di stato per il testo piccolo (`--ok-text`/`--warn-text`, più scure di `--ok`/`--warn` che come testo sono sotto AA; la rampa transmog continua a usare i pieni). Le **griglie a card** usano `auto-fill` / `column-width` con `minmax(min(Npx, 100%), 1fr)`, non breakpoint scelti a mano. **`.ico` ha `max-width: none`**: NON rimuoverlo, evita che le icone si schiaccino nelle tabelle auto-layout.
 - [src/lib/content.ts](src/lib/content.ts) — lettura dati + `getAddons/getMacros/getProfessions/getRosterHtml/getRosterCount/sourceDate`, mappe icone, rendering roster.
 - [src/lib/char-specs.ts](src/lib/char-specs.ts) — spec PG.
-- [src/pages/](src/pages/) — `index` (card), `addons`, `macros`, `professioni`, `roster`, `transmog`, `ui`, `404`. Le pagine **non hanno titoli/sottotitoli** (scelta voluta): partono col contenuto.
+- [src/pages/](src/pages/) — `index` (card), `addons`, `macros`, `professioni`, `roster`, `transmog`, `ui`, `404`. Le pagine **non hanno titoli/sottotitoli visibili** (scelta voluta): partono col contenuto. Il layout però inietta un `<h1 class="sr-only">` col titolo della pagina (a11y + SEO), così ogni pagina ha un'intestazione di primo livello senza mostrarla; chi ha un h1 proprio (404) passa `bareHeading` per non averne due.
 
 ## Verifica e dev
 

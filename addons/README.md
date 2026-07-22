@@ -4,7 +4,7 @@ Inventario degli addon installati in `_retail_/Interface/AddOns/`.
 
 ## File
 
-- `manifest.json` — fonte di verità: lista addon con `version`, `interface` (TOC), `source`, `url`, `folders`, `installed`, `notes`.
+- `manifest.json` — fonte di verità: lista addon con `desc` (riga mostrata sul sito, "cosa fa l'addon"), `version`, `interface` (TOC), `source`, `url`, `folders`, `installed`, `notes` (memoria interna di manutenzione, **non** mostrata sul sito).
 - `installs.log` — append-only di operazioni (INIT/INSTALL/UPDATE/REMOVE con timestamp).
 
 ## Schema entry
@@ -12,6 +12,7 @@ Inventario degli addon installati in `_retail_/Interface/AddOns/`.
 ```json
 "<AddonKey>": {
   "name": "Display Name",
+  "desc": "riga breve: cosa fa l'addon (mostrata sul sito)",
   "version": "x.y.z | unknown",
   "interface": "120005, 120007",
   "source": "curseforge | github | wago | manual",

@@ -2,7 +2,7 @@
 
 Profili esportabili di addon (Plater, Details!, ElvUI, Bartender, ecc.).
 
-Stesso pattern di `weakauras/`: export string raw in `exports/`, metadata in `manifest.json`.
+Pattern: export string raw in `exports/`, metadata in `manifest.json`.
 
 ## Schema entry
 

@@ -23,6 +23,7 @@ Le cartelle servono solo a organizzare i file di export, ma vanno tenute coerent
 ```json
 "<macro-id-slug>": {
   "name": "Charge+Pummel",
+  "desc": "riga breve: cosa fa il bottone (mostrata sul sito)",
   "scope": "account",
   "class": "warrior",
   "spec": "fury",
@@ -38,4 +39,5 @@ Le cartelle servono solo a organizzare i file di export, ma vanno tenute coerent
 - **Tutte le macro stanno nel tab account-wide (General Macros).** Il discriminante è la **classe** (`class`), non il personaggio: una macro warrior è account-wide ma utile solo su warrior. `scope` è sempre `account`; `character` è sempre `null` (il tab character-specific non viene usato).
 - `spec` (`fury`/`arms`/`protection`/`null`) indica per quale spec/loadout la macro è pensata; `null` = cross-spec.
 - `class=null` per macro shared/ (mount, marker, generiche cross-class).
+- `desc` = riga mostrata sul sito (cosa fa il bottone); `notes` = memoria interna di manutenzione (date, `VERIFICATO`, caveat), **non** mostrata sul sito.
 - Preferire `body_file` a `body` inline — più leggibile in diff e riusabile.
