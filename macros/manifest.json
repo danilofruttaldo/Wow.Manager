@@ -709,6 +709,45 @@
       "body_file": "rogue/assassination/deathmark-trinket.txt",
       "body": null,
       "notes": "Creata 2026-07-21 su richiesta utente (proposta dal repertorio, approvata). Burst opener Assassination in un press, stesso schema di warrior-reck-trinket e degli altri burst del repo: Deathmark + trinket 13/14. spec:assassination. DIFFERENZA dagli altri due opener rogue: Deathmark NON e' baseline ma un TALENTO (albero Assassination), quindi guardato con [known:Deathmark] come i discriminatori known: warrior/mago/shaman -> in una build senza Deathmark la riga non casta nulla (niente 'spell sconosciuta'), la macro resta solo i due trinket. In pratica Deathmark e' quasi sempre talentato. off-GCD, parte coi trinket in un colpo. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. #showtooltip nudo mostra Deathmark quando talentato, altrimenti l'icona del trinket 13."
+    },
+    "monk-ring-of-peace": {
+      "name": "Ring of Peace",
+      "desc": "Ring of Peace sulla posizione del mouse (respinge i nemici dall'area).",
+      "scope": "account",
+      "class": "monk",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "monk/ring-of-peace.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-22 ('macro da monaco shared' -> spec:null, cross-spec). PRIMA macro Monk del repertorio (la classe non aveva ancora macro; l'infra la supportava gia': CLASS_ABBR Mon->monk, ordine spec brewmaster/mistweaver/windwalker, icona monk.jpg). Piazza Ring of Peace sulla posizione del mouse (@cursor): area che espelle/respinge i nemici che vi entrano (disruption AoE). Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema di demon-hunter-sigil-of-misery e dei @cursor shaman/druido/dk/hunter/warlock). Ring of Peace e' talento dell'albero CLASSE monk -> disponibile a tutte le spec (Brewmaster/Mistweaver/Windwalker) se talentato, per questo spec:null (root classe). L'utente l'aveva scritta con /use; convertita a /cast per l'uniformazione del repertorio del 2026-07-20 (Ring of Peace e' una spell, non uno slot 13/14 -> /cast e /use sono alias). #showtooltip nudo mostra Ring of Peace. CAVEAT: se non talentato nel loadout corrente la macro e' inerte."
+    },
+    "monk-detox-provoke": {
+      "name": "Detox / Provoke",
+      "desc": "Mouseover su alleato -> Detox (dispel); altrimenti Provoke (taunt).",
+      "scope": "account",
+      "class": "monk",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "monk/detox-provoke.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-22 ('altra macro shared per monk' -> spec:null). Doppio ruolo un-bottone, stesso schema di paladin-cleanse-taunt (Cleanse Toxins/Hand of Reckoning) e del ramo dispel+taunt del druido Guardian: mouseover su alleato vivo (@mouseover,help,nodead) -> Detox (dispel: rimuove veleni/malattie dall'alleato senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) -> Provoke (taunt sul target nemico corrente). Il ramo default NON ha @mouseover -> Provoke va sul target attuale, non sul mouseover nemico. nodead evita il dispel su alleato morto. Provoke e' il taunt baseline di tutte le spec monk. CAVEAT spec (identico a paladin-cleanse-taunt): Detox in Brewmaster/Windwalker rimuove solo veleni/malattie, il Mistweaver ha la versione che dispella anche Magic -> resta comunque valido su tutte le spec, per questo spec:null. #showtooltip nudo dinamico mostra l'icona del ramo attivo (Detox col mouse sull'alleato, Provoke altrimenti)."
+    },
+    "monk-mistweaver-reawaken-resuscitate": {
+      "name": "Reawaken / Resuscitate",
+      "desc": "Resurrezione: col modifier -> Reawaken, altrimenti -> Resuscitate.",
+      "scope": "account",
+      "class": "monk",
+      "spec": "mistweaver",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "monk/mistweaver/reawaken-resuscitate.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-22 ('macro per monk mistweaver' -> spec:mistweaver). Rez a doppio ramo via [mod] (qualsiasi modifier shift/ctrl/alt), stesso schema di shaman-ancestral-vision-spirit e del ramo mass-res di druid-rebirth-revitalize-revive: modifier tenuto -> Reawaken; tap nudo -> Resuscitate (rez singolo target, la resurrezione del monaco). Solo il Mistweaver del monaco puo' rianimare -> spec:mistweaver (su Brewmaster/Windwalker il ramo darebbe 'spell sconosciuta'). #showtooltip nudo dinamico mostra l'icona del ramo attivo. Target = cadavere alleato corrente. WARN DA VERIFICARE IN GIOCO: il meccanico esatto di Reawaken (mass-res di gruppo vs combat-res singola) non e' confermato - il body segue lo schema mass-res-su-modifier del repo ma va controllato su Wowhead/in gioco prima di darlo per assodato (principio verify-before-announcing)."
     }
   }
 }

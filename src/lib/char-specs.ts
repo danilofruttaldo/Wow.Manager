@@ -84,6 +84,6 @@ export const CHAR_SPEC: Record<string, string> = {
 
 // Disambiguazione per PG omonimi: chiave `nome|razza` (minuscolo). Ha precedenza su CHAR_SPEC.
 export const CHAR_SPEC_BY_RACE: Record<string, string> = {
-  'furricane|vulpera': 'mistweaver', // Orda — Monk
+  'furricane|vulpera': 'brewmaster', // Orda — Monk
   'furricane|worgen': 'frost',       // Alleanza — Death Knight
 };
