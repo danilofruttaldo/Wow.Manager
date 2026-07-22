@@ -180,11 +180,11 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
 .footer-inner a { color: var(--accent); }
 /* Disclaimer IP: nomi/immagini/icone di WoW sono di Blizzard, questo e' un sito fan
    non ufficiale. Testo piccolo e smorzato, su tutte le pagine (e' nel layout).
-   Filetto sopra + aria per staccarlo dalla riga dominio/GitHub: non un blocco
-   compresso ma una fascia di fine-print distinta. max-width contenuta e line-height
-   generoso perche' respiri invece di riempire una banda larga e densa. */
+   Filetto sopra + aria per staccarlo dalla riga dominio/GitHub. NIENTE max-width:
+   deve occupare tutta la fascia del footer (poche righe larghe), non incolonnarsi
+   stretto a sinistra lasciando meta' footer vuoto. */
 .footer-legal { padding-top: 1rem; padding-bottom: 1.8rem; border-top: 1px solid var(--border-light); }
-.footer-legal p { margin: 0; max-width: 68ch; font-size: 0.72rem; line-height: 1.7; color: var(--text-subtle); }
+.footer-legal p { margin: 0; font-size: 0.72rem; line-height: 1.7; color: var(--text-subtle); }
 
 @media (max-width: 820px) { .build-badge { display: none; } }
 @media (max-width: 600px) {
