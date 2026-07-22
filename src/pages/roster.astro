@@ -28,8 +28,13 @@ const html = getRosterHtml();
   .roster-prose :global(thead th) { background: var(--surface-2); padding: 0.4rem 0.2rem; }
   .roster-prose :global(.ico) { width: 24px; height: 24px; }
   .roster-prose :global(.race-txt) { font-size: var(--fs-xs); font-weight: 600; }
-  /* Nome + icone: inline-flex centrato -> scritte e icone allineate verticalmente, sempre in riga */
-  .roster-prose :global(.pg) { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; vertical-align: middle; line-height: 1; }
+  /* Nome sopra, icona/e spec SOTTO e centrate. La cella e' a larghezza fissa (~85px):
+     tenere nome e icona in riga faceva sforare i nomi lunghi. Con flex-wrap + il nome a
+     `flex-basis:100%` il nome prende tutta la larghezza della colonna (parola intera, niente
+     tagli a meta'), le icone vanno a capo sotto e restano in riga centrata. overflow-wrap
+     resta come ultima risorsa per i nomi piu' larghi della colonna. */
+  .roster-prose :global(.pg) { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 3px; max-width: 100%; vertical-align: middle; line-height: 1.15; }
+  .roster-prose :global(.pg .pg-name) { flex-basis: 100%; text-align: center; overflow-wrap: anywhere; }
   .roster-prose :global(.pg .ico-spec) { width: 18px; height: 18px; margin: 0; }
   .roster-prose :global(.pg .spec-q) { margin: 0; }
   .roster-prose :global(.pg .spec-l) { color: var(--text-muted); font-weight: 600; }
