@@ -8,7 +8,7 @@ import { getClassStats } from '../lib/content';
 // stavano qui), quindi la home e' solo questa tabella.
 const stats = getClassStats();
 const totMacro = stats.reduce((n, s) => n + s.macros, 0);
-const totRoster = stats.reduce((n, s) => n + s.roster, 0);
+const totPg = stats.reduce((n, s) => n + s.pg, 0);
 const totShots = stats.reduce((n, s) => n + s.shots, 0);
 const tmogGot = stats.reduce((n, s) => n + s.tmogGot, 0);
 const tmogTotal = stats.reduce((n, s) => n + s.tmogTotal, 0);
@@ -23,7 +23,7 @@ const tmogPct = tmogTotal ? Math.round((tmogGot / tmogTotal) * 100) : 0;
             <tr>
               <th scope="col" class="c-cls" aria-sort="ascending"><button type="button" class="sort-btn" data-type="text" aria-label="Ordina per classe">Classe</button></th>
               <th scope="col"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per numero di macro">Macro</button></th>
-              <th scope="col"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per numero di PG">Roster</button></th>
+              <th scope="col"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per numero di PG">PG</button></th>
               <th scope="col"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per numero di screenshot">UI</button></th>
               <th scope="col" class="c-tmog"><button type="button" class="sort-btn" data-type="num" aria-label="Ordina per completamento transmog">Transmog</button></th>
             </tr>
@@ -38,7 +38,7 @@ const tmogPct = tmogTotal ? Math.round((tmogGot / tmogTotal) * 100) : 0;
                   </span>
                 </th>
                 <td data-v={s.macros}>{s.macros || <span class="c-zero">—</span>}</td>
-                <td data-v={s.roster}>{s.roster || <span class="c-zero">—</span>}</td>
+                <td data-v={s.pg}>{s.pg || <span class="c-zero">—</span>}</td>
                 <td data-v={s.shots}>{s.shots || <span class="c-zero">—</span>}</td>
                 <td class="c-tmog" data-v={s.tmogPct}>
                   <span class="c-tcell" style={`--pct:${s.tmogPct}`}>
@@ -53,7 +53,7 @@ const tmogPct = tmogTotal ? Math.round((tmogGot / tmogTotal) * 100) : 0;
             <tr>
               <th scope="row" class="c-cls">Totale</th>
               <td>{totMacro}</td>
-              <td>{totRoster}</td>
+              <td>{totPg}</td>
               <td>{totShots}</td>
               <td class="c-tmog">
                 <span class="c-tcell" style={`--pct:${tmogPct}`}>

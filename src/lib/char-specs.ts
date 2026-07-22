@@ -1,5 +1,5 @@
 // Personaggio -> spec. Chiave = nome PG in minuscolo.
-// Nel roster mostriamo la PRIMA LETTERA della spec fra parentesi accanto al nome.
+// Nella tabella PG mostriamo la PRIMA LETTERA della spec fra parentesi accanto al nome.
 // Fonte iniziale: i 7 screenshot (filename classe-spec-nome). Il resto lo compila l'utente.
 export const CHAR_SPEC: Record<string, string> = {
   stantu: 'arms*', // wildcard: gioca tutte le spec Warrior
@@ -76,7 +76,7 @@ export const CHAR_SPEC: Record<string, string> = {
   bloomanjaro: 'restoration',  // TODO Troll Dru — Kilimanjaro → Lifebloom (resto)
   furocious: 'feral',          // TODO Worgen Dru — ferocious/fur = feral
   bearnacle: 'guardian',       // TODO Kul Tiran Dru — bear=guardian + barnacle=mare
-  // TODO — spec ancora scoperte in tutto il roster (Monk/Evoker non erano tra le classi limitate).
+  // TODO — spec ancora scoperte tra tutti i PG (Monk/Evoker non erano tra le classi limitate).
   mistfits: 'mistweaver',      // TODO Mechagnome Mon — Misfits → mistweaver; razza in minoranza
   preservative: 'preservation',// TODO Dracthyr Evo — "preservative" contiene preservation
   augmentin: 'augmentation',   // TODO Dracthyr Evo — brand → augmentation

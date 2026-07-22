@@ -183,7 +183,7 @@ export function getExtra(): Extra[] {
 // Matrice tier × versione, una per classe. Le 4 colonne sono SLOT di versione, non
 // difficoltà letterali: prima di Cataclysm gli assi erano altri (10/25 uomini, fazione,
 // Sanctified), quindi ogni tier dichiara l'etichetta reale degli slot che usa e gli slot
-// non dichiarati diventano celle "non applicabile" (stesso pattern delle combo del roster).
+// non dichiarati diventano celle "non applicabile" (stesso pattern delle combo della tabella PG).
 // Un pezzo del set nel tooltip: testo gia' formattato + se e' gia' stato preso.
 export interface TmogPiece {
   testo: string;                                  // es. "Shoulder — Ragnaros (FL)"
@@ -411,7 +411,7 @@ function computeTransmog(): TmogClass[] {
 }
 
 // ── Markdown raw (fuori da src) ───────────────────
-const rosterFile = import.meta.glob('/roster.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const pgFile = import.meta.glob('/pg.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
 const CLASS_LABELS: Record<string, string> = {
   'death-knight': 'Death Knight', 'demon-hunter': 'Demon Hunter', 'druid': 'Druid',
@@ -426,7 +426,7 @@ export function titleCase(s: string): string {
   return s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-// Abbreviazione classe (header roster) -> [slug icona, nome esteso]
+// Abbreviazione classe (header tabella PG) -> [slug icona, nome esteso]
 const CLASS_ABBR: Record<string, [string, string]> = {
   War: ['warrior', 'Warrior'], Pal: ['paladin', 'Paladin'], Hun: ['hunter', 'Hunter'],
   Rog: ['rogue', 'Rogue'], Pri: ['priest', 'Priest'], DK: ['deathknight', 'Death Knight'],
@@ -434,7 +434,7 @@ const CLASS_ABBR: Record<string, [string, string]> = {
   Mon: ['monk', 'Monk'], Dru: ['druid', 'Druid'], DH: ['demonhunter', 'Demon Hunter'],
   Evo: ['evoker', 'Evoker'],
 };
-// Nome razza (prima colonna roster) -> slug icona (null = nessuna icona ufficiale)
+// Nome razza (prima colonna tabella PG) -> slug icona (null = nessuna icona ufficiale)
 const RACE_ICON: Record<string, string | null> = {
   'Orc': 'orc', 'Undead': 'scourge', 'Tauren': 'tauren', 'Troll': 'troll', 'Goblin': 'goblin',
   'Blood Elf': 'bloodelf', 'Nightborne': 'nightborne', 'Highmountain Tauren': 'highmountaintauren',
@@ -483,8 +483,8 @@ const CHAR_INFO: Record<string, { realm?: string; professions?: string[]; class?
     Object.entries(((charactersManifest as any).characters ?? {}) as Record<string, any>)
       .map(([n, v]) => [n.toLowerCase(), v]),
   );
-// Suffisso realm nel roster -> nome esteso. Devono esserci TUTTI i codici della legenda
-// di roster.md (N/P/R/S): se ne manca uno, per quei PG realmCandidate resta la lettera
+// Suffisso realm nella tabella PG -> nome esteso. Devono esserci TUTTI i codici della
+// legenda di pg.md (N/P/R/S): se ne manca uno, per quei PG realmCandidate resta la lettera
 // grezza, la guardia realm-match scatta a vuoto e il tooltip perde le professioni.
 const REALM_ABBR: Record<string, string> = {
   N: 'Nemesis', P: "Pozzo dell'Eternità", R: 'Ravencrest', S: 'Silvermoon',
@@ -508,7 +508,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     const realmCode = name.match(/·([A-Z])$/)?.[1];
     name = name.replace(/·[A-Z]$/, '').trim();
     // Prefisso "*" = PG pianificato (TODO): non ancora creato. Lo togliamo dal nome,
-    // lo rendiamo in stile "da creare" e NON lo contiamo (vedi getRosterCount).
+    // lo rendiamo in stile "da creare" e NON lo contiamo (vedi getPgCount).
     const todo = name.startsWith('*');
     if (todo) name = name.slice(1).trim();
     // Prefisso "_" = PG esistente ma NON ancora al level cap (in leveling). Lo togliamo
@@ -536,7 +536,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     // "nome + icone" = inline-flex centrato: scritte e icone allineate verticalmente.
     // Tooltip nativo (abbozzo): realm, livello, professioni PRIMARIE. La spec di combat
     // NON va nel tooltip -- e' gia' l'icona accanto al nome, sarebbe ridondante. Il
-    // livello e' GREZZO, dai prefissi del roster (0 se non creato, "in leveling" per "_",
+    // livello e' GREZZO, dai prefissi della tabella PG (0 se non creato, "in leveling" per "_",
     // 90 al cap): i numeri reali vivono in AllTheThings.lua (chiave `lvl`) e si agganciano
     // a parte, gestendo gli omonimi per realm. Le professioni vengono dal tracker
     // characters.json, popolato durante il grind (quindi ancora parziale).
@@ -549,7 +549,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     const realmName = realmCandidate ?? info0?.realm;
     const info = (realmCandidate && info0?.realm && info0.realm !== realmCandidate) ? undefined : info0;
     // Livello REALE da AllTheThings (nel tracker) se noto; altrimenti fallback grezzo
-    // dai prefissi del roster (0 se non creato, in leveling, 90 al cap).
+    // dai prefissi della tabella PG (0 se non creato, in leveling, 90 al cap).
     const level = info?.level != null
       ? String(info.level)
       : (todo ? '0 · non creato' : wip ? 'in leveling (<90)' : '90');
@@ -567,7 +567,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
 
 const stripRealm = (cell: string): string => cell.replace(/·[A-Z]/g, '');
 
-// PG reali in una cella: stessa regola del contatore totale (getRosterCount).
+// PG reali in una cella: stessa regola del contatore totale (getPgCount).
 // Esclude i pianificati "*" (non ancora creati), include i "_" in leveling; X/vuoto = 0.
 function cellCount(cell: string): number {
   const t = stripRealm(cell).trim();
@@ -576,7 +576,7 @@ function cellCount(cell: string): number {
 }
 
 // Estrae le righe (array di celle) della tabella markdown sotto "## <section>".
-function extractRosterTable(raw: string, section: string): string[][] | null {
+function extractPgTable(raw: string, section: string): string[][] | null {
   const lines = raw.split('\n');
   let i = lines.findIndex((l) => new RegExp(`^##\\s+${section}`, 'i').test(l));
   if (i < 0) return null;
@@ -596,7 +596,7 @@ function extractRosterTable(raw: string, section: string): string[][] | null {
 
 // Costruisce le <tr> del corpo: icona razza in prima colonna, casella scura per X, icona spec.
 // header = riga di intestazione (abbreviazioni classe) per ricavare la classe di ogni colonna.
-function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): { html: string; races: Set<string>; colCounts: number[] } {
+function pgBodyRows(rows: string[][], rowClass: string, header: string[]): { html: string; races: Set<string>; colCounts: number[] } {
   const races = new Set<string>();
   const colCounts: number[] = new Array(header.length).fill(0); // totale PG per classe (indice 0 inutilizzato)
   const html = rows.map((cells) => {
@@ -629,12 +629,12 @@ function rosterBodyRows(rows: string[][], rowClass: string, header: string[]): {
   return { html, races, colCounts };
 }
 
-// Conta i PG presenti nel roster (Orda + Alleanza), inclusi i nomi multipli per cella.
-export function getRosterCount(): number {
-  const raw = Object.values(rosterFile)[0] ?? '';
+// Conta i PG presenti nella tabella (Orda + Alleanza), inclusi i nomi multipli per cella.
+export function getPgCount(): number {
+  const raw = Object.values(pgFile)[0] ?? '';
   let count = 0;
   for (const section of ['Orda', 'Alleanza']) {
-    const rows = extractRosterTable(raw, section);
+    const rows = extractPgTable(raw, section);
     if (!rows) continue;
     for (const cells of rows.slice(1)) {
       // Stessa regola per cella di `cellCount` (X/vuoto = 0, "*" pianificati esclusi):
@@ -660,7 +660,7 @@ export function getScreenshotCount(): number {
 
 // ── Stats per classe (matrice della home) ─────────
 // Aggrega in una riga per classe le metriche per-classe che il repo gia' conosce:
-// quante macro, quanti PG nel roster, quanti screenshot, e il completamento transmog.
+// quante macro, quanti PG, quanti screenshot, e il completamento transmog.
 // Tutte e 13 le classi sempre presenti, anche a zero, cosi' la matrice e' completa e
 // stabile. Le fonti sono le stesse delle rispettive pagine: nessun conteggio nuovo da
 // mantenere a mano, si allinea da se' quando cambi il dato sottostante.
@@ -669,7 +669,7 @@ export interface ClassStat {
   label: string;
   icon: string;
   macros: number;
-  roster: number;
+  pg: number;
   shots: number;
   tmogGot: number;
   tmogTotal: number;
@@ -687,13 +687,13 @@ export function getClassStats(): ClassStat[] {
   const macroBy: Record<string, number> = {};
   for (const m of getMacros()) if (m.class) macroBy[m.class] = (macroBy[m.class] ?? 0) + 1;
 
-  // Roster: somma per colonna-classe su Orda + Alleanza. L'header porta le abbreviazioni
-  // (War, Pal, ...) -> slug via CLASS_ABBR, con la stessa `cellCount` del totale roster,
+  // PG: somma per colonna-classe su Orda + Alleanza. L'header porta le abbreviazioni
+  // (War, Pal, ...) -> slug via CLASS_ABBR, con la stessa `cellCount` del totale PG,
   // cosi' i per-classe non possono divergere dal conteggio complessivo.
-  const rosterBy: Record<string, number> = {};
-  const raw = Object.values(rosterFile)[0] ?? '';
+  const pgBy: Record<string, number> = {};
+  const raw = Object.values(pgFile)[0] ?? '';
   for (const section of ['Orda', 'Alleanza']) {
-    const rows = extractRosterTable(raw, section);
+    const rows = extractPgTable(raw, section);
     if (!rows) continue;
     const header = rows[0];
     for (const cells of rows.slice(1)) {
@@ -701,7 +701,7 @@ export function getClassStats(): ClassStat[] {
         const iconSlug = CLASS_ABBR[(header[j] ?? '').trim()]?.[0];
         if (!iconSlug) continue;
         const slug = toDashedSlug(iconSlug);
-        rosterBy[slug] = (rosterBy[slug] ?? 0) + cellCount(cells[j] ?? '');
+        pgBy[slug] = (pgBy[slug] ?? 0) + cellCount(cells[j] ?? '');
       }
     }
   }
@@ -726,7 +726,7 @@ export function getClassStats(): ClassStat[] {
         label: classLabel(slug),
         icon: `/icons/class/${slug.replace(/-/g, '')}.jpg`,
         macros: macroBy[slug] ?? 0,
-        roster: rosterBy[slug] ?? 0,
+        pg: pgBy[slug] ?? 0,
         shots: shotsBy[slug] ?? 0,
         tmogGot: t.got,
         tmogTotal: t.total,
@@ -736,26 +736,26 @@ export function getClassStats(): ClassStat[] {
     .sort((a, b) => a.label.localeCompare(b.label, 'it'));
 }
 
-export function getRosterHtml(): string {
-  const raw = Object.values(rosterFile)[0] ?? '';
-  const orda = extractRosterTable(raw, 'Orda');
-  if (!orda) return '<p>Roster non trovato.</p>';
+export function getPgHtml(): string {
+  const raw = Object.values(pgFile)[0] ?? '';
+  const orda = extractPgTable(raw, 'Orda');
+  if (!orda) return '<p>Tabella PG non trovata.</p>';
   const header = orda[0];
   const ncols = header.length;
 
   const band = (text: string, cls: string) => `<tr class="rsep ${cls}"><td colspan="${ncols}">${text}</td></tr>`;
-  const horde = rosterBodyRows(orda.slice(1), 'fac-horde', header);
+  const horde = pgBodyRows(orda.slice(1), 'fac-horde', header);
 
   // Totali per classe (colonna): partono dall'Orda, poi sommo l'Alleanza.
   const colTotals = horde.colCounts.slice();
 
   let allyHtml = '';
-  const ally = extractRosterTable(raw, 'Alleanza');
+  const ally = extractPgTable(raw, 'Alleanza');
   if (ally) {
     // Razze condivise (già nel blocco Orda) restano solo lì: qui le saltiamo.
     const allyRows = ally.slice(1).filter((cells) => !horde.races.has(stripRealm(cells[0]).trim()));
     if (allyRows.length) {
-      const allyBody = rosterBodyRows(allyRows, 'fac-alliance', header);
+      const allyBody = pgBodyRows(allyRows, 'fac-alliance', header);
       allyHtml = band('Alleanza', 'rsep--alliance') + allyBody.html;
       for (let i = 0; i < colTotals.length; i++) colTotals[i] += allyBody.colCounts[i];
     }

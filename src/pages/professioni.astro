@@ -200,7 +200,7 @@ function renderNode(n: ProfNode, depth = 0): string {
 /* ⚠️ I nodi FIGLI li produce renderNode via set:html, quindi NON hanno l'attributo
    [data-astro-cid-…] con cui Astro scopa gli stili: le loro regole DEVONO stare in
    :global(), altrimenti il cap resta un numero nudo incollato al nome invece che una
-   pastiglia a destra. Stesso motivo per cui transmog e roster usano :global sulle voci
+   pastiglia a destra. Stesso motivo per cui transmog e pg usano :global sulle voci
    create a runtime. Le classi .pnode-* sono uniche di questa pagina: il global non esce. */
 :global(.pnode-head) { display: flex; align-items: baseline; gap: 0.5rem; }
 :global(.pnode-name) { font-weight: 600; color: var(--text); line-height: 1.3; min-width: 0; }

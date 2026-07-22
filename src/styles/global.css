@@ -58,7 +58,7 @@
 
   --header-height: 50px;
   /* Larghezza massima UNICA del contenuto: header, footer e ogni pagina si allineano a
-     questa (griglie di card, matrici roster/transmog, tabella home). Un solo posto da
+     questa (griglie di card, matrici PG/transmog, tabella home). Un solo posto da
      toccare per cambiarla; niente piu' override per-pagina. */
   --page-max: min(1280px, 96vw);
 
@@ -112,7 +112,7 @@ code { font-family: var(--font-mono); font-size: 0.82em; background: var(--borde
 /* ── Icone (classe / razza) ────────────────────── */
 .ico { display: inline-block; width: 26px; height: 26px; max-width: none; min-width: 26px; border-radius: 5px; vertical-align: middle; border: 1px solid var(--border); background: var(--surface); flex-shrink: 0; object-fit: cover; aspect-ratio: 1 / 1; }
 .ico-sm { width: 20px; height: 20px; min-width: 20px; border-radius: 4px; }
-/* Icona spec inline accanto al nome PG nel roster */
+/* Icona spec inline accanto al nome del PG nella tabella */
 .ico-spec { width: 16px; height: 16px; min-width: 16px; border-radius: 3px; vertical-align: -3px; margin-left: 2px; }
 /* Segnaposto "spec da confermare" (?) */
 .spec-q { display: inline-block; width: 16px; height: 16px; min-width: 16px; line-height: 16px; text-align: center; font-size: 0.68rem; font-weight: 700; color: var(--text-subtle); background: var(--border-light); border: 1px solid var(--border); border-radius: 3px; vertical-align: -3px; margin-left: 2px; }

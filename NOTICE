@@ -17,7 +17,7 @@ are copyright (C) Blizzard Entertainment, Inc.
 
 Affected files: the game icons under public/icons/ (class, race, prof, spec,
 section, ui), the in-game UI screenshots under public/screenshots/, and every
-WoW name referenced across the manifests, the roster and the site pages. Game
+WoW name referenced across the manifests, the PG table and the site pages. Game
 icons were obtained via Wowhead's icon CDN (https://wow.zamimg.com); the
 screenshots capture live gameplay. The underlying game artwork is Blizzard's.
 

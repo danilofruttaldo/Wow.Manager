@@ -1,4 +1,4 @@
-# Roster — matrice razza × classe
+# PG — matrice razza × classe
 
 Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndicator.lua` incrociato con le cartelle `WTF/.../<realm>/`.
 

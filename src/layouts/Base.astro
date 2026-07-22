@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getRosterCount, getExtra, getScreenshotCount, getTransmog } from '../lib/content';
+import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog } from '../lib/content';
 
 interface Props {
   title: string;
@@ -21,7 +21,7 @@ const SOURCE_BY_PATH: Record<string, string> = {
   '/addons': 'addons/manifest.json',
   '/macros': 'macros/manifest.json',
   '/professioni': 'professions',
-  '/roster': 'roster.md',
+  '/pg': 'pg.md',
   '/transmog': 'transmog/manifest.json',
   '/ui': 'public/screenshots',
   '/extra': 'scripts',
@@ -34,7 +34,7 @@ const updated = sourceDate(SOURCE_BY_PATH[pathKey] ?? '.');
 const SITE_NAME = 'wow.danilofruttaldo.com'; // dominio (footer, canonical)
 const SITE_TITLE = 'WoW Manager';            // nome nel titolo del tab
 const fullTitle = title === SITE_TITLE ? SITE_TITLE : `${title} · ${SITE_TITLE}`;
-const metaDescription = description || 'Setup WoW Retail di Stantu — addon, macro, professioni, roster.';
+const metaDescription = description || 'Setup WoW Retail di Stantu — addon, macro, professioni, PG.';
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
 // La toolbar ha ASSORBITO i pulsanti che stavano sulla home: icona + conteggio per
@@ -52,7 +52,7 @@ const nav = [
   { href: '/addons', label: 'Addon', full: 'Addon', icon: '/icons/section/addon.jpg', count: `${getAddons().length}`, color: '#2E68D8' },
   { href: '/macros', label: 'Macro', full: 'Macro', icon: '/icons/section/macro.jpg', count: `${getMacros().length}`, color: '#7A5AF8' },
   { href: '/professioni', label: 'Prof', full: 'Professioni', icon: '/icons/section/prof.jpg', count: `${getProfessions().length}`, color: '#C77D0A' },
-  { href: '/roster', label: 'Roster', full: 'Roster', icon: '/icons/section/roster.jpg', count: `${getRosterCount()}`, color: '#C0202A' },
+  { href: '/pg', label: 'PG', full: 'PG', icon: '/icons/section/pg.jpg', count: `${getPgCount()}`, color: '#C0202A' },
   { href: '/transmog', label: 'Xmog', full: 'Transmog', icon: '/icons/section/transmog.jpg', count: `${tmogPct}%`, color: '#9B4DCA' },
   { href: '/ui', label: 'UI', full: 'UI', icon: '/icons/section/ui.jpg', count: `${getScreenshotCount()}`, color: '#159A8C' },
   { href: '/extra', label: 'Extra', full: 'Extra', icon: '/icons/section/extra.jpg', count: `${getExtra().length}`, color: '#5B6470' },
