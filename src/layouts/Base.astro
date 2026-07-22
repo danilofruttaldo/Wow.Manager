@@ -96,10 +96,6 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
   <header class="site-header">
     <div class="wrap header-inner">
       <a href="/" class="brand">wow<span>.danilofruttaldo</span></a>
-      <span class="build-badge">
-        {wowBuild && <>build <code>{wowBuild}</code></>}
-        {updated && <> · sync <code>{updated}</code></>}
-      </span>
       <nav aria-label="Navigazione">
         {nav.map(item => (
           <a href={item.href} data-astro-prefetch title={item.full} style={`--hc: ${item.color}`} aria-current={isActive(item.href) ? 'page' : undefined} class:list={['nav-link', { active: isActive(item.href) }]}>
@@ -120,7 +116,10 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
   <footer class="site-footer">
     <div class="wrap footer-inner">
       <span>{SITE_NAME}</span>
-      <span class="spacer"></span>
+      <span class="build-badge">
+        {wowBuild && <>build <code>{wowBuild}</code></>}
+        {updated && <> · sync <code>{updated}</code></>}
+      </span>
       <a href="https://github.com/danilofruttaldo/Wow.Manager" target="_blank" rel="noopener noreferrer">GitHub</a>
     </div>
     <div class="wrap footer-legal">
@@ -144,10 +143,11 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
-.header-inner { position: relative; height: 100%; display: flex; align-items: center; gap: 1rem; }
-/* In flusso (non piu' absolute-centered): si prende lo spazio residuo fra brand e nav e
-   ci si centra dentro. Cosi' non si sovrappone mai alla nav, che ora e' piu' larga
-   (icone + conteggi assorbiti dai vecchi pulsanti della home). */
+/* Senza il badge in mezzo, brand a sinistra e nav a destra: space-between li tiene ai
+   due estremi (la nav prende comunque solo lo spazio che le serve, con overflow-x). */
+.header-inner { position: relative; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+/* Il badge vive nel FOOTER, in flusso fra dominio e GitHub: flex: 1 gli fa prendere lo
+   spazio residuo e text-align: center lo centra dentro (stesso trucco che aveva in header). */
 .build-badge { flex: 1; text-align: center; font-size: 0.74rem; color: var(--text-subtle); white-space: nowrap; pointer-events: none; }
 .build-badge code { font-size: 0.72rem; background: var(--border-light); padding: 0.05rem 0.4rem; border-radius: 999px; color: var(--text-muted); }
 .brand { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; white-space: nowrap; flex-shrink: 0; }
@@ -187,7 +187,6 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
 
 .site-footer { border-top: 1px solid var(--border); background: var(--surface); }
 .footer-inner { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding-top: 1.4rem; padding-bottom: 1rem; font-size: 0.78rem; color: var(--text-subtle); }
-.footer-inner .spacer { margin-left: auto; }
 .footer-inner a { color: var(--accent); }
 /* Disclaimer IP: nomi/immagini/icone di WoW sono di Blizzard, questo e' un sito fan
    non ufficiale. Testo piccolo e smorzato, su tutte le pagine (e' nel layout).
@@ -197,7 +196,9 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
 .footer-legal { padding-top: 1rem; padding-bottom: 1.8rem; border-top: 1px solid var(--border-light); }
 .footer-legal p { margin: 0; font-size: 0.72rem; line-height: 1.7; color: var(--text-subtle); }
 
-@media (max-width: 820px) { .build-badge { display: none; } }
+/* Su schermo stretto il badge va a capo su una riga propria (flex-basis: 100%), centrato,
+   invece di stringere dominio e GitHub sulla stessa riga. */
+@media (max-width: 560px) { .build-badge { flex-basis: 100%; } }
 @media (max-width: 600px) {
   .header-inner { gap: 0.75rem; }
   .brand span { display: none; }
