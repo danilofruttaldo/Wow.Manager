@@ -45,7 +45,6 @@ local TIER = {
     ["10|Manaforge Omega"] = "t34", ["11|The Voidspire"] = "t35",
     -- Righe senza asse di difficolta': un set solo per classe.
     ["6|Legion Order Hall"] = "ohall",
-    ["4|Pandaria Challenge Dungeons"] = "challenge",
 }
 
 -- Set per TIPO DI ARMATURA: uno solo per stoffa/cuoio/maglia/piastre, condiviso da
@@ -67,15 +66,15 @@ local TIER_ARMOR = {
 
 -- Ordine dei tier nel manifest (serve solo a rendere l'output ordinato).
 local TIER_ORDER = { "t0", "t05", "t1", "t2", "t25", "t3", "t4", "t5", "t6", "t6-swp", "t7", "t8",
-    "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "challenge", "t17", "t18",
+    "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18",
     "hfc-lfr", "ohall", "tov", "t19", "t20", "t21", "uldir", "bod", "tep", "nya", "nathria",
     "sod", "t28", "t29", "t30", "t31", "t32", "t33", "t34", "t35" }
 
--- Righe senza asse: il gioco non da' `description` (l'Order Hall e i set delle
--- Challenge Mode di Pandaria sono uno solo per classe), quindi lo slot non si puo'
+-- Righe senza asse: il gioco non da' `description` (l'Order Hall e' uno solo per
+-- classe), quindi lo slot non si puo'
 -- dedurre da li' e si dichiara qui. Senza questo finivano in dropped come
 -- "slot ignoto nil" e la riga restava vuota.
-local SLOT_UNICO = { ohall = "normal", challenge = "normal", ["t6-swp"] = "normal" }
+local SLOT_UNICO = { ohall = "normal", ["t6-swp"] = "normal" }
 
 -- Le classi accese in un classMask. Per un set di classe e' una sola; per un set per
 -- tipo di armatura sono tutte quelle che lo portano, ed e' li' che serve: lo stesso
