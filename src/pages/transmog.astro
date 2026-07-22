@@ -337,6 +337,8 @@ const daScrivere = (cell: { slot: string; label: string }) =>
 </style>
 
 <script>
+  import { loadFilters, saveFilters } from '../lib/filter-state';
+
   // Elenco pezzi per classe, caricato da /transmog/<classe>.json alla prima apertura
   // del tab e tenuto in cache. Modulo eseguito una volta sola, quindi la cache
   // sopravvive alle navigazioni ClientRouter (come la guardia __tmogTip).
@@ -366,6 +368,12 @@ const daScrivere = (cell: { slot: string; label: string }) =>
     const search = document.getElementById('tmog-search') as HTMLInputElement | null;
     const emptyMsg = document.getElementById('tmog-empty') as HTMLElement | null;
 
+    // Salva la classe attiva + la ricerca (localStorage), per ritrovarle alla prossima visita.
+    const persist = () => saveFilters('transmog', {
+      cls: chips.find(c => c.classList.contains('is-active'))?.dataset.class || '',
+      q: search?.value || '',
+    });
+
     // Filtra per testo le righe del pannello VISIBILE (una classe alla volta), e nasconde
     // i separatori di espansione rimasti senza righe. Va ri-eseguito a ogni cambio tab
     // perche' la ricerca vale sulla classe attiva.
@@ -385,7 +393,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
       flush();
       if (emptyMsg) emptyMsg.hidden = !(shown === 0 && q !== '');
     }
-    if (search) search.addEventListener('input', applySearch);
+    if (search) search.addEventListener('input', () => { applySearch(); persist(); });
 
     // Tab a selezione singola: una classe alla volta (a differenza del filtro multi di /macros).
     // `focus` distingue il click (non deve rubare il focus) dalla navigazione a tastiera
@@ -402,6 +410,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
       if (focus) chip.focus();
       applySearch();      // la ricerca vale sulla classe attiva: ri-filtra il nuovo pannello
       ensureTips(target); // carica i pezzi della classe appena aperta
+      persist();
     }
 
     // Stato iniziale del roving tabindex: solo il chip attivo (il primo) entra nel Tab order.
@@ -423,6 +432,14 @@ const daScrivere = (cell: { slot: string; label: string }) =>
       else if (e.key === 'End') next = chips.length - 1;
       select(chips[next], true);
     });
+
+    // Ripristina l'ultima classe + ricerca dall'ultima visita (localStorage). Classe
+    // sparita (rimossa dai dati) -> resta il default renderizzato dal server.
+    const saved = loadFilters('transmog', { cls: '', q: '' });
+    if (search && saved.q) search.value = saved.q;
+    const savedChip = saved.cls ? chips.find(c => c.dataset.class === saved.cls) : undefined;
+    if (savedChip) select(savedChip);   // cambia classe + ri-filtra col testo ripristinato
+    else if (saved.q) applySearch();    // solo ricerca: filtra il pannello di default
 
     initTip();
   }

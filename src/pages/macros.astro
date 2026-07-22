@@ -134,6 +134,8 @@ const specMap: Record<string, string[]> = Object.fromEntries(
 </style>
 
 <script>
+  import { loadFilters, saveFilters } from '../lib/filter-state';
+
   function initMacros() {
     const grid = document.getElementById('macro-grid');
     if (!grid) return;
@@ -156,6 +158,11 @@ const specMap: Record<string, string[]> = Object.fromEntries(
     let activeSpec = '';
     const search = document.getElementById('macro-search') as HTMLInputElement;
     let query = '';
+    // Salva ricerca + classe + spec correnti (localStorage): al piu' una classe, quindi
+    // il Set collassa a stringa; spec vale solo con una classe attiva.
+    const persist = () => saveFilters('macros', {
+      q: search?.value || '', cls: [...activeClasses][0] || '', spec: activeSpec,
+    });
 
     const apply = () => {
       let shown = 0;
@@ -206,6 +213,7 @@ const specMap: Record<string, string[]> = Object.fromEntries(
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
           }
           apply();
+          persist();
         });
         specChipsBox.append(btn);
       }
@@ -213,7 +221,7 @@ const specMap: Record<string, string[]> = Object.fromEntries(
     };
 
     if (search) {
-      search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); apply(); });
+      search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); apply(); persist(); });
     }
 
     for (const chip of classChips) {
@@ -233,8 +241,37 @@ const specMap: Record<string, string[]> = Object.fromEntries(
         // La riga spec vive solo con UNA classe attiva: si aggiorna/sparisce a ogni scelta.
         renderSpecRow();
         apply();
+        persist();
       });
     }
+
+    // Ripristina l'ultimo stato (localStorage): ricerca, classe e, se ancora presente
+    // fra le chip rigenerate, la spec. Valori spariti (classe/spec rimossa) -> si ignora.
+    const saved = loadFilters('macros', { q: '', cls: '', spec: '' });
+    if (saved.q) { query = saved.q.trim().toLowerCase(); if (search) search.value = saved.q; }
+    if (saved.cls) {
+      const chip = classChips.find(c => (c.dataset.class || '') === saved.cls);
+      if (chip) {
+        activeClasses.clear();
+        activeClasses.add(saved.cls);
+        for (const other of classChips) {
+          const on = activeClasses.has(other.dataset.class || '');
+          other.classList.toggle('is-active', on);
+          other.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+        renderSpecRow();              // ricostruisce le chip spec e azzera activeSpec
+        if (saved.spec) {
+          const specBtn = (Array.from(specChipsBox.querySelectorAll('.chip')) as HTMLButtonElement[])
+            .find(b => (b.dataset.spec || '') === saved.spec);
+          if (specBtn) {
+            activeSpec = saved.spec;
+            specBtn.classList.add('is-active');
+            specBtn.setAttribute('aria-pressed', 'true');
+          }
+        }
+      }
+    }
+    apply();
 
     // L'etichetta di riposo e' una costante, non il testo letto dal bottone: leggendolo
     // due click ravvicinati catturavano 'Copiato' come "precedente" e il bottone ci

@@ -88,6 +88,8 @@ a.acard-name:hover { color: var(--accent); text-decoration: underline; text-unde
 </style>
 
 <script>
+  import { loadFilters, saveFilters } from '../lib/filter-state';
+
   function initAddons() {
     const grid = document.getElementById('addon-grid');
     if (!grid) return;
@@ -96,8 +98,11 @@ a.acard-name:hover { color: var(--accent); text-decoration: underline; text-unde
     const chips = Array.from(document.querySelectorAll('#addon-filters .chip')) as HTMLButtonElement[];
     const empty = document.getElementById('empty') as HTMLElement;
 
-    let query = '';
-    let filter = ''; // '' = tutti, 'updated', 'outdated'
+    // Stato ripristinato dall'ultima visita (localStorage): ricerca + chip stato.
+    const saved = loadFilters('addons', { q: '', filter: '' });
+    let query = (saved.q || '').trim().toLowerCase();
+    let filter = saved.filter || ''; // '' = tutti, 'updated', 'outdated'
+    const persist = () => saveFilters('addons', { q: search?.value || '', filter });
 
     const apply = () => {
       let shown = 0;
@@ -111,7 +116,7 @@ a.acard-name:hover { color: var(--accent); text-decoration: underline; text-unde
       if (empty) empty.hidden = shown > 0;
     };
 
-    if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); apply(); });
+    if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); apply(); persist(); });
     for (const chip of chips) {
       chip.addEventListener('click', () => {
         const f = chip.dataset.filter || '';
@@ -124,8 +129,20 @@ a.acard-name:hover { color: var(--accent); text-decoration: underline; text-unde
           c.setAttribute('aria-pressed', on ? 'true' : 'false');
         }
         apply();
+        persist();
       });
     }
+
+    // Ripristina lo stato salvato sul DOM, poi filtra.
+    if (search && saved.q) search.value = saved.q;
+    if (filter) {
+      for (const c of chips) {
+        const on = (c.dataset.filter || '') === filter;
+        c.classList.toggle('is-active', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+    }
+    apply();
   }
 
   document.addEventListener('astro:page-load', initAddons);

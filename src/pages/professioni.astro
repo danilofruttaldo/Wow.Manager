@@ -237,6 +237,8 @@ function renderNode(n: ProfNode, depth = 0): string {
 </style>
 
 <script>
+  import { loadFilters, saveFilters } from '../lib/filter-state';
+
   function initProfessioni() {
     const chips = Array.from(document.querySelectorAll('#prof-chips .chip')) as HTMLButtonElement[];
     const panels = Array.from(document.querySelectorAll('.prof-panel')) as HTMLElement[];
@@ -244,6 +246,13 @@ function renderNode(n: ProfNode, depth = 0): string {
     const search = document.getElementById('prof-search') as HTMLInputElement | null;
     const emptyMsg = document.getElementById('prof-empty') as HTMLElement | null;
     if (!chips.length || !panels.length) return;
+
+    // Salva professione attiva + espansione + ricerca (localStorage).
+    const persist = () => saveFilters('professioni', {
+      prof: chips.find(c => c.classList.contains('is-active'))?.dataset.prof || '',
+      exp: expSel?.value || '',
+      q: search?.value || '',
+    });
 
     // Filtra per testo il contenuto della professione VISIBILE: nasconde le card spec e le
     // tappe di leveling che non combaciano. Ri-eseguito a ogni cambio tab/espansione.
@@ -260,7 +269,7 @@ function renderNode(n: ProfNode, depth = 0): string {
       }
       if (emptyMsg) emptyMsg.hidden = !(shown === 0 && q !== '');
     }
-    if (search) search.addEventListener('input', applySearch);
+    if (search) search.addEventListener('input', () => { applySearch(); persist(); });
 
     // Tab a selezione singola, stesso pattern di /transmog: una professione alla volta.
     // `focus` regola il roving tabindex + lo spostamento del focus da tastiera: 0 sul chip
@@ -277,6 +286,7 @@ function renderNode(n: ProfNode, depth = 0): string {
       for (const p of panels) p.hidden = p.dataset.prof !== target;
       if (focus) chip.focus();
       applySearch();   // la ricerca vale sulla professione attiva: ri-filtra il nuovo pannello
+      persist();
     };
 
     for (const chip of chips) {
@@ -308,8 +318,20 @@ function renderNode(n: ProfNode, depth = 0): string {
         if (chip) chip.classList.toggle('is-empty', active?.dataset.has !== '1');
       }
       applySearch();   // cambiato blocco espansione: ri-filtra il contenuto ora visibile
+      persist();
     };
     if (expSel) expSel.addEventListener('change', applyExp);
+
+    // Ripristina l'ultima professione + espansione + ricerca (localStorage). Valori
+    // spariti (professione/espansione rimossa) -> resta il default renderizzato dal server.
+    const saved = loadFilters('professioni', { prof: '', exp: '', q: '' });
+    if (search && saved.q) search.value = saved.q;
+    if (expSel && saved.exp && Array.from(expSel.options).some(o => o.value === saved.exp)) {
+      expSel.value = saved.exp;
+    }
+    const savedChip = saved.prof ? chips.find(c => c.dataset.prof === saved.prof) : undefined;
+    if (savedChip) select(savedChip);   // cambia professione + ri-filtra
+    applyExp();                         // applica l'espansione + ri-filtra col testo ripristinato
   }
 
   document.addEventListener('astro:page-load', initProfessioni);
