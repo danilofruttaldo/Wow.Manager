@@ -165,9 +165,12 @@ const daScrivere = (cell: { slot: string; label: string }) =>
   .tmog-panel[hidden] { display: none !important; }
 
   /* Matrice: colonna tier larga e a sinistra, 4 colonne versione strette e centrate. */
+  /* Bordo e raggio li porta il contenitore .table-scroll: qui li tolgo per non avere due
+     filetti arrotondati annidati (come la home, che borda solo il contenitore). L'overflow
+     resta: la testata sticky si aggancia comunque al contenitore di scroll. */
   .tmog-panel table {
-    font-size: 0.78rem; width: 100%; table-layout: fixed;
-    border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface);
+    font-size: var(--fs-sm); width: 100%; table-layout: fixed;
+    overflow: hidden; background: var(--surface);
   }
   .tmog-panel th, .tmog-panel td {
     padding: 0.34rem 0.4rem; text-align: center; vertical-align: middle;

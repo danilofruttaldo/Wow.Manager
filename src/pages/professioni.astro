@@ -163,8 +163,9 @@ function renderNode(n: ProfNode, depth = 0): string {
 .exp-pick { margin-left: auto; display: inline-flex; align-items: center; gap: 0.4rem; }
 .exp-pick-lbl { font-size: 0.78rem; color: var(--text-subtle); }
 #prof-exp {
-  font-family: inherit; font-size: 0.82rem; color: var(--text); background: var(--surface);
+  font-family: inherit; font-size: var(--fs-base); color: var(--text); background: var(--surface);
   border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.7rem; cursor: pointer;
+  min-height: var(--control-h);
 }
 #prof-exp:hover { border-color: var(--accent); }
 
@@ -190,7 +191,7 @@ function renderNode(n: ProfNode, depth = 0): string {
 .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--grid-gap); }
 .spec { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-pad); }
 .spec-head { border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
-.spec-head .pnode-name { font-size: 1rem; font-weight: 700; }
+.spec-head .pnode-name { font-size: var(--fs-lg); font-weight: 700; }
 
 /* ⚠️ I nodi FIGLI li produce renderNode via set:html, quindi NON hanno l'attributo
    [data-astro-cid-…] con cui Astro scopa gli stili: le loro regole DEVONO stare in

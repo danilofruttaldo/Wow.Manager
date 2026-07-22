@@ -114,8 +114,8 @@ const specMap: Record<string, string[]> = Object.fromEntries(
 .mcard-icons { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; }
 .ico-spec--card { width: 18px; height: 18px; min-width: 18px; border-radius: 4px; }
 .mcard-title { min-width: 0; }
-.mcard-title strong { font-size: 0.95rem; line-height: 1.25; }
-.mcard-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.45; margin: 0; }
+.mcard-title strong { font-size: var(--fs-lg); line-height: 1.25; }
+.mcard-desc { font-size: var(--fs-md); color: var(--text-muted); line-height: 1.45; margin: 0; }
 .mcard-code { position: relative; }
 /* padding-right ampio: il bottone .copy (overlay in alto a destra) non copre la prima riga del corpo. */
 .mcard-code pre { background: var(--surface-2); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.6rem 3.2rem 0.6rem 0.7rem; overflow: hidden; }

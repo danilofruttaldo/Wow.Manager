@@ -165,4 +165,13 @@ thead th.c-cls, tfoot th.c-cls { font-weight: 700; }
 
 .cstats-tbl tfoot tr { border-top: 2px solid var(--border); }
 .cstats-tbl tfoot th, .cstats-tbl tfoot td { font-weight: 800; }
+
+/* Su schermo stretto la matrice va in scroll orizzontale dentro .cstats-scroll: tengo la
+   colonna Classe ancorata a sinistra, altrimenti scorrendo verso destra si perde a quale
+   riga appartengono i numeri. Sfondo opaco per coprire le celle che le passano sotto. */
+@media (max-width: 640px) {
+  .cstats-tbl th.c-cls { position: sticky; left: 0; }
+  .cstats-tbl tbody th.c-cls { background: var(--surface); z-index: 2; }
+  .cstats-tbl thead th.c-cls, .cstats-tbl tfoot th.c-cls { background: var(--surface-2); z-index: 3; }
+}
 </style>

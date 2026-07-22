@@ -13,9 +13,11 @@ const html = getRosterHtml();
 <style>
   /* Larghezza: eredita --page-max da .wrap (standard unico del sito), niente override. */
   /* Matrice: table-layout fixed + width 100% -> colonne adattive, testo a capo, MAI scroll. */
+  /* Bordo e raggio li porta il contenitore .table-scroll: qui li tolgo per non avere due
+     filetti arrotondati annidati (la home fa gia' cosi', bordo solo sul contenitore). */
   .roster-prose :global(table) {
-    font-size: 0.74rem; width: 100%; table-layout: fixed;
-    border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface);
+    font-size: var(--fs-sm); width: 100%; table-layout: fixed;
+    overflow: hidden; background: var(--surface);
   }
   .roster-prose :global(th), .roster-prose :global(td) {
     padding: 0.32rem 0.28rem; text-align: center; vertical-align: middle;
@@ -25,7 +27,7 @@ const html = getRosterHtml();
   .roster-prose :global(th:first-child), .roster-prose :global(td:first-child) { width: 42px; }
   .roster-prose :global(thead th) { background: var(--surface-2); padding: 0.4rem 0.2rem; }
   .roster-prose :global(.ico) { width: 24px; height: 24px; }
-  .roster-prose :global(.race-txt) { font-size: 0.68rem; font-weight: 600; }
+  .roster-prose :global(.race-txt) { font-size: var(--fs-xs); font-weight: 600; }
   /* Nome + icone: inline-flex centrato -> scritte e icone allineate verticalmente, sempre in riga */
   .roster-prose :global(.pg) { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; vertical-align: middle; line-height: 1; }
   .roster-prose :global(.pg .ico-spec) { width: 18px; height: 18px; margin: 0; }
