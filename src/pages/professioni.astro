@@ -188,10 +188,14 @@ function renderNode(n: ProfNode, depth = 0): string {
 .sec-hint { margin-left: 0.4rem; font-size: 0.72rem; font-weight: 400; color: var(--text-subtle); font-style: italic; }
 
 /* Parte 1: spec di primo livello affiancate in colonne. */
-.spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--grid-gap); }
+/* min(240px,100%): protezione anti-overflow su contenitore stretto, come le altre griglie. */
+.spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: var(--grid-gap); }
 .spec { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-pad); }
 .spec-head { border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; margin-bottom: 0.5rem; }
 .spec-head .pnode-name { font-size: var(--fs-lg); font-weight: 700; }
+/* La descrizione di primo livello della spec è contenuto di card come nelle altre pagine:
+   stessa misura (--fs-md). I nodi figli restano più piccoli (.pnode-desc di default). */
+.spec > .pnode-desc { font-size: var(--fs-md); }
 
 /* ⚠️ I nodi FIGLI li produce renderNode via set:html, quindi NON hanno l'attributo
    [data-astro-cid-…] con cui Astro scopa gli stili: le loro regole DEVONO stare in

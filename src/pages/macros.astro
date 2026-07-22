@@ -103,12 +103,11 @@ const specMap: Record<string, string[]> = Object.fromEntries(
 /* `display:flex/grid` sulle card/chips vince sull'attributo [hidden] (regola autore > UA): forziamo il nascondere. */
 .mcard[hidden], .chips[hidden] { display: none !important; }
 
-/* 3 colonne fisse (2 su schermi medi, 1 su mobile). minmax(0,1fr) evita che una riga
-   lunga di macro allarghi la colonna oltre la pagina: è il <pre> a scrollare. */
-/* Masonry via multi-column: le card si impilano in verticale riempiendo i vuoti (niente
-   allineamento per righe, così non restano spazi morti sotto le card più corte). */
-.macro-grid { column-count: 3; column-gap: var(--grid-gap); padding-top: 0.6rem; }
-@media (max-width: 1000px) { .macro-grid { column-count: 2; } }
+/* Masonry via multi-column con column-width: il numero di colonne si adatta da sé alla
+   larghezza (come l'auto-fill delle griglie a card), senza breakpoint scelti a mano.
+   Le card si impilano in verticale riempiendo i vuoti; una riga lunga di macro non allarga
+   la colonna, è il <pre> a scrollare. Sotto ~340px di contenitore: una colonna sola. */
+.macro-grid { column-width: 340px; column-gap: var(--grid-gap); padding-top: 0.6rem; }
 .mcard { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: var(--grid-gap); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-pad); }
 .mcard-head { display: flex; align-items: center; gap: 0.6rem; }
 .mcard-icons { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; }
@@ -132,9 +131,6 @@ const specMap: Record<string, string[]> = Object.fromEntries(
   .copy { opacity: 1; }
 }
 
-@media (max-width: 600px) {
-  .macro-grid { column-count: 1; }
-}
 </style>
 
 <script>
