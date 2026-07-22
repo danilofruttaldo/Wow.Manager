@@ -43,3 +43,11 @@ Il repo pubblica anche un sito statico che presenta i dati (addon, macro, profes
 
 Il sito **non** modifica i dati: li legge in sola lettura. La fonte di verità resta nei manifest/`roster.md`.
 Per manutenerlo/estenderlo (anche da un'altra postazione) vedi **[CLAUDE.md](CLAUDE.md)**.
+
+## Licenza
+
+La [MIT](LICENSE) copre **solo** il lavoro originale di questo repo: il codice del sito (`src/`), gli script di manutenzione (`scripts/`) e i file di dati redazionali (manifest e markdown scritti qui). **Non** copre — né potrebbe — il materiale di terzi che il repo trasporta, elencato in **[NOTICE](NOTICE)** e di proprietà dei rispettivi titolari:
+
+- **World of Warcraft**, i suoi nomi, le icone (`public/icons/`) e gli screenshot di gioco (`public/screenshots/`) sono © e marchi di **Blizzard Entertainment, Inc.**; le icone sono reperite tramite [Wowhead](https://www.wowhead.com). Questo è un progetto **fan non ufficiale e non commerciale**, non affiliato né approvato da Blizzard, pubblicato in linea con i [termini legali Blizzard](https://www.blizzard.com/en-us/legal) per i contenuti dei fan.
+- Gli **avatar degli addon** (`public/icons/addon/`) appartengono ai rispettivi autori, reperiti tramite [CurseForge](https://www.curseforge.com).
+- I **font web** Inter e JetBrains Mono (`public/fonts/`) sono sotto **SIL Open Font License 1.1** — testo in [public/fonts/OFL.txt](public/fonts/OFL.txt).

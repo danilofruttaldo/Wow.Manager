@@ -1,0 +1,46 @@
+Wow.Manager — third-party notices
+==================================
+
+The MIT license in LICENSE covers ONLY the original source of this project:
+the site code (src/), the maintenance scripts (scripts/, *.ps1 / *.lua), and
+the data files authored for this repo (the manifests and the editorial
+markdown). It does not — and cannot — grant any rights over the third-party
+material listed below, which remains the property of its respective owners
+and is redistributed here under the terms noted.
+
+1. Blizzard Entertainment — game names, imagery and trademarks
+-------------------------------------------------------------
+World of Warcraft(R) and Blizzard Entertainment(R) are trademarks or
+registered trademarks of Blizzard Entertainment, Inc., in the U.S. and/or
+other countries. All World of Warcraft names, terms, game icons and imagery
+are copyright (C) Blizzard Entertainment, Inc.
+
+Affected files: the game icons under public/icons/ (class, race, prof, spec,
+section, ui), the in-game UI screenshots under public/screenshots/, and every
+WoW name referenced across the manifests, the roster and the site pages. Game
+icons were obtained via Wowhead's icon CDN (https://wow.zamimg.com); the
+screenshots capture live gameplay. The underlying game artwork is Blizzard's.
+
+This is an unofficial, non-commercial fan project. It is not affiliated with,
+endorsed, sponsored or approved by Blizzard Entertainment, Inc., and is
+published in line with Blizzard's legal terms for fan-created content
+(see https://www.blizzard.com/en-us/legal).
+
+2. Addon authors / CurseForge — addon avatars
+---------------------------------------------
+The addon avatar images under public/icons/addon/ are the logos of the
+respective addon projects, obtained via CurseForge (https://curseforge.com).
+They belong to their respective authors / Overwolf (CurseForge) and are used
+here for identification only.
+
+3. Web fonts — SIL Open Font License 1.1
+----------------------------------------
+The web fonts under public/fonts/ are redistributed subsets of:
+
+  - Inter          — Copyright 2020 The Inter Project Authors
+                     (https://github.com/rsms/inter)
+  - JetBrains Mono — Copyright 2020 The JetBrains Mono Project Authors
+                     (https://github.com/JetBrains/JetBrainsMono)
+
+Both are licensed under the SIL Open Font License, Version 1.1. The full
+license text ships alongside the fonts in public/fonts/OFL.txt.

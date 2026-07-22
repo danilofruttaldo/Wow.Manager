@@ -6,6 +6,9 @@
 # Serve solo quando cambi i font o i pesi usati: i file gia' scaricati stanno nel
 # repo e non vanno riscaricati a ogni build.
 #
+# Se cambi i font, aggiorna anche public/fonts/OFL.txt: la SIL OFL 1.1 vuole che
+# la licenza (con gli header di copyright) sia spedita insieme ai woff2.
+#
 # Perche' self-hostati: caricarli da fonts.googleapis.com manda a Google l'IP di
 # ogni visitatore, ed e' l'unico host esterno del sito. In locale sparisce anche
 # la dipendenza di rendering da un terzo.
