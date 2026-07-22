@@ -1,0 +1,3 @@
+#showtooltip Purifying Brew
+/cast Celestial Infusion
+/cast Purifying Brew
