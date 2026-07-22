@@ -111,8 +111,15 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
       <span>{SITE_NAME}</span>
       <span class="spacer"></span>
       <a href="https://github.com/danilofruttaldo/Wow.Manager" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <span class="dot">·</span>
-      <span>WoW &copy; Blizzard. Sito non ufficiale.</span>
+    </div>
+    <div class="wrap footer-legal">
+      <p>
+        World of Warcraft&reg; e Blizzard Entertainment&reg; sono marchi o marchi registrati di
+        Blizzard Entertainment, Inc. negli Stati Uniti e/o in altri Paesi. Nomi, immagini e icone
+        di gioco sono &copy; Blizzard Entertainment, Inc. e sono usati qui a scopo informativo e
+        amatoriale. Sito fan non ufficiale, non affiliato né approvato da Blizzard Entertainment.
+        Icone di gioco tramite Wowhead; avatar addon tramite CurseForge.
+      </p>
     </div>
   </footer>
 </body>
@@ -168,10 +175,13 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
 .nav-link.active .nav-count { color: #fff; background: var(--hc); }
 
 .site-footer { border-top: 1px solid var(--border); background: var(--surface); }
-.footer-inner { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding-top: 0.9rem; padding-bottom: 0.9rem; font-size: 0.78rem; color: var(--text-subtle); }
+.footer-inner { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding-top: 0.9rem; padding-bottom: 0.6rem; font-size: 0.78rem; color: var(--text-subtle); }
 .footer-inner .spacer { margin-left: auto; }
 .footer-inner a { color: var(--accent); }
-.footer-inner .dot { opacity: 0.5; }
+/* Disclaimer IP: nomi/immagini/icone di WoW sono di Blizzard, questo e' un sito fan
+   non ufficiale. Testo piccolo e smorzato, su tutte le pagine (e' nel layout). */
+.footer-legal { padding-bottom: 1rem; }
+.footer-legal p { margin: 0; max-width: 78ch; font-size: 0.7rem; line-height: 1.55; color: var(--text-subtle); }
 
 @media (max-width: 820px) { .build-badge { display: none; } }
 @media (max-width: 600px) {
