@@ -130,6 +130,8 @@ let gi = 0;
 </style>
 
 <script>
+import { loadFilters, saveFilters } from '../lib/filter-state';
+
 // ── Stato del lightbox a livello di modulo ──
 // Il listener da tastiera sta su `document` e va agganciato UNA volta sola (vedi
 // initLbKeys): con ClientRouter `astro:page-load` rispara a ogni navigazione. Per
@@ -202,6 +204,8 @@ document.addEventListener('astro:page-load', () => {
   const empty = document.getElementById('empty');
   const activeClasses = new Set<string>();
   let query = '';
+  // Salva ricerca + classi selezionate (multi, quindi array) in localStorage.
+  const persist = () => saveFilters('ui', { q: search?.value || '', classes: [...activeClasses] });
 
   const applyFilter = () => {
     let shown = 0;
@@ -219,7 +223,7 @@ document.addEventListener('astro:page-load', () => {
     if (empty) empty.hidden = shown > 0;
   };
 
-  if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); applyFilter(); });
+  if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); applyFilter(); persist(); });
   for (const chip of chips) {
     chip.addEventListener('click', () => {
       const c = chip.dataset.class || '';
@@ -230,8 +234,24 @@ document.addEventListener('astro:page-load', () => {
       chip.classList.toggle('is-active', on);
       chip.setAttribute('aria-pressed', on ? 'true' : 'false');
       applyFilter();
+      persist();
     });
   }
+
+  // Ripristina ricerca + classi selezionate dall'ultima visita (localStorage).
+  // Classi sparite (slug non piu' presente) -> semplicemente ignorate.
+  const saved = loadFilters('ui', { q: '', classes: [] as string[] });
+  if (search && saved.q) { search.value = saved.q; query = saved.q.trim().toLowerCase(); }
+  if (Array.isArray(saved.classes) && saved.classes.length) {
+    for (const chip of chips) {
+      const c = chip.dataset.class || '';
+      if (!saved.classes.includes(c)) continue;
+      activeClasses.add(c);
+      chip.classList.add('is-active');
+      chip.setAttribute('aria-pressed', 'true');
+    }
+  }
+  applyFilter();
 
   // ── Lightbox: naviga solo tra gli screenshot visibili ──
   lbList = allShots;
