@@ -12,7 +12,8 @@ const html = getRosterHtml();
 
 <style>
   /* Larghezza: eredita --page-max da .wrap (standard unico del sito), niente override. */
-  /* Matrice: table-layout fixed + width 100% -> colonne adattive, testo a capo, MAI scroll. */
+  /* Matrice: table-layout fixed + width 100% -> colonne adattive, testo a capo, niente scroll
+     su desktop/tablet. Sotto i 640px scatta un min-width + scroll orizzontale (in fondo). */
   /* Bordo e raggio li porta il contenitore .table-scroll: qui li tolgo per non avere due
      filetti arrotondati annidati (la home fa gia' cosi', bordo solo sul contenitore). */
   .roster-prose :global(table) {
@@ -20,21 +21,26 @@ const html = getRosterHtml();
     overflow: hidden; background: var(--surface);
   }
   .roster-prose :global(th), .roster-prose :global(td) {
-    padding: 0.32rem 0.28rem; text-align: center; vertical-align: middle;
+    padding: 0.3rem 0.22rem; text-align: center; vertical-align: middle;
     white-space: normal; overflow-wrap: anywhere; line-height: 1.25;
     border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);
   }
-  .roster-prose :global(th:first-child), .roster-prose :global(td:first-child) { width: 42px; }
+  .roster-prose :global(th:first-child), .roster-prose :global(td:first-child) { width: 56px; }
+  /* Ultima colonna: niente border-right, si sdoppiava contro il bordo del .table-scroll. */
+  .roster-prose :global(th:last-child), .roster-prose :global(td:last-child) { border-right: none; }
   .roster-prose :global(thead th) { background: var(--surface-2); padding: 0.4rem 0.2rem; }
   .roster-prose :global(.ico) { width: 24px; height: 24px; }
   .roster-prose :global(.race-txt) { font-size: var(--fs-xs); font-weight: 600; }
-  /* Nome sopra, icona/e spec SOTTO e centrate. La cella e' a larghezza fissa (~85px):
-     tenere nome e icona in riga faceva sforare i nomi lunghi. Con flex-wrap + il nome a
-     `flex-basis:100%` il nome prende tutta la larghezza della colonna (parola intera, niente
-     tagli a meta'), le icone vanno a capo sotto e restano in riga centrata. overflow-wrap
-     resta come ultima risorsa per i nomi piu' larghi della colonna. */
-  .roster-prose :global(.pg) { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 3px; max-width: 100%; vertical-align: middle; line-height: 1.15; }
-  .roster-prose :global(.pg .pg-name) { flex-basis: 100%; text-align: center; overflow-wrap: anywhere; }
+  /* Nome e icona/e spec sulla STESSA riga quando ci stanno; se non ci stanno, e' l'ICONA a
+     scendere sotto -- il nome non si accorcia mai. La chiave e' `flex: 0 0 auto` sul nome:
+     non si stringe per far posto all'icona di fianco (era il vecchio difetto, nome tagliato
+     a meta'), quindi resta intero e semmai spinge l'icona a capo. `max-width: 100%` lo tiene
+     dentro la colonna: un nome piu' largo della cella si spezza dal `overflow-wrap` invece di
+     sforare. `.pg` a `max-width: 100%` fa lo stesso per l'intero gruppo. flex-wrap manda
+     l'icona a capo quando la riga e' piena, mai fuori dalla cella. Cosi' i nomi corti stanno
+     su una riga sola -- meno spazio verticale sprecato e righe piu' uniformi. */
+  .roster-prose :global(.pg) { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 4px; max-width: 100%; vertical-align: middle; line-height: 1.2; }
+  .roster-prose :global(.pg .pg-name) { flex: 0 0 auto; max-width: 100%; text-align: center; overflow-wrap: anywhere; }
   .roster-prose :global(.pg .ico-spec) { width: 18px; height: 18px; margin: 0; }
   .roster-prose :global(.pg .spec-q) { margin: 0; }
   .roster-prose :global(.pg .spec-l) { color: var(--text-muted); font-weight: 600; }
@@ -88,4 +94,12 @@ const html = getRosterHtml();
   /* Hover: evidenzia la riga senza coprire i PG bianchi */
   .roster-prose :global(tbody tr.fac-horde:hover)    { background: color-mix(in srgb, #C0202A 13%, var(--surface)); }
   .roster-prose :global(tbody tr.fac-alliance:hover) { background: color-mix(in srgb, #1E6FD0 13%, var(--surface)); }
+
+  /* Mobile: sotto i 640px 14 colonne diventano celle da ~20px, coi nomi spezzati in verticale
+     e illeggibili. Il "MAI scroll" vale su desktop/tablet (colonne adattive); qui sotto do alla
+     tabella un min-width e lascio scorrere il .table-scroll in orizzontale, cosi' le colonne
+     restano leggibili. Desktop invariato: width:100% >= min-width -> nessuno scroll. */
+  @media (max-width: 640px) {
+    .roster-prose :global(table) { min-width: 720px; }
+  }
 </style>
