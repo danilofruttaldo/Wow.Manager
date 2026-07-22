@@ -70,6 +70,8 @@ const tmogPct = tmogTotal ? Math.round((tmogGot / tmogTotal) * 100) : 0;
 </Base>
 
 <script>
+  import { loadFilters, saveFilters } from '../lib/filter-state';
+
   // Ordinamento client-side della matrice per classe. Ogni intestazione porta un <button>
   // (il controllo vero, azionabile da AT/tastiera); il <th> resta columnheader e porta
   // `aria-sort`. Click -> ordina per quella colonna; ri-click -> inverte. Testo A→Z al
@@ -81,25 +83,40 @@ const tmogPct = tmogTotal ? Math.round((tmogGot / tmogTotal) * 100) : 0;
     const ths = Array.from(table.tHead?.rows[0]?.cells ?? []) as HTMLTableCellElement[];
     let curCol = -1, curDir = 1;
 
+    // Applica l'ordinamento su una colonna e aggiorna aria-sort. Estratto perche' lo usano
+    // sia il click sia il ripristino da localStorage. Non salva: lo fa il chiamante.
+    const applySort = (i: number, dir: number, type: string | undefined) => {
+      curCol = i; curDir = dir;
+      const rows = Array.from(tbody.rows);
+      rows.sort((a, b) => {
+        const av = a.cells[i].dataset.v ?? '';
+        const bv = b.cells[i].dataset.v ?? '';
+        const cmp = type === 'num' ? Number(av) - Number(bv) : av.localeCompare(bv, 'it');
+        return cmp * dir;
+      });
+      rows.forEach((r) => tbody.appendChild(r));
+      ths.forEach((t) => t.removeAttribute('aria-sort'));
+      ths[i]?.setAttribute('aria-sort', dir === 1 ? 'ascending' : 'descending');
+    };
+
     table.querySelectorAll<HTMLButtonElement>('.sort-btn').forEach((btn) => {
       const th = btn.closest('th') as HTMLTableCellElement;
       const i = th.cellIndex;
       const type = btn.dataset.type;
       btn.addEventListener('click', () => {
-        curDir = curCol === i ? -curDir : (type === 'num' ? -1 : 1);
-        curCol = i;
-        const rows = Array.from(tbody.rows);
-        rows.sort((a, b) => {
-          const av = a.cells[i].dataset.v ?? '';
-          const bv = b.cells[i].dataset.v ?? '';
-          const cmp = type === 'num' ? Number(av) - Number(bv) : av.localeCompare(bv, 'it');
-          return cmp * curDir;
-        });
-        rows.forEach((r) => tbody.appendChild(r));
-        ths.forEach((t) => t.removeAttribute('aria-sort'));
-        th.setAttribute('aria-sort', curDir === 1 ? 'ascending' : 'descending');
+        const dir = curCol === i ? -curDir : (type === 'num' ? -1 : 1);
+        applySort(i, dir, type);
+        saveFilters('home', { col: i, dir });
       });
     });
+
+    // Ripristina l'ultimo ordinamento scelto (localStorage). Colonna fuori range (tabella
+    // cambiata) -> si ignora e resta l'ordine naturale renderizzato dal server.
+    const saved = loadFilters('home', { col: -1, dir: 1 });
+    if (saved.col >= 0 && saved.col < ths.length) {
+      const type = ths[saved.col]?.querySelector<HTMLButtonElement>('.sort-btn')?.dataset.type;
+      applySort(saved.col, saved.dir === -1 ? -1 : 1, type);
+    }
   }
   document.addEventListener('astro:page-load', setupClassSort);
 </script>
