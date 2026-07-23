@@ -18,7 +18,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Highmountain Tauren | Stantu·P | X | | | | | *Rainmaker | | | | _Ecoterrorist·N | X | X |
 | Mag'har Orc | _Axetomouth·N | X | | | | | Blondelust·P | | | | X | X | X |
 | Zandalari Troll | | _Divinetroll·P | | | | _Trollminator·P | *Stormsaurus | | | | _Shiftzord·N | X | X |
-| Vulpera | | X | | | | Rotandroll·N | _Foxlust·N | | | _Furricane·P | X | X | X |
+| Vulpera | | X | | | | Rotandroll·N | _Foxlust·N | | | Furricane·P | X | X | X |
 | Pandaren | | X | | | | | _Pandacoil·P | | | _Windwasher·N | X | X | X |
 | Dracthyr | | X | | | | X | X | | | X | X | X | _Dragoncelloh·P<br>*Preservative<br>*Augmentin |
 | Earthen | | X | Rockbiter·P | | | X | *Stonestrike | | | | X | X | X |
