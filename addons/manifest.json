@@ -31,11 +31,11 @@
     "LittleWigs": {
       "name": "LittleWigs",
       "desc": "L’equivalente di BigWigs fuori dai raid: boss mod per dungeon, M+ e scenari.",
-      "version": "v12.0.62",
+      "version": "v12.0.63",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-07-14",
+      "installed": "2026-07-23",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -50,7 +50,7 @@
         "LittleWigs_WarlordsOfDraenor",
         "LittleWigs_WrathOfTheLichKing"
       ],
-      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-14 v12.0.61->v12.0.62 via /aggiorna-addon (workflow) forgecdn files/8426/6. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione)."
+      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-23 v12.0.62->v12.0.63 via /aggiorna-addon (workflow) forgecdn files/8480/339. TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione)."
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
@@ -66,13 +66,13 @@
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "desc": "Comodità varie: quest automatiche, riparazione e vendita delle cianfrusaglie, skip cinematiche.",
-      "version": "12.0.27",
+      "version": "12.0.28",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-07-15",
+      "installed": "2026-07-23",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-15 12.0.26->12.0.27 via /aggiorna-addon (workflow) forgecdn files/8435/797 (Leatrix_Plus-12.0.27.zip). TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-23 12.0.27->12.0.28 via /aggiorna-addon (workflow) forgecdn files/8490/258 (Leatrix_Plus-12.0.28.zip). TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
     },
     "HandyNotes": {
       "name": "HandyNotes",
