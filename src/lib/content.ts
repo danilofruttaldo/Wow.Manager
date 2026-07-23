@@ -185,13 +185,38 @@ export function getProfessionLeveling(): Record<string, Record<string, LevelGuid
 // client in trees.json. E' cio' che la pagina rende in cima alla sezione 1, sopra l'albero
 // completo. File suo, come leveling.json, per non mischiarlo col dump macchina-generato.
 export interface ProfBuildStep {
-  spec: string;    // nodo/spec dove mettere i punti (nome del client, come in trees.json)
-  alt?: string;    // alternativa "oppure ...": ramo o build in alternativa
-  tag?: string;    // pastiglia breve: "base", "10 pt", "uno solo", "alternativa"...
-  note?: string;   // razionale reader-facing (italiano)
+  spec: string;      // nodo/spec dove mettere i punti (nome del client, come in trees.json)
+  alt?: string;      // alternativa "oppure ...": ramo o build in alternativa
+  tag?: string;      // pastiglia breve: "base", "10 pt", "uno solo", "alternativa"...
+  note?: string;     // razionale reader-facing (italiano)
+  nodes?: string[];  // nomi-nodo ESPLICITI per il badge d'ordine nell'albero (fallback: spec+alt)
 }
-export function getProfessionBuilds(): Record<string, Record<string, ProfBuildStep[]>> {
-  return ((profBuildsManifest as any).professions ?? {}) as Record<string, Record<string, ProfBuildStep[]>>;
+// Ordine alternativo per una classe/situazione specifica (es. Druido per Herbalism: ha la
+// raccolta a cavallo da Travel Form e inverte l'ordine). La pagina mostra un interruttore
+// con `label` che scambia i passi visualizzati.
+export interface ProfBuildVariant {
+  key: string;     // slug tecnico, es. 'druid'
+  label: string;   // etichetta dell'interruttore, es. 'Druido'
+  steps: ProfBuildStep[];
+}
+export interface ProfBuild {
+  steps: ProfBuildStep[];
+  variants?: ProfBuildVariant[];
+}
+// In builds.json una professione e' un semplice array di step (caso comune) OPPURE un
+// oggetto { steps, variants } quando ha ordini alternativi. Normalizziamo qui al secondo
+// caso, cosi' la pagina legge sempre `.steps` (+ `.variants` opzionali).
+function normalizeBuild(raw: ProfBuildStep[] | ProfBuild): ProfBuild {
+  return Array.isArray(raw) ? { steps: raw } : (raw ?? { steps: [] });
+}
+export function getProfessionBuilds(): Record<string, Record<string, ProfBuild>> {
+  const raw = ((profBuildsManifest as any).professions ?? {}) as Record<string, Record<string, ProfBuildStep[] | ProfBuild>>;
+  const out: Record<string, Record<string, ProfBuild>> = {};
+  for (const [key, byExp] of Object.entries(raw)) {
+    out[key] = {};
+    for (const [exp, v] of Object.entries(byExp)) out[key][exp] = normalizeBuild(v);
+  }
+  return out;
 }
 
 // ── Extra (script / link / appunti) ───────────────// Corpi degli script (file eseguibili fuori da src/, letti a build-time in sola lettura).

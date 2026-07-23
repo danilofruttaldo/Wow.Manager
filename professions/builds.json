@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "note": "ORDINE CONSIGLIATO delle specializzazioni, per professione. Editoriale (derivato dalle `notes` di manifest.json, verificato: i nomi degli `spec` combaciano coi nodi del CLIENT in trees.json). Reader-facing: `spec`/`alt`/`tag`/`note` sono MOSTRATI sul sito nella sezione 1 di /professioni, sopra l'albero completo. Chiave: professione -> espansione -> steps[]. Ogni step: { spec, alt?, tag?, note? }. Preserva le scelte di build dell'utente: non inventare consigli nuovi, e se aggiungi uno `spec` controlla che esista in trees.json."
+    "note": "ORDINE CONSIGLIATO delle specializzazioni, per professione. Editoriale (derivato dalle `notes` di manifest.json, verificato: i nomi degli `spec` combaciano coi nodi del CLIENT in trees.json). Reader-facing: `spec`/`alt`/`tag`/`note` sono MOSTRATI sul sito nella sezione 1 di /professioni, sopra l'albero completo. Chiave: professione -> espansione -> steps[]. Ogni step: { spec, alt?, tag?, note?, nodes? }. `nodes` = elenco ESPLICITO dei nomi-nodo del client su cui appuntare il badge d'ordine nell'albero a tab (serve solo quando `spec`/`alt` non sono gia' nomi-nodo esatti, es. i composti \"Sculpted / Large Plate / Articulating Armor\"); se assente si usano spec+alt. FORMA ALTERNATIVA: una professione con un ordine variante usa { steps[], variants[] } invece dell'array nudo (es. Herbalism -> Druido, che ha la raccolta a cavallo da Travel Form e inverte l'ordine). Ogni variant = { key, label, steps[] }; la pagina mostra un interruttore con `label` che scambia l'ordine visualizzato. Preserva le scelte di build dell'utente: non inventare consigli nuovi, e se aggiungi uno `spec` controlla che esista in trees.json."
   },
   "expansions": ["Midnight"],
   "professions": {
@@ -13,7 +13,7 @@
       "Midnight": [
         { "spec": "The Old Ways", "tag": "base", "note": "I suoi nodi valgono su TUTTI i craft di Blacksmithing, non su un solo ramo. Sotto: Resourceful Smith (Resourcefulness) o Second Nature (Ingenuity)." },
         { "spec": "Armorsmithing", "alt": "Weaponsmithing", "note": "Per i pezzi plate end-game; Weaponsmithing se punti alle armi." },
-        { "spec": "Sculpted / Large Plate / Articulating Armor", "tag": "uno solo", "note": "Rami alternativi sotto Armorsmithing: se ne prende UNO." }
+        { "spec": "Sculpted / Large Plate / Articulating Armor", "nodes": ["Sculpted Armor", "Large Plate Armor", "Articulating Armor"], "tag": "uno solo", "note": "Rami alternativi sotto Armorsmithing: se ne prende UNO." }
       ]
     },
     "enchanting": {
@@ -32,11 +32,24 @@
       ]
     },
     "herbalism": {
-      "Midnight": [
-        { "spec": "Botany", "tag": "non-Druidi", "note": "Sblocca la raccolta a cavallo. I Druidi ce l'hanno già in Travel Form e possono invertire, prendendo Bountiful Harvests per primo." },
-        { "spec": "Bountiful Harvests", "note": "Resa e skill sulle erbe." },
-        { "spec": "Midnight Overload", "tag": "da valutare", "note": "Terzo albero (Lightfused / Wild / Primal / Voidbound), non ancora valutato." }
-      ]
+      "Midnight": {
+        "steps": [
+          { "spec": "Botany", "note": "Sblocca la raccolta a cavallo: da non-Druido va presa per prima." },
+          { "spec": "Bountiful Harvests", "note": "Resa e skill sulle erbe." },
+          { "spec": "Midnight Overload", "tag": "da valutare", "note": "Terzo albero (Lightfused / Wild / Primal / Voidbound), non ancora valutato." }
+        ],
+        "variants": [
+          {
+            "key": "druid",
+            "label": "Druido",
+            "steps": [
+              { "spec": "Bountiful Harvests", "tag": "prima", "note": "Da Druido parti da qui: la raccolta a cavallo ce l'hai già in Travel Form, quindi Botany non è urgente. Resa e skill sulle erbe." },
+              { "spec": "Botany", "note": "Poi Botany per gli altri bonus — la raccolta a cavallo per te è ridondante con Travel Form." },
+              { "spec": "Midnight Overload", "tag": "da valutare", "note": "Terzo albero (Lightfused / Wild / Primal / Voidbound), non ancora valutato." }
+            ]
+          }
+        ]
+      }
     },
     "inscription": {
       "Midnight": [
@@ -62,7 +75,7 @@
       "Midnight": [
         { "spec": "Meticulous Mining", "tag": "40 pt", "note": "Il mining a cavallo sta qui." },
         { "spec": "Plentiful Ores", "tag": "50 pt", "note": "Skill e resa del minerale." },
-        { "spec": "Refulgent Copper", "alt": "Umbral Tin / Brilliant Silver", "note": "Nodo per singolo minerale (sotto Plentiful Ores): Refulgent Copper è il più richiesto." }
+        { "spec": "Refulgent Copper", "alt": "Umbral Tin / Brilliant Silver", "nodes": ["Refulgent Copper", "Umbral Tin", "Brilliant Silver"], "note": "Nodo per singolo minerale (sotto Plentiful Ores): Refulgent Copper è il più richiesto." }
       ]
     },
     "skinning": {
