@@ -1,6 +1,6 @@
 {
   "expansion": "Midnight (12.0)",
-  "note": "ELENCO delle professioni primarie (key/name/type) + `notes` editoriali di build, mostrate sotto l'albero nella pagina /professioni. NON contiene piu' l'albero di specializzazione: quello vive in professions/trees.json (estratto dal CLIENT, non a mano) e il leveling della skill in professions/leveling.json. Le secondarie (Cooking/Fishing/Archaeology) restano fuori. `key` deve combaciare col file icona in public/icons/prof/<key>.jpg e con le chiavi di trees.json/leveling.json.",
+  "note": "ELENCO delle professioni primarie (key/name/type) + `notes` editoriali di build. ⚠️ `notes` e' ora memoria INTERNA (non piu' mostrata sul sito): e' la fonte prosaica da cui deriva l'ORDINE CONSIGLIATO strutturato in professions/builds.json, che la pagina rende in cima alla sezione 1. L'albero di specializzazione vive in professions/trees.json (dal CLIENT, non a mano), il leveling della skill in professions/leveling.json. Le secondarie (Cooking/Fishing/Archaeology) restano fuori. `key` deve combaciare col file icona in public/icons/prof/<key>.jpg e con le chiavi di trees.json/leveling.json/builds.json.",
   "professions": [
     {
       "key": "alchemy",
@@ -54,7 +54,7 @@
       "key": "herbalism",
       "name": "Herbalism",
       "type": "gathering",
-      "notes": "Ordine per non-Druidi: Botany prima, sblocca la raccolta a cavallo (i Druidi ce l'hanno già in Travel Form e possono invertire, prendendo Bountiful Harvests per primo). Poi Bountiful Harvests per resa e skill sulle erbe. Terzo albero Overloading (Lightfused/Wild/Primal/Voidbound) non ancora valutato."
+      "notes": "Ordine per non-Druidi: Botany prima, sblocca la raccolta a cavallo (i Druidi ce l'hanno già in Travel Form e possono invertire, prendendo Bountiful Harvests per primo). Poi Bountiful Harvests per resa e skill sulle erbe. Terzo albero Midnight Overload (Lightfused/Wild/Primal/Voidbound) non ancora valutato."
     },
     {
       "key": "mining",

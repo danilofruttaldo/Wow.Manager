@@ -1,17 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getProfessions, getProfessionTrees, getProfessionLeveling, getProfExpansions,
-         type Profession, type ProfNode } from '../lib/content';
+import { getProfessions, getProfessionTrees, getProfessionLeveling, getProfessionBuilds,
+         getProfExpansions, type Profession, type ProfNode } from '../lib/content';
 
-// Tab per professione, come /transmog e' a tab per classe. Dentro ogni tab DUE parti:
-//   1. Specializzazioni da prendere -- l'albero estratto dal CLIENT (trees.json): spec,
-//      sotto-nodi e i punti massimi, il dato che il web non ha.
+// Tab per professione, come /transmog e' a tab per classe. Dentro ogni tab DUE sezioni:
+//   1. Specializzazioni -- l'ORDINE CONSIGLIATO (builds.json, editoriale/verificato: quali
+//      spec prendere e in che ordine), e sotto l'albero completo estratto dal CLIENT
+//      (trees.json: tutti i nodi + i punti massimi) come riferimento espandibile.
 //   2. Skill-up 1 -> max -- la guida di leveling della skill (leveling.json), web-sourced.
 // Una tendina sceglie l'espansione: oggi solo Midnight, ma struttura e controllo sono
 // gia' pronti per aggiungere le passate.
 const professions = getProfessions().sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
 const trees = getProfessionTrees();          // key -> espansione -> albero
 const leveling = getProfessionLeveling();    // key -> espansione -> guida skill
+const builds = getProfessionBuilds();        // key -> espansione -> ordine consigliato
 const expansions = getProfExpansions();      // ordinate; oggi ["Midnight"]
 const defaultExp = expansions[0] ?? 'Midnight';
 
@@ -25,10 +27,12 @@ const profIcon = (key: string) => (PROF_ICONS.has(key) ? `/icons/prof/${key}.jpg
 
 const treeFor = (key: string, exp: string) => trees[key]?.[exp];
 const levelFor = (key: string, exp: string) => leveling[key]?.[exp];
+const buildFor = (key: string, exp: string) => builds[key]?.[exp];
 const hasTree = (key: string, exp: string) => !!treeFor(key, exp)?.specs?.length;
 const hasLevel = (key: string, exp: string) => !!levelFor(key, exp)?.steps?.length;
-// Un tab e' "vuoto" (chip spenta) solo se NESSUNA delle due parti ha dati per quell'espansione.
-const hasAny = (key: string, exp: string) => hasTree(key, exp) || hasLevel(key, exp);
+const hasBuild = (key: string, exp: string) => !!buildFor(key, exp)?.length;
+// Un tab e' "vuoto" (chip spenta) solo se NESSUNA sezione ha dati per quell'espansione.
+const hasAny = (key: string, exp: string) => hasBuild(key, exp) || hasTree(key, exp) || hasLevel(key, exp);
 // Tab attivo di default: la prima professione (alfabetica) con qualcosa nell'espansione
 // di default, cosi' all'apertura si vede contenuto reale e non due segnaposto.
 const defaultKey = (professions.find(p => hasAny(p.key, defaultExp)) ?? professions[0])?.key;
@@ -80,7 +84,10 @@ function renderNode(n: ProfNode, depth = 0): string {
           );
         })}
       </div>
-      <label class="exp-pick">
+      {/* Con una sola espansione la tendina sarebbe un controllo disabilitato inutile: la
+         nascondiamo (il <select> resta nel DOM, il JS lo legge lo stesso). Ricompare da
+         sola quando builds/trees/leveling porteranno una seconda espansione. */}
+      <label class="exp-pick" hidden={expansions.length < 2}>
         <span class="exp-pick-lbl">Espansione</span>
         <select id="prof-exp" aria-label="Scegli l'espansione" autocomplete="off" disabled={expansions.length < 2}>
           {expansions.map(exp => <option value={exp} selected={exp === defaultExp}>{exp}</option>)}
@@ -101,17 +108,37 @@ function renderNode(n: ProfNode, depth = 0): string {
         {expansions.map(exp => {
           const tree = treeFor(p.key, exp);
           const guide = levelFor(p.key, exp);
+          const build = buildFor(p.key, exp);
           const okTree = !!tree?.specs?.length;
           const okLevel = !!guide?.steps?.length;
+          const okBuild = !!build?.length;
           return (
-            <div class="prof-exp" data-exp={exp} data-has={okTree || okLevel ? '1' : '0'} hidden={exp !== defaultExp}>
-              {/* Parte 1: specializzazioni da prendere */}
+            <div class="prof-exp" data-exp={exp} data-has={okBuild || okTree || okLevel ? '1' : '0'} hidden={exp !== defaultExp}>
+              {/* Parte 1: specializzazioni. In cima l'ORDINE CONSIGLIATO (builds.json), sotto
+                 l'albero completo del client (trees.json) come riferimento espandibile. */}
               <section class="prof-sec">
-                <h2 class="sec-title"><span class="sec-num">1</span>Specializzazioni da prendere
-                  {okTree && <span class="sec-hint">i numeri = rank massimo del nodo</span>}
+                <h2 class="sec-title"><span class="sec-num">1</span>Specializzazioni
+                  <span class="sec-hint">ordine consigliato</span>
                 </h2>
-                {okTree
-                  ? <div class="spec-grid">
+                {okBuild
+                  ? <ol class="build">
+                      {build!.map(step => (
+                        <li class="build-step" data-search={`${step.spec} ${step.alt ?? ''} ${step.tag ?? ''} ${step.note ?? ''}`.toLowerCase()}>
+                          <div class="build-head">
+                            <span class="build-spec">{step.spec}</span>
+                            {step.alt && <span class="build-alt">oppure {step.alt}</span>}
+                            {step.tag && <span class="build-tag">{step.tag}</span>}
+                          </div>
+                          {step.note && <p class="build-note">{step.note}</p>}
+                        </li>
+                      ))}
+                    </ol>
+                  : <p class="prof-empty">Ordine consigliato <strong>{exp}</strong> non ancora definito per <strong>{p.name}</strong>.</p>}
+
+                {okTree &&
+                  <details class="tree-ref">
+                    <summary>Albero completo dal client <span class="tree-ref-hint">i numeri = rank massimo del nodo</span></summary>
+                    <div class="spec-grid">
                       {tree!.specs.map(spec => (
                         <article class="spec" data-search={`${spec.name} ${spec.desc ?? ''} ${(spec.children ?? []).map(nodeText).join(' ')}`.toLowerCase()}>
                           <div class="pnode-head spec-head">
@@ -124,7 +151,7 @@ function renderNode(n: ProfNode, depth = 0): string {
                         </article>
                       ))}
                     </div>
-                  : <p class="prof-empty">Albero <strong>{exp}</strong> non ancora estratto dal client. Serve loggare un PG con <strong>{p.name}</strong> e rilanciare il dump.</p>}
+                  </details>}
               </section>
 
               {/* Parte 2: skill-up 1 -> max */}
@@ -147,8 +174,6 @@ function renderNode(n: ProfNode, depth = 0): string {
             </div>
           );
         })}
-
-        {p.notes && <p class="prof-note">{p.notes}</p>}
       </section>
     ))}
     <p class="empty" id="prof-empty" role="status" hidden>Nessun risultato per questa ricerca in questa professione.</p>
@@ -161,6 +186,9 @@ function renderNode(n: ProfNode, depth = 0): string {
 .prof-exp[hidden] { display: none !important; }
 
 .exp-pick { margin-left: auto; display: inline-flex; align-items: center; gap: 0.4rem; }
+/* display:inline-flex vince sul [hidden] della UA stylesheet: forziamo (stesso motivo di
+   .chip[hidden] in global.css). Cosi' con una sola espansione la tendina sparisce davvero. */
+.exp-pick[hidden] { display: none !important; }
 .exp-pick-lbl { font-size: 0.78rem; color: var(--text-subtle); }
 #prof-exp {
   font-family: inherit; font-size: var(--fs-base); color: var(--text); background: var(--surface);
@@ -186,11 +214,44 @@ function renderNode(n: ProfNode, depth = 0): string {
 .sec-title { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 0 0 0.7rem; }
 .sec-num { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
 .sec-range { margin-left: 0.3rem; font-size: 0.78rem; font-weight: 600; color: var(--text-subtle); font-variant-numeric: tabular-nums; }
-/* Hint di sezione (NON un titolo di pagina): spiega in chiaro i numeri .pnode-cap,
-   altrimenti leggibili solo nel title in hover (invisibile su touch). */
+/* Sottotitolo del titolo di sezione (NON un titolo di pagina): oggi "ordine consigliato"
+   accanto a "Specializzazioni", per dire che la lista sotto e' una sequenza, non un elenco. */
 .sec-hint { margin-left: 0.4rem; font-size: 0.72rem; font-weight: 400; color: var(--text-subtle); font-style: italic; }
 
-/* Parte 1: spec di primo livello affiancate in colonne. */
+/* Parte 1a: ORDINE CONSIGLIATO delle spec (builds.json) -- lista numerata col contatore CSS.
+   E' il contenuto principale della sezione: la costruzione da seguire, non un dump. */
+.build { list-style: none; counter-reset: bstep; display: flex; flex-direction: column; gap: 0.5rem; max-width: 720px; }
+.build-step {
+  counter-increment: bstep; position: relative;
+  padding: 0.5rem 0.85rem 0.55rem 2.5rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+}
+/* Pastiglia numerata a sinistra: stesso stile di .sec-num, generato dal contatore. */
+.build-step::before {
+  content: counter(bstep); position: absolute; left: 0.6rem; top: 0.55rem;
+  display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px;
+  background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.build-step[hidden] { display: none !important; }  /* la ricerca nasconde le tappe non pertinenti */
+.build-head { display: flex; align-items: baseline; gap: 0.35rem 0.5rem; flex-wrap: wrap; }
+.build-spec { font-weight: 700; font-size: var(--fs-md); color: var(--text); }
+.build-alt { font-size: var(--fs-sm); color: var(--text-subtle); }
+.build-tag {
+  font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+  color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0.06rem 0.45rem;
+}
+.build-note { font-size: var(--fs-sm); color: var(--text-subtle); line-height: 1.4; margin: 0.25rem 0 0; }
+
+/* Parte 1b: albero completo dal client, riferimento espandibile SOTTO l'ordine consigliato.
+   Il marker nativo di <details> resta (affordance standard, non un'icona di contenuto). */
+.tree-ref { margin-top: 1.1rem; }
+.tree-ref > summary { cursor: pointer; font-size: var(--fs-sm); font-weight: 600; color: var(--text-subtle); padding: 0.35rem 0; }
+.tree-ref > summary:hover { color: var(--text); }
+.tree-ref-hint { font-weight: 400; font-style: italic; font-size: var(--fs-xs); margin-left: 0.35rem; }
+.tree-ref[open] > .spec-grid { margin-top: 0.7rem; }
+
+/* Albero: spec di primo livello affiancate in colonne. */
 /* min(240px,100%): protezione anti-overflow su contenitore stretto, come le altre griglie. */
 .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: var(--grid-gap); }
 .spec { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-pad); }
@@ -232,10 +293,6 @@ function renderNode(n: ProfNode, depth = 0): string {
 .prof-empty { color: var(--text-subtle); font-size: 0.9rem; padding: 1rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-lg); }
 .prof-empty strong { color: var(--text); }
 
-/* Nota editoriale della professione: sul sito le note delle professioni SI vedono
-   (unica eccezione nel repo), quindi restano in fondo. */
-.prof-note { margin-top: 1.6rem; padding-top: 0.7rem; border-top: 1px solid var(--border-light); font-size: 0.8rem; color: var(--text-subtle); line-height: 1.5; }
-
 .chip-mono { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 0.7rem; }
 </style>
 
@@ -264,16 +321,25 @@ function renderNode(n: ProfNode, depth = 0): string {
       const panel = panels.find(p => !p.hidden);
       if (!panel) return;
       // Solo il blocco espansione VISIBILE: con piu' espansioni, un blocco .prof-exp nascosto
-      // conterrebbe .spec/.lvl-step invisibili che falserebbero il conteggio "shown" (e quindi
-      // il messaggio "nessun risultato"). Oggi c'e' solo Midnight, ma il giro e' gia' corretto.
-      const items = Array.from(
-        panel.querySelectorAll('.prof-exp:not([hidden]) .spec, .prof-exp:not([hidden]) .lvl-step'),
-      ) as HTMLElement[];
+      // conterrebbe voci invisibili che falserebbero il conteggio "shown" (e quindi il
+      // messaggio "nessun risultato"). Oggi c'e' solo Midnight, ma il giro e' gia' corretto.
+      // Cerchiamo su tutte e tre le voci: ordine consigliato (.build-step), nodi dell'albero
+      // (.spec) e tappe di leveling (.lvl-step).
+      const items = Array.from(panel.querySelectorAll(
+        '.prof-exp:not([hidden]) .build-step, .prof-exp:not([hidden]) .spec, .prof-exp:not([hidden]) .lvl-step',
+      )) as HTMLElement[];
       let shown = 0;
       for (const it of items) {
         const match = q === '' || (it.dataset.search || '').includes(q);
         it.hidden = !match;
         if (match) shown++;
+      }
+      // I .spec vivono in un <details> chiuso di default: con una ricerca attiva lo apriamo,
+      // altrimenti un nodo che combacia resterebbe nascosto dentro l'albero collassato.
+      if (q !== '') {
+        for (const d of Array.from(panel.querySelectorAll('.prof-exp:not([hidden]) .tree-ref')) as HTMLDetailsElement[]) {
+          d.open = true;
+        }
       }
       if (emptyMsg) emptyMsg.hidden = !(shown === 0 && q !== '');
     }

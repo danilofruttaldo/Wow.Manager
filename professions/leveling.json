@@ -12,9 +12,9 @@
           { "from": 16, "to": 20, "action": "Craft 1x Evercore Shade e 1x Evercore Vision Guard (ricette scoperte via Recycling)." },
           { "from": 20, "to": 25, "action": "Craft 1x Evercore Dome Dinger, 1x Evercore Zoomshroud e 1x Evercore Reconnaissance." },
           { "from": 25, "to": 39, "action": "A skill 25 si sbloccano le specializzazioni. Craft 10x Soul Sprocket, le 4 ricette Cogwheel e ogni ricetta del trainer una volta.", "note": "Ogni ricetta al primo craft da' skill: falle tutte una volta per il bonus." },
-          { "from": 39, "to": 45, "action": "Usa Recycling ~20 volte (Bright Linen Bolt / Refulgent Copper Ingot / Powder Pigment) e craft ogni nuova ricetta del trainer." },
+          { "from": 39, "to": 45, "action": "Usa Recycling ~20 volte su materiali economici (Bright Linen Bolt / Refulgent Copper Ingot / Powder Pigment) e craft ogni nuova ricetta del trainer." },
           { "from": 45, "to": 80, "action": "Craft in serie la Quel'dorei gear scoperta via Recycling (es. ~60x Quel'dorei Guards): e' il grosso del leveling in questa fascia.", "note": "Il pezzo e il conteggio esatto dipendono da quale ricetta hai scoperto via Recycling." },
-          { "from": 80, "to": 100, "action": "Percorso variabile: le 7 ricette Housing Decor (gialle fino a 92), oppure tool/accessori rari via Market Mobility, oppure Crafting Orders con tool epici.", "note": "I tool epici richiedono Fused Vitality, a fornitura settimanale. Dopo 80 le ricette del trainer non danno piu' skill." }
+          { "from": 80, "to": 100, "action": "Percorso variabile: le ricette Housing Decor (gialle fino a 92), oppure tool/accessori rari via Market Mobility, oppure Crafting Orders con tool epici.", "note": "I tool epici richiedono Fused Vitality, a fornitura settimanale. Dopo 80 le ricette del trainer non danno piu' skill." }
         ]
       }
     },
@@ -36,7 +36,7 @@
           { "from": 7, "to": 20, "action": "Usa Recycle Potions 10 volte sulle Silvermoon Health Potion appena create: da' skill e produce Stabilized Derivate.", "note": "La valuta per sbloccare le ricette alla Camberon's Cauldron e' Artisan Alchemist's Moxie (guadagnata a parte), non lo Stabilized Derivate." },
           { "from": 20, "to": 27, "action": "Sblocca alla Camberon's Cauldron e fai il PRIMO CRAFT (1x ciascuna) di: Refreshing Serum, Lightfused Mana Potion, Primal Philosopher's Stone, Transmute: Mote of Wild Magic, Composite Flora, Enlightenment Tonic, Entropic Extract." },
           { "from": 27, "to": 32, "action": "Craft 8x Entropic Extract. Materiali: ~24x Tranquility Bloom, ~40x Sunglass Vial." },
-          { "from": 32, "to": 50, "action": "Craft 30x Silvermoon Health Potion. Materiali: ~180x Tranquility Bloom, ~150x Sunglass Vial.", "note": "In alternativa puoi passare presto alla spec Transmutation Authority e chiudere con 1x Wondorous Synergist." },
+          { "from": 32, "to": 50, "action": "Craft 30x Silvermoon Health Potion. Materiali: ~180x Tranquility Bloom, ~150x Sunglass Vial.", "note": "In alternativa puoi passare presto alla spec Transmutation Authority e chiudere con 1x Wondrous Synergist." },
           { "from": 50, "to": 100, "action": "Spamma ~80x Light's Potential (sbloccata dalla Camberon's Cauldron): +1 garantito fino a 80, poi gialla 80-90, verde 90-100. In alternativa ~45 flask (2 punti/craft) o i transmute della tua spec." }
         ]
       }
@@ -128,7 +128,7 @@
           { "from": 55, "to": 62, "action": "Craft 9x Enchant Ring - Amani Mastery (~45x Eversinging Dust).", "note": "Le ricette Gleeful Glamours dal vendor danno Knowledge Points ma NON skill: non contano per il leveling." },
           { "from": 62, "to": 80, "action": "Craft 1x di ogni ricetta arancione disponibile, vendile in AH, poi produci in massa la piu' economica finche' resta arancione. Fallback: Enchant Weapon - Worldsoul Aegis, arancione fino a 100." },
           { "from": 80, "to": 90, "action": "Gli anelli diventano gialli (niente skill): restano arancioni gli enchant di elmo, spalle e arma. Craft quelli." },
-          { "from": 90, "to": 100, "action": "Solo gli enchant ARMA restano arancioni: craftali (es. Enchant Weapon - Worldsoul Aegis) finche' arrivi a 100." }
+          { "from": 90, "to": 100, "action": "Solo gli enchant ARMA restano arancioni: craftali (es. Enchant Weapon - Worldsoul Aegis) finché arrivi a 100.", "note": "Il Worldsoul Aegis dava skill fino a 100 nei test, ma potrebbe essere corretto in un hotfix: se smette di salire, ripiega su un altro enchant arma arancione." }
         ]
       }
     },
@@ -136,10 +136,10 @@
       "Midnight": {
         "maxSkill": 100,
         "steps": [
-          { "from": 1, "to": 20, "action": "Macina (Midnight Milling) le erbe di Midnight per i pigmenti (Standard + Luminous). Erbe: Tranquility Bloom, Argentleaf, Mana Lily, Sanguithorn." },
+          { "from": 1, "to": 20, "action": "Macina (Midnight Milling) le quattro erbe di Midnight (Tranquility Bloom, Argentleaf, Mana Lily, Sanguithorn) per i pigmenti, poi trasformati in inchiostri (Munsell Ink, Sienna Ink)." },
           { "from": 20, "to": 30, "action": "Due vie equivalenti fino a 30: craft inchiostri (~11x Munsell Ink, ~12x Sienna Ink), oppure ~7x Faunatender's Baton." },
           { "from": 30, "to": 35, "action": "Primo-craft (bonus prima-volta), 1x ciascuno: Faunatender's Baton, Floratender's Crutch, Rootwarden's Lamp, Soul Cipher." },
-          { "from": 35, "to": 42, "action": "Primo-craft delle ricette restanti, 1x ciascuna: Codified Azeroot, Faunatender's Trust, i 3 Hobbyist tools (Scribe's Quill, Alchemist's Mixing Rod, Rolling Pin) e 3 Missives." },
+          { "from": 35, "to": 42, "action": "Primo-craft delle ricette restanti, 1x ciascuna: Codified Azeroot, Faunatender's Trust, i 3 Hobbyist tools (Scribe's Quill, Alchemist's Mixing Rod, Rolling Pin) e i Missive disponibili dal trainer." },
           { "from": 42, "to": 45, "action": "Craft 3x Thalassian Treatise on Inscription.", "note": "Prerequisito: a skill 25 sblocca la spec Calm Hands, che insegna la ricetta del treatise (~1 skill/craft, economico)." },
           { "from": 45, "to": 50, "action": "Craft 1x Missive of the Peerless, 1x Missive of the Quickblade e altri 3x Thalassian Treatise on Inscription." },
           { "from": 50, "to": 100, "action": "Craft in serie Thalassian Treatise on Inscription (~70, ~1 skill/craft); passa ai treatise specifici di professione man mano che li scopri.", "note": "In cima (85-100) puoi anche usare nuove ricette del trainer, Darkmoon Cards o Crafting Orders." }

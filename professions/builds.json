@@ -1,0 +1,83 @@
+{
+  "_meta": {
+    "note": "ORDINE CONSIGLIATO delle specializzazioni, per professione. Editoriale (derivato dalle `notes` di manifest.json, verificato: i nomi degli `spec` combaciano coi nodi del CLIENT in trees.json). Reader-facing: `spec`/`alt`/`tag`/`note` sono MOSTRATI sul sito nella sezione 1 di /professioni, sopra l'albero completo. Chiave: professione -> espansione -> steps[]. Ogni step: { spec, alt?, tag?, note? }. Preserva le scelte di build dell'utente: non inventare consigli nuovi, e se aggiungi uno `spec` controlla che esista in trees.json."
+  },
+  "expansions": ["Midnight"],
+  "professions": {
+    "alchemy": {
+      "Midnight": [
+        { "spec": "Fluent in Flasks", "alt": "Potion Prowess", "tag": "scegli una", "note": "Build Flask: massima domanda sui flask da raid. Passa a Potion Prowess se vendi pozioni da combattimento." }
+      ]
+    },
+    "blacksmithing": {
+      "Midnight": [
+        { "spec": "The Old Ways", "tag": "base", "note": "I suoi nodi valgono su TUTTI i craft di Blacksmithing, non su un solo ramo. Sotto: Resourceful Smith (Resourcefulness) o Second Nature (Ingenuity)." },
+        { "spec": "Armorsmithing", "alt": "Weaponsmithing", "note": "Per i pezzi plate end-game; Weaponsmithing se punti alle armi." },
+        { "spec": "Sculpted / Large Plate / Articulating Armor", "tag": "uno solo", "note": "Rami alternativi sotto Armorsmithing: se ne prende UNO." }
+      ]
+    },
+    "enchanting": {
+      "Midnight": [
+        { "spec": "Spellbound Shatterer", "tag": "20 pt root", "note": "Build Concentration." },
+        { "spec": "Infinite Ingenuity", "tag": "30 pt", "note": "Un enchant HQ ogni pochi giorni. Shatter Essence va preso prima di craftare." },
+        { "spec": "Elevating Equipment", "tag": "scegli sub-spec", "note": "Tre sub-spec (Amani / Haranir / Thalassian): scegli quella degli enchant che vendi." }
+      ]
+    },
+    "engineering": {
+      "Midnight": [
+        { "spec": "Mandatory Tools", "tag": "10 pt", "note": "Sotto Market Mobility (Build Profession Gear). Sblocca anche gli attrezzi di Tailoring e Jewelcrafting." },
+        { "spec": "Market Mobility", "tag": "25 pt root", "note": "Completa il root." },
+        { "spec": "Finishing Touches", "note": "Accessori da engineering/mining e canne da pesca." },
+        { "spec": "Bits and Bots", "alt": "Recycling", "tag": "alternativa", "note": "Se invece punti a gadget e munizioni: Bits and Bots, poi Recycling." }
+      ]
+    },
+    "herbalism": {
+      "Midnight": [
+        { "spec": "Botany", "tag": "non-Druidi", "note": "Sblocca la raccolta a cavallo. I Druidi ce l'hanno già in Travel Form e possono invertire, prendendo Bountiful Harvests per primo." },
+        { "spec": "Bountiful Harvests", "note": "Resa e skill sulle erbe." },
+        { "spec": "Midnight Overload", "tag": "da valutare", "note": "Terzo albero (Lightfused / Wild / Primal / Voidbound), non ancora valutato." }
+      ]
+    },
+    "inscription": {
+      "Midnight": [
+        { "spec": "Calm Hands", "tag": "consigliata", "note": "Build Reagents, la più sicura." },
+        { "spec": "Perfected Products", "note": "Per milling e multicraft." },
+        { "spec": "Darkmoon Curiosity", "tag": "opzionale", "note": "Per le carte." }
+      ]
+    },
+    "jewelcrafting": {
+      "Midnight": [
+        { "spec": "Thoughtful Throughput", "note": "Build Gemcutting (Multicraft). Le gemme hanno domanda costante." },
+        { "spec": "Glamorous Gems", "note": "Nella seconda tappa i punti vanno nella sub-spec del colore che lavori." },
+        { "spec": "Skilled Savings", "note": "Per la Resourcefulness." }
+      ]
+    },
+    "leatherworking": {
+      "Midnight": [
+        { "spec": "Learned Leatherworker", "tag": "base", "note": "I fondamentali di Leatherworking." },
+        { "spec": "Lasting Leather", "alt": "Safeguarding Scales", "note": "Secondo le classi che rifornisci: Lasting Leather = cuoio, Safeguarding Scales = maglia (strutture identiche). I punti vanno sui quattro slot di un gruppo: Head/Chest/Shoulder/Wrist da un lato, Legs/Hands/Waist/Feet dall'altro." }
+      ]
+    },
+    "mining": {
+      "Midnight": [
+        { "spec": "Meticulous Mining", "tag": "40 pt", "note": "Il mining a cavallo sta qui." },
+        { "spec": "Plentiful Ores", "tag": "50 pt", "note": "Skill e resa del minerale." },
+        { "spec": "Refulgent Copper", "alt": "Umbral Tin / Brilliant Silver", "note": "Nodo per singolo minerale (sotto Plentiful Ores): Refulgent Copper è il più richiesto." }
+      ]
+    },
+    "skinning": {
+      "Midnight": [
+        { "spec": "Thorough Tanning", "tag": "10 pt", "note": "Build Farming." },
+        { "spec": "Lasting Leather", "alt": "Superb Scales", "tag": "40 pt", "note": "Il ramo scelto sotto Thorough Tanning, secondo cosa ti serve." },
+        { "spec": "Gainful Gathering", "note": "Careful Carving o Trophy Taker." }
+      ]
+    },
+    "tailoring": {
+      "Midnight": [
+        { "spec": "Nimble Needlework", "tag": "20 pt root", "note": "Build Bolt: cooldown dei bolt. Sub-spec Arcanoweave o Sunfire Silk, secondo la stoffa che lavori." },
+        { "spec": "Creative Efficiency", "tag": "30 pt", "note": "Sotto Fiber Arts." },
+        { "spec": "Fiber Arts", "note": "Root di Fiber Arts, poi Textile Utilization (Resourcefulness)." }
+      ]
+    }
+  }
+}

@@ -11,6 +11,7 @@ import extraManifest from '../../scripts/manifest.json';
 import transmogManifest from '../../transmog/manifest.json';
 import profTreesManifest from '../../professions/trees.json';
 import profLevelingManifest from '../../professions/leveling.json';
+import profBuildsManifest from '../../professions/builds.json';
 import charactersManifest from '../../professions/characters.json';
 
 // ── Tipi ──────────────────────────────────────────
@@ -176,6 +177,21 @@ export interface LevelGuide {
 }
 export function getProfessionLeveling(): Record<string, Record<string, LevelGuide>> {
   return ((profLevelingManifest as any).professions ?? {}) as Record<string, Record<string, LevelGuide>>;
+}
+
+// ORDINE CONSIGLIATO delle specializzazioni (professions/builds.json): quali spec prendere
+// e in che ordine, con punti e alternative. Editoriale (derivato dalle `notes` di
+// manifest.json, non piu' mostrate) ma VERIFICATO -- ogni `spec` combacia con un nodo del
+// client in trees.json. E' cio' che la pagina rende in cima alla sezione 1, sopra l'albero
+// completo. File suo, come leveling.json, per non mischiarlo col dump macchina-generato.
+export interface ProfBuildStep {
+  spec: string;    // nodo/spec dove mettere i punti (nome del client, come in trees.json)
+  alt?: string;    // alternativa "oppure ...": ramo o build in alternativa
+  tag?: string;    // pastiglia breve: "base", "10 pt", "uno solo", "alternativa"...
+  note?: string;   // razionale reader-facing (italiano)
+}
+export function getProfessionBuilds(): Record<string, Record<string, ProfBuildStep[]>> {
+  return ((profBuildsManifest as any).professions ?? {}) as Record<string, Record<string, ProfBuildStep[]>>;
 }
 
 // ── Extra (script / link / appunti) ───────────────// Corpi degli script (file eseguibili fuori da src/, letti a build-time in sola lettura).
