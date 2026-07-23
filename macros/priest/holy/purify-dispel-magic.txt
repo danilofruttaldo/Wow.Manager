@@ -1,0 +1,2 @@
+#showtooltip
+/cast [@mouseover,help,nodead]Purify;Dispel Magic

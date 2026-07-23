@@ -761,6 +761,84 @@
       "body_file": "monk/brewmaster/celestial-infusion-purifying-brew.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-07-22 (scelta variante letterale, 'macro solo brewmaster' -> spec:brewmaster). Bottone di mitigazione istantanea in un press: Celestial Infusion (assorbimento difensivo attivo) + Purifying Brew (pulisce parte dello Stagger). Purifying Brew e' off-GCD -> qualunque sia il GCD di Celestial Infusion partono entrambe nello stesso press. VERIFICATO Wowhead/Icy Veins 12.0.7: Celestial Infusion e' un TALENTO Brewmaster, nodo di scelta ESCLUSIVO con Celestial Brew; nella 12.0.0 e' stato rimosso il vecchio bonus +200% assorbimento quando si purifica lo Stagger, quindi l'ordine delle due cast e' ormai indifferente (nessun bonus da sequenza). spec:brewmaster: entrambe le abilita' sono Brewmaster (su Mistweaver/Windwalker darebbero spell non disponibile). #showtooltip Purifying Brew (esplicito, scelta utente 2026-07-22): NON nudo -> il bottone mostra icona e CARICHE di Purifying Brew invece del CD di Celestial Infusion (che sarebbe il default nudo, cioe' la prima cast). Nomina una spell DIVERSA dalla prima cast -> intenzionale e non ridondante (eccezione alla regola dello #showtooltip nudo: showtooltip di spell diversa = voluto). CAVEAT bilancio d'uso: ogni pressione spende sia una carica di Purifying Brew sia il CD dell'assorbimento -> e' un bottone-panico che scarica tutta la mitigazione insieme, si rinuncia a purificare lo Stagger indipendentemente dallo scudo (trade-off accettato dall'utente). VARIANTE auto-adattiva scartata su scelta utente (sarebbe [known:Celestial Infusion]Celestial Infusion;Celestial Brew per coprire anche la build Celestial Brew): se in futuro passasse a quella build, il primo /cast diventa inerte (Purifying Brew scatta comunque) e converra' reintrodurre il ramo known:."
+    },
+    "priest-mind-soothe": {
+      "name": "Mind Soothe",
+      "desc": "Mind Soothe sul bersaglio sotto il cursore (abbassa il raggio di aggro del nemico).",
+      "scope": "account",
+      "class": "priest",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "priest/mind-soothe.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-23 come parte della PRIMA serie di macro Priest del repertorio (la classe non aveva ancora macro; l'infra la supportava gia': CLASS_ABBR Pri->priest, ordine spec discipline/holy/shadow, icone class/priest.jpg e spec/priest-{discipline,holy,shadow}.jpg presenti). Lancia Mind Soothe sul bersaglio sotto il mouse (@cursor su spell a bersaglio-unita = casta sul nemico che il cursore sovrasta, senza cambiare target): riduce il raggio di individuazione del nemico -> utile per skippare pull. VERIFICATO Warcraft Wiki (Midnight 12.0.x): Mind Soothe e' 'Level 14 priest ability' baseline, senza riga di spec -> disponibile a tutte e tre le spec (Discipline/Holy/Shadow), per questo spec:null (root classe). #showtooltip nudo mostra Mind Soothe."
+    },
+    "priest-mass-dispel": {
+      "name": "Mass Dispel",
+      "desc": "Mass Dispel sulla posizione del mouse (dispel di magia ad area).",
+      "scope": "account",
+      "class": "priest",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "priest/mass-dispel.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-23 (serie Priest). Piazza Mass Dispel sulla posizione del mouse (@cursor): dispel di magia ad AREA (rimuove effetti magici dagli alleati e buff magici dai nemici nel raggio). Ground-target esplicito via @cursor -> niente reticolo verde di targeting (stesso schema dei @cursor delle altre classi). VERIFICATO Warcraft Wiki (12.0.x): dalla 10.0.0 Mass Dispel e' un TALENTO dell'albero CLASSE (row 4) -> disponibile a tutte e tre le spec se talentato, per questo spec:null. CAVEAT: se non talentato nel loadout corrente la macro e' inerte (spell non disponibile). #showtooltip nudo mostra Mass Dispel."
+    },
+    "priest-angelic-feather": {
+      "name": "Angelic Feather",
+      "desc": "Angelic Feather su se stessi (scatto di velocità immediato).",
+      "scope": "account",
+      "class": "priest",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "priest/angelic-feather.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-23 (serie Priest). Angelic Feather su se stessi (@player): piazza la piuma sotto i propri piedi -> scatto di velocita' movimento immediato senza dover mirare a terra (normalmente Angelic Feather e' ground-target; @player la applica subito a se'). VERIFICATO Warcraft Wiki (12.0.x): dalla 10.0.0 e' un TALENTO dell'albero CLASSE (row 3) -> disponibile a tutte e tre le spec se talentato. Shadow INCLUSA: la nota 'No longer available to Shadow priests' presente sulla pagina e' datata 7.0.3 (Legion) ed e' superata dalla riclassificazione ad albero classe della 10.0.0 (confermato da Icy Veins 12.0.7, che elenca Angelic Feather tra i talenti di movimento Shadow). Per questo spec:null (root classe). CAVEAT: se non talentato la macro e' inerte. #showtooltip nudo mostra Angelic Feather."
+    },
+    "priest-holy-purify-dispel-magic": {
+      "name": "Purify / Dispel Magic",
+      "desc": "Mouseover su alleato → Purify; altrimenti Dispel Magic sul nemico.",
+      "scope": "account",
+      "class": "priest",
+      "spec": "holy",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "priest/holy/purify-dispel-magic.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-23 (serie Priest). Doppio ruolo un-bottone, stesso schema di paladin-cleanse-taunt / monk-detox-provoke / shaman-purge-cleanse-spirit: mouseover su alleato vivo (@mouseover,help,nodead) -> Purify (dispella Magia dall'alleato senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) -> Dispel Magic (dispel offensivo, rimuove un buff magico dal nemico corrente). Il ramo default NON ha @mouseover -> Dispel Magic va sul target attuale. nodead evita il dispel su alleato morto. CLASSIFICAZIONE spec:holy (NON spec:null) — VERIFICATO Warcraft Wiki (12.0.x): Purify e' 'Level 10 Discipline priest ability' e 'Level 10 Holy priest ability', NIENTE riga Shadow (lo Shadow ha invece 'Purify Disease', talento row 3, che rimuove solo Malattie). Quindi il ramo Purify e' DISC+HOLY: su Shadow darebbe 'spell sconosciuta'. Dispel Magic dalla 10.0.0 e' talento albero CLASSE, offensivo (solo nemico). Poiche' Purify non esiste su Shadow, la macro NON e' cross-spec completa -> messa sotto holy. NB: funziona anche su Discipline (Purify e' Disc+Holy, non Holy-only). Purify rimuove solo Magia; col talento Improved Purify aggiunge anche Malattia. Per renderla cross-spec safe (Shadow inclusa): [@mouseover,help,nodead,known:Purify]Purify;[@mouseover,help,nodead]Purify Disease;Dispel Magic (schema known: come mage-decurse-spellsteal) -> su Shadow il ramo cade su Purify Disease. #showtooltip nudo dinamico mostra il ramo attivo."
+    },
+    "priest-holy-mass-resurrection": {
+      "name": "Mass Resurrection / Resurrection",
+      "desc": "Resurrezione: col modifier → Mass Resurrection (di massa), altrimenti Resurrection sul mouseover.",
+      "scope": "account",
+      "class": "priest",
+      "spec": "holy",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "priest/holy/mass-resurrection.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-23 (serie Priest). Rez a doppio ramo via [mod] (qualsiasi modifier shift/ctrl/alt), stesso schema di shaman-ancestral-vision-spirit e del ramo mass-res di druid-rebirth-revitalize-revive / monk-mistweaver-reawaken-resuscitate: modifier tenuto -> Mass Resurrection (rez di MASSA, riporta in vita tutti i membri del gruppo morti, solo fuori combat); tap nudo -> Resurrection sul cadavere sotto il mouse (@mouseover). CLASSIFICAZIONE spec:holy — VERIFICATO Warcraft Wiki (12.0.x): Mass Resurrection e' 'Level 37 Discipline priest ability' e 'Level 37 Holy priest ability', NIENTE riga Shadow, e 'Cannot be cast when in combat'. Resurrection e' invece baseline su tutte e tre le spec (nessuna riga di spec). Poiche' il ramo [mod] (Mass Resurrection) non esiste su Shadow, la macro non e' cross-spec completa -> holy. NB: funziona anche su Discipline (Mass Res e' Disc+Holy). Per renderla safe su Shadow: [mod,known:Mass Resurrection]Mass Resurrection;[@mouseover]Resurrection -> su Shadow il [mod] cade sul Resurrection singolo senza errore (stesso known: di druid-rebirth-revitalize-revive). #showtooltip nudo dinamico mostra il ramo attivo. Target del ramo singolo = cadavere alleato sotto il mouse."
+    },
+    "priest-holy-flash-heal-smite": {
+      "name": "Flash Heal / Smite",
+      "desc": "Mouseover su alleato → Flash Heal; altrimenti Smite sul nemico.",
+      "scope": "account",
+      "class": "priest",
+      "spec": "holy",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "priest/holy/flash-heal-smite.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-23 (serie Priest). Doppio ruolo un-bottone (cura-o-danno), stesso schema mouseover-fallback di mage-decurse-spellsteal / rogue-tricks-shiv: mouseover su alleato vivo (@mouseover,help,nodead) -> Flash Heal (cura rapida sull'alleato sotto il mouse senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) -> Smite (danno sul nemico corrente). Il ramo default NON ha @mouseover -> Smite va sul target attuale. nodead evita la cura su alleato morto. CLASSIFICAZIONE spec:holy — VERIFICATO Warcraft Wiki (12.0.x): Flash Heal e' baseline 'available to all specializations, but Discipline and Shadow eventually replace it with Shadow Mend' -> in pratica solo HOLY casta davvero Flash Heal (Disc e Shadow lo sostituiscono con Shadow Mend). Smite e' Disc+Holy ('known by all priests from level 1', ma su Shadow 'replaced with Mind Flay'). Il vincolo stringente e' Flash Heal (solo Holy) -> spec:holy pulito. #showtooltip nudo dinamico mostra il ramo attivo (Flash Heal col mouse sull'alleato, Smite altrimenti)."
     }
   }
 }
