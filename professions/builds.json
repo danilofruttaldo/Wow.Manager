@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "note": "ORDINE CONSIGLIATO delle specializzazioni, per professione. Editoriale (derivato dalle `notes` di manifest.json, verificato: i nomi degli `spec` combaciano coi nodi del CLIENT in trees.json). Reader-facing: `spec`/`alt`/`tag`/`note` sono MOSTRATI sul sito nella sezione 1 di /professioni, sopra l'albero completo. Chiave: professione -> espansione -> steps[]. Ogni step: { spec, alt?, tag?, note?, nodes? }. `nodes` = elenco ESPLICITO dei nomi-nodo del client su cui appuntare il badge d'ordine nell'albero a tab (serve solo quando `spec`/`alt` non sono gia' nomi-nodo esatti, es. i composti \"Sculpted / Large Plate / Articulating Armor\"); se assente si usano spec+alt. FORMA ALTERNATIVA: una professione con un ordine variante usa { steps[], variants[] } invece dell'array nudo (es. Herbalism -> Druido, che ha la raccolta a cavallo da Travel Form e inverte l'ordine). Ogni variant = { key, label, steps[] }; la pagina mostra un interruttore con `label` che scambia l'ordine visualizzato. Preserva le scelte di build dell'utente: non inventare consigli nuovi, e se aggiungi uno `spec` controlla che esista in trees.json."
+    "note": "ORDINE CONSIGLIATO delle specializzazioni, per professione. Editoriale (derivato dalle `notes` di manifest.json, verificato: i nomi degli `spec` combaciano coi nodi del CLIENT in trees.json). Reader-facing: `spec`/`alt`/`tag`/`note` sono MOSTRATI sul sito nella sezione 1 di /professioni (CARD SEQUENZIALI: nome ramo + descrizione + badge punti; l'albero non si mostra piu'). Chiave: professione -> espansione -> steps[]. Ogni step: { spec, alt?, tag?, note?, nodes? }. `tag` = pastiglia con VOCABOLARIO RISTRETTO e intuitivo: `base` (punto di partenza sicuro), `uno solo` (di piu' alternative se ne prende una sola), `opzionale` (saltabile). NON usare tag che ripetano quello che la card gia' mostra: niente tag d'ordine (lo dice il numero della card), niente 'scegli/alternativa' se c'e' gia' un `alt` (reso come 'oppure X'). I conteggi punti (es. `20 pt root`) restano nel tag ma NON sono pastiglie: la pagina li estrae come badge dei punti. `nodes` = elenco ESPLICITO dei nomi-nodo del client su cui appuntare il badge d'ordine nell'albero a tab (serve solo quando `spec`/`alt` non sono gia' nomi-nodo esatti, es. i composti \"Sculpted / Large Plate / Articulating Armor\"); se assente si usano spec+alt. FORMA ALTERNATIVA: una professione con un ordine variante usa { steps[], variants[] } invece dell'array nudo (es. Herbalism -> Druido, che ha la raccolta a cavallo da Travel Form e inverte l'ordine). Ogni variant = { key, label, steps[] }; la pagina mostra un interruttore con `label` che scambia l'ordine visualizzato. Preserva le scelte di build dell'utente: non inventare consigli nuovi, e se aggiungi uno `spec` controlla che esista in trees.json."
   },
   "expansions": ["Midnight"],
   "professions": {
     "alchemy": {
       "Midnight": [
-        { "spec": "Fluent in Flasks", "alt": "Potion Prowess", "tag": "scegli una", "note": "Build Flask: massima domanda sui flask da raid. Passa a Potion Prowess se vendi pozioni da combattimento." }
+        { "spec": "Fluent in Flasks", "alt": "Potion Prowess", "note": "Build Flask: massima domanda sui flask da raid. Passa a Potion Prowess se vendi pozioni da combattimento." }
       ]
     },
     "blacksmithing": {
@@ -20,7 +20,7 @@
       "Midnight": [
         { "spec": "Spellbound Shatterer", "tag": "20 pt root", "note": "Build Concentration." },
         { "spec": "Infinite Ingenuity", "tag": "30 pt", "note": "Un enchant HQ ogni pochi giorni. Shatter Essence va preso prima di craftare." },
-        { "spec": "Elevating Equipment", "tag": "scegli sub-spec", "note": "Tre sub-spec (Amani / Haranir / Thalassian): scegli quella degli enchant che vendi." }
+        { "spec": "Elevating Equipment", "tag": "uno solo", "note": "Tre sub-spec (Amani / Haranir / Thalassian): scegli quella degli enchant che vendi." }
       ]
     },
     "engineering": {
@@ -28,7 +28,7 @@
         { "spec": "Mandatory Tools", "tag": "10 pt", "note": "Sotto Market Mobility (Build Profession Gear). Sblocca anche gli attrezzi di Tailoring e Jewelcrafting." },
         { "spec": "Market Mobility", "tag": "25 pt root", "note": "Completa il root." },
         { "spec": "Finishing Touches", "note": "Accessori da engineering/mining e canne da pesca." },
-        { "spec": "Bits and Bots", "alt": "Recycling", "tag": "alternativa", "note": "Se invece punti a gadget e munizioni: Bits and Bots, poi Recycling." }
+        { "spec": "Bits and Bots", "alt": "Recycling", "note": "Se invece punti a gadget e munizioni: Bits and Bots, poi Recycling." }
       ]
     },
     "herbalism": {
@@ -36,16 +36,16 @@
         "steps": [
           { "spec": "Botany", "note": "Sblocca la raccolta a cavallo: da non-Druido va presa per prima." },
           { "spec": "Bountiful Harvests", "note": "Resa e skill sulle erbe." },
-          { "spec": "Midnight Overload", "tag": "da valutare", "note": "Terzo albero (Lightfused / Wild / Primal / Voidbound), non ancora valutato." }
+          { "spec": "Midnight Overload", "note": "Terzo albero (Lightfused / Wild / Primal / Voidbound), non ancora valutato." }
         ],
         "variants": [
           {
             "key": "druid",
             "label": "Druido",
             "steps": [
-              { "spec": "Bountiful Harvests", "tag": "prima", "note": "Da Druido parti da qui: la raccolta a cavallo ce l'hai già in Travel Form, quindi Botany non è urgente. Resa e skill sulle erbe." },
+              { "spec": "Bountiful Harvests", "note": "Da Druido parti da qui: la raccolta a cavallo ce l'hai già in Travel Form, quindi Botany non è urgente. Resa e skill sulle erbe." },
               { "spec": "Botany", "note": "Poi Botany per gli altri bonus — la raccolta a cavallo per te è ridondante con Travel Form." },
-              { "spec": "Midnight Overload", "tag": "da valutare", "note": "Terzo albero (Lightfused / Wild / Primal / Voidbound), non ancora valutato." }
+              { "spec": "Midnight Overload", "note": "Terzo albero (Lightfused / Wild / Primal / Voidbound), non ancora valutato." }
             ]
           }
         ]
@@ -53,7 +53,7 @@
     },
     "inscription": {
       "Midnight": [
-        { "spec": "Calm Hands", "tag": "consigliata", "note": "Build Reagents, la più sicura." },
+        { "spec": "Calm Hands", "tag": "base", "note": "Build Reagents, la più sicura." },
         { "spec": "Perfected Products", "note": "Per milling e multicraft." },
         { "spec": "Darkmoon Curiosity", "tag": "opzionale", "note": "Per le carte." }
       ]

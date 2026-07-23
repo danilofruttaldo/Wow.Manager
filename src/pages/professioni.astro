@@ -1,12 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getProfessions, getProfessionTrees, getProfessionLeveling, getProfessionBuilds,
-         getProfExpansions, type Profession, type ProfNode } from '../lib/content';
+         getProfessionSpecDescs, getProfExpansions, type Profession, type ProfNode } from '../lib/content';
 
 // Tab per professione, come /transmog e' a tab per classe. Dentro ogni tab DUE sezioni:
-//   1. Specializzazioni -- l'ORDINE CONSIGLIATO (builds.json, editoriale/verificato: quali
-//      spec prendere e in che ordine), e sotto l'albero completo estratto dal CLIENT
-//      (trees.json: tutti i nodi + i punti massimi) come riferimento espandibile.
+//   1. Specializzazioni -- l'ORDINE CONSIGLIATO (builds.json, editoriale/verificato): card
+//      sequenziali, "quali rami potenziare e in che ordine". Ogni card porta i PUNTI del ramo
+//      (il `cap`/maxRanks del nodo, letto da trees.json). L'albero completo NON si mostra piu':
+//      trees.json serve solo a ricavare quei numeri.
 //   2. Skill-up 1 -> max -- la guida di leveling della skill (leveling.json), web-sourced.
 // Una tendina sceglie l'espansione: oggi solo Midnight, ma struttura e controllo sono
 // gia' pronti per aggiungere le passate.
@@ -14,8 +15,20 @@ const professions = getProfessions().sort((a, b) => (a.name ?? '').localeCompare
 const trees = getProfessionTrees();          // key -> espansione -> albero
 const leveling = getProfessionLeveling();    // key -> espansione -> guida skill
 const builds = getProfessionBuilds();        // key -> espansione -> ordine consigliato
-const expansions = getProfExpansions();      // ordinate; oggi ["Midnight"]
+const specDescs = getProfessionSpecDescs();  // key -> nome-nodo -> descrizione breve (IT)
+const expansions = getProfExpansions();      // quelle CON dati; oggi ["Midnight"]
 const defaultExp = expansions[0] ?? 'Midnight';
+// Elenco completo per la tendina: TUTTE le espansioni WoW da Classic a Midnight, in ordine di
+// uscita; quelle senza dati restano <option disabled> (grigie). `expansions` (con dati) decide
+// quali sono selezionabili -- oggi solo Midnight.
+const ALL_EXPANSIONS = [
+  'Classic', 'The Burning Crusade', 'Wrath of the Lich King', 'Cataclysm',
+  'Mists of Pandaria', 'Warlords of Draenor', 'Legion', 'Battle for Azeroth',
+  'Shadowlands', 'Dragonflight', 'The War Within', 'Midnight',
+];
+// Elenco reso in tendina: le note sopra + eventuali espansioni con dati non ancora in lista.
+const expList = [...ALL_EXPANSIONS, ...expansions.filter(e => !ALL_EXPANSIONS.includes(e))];
+const hasData = (exp: string) => expansions.includes(exp);
 
 const TYPE_LABEL: Record<Profession['type'], string> = { crafting: 'Craft', gathering: 'Raccolta' };
 
@@ -37,36 +50,48 @@ const hasAny = (key: string, exp: string) => hasBuild(key, exp) || hasTree(key, 
 // di default, cosi' all'apertura si vede contenuto reale e non due segnaposto.
 const defaultKey = (professions.find(p => hasAny(p.key, defaultExp)) ?? professions[0])?.key;
 
-// L'albero e' generato da dati JSON nostri (fidati), ma passa da set:html: scappiamo
-// comunque i metacaratteri; i `cap` sono numeri.
-const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-// Testo cercabile di un nodo e dei suoi discendenti: nome + descrizione, ricorsivo.
-// Alimenta il `data-search` della card spec (i figli sono resi via set:html, quindi il
-// testo va raccolto qui e non e' estraibile dal DOM in modo affidabile).
-const nodeText = (n: ProfNode): string =>
-  `${n.name ?? ''} ${n.desc ?? ''} ${(n.children ?? []).map(nodeText).join(' ')}`;
-// Mappa nome-nodo -> ordine consigliato (posizione nel build + eventuale tag): alimenta i
-// badge ①②③ su tab e rami dell'albero. Per professione/espansione (vedi expansions.map).
-type OrderMap = Map<string, { n: number; tag?: string }>;
-function renderNode(n: ProfNode, order: OrderMap, depth = 0): string {
-  const kids = n.children?.length
-    ? `<div class="pnode-kids">${n.children.map(c => renderNode(c, order, depth + 1)).join('')}</div>`
-    : '';
-  const desc = n.desc ? `<p class="pnode-desc">${esc(n.desc)}</p>` : '';
-  // Difesa su dump parziale/malformato: senza questi default, un nodo senza `name`
-  // farebbe esc(undefined).replace -> crash del build; un `cap` mancante stamperebbe
-  // "undefined" nella pastiglia.
-  const name = esc(n.name ?? '?');
-  const cap = n.cap ?? '';
-  // Badge d'ordine consigliato sul ramo, se builds.json lo referenzia (per nome-nodo esatto).
-  const ord = order.get(n.name ?? '');
-  const badge = ord
-    ? `<span class="pnode-order" title="Scelta consigliata n. ${ord.n}${ord.tag ? ' - ' + esc(ord.tag) : ''}">${ord.n}</span>`
-    : '';
-  return `<div class="pnode pnode--d${depth}">`
-    + `<div class="pnode-head">${badge}<span class="pnode-name">${name}</span>`
-    + `<span class="pnode-cap" title="Rank massimo: ${cap} punti conoscenza">${cap}</span></div>`
-    + `${desc}${kids}</div>`;
+// PUNTI del ramo per la card. Due fonti, il tag editoriale ha la precedenza:
+//   1. il `tag` di builds.json quando indica un conteggio ("20 pt root", "10 pt", "40 pt"...):
+//      e' la scelta VOLUTA di quanti punti mettere, e puo' divergere dal massimo del ramo
+//      (skinning: "10 pt" su un ramo che ne regge 40). Include l'eventuale qualifica ("root").
+//   2. altrimenti il `cap` (maxRanks) del nodo `spec`/`nodes`, dall'albero client (trees.json,
+//      non piu' mostrato): il tetto del ramo, buono per i passi che si massano ("base", ecc.).
+// Cosi' ogni card ha UN solo numero, senza il doppione "30 punti + 20 pt" che confondeva.
+function tagPoints(tag: string | undefined): { n: number; rest: string } | null {
+  const m = tag?.match(/^\s*(\d+)\s*pt\b\s*(.*)$/i);
+  return m ? { n: Number(m[1]), rest: m[2].trim() } : null;
+}
+function capMap(tree: { specs?: ProfNode[] } | undefined): Map<string, number> {
+  const m = new Map<string, number>();
+  const walk = (n: ProfNode) => {
+    if (n?.name != null && n.cap != null) m.set(n.name, n.cap);
+    (n?.children ?? []).forEach(walk);
+  };
+  (tree?.specs ?? []).forEach(walk);
+  return m;
+}
+function branchCap(step: { spec: string; nodes?: string[] }, caps: Map<string, number>): number | null {
+  const names = step.nodes?.length ? step.nodes : [step.spec];
+  const vals = names.map(n => caps.get(n)).filter((c): c is number => c != null);
+  return vals.length ? Math.max(...vals) : null;
+}
+// Mappa nome-nodo -> desc del client (fallback delle descrizioni card, quando specs.json non
+// copre ancora quel nodo). Nel client solo le spec di primo livello hanno una desc.
+function clientDescMap(tree: { specs?: ProfNode[] } | undefined): Map<string, string> {
+  const m = new Map<string, string>();
+  const walk = (n: ProfNode) => {
+    const d = (n?.desc ?? '').trim();
+    if (n?.name != null && d) m.set(n.name, d);
+    (n?.children ?? []).forEach(walk);
+  };
+  (tree?.specs ?? []).forEach(walk);
+  return m;
+}
+// Descrizione breve della card: specs.json (IT, verificato) col nome-nodo del passo; per i
+// passi composti ("uno solo") si usa il primo dei `nodes`. Fallback: desc del client.
+function stepDesc(step: { spec: string; nodes?: string[] }, specForKey: Record<string, string>, cdesc: Map<string, string>): string | null {
+  const dkey = step.nodes?.length ? step.nodes[0] : step.spec;
+  return specForKey[dkey] ?? specForKey[step.spec] ?? cdesc.get(dkey) ?? cdesc.get(step.spec) ?? null;
 }
 ---
 <Base title="Professioni" description="Alberi di specializzazione e leveling WoW per professione: spec, punti massimi e skill-up, dal client.">
@@ -92,13 +117,16 @@ function renderNode(n: ProfNode, order: OrderMap, depth = 0): string {
           );
         })}
       </div>
-      {/* Con una sola espansione la tendina sarebbe un controllo disabilitato inutile: la
-         nascondiamo (il <select> resta nel DOM, il JS lo legge lo stesso). Ricompare da
-         sola quando builds/trees/leveling porteranno una seconda espansione. */}
-      <label class="exp-pick" hidden={expansions.length < 2}>
+      {/* Tendina espansione, in fondo ai filtri (spinta a destra da margin-left:auto). Mostra
+         TUTTE le espansioni dell'era specializzazioni; selezionabili solo quelle con dati
+         (oggi Midnight), le altre restano come <option disabled> (grigie). Quando builds/
+         trees/leveling porteranno una nuova espansione, si abilita da sola via `hasData`. */}
+      <label class="exp-pick">
         <span class="exp-pick-lbl">Espansione</span>
-        <select id="prof-exp" aria-label="Scegli l'espansione" autocomplete="off" disabled={expansions.length < 2}>
-          {expansions.map(exp => <option value={exp} selected={exp === defaultExp}>{exp}</option>)}
+        <select id="prof-exp" aria-label="Scegli l'espansione" autocomplete="off">
+          {expList.map(exp => (
+            <option value={exp} disabled={!hasData(exp)} selected={exp === defaultExp}>{exp}</option>
+          ))}
         </select>
       </label>
     </div>
@@ -114,32 +142,52 @@ function renderNode(n: ProfNode, order: OrderMap, depth = 0): string {
         </header>
 
         {expansions.map(exp => {
-          const tree = treeFor(p.key, exp);
+          const tree = treeFor(p.key, exp);   // non si mostra: serve solo per i cap dei rami
           const guide = levelFor(p.key, exp);
           const build = buildFor(p.key, exp);
-          const okTree = !!tree?.specs?.length;
           const okLevel = !!guide?.steps?.length;
           const okBuild = !!build?.steps?.length;
-          // Liste di ordine da rendere: l'ordine "default" + una per variante (es. Druido).
-          // La prima e' visibile, le altre nascoste; l'interruttore le scambia via JS.
-          const buildLists = okBuild
-            ? [{ variant: 'default', steps: build!.steps }, ...(build!.variants ?? []).map(v => ({ variant: v.key, steps: v.steps }))]
+          // Cap dei rami: fallback dei punti quando il tag non li indica, e sorgente dei numeri
+          // degli step auto.
+          const caps = capMap(tree);
+          // Descrizioni brevi delle card: specs.json (IT) col fallback sulla desc del client.
+          const specForKey = specDescs[p.key] ?? {};
+          const cdesc = clientDescMap(tree);
+          // Step di completamento AUTO: dopo i passi curati, ogni nodo dell'albero client NON
+          // ancora toccato (in ordine d'albero) diventa una card "riempi il ramo al suo cap",
+          // finche' non sono coperti tutti i punti potenziali. Non e' un consiglio inventato:
+          // e' "poi completa tutto il resto". Solo le prime 4 card si mostrano, il resto sotto
+          // "mostra tutti" (vedi JS). ⚠️ Enumera anche i rami che una scelta curata segna come
+          // alternativi ("uno solo"/"scegli una"): li elenca tutti, non e' un errore di lettura.
+          const autoFor = (steps: { spec: string; alt?: string; nodes?: string[] }[]) => {
+            const covered = new Set<string>();
+            for (const s of steps) { covered.add(s.spec); if (s.alt) covered.add(s.alt); (s.nodes ?? []).forEach(n => covered.add(n)); }
+            const out: { spec: string; auto: true }[] = [];
+            const walk = (n: ProfNode) => {
+              if (n?.name != null && n.cap != null && !covered.has(n.name)) out.push({ spec: n.name, auto: true });
+              (n?.children ?? []).forEach(walk);
+            };
+            (tree?.specs ?? []).forEach(walk);
+            return out;
+          };
+          // Liste da rendere: default + una per variante (es. Druido); a ciascuna appendiamo i
+          // suoi step auto. La prima e' visibile, le altre nascoste (l'interruttore le scambia).
+          const buildLists: { variant: string; steps: any[] }[] = okBuild
+            ? [{ variant: 'default', steps: [...build!.steps, ...autoFor(build!.steps)] },
+               ...(build!.variants ?? []).map(v => ({ variant: v.key, steps: [...v.steps, ...autoFor(v.steps)] }))]
             : [];
-          // Ordine consigliato -> badge sui nodi dell'albero. Chiave = nome-nodo del client:
-          // `nodes` esplicito quando c'e' (composti), altrimenti spec+alt. Basato sull'ordine
-          // DEFAULT (le varianti scambiano solo le card, non i badge dell'albero).
-          const orderByNode: OrderMap = new Map();
-          (build?.steps ?? []).forEach((step, i) => {
-            const names = step.nodes ?? [step.spec, ...(step.alt ? [step.alt] : [])];
-            for (const nm of names) if (!orderByNode.has(nm)) orderByNode.set(nm, { n: i + 1, tag: step.tag });
-          });
           return (
-            <div class="prof-exp" data-exp={exp} data-has={okBuild || okTree || okLevel ? '1' : '0'} hidden={exp !== defaultExp}>
-              {/* Parte 1: specializzazioni, un blocco solo. In cima l'ORDINE CONSIGLIATO
-                 (builds.json), sotto inline l'albero completo del client (trees.json). */}
+            <div class="prof-exp" data-exp={exp} data-has={okBuild || okLevel ? '1' : '0'} hidden={exp !== defaultExp}>
+              {/* Sezione 1: SPECIALIZZAZIONI. Pannello con testata e corpo. Il corpo e' l'ORDINE
+                 CONSIGLIATO (builds.json): CARD SEQUENZIALI, "come sviluppare la professione".
+                 Ogni card = un passo: nome del ramo/spec + i PUNTI da metterci (cap dall'albero
+                 client) prima di passare alla card successiva. L'albero completo non si mostra. */}
               <section class="prof-sec">
-                <h2 class="sec-title"><span class="sec-num">1</span>Specializzazioni
-                  <span class="sec-hint">ordine consigliato</span>
+                <header class="sec-head">
+                  <div class="sec-headtext">
+                    <h2 class="sec-title">Specializzazioni</h2>
+                    <p class="sec-sub">Come sviluppare la professione: in quali rami mettere i punti, nell'ordine</p>
+                  </div>
                   {/* Interruttore variante (oggi solo Herbalism -> Druido): scambia l'ordine. */}
                   {build?.variants?.length ? (
                     <label class="build-toggle" title={`Mostra l'ordine consigliato per ${build.variants[0].label}`}>
@@ -147,71 +195,73 @@ function renderNode(n: ProfNode, order: OrderMap, depth = 0): string {
                       <span class="build-toggle-lbl">{build.variants[0].label}</span>
                     </label>
                   ) : null}
-                </h2>
-                {okBuild
-                  ? <div class="build-wrap">
-                      {buildLists.map((lst, i) => (
-                        <ol class="build" data-variant={lst.variant} hidden={i !== 0}>
-                          {lst.steps.map(step => (
-                            <li class="build-step" data-search={`${step.spec} ${step.alt ?? ''} ${step.tag ?? ''} ${step.note ?? ''}`.toLowerCase()}>
-                              <div class="build-head">
-                                <span class="build-spec">{step.spec}</span>
-                                {step.alt && <span class="build-alt">oppure {step.alt}</span>}
-                                {step.tag && <span class="build-tag">{step.tag}</span>}
-                              </div>
-                              {step.note && <p class="build-note">{step.note}</p>}
-                            </li>
-                          ))}
-                        </ol>
-                      ))}
-                    </div>
-                  : <p class="prof-empty">Ordine consigliato <strong>{exp}</strong> non ancora definito per <strong>{p.name}</strong>.</p>}
-
-                {okTree &&
-                  <div class="tree-inline">
-                    <p class="tree-inline-lbl">Albero completo dal client <span class="tree-ref-hint">i numeri = rank massimo del nodo</span></p>
-                    {/* Specializzazioni in TAB come in gioco: una barra di tab (una per spec di
-                       primo livello) e un panel per volta col tree di quella spec. */}
-                    <div class="spec-tabs" role="tablist" aria-label={`Specializzazioni di ${p.name}`}>
-                      {tree!.specs.map((spec, si) => (
-                        <button class:list={['spec-tab', { 'is-active': si === 0 }]} type="button" role="tab"
-                                id={`stab-${p.key}-${si}`} aria-controls={`spanel-${p.key}-${si}`}
-                                data-spec-idx={String(si)} aria-selected={si === 0 ? 'true' : 'false'} tabindex={si === 0 ? 0 : -1}
-                                data-search={`${spec.name} ${spec.desc ?? ''} ${(spec.children ?? []).map(nodeText).join(' ')}`.toLowerCase()}>
-                          {orderByNode.get(spec.name) &&
-                            <span class="spec-tab-order" title={`Scelta consigliata n. ${orderByNode.get(spec.name)!.n}`}>{orderByNode.get(spec.name)!.n}</span>}
-                          <span class="spec-tab-name">{spec.name}</span>
-                          <span class="spec-tab-cap" title={`Rank massimo: ${spec.cap} punti conoscenza`}>{spec.cap}</span>
-                        </button>
-                      ))}
-                    </div>
-                    {tree!.specs.map((spec, si) => (
-                      <div class="spec-panel" data-spec-idx={String(si)} role="tabpanel"
-                           id={`spanel-${p.key}-${si}`} aria-labelledby={`stab-${p.key}-${si}`} hidden={si !== 0}>
-                        {spec.desc && <p class="pnode-desc spec-panel-desc">{spec.desc}</p>}
-                        {spec.children && spec.children.length > 0 &&
-                          <div class="pnode-kids spec-panel-kids" set:html={spec.children.map(c => renderNode(c, orderByNode, 1)).join('')} />}
+                </header>
+                <div class="sec-body">
+                  {okBuild
+                    ? <div class="build-wrap">
+                        {buildLists.map((lst, i) => (
+                          <ol class="build" data-variant={lst.variant} hidden={i !== 0}>
+                            {lst.steps.map((step, si) => {
+                              const tp = tagPoints(step.tag);           // conteggio dal tag editoriale (precedenza)
+                              const pts = tp ? tp.n : branchCap(step, caps);   // altrimenti il cap del ramo
+                              const desc = stepDesc(step, specForKey, cdesc);  // breve descrizione (cosa fa il ramo)
+                              return (
+                                <li class="build-step"
+                                    data-search={`${step.spec} ${step.alt ?? ''} ${step.tag ?? ''} ${desc ?? ''} ${step.note ?? ''}`.toLowerCase()}>
+                                  {/* Numero esplicito (non contatore CSS): resta stabile anche quando
+                                     collapse/ricerca nascondono delle card in mezzo. */}
+                                  <span class="build-num" aria-hidden="true">{si + 1}</span>
+                                  <div class="build-head">
+                                    <span class="build-spec">{step.spec}</span>
+                                    {step.alt && <span class="build-alt">oppure {step.alt}</span>}
+                                  </div>
+                                  {/* Breve descrizione: cosa fa/sblocca il ramo (specs.json, fallback client). */}
+                                  {desc && <p class="build-desc">{desc}</p>}
+                                  <div class="build-meta">
+                                    {pts != null &&
+                                      <span class="build-pts" title="Punti da mettere in questo ramo prima di passare alla card successiva">
+                                        <span class="build-pts-n">{pts}</span> punti{tp?.rest && <span class="build-pts-q"> · {tp.rest}</span>}
+                                      </span>}
+                                    {/* Il tag si mostra solo se NON e' gia' il conteggio punti (che sta nel badge sopra). */}
+                                    {step.tag && !tp && <span class="build-tag">{step.tag}</span>}
+                                  </div>
+                                  {/* Nota editoriale (il "perche'"), solo sulle card curate. */}
+                                  {step.note && <p class="build-note">{step.note}</p>}
+                                </li>
+                              );
+                            })}
+                          </ol>
+                        ))}
+                        {/* Collapse: le prime 4 card sono visibili, il resto (soprattutto gli step
+                           auto) sta qui sotto. Visibilita' e testo li gestisce il JS (nascosto se
+                           <=4 card o durante la ricerca). */}
+                        <button class="build-more" type="button" hidden>Mostra tutti</button>
                       </div>
-                    ))}
-                  </div>}
+                    : <p class="prof-empty">Ordine consigliato <strong>{exp}</strong> non ancora definito per <strong>{p.name}</strong>.</p>}
+                </div>
               </section>
 
-              {/* Parte 2: skill-up 1 -> max */}
+              {/* Sezione 2: SKILL-UP 1 -> max (leveling.json). */}
               <section class="prof-sec">
-                <h2 class="sec-title">
-                  <span class="sec-num">2</span>Skill-up
+                <header class="sec-head">
+                  <div class="sec-headtext">
+                    <h2 class="sec-title">Skill-up</h2>
+                    <p class="sec-sub">Come portare la professione da 1 al livello massimo</p>
+                  </div>
                   {guide?.maxSkill && <span class="sec-range">1 → {guide.maxSkill}</span>}
-                </h2>
-                {okLevel
-                  ? <ol class="lvl">
-                      {guide!.steps.map(s => (
-                        <li class="lvl-step" data-search={`${s.from} ${s.to} ${s.action} ${s.note ?? ''}`.toLowerCase()}>
-                          <span class="lvl-range">{s.from}–{s.to}</span>
-                          <span class="lvl-action">{s.action}{s.note && <em class="lvl-note"> — {s.note}</em>}</span>
-                        </li>
-                      ))}
-                    </ol>
-                  : <p class="prof-empty">Guida di leveling <strong>{exp}</strong> non ancora inserita.</p>}
+                </header>
+                <div class="sec-body">
+                  {okLevel
+                    ? <ol class="lvl">
+                        {guide!.steps.map(s => (
+                          <li class="lvl-step" data-search={`${s.from} ${s.to} ${s.action} ${s.note ?? ''}`.toLowerCase()}>
+                            <span class="lvl-range">{s.from}–{s.to}</span>
+                            <span class="lvl-action">{s.action}{s.note && <em class="lvl-note"> — {s.note}</em>}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    : <p class="prof-empty">Guida di leveling <strong>{exp}</strong> non ancora inserita.</p>}
+                </div>
               </section>
             </div>
           );
@@ -250,100 +300,79 @@ function renderNode(n: ProfNode, order: OrderMap, depth = 0): string {
    ~4.9:1, mantenendo il segnale "verde = raccolta" e la simmetria con --crafting. */
 .ptype--gathering { background: color-mix(in srgb, var(--ok) 14%, transparent); color: var(--ok-text); }
 
-/* Le due parti (Specializzazioni / Skill-up), separate da un titolo numerato. */
-.prof-sec { margin-top: 0.6rem; }
-.prof-sec + .prof-sec { margin-top: 1.6rem; }
-.sec-title { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 0 0 0.7rem; }
-.sec-num { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
-.sec-range { margin-left: 0.3rem; font-size: 0.78rem; font-weight: 600; color: var(--text-subtle); font-variant-numeric: tabular-nums; }
-/* Sottotitolo del titolo di sezione (NON un titolo di pagina): oggi "ordine consigliato"
-   accanto a "Specializzazioni", per dire che la lista sotto e' una sequenza, non un elenco. */
-.sec-hint { margin-left: 0.4rem; font-size: 0.72rem; font-weight: 400; color: var(--text-subtle); font-style: italic; }
+/* Le DUE sezioni (Specializzazioni / Skill-up): ognuna un pannello riquadrato con testata
+   e corpo, cosi' sono nettamente distinte a colpo d'occhio. La testata e' una fascia bianca
+   con filetto nella tinta della sezione (come la barra filtri); il corpo sta sul grigio di
+   pagina, cosi' le card bianche dell'ordine consigliato e l'albero risaltano dentro. */
+.prof-sec { margin-top: 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
+.prof-sec + .prof-sec { margin-top: 1.4rem; }
+.sec-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; background: var(--surface); border-bottom: 2px solid color-mix(in srgb, var(--section, var(--border)) 42%, var(--border)); }
+.sec-headtext { min-width: 0; display: flex; flex-direction: column; gap: 0.05rem; }
+.sec-title { font-size: var(--fs-lg); font-weight: 700; color: var(--text); margin: 0; }
+.sec-sub { font-size: var(--fs-xs); font-weight: 400; color: var(--text-subtle); margin: 0; line-height: 1.3; }
+/* Range "1 -> max" spinto a destra nella testata della sezione 2. */
+.sec-range { margin-left: auto; flex-shrink: 0; font-size: var(--fs-sm); font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0.12rem 0.55rem; font-variant-numeric: tabular-nums; }
+.sec-body { padding: 1rem; background: var(--bg); }
 
 /* Interruttore variante d'ordine (oggi solo Herbalism -> Druido): checkbox nativa + etichetta,
-   accanto al sottotitolo "ordine consigliato". Spuntato = mostra l'ordine della variante. */
-.build-toggle { display: inline-flex; align-items: center; gap: 0.35rem; margin-left: 0.6rem; font-size: var(--fs-xs); font-weight: 600; color: var(--text-subtle); cursor: pointer; user-select: none; }
+   nella testata della sezione (spinto a destra). Spuntato = mostra l'ordine della variante. */
+.build-toggle { display: inline-flex; align-items: center; gap: 0.35rem; margin-left: auto; font-size: var(--fs-xs); font-weight: 600; color: var(--text-subtle); cursor: pointer; user-select: none; }
 .build-toggle:hover { color: var(--text); }
 .build-toggle-input { width: 0.95rem; height: 0.95rem; margin: 0; accent-color: var(--accent); cursor: pointer; }
 .build-toggle-input:checked ~ .build-toggle-lbl { color: var(--accent); }
 
-/* Parte 1a: ORDINE CONSIGLIATO delle spec (builds.json) -- passi numerati col contatore CSS.
-   E' il contenuto principale della sezione: la costruzione da seguire, non un dump. Griglia
-   di card (come le altre griglie del sito) per sfruttare tutta la larghezza del container;
-   i numeri tengono l'ordine leggibile anche affiancati. */
-.build { list-style: none; counter-reset: bstep; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--grid-gap); }
-/* display:flex vince sul [hidden] della UA: forziamo, cosi' la lista-variante nascosta
+/* SEZIONE 1 = card sequenziali (builds.json + completamento auto): "come sviluppare la
+   professione". Ogni card e' un passo numerato: nome del ramo/spec + i punti da metterci.
+   Griglia a 4 COLONNE: le prime 4 card (visibili a riposo) stanno su una riga, il resto sotto
+   il "Mostra tutti" a righe di 4. Scende a 2 colonne su schermi medi, 1 su mobile. */
+.build { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--grid-gap); }
+@media (max-width: 900px) { .build { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .build { grid-template-columns: 1fr; } }
+/* display:grid vince sul [hidden] della UA: forziamo, cosi' la lista-variante nascosta
    sparisce davvero (stesso motivo di .exp-pick[hidden] / .chip[hidden]). */
 .build[hidden] { display: none !important; }
 .build-step {
-  counter-increment: bstep; position: relative;
+  position: relative;
   padding: 0.5rem 0.85rem 0.55rem 2.5rem;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
 }
-/* Pastiglia numerata a sinistra: stesso stile di .sec-num, generato dal contatore. */
-.build-step::before {
-  content: counter(bstep); position: absolute; left: 0.6rem; top: 0.55rem;
+/* Pastiglia numerata a sinistra: numero esplicito dal template (stabile con collapse/ricerca). */
+.build-num {
+  position: absolute; left: 0.6rem; top: 0.55rem;
   display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px;
   background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
-.build-step[hidden] { display: none !important; }  /* la ricerca nasconde le tappe non pertinenti */
+.build-step[hidden] { display: none !important; }  /* collapse/ricerca nascondono le card non pertinenti */
 .build-head { display: flex; align-items: baseline; gap: 0.35rem 0.5rem; flex-wrap: wrap; }
 .build-spec { font-weight: 700; font-size: var(--fs-md); color: var(--text); }
 .build-alt { font-size: var(--fs-sm); color: var(--text-subtle); }
+/* Breve descrizione del ramo (cosa fa/sblocca): sotto il nome, sopra i punti. */
+.build-desc { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.35; margin: 0.2rem 0 0; }
+/* Riga dei metadati del passo: i PUNTI del ramo + l'eventuale tag. Sotto il nome del ramo. */
+.build-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+/* Pastiglia dei punti: il numero (cap del ramo) risaltato + testo. E' il dato-chiave della card
+   ("quanti punti metto qui"), quindi piu' marcato del tag: fondo pieno accent, non tint. */
+.build-pts { display: inline-flex; align-items: baseline; gap: 0.3rem; font-size: var(--fs-xs); font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0.1rem 0.55rem; }
+.build-pts-n { font-size: var(--fs-sm); font-weight: 800; font-variant-numeric: tabular-nums; }
+/* Qualifica del conteggio (es. "root" da "20 pt root"): attenuata, dentro la stessa pastiglia. */
+.build-pts-q { font-weight: 600; opacity: 0.75; }
 .build-tag {
   font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
-  color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0.06rem 0.45rem;
+  color: var(--text-subtle); background: var(--border-light); border-radius: 999px; padding: 0.06rem 0.45rem;
 }
-.build-note { font-size: var(--fs-sm); color: var(--text-subtle); line-height: 1.4; margin: 0.25rem 0 0; }
+.build-note { font-size: var(--fs-sm); color: var(--text-subtle); line-height: 1.4; margin: 0.4rem 0 0; }
 
-/* Parte 1b: albero completo dal client, mostrato INLINE sotto l'ordine consigliato -- stessa
-   sezione 1 (niente piu' <details> separato), diviso da un filetto e un'etichetta discreta. */
-.tree-inline { margin-top: 1.3rem; padding-top: 1rem; border-top: 1px solid var(--border-light); }
-.tree-inline-lbl { font-size: var(--fs-sm); font-weight: 600; color: var(--text-subtle); margin: 0 0 0.7rem; }
-.tree-ref-hint { font-weight: 400; font-style: italic; font-size: var(--fs-xs); margin-left: 0.35rem; }
-
-/* Albero: specializzazioni in TAB come in gioco. Barra di tab (una per spec di primo
-   livello, col badge d'ordine consigliato) + un panel per volta con l'albero di quella spec. */
-.spec-tabs { display: flex; flex-wrap: wrap; gap: 0.1rem 0.2rem; margin-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
-.spec-tab {
-  display: inline-flex; align-items: center; gap: 0.4rem; font-family: inherit;
-  font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); background: none;
-  border: none; border-bottom: 2px solid transparent; margin-bottom: -1px;
-  padding: 0.4rem 0.6rem; cursor: pointer; transition: color var(--transition), border-color var(--transition);
+/* Bottone "Mostra tutti / Mostra meno": apre le card oltre le prime 4 (soprattutto gli step
+   auto). A tutta larghezza sotto la griglia; tinta di sezione sul bordo, come gli altri controlli. */
+.build-more {
+  margin-top: var(--grid-gap); width: 100%;
+  font-family: inherit; font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted);
+  background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-lg);
+  padding: 0.5rem 0.75rem; cursor: pointer; transition: color var(--transition), border-color var(--transition);
 }
-.spec-tab:hover { color: var(--text); }
-.spec-tab.is-active { color: var(--accent); border-bottom-color: var(--accent); }
-.spec-tab[hidden] { display: none !important; }  /* inline-flex vince sul [hidden] della UA */
-.spec-tab-cap { font-size: 0.62rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0.03rem 0.4rem; font-variant-numeric: tabular-nums; }
-/* Badge d'ordine consigliato ①②③: pallino pieno come .sec-num, piu' piccolo. Sul tab qui,
-   e via :global(.pnode-order) sui rami dell'albero (che vengono da set:html). */
-.spec-tab-order { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; }
-
-.spec-panel { min-width: 0; }
-.spec-panel[hidden] { display: none; }
-.spec-panel-desc { font-size: var(--fs-md); margin: 0 0 0.7rem; }
-/* I figli di primo livello del panel non hanno un nodo-genitore sopra: via bordo/indent, che
-   sarebbero un filetto vagante (la nidificazione piu' profonda li tiene, :global .pnode-kids). */
-.spec-panel-kids { margin: 0; padding-left: 0; border-left: none; }
-
-/* ⚠️ I nodi FIGLI li produce renderNode via set:html, quindi NON hanno l'attributo
-   [data-astro-cid-…] con cui Astro scopa gli stili: le loro regole DEVONO stare in
-   :global(), altrimenti il cap resta un numero nudo incollato al nome invece che una
-   pastiglia a destra. Stesso motivo per cui transmog e pg usano :global sulle voci
-   create a runtime. Le classi .pnode-* sono uniche di questa pagina: il global non esce. */
-:global(.pnode-head) { display: flex; align-items: baseline; gap: 0.5rem; }
-:global(.pnode-name) { font-weight: 600; color: var(--text); line-height: 1.3; min-width: 0; }
-:global(.pnode-cap) {
-  margin-left: auto; flex-shrink: 0; font-size: 0.75rem; font-weight: 700;
-  color: var(--accent); background: var(--accent-soft); border-radius: 999px;
-  padding: 0.05rem 0.5rem; font-variant-numeric: tabular-nums;
-}
-:global(.pnode-order) { display: inline-grid; place-items: center; width: 15px; height: 15px; min-width: 15px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 0.58rem; font-weight: 700; align-self: center; }
-:global(.pnode-desc) { font-size: 0.76rem; color: var(--text-subtle); line-height: 1.4; margin: 0.2rem 0 0; }
-:global(.pnode-kids) { margin: 0.45rem 0 0 0.3rem; padding-left: 0.7rem; border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem; }
-:global(.pnode) { min-width: 0; }
-:global(.pnode .pnode-head) { font-size: 0.9rem; }
+.build-more:hover { color: var(--text); border-color: var(--section, var(--accent)); }
+.build-more[hidden] { display: none !important; }
 
 /* Parte 2: skill-up, una tappa per riga con la fascia "da-a" a sinistra. Larghezza piena
    del container (niente cap): le azioni sono testi lunghi e respirano meglio. */
@@ -379,22 +408,8 @@ function renderNode(n: ProfNode, order: OrderMap, depth = 0): string {
     // uno in pagina, quindi lo stato sta in un singolo bool `druid`.
     const variantToggle = document.querySelector('.build-toggle-input') as HTMLInputElement | null;
 
-    // Tab delle specializzazioni dentro l'albero (come in gioco): una spec alla volta.
-    // Mostra il panel della spec scelta e nasconde gli altri, dentro il suo .tree-inline.
-    const activateSpecTab = (tab: HTMLButtonElement) => {
-      const wrap = tab.closest('.tree-inline');
-      if (!wrap) return;
-      const idx = tab.dataset.specIdx;
-      for (const t of Array.from(wrap.querySelectorAll('.spec-tab')) as HTMLButtonElement[]) {
-        const on = t === tab;
-        t.classList.toggle('is-active', on);
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
-        t.tabIndex = on ? 0 : -1;
-      }
-      for (const pan of Array.from(wrap.querySelectorAll('.spec-panel')) as HTMLElement[]) {
-        pan.hidden = pan.dataset.specIdx !== idx;
-      }
-    };
+    // Collapse: quante card dell'ordine si vedono a riposo prima del "Mostra tutti".
+    const VISIBLE = 4;
 
     // Salva professione attiva + espansione + ricerca + stato variante (localStorage).
     const persist = () => saveFilters('professioni', {
@@ -404,44 +419,60 @@ function renderNode(n: ProfNode, order: OrderMap, depth = 0): string {
       druid: !!variantToggle?.checked,
     });
 
-    // Filtra per testo il contenuto della professione VISIBILE: nasconde le card spec e le
-    // tappe di leveling che non combaciano. Ri-eseguito a ogni cambio tab/espansione.
+    // Filtra e/o collassa il contenuto della professione VISIBILE. Due comportamenti:
+    //  - a RIPOSO (ricerca vuota): le card dell'ordine sono collassate (prime VISIBLE + "Mostra
+    //    tutti"); le tappe di leveling tutte visibili.
+    //  - in RICERCA: il collapse si sospende, si mostrano tutte le card/tappe che combaciano.
+    // Solo il blocco espansione VISIBILE (con piu' espansioni un .prof-exp nascosto falserebbe
+    // il conteggio "shown"). `.build:not([hidden])`: la lista-variante nascosta (Druido) e'
+    // esclusa. Ri-eseguito a ogni cambio tab/espansione/variante.
     function applySearch() {
       const q = (search?.value || '').trim().toLowerCase();
       const panel = panels.find(p => !p.hidden);
       if (!panel) return;
-      // Solo il blocco espansione VISIBILE: con piu' espansioni, un blocco .prof-exp nascosto
-      // conterrebbe voci invisibili che falserebbero il conteggio "shown" (e quindi il
-      // messaggio "nessun risultato"). Oggi c'e' solo Midnight, ma il giro e' gia' corretto.
-      // Cerchiamo su tre voci: ordine consigliato (.build-step), tab delle spec dell'albero
-      // (.spec-tab, gestite a parte sotto) e tappe di leveling (.lvl-step).
-      // `.build:not([hidden])`: con una variante attiva (es. Druido) la lista d'ordine
-      // nascosta resta nel DOM -- va esclusa, o le sue tappe falserebbero il conteggio.
-      const items = Array.from(panel.querySelectorAll(
-        '.prof-exp:not([hidden]) .build:not([hidden]) .build-step, .prof-exp:not([hidden]) .lvl-step',
-      )) as HTMLElement[];
+      const searching = q !== '';
       let shown = 0;
-      for (const it of items) {
+
+      // Card dell'ordine consigliato (curate + auto): ricerca oppure collapse.
+      const build = panel.querySelector('.prof-exp:not([hidden]) .build:not([hidden])') as HTMLElement | null;
+      if (build) {
+        const steps = Array.from(build.querySelectorAll('.build-step')) as HTMLElement[];
+        const expanded = build.classList.contains('is-expanded');
+        steps.forEach((it, i) => {
+          const match = q === '' || (it.dataset.search || '').includes(q);
+          const vis = searching ? match : (expanded || i < VISIBLE);
+          it.hidden = !vis;
+          if (searching && match) shown++;
+        });
+        // "Mostra tutti / Mostra meno": solo a riposo e con piu' di VISIBLE card.
+        const moreBtn = build.parentElement?.querySelector('.build-more') as HTMLButtonElement | null;
+        if (moreBtn) {
+          moreBtn.hidden = searching || steps.length <= VISIBLE;
+          moreBtn.textContent = expanded ? 'Mostra meno' : `Mostra tutti (${steps.length})`;
+        }
+      }
+
+      // Tappe di leveling: pura ricerca.
+      const lvls = Array.from(panel.querySelectorAll('.prof-exp:not([hidden]) .lvl-step')) as HTMLElement[];
+      for (const it of lvls) {
         const match = q === '' || (it.dataset.search || '').includes(q);
         it.hidden = !match;
-        if (match) shown++;
+        if (searching && match) shown++;
       }
-      // Tab spec dell'albero: filtra per data-search (nome spec + tutti i discendenti). Se
-      // l'attiva sparisce con la ricerca, si attiva la prima ancora visibile.
-      const treeScope = panel.querySelector('.prof-exp:not([hidden]) .tree-inline') as HTMLElement | null;
-      if (treeScope) {
-        const tabs = Array.from(treeScope.querySelectorAll('.spec-tab')) as HTMLButtonElement[];
-        let firstVisible: HTMLButtonElement | null = null, activeVisible = false;
-        for (const tab of tabs) {
-          const match = q === '' || (tab.dataset.search || '').includes(q);
-          tab.hidden = !match;
-          if (match) { shown++; if (!firstVisible) firstVisible = tab; if (tab.classList.contains('is-active')) activeVisible = true; }
-        }
-        if (!activeVisible && firstVisible) activateSpecTab(firstVisible);
-      }
-      if (emptyMsg) emptyMsg.hidden = !(shown === 0 && q !== '');
+
+      if (emptyMsg) emptyMsg.hidden = !(shown === 0 && searching);
     }
     if (search) search.addEventListener('input', () => { applySearch(); persist(); });
+
+    // Bottone "Mostra tutti / Mostra meno": espande/collassa le card della build visibile.
+    for (const btn of Array.from(document.querySelectorAll('.build-more')) as HTMLButtonElement[]) {
+      btn.addEventListener('click', () => {
+        const build = btn.parentElement?.querySelector('.build:not([hidden])') as HTMLElement | null;
+        if (!build) return;
+        build.classList.toggle('is-expanded');
+        applySearch();
+      });
+    }
 
     // Tab a selezione singola, stesso pattern di /transmog: una professione alla volta.
     // `focus` regola il roving tabindex + lo spostamento del focus da tastiera: 0 sul chip
@@ -475,23 +506,6 @@ function renderNode(n: ProfNode, order: OrderMap, depth = 0): string {
         else return;
         e.preventDefault();
         select(chips[next], true);
-      });
-    }
-
-    // Click + tastiera sulle tab delle spec (roving tabindex, stesso pattern delle chip).
-    for (const tab of Array.from(document.querySelectorAll('.spec-tab')) as HTMLButtonElement[]) {
-      tab.addEventListener('click', () => activateSpecTab(tab));
-      tab.addEventListener('keydown', (e) => {
-        const group = (Array.from(tab.closest('.spec-tabs')!.querySelectorAll('.spec-tab')) as HTMLButtonElement[]).filter(t => !t.hidden);
-        const i = group.indexOf(tab);
-        let next = -1;
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % group.length;
-        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + group.length) % group.length;
-        else if (e.key === 'Home') next = 0;
-        else if (e.key === 'End') next = group.length - 1;
-        else return;
-        e.preventDefault();
-        activateSpecTab(group[next]); group[next].focus();
       });
     }
 

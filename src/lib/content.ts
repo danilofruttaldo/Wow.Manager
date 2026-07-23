@@ -12,6 +12,7 @@ import transmogManifest from '../../transmog/manifest.json';
 import profTreesManifest from '../../professions/trees.json';
 import profLevelingManifest from '../../professions/leveling.json';
 import profBuildsManifest from '../../professions/builds.json';
+import profSpecsManifest from '../../professions/specs.json';
 import charactersManifest from '../../professions/characters.json';
 
 // ── Tipi ──────────────────────────────────────────
@@ -158,6 +159,15 @@ export function getProfExpansions(): string[] {
 }
 export function getProfessionTrees(): Record<string, Record<string, ProfTree>> {
   return ((profTreesManifest as any).professions ?? {}) as Record<string, Record<string, ProfTree>>;
+}
+
+// Descrizioni brevi (IT) dei nodi degli alberi di specializzazione (professions/specs.json):
+// professione -> nome-nodo del client (come in trees.json) -> descrizione. Alimentano la riga
+// descrittiva di ogni card della sezione 1 di /professioni. Le spec di primo livello vengono
+// dal client, i sotto-nodi da ricerca verificata sulle guide. File suo per non mischiarlo col
+// dump di trees.json (macchina-generato, rigenerabile).
+export function getProfessionSpecDescs(): Record<string, Record<string, string>> {
+  return ((profSpecsManifest as any).professions ?? {}) as Record<string, Record<string, string>>;
 }
 
 // Guida di LEVELING della skill (1 -> max): "da X a Y fai questo". A differenza degli
