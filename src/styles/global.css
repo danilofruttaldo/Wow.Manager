@@ -8,7 +8,9 @@
   --surface-2:    #F8F9FB;
   --text:         #171A1E;
   --text-muted:   #4E545B;
-  --text-subtle:  #6A717A;
+  /* #6A717A rendeva 4.49:1 su --bg (appena sotto AA su .empty/h2.group/.phead .meta):
+     scurito quel tanto che basta a superare 4.5:1 anche sul fondo piu' chiaro del sito. */
+  --text-subtle:  #656C75;
   --border:       #DDE1E6;
   --border-light: #EBEEF1;
   color-scheme: light;
@@ -43,7 +45,6 @@
   --shadow-md: 0 4px 16px rgba(18, 24, 33, 0.10);
 
   --accent:       #2C63CE;
-  --accent-hover: #214FAA;
   --accent-soft:  #E9F0FB;
 
   /* Colori di stato (leggibili su fondo chiaro) */
@@ -159,7 +160,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   border-bottom: 2px solid color-mix(in srgb, var(--section, var(--border)) 42%, var(--border));
 }
 .filters.row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 0.8rem; }
-@media (max-width: 820px) { .filters { top: 0; } }
+/* L'header resta sticky (top:0, z-50) a ogni larghezza: la barra filtri (z-10) DEVE
+   ancorarsi sotto di esso, non a top:0, altrimenti scorrendo si incolla DIETRO l'header
+   alto 50px e sparisce (search+chip non piu' usabili su mobile). Resta quindi
+   var(--header-height) su tutte le larghezze. */
 
 .search { font-family: inherit; font-size: var(--fs-md); color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.36rem 0.9rem; min-height: var(--control-h); transition: border-color var(--transition), box-shadow var(--transition); }
 .search::placeholder { color: var(--text-subtle); }
@@ -183,9 +187,17 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .chip .c { font-size: var(--fs-xs); font-variant-numeric: tabular-nums; color: var(--text-subtle); }
 .chip.is-active .c { color: #fff; opacity: 0.85; }
 .chip[hidden] { display: none !important; }  /* display:inline-flex vince su [hidden]: forziamo */
-/* Filtro senza risultati (es. classe senza contenuti): chip attenuata ma cliccabile → stato vuoto. */
-.chip.is-empty { opacity: 0.5; }
-.chip.is-empty:hover, .chip.is-empty.is-active { opacity: 1; }
+/* Filtro senza risultati (es. classe senza contenuti): chip attenuata ma cliccabile → stato vuoto.
+   NON si usa `opacity` sull'intera chip: al 50% il testo su bianco crollava a ~2.35:1 (sotto
+   AA) su un controllo cliccabile, che non gode dell'esenzione "disabled". Si attenua invece
+   solo l'ICONA (grafica, senza soglia) e il testo passa a --text-subtle, che su --surface
+   resta ~4.9:1. Su hover/active torna pieno. */
+.chip.is-empty:not(.is-active) { color: var(--text-subtle); }
+.chip.is-empty .chip-ico { opacity: 0.5; }
+.chip.is-empty:hover:not(.is-active) { color: var(--text); }
+/* Da attiva l'empty resta bianca su accent (regola .chip.is-active): non la si sovrascrive.
+   L'icona torna piena sia da hover sia da attiva. */
+.chip.is-empty:hover .chip-ico, .chip.is-empty.is-active .chip-ico { opacity: 1; }
 /* Icona WoW dentro una chip: quadratino arrotondato, senza cornice pesante */
 .chip-ico { width: 18px; height: 18px; min-width: 18px; border-radius: 4px; object-fit: cover; flex-shrink: 0; max-width: none; }
 /* Icona inline dentro le righe di stat/metadati delle card (usata da /addons e /extra). */

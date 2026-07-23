@@ -9,7 +9,7 @@ import { getProfessions, getProfessionTrees, getProfessionLeveling, getProfExpan
 //   2. Skill-up 1 -> max -- la guida di leveling della skill (leveling.json), web-sourced.
 // Una tendina sceglie l'espansione: oggi solo Midnight, ma struttura e controllo sono
 // gia' pronti per aggiungere le passate.
-const professions = getProfessions().sort((a, b) => a.name.localeCompare(b.name));
+const professions = getProfessions().sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
 const trees = getProfessionTrees();          // key -> espansione -> albero
 const leveling = getProfessionLeveling();    // key -> espansione -> guida skill
 const expansions = getProfExpansions();      // ordinate; oggi ["Midnight"]
@@ -171,11 +171,14 @@ function renderNode(n: ProfNode, depth = 0): string {
 
 .prof-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.2rem 0 0.9rem; }
 .prof-ico { width: 40px; height: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border); object-fit: cover; max-width: none; }
-.prof-mono { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius-lg); background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 1.2rem; }
-.prof-name { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; }
+.prof-mono { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius-lg); background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: var(--fs-xl); }
+.prof-name { font-weight: 700; font-size: var(--fs-xl); letter-spacing: -0.01em; }
 .ptype { text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.64rem; }
 .ptype--crafting  { background: var(--accent-soft); color: var(--accent); }
-.ptype--gathering { background: color-mix(in srgb, var(--c-hunter) 14%, transparent); color: var(--c-hunter); }
+/* --c-hunter (#5E8E2E) su un suo tint chiaro dava ~3.3:1 (sotto AA su testo 0.64rem):
+   si passa alla coppia token verde pensata apposta per il testo (--ok-text su tint --ok),
+   ~4.9:1, mantenendo il segnale "verde = raccolta" e la simmetria con --crafting. */
+.ptype--gathering { background: color-mix(in srgb, var(--ok) 14%, transparent); color: var(--ok-text); }
 
 /* Le due parti (Specializzazioni / Skill-up), separate da un titolo numerato. */
 .prof-sec { margin-top: 0.6rem; }
@@ -260,7 +263,12 @@ function renderNode(n: ProfNode, depth = 0): string {
       const q = (search?.value || '').trim().toLowerCase();
       const panel = panels.find(p => !p.hidden);
       if (!panel) return;
-      const items = Array.from(panel.querySelectorAll('.spec, .lvl-step')) as HTMLElement[];
+      // Solo il blocco espansione VISIBILE: con piu' espansioni, un blocco .prof-exp nascosto
+      // conterrebbe .spec/.lvl-step invisibili che falserebbero il conteggio "shown" (e quindi
+      // il messaggio "nessun risultato"). Oggi c'e' solo Midnight, ma il giro e' gia' corretto.
+      const items = Array.from(
+        panel.querySelectorAll('.prof-exp:not([hidden]) .spec, .prof-exp:not([hidden]) .lvl-step'),
+      ) as HTMLElement[];
       let shown = 0;
       for (const it of items) {
         const match = q === '' || (it.dataset.search || '').includes(q);

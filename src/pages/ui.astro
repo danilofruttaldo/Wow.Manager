@@ -125,7 +125,9 @@ let gi = 0;
 .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: #fff; width: 42px; height: 42px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .lb-nav:hover { background: rgba(255,255,255,0.16); }
 .lb-prev { left: 1rem; } .lb-next { right: 1rem; }
-.lb-close { position: absolute; top: 1rem; right: 1.25rem; z-index: 2; background: none; border: 0; color: #fff; font-size: 1.6rem; cursor: pointer; opacity: 0.85; }
+/* Area cliccabile comoda su touch (~44px), oltre il minimo AA di 24px: il controllo di
+   chiusura e' primario. Il glifo resta 1.6rem, centrato nell'area. */
+.lb-close { position: absolute; top: 0.75rem; right: 1rem; z-index: 2; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 0; color: #fff; font-size: 1.6rem; line-height: 1; cursor: pointer; opacity: 0.85; }
 .lb-close:hover { opacity: 1; }
 </style>
 
@@ -150,7 +152,16 @@ function lbShow(i: number) {
   const img = document.getElementById('lb-img') as HTMLImageElement | null;
   const cap = document.getElementById('lb-cap');
   if (img) { img.src = el.dataset.src || ''; img.alt = el.dataset.char || ''; }
-  if (cap) cap.innerHTML = `<b>${el.dataset.char}</b><span>${el.dataset.who}</span>`;
+  // Costruito con textContent (non innerHTML): i valori vengono dai nomi-file, ma un nome
+  // con < o & romperebbe il markup — meglio non passare mai da una stringa HTML.
+  if (cap) {
+    cap.replaceChildren();
+    const b = document.createElement('b');
+    b.textContent = el.dataset.char || '';
+    const s = document.createElement('span');
+    s.textContent = el.dataset.who || '';
+    cap.append(b, s);
+  }
 }
 
 // Alla chiusura il focus torna da dove era partito, altrimenti finisce su <body>

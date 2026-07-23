@@ -58,7 +58,9 @@ const specMap: Record<string, string[]> = Object.fromEntries(
 
     <!-- Riga chip spec: popolata dal JS solo quando è attiva UNA sola classe con spec proprie. -->
     <div class="chips spec-chips" id="spec-chips" role="group" aria-label="Filtra per spec" hidden></div>
-    <script type="application/json" id="spec-map" set:html={JSON.stringify(specMap)}></script>
+    {/* `<` escapato a \u003c: JSON.stringify non lo tocca, e uno spec con "</script>"
+        chiuderebbe il tag in anticipo. JSON.parse lato client lo ridecodifica identico. */}
+    <script type="application/json" id="spec-map" set:html={JSON.stringify(specMap).replace(/</g, '\\u003c')}></script>
 
     <div class="macro-grid" id="macro-grid">
       {macros.map(m => {
@@ -135,6 +137,7 @@ const specMap: Record<string, string[]> = Object.fromEntries(
 
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
+  import { copyText } from '../lib/clipboard';
 
   function initMacros() {
     const grid = document.getElementById('macro-grid');
@@ -280,12 +283,10 @@ const specMap: Record<string, string[]> = Object.fromEntries(
     for (const btn of Array.from(document.querySelectorAll('.copy')) as HTMLButtonElement[]) {
       btn.addEventListener('click', async () => {
         const code = btn.parentElement?.querySelector('code')?.textContent ?? '';
-        try {
-          await navigator.clipboard.writeText(code);
-          btn.textContent = 'Copiato';
-          btn.classList.add('done');
-          setTimeout(() => { btn.textContent = COPY_LABEL; btn.classList.remove('done'); }, 1400);
-        } catch { /* clipboard non disponibile */ }
+        const ok = await copyText(code);
+        btn.textContent = ok ? 'Copiato' : 'Errore';
+        btn.classList.toggle('done', ok);
+        setTimeout(() => { btn.textContent = COPY_LABEL; btn.classList.remove('done'); }, 1400);
       });
     }
   }

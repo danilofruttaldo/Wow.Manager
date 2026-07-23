@@ -96,7 +96,8 @@ a.xcard:hover { border-color: var(--accent); }
 .xlb-head #xlb-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; min-width: 0; }
 /* Aspetto base in global.css (`.copy`): qui solo posizione e misura. */
 .xlb-head .copy { margin-left: auto; font-size: 0.74rem; padding: 0.2rem 0.55rem; }
-.xlb-close { background: none; border: 0; color: var(--text-subtle); font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 0 0.2rem; }
+/* Area cliccabile ~44px su touch (oltre il minimo AA di 24px), glifo centrato. */
+.xlb-close { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: none; background: none; border: 0; color: var(--text-subtle); font-size: 1.5rem; line-height: 1; cursor: pointer; }
 .xlb-close:hover { color: var(--text); }
 .xlb-panel pre { margin: 0; overflow: auto; background: var(--surface-2); padding: 0.85rem 1rem; flex: 1; }
 .xlb-panel code { display: block; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.55; color: var(--text); white-space: pre; background: none; padding: 0; }
@@ -104,6 +105,7 @@ a.xcard:hover { border-color: var(--accent); }
 
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
+  import { copyText } from '../lib/clipboard';
 
   // Da dove si era arrivati alla modale, per restituire il focus alla chiusura.
   let xlbLastFocus: HTMLElement | null = null;
@@ -213,11 +215,10 @@ a.xcard:hover { border-color: var(--accent); }
     initXlbKeys();
 
     copy.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(code.textContent ?? '');
-        copy.textContent = 'Copiato'; copy.classList.add('done');
-        setTimeout(() => { copy.textContent = 'Copia'; copy.classList.remove('done'); }, 1400);
-      } catch { /* clipboard non disponibile */ }
+      const ok = await copyText(code.textContent ?? '');
+      copy.textContent = ok ? 'Copiato' : 'Errore';
+      copy.classList.toggle('done', ok);
+      setTimeout(() => { copy.textContent = 'Copia'; copy.classList.remove('done'); }, 1400);
     });
   }
 

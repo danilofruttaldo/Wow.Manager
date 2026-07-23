@@ -132,7 +132,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                                   <span class="frac">{cell.got}/{cell.total}</span>
                                   {cell.setName && <span class="vname">{cell.setName}</span>}
                                   {daScrivere(cell) && <span class="vlab">{cell.label}</span>}
-                                  <span class="bar"><span class="bar-fill" style={`width:${(cell.got / cell.total) * 100}%`}></span></span>
+                                  <span class="bar"><span class="bar-fill" style={`width:${cell.total ? (cell.got / cell.total) * 100 : 0}%`}></span></span>
                                 </span>
                               ))}
                             </td>
@@ -484,6 +484,14 @@ const daScrivere = (cell: { slot: string; label: string }) =>
         const i = raw.indexOf(' — ');
         const li = document.createElement('li');
         li.className = preso ? 'is-preso' : 'is-manca';
+        // Lo stato preso/mancante e' segnalato dal COLORE (rosso/verde): invisibile a chi
+        // e' daltonico e del tutto perso da uno screen reader, che via aria-describedby
+        // leggerebbe solo "Shoulder — Ragnaros". Un prefisso sr-only lo rende esplicito
+        // all'AT senza aggiungere nulla di visibile (WCAG 1.4.1).
+        const state = document.createElement('span');
+        state.className = 'sr-only';
+        state.textContent = preso ? 'Preso: ' : 'Mancante: ';
+        li.append(state);
         const b = document.createElement('b');
         b.textContent = i < 0 ? raw : raw.slice(0, i);
         li.append(b);

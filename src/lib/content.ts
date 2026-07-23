@@ -1,7 +1,6 @@
 // Accesso ai dati della repo Wow.Manager (manifest JSON + markdown).
 // I file vivono fuori da src/: sono la fonte di verità, il sito li legge in sola lettura.
 import { execSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
 
 import { CHAR_SPEC, CHAR_SPEC_BY_RACE } from './char-specs';
 
@@ -71,29 +70,41 @@ export interface Extra {
 // ── Meta build + data aggiornamento (git) ─────────
 export const wowBuild: string = (addonsManifest as any)._meta?.wow_build ?? '';
 // Data dell'ultimo commit che ha toccato il file/cartella sorgente (YYYY-MM-DD).
+// Memoizzata per relPath: il layout la chiama una volta per pagina (~9 spawn git a
+// build), e lo stesso path da' sempre lo stesso risultato entro un build.
+const _dateCache = new Map<string, string>();
 export function sourceDate(relPath = '.'): string {
+  const cached = _dateCache.get(relPath);
+  if (cached !== undefined) return cached;
+  let out = '';
   try {
-    return execSync(`git log -1 --format=%cs -- "${relPath}"`, { encoding: 'utf8' }).trim();
+    out = execSync(`git log -1 --format=%cs -- "${relPath}"`, { encoding: 'utf8' }).trim();
   } catch {
-    return '';
+    out = '';
   }
+  _dateCache.set(relPath, out);
+  return out;
 }
 
 // ── Addon ─────────────────────────────────────────
 export const addonsMeta = (addonsManifest as any)._meta;
 // Icona addon (avatar CurseForge scaricato in public/icons/addon/<key>.<ext>).
-// Estensioni miste (png/jpg/jpeg) → risolvo a build-time il file che esiste per quella chiave.
+// Estensioni miste (png/jpg/jpeg) → risolte via glob (solo le chiavi): a differenza di un
+// existsSync su path relativo, il glob non dipende dalla cwd del processo di build.
+const addonIcons = import.meta.glob('/public/icons/addon/*.{png,jpg,jpeg}', { eager: true });
 function addonIcon(key: string): string | undefined {
   for (const ext of ['png', 'jpg', 'jpeg']) {
-    if (existsSync(`public/icons/addon/${key}.${ext}`)) return `/icons/addon/${key}.${ext}`;
+    if (`/public/icons/addon/${key}.${ext}` in addonIcons) return `/icons/addon/${key}.${ext}`;
   }
   return undefined;
 }
+let _addons: Addon[] | null = null;
 export function getAddons(): Addon[] {
+  if (_addons) return _addons;
   const raw = (addonsManifest as any).addons ?? {};
-  return Object.entries(raw)
+  return (_addons = Object.entries(raw)
     .map(([key, v]: [string, any]) => ({ key, folders: [], ...v, icon: v.icon ?? addonIcon(key) }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '')));
 }
 
 // ── Macro ─────────────────────────────────────────// Corpi reali delle macro: file .txt fuori da src/, letti a build-time (sola lettura).
@@ -105,11 +116,13 @@ function macroBody(bodyFile?: string | null): string | undefined {
   const hit = Object.entries(macroBodies).find(([p]) => p.endsWith('/' + bodyFile));
   return hit ? hit[1].trim() : undefined;
 }
+let _macros: Macro[] | null = null;
 export function getMacros(): Macro[] {
+  if (_macros) return _macros;
   const raw = (macrosManifest as any).macros ?? {};
-  return Object.entries(raw)
+  return (_macros = Object.entries(raw)
     .map(([key, v]: [string, any]) => ({ key, ...v, body: v.body ?? macroBody(v.body_file) }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '')));
 }
 
 // ── Professioni ───────────────────────────────────
@@ -172,11 +185,13 @@ function extraBody(bodyFile?: string | null): string | undefined {
   const hit = Object.entries(extraBodies).find(([p]) => p.endsWith('/' + bodyFile));
   return hit ? hit[1].replace(/\s+$/, '') : undefined;
 }
+let _extra: Extra[] | null = null;
 export function getExtra(): Extra[] {
+  if (_extra) return _extra;
   const raw = (extraManifest as any).extra ?? {};
-  return Object.entries(raw)
+  return (_extra = Object.entries(raw)
     .map(([key, v]: [string, any]) => ({ key, ...v, body: v.body ?? extraBody(v.body_file) }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '')));
 }
 
 // ── Transmog (tier set per classe) ────────────────
@@ -255,7 +270,7 @@ const slotRank = (testo: string) => {
 // i boss ("Baleroc, the Gatekeeper") sia i raid ("Antorus, the Burning Throne").
 // Si prova quindi ogni virgola da destra e si tiene la prima la cui coda e' un raid
 // noto del tier; solo se nessuna corrisponde si ripiega sull'ultima.
-export function formatMissing(raw: string, raids: [string, string][]): string {
+function formatMissing(raw: string, raids: [string, string][]): string {
   const m = raw.match(/^(.*?) \((.*)\)$/);
   if (!m) return raw;
   const [, slot, detail] = m;
@@ -283,7 +298,7 @@ export function getTransmog(): TmogClass[] {
 function computeTransmog(): TmogClass[] {
   const m = transmogManifest as any;
   const cols = m.columns as { key: string; label: string }[];
-  const tiers = m.tiers as any[];
+  const tiers = (m.tiers ?? []) as any[];
   const classStart = (m.classStart ?? {}) as Record<string, string>;
   const collected = (m.collected ?? {}) as Record<string, any>;
   // Dal dump: TUTTI i pezzi di ogni versione come [testo, preso], con il boss che li
@@ -297,7 +312,7 @@ function computeTransmog(): TmogClass[] {
     const startIdx = tmogTierIndex[classStart[slug] ?? ''] ?? 0; // classe assente prima di questo tier
     let classGot = 0, classTotal = 0;   // per la percentuale nel chip della classe
 
-    const groups: TmogGroup[] = (m.expansions as any[]).map((exp) => {
+    const groups: TmogGroup[] = ((m.expansions ?? []) as any[]).map((exp) => {
       // Set di classe precedenti alla classe: non li mostro affatto (il tab parte dal suo primo set).
       // I set per TIPO DI ARMATURA restano: non sono vincolati alla classe, quindi una classe
       // nata dopo puo' comunque collezionarli e indossarli (un Evoker porta il maglia di Uldir).
@@ -340,8 +355,12 @@ function computeTransmog(): TmogClass[] {
           // Dal gioco: [pezzi posseduti, pezzi totali]. Il totale varia per classe e
           // per versione, quindi il `pieces` del tier resta solo come fallback.
           const cell = collected[slug]?.[t.key]?.[c.key];
-          const got = Number((Array.isArray(cell) ? cell[0] : cell) ?? 0);
-          const total = Number((Array.isArray(cell) ? cell[1] : undefined) ?? t.pieces);
+          const gotN = Number((Array.isArray(cell) ? cell[0] : cell) ?? 0);
+          const totalN = Number((Array.isArray(cell) ? cell[1] : undefined) ?? t.pieces);
+          // Guardia anti-NaN: un valore malformato in `collected` (typo di editing manuale)
+          // non deve propagarsi in classGot/rowTotal/pct e nella % della home.
+          const got = Number.isFinite(gotN) ? gotN : 0;
+          const total = Number.isFinite(totalN) ? totalN : 0;
           classGot += got;
           classTotal += total;
           return {
@@ -493,6 +512,10 @@ const REALM_ABBR: Record<string, string> = {
 // che il tooltip nativo rende su piu' righe.
 const escAttr = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/\n/g, '&#10;');
+// Escape per il TESTO di un elemento (il nome PG visibile): & < >. Il title passa gia'
+// da escAttr; il nome mostrato va escapato a parte, per coerenza col resto del rendering.
+const escHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 // Accanto a ogni nome PG mette l'ICONA della spec (se nota) o "?" se da confermare.
 // Disambigua i PG omonimi via `nome|razza` (CHAR_SPEC_BY_RACE), altrimenti CHAR_SPEC.
@@ -560,7 +583,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     if (profs?.length) tipLines.push(`Professioni: ${profs.join(', ')}`);
     const nameAttr = ` title="${escAttr(tipLines.join('\n'))}"`;
     const pgClass = todo ? ' pg--todo' : wip ? ' pg--wip' : '';
-    return `<span class="pg${pgClass}"><span class="pg-name"${nameAttr}>${name}</span>${tail}</span>`;
+    return `<span class="pg${pgClass}"><span class="pg-name"${nameAttr}>${escHtml(name)}</span>${tail}</span>`;
   });
   return ` ${out.join('<br>')} `;
 }
@@ -629,20 +652,39 @@ function pgBodyRows(rows: string[][], rowClass: string, header: string[]): { htm
   return { html, races, colCounts };
 }
 
-// Conta i PG presenti nella tabella (Orda + Alleanza), inclusi i nomi multipli per cella.
-export function getPgCount(): number {
+// Righe di CORPO della matrice PG (Orda + Alleanza), deduplicate ESATTAMENTE come le
+// rende getPgHtml: le razze condivise (Pandaren/Dracthyr/Earthen/Haranir), che il
+// renderer tiene solo nel blocco Orda, non si ricontano in Alleanza. Fonte unica per
+// getPgCount e getClassStats, cosi' i totali non possono divergere da cio' che la
+// tabella mostra davvero (prima li contavano entrambi senza dedup → sovracount latente).
+let _pgTables: { header: string[]; rows: string[][] } | null | undefined;
+function pgTables(): { header: string[]; rows: string[][] } | null {
+  if (_pgTables !== undefined) return _pgTables;
   const raw = Object.values(pgFile)[0] ?? '';
+  const orda = extractPgTable(raw, 'Orda');
+  if (!orda) return (_pgTables = null);
+  const header = orda[0];
+  const hordeRows = orda.slice(1);
+  const races = new Set(hordeRows.map((c) => stripRealm(c[0] ?? '').trim()));
+  const ally = extractPgTable(raw, 'Alleanza');
+  const allyRows = ally
+    ? ally.slice(1).filter((c) => !races.has(stripRealm(c[0] ?? '').trim()))
+    : [];
+  return (_pgTables = { header, rows: [...hordeRows, ...allyRows] });
+}
+
+// Conta i PG presenti nella tabella (Orda + Alleanza), inclusi i nomi multipli per cella.
+let _pgCount: number | null = null;
+export function getPgCount(): number {
+  if (_pgCount !== null) return _pgCount;
+  const t = pgTables();
   let count = 0;
-  for (const section of ['Orda', 'Alleanza']) {
-    const rows = extractPgTable(raw, section);
-    if (!rows) continue;
-    for (const cells of rows.slice(1)) {
+  if (t)
+    for (const cells of t.rows)
       // Stessa regola per cella di `cellCount` (X/vuoto = 0, "*" pianificati esclusi):
       // una sola fonte, cosi' il totale e i per-cella non possono divergere.
       for (let i = 1; i < cells.length; i++) count += cellCount(cells[i] ?? '');
-    }
-  }
-  return count;
+  return (_pgCount = count);
 }
 
 // ── Screenshot UI ─────────────────────────────────
@@ -691,14 +733,11 @@ export function getClassStats(): ClassStat[] {
   // (War, Pal, ...) -> slug via CLASS_ABBR, con la stessa `cellCount` del totale PG,
   // cosi' i per-classe non possono divergere dal conteggio complessivo.
   const pgBy: Record<string, number> = {};
-  const raw = Object.values(pgFile)[0] ?? '';
-  for (const section of ['Orda', 'Alleanza']) {
-    const rows = extractPgTable(raw, section);
-    if (!rows) continue;
-    const header = rows[0];
-    for (const cells of rows.slice(1)) {
-      for (let j = 1; j < header.length; j++) {
-        const iconSlug = CLASS_ABBR[(header[j] ?? '').trim()]?.[0];
+  const pgt = pgTables();
+  if (pgt) {
+    for (const cells of pgt.rows) {
+      for (let j = 1; j < pgt.header.length; j++) {
+        const iconSlug = CLASS_ABBR[(pgt.header[j] ?? '').trim()]?.[0];
         if (!iconSlug) continue;
         const slug = toDashedSlug(iconSlug);
         pgBy[slug] = (pgBy[slug] ?? 0) + cellCount(cells[j] ?? '');

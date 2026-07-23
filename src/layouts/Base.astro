@@ -36,6 +36,9 @@ const SITE_TITLE = 'WoW Manager';            // nome nel titolo del tab
 const fullTitle = title === SITE_TITLE ? SITE_TITLE : `${title} · ${SITE_TITLE}`;
 const metaDescription = description || 'Setup WoW Retail di Stantu — addon, macro, professioni, PG.';
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+// Anteprima social: URL ASSOLUTO (i crawler non risolvono i path relativi). Asset in
+// public/og-image.png, 1200×630 (rigenerabile con scripts/make-og-image.ps1).
+const ogImage = new URL('/og-image.png', Astro.site).href;
 
 // La toolbar ha ASSORBITO i pulsanti che stavano sulla home: icona + conteggio per
 // sezione, cosi' non c'e' piu' un doppione (nav in header + barra di card che linkavano
@@ -70,7 +73,7 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={metaDescription} />
-  <meta name="theme-color" content="#F4F5F7" />
+  <meta name="theme-color" content="#F3F4F7" />
   <meta name="color-scheme" content="light" />
   <ClientRouter />
 
@@ -79,6 +82,13 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonicalUrl.href} />
   <meta property="og:site_name" content={SITE_TITLE} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={metaDescription} />
+  <meta name="twitter:image" content={ogImage} />
 
   <title>{fullTitle}</title>
   <link rel="canonical" href={canonicalUrl.href} />
@@ -149,7 +159,7 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
 /* Il badge vive nel FOOTER, in flusso fra dominio e GitHub: flex: 1 gli fa prendere lo
    spazio residuo e text-align: center lo centra dentro (stesso trucco che aveva in header). */
 .build-badge { flex: 1; text-align: center; font-size: 0.74rem; color: var(--text-subtle); white-space: nowrap; pointer-events: none; }
-.build-badge code { font-size: 0.72rem; background: var(--border-light); padding: 0.05rem 0.4rem; border-radius: 999px; color: var(--text-muted); }
+.build-badge code { font-size: var(--fs-xs); background: var(--border-light); padding: 0.05rem 0.4rem; border-radius: 999px; color: var(--text-muted); }
 .brand { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; white-space: nowrap; flex-shrink: 0; }
 .brand span { color: var(--text-subtle); font-weight: 500; }
 .site-header nav { display: flex; align-items: center; gap: 0.3rem; overflow-x: auto; flex: 0 1 auto; min-width: 0; }
@@ -165,7 +175,7 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
   transition: color var(--transition), background var(--transition), border-color var(--transition);
 }
 .nav-ico { width: 20px; height: 20px; border-radius: 999px; border: 1px solid var(--border); object-fit: cover; max-width: none; flex: none; transition: box-shadow var(--transition), border-color var(--transition); }
-.nav-count { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); font-variant-numeric: tabular-nums; background: var(--border-light); padding: 0.03rem 0.36rem; border-radius: 999px; transition: color var(--transition), background var(--transition); }
+.nav-count { font-size: var(--fs-2xs); font-weight: 700; color: var(--text-muted); font-variant-numeric: tabular-nums; background: var(--border-light); padding: 0.03rem 0.36rem; border-radius: 999px; transition: color var(--transition), background var(--transition); }
 
 .nav-link:hover {
   color: var(--text);
@@ -186,7 +196,7 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
 .nav-link.active .nav-count { color: #fff; background: var(--hc); }
 
 .site-footer { border-top: 1px solid var(--border); background: var(--surface); }
-.footer-inner { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding-top: 1.4rem; padding-bottom: 1rem; font-size: 0.78rem; color: var(--text-subtle); }
+.footer-inner { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding-top: 1.4rem; padding-bottom: 1rem; font-size: var(--fs-sm); color: var(--text-subtle); }
 .footer-inner a { color: var(--accent); }
 /* Disclaimer IP: nomi/immagini/icone di WoW sono di Blizzard, questo e' un sito fan
    non ufficiale. Testo piccolo e smorzato, su tutte le pagine (e' nel layout).
@@ -194,7 +204,7 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
    deve occupare tutta la fascia del footer (poche righe larghe), non incolonnarsi
    stretto a sinistra lasciando meta' footer vuoto. */
 .footer-legal { padding-top: 1rem; padding-bottom: 1.8rem; border-top: 1px solid var(--border-light); }
-.footer-legal p { margin: 0; font-size: 0.72rem; line-height: 1.7; color: var(--text-subtle); }
+.footer-legal p { margin: 0; font-size: var(--fs-xs); line-height: 1.7; color: var(--text-subtle); }
 
 /* Su schermo stretto il badge va a capo su una riga propria (flex-basis: 100%), centrato,
    invece di stringere dominio e GitHub sulla stessa riga. */
