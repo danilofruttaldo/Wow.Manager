@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getMounts, getMountSources, getMountStats, mountCats, MOUNT_CATS } from '../lib/content';
+import { getMounts, getMountSources, getMountStats, mountCats, mountBadges, MOUNT_CATS } from '../lib/content';
 
 const mounts = getMounts();
 const sources = getMountSources();
@@ -32,10 +32,9 @@ const srcOptions = [...srcCounts.entries()]
   .map(([k, n]) => ({ k, n, label: sources[k] ?? 'Altro' }))
   .sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
 
-const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo Alleanza' };
 ---
 <Base title="Mount" description="Collezione cavalcature: tutte le mount del gioco, quelle sbloccate e quelle che mancano, con la provenienza.">
-  <div class="wrap">
+  <div class="wrap" id="mount-main">
     <div class="filters row">
       <input id="mount-search" class="search" type="search" inputmode="search" autocomplete="off"
              placeholder="Cerca cavalcatura…" aria-label="Cerca cavalcatura" />
@@ -58,8 +57,11 @@ const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo A
 
     <div class="mount-grid" id="mount-grid">
       {mounts.map(m => (
-        <article class="mcard" data-got={String(m.got)} data-cats={mountCats(m).join(' ')} data-src={String(m.src)}
-                 data-search={`${m.name} ${srcLabel(m)} ${sources[String(m.src)] ?? ''}`.toLowerCase()}>
+        <button type="button" class="mcard" data-got={String(m.got)} data-cats={mountCats(m).join(' ')} data-src={String(m.src)}
+                 data-full={m.srcText ?? ''} data-desc={m.desc ?? ''} data-spell={String(m.spell)} data-img={m.img}
+                 data-srclabel={sources[String(m.src)] ?? ''}
+                 data-badges={mountBadges(m).length ? JSON.stringify(mountBadges(m)) : undefined}
+                 data-search={`${m.name} ${srcLabel(m)} ${sources[String(m.src)] ?? ''} ${m.class ?? ''} ${m.race ?? ''}`.toLowerCase()}>
           {m.icon
             ? <img class="mico" src={`/icons/mount/${m.icon}.jpg`} alt="" width="36" height="36" loading="lazy" decoding="async" />
             : <span class="mono" aria-hidden="true">{m.name.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase()}</span>}
@@ -67,14 +69,51 @@ const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo A
             <span class="mname">{m.name}</span>
             <span class="msrc">{srcLabel(m)}</span>
           </div>
-          {m.faction && <span class="mfac">{facLabel[m.faction]}</span>}
-        </article>
+          {/* Vincoli d'uso: fazione, classe e -- per le mount razziali dei paladini --
+              anche la razza. Icone di gioco col nome nel tooltip, non testo. */}
+          {(() => { const b = mountBadges(m); return b.length > 0 && (
+            <span class="mreq">
+              {b.map(x => x.icon
+                ? <img class="mreq-ico" src={x.icon} alt={x.label} title={x.label} width="18" height="18" loading="lazy" decoding="async" />
+                : <span class="mreq-txt" title={x.label}>{x.label}</span>)}
+            </span>
+          ); })()}
+        </button>
       ))}
     </div>
     <p class="empty" id="empty" role="status" hidden>Nessuna cavalcatura trovata.</p>
     {mounts.length === 0 && (
       <p class="empty">Nessun dato: lancia <code>scripts\mount-sync.ps1</code> dopo un <code>/reload</code> in gioco.</p>
     )}
+  </div>
+
+  {/* Etichette e icone delle categorie, una volta sola: la modale le rimonta dalle
+      chiavi in data-cats invece di ripeterle su ognuna delle ~1500 card. */}
+  <script type="application/json" id="mount-maps" set:html={JSON.stringify(
+    Object.fromEntries(MOUNT_CATS.map(c => [c.key, { label: c.label, icon: c.icon }])))}></script>
+
+  <div class="mlb" id="mlb" role="dialog" aria-modal="true" aria-labelledby="mlb-title">
+    <div class="mlb-panel">
+      <div class="mlb-head">
+        <img class="mlb-ico" id="mlb-ico" src="/icons/section/mount.jpg" alt="" width="44" height="44" />
+        <div class="mlb-htext">
+          <strong id="mlb-title"></strong>
+          <span class="mlb-state" id="mlb-state"></span>
+        </div>
+        <button class="mlb-close" id="mlb-close" aria-label="Chiudi">&times;</button>
+      </div>
+      <div class="mlb-body">
+        {/* Immagine del modello: caricata solo all'apertura (il src lo mette il JS),
+            quindi le ~1500 miniature non pesano sul caricamento della pagina. */}
+        <img class="mlb-img" id="mlb-img" src="" alt="" hidden decoding="async" />
+        <div class="mlb-badges" id="mlb-badges"></div>
+        <dl class="mlb-fields" id="mlb-fields"></dl>
+        <p class="mlb-desc" id="mlb-desc" hidden></p>
+        <a class="mlb-link" id="mlb-link" href="#" target="_blank" rel="noopener noreferrer">
+          Scheda su Wowhead <img class="stat-ico" src="/icons/ui/external.jpg" alt="" width="14" height="14" /><span class="sr-only"> (apre in una nuova scheda)</span>
+        </a>
+      </div>
+    </div>
   </div>
 </Base>
 
@@ -90,7 +129,13 @@ const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo A
   position: relative; display: flex; align-items: center; gap: 0.7rem;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
   padding: 0.55rem 0.7rem; box-shadow: inset 3px 0 0 var(--ok); overflow: hidden;
+  font: inherit; color: inherit; text-align: left; cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
+/* La barretta di stato e' un box-shadow: l'hover deve RIPETERLA, altrimenti
+   aggiungendo l'ombra la si spegne e la card sembra cambiare stato al passaggio. */
+.mcard:hover { border-color: var(--section, var(--accent)); box-shadow: inset 3px 0 0 var(--ok), var(--shadow-md); }
+.mcard[data-got="0"]:hover { box-shadow: inset 3px 0 0 var(--bad), var(--shadow-md); }
 .mcard[data-got="0"] { box-shadow: inset 3px 0 0 var(--bad); background: var(--surface-2); }
 /* Mancante: l'icona resta leggibile ma smorzata, cosi' la griglia si legge a colpo
    d'occhio senza doverla percorrere card per card. */
@@ -105,16 +150,93 @@ const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo A
 /* Provenienza su una riga sola: il testo del gioco puo' essere lungo (boss + zona) e
    qui conta il colpo d'occhio, non il testo integrale. */
 .msrc { font-size: var(--fs-xs); color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mfac { flex-shrink: 0; align-self: flex-start; font-size: var(--fs-2xs); font-weight: 600; color: var(--text-muted); background: var(--border-light); border-radius: 999px; padding: 0.05rem 0.4rem; }
+/* Vincoli: fila di icone a destra del nome. Restano piccole (18px) perche' sono un
+   contorno del dato, non il dato: la card deve leggersi lo stesso senza guardarle. */
+.mreq { flex-shrink: 0; align-self: center; display: flex; align-items: center; gap: 0.2rem; }
+.mreq-ico { width: 18px; height: 18px; min-width: 18px; max-width: none; border-radius: 4px; border: 1px solid var(--border); object-fit: cover; }
+/* Razza senza icona mappata: si scrive, non si perde. */
+.mreq-txt { font-size: var(--fs-2xs); font-weight: 600; color: var(--text-muted); background: var(--border-light); border-radius: 999px; padding: 0.05rem 0.4rem; white-space: nowrap; }
 
 /* Tendina delle provenienze: stessa altezza dei controlli della barra filtri. */
 .select { font-family: inherit; font-size: var(--fs-base); color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.7rem; min-height: var(--control-h); cursor: pointer; }
 .select:hover { border-color: var(--section, var(--accent)); }
 .tally { margin-left: auto; font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ── Modale di dettaglio (pattern lightbox di /extra e /ui) ── */
+.mlb { position: fixed; inset: 0; z-index: 100; background: rgba(10,12,16,0.94); display: none; align-items: center; justify-content: center; padding: 1rem; }
+.mlb.open { display: flex; }
+.mlb-panel { display: flex; flex-direction: column; width: min(560px, 96vw); max-height: 92vh; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.mlb-head { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); }
+.mlb-ico { width: 44px; height: 44px; min-width: 44px; max-width: none; border-radius: var(--radius-md); border: 1px solid var(--border); object-fit: cover; }
+.mlb-htext { min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.mlb-htext #mlb-title { font-size: var(--fs-lg); font-weight: 700; letter-spacing: -0.01em; }
+/* Stato scritto in chiaro, non affidato al solo colore. */
+.mlb-state { font-size: var(--fs-xs); font-weight: 700; }
+.mlb-state.got { color: var(--ok-text); }
+.mlb-state.missing { color: var(--bad); }
+.mlb-close { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: none; margin-left: auto; background: none; border: 0; color: var(--text-subtle); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.mlb-close:hover { color: var(--text); }
+.mlb-body { padding: 0.85rem 0.9rem 1rem; overflow: auto; display: flex; flex-direction: column; gap: 0.8rem; }
+/* Il modello sta su fondo trasparente: gli si mette sotto una superficie leggera,
+   altrimenti le parti scure spariscono sul bianco della modale. */
+.mlb-img { align-self: center; width: 200px; height: 200px; object-fit: contain; background: var(--surface-2); border: 1px solid var(--border-light); border-radius: var(--radius-lg); }
+
+/* Qui le icone portano l'etichetta ACCANTO, non solo nel tooltip: nella card lo
+   spazio non c'e', nella modale si'. */
+.mlb-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.mlb-badges span { display: inline-flex; align-items: center; gap: 0.32rem; font-size: var(--fs-xs); font-weight: 600; color: var(--text-muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 0.12rem 0.5rem 0.12rem 0.22rem; }
+.mlb-badges img { width: 18px; height: 18px; min-width: 18px; max-width: none; border-radius: 999px; object-fit: cover; }
+
+/* Provenienza: il gioco la scrive gia' come "Etichetta: valore" (Vendor, Zone,
+   Cost, Faction), quindi diventa una lista di campi senza doverla interpretare. */
+.mlb-fields { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 0.7rem; margin: 0; font-size: var(--fs-md); }
+.mlb-fields dt { color: var(--text-subtle); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding-top: 0.12rem; }
+.mlb-fields dd { margin: 0; color: var(--text); }
+.mlb-desc { margin: 0; font-size: var(--fs-md); font-style: italic; color: var(--text-muted); line-height: 1.5; border-left: 2px solid var(--border); padding-left: 0.7rem; }
+.mlb-link { align-self: flex-start; font-size: var(--fs-sm); font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 0.3rem; }
+.mlb-link:hover { text-decoration: underline; text-underline-offset: 2px; }
 </style>
 
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
+
+  // Da dove si era arrivati alla modale, per restituire il focus alla chiusura.
+  let mlbLastFocus: HTMLElement | null = null;
+
+  // Il nodo si risolve a ogni chiamata: con ClientRouter la pagina viene sostituita
+  // ma questo modulo resta, quindi un riferimento preso una volta sola sarebbe
+  // quello della pagina precedente.
+  const closeMlb = () => {
+    const lb = document.getElementById('mlb');
+    if (!lb) return;
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    // Griglia e filtri tornano navigabili: erano inerti dietro l'overlay. Non si
+    // tocca #main, che CONTIENE la modale stessa.
+    document.getElementById('mount-main')?.removeAttribute('inert');
+    mlbLastFocus?.focus();
+    mlbLastFocus = null;
+  };
+
+  // I listener su `document` si agganciano UNA volta sola: `astro:page-load` rispara
+  // a ogni navigazione e ne accumulerebbe una copia per visita (stessa guardia di
+  // /extra e /transmog).
+  function initMlbKeys() {
+    if ((window as any).__mountKeys) return;
+    (window as any).__mountKeys = true;
+    document.addEventListener('keydown', (e) => {
+      const lb = document.getElementById('mlb');
+      if (!lb || !lb.classList.contains('open')) return;
+      if (e.key === 'Escape') { closeMlb(); return; }
+      if (e.key !== 'Tab') return;
+      // Trappola del focus: dentro un dialog il Tab non deve uscire sulla pagina.
+      const f = Array.from(lb.querySelectorAll<HTMLElement>('button, a[href]'));
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1], cur = document.activeElement;
+      if (e.shiftKey && (cur === first || !lb.contains(cur))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (cur === last || !lb.contains(cur))) { e.preventDefault(); first.focus(); }
+    });
+  }
 
   function initMounts() {
     const grid = document.getElementById('mount-grid');
@@ -188,7 +310,95 @@ const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo A
       }
     }
     apply();
+
+    // ── Modale di dettaglio ────────────────────────────
+    const lb = document.getElementById('mlb');
+    const maps = JSON.parse(document.getElementById('mount-maps')?.textContent || '{}');
+    if (lb) {
+      const elIco = document.getElementById('mlb-ico') as HTMLImageElement;
+      const elTitle = document.getElementById('mlb-title')!;
+      const elState = document.getElementById('mlb-state')!;
+      const elBadges = document.getElementById('mlb-badges')!;
+      const elFields = document.getElementById('mlb-fields')!;
+      const elDesc = document.getElementById('mlb-desc') as HTMLElement;
+      const elLink = document.getElementById('mlb-link') as HTMLAnchorElement;
+      const elImg = document.getElementById('mlb-img') as HTMLImageElement;
+
+      const pill = (label: string, icon?: string) => {
+        const s = document.createElement('span');
+        if (icon) {
+          const img = document.createElement('img');
+          img.src = icon; img.alt = ''; img.width = 18; img.height = 18;
+          s.appendChild(img);
+        }
+        s.appendChild(document.createTextNode(label));
+        return s;
+      };
+
+      const open = (card: HTMLElement) => {
+        const got = card.dataset.got === '1';
+        elTitle.textContent = card.querySelector('.mname')?.textContent || '';
+        const ico = card.querySelector('.mico') as HTMLImageElement | null;
+        elIco.src = ico?.getAttribute('src') || '/icons/section/mount.jpg';
+        elState.textContent = got ? 'Sbloccata' : 'Mancante';
+        elState.className = 'mlb-state ' + (got ? 'got' : 'missing');
+
+        // Non tutte hanno il modello: senza, la modale resta senza immagine invece di
+        // mostrare un riquadro rotto.
+        const img = card.dataset.img || '';
+        elImg.hidden = !img;
+        if (img) { elImg.src = img; elImg.alt = elTitle.textContent || ''; } else { elImg.removeAttribute('src'); }
+
+        // Categorie (dalle chiavi in data-cats) + vincoli (gia' risolti a build-time
+        // in data-badges, che c'e' solo dove serve).
+        elBadges.textContent = '';
+        for (const k of (card.dataset.cats || '').split(' ').filter(Boolean)) {
+          const c = maps[k];
+          if (c) elBadges.appendChild(pill(c.label, c.icon));
+        }
+        for (const b of JSON.parse(card.dataset.badges || '[]')) {
+          elBadges.appendChild(pill(b.label, b.icon));
+        }
+
+        // Provenienza: il gioco la scrive gia' come "Etichetta: valore" una riga per
+        // volta (Vendor, Zone, Cost, Faction), quindi diventa una lista di campi.
+        // Le righe senza due punti (es. "Trading Post") restano valore senza etichetta.
+        elFields.textContent = '';
+        const riga = (dt: string, dd: string) => {
+          const a = document.createElement('dt'); a.textContent = dt;
+          const b = document.createElement('dd'); b.textContent = dd;
+          elFields.append(a, b);
+        };
+        if (card.dataset.srclabel) riga('Sorgente', card.dataset.srclabel);
+        for (const l of (card.dataset.full || '').split('\n').map(s => s.trim()).filter(Boolean)) {
+          const i = l.indexOf(': ');
+          if (i > 0) riga(l.slice(0, i), l.slice(i + 2));
+          else riga('', l);
+        }
+
+        const desc = card.dataset.desc || '';
+        elDesc.textContent = desc;
+        elDesc.hidden = !desc;
+        elLink.href = `https://www.wowhead.com/spell=${card.dataset.spell || ''}`;
+
+        mlbLastFocus = card;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('mount-main')?.setAttribute('inert', '');
+        (document.getElementById('mlb-close') as HTMLElement)?.focus();
+      };
+
+      // Un listener solo sulla griglia invece di ~1500: le card sono tante e ognuna
+      // con il suo handler peserebbe sulla memoria senza motivo.
+      grid.addEventListener('click', (e) => {
+        const card = (e.target as HTMLElement).closest('.mcard') as HTMLElement | null;
+        if (card) open(card);
+      });
+      document.getElementById('mlb-close')?.addEventListener('click', closeMlb);
+      lb.addEventListener('click', (e) => { if (e.target === lb) closeMlb(); });
+    }
   }
 
   document.addEventListener('astro:page-load', initMounts);
+  document.addEventListener('astro:page-load', initMlbKeys);
 </script>

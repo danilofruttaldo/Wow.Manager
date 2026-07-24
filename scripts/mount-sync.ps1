@@ -45,6 +45,7 @@ param(
 $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path $PSScriptRoot -Parent
 $IconDir  = Join-Path $RepoRoot "public\icons\mount"
+$ImgDir   = Join-Path $RepoRoot "public\mounts"
 # PS 5.1: senza TLS 1.2 esplicito le chiamate https falliscono, e la barra di
 # avanzamento di Invoke-WebRequest rallenta ogni download di ordini di grandezza.
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -131,28 +132,49 @@ if ($lua -match '\["build"\]\s*=\s*"([^"]*)"') { $build = $matches[1] }
 # Nome icona gia' noto dal manifest precedente: si riusa, cosi' ogni mount si cerca
 # una volta sola nella vita del repo e i giri successivi toccano solo le novita'.
 $noti = @{}
+# Classe gia' cercata: la stringa vuota vale "cercata, nessun requisito" ed e' diversa
+# da "mai cercata" (assente), altrimenti le mount senza vincoli si ricercherebbero a
+# ogni giro -- che sono il 98%.
+$notiClasse = @{}
 if (Test-Path $Manifest) {
     $vecchio = Get-Content -Raw -Encoding UTF8 $Manifest | ConvertFrom-Json
     foreach ($m in $vecchio.mounts) {
         if ($m.icon) { $noti[[string]$m.spell] = [string]$m.icon }
+        if ($null -ne $m.class) { $notiClasse[[string]$m.spell] = [string]$m.class }
     }
 }
 
-function IconaDiSpell($spellID) {
-    # Via principale: l'endpoint tooltip di Wowhead, che risponde JSON con il nome
-    # dell'icona. Ripiego: la pagina della spell, dove il nome sta nell'og:image --
-    # lo stesso trucco usato per gli avatar degli addon.
+# Una sola chiamata da' DUE cose: il nome dell'icona e il requisito di classe.
+#
+# ⚠️ La classe NON viene dal client: il tooltip in gioco non ha righe "Requires ..."
+# (misurato sul dump -- zero requisiti trovati e zero righe non riconosciute), e la
+# provenienza cita una classe in 23 casi su 1532. Wowhead invece la scrive nel blocco
+# `wowhead-tooltip-requirements` ("Requires Death Knight", "Requires Paladin").
+#
+# ⚠️ La RAZZA li' non c'e': per Thalassian Charger e Sunwalker Kodo, che sono le
+# cavalcature razziali dei paladini, Wowhead dichiara solo "Requires Paladin". Quindi
+# il vincolo di razza non e' noto a nessuna delle due fonti e NON si inventa.
+#
+# Ripiego per la sola icona: la pagina della spell, dove il nome sta nell'og:image --
+# lo stesso trucco usato per gli avatar degli addon.
+function DatiDiSpell($spellID) {
+    $icona, $classe = $null, ""
     try {
         $r = Invoke-RestMethod -Uri "https://nether.wowhead.com/tooltip/spell/$spellID" `
                                -Headers @{ "User-Agent" = $UA } -TimeoutSec 20
-        if ($r.icon) { return [string]$r.icon }
+        if ($r.icon) { $icona = [string]$r.icon }
+        if ($r.tooltip -match 'wowhead-tooltip-requirements[^>]*>Requires ([^<]+)<') {
+            $classe = $matches[1].Trim()
+        }
     } catch { }
-    try {
-        $h = Invoke-WebRequest -Uri "https://www.wowhead.com/spell=$spellID" `
-                               -Headers @{ "User-Agent" = $UA } -TimeoutSec 20 -UseBasicParsing
-        if ($h.Content -match 'icons/large/([a-z0-9_]+)\.jpg') { return $matches[1] }
-    } catch { }
-    return $null
+    if (-not $icona) {
+        try {
+            $h = Invoke-WebRequest -Uri "https://www.wowhead.com/spell=$spellID" `
+                                   -Headers @{ "User-Agent" = $UA } -TimeoutSec 20 -UseBasicParsing
+            if ($h.Content -match 'icons/large/([a-z0-9_]+)\.jpg') { $icona = $matches[1] }
+        } catch { }
+    }
+    return @{ icona = $icona; classe = $classe }
 }
 
 function ScaricaIcona($nome) {
@@ -252,10 +274,16 @@ if ($tolte.Count -gt 0) {
 }
 $nuoveIcone = 0
 $senzaIcona = 0
+$conClasse = 0
 $daCercare = 0
 if (-not $NoIcone) {
-    foreach ($l in $righe) { if ($l -match '"spell":(\d+)' -and -not $noti[$matches[1]]) { $daCercare++ } }
-    if ($daCercare -gt 0) { Write-Host ("icone da risolvere: {0}" -f $daCercare) }
+    foreach ($l in $righe) {
+        if ($l -match '"spell":(\d+)') {
+            $s = $matches[1]
+            if (-not $noti[$s] -or $null -eq $notiClasse[$s]) { $daCercare++ }
+        }
+    }
+    if ($daCercare -gt 0) { Write-Host ("da cercare su Wowhead (icona + classe): {0}" -f $daCercare) }
 }
 
 $fatte = 0
@@ -265,16 +293,24 @@ for ($i = 0; $i -lt $righe.Count; $i++) {
     if ($l -notmatch '"spell":(\d+)') { continue }
     $spell = $matches[1]
     $icona = $noti[$spell]
-    if (-not $icona -and -not $NoIcone -and $spell -ne "0") {
+    $classe = $notiClasse[$spell]
+    if ((-not $icona -or $null -eq $classe) -and -not $NoIcone -and $spell -ne "0") {
         if ($MaxIcone -gt 0 -and $fatte -ge $MaxIcone) {
+            # ⚠️ Oltre il tetto si SALTA LA RICERCA, non la riga: con un `continue`
+            # qui la mount perdeva anche l'icona che gia' si conosceva, e siccome la
+            # cache delle icone e' il manifest stesso, il giro dopo se le ritrovava
+            # tutte da ricercare. Si scrive quel che si sa e si rimanda il resto.
             $rimandate++
-            continue    # niente campo icon: la cerca il giro dopo
+        } else {
+            $d = DatiDiSpell $spell
+            if (-not $icona) { $icona = $d.icona }
+            if ($null -eq $classe) { $classe = $d.classe }
+            $fatte++
+            if ($fatte % 25 -eq 0) { Write-Host ("  ...{0}/{1}" -f $fatte, $daCercare) }
+            Start-Sleep -Milliseconds 60   # gentile con Wowhead
         }
-        $icona = IconaDiSpell $spell
-        $fatte++
-        if ($fatte % 25 -eq 0) { Write-Host ("  ...{0}/{1}" -f $fatte, $daCercare) }
-        Start-Sleep -Milliseconds 60   # gentile con Wowhead
     }
+    if ($classe) { $conClasse++ }
     if ($icona) {
         if (-not $NoIcone) {
             if (ScaricaIcona $icona) {
@@ -284,11 +320,18 @@ for ($i = 0; $i -lt $righe.Count; $i++) {
             }
         }
     }
-    if (-not $icona) { $senzaIcona++; continue }
+    if (-not $icona) { $senzaIcona++ }
 
+    # La classe si riscrive sempre: il dump la emette a null (non la sa), qui si
+    # sostituisce col valore vero. Si toglie prima l'eventuale campo gia' presente,
+    # cosi' la riga resta valida qualunque versione del dump l'abbia prodotta.
     $coda = ""
     if ($l.EndsWith(",")) { $coda = ","; $l = $l.Substring(0, $l.Length - 1) }
-    $righe[$i] = $l.Substring(0, $l.Length - 1) + (',"icon":"{0}"}}' -f $icona) + $coda
+    $l = $l -replace ',"class":(?:null|"[^"]*")', ''
+    $agg = ""
+    if ($icona) { $agg += ',"icon":"{0}"' -f $icona }
+    if ($null -ne $classe) { $agg += ',"class":{0}' -f $(if ($classe) { '"' + $classe + '"' } else { '""' }) }
+    $righe[$i] = $l.Substring(0, $l.Length - 1) + $agg + "}" + $coda
 }
 
 # --- 5. scrivere il manifest ----------------------------------------------------
@@ -327,6 +370,7 @@ if (Test-Path $Manifest) {
 $delta = $presi - $primaPrese
 Write-Host ("manifest: {0}/{1} mount collezionate ({2:+#;-#;0} rispetto a prima)" -f $presi, $totale, $delta) -ForegroundColor Green
 if ($nuoveIcone -gt 0) { Write-Host ("icone scaricate: {0}" -f $nuoveIcone) }
+if ($conClasse -gt 0) { Write-Host ("mount con vincolo di classe: {0}" -f $conClasse) }
 if ($rimandate -gt 0) {
     Write-Host ("icone rimandate al prossimo giro: {0} (tetto -MaxIcone {1})" -f $rimandate, $MaxIcone) -ForegroundColor Cyan
     Write-Host "  rilancia con -Subito per continuare da dove e' rimasto."
@@ -334,7 +378,51 @@ if ($rimandate -gt 0) {
     Write-Host ("senza icona: {0} (la card mostra l'iniziale)" -f $senzaIcona) -ForegroundColor Yellow
 }
 
-# --- 5b. icone rimaste senza padrone --------------------------------------------
+# --- 5a. immagini del modello ---------------------------------------------------
+# La miniatura del model viewer, indirizzata dal creatureDisplayInfoID che il client
+# gia' da'. ⚠️ Differenza importante rispetto alle icone: qui non c'e' NULLA da
+# risolvere, il nome del file e' il displayID -- quindi il file su disco e' la cache
+# e un'interruzione non fa perdere lavoro. Per questo non serve un tetto tipo
+# -MaxIcone: si riprende da dove era rimasto e basta.
+#
+# Si scaricano anche per le mount NON collezionate: vedere il modello di una che non
+# hai ancora e' il caso piu' utile in una pagina di collezione.
+if (-not (Test-Path $ImgDir)) { New-Item -ItemType Directory -Force -Path $ImgDir | Out-Null }
+$imgNuove, $imgKo, $imgAttese = 0, 0, 0
+if (-not $NoIcone) {
+    $daScaricare = New-Object System.Collections.ArrayList
+    foreach ($l in $righe) {
+        if ($l -match '"display":(\d+)' -and $matches[1] -ne "0") {
+            $d = $matches[1]
+            if (-not (Test-Path (Join-Path $ImgDir "$d.webp"))) { [void]$daScaricare.Add($d) }
+        }
+    }
+    $daScaricare = @($daScaricare | Select-Object -Unique)
+    $imgAttese = $daScaricare.Count
+    if ($imgAttese -gt 0) { Write-Host ("immagini da scaricare: {0}" -f $imgAttese) }
+    $fatte = 0
+    foreach ($d in $daScaricare) {
+        # Wowhead spezza le miniature in cartelle da displayID modulo 256.
+        $cartella = [int]$d % 256
+        $file = Join-Path $ImgDir "$d.webp"
+        try {
+            Invoke-WebRequest -Uri "https://wow.zamimg.com/modelviewer/live/webthumbs/npc/$cartella/$d.webp" `
+                              -Headers @{ "User-Agent" = $UA } -OutFile $file -TimeoutSec 30 -UseBasicParsing
+            $imgNuove++
+        } catch {
+            # Non tutte esistono: la modale semplicemente non mostra l'immagine.
+            if (Test-Path $file) { Remove-Item $file -Force }
+            $imgKo++
+        }
+        $fatte++
+        if ($fatte % 100 -eq 0) { Write-Host ("  ...{0}/{1}" -f $fatte, $imgAttese) }
+    }
+    if ($imgNuove -gt 0 -or $imgKo -gt 0) {
+        Write-Host ("immagini: {0} scaricate, {1} non disponibili" -f $imgNuove, $imgKo)
+    }
+}
+
+# --- 5b. icone e immagini rimaste senza padrone ----------------------------------
 # Una mount esclusa (o sparita dal diario) lascia il suo file icona nel repo. Si
 # cancella solo dopo un giro COMPLETO di icone: con -NoIcone o col tetto -MaxIcone
 # ci sono mount che non hanno ancora il campo icon, e il loro file sembrerebbe
@@ -348,6 +436,15 @@ if (-not $NoIcone -and $rimandate -eq 0) {
         if (-not $usate[$f.BaseName]) { Remove-Item $f.FullName -Force; $orfane++ }
     }
     if ($orfane -gt 0) { Write-Host ("icone orfane rimosse: {0}" -f $orfane) }
+
+    # Stesso discorso per le immagini del modello: una mount esclusa lascia il file.
+    $usati = @{}
+    foreach ($l in $righe) { if ($l -match '"display":(\d+)') { $usati[$matches[1]] = $true } }
+    $imgOrfane = 0
+    foreach ($f in Get-ChildItem $ImgDir -Filter *.webp -ErrorAction SilentlyContinue) {
+        if (-not $usati[$f.BaseName]) { Remove-Item $f.FullName -Force; $imgOrfane++ }
+    }
+    if ($imgOrfane -gt 0) { Write-Host ("immagini orfane rimosse: {0}" -f $imgOrfane) }
 }
 
 # --- 6. git ---------------------------------------------------------------------
@@ -359,7 +456,7 @@ if ($NoGit) {
 Push-Location $RepoRoot
 try {
 
-git add -- "mounts/manifest.json" "public/icons/mount"
+git add -- "mounts/manifest.json" "public/icons/mount" "public/mounts"
 git diff --cached --quiet
 if ($LASTEXITCODE -eq 0) {
     Write-Host "niente di nuovo da committare." -ForegroundColor Yellow
@@ -368,7 +465,7 @@ if ($LASTEXITCODE -eq 0) {
 
 # Non si committa il lavoro altrui: se ci sono altri file modificati ci si ferma.
 $sporchi = @(git status --porcelain | ForEach-Object { $_.Substring(3) } |
-             Where-Object { $_ -ne "mounts/manifest.json" -and $_ -notlike "public/icons/mount/*" })
+             Where-Object { $_ -ne "mounts/manifest.json" -and $_ -notlike "public/icons/mount/*" -and $_ -notlike "public/mounts/*" })
 if ($sporchi.Count -gt 0) {
     Write-Host "altri file modificati, non committo da solo:" -ForegroundColor Yellow
     $sporchi | ForEach-Object { Write-Host "   $_" }

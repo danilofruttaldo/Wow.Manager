@@ -254,23 +254,61 @@ export function getExtra(): Extra[] {
 export interface Mount {
   id: number;
   spell: number;
+  display: number;         // creatureDisplayInfoID = il MODELLO -> public/mounts/<display>.webp
   name: string;
   src: number;             // indice sourceType del client (chiave di `sources`)
   srcText?: string;        // provenienza per esteso, multiriga come la scrive il gioco
+  desc?: string;           // testo di colore del gioco, diverso dalla provenienza
   type: number;            // mountTypeID grezzo, tenuto per diagnostica
   // Categorie COME LE DA' IL DIARIO (i suoi filtri Type), non dedotte: una mount puo'
   // starne in piu' d'una -- una volante che porta passeggeri e' in `volo` e in
   // `passeggero`. Vuoto = il diario non l'ha classificata (in pagina: «Altro»).
   cats: string[];
+  // Vincoli d'uso, letti dal TOOLTIP della spell in gioco ("Requires Paladin",
+  // "Requires Draenei"): la provenienza non basta, cita una classe in 23 casi su
+  // 1532 e la razza mai. `race` puo' elencarne piu' d'una, separate da " / ".
   faction: 'horde' | 'alliance' | null;
+  class: string | null;
+  race: string | null;
   got: 0 | 1;
   icon?: string;           // nome icona Wowhead -> public/icons/mount/<icon>.jpg
+  img?: string;            // path dell'immagine del modello, se scaricata
+}
+
+// Vincoli di una mount resi come ICONE di gioco col nome nel tooltip, non come
+// testo: le icone di classe e razza esistono gia' (le usa la tabella PG) e sono il
+// linguaggio visivo del sito. ⚠️ Non contraddice la regola "niente tooltip
+// decorativi": qui il tooltip espande un'icona che E' il contenuto, esattamente come
+// l'<abbr> sulle sigle dei raid in /transmog. Senza icona (razza non mappata) la
+// voce resta, come pastiglia di testo: meglio scritta che persa.
+export interface MountBadge {
+  icon?: string;
+  label: string;
+}
+export function mountBadges(m: Mount): MountBadge[] {
+  const out: MountBadge[] = [];
+  if (m.faction) {
+    out.push({
+      icon: `/icons/faction/${m.faction}.jpg`,
+      label: m.faction === 'horde' ? 'Orda' : 'Alleanza',
+    });
+  }
+  if (m.class) {
+    out.push({ icon: `/icons/class/${m.class.toLowerCase().replace(/[^a-z]/g, '')}.jpg`, label: m.class });
+  }
+  for (const r of (m.race ?? '').split('/').map((s) => s.trim()).filter(Boolean)) {
+    const slug = RACE_ICON[r];
+    out.push({ icon: slug ? `/icons/race/${slug}.jpg` : undefined, label: r });
+  }
+  return out;
 }
 
 // Esistenza del file icona, senza `eager`: qui i file sono ~un migliaio e servono le
 // sole CHIAVI (che il glob espone anche pigro), non i moduli. Con eager si importerebbero
 // mille asset a ogni build per poi guardarne il nome.
 const mountIcons = import.meta.glob('/public/icons/mount/*.jpg');
+// Immagini del modello: non tutte esistono su Wowhead, quindi si guarda il file.
+const mountImgs = import.meta.glob('/public/mounts/*.webp');
 let _mounts: Mount[] | null = null;
 export function getMounts(): Mount[] {
   if (_mounts) return _mounts;
@@ -280,6 +318,7 @@ export function getMounts(): Mount[] {
   return (_mounts = raw.map((m) => ({
     ...m,
     icon: m.icon && `/public/icons/mount/${m.icon}.jpg` in mountIcons ? m.icon : undefined,
+    img: m.display && `/public/mounts/${m.display}.webp` in mountImgs ? `/mounts/${m.display}.webp` : undefined,
   })));
 }
 

@@ -47,6 +47,16 @@ local function esc(s)
     end))
 end
 
+-- ⚠️ REQUISITI DI CLASSE: NON provare a leggerli dal client, e' gia' stato fatto.
+-- L'idea era il tooltip della spell (C_TooltipInfo.GetSpellByID + SurfaceArgs),
+-- cercando le righe "Requires ...". MISURATO su tutte le 1532 mount: zero requisiti
+-- trovati E zero righe "Requires" non riconosciute, cioe' quelle righe nel tooltip
+-- di gioco non esistono proprio. La provenienza non aiuta: cita una classe in 23
+-- casi su 1532. Il requisito lo da' Wowhead, e lo legge mount-sync.ps1 dallo stesso
+-- endpoint da cui prende l'icona (blocco `wowhead-tooltip-requirements`).
+-- La RAZZA non la sa nessuna delle due fonti: per le cavalcature razziali dei
+-- paladini Wowhead dichiara solo "Requires Paladin".
+
 -- Il testo di provenienza e' pieno del markup del client, non solo dei colori:
 --   |cFFFFD200Drop:|r      colore
 --   |n                     a capo -- NON e' \n, e senza tradurlo le righe si fondono
@@ -276,7 +286,11 @@ local function Dump()
         local name, spellID, _, _, _, sourceType, _, isFactionSpecific, faction,
               shouldHideOnChar, isCollected, mountID = C_MountJournal.GetMountInfoByID(id)
         -- creatureDisplayInfoID, description, source, isSelfMount, mountTypeID, ...
-        local _, _, source, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(id)
+        -- `description` e' il testo di colore ("These beasts of burden are known
+        -- to..."), diverso da `source` che e' la provenienza. Lo mostra la modale.
+        -- `creatureDisplayInfoID` identifica il MODELLO: e' la chiave con cui si
+        -- ritrova l'immagine della cavalcatura, che l'icona da sola non da'.
+        local displayID, descrizione, source, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(id)
         if name and segnaposto(name) then
             scartate[#scartate + 1] = name
         elseif name then
@@ -286,6 +300,8 @@ local function Dump()
             raccolta[#raccolta + 1] = {
                 id = mountID, spell = spellID or 0, name = name,
                 src = sourceType or 0, srcText = pulisci(source) or "",
+                desc = pulisci(descrizione) or "",
+                display = displayID or 0,
                 type = mountTypeID or 0,
                 nascosta = shouldHideOnChar and true or false,
                 faction = isFactionSpecific and ((faction == 0) and "horde" or "alliance") or nil,
@@ -345,8 +361,10 @@ local function Dump()
         for i, c in ipairs(r.cats) do catsJson[i] = '"' .. c .. '"' end
         voci[#voci + 1] = {
             name = r.name,
-            json = ('{"id":%d,"spell":%d,"name":"%s","src":%d,"srcText":"%s","type":%d,"cats":[%s],"faction":%s,"got":%d}')
-                :format(r.id, r.spell, esc(r.name), r.src, esc(r.srcText), r.type,
+            -- `class` non c'e': non e' un dato del client. Lo aggiunge mount-sync.ps1
+            -- leggendolo da Wowhead, insieme al nome dell'icona.
+            json = ('{"id":%d,"spell":%d,"display":%d,"name":"%s","src":%d,"srcText":"%s","desc":"%s","type":%d,"cats":[%s],"faction":%s,"got":%d}')
+                :format(r.id, r.spell, r.display, esc(r.name), r.src, esc(r.srcText), esc(r.desc), r.type,
                     table.concat(catsJson, ","),
                     r.faction and ('"' .. r.faction .. '"') or "null", r.got),
         }
