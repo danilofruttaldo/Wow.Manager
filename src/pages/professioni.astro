@@ -123,7 +123,7 @@ function stepDesc(step: { spec: string; nodes?: string[] }, specForKey: Record<s
          trees/leveling porteranno una nuova espansione, si abilita da sola via `hasData`. */}
       <label class="exp-pick">
         <span class="exp-pick-lbl">Espansione</span>
-        <select id="prof-exp" aria-label="Scegli l'espansione" autocomplete="off">
+        <select id="prof-exp" class="select" aria-label="Scegli l'espansione" autocomplete="off">
           {expList.map(exp => (
             <option value={exp} disabled={!hasData(exp)} selected={exp === defaultExp}>{exp}</option>
           ))}
@@ -282,12 +282,9 @@ function stepDesc(step: { spec: string; nodes?: string[] }, specForKey: Record<s
    .chip[hidden] in global.css). Cosi' con una sola espansione la tendina sparisce davvero. */
 .exp-pick[hidden] { display: none !important; }
 .exp-pick-lbl { font-size: 0.78rem; color: var(--text-subtle); }
-#prof-exp {
-  font-family: inherit; font-size: var(--fs-base); color: var(--text); background: var(--surface);
-  border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.7rem; cursor: pointer;
-  min-height: var(--control-h);
-}
-#prof-exp:hover { border-color: var(--accent); }
+/* L'aspetto della tendina sta in `.select` (global.css), condiviso con /mount. Qui niente
+   regola su #prof-exp: un selettore per id vincerebbe sulla classe e la farebbe divergere
+   di nuovo (l'id resta, ma serve solo al JS). */
 
 .prof-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.2rem 0 0.9rem; }
 .prof-ico { width: 40px; height: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border); object-fit: cover; max-width: none; }

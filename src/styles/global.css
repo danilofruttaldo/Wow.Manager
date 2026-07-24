@@ -173,6 +173,13 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 /* Search: larghezza fissa e identica su tutte le pagine (generosa), responsive su schermi stretti.
    min(460px,100%) garantisce che non superi mai il contenitore → niente overflow orizzontale su mobile. */
 .filters.row .search { flex: 0 0 auto; width: min(460px, 100%); }
+
+/* Tendina della barra filtri — condivisa da professioni (espansione) e mount (provenienza).
+   Stessa pillola dei chip e stessa --control-h, così i tre controlli si allineano sulla riga.
+   Era duplicata nelle due pagine, con hover divergente (--accent fisso di là, --section di qua):
+   qui vale la regola generale, cioè il bordo prende la tinta della sezione attiva. */
+.select { font-family: inherit; font-size: var(--fs-base); color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.7rem; min-height: var(--control-h); cursor: pointer; }
+.select:hover { border-color: var(--section, var(--accent)); }
 /* Contenitore chip sciolto: le chip diventano sorelle flex della search e fluiscono
    sulla stessa riga, riempiendo lo spazio. Uguale per tutte le pagine con `.filters.row`. */
 .filters.row .chips { display: contents; }
