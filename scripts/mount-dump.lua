@@ -65,10 +65,68 @@ end
 -- Va tolto tutto: il sito mostra questa riga cosi' com'e', e un dump grezzo ci
 -- portava dentro pezzi di path di texture.
 local residui = {}
+local costiGrezzi = {}
 local function pulisci(s)
     if not s or s == "" then return nil end
-    s = s:gsub("|T.-|t", ""):gsub("|A.-|a", "")   -- icone inline e atlas
-    s = s:gsub("|H.-|h(.-)|h", "%1")              -- link: resta il solo testo visibile
+
+    -- ⚠️ LA VALUTA PRIMA DI TUTTO IL RESTO: il costo di un vendor arriva come
+    -- "Cost: 7|Hcurrency:3303|h|TInterface\ICONS\...|t|h", cioe' un LINK che come
+    -- testo visibile ha solo un'icona. Passandolo dallo spoglia-texture e dallo
+    -- spoglia-link (sotto) resta il numero nudo -- "Cost: 7" -- e non si capisce 7
+    -- di cosa. Qui il link diventa il nome vero della valuta, chiesto al client.
+    -- Diagnostica: una riga "Cost:" per FORMA di markup, non le prime che capitano.
+    -- Senza deduplicare uscivano quindici volte lo stesso "Cost: 1" in oro e non si
+    -- vedeva mai il caso con la valuta.
+    if s:find("Cost:", 1, true) then
+        for riga in (s .. "|n"):gmatch("(.-)|n") do
+            if riga:find("Cost:", 1, true) then
+                local forma = riga:gsub("%d", "")
+                if not costiGrezzi[forma] then costiGrezzi[forma] = riga end
+            end
+        end
+    end
+    -- ⚠️ NIENTE pattern che dipendano dalle maiuscole: i pattern Lua non hanno il
+    -- case-insensitive e il client NON e' coerente -- il link e' "|Hcurrency:" in
+    -- minuscolo, ma il path della texture arriva tutto MAIUSCOLO
+    -- ("|TINTERFACE\MONEYFRAME\UI-GOLDICON.BLP"). Un primo tentativo scritto sulla
+    -- grafia "Interface\MoneyFrame\UI-GoldIcon" non agganciava niente.
+    --
+    -- Prima i LINK: quello di valuta ha come testo visibile solo un'icona, quindi
+    -- va risolto qui o si perde. Il nome vero lo da' il client.
+    s = s:gsub("|H(.-)|h(.-)|h", function(link, testo)
+        local tipo, id = link:match("^([^:]+):(%d+)")
+        tipo = tipo and tipo:lower()
+        if tipo == "currency" then
+            local info = C_CurrencyInfo and C_CurrencyInfo.GetCurrencyInfo(tonumber(id))
+            return " " .. ((info and info.name) or ("valuta " .. id))
+        end
+        -- Non si paga solo in valute: parecchi vendor vogliono OGGETTI (Primal Water,
+        -- Gladiator's Medallion, Stormlord's Favor...), e li' il link e' |Hitem:.
+        --
+        -- ⚠️ Il NOME non si chiede al client: GetItemInfo risponde nil finche'
+        -- l'oggetto non e' in cache, e per roba mai vista non ci arriva. Provato con
+        -- RequestLoadItemDataByID: dopo un giro completo 31 nomi su 32 mancavano
+        -- ancora. Quindi qui si scrive un segnaposto con l'ID e il nome lo risolve
+        -- mount-sync.ps1 su Wowhead, una volta sola. Deterministico: non dipende piu'
+        -- da cosa il client si e' trovato in cache in quel momento.
+        if tipo == "item" then
+            return " {item:" .. id .. "}"
+        end
+        return testo
+    end)
+    -- Poi le TEXTURE: quelle delle monete diventano il simbolo (letto dal client,
+    -- non trascritto), tutte le altre icone inline si buttano.
+    s = s:gsub("|T([^|]*)|t", function(path)
+        local P = path:upper()
+        if P:find("GOLDICON", 1, true) then return GOLD_AMOUNT_SYMBOL or "g" end
+        if P:find("SILVERICON", 1, true) then return SILVER_AMOUNT_SYMBOL or "s" end
+        if P:find("COPPERICON", 1, true) then return COPPER_AMOUNT_SYMBOL or "c" end
+        -- Qualche valuta e' disegnata come texture NUDA, senza link che la nomini:
+        -- l'onore lo dice il path stesso ("PVPCurrency-Honor-Alliance").
+        if P:find("PVPCURRENCY-HONOR", 1, true) then return " " .. (HONOR or "Honor") end
+        return ""
+    end)
+    s = s:gsub("|A.-|a", "")                      -- atlas
     s = s:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "")
     s = s:gsub("|n", "\n")
     -- Riga per riga: spazi doppi via (il gioco scrive "Drop:  Boss"), righe vuote via.
@@ -275,6 +333,7 @@ local function Dump()
     local voci, presi = {}, 0
     local tipi, scartate = {}, {}
     local senzaCat, tipiAmbigui = {}, {}
+    costiGrezzi = {}
     local cop = { diario = 0, perTipo = 0, perNome = 0, niente = 0, nascosteScoperte = 0 }
     residui = {}
 
@@ -407,6 +466,7 @@ local function Dump()
         tipi = tipi,             -- mountTypeID -> quante mount, per vedere cosa esiste
         scartate = scartate,     -- segnaposto di Blizzard tolti dall'elenco
         residui = residui,       -- provenienze con markup non riconosciuto (dovrebbe essere vuoto)
+        costiGrezzi = costiGrezzi,  -- righe "Cost:" GREZZE: servono a vedere se la valuta e' stata letta
         api = ApiNames(),        -- funzioni C_MountJournal davvero esposte
         filtri = contaFiltri,    -- indice del filtro Type -> quante mount ci stanno
         filtriEsempi = esempiFiltri,  -- e i primi nomi: e' cosi' che si verifica l'accoppiamento

@@ -128,6 +128,24 @@ $sorgenti = Blocco "sorgentiJson"
 $build    = ""
 if ($lua -match '\["build"\]\s*=\s*"([^"]*)"') { $build = $matches[1] }
 
+# --- 4bis. nomi degli oggetti usati come prezzo ----------------------------------
+# Il dump lascia un segnaposto {item:ID} dove il vendor vuole un OGGETTO invece di
+# una valuta (Mark of Honor, Drowned Mana, Essence of the Storm...). Il nome non si
+# chiede al client -- GetItemInfo tace finche' l'oggetto non e' in cache, e per roba
+# mai vista non ci arriva mai: misurato, 31 nomi su 32 mancanti anche dopo aver
+# chiesto il caricamento. Qui si risolve su Wowhead una volta sola e si conserva nel
+# manifest (blocco `items`), che e' anche la cache dei giri successivi.
+# Il manifest precedente si legge QUI e non piu' avanti: e' la cache sia dei nomi
+# degli oggetti sia delle icone, e questo blocco viene prima di quello delle icone.
+$vecchio = $null
+if (Test-Path $Manifest) { $vecchio = Get-Content -Raw -Encoding UTF8 $Manifest | ConvertFrom-Json }
+$itemNomi = @{}
+if ($vecchio -and $vecchio.items) {
+    foreach ($p in $vecchio.items.PSObject.Properties) { $itemNomi[$p.Name] = [string]$p.Value }
+}
+# La risoluzione vera sta piu' sotto (4c), dopo che $righe esiste ed e' stata
+# filtrata: qui si carica solo la cache.
+
 # --- 4. icone -------------------------------------------------------------------
 # Nome icona gia' noto dal manifest precedente: si riusa, cosi' ogni mount si cerca
 # una volta sola nella vita del repo e i giri successivi toccano solo le novita'.
@@ -136,8 +154,7 @@ $noti = @{}
 # da "mai cercata" (assente), altrimenti le mount senza vincoli si ricercherebbero a
 # ogni giro -- che sono il 98%.
 $notiClasse = @{}
-if (Test-Path $Manifest) {
-    $vecchio = Get-Content -Raw -Encoding UTF8 $Manifest | ConvertFrom-Json
+if ($vecchio) {
     foreach ($m in $vecchio.mounts) {
         if ($m.icon) { $noti[[string]$m.spell] = [string]$m.icon }
         if ($null -ne $m.class) { $notiClasse[[string]$m.spell] = [string]$m.class }
@@ -272,6 +289,40 @@ if ($tolte.Count -gt 0) {
     Write-Host ("non piu' ottenibili, escluse: {0}" -f $tolte.Count)
     foreach ($k in ($motivi.Keys | Sort-Object)) { Write-Host ("   {0,-28} {1}" -f $k, $motivi[$k]) }
 }
+
+# --- 4c. i nomi degli oggetti-prezzo --------------------------------------------
+# ⚠️ Deve stare QUI, non prima: $righe nasce poche righe sopra. Al primo tentativo
+# questo blocco era sopra la sua creazione, girava a vuoto senza dire niente e 66
+# mount finivano nel manifest col segnaposto grezzo dentro.
+$daRisolvere = New-Object System.Collections.ArrayList
+foreach ($l in $righe) {
+    foreach ($mm in [regex]::Matches($l, '\{item:(\d+)\}')) {
+        $id = $mm.Groups[1].Value
+        if (-not $itemNomi.ContainsKey($id) -and -not $daRisolvere.Contains($id)) { [void]$daRisolvere.Add($id) }
+    }
+}
+if ($daRisolvere.Count -gt 0 -and -not $NoIcone) {
+    Write-Host ("oggetti-prezzo da risolvere: {0}" -f $daRisolvere.Count)
+    foreach ($id in $daRisolvere) {
+        $nome = ""
+        try {
+            $r = Invoke-RestMethod -Uri "https://nether.wowhead.com/tooltip/item/$id" `
+                                   -Headers @{ "User-Agent" = $UA } -TimeoutSec 20
+            if ($r.name) { $nome = [string]$r.name }
+        } catch { }
+        $itemNomi[$id] = $nome
+        Start-Sleep -Milliseconds 60
+    }
+}
+# Sostituzione: senza nome resta il solo numero, come prima.
+for ($i = 0; $i -lt $righe.Count; $i++) {
+    if ($righe[$i] -notmatch '\{item:') { continue }
+    $righe[$i] = [regex]::Replace($righe[$i], '\{item:(\d+)\}', {
+        param($m)
+        $n = $itemNomi[$m.Groups[1].Value]
+        if ($n) { ($n -replace '\\', '\\\\') -replace '"', '\"' } else { "" }
+    })
+}
 $nuoveIcone = 0
 $senzaIcona = 0
 $conClasse = 0
@@ -352,6 +403,11 @@ $testo = @(
     ('    "excluded": {0}' -f $tolte.Count),
     "  },",
     ('  "sources": {0},' -f $sorgenti),
+    # Nomi degli oggetti usati come prezzo: gia' sostituiti dentro `srcText`, ma
+    # tenuti anche qui perche' sono la CACHE -- senza, ogni sync li ricercherebbe.
+    ('  "items": {{ {0} }},' -f (($itemNomi.Keys | Sort-Object { [int]$_ } | ForEach-Object {
+        '"{0}": "{1}"' -f $_, ((($itemNomi[$_] -replace '\\', '\\') -replace '"', '\"'))
+     }) -join ", ")),
     ('  "mounts": {0}' -f ($righe -join "`n")),
     "}"
 ) -join "`n"
