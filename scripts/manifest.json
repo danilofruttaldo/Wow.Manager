@@ -62,6 +62,16 @@
       "body_file": "transmog-sync.ps1",
       "notes": "Le guardie sono il motivo per cui esiste: si ferma se il dump ha `sospetto` valorizzato, se `mismatches` o `errors` non sono vuoti, o se i pezzi collezionati risultano zero. Serve perche' un dump preso mentre il client non ha ancora caricato la collezione e' internamente COERENTE -- ogni set a zero su totale giusto -- quindi nessuna verifica a valle lo distingue da uno buono, e incollarlo azzera la collezione. Caso reale: al primo test lo script si e' fermato su un dump con presi=0 su 11491 pezzi. Valida il JSON PRIMA di scrivere e cerca il SavedVariables invece di avere il percorso scritto dentro, perche' contiene il nome dell'account."
     },
+    "transmog-raid": {
+      "kind": "script",
+      "name": "Stato di un raid su tutte le classi",
+      "desc": "Dice quanto ti manca al tier set di un raid su tutte le classi insieme: per ognuna il Mythic, con il dettaglio delle difficoltà a fianco. Il sito è a tab per classe, questo dà la vista opposta.",
+      "lang": "powershell",
+      "when": "Quando vuoi sapere quanto ti manca su un raid. Passa la chiave del tier (transmog-raid.ps1 t20), un pezzo del nome (sargeras), o niente per l'elenco dei raid con le chiavi.",
+      "warn": "Legge il manifest, non il gioco: i numeri valgono quanto l'ultimo sync. Se hai appena sbloccato pezzi lancia prima transmog-sync.ps1.",
+      "body_file": "transmog-raid.ps1",
+      "notes": "Sola lettura, non tocca il manifest. La metrica principale e' il MYTHIC perche' completarlo sblocca da solo anche LFR/Normal/Heroic dello stesso tier: verificato sul blocco collected, 30 casi su 30 con Mythic pieno hanno tutte le inferiori piene, zero controesempi. Quindi il bersaglio vero di un raid e' il Mythic e le inferiori sono solo dettaglio. Sui tier vecchi senza chiave mythic (T6 e simili) la metrica ripiega sul totale di tutte le versioni, e l'etichetta della colonna diventa Totale. Risoluzione del raid: la chiave esatta vince sempre, altrimenti sigla tier o pezzo di nome -- serve perche' t6 e t6-swp condividono la sigla T6 e senza precedenza alla chiave 't6' usciva ambiguo. Le classi che a quel raid non esistevano non compaiono (non hanno la voce nel collected, stesso effetto di classStart sul sito): su ToS l'Evoker e' giustamente assente."
+    },
     "make-thumbs": {
       "kind": "script",
       "name": "Miniature screenshot UI",
