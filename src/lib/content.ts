@@ -257,8 +257,11 @@ export interface Mount {
   name: string;
   src: number;             // indice sourceType del client (chiave di `sources`)
   srcText?: string;        // provenienza per esteso, multiriga come la scrive il gioco
-  type: number;            // mountTypeID grezzo, per ricostruire `cat` se la mappa cambia
-  cat: string;             // terra | volo | acqua | drago | '?' (tipo non ancora classificato)
+  type: number;            // mountTypeID grezzo, tenuto per diagnostica
+  // Categorie COME LE DA' IL DIARIO (i suoi filtri Type), non dedotte: una mount puo'
+  // starne in piu' d'una -- una volante che porta passeggeri e' in `volo` e in
+  // `passeggero`. Vuoto = il diario non l'ha classificata (in pagina: «Altro»).
+  cats: string[];
   faction: 'horde' | 'alliance' | null;
   got: 0 | 1;
   icon?: string;           // nome icona Wowhead -> public/icons/mount/<icon>.jpg
@@ -292,15 +295,26 @@ export function getMountStats(): { got: number; total: number; pct: number } {
   return { got, total: all.length, pct: all.length ? Math.round((got / all.length) * 100) : 0 };
 }
 
-// Etichette delle categorie. '?' = mountTypeID che il dump non sa ancora classificare:
-// si dice "Altro" invece di indovinare (vedi CAT in scripts/mount-dump.lua).
+// Le categorie del menu "Type" del diario: la pagina rispecchia i filtri di gioco
+// invece di inventarsi una tassonomia sua. '?' = il diario non l'ha classificata, e
+// si dice «Altro» invece di indovinare.
+// ⚠️ «Passeggeri» (Ride Along) oggi non compare: il filtro corrispondente si dichiara
+// non valido e non restituisce nulla. La voce resta qui perche' la chip nasce solo se
+// ha almeno una mount -- se un giorno il gioco risponde, appare da se'.
 export const MOUNT_CATS: { key: string; label: string; icon: string }[] = [
   { key: 'terra', label: 'Terra', icon: '/icons/mountcat/terra.jpg' },
   { key: 'volo', label: 'Volo', icon: '/icons/mountcat/volo.jpg' },
-  { key: 'drago', label: 'Skyriding', icon: '/icons/mountcat/drago.jpg' },
+  { key: 'skyriding', label: 'Skyriding', icon: '/icons/mountcat/skyriding.jpg' },
   { key: 'acqua', label: 'Acqua', icon: '/icons/mountcat/acqua.jpg' },
+  { key: 'passeggero', label: 'Passeggeri', icon: '/icons/mountcat/passeggero.jpg' },
   { key: '?', label: 'Altro', icon: '/icons/mountcat/altro.jpg' },
 ];
+
+// Le categorie di una mount, gia' pronte per l'attributo del filtro: vuoto -> '?',
+// cosi' la chip «Altro» ha qualcosa da agganciare.
+export function mountCats(m: Mount): string[] {
+  return m.cats && m.cats.length ? m.cats : ['?'];
+}
 
 // ── Transmog (tier set per classe) ────────────────
 // Matrice tier × versione, una per classe. Le 4 colonne sono SLOT di versione, non

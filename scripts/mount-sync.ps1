@@ -30,6 +30,11 @@ param(
     # perche' i nomi si salvano solo scrivendo il manifest. Con un tetto lo script si
     # rilancia finche' non ne restano: ogni giro scrive quello che ha risolto.
     [int]$MaxIcone = 0,
+    # ⚠️ UNICA manopola redazionale di questo script, da aggiornare a ogni espansione:
+    # serve a capire quale stagione gladiator e' ancora in corso (vedi il taglio delle
+    # non piu' ottenibili). Il numero della stagione NON si scrive qui, si ricava dai
+    # dati: basta il nome dell'espansione.
+    [string]$EspansioneCorrente = "Midnight",
     [int]$AttesaMax = 300,
     # Ancorati alla posizione dello script, non alla cwd: lanciato da scripts\ il
     # path relativo non risolverebbe e git finirebbe sul repo della cwd.
@@ -166,6 +171,85 @@ function ScaricaIcona($nome) {
 if (-not (Test-Path $IconDir)) { New-Item -ItemType Directory -Force -Path $IconDir | Out-Null }
 
 $righe = $mounts -split "`n"
+
+# --- 4b. via le cavalcature non piu' ottenibili ---------------------------------
+# Tre regole, in ordine di autorevolezza. Solo la prima viene dal gioco.
+#
+# 1. "Legacy": il client stesso, al posto della provenienza, scrive quella riga
+#    (Amani War Bear, i Qiraji Battle Tank dell'evento, i nether drake dei gladiator
+#    piu' vecchi). E' l'unica fonte macchina che esista: Wowhead segnala gli stessi
+#    casi e nulla di piu'.
+# 2. Gladiator di stagione passata: il client NON li marca, quindi il criterio e'
+#    nostro. Non si tolgono per nome -- cancellerebbe anche la stagione in corso,
+#    che si prende ancora -- ma si tiene la sola stagione PIU' RECENTE
+#    dell'espansione corrente, ricavata dai dati stessi: quando esce la stagione
+#    nuova la vecchia decade da se', senza toccare lo script.
+# 3. Challenge mode: una sola mount (Challenger's War Yeti).
+#    ⚠️ La regola e' ancorata a "Achievement: Challenge ", NON alla parola
+#    "Challenge": "Challenger's Cache" compare nella provenienza di 7 mount da
+#    mitica+ che si prendono benissimo, e una regola larga le cancellerebbe.
+#
+# Il Trading Card Game resta DENTRO per scelta: le carte si comprano ancora
+# sull'usato, quindi non sono "non piu' ottenibili" ma solo scomode.
+#
+# Si filtra QUI e non nel dump di proposito: il dump resta lo specchio fedele del
+# diario, e siccome il taglio viene prima della risoluzione delle icone, le escluse
+# non vengono nemmeno cercate su Wowhead.
+
+# Stagione piu' recente dell'espansione corrente, letta dai dati.
+$stagioneMax = 0
+foreach ($l in $righe) {
+    if ($l -match ('Gladiator: ' + [regex]::Escape($EspansioneCorrente) + ' Season (\d+)')) {
+        if ([int]$matches[1] -gt $stagioneMax) { $stagioneMax = [int]$matches[1] }
+    }
+}
+
+function MotivoEsclusione($parti) {
+    if ($parti -contains 'Legacy') { return 'Legacy (lo dice il client)' }
+    foreach ($p in $parti) {
+        if ($p -match '^Achievement: Challenge ') { return 'challenge mode' }
+        if ($p -match 'Gladiator: (.+?) Season (\d+)$') {
+            $exp = $matches[1]
+            $st = [int]$matches[2]
+            if (-not ($exp -eq $EspansioneCorrente -and $st -eq $stagioneMax)) {
+                return 'gladiator, stagione passata'
+            }
+        }
+    }
+    return $null
+}
+
+$tolte = @()
+$motivi = @{}
+$tenute = New-Object System.Collections.ArrayList
+foreach ($l in $righe) {
+    $motivo = $null
+    if ($l -match '"srcText":"((?:[^"\\]|\\.)*)"') {
+        # srcText porta gli a capo come \n letterali: si spezza su quelli e si
+        # ragiona per RIGA, non per sottostringa.
+        $motivo = MotivoEsclusione ($matches[1] -split '\\n')
+    }
+    if ($motivo) {
+        if ($l -match '"name":"((?:[^"\\]|\\.)*)"') { $tolte += $matches[1] }
+        $motivi[$motivo] = ($motivi[$motivo] + 1)
+    } else {
+        [void]$tenute.Add($l)
+    }
+}
+$righe = $tenute.ToArray()
+# L'ultima riga rimasta non deve portare la virgola: se le tolte erano in fondo,
+# il JSON finirebbe con una virgola pendente.
+for ($i = $righe.Count - 1; $i -ge 0; $i--) {
+    if ($righe[$i].TrimEnd().EndsWith("},")) {
+        $righe[$i] = $righe[$i].TrimEnd().TrimEnd(",")
+        break
+    }
+    if ($righe[$i].TrimEnd().EndsWith("}")) { break }
+}
+if ($tolte.Count -gt 0) {
+    Write-Host ("non piu' ottenibili, escluse: {0}" -f $tolte.Count)
+    foreach ($k in ($motivi.Keys | Sort-Object)) { Write-Host ("   {0,-28} {1}" -f $k, $motivi[$k]) }
+}
 $nuoveIcone = 0
 $senzaIcona = 0
 $daCercare = 0
@@ -208,6 +292,12 @@ for ($i = 0; $i -lt $righe.Count; $i++) {
 }
 
 # --- 5. scrivere il manifest ----------------------------------------------------
+# I conteggi si RICALCOLANO sulle righe rimaste, non si prendono dal dump: quelli del
+# dump contano anche le non piu' ottenibili, e il totale in pagina non tornerebbe.
+$presi, $totale = 0, 0
+foreach ($l in $righe) {
+    if ($l -match '"got":(\d)') { $totale++; if ($matches[1] -eq "1") { $presi++ } }
+}
 $oggi = Get-Date -Format "yyyy-MM-dd"
 $testo = @(
     "{",
@@ -215,7 +305,8 @@ $testo = @(
     ('    "generated": "{0}",' -f $oggi),
     ('    "build": "{0}",' -f $build),
     ('    "collected": {0},' -f $presi),
-    ('    "total": {0}' -f $totale),
+    ('    "total": {0},' -f $totale),
+    ('    "excluded": {0}' -f $tolte.Count),
     "  },",
     ('  "sources": {0},' -f $sorgenti),
     ('  "mounts": {0}' -f ($righe -join "`n")),
@@ -241,6 +332,22 @@ if ($rimandate -gt 0) {
     Write-Host "  rilancia con -Subito per continuare da dove e' rimasto."
 } elseif ($senzaIcona -gt 0) {
     Write-Host ("senza icona: {0} (la card mostra l'iniziale)" -f $senzaIcona) -ForegroundColor Yellow
+}
+
+# --- 5b. icone rimaste senza padrone --------------------------------------------
+# Una mount esclusa (o sparita dal diario) lascia il suo file icona nel repo. Si
+# cancella solo dopo un giro COMPLETO di icone: con -NoIcone o col tetto -MaxIcone
+# ci sono mount che non hanno ancora il campo icon, e il loro file sembrerebbe
+# orfano pur non essendolo. Chi condivide l'icona con una mount rimasta si salva da
+# se': il confronto e' sui nomi ancora referenziati.
+$orfane = 0
+if (-not $NoIcone -and $rimandate -eq 0) {
+    $usate = @{}
+    foreach ($l in $righe) { if ($l -match '"icon":"([^"]+)"') { $usate[$matches[1]] = $true } }
+    foreach ($f in Get-ChildItem $IconDir -Filter *.jpg -ErrorAction SilentlyContinue) {
+        if (-not $usate[$f.BaseName]) { Remove-Item $f.FullName -Force; $orfane++ }
+    }
+    if ($orfane -gt 0) { Write-Host ("icone orfane rimosse: {0}" -f $orfane) }
 }
 
 # --- 6. git ---------------------------------------------------------------------

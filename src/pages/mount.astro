@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getMounts, getMountSources, getMountStats, MOUNT_CATS } from '../lib/content';
+import { getMounts, getMountSources, getMountStats, mountCats, MOUNT_CATS } from '../lib/content';
 
 const mounts = getMounts();
 const sources = getMountSources();
@@ -13,10 +13,12 @@ const srcLabel = (m: (typeof mounts)[number]) =>
   (m.srcText ?? '').split('\n').map((s) => s.trim()).filter(Boolean).join(' · ')
   || sources[String(m.src)] || 'Provenienza ignota';
 
-const catCount = (key: string) => mounts.filter((m) => m.cat === key).length;
-// Categorie senza nemmeno una mount non diventano chip: la mappa dei mountTypeID copre
-// piu' casi di quanti ne esistano davvero in una data patch (es. "Altro" a zero = tutti
-// i tipi sono classificati, ed e' la situazione buona).
+// Una mount puo' stare in piu' categorie (volante che porta passeggeri), quindi i
+// conteggi delle chip NON sommano al totale: e' lo stesso comportamento del menu di
+// gioco, dove i filtri Type si spuntano insieme.
+const catCount = (key: string) => mounts.filter((m) => mountCats(m).includes(key)).length;
+// Categoria senza nemmeno una mount -> niente chip. «Altro» a zero e' la situazione
+// buona: vuol dire che il diario ha classificato tutto.
 const cats = MOUNT_CATS.filter((c) => catCount(c.key) > 0);
 
 // Fonti presenti nei dati, per la tendina: ordinate per numero di mount (le grosse in
@@ -56,7 +58,7 @@ const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo A
 
     <div class="mount-grid" id="mount-grid">
       {mounts.map(m => (
-        <article class="mcard" data-got={String(m.got)} data-cat={m.cat} data-src={String(m.src)}
+        <article class="mcard" data-got={String(m.got)} data-cats={mountCats(m).join(' ')} data-src={String(m.src)}
                  data-search={`${m.name} ${srcLabel(m)} ${sources[String(m.src)] ?? ''}`.toLowerCase()}>
           {m.icon
             ? <img class="mico" src={`/icons/mount/${m.icon}.jpg`} alt="" width="36" height="36" loading="lazy" decoding="async" />
@@ -136,9 +138,11 @@ const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo A
     const apply = () => {
       let shown = 0;
       for (const card of cards) {
+        // Le categorie sono una LISTA (una mount puo' essere volo + passeggero):
+        // si confronta l'appartenenza, non l'uguaglianza.
         const show = (query === '' || (card.dataset.search || '').includes(query))
           && (stato === '' || card.dataset.got === stato)
-          && (cat === '' || card.dataset.cat === cat)
+          && (cat === '' || (card.dataset.cats || '').split(' ').includes(cat))
           && (src === '' || card.dataset.src === src);
         card.hidden = !show;
         if (show) shown++;
