@@ -96,17 +96,6 @@
       "folders": ["HandyNotes_Midnight"],
       "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita."
     },
-    "HandyNotes_BattleForAzeroth": {
-      "name": "HandyNotes: Battle for Azeroth",
-      "desc": "Plugin HandyNotes per Battle for Azeroth: rare, tesori, mascotte e punti d’interesse.",
-      "version": "v146",
-      "interface": "120007",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/handynotes-battle-for-azeroth",
-      "installed": "2026-07-13",
-      "folders": ["HandyNotes_BattleForAzeroth"],
-      "notes": "Plugin Zarillion per BfA: rare, tesori, battle pet, PoI. Stessa famiglia di [[HandyNotes_Midnight]] (monorepo zarillion/handynotes-plugins, versionati insieme -> stesso tag). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/36. RequiredDeps: HandyNotes (presente). Dalla v146 il .toc ha '## Interface: 120007'. NB da NON confondere con 'HandyNotes: BfA Treasures and Rares' di kemayo (slug ...-treasures), che copre solo tesori/rare."
-    },
     "TeleportMenu": {
       "name": "Teleport Menu",
       "desc": "Aggiunge bottoni per teletrasporti e Hearthstone nel menu di gioco (ESC), con i cooldown.",
