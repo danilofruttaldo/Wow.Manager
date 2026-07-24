@@ -145,8 +145,12 @@ end
 -- Segnaposto di Blizzard rimasti nel diario: non sono cavalcature, sono voci di
 -- lavorazione ("(PH)" = placeholder, "[DND]" = do not distribute). Si scartano
 -- perche' sul sito sarebbero righe finte, e si contano per non farlo in silenzio.
+-- ⚠️ Le PARENTESI QUADRE vanno accettate quanto le tonde: la prima stesura cercava il
+-- solo "(PH)" e lasciava passare cinque voci "[PH] ..." -- fra cui "[PH] Horse with
+-- Hat" -- che sono finite in pagina come cavalcature mancanti da collezionare.
 local function segnaposto(name)
-    return name:find("^%(PH%)") ~= nil or name:find("^%[DND%]") ~= nil
+    return name:find("^%(PH%)") ~= nil or name:find("^%[PH%]") ~= nil
+        or name:find("^%[DND%]") ~= nil or name:find("^%(DND%)") ~= nil
 end
 
 -- Indice del filtro "Type" del diario -> chiave usata dal sito.

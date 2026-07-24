@@ -6,20 +6,27 @@ const mounts = getMounts();
 const sources = getMountSources();
 const stats = getMountStats();
 
-// Etichetta della provenienza: il testo per esteso che scrive il gioco ("Drop: Attumen
-// the Huntsman\nKarazhan") quando c'e', altrimenti la sola categoria di sorgente. Le
-// righe si uniscono con un punto medio: nella card ci sta una riga sola.
+// Le righe della provenienza come le scrive il gioco, una per campo ("Drop: Attumen the
+// Huntsman" / "Location: Karazhan" / "Cost: 5000 Gold").
+const srcLines = (m: (typeof mounts)[number]) =>
+  (m.srcText ?? '').split('\n').map((s) => s.trim()).filter(Boolean);
+
+// Nella card ci sta la PRIMA riga soltanto, cioe' la provenienza vera (Drop/Vendor/Quest).
+// Concatenando anche zona, costo e fazione il testo superava i 40 caratteri su 909 card
+// su 1527: sei righe su dieci finivano in ellissi e la colonna diventava una fila di
+// puntini. Gli altri campi sono nella modale, dove hanno la loro etichetta.
 const srcLabel = (m: (typeof mounts)[number]) =>
-  (m.srcText ?? '').split('\n').map((s) => s.trim()).filter(Boolean).join(' · ')
-  || sources[String(m.src)] || 'Provenienza ignota';
+  srcLines(m)[0] || sources[String(m.src)] || 'Provenienza ignota';
 
 // Una mount puo' stare in piu' categorie (volante che porta passeggeri), quindi i
 // conteggi delle chip NON sommano al totale: e' lo stesso comportamento del menu di
 // gioco, dove i filtri Type si spuntano insieme.
 const catCount = (key: string) => mounts.filter((m) => mountCats(m).includes(key)).length;
 // Categoria senza nemmeno una mount -> niente chip. «Altro» a zero e' la situazione
-// buona: vuol dire che il diario ha classificato tutto.
-const cats = MOUNT_CATS.filter((c) => catCount(c.key) > 0);
+// buona: vuol dire che il diario ha classificato tutto. `chip: false` = categoria che
+// esiste nei dati ma non e' uno dei quattro TIPI del gioco (skyriding), quindi resta
+// pastiglia nella modale e fuori dai filtri.
+const cats = MOUNT_CATS.filter((c) => c.chip !== false && catCount(c.key) > 0);
 
 // Fonti presenti nei dati, per la tendina: ordinate per numero di mount (le grosse in
 // testa), con il conteggio accanto.
@@ -47,6 +54,10 @@ const srcOptions = [...srcCounts.entries()]
         <option value="">Tutte le provenienze</option>
         {srcOptions.map(o => <option value={o.k}>{o.label} ({o.n})</option>)}
       </select>
+      {/* Avanzamento della collezione: la pagina esiste per quello, e un numero secco
+          in coda alla barra non lo fa vedere. La barretta e' decorativa (aria-hidden),
+          il dato resta scritto accanto. */}
+      <span class="prog" style={`--pct:${stats.pct}`} aria-hidden="true"></span>
       <span class="tally" id="tally">{stats.got} / {stats.total} · {stats.pct}%</span>
     </div>
 
@@ -66,7 +77,7 @@ const srcOptions = [...srcCounts.entries()]
                  data-full={m.srcText ?? ''} data-desc={m.desc ?? ''} data-spell={String(m.spell)} data-img={m.img}
                  data-srclabel={sources[String(m.src)] ?? ''}
                  data-badges={mountBadges(m).length ? JSON.stringify(mountBadges(m)) : undefined}
-                 data-search={`${m.name} ${srcLabel(m)} ${sources[String(m.src)] ?? ''} ${m.class ?? ''} ${m.race ?? ''}`.toLowerCase()}>
+                 data-search={`${m.name} ${srcLines(m).join(' ')} ${sources[String(m.src)] ?? ''} ${m.class ?? ''} ${m.race ?? ''}`.toLowerCase()}>
           {m.icon
             ? <img class="mico" src={`/icons/mount/${m.icon}.jpg`} alt="" width="36" height="36" loading="lazy" decoding="async" />
             : <span class="mono" aria-hidden="true">{m.name.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase()}</span>}
@@ -100,7 +111,12 @@ const srcOptions = [...srcCounts.entries()]
     Object.fromEntries(MOUNT_CATS.map(c => [c.key, { label: c.label, icon: c.icon }])))}></script>
 
   <div class="mlb" id="mlb" role="dialog" aria-modal="true" aria-labelledby="mlb-title">
-    <div class="mlb-panel">
+    {/* `tabindex=-1`: all'apertura il focus va sul PANNELLO, non sulla ×. Portandolo
+        sul bottone di chiusura la prima cosa che si vedeva era un grosso anello di
+        focus verde sulla × -- l'occhio finiva li' invece che sulla cavalcatura. Il
+        lettore di schermo annuncia comunque il dialog, e il Tab entra nella trappola
+        dal primo controllo. */}
+    <div class="mlb-panel" id="mlb-panel" tabindex="-1">
       <div class="mlb-head">
         <img class="mlb-ico" id="mlb-ico" src="/icons/section/mount.jpg" alt="" width="44" height="44" />
         <div class="mlb-htext">
@@ -114,7 +130,7 @@ const srcOptions = [...srcCounts.entries()]
         </div>
         {/* Frecce fra le card, come il lightbox di /ui (stesse ArrowLeft/ArrowRight e
             stesso giro circolare). Scorrono le card VISIBILI, cioe' rispettano il
-            filtro attivo: con 1532 cavalcature sfogliare il sottoinsieme e' il modo
+            filtro attivo: con 1527 cavalcature sfogliare il sottoinsieme e' il modo
             normale di usarle. In testata e non sull'immagine, che 8 mount non hanno. */}
         <span class="mlb-pos" id="mlb-pos"></span>
         <button class="mlb-step" id="mlb-prev" type="button" aria-label="Precedente">&lsaquo;</button>
@@ -122,9 +138,10 @@ const srcOptions = [...srcCounts.entries()]
         <button class="mlb-close" id="mlb-close" aria-label="Chiudi">&times;</button>
       </div>
       {/* Immagine del modello: il src lo mette il JS all'apertura, quindi le ~1500
-          miniature non pesano sul caricamento della pagina. Fuori da .mlb-body per
+          immagini non pesano sul caricamento della pagina. Fuori da .mlb-body per
           restare a piena larghezza e ferma mentre i campi scorrono. Le sorgenti sono
-          300x300: si mostrano a 1:1 invece di rimpicciolirle a 200. */}
+          600x600 (render ufficiali Blizzard): si mostrano a 320 CSS, cioe' con la
+          riserva di risoluzione che serve agli schermi a densita' doppia. */}
       <div class="mlb-hero" id="mlb-hero" hidden>
         {/* Niente `src=""`: un src vuoto il browser lo risolve sull'URL della pagina e
             se la va a scaricare. L'attributo lo crea il JS quando serve. */}
@@ -143,20 +160,27 @@ const srcOptions = [...srcCounts.entries()]
 </Base>
 
 <style>
-/* Card fitte: sono 1532, quindi la griglia sta stretta (auto-fill su 260px) e ogni card
+/* Card fitte: sono 1527, quindi la griglia sta stretta (auto-fill su 260px) e ogni card
    e' una fascia bassa di icona + nome + provenienza, col nome al massimo su due righe. */
 .mount-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--grid-gap); padding-top: 0.6rem; }
 
-/* Lo stato e' una barretta a sinistra, non un colore di fondo: verde = presa, rosso =
-   manca. Stessi token della rampa transmog, ma qui il dato e' binario e non c'e' una
-   rampa da percorrere. `inset` invece di un border per non spostare il contenuto. */
+/* Lo stato e' una barretta a sinistra, non un colore di fondo: verde = presa, grigio =
+   manca. ⚠️ La barra delle mancanti era ROSSA: su 832 card mancanti di 1527 la griglia
+   diventava una scacchiera rosso/verde che si leggeva come un elenco di errori, e
+   filtrando «Mancanti» era un muro rosso pieno. Ma una mount che non hai non e' un
+   guasto: e' il default. Il segnale di «presa» resta pieno (verde), il «manca» torna
+   quieto -- grigio, fondo appena piu' scuro, icona smorzata -- e il colore in pagina
+   dice una cosa sola. Non e' la rampa di /transmog, che vive in una matrice di poche
+   celle dove il rosso ha spazio per significare qualcosa.
+   `inset` invece di un border per non spostare il contenuto. */
 .mcard {
+  --bar: var(--ok);
   position: relative; display: flex; align-items: center; gap: 0.7rem;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
-  padding: 0.55rem 0.7rem; box-shadow: inset 3px 0 0 var(--ok); overflow: hidden;
+  padding: 0.55rem 0.7rem; box-shadow: inset 3px 0 0 var(--bar); overflow: hidden;
   font: inherit; color: inherit; text-align: left; cursor: pointer;
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
-  /* Le card sono 1532 e stanno TUTTE nel DOM (il filtro nasconde, non rimuove): senza
+  /* Le card sono 1527 e stanno TUTTE nel DOM (il filtro nasconde, non rimuove): senza
      contenimento il browser impagina e disegna anche le migliaia fuori schermo a ogni
      giro. `auto` come misura di riserva vuol dire "usa 56px finche' non l'hai vista,
      poi ricordati quella vera", cosi' la barra di scorrimento non salta. */
@@ -164,15 +188,18 @@ const srcOptions = [...srcCounts.entries()]
   contain-intrinsic-size: auto 56px;
 }
 /* La barretta di stato e' un box-shadow: l'hover deve RIPETERLA, altrimenti
-   aggiungendo l'ombra la si spegne e la card sembra cambiare stato al passaggio.
-   Il sollevamento di 1px e' il feedback comune a tutte le card cliccabili del sito
-   (/extra e /ui): la card apre una modale, quindi si comporta come quelle. */
-.mcard:hover { border-color: var(--section, var(--accent)); box-shadow: inset 3px 0 0 var(--ok), var(--shadow-md); transform: translateY(-1px); }
-.mcard[data-got="0"]:hover { box-shadow: inset 3px 0 0 var(--bad), var(--shadow-md); }
-.mcard[data-got="0"] { box-shadow: inset 3px 0 0 var(--bad); background: var(--surface-2); }
+   aggiungendo l'ombra la si spegne e la card sembra cambiare stato al passaggio. La
+   ripete via `--bar`, cosi' la regola vale per tutti e due gli stati invece di
+   duplicarsi. Il sollevamento di 1px e' il feedback comune a tutte le card cliccabili
+   del sito (/extra e /ui): la card apre una modale, quindi si comporta come quelle. */
+.mcard:hover { border-color: var(--section, var(--accent)); box-shadow: inset 3px 0 0 var(--bar), var(--shadow-md); transform: translateY(-1px); }
+.mcard[data-got="0"] { --bar: color-mix(in srgb, var(--text-subtle) 35%, var(--border)); background: var(--surface-2); }
 /* Mancante: l'icona resta leggibile ma smorzata, cosi' la griglia si legge a colpo
-   d'occhio senza doverla percorrere card per card. */
-.mcard[data-got="0"] .mico { filter: grayscale(1); opacity: 0.55; }
+   d'occhio senza doverla percorrere card per card. ⚠️ Era grayscale pieno a 0.55 di
+   opacita': le icone di WoW sono la sola parte a colori della pagina, e cosi' meta'
+   griglia diventava una fila di macchie grigie indistinguibili. Ora si riconoscono
+   ancora, restando chiaramente in secondo piano. */
+.mcard[data-got="0"] .mico { filter: grayscale(0.85); opacity: 0.72; }
 .mcard[data-got="0"] .mname { color: var(--text-muted); }
 .mcard[hidden] { display: none !important; }  /* display:flex vince su [hidden]: forziamo */
 
@@ -200,12 +227,22 @@ const srcOptions = [...srcCounts.entries()]
    `.chips` (global.css) le dispone gia' in flex con gap 0.4rem — qui serve solo lo
    stacco dalla barra. Stesso trattamento di `.spec-chips` in /macros. */
 .cat-chips { margin-top: 0.5rem; }
-.tally { margin-left: auto; font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tally { font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* Barretta di avanzamento: `--pct` (0-100, unitless) inline, come la rampa di
+   /transmog. Sta in coda alla barra filtri insieme al contatore, di cui e' la lettura
+   a colpo d'occhio -- non un elemento a se'. */
+.prog { margin-left: auto; flex: none; width: 88px; height: 6px; border-radius: 999px; background: var(--border-light); border: 1px solid var(--border); overflow: hidden; }
+.prog::after { content: ""; display: block; width: calc(var(--pct, 0) * 1%); height: 100%; background: var(--ok); border-radius: 999px; }
 
 /* ── Modale di dettaglio (pattern lightbox di /extra e /ui) ── */
 .mlb { position: fixed; inset: 0; z-index: 100; background: rgba(10,12,16,0.94); display: none; align-items: center; justify-content: center; padding: 1rem; }
 .mlb.open { display: flex; }
 .mlb-panel { display: flex; flex-direction: column; width: min(560px, 96vw); max-height: 92vh; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+/* Il pannello prende il focus all'apertura (vedi il tabindex nel template) ma non e'
+   un controllo: un anello attorno all'intera modale non indica nulla di azionabile e
+   incornicia la cavalcatura. L'indicazione di focus resta su frecce, chiusura e link,
+   che sono le cose su cui si preme. */
+.mlb-panel:focus, .mlb-panel:focus-visible { outline: none; }
 .mlb-head { flex: none; display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); }
 .mlb-ico { width: 44px; height: 44px; min-width: 44px; max-width: none; border-radius: var(--radius-lg); border: 1px solid var(--border); object-fit: cover; }
 /* flex:1 — i nomi arrivano a 46 caratteri: senza, un titolo lungo spingerebbe frecce e
@@ -217,7 +254,9 @@ const srcOptions = [...srcCounts.entries()]
    pensate per il testo piccolo, su un velo chiarissimo della stessa tinta. */
 .mlb-state { display: inline-flex; align-items: center; gap: 0.3rem; font-size: var(--fs-xs); font-weight: 700; border-radius: 999px; padding: 0.1rem 0.5rem 0.1rem 0.22rem; }
 .mlb-state.got { color: var(--ok-text); background: color-mix(in srgb, var(--ok) 12%, var(--surface)); }
-.mlb-state.missing { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, var(--surface)); }
+/* Ambra, non rosso: l'icona accanto e' `warn.jpg` -- la stessa della chip «Mancanti» --
+   e un testo rosso accanto a un'icona ambra sono due colori che dicono due cose. */
+.mlb-state.missing { color: var(--warn-text); background: color-mix(in srgb, var(--warn) 12%, var(--surface)); }
 .mlb-state-ico { width: 14px; height: 14px; min-width: 14px; max-width: none; border-radius: 3px; object-fit: cover; }
 /* Posizione nel sottoinsieme filtrato: dice quanto resta da sfogliare, come il
    contatore della barra dice quanto manca alla collezione. */
@@ -230,14 +269,21 @@ const srcOptions = [...srcCounts.entries()]
 .mlb-step:hover, .mlb-close:hover { color: var(--text); }
 .mlb-step[disabled] { opacity: 0.3; cursor: default; }
 
-/* Il modello sta su fondo trasparente: la fascia gli mette sotto una superficie
-   leggera, altrimenti le parti scure spariscono sul bianco della modale. Fuori dal
-   corpo scorrevole, quindi resta ferma mentre si leggono i campi. */
-.mlb-hero { flex: none; display: flex; align-items: center; justify-content: center; padding: 0.7rem; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+/* I render ufficiali hanno il loro fondo scuro: la fascia lo continua fino ai bordi
+   della modale, cosi' il modello sta su un palco invece che dentro un francobollo
+   incollato sul bianco. Il gradiente e' appena percettibile, serve solo a non avere
+   un rettangolo piatto. Fuori dal corpo scorrevole, quindi resta ferma mentre si
+   leggono i campi. */
+/* ⚠️ #181818 non e' un colore scelto: e' ESATTAMENTE il fondo dei render di Blizzard
+   (misurato sui pixel, e' piatto su tutta l'immagine). Serve che combaci al valore,
+   altrimenti si vede il quadrato dell'immagine stagliarsi sulla fascia e la testata
+   sembra avere un buco rettangolare in mezzo. Se un giorno cambia la fonte delle
+   immagini, va rimisurato. */
+.mlb-hero { flex: none; display: flex; align-items: center; justify-content: center; padding: 0.5rem; background: #181818; border-bottom: 1px solid var(--border); }
 .mlb-hero[hidden] { display: none; }
-/* 1:1 con la sorgente (300x300) quando c'e' spazio; su schermi bassi cede in altezza
-   invece di spingere i campi fuori dalla modale. */
-.mlb-img { width: min(300px, 100%); height: auto; aspect-ratio: 1; max-height: min(300px, 38vh); object-fit: contain; }
+/* La sorgente e' 600x600: si mostra a 320 (riserva per gli schermi a densita' doppia);
+   su schermi bassi cede in altezza invece di spingere i campi fuori dalla modale. */
+.mlb-img { width: min(320px, 100%); height: auto; aspect-ratio: 1; max-height: min(320px, 40vh); object-fit: contain; }
 .mlb-body { flex: 1; min-height: 0; padding: 0.85rem 0.9rem 1rem; overflow: auto; display: flex; flex-direction: column; gap: 0.8rem; }
 
 /* Qui le icone portano l'etichetta ACCANTO, non solo nel tooltip: nella card lo
@@ -314,6 +360,12 @@ const srcOptions = [...srcCounts.entries()]
       const f = Array.from(lb.querySelectorAll<HTMLElement>('button:not([disabled]), a[href]'));
       if (!f.length) return;
       const first = f[0], last = f[f.length - 1], cur = document.activeElement;
+      // Il pannello e' il punto di partenza (ci va il focus all'apertura) e non e' un
+      // controllo: in avanti il browser scende da solo sul primo bottone, ma
+      // all'indietro uscirebbe dal dialog -- la pagina dietro e' `inert`, quindi il
+      // focus finirebbe sulla barra del browser. Si chiude il giro a mano.
+      const panel = lb.querySelector('.mlb-panel');
+      if (e.shiftKey && cur === panel) { e.preventDefault(); last.focus(); return; }
       if (e.shiftKey && (cur === first || !lb.contains(cur))) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && (cur === last || !lb.contains(cur))) { e.preventDefault(); first.focus(); }
     });
@@ -323,7 +375,7 @@ const srcOptions = [...srcCounts.entries()]
     const grid = document.getElementById('mount-grid');
     // Si stacca subito il ponte verso la pagina precedente: con ClientRouter il modulo
     // sopravvive alla navigazione, e una closure viva tratterrebbe in memoria la griglia
-    // di prima, cioe' 1532 card. Lo riassegna piu' sotto chi la griglia ce l'ha davvero.
+    // di prima, cioe' 1527 card. Lo riassegna piu' sotto chi la griglia ce l'ha davvero.
     mlbStep = null;
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.mcard')) as HTMLElement[];
@@ -344,7 +396,7 @@ const srcOptions = [...srcCounts.entries()]
 
     // Indice letto UNA volta sola. `dataset` non e' un oggetto normale: ogni accesso
     // ricalcola il nome dell'attributo, e qui se ne leggevano quattro per ognuna delle
-    // 1532 card a ogni battuta sulla ricerca. Anche lo `split` delle categorie era
+    // 1527 card a ogni battuta sulla ricerca. Anche lo `split` delle categorie era
     // rifatto da capo ogni volta. Ora il filtro lavora su valori gia' pronti.
     const idx = cards.map((card) => ({
       card,
@@ -367,7 +419,7 @@ const srcOptions = [...srcCounts.entries()]
           && (stato === '' || it.got === stato)
           && (cat === '' || it.cats.includes(cat))
           && (src === '' || it.src === src);
-        // Si scrive solo quando cambia davvero: riassegnare `hidden` a tutte e 1532
+        // Si scrive solo quando cambia davvero: riassegnare `hidden` a tutte e 1527
         // invalida lo stile di ognuna anche dove non e' cambiato nulla.
         if (it.card.hidden === show) it.card.hidden = !show;
         if (show) visible.push(it.card);
@@ -459,7 +511,7 @@ const srcOptions = [...srcCounts.entries()]
         elStateIco.src = got ? '/icons/ui/ok.jpg' : '/icons/ui/warn.jpg';
         elState.className = 'mlb-state ' + (got ? 'got' : 'missing');
 
-        // Non tutte hanno il modello (8 su 1532): senza, sparisce la fascia INTERA,
+        // Non tutte hanno il modello (8 su 1527): senza, sparisce la fascia INTERA,
         // invece di lasciare una banda vuota sotto la testata.
         const img = card.dataset.img || '';
         elHero.hidden = !img;
@@ -485,8 +537,22 @@ const srcOptions = [...srcCounts.entries()]
           const b = document.createElement('dd'); b.textContent = dd;
           elFields.append(a, b);
         };
-        if (card.dataset.srclabel) riga('Sorgente', card.dataset.srclabel);
-        for (const l of (card.dataset.full || '').split('\n').map(s => s.trim()).filter(Boolean)) {
+        const srcLab = card.dataset.srclabel || '';
+        const righe = (card.dataset.full || '').split('\n').map(s => s.trim()).filter(Boolean);
+        // La categoria di sorgente («Drop», «Trading Post», «Vendor») si scrive solo se
+        // le righe del gioco non la dicono gia' -- e quasi sempre la dicono, o come
+        // riga nuda («Trading Post» sotto «SORGENTE: Trading Post», 198 mount) o come
+        // etichetta della riga di dettaglio («DROP: Mistress Sassz'ine»). Prima usciva
+        // comunque, e la lista si apriva con la stessa parola due volte di fila.
+        const uguale = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+        // ⚠️ Solo quando l'ETICHETTA di una riga di dettaglio ripete la sorgente: se a
+        // ripeterla e' una riga nuda («Trading Post»), la riga «Sorgente» va scritta
+        // lo stesso -- e' quella nuda a essere saltata sotto -- altrimenti la modale
+        // resterebbe senza nessun campo.
+        const gia = righe.some(l => l.includes(': ') && uguale(l.slice(0, l.indexOf(': ')), srcLab));
+        if (srcLab && !gia) riga('Sorgente', srcLab);
+        for (const l of righe) {
+          if (uguale(l, srcLab)) continue;
           const sep = l.indexOf(': ');
           if (sep > 0) riga(l.slice(0, sep), l.slice(sep + 2));
           else riga('', l);
@@ -500,7 +566,7 @@ const srcOptions = [...srcCounts.entries()]
         elDesc.hidden = !desc;
         elLink.href = `https://www.wowhead.com/spell=${card.dataset.spell || ''}`;
 
-        // Posizione nel sottoinsieme filtrato: con 1532 cavalcature dice quanto resta
+        // Posizione nel sottoinsieme filtrato: con 1527 cavalcature dice quanto resta
         // da sfogliare, come il contatore in barra dice quanto manca alla collezione.
         const pos = visible.indexOf(card);
         elPos.textContent = pos >= 0 && visible.length > 1 ? `${pos + 1} / ${visible.length}` : '';
@@ -516,7 +582,7 @@ const srcOptions = [...srcCounts.entries()]
         lb.classList.add('open');
         document.body.style.overflow = 'hidden';
         document.getElementById('mount-main')?.setAttribute('inert', '');
-        (document.getElementById('mlb-close') as HTMLElement)?.focus();
+        (document.getElementById('mlb-panel') as HTMLElement)?.focus();
       };
 
       // Giro circolare come il lightbox di /ui: dall'ultima si torna alla prima.

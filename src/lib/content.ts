@@ -254,7 +254,7 @@ export function getExtra(): Extra[] {
 export interface Mount {
   id: number;
   spell: number;
-  display: number;         // creatureDisplayInfoID = il MODELLO -> public/mounts/<display>.webp
+  display: number;         // creatureDisplayInfoID = il MODELLO -> public/mounts/<display>.webp (600x600)
   name: string;
   src: number;             // indice sourceType del client (chiave di `sources`)
   srcText?: string;        // provenienza per esteso, multiriga come la scrive il gioco
@@ -264,9 +264,12 @@ export interface Mount {
   // starne in piu' d'una -- una volante che porta passeggeri e' in `volo` e in
   // `passeggero`. Vuoto = il diario non l'ha classificata (in pagina: «Altro»).
   cats: string[];
-  // Vincoli d'uso, letti dal TOOLTIP della spell in gioco ("Requires Paladin",
-  // "Requires Draenei"): la provenienza non basta, cita una classe in 23 casi su
-  // 1532 e la razza mai. `race` puo' elencarne piu' d'una, separate da " / ".
+  // Vincoli d'uso, risolti da scripts/mount-classes.mjs sui dati di Wowhead: il client
+  // non li espone (nel suo tooltip non c'e' nessuna riga "Requires") e la provenienza
+  // cita una classe in 23 casi su 1527 e la razza mai. Oggi 52 mount hanno un vincolo
+  // di classe e 13 uno di razza -- i cavalli razziali dei paladini piu' l'hawkstrider
+  // dei Blood Elf. `race` puo' elencarne piu' d'una, separate da " / " (il Great
+  // Exarch's Elekk vale per Draenei e Draenei Forgiati dalla Luce).
   faction: 'horde' | 'alliance' | null;
   class: string | null;
   race: string | null;
@@ -307,8 +310,14 @@ export function mountBadges(m: Mount): MountBadge[] {
 // sole CHIAVI (che il glob espone anche pigro), non i moduli. Con eager si importerebbero
 // mille asset a ogni build per poi guardarne il nome.
 const mountIcons = import.meta.glob('/public/icons/mount/*.jpg');
-// Immagini del modello: non tutte esistono su Wowhead, quindi si guarda il file.
+// Immagini del modello: non esistono per tutte, quindi si guarda il file. Sono i
+// render UFFICIALI di Blizzard (600x600 su fondo scuro), scaricati e convertiti in
+// webp da scripts/mount-images.mjs; dove il render non c'e' (7 su 1516) resta la
+// vecchia miniatura del model viewer di Wowhead, 300x300 su fondo trasparente.
 const mountImgs = import.meta.glob('/public/mounts/*.webp');
+function mountImg(display: number | undefined): string | undefined {
+  return display && `/public/mounts/${display}.webp` in mountImgs ? `/mounts/${display}.webp` : undefined;
+}
 let _mounts: Mount[] | null = null;
 export function getMounts(): Mount[] {
   if (_mounts) return _mounts;
@@ -318,7 +327,7 @@ export function getMounts(): Mount[] {
   return (_mounts = raw.map((m) => ({
     ...m,
     icon: m.icon && `/public/icons/mount/${m.icon}.jpg` in mountIcons ? m.icon : undefined,
-    img: m.display && `/public/mounts/${m.display}.webp` in mountImgs ? `/mounts/${m.display}.webp` : undefined,
+    img: mountImg(m.display),
   })));
 }
 
@@ -337,16 +346,27 @@ export function getMountStats(): { got: number; total: number; pct: number } {
 // Le categorie del menu "Type" del diario: la pagina rispecchia i filtri di gioco
 // invece di inventarsi una tassonomia sua. '?' = il diario non l'ha classificata, e
 // si dice «Altro» invece di indovinare.
+//
+// ⚠️ I TIPI DEL GIOCO SONO QUATTRO: Ground, Flying, Aquatic, Ride Along. Sono quelli
+// che possono essere una CHIP di filtro, e non se ne aggiungono altri.
 // ⚠️ «Passeggeri» (Ride Along) oggi non compare: il filtro corrispondente si dichiara
 // non valido e non restituisce nulla. La voce resta qui perche' la chip nasce solo se
 // ha almeno una mount -- se un giorno il gioco risponde, appare da se'.
-export const MOUNT_CATS: { key: string; label: string; icon: string }[] = [
+//
+// «Skyriding» NON e' un quinto tipo e per questo ha `chip: false`, cioe' compare solo
+// come pastiglia nella modale. Dal rifacimento del volo lo skyriding vale su
+// praticamente tutte le volanti, salvo eccezioni: il filtro 5 del diario non elenca
+// «le mount che skyridano» ma le 23 cavalcature PERSONALIZZABILI (Renewed
+// Proto-Drake, Highland Drake, i Delver's...). Come chip diceva la cosa sbagliata --
+// 23 su 712 volanti -- e tutte e 23 sono comunque gia' in `volo`, quindi togliendola
+// dal filtro non si perde nulla.
+export const MOUNT_CATS: { key: string; label: string; icon: string; chip?: boolean }[] = [
   { key: 'terra', label: 'Terra', icon: '/icons/mountcat/terra.jpg' },
   { key: 'volo', label: 'Volo', icon: '/icons/mountcat/volo.jpg' },
-  { key: 'skyriding', label: 'Skyriding', icon: '/icons/mountcat/skyriding.jpg' },
   { key: 'acqua', label: 'Acqua', icon: '/icons/mountcat/acqua.jpg' },
   { key: 'passeggero', label: 'Passeggeri', icon: '/icons/mountcat/passeggero.jpg' },
   { key: '?', label: 'Altro', icon: '/icons/mountcat/altro.jpg' },
+  { key: 'skyriding', label: 'Personalizzabile', icon: '/icons/mountcat/skyriding.jpg', chip: false },
 ];
 
 // Le categorie di una mount, gia' pronte per l'attributo del filtro: vuoto -> '?',
