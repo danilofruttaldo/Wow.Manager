@@ -839,6 +839,58 @@
       "body_file": "priest/holy/flash-heal-smite.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-07-23 (serie Priest). Doppio ruolo un-bottone (cura-o-danno), stesso schema mouseover-fallback di mage-decurse-spellsteal / rogue-tricks-shiv: mouseover su alleato vivo (@mouseover,help,nodead) -> Flash Heal (cura rapida sull'alleato sotto il mouse senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) -> Smite (danno sul nemico corrente). Il ramo default NON ha @mouseover -> Smite va sul target attuale. nodead evita la cura su alleato morto. CLASSIFICAZIONE spec:holy — VERIFICATO Warcraft Wiki (12.0.x): Flash Heal e' baseline 'available to all specializations, but Discipline and Shadow eventually replace it with Shadow Mend' -> in pratica solo HOLY casta davvero Flash Heal (Disc e Shadow lo sostituiscono con Shadow Mend). Smite e' Disc+Holy ('known by all priests from level 1', ma su Shadow 'replaced with Mind Flay'). Il vincolo stringente e' Flash Heal (solo Holy) -> spec:holy pulito. #showtooltip nudo dinamico mostra il ramo attivo (Flash Heal col mouse sull'alleato, Smite altrimenti)."
+    },
+    "demon-hunter-infernal-strike": {
+      "name": "Infernal Strike",
+      "desc": "Infernal Strike sulla posizione del mouse (salto + danno ad area).",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "vengeance",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/vengeance/infernal-strike.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance, pg _Demoversion in leveling). Salta sulla posizione del mouse (@cursor) e all'atterraggio infligge danno da fuoco ad area. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema di warrior-heroic-leap-cursor e degli altri @cursor). CLASSIFICAZIONE spec:vengeance — e' la mobilita' base di Vengeance: Havoc usa Fel Rush, Devourer usa Shift (vedi demon-hunter-shift, gia' verificato). Confermato indirettamente dalle note di Midnight 12.0.7 su maxroll, dove i talenti di classe che toccano la mobilita' nominano i tre pezzi come abilita' distinte: 'Erratic Felheart has been updated - Now reduces the cooldown of Fel Rush, Shift, and Infernal Strike by 1 second/2 seconds' e 'Infernal Strike/Shift grants you a rapidly decaying shield for 6% of your maximum health'. #showtooltip nudo mostra Infernal Strike."
+    },
+    "demon-hunter-sigil-of-flame": {
+      "name": "Sigil of Flame",
+      "desc": "Sigil of Flame sulla posizione del mouse (danno ad area nel tempo).",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "vengeance",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/vengeance/sigil-of-flame.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Flame sulla posizione del mouse (@cursor): sigillo che dopo l'attivazione incendia l'area e lascia un danno nel tempo sui nemici dentro; in Vengeance genera anche Fury. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance, NON spec:null — in Midnight NON e' piu' abilita' di classe: maxroll (guide Havoc e Vengeance 12.0.7) scrive verbatim 'Sigil of Flame is now a Vengeance only ability (was all specializations)', e Icy Veins nella guida Havoc parla della 'removal of Sigil of Spite and Sigil of Flame'. Attenzione: e' un cambio recente, le guide vecchie (Dragonflight/TWW) la danno nell'albero classe -> non 'correggere' a spec:null. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Flame."
+    },
+    "demon-hunter-sigil-of-silence": {
+      "name": "Sigil of Silence",
+      "desc": "Sigil of Silence sulla posizione del mouse (silenzia ad area).",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "vengeance",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/vengeance/sigil-of-silence.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Silence sulla posizione del mouse (@cursor): sigillo che dopo l'attivazione silenzia i nemici nell'area — interrupt ad area, strumento cardine in mitica+. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance — prova piu' debole delle altre due (nessuna riga di patch note che la sposti esplicitamente), tenuta su due indizi concordi: method.gg 12.0.7 la elenca sotto i talenti SPEC di Vengeance ('Sigil of Silence is a strong tool in Mythic+ but less important in Raid'), e le guide Havoc di maxroll e Icy Veins non la nominano mai pur elencando Sigil of Misery fra la CC. Se un giorno risultasse ancora di classe, il fix e' spec:null. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Silence."
+    },
+    "demon-hunter-sigil-of-spite": {
+      "name": "Sigil of Spite",
+      "desc": "Sigil of Spite sulla posizione del mouse (danno ad area + frammenti d'anima).",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "vengeance",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/vengeance/sigil-of-spite.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Spite (ex Elysian Decree) sulla posizione del mouse (@cursor): sigillo di danno ad area che frantuma le anime dei colpiti generando Soul Fragment. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance, NON spec:null — spostata dall'albero di classe a quello di spec in Midnight: maxroll 12.0.7 verbatim 'Sigil of Spite, Soul Sigils, and Quickened Sigils moved to the Vengeance talent tree (was class talents)' e 'Sigil of Spite has been made unique to the Vengeance spec'. Stesso caveat di sigil-of-flame: le guide pre-Midnight la danno di classe. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Spite."
     }
   }
 }
