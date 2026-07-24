@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog } from '../lib/content';
+import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog, getMountStats } from '../lib/content';
 
 interface Props {
   title: string;
@@ -23,6 +23,7 @@ const SOURCE_BY_PATH: Record<string, string> = {
   '/professioni': 'professions',
   '/pg': 'pg.md',
   '/transmog': 'transmog/manifest.json',
+  '/mount': 'mounts/manifest.json',
   '/ui': 'public/screenshots',
   '/extra': 'scripts',
 };
@@ -47,6 +48,7 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
 const tmog = getTransmog();
 const tmogTotal = tmog.reduce((n, c) => n + c.total, 0);
 const tmogPct = tmogTotal ? Math.round((tmog.reduce((n, c) => n + c.got, 0) / tmogTotal) * 100) : 0;
+const mountStats = getMountStats();
 // `label` = sigla mostrata nella toolbar (spazio stretto, si appoggia a icona + conteggio
 // per il senso); `full` = nome esteso nel title per accessibilita' e hover.
 // `color` = tinta identitaria della sezione (la stessa delle vecchie card della home):
@@ -57,6 +59,7 @@ const nav = [
   { href: '/professioni', label: 'Prof', full: 'Professioni', icon: '/icons/section/prof.jpg', count: `${getProfessions().length}`, color: '#C77D0A' },
   { href: '/pg', label: 'PG', full: 'PG', icon: '/icons/section/pg.jpg', count: `${getPgCount()}`, color: '#C0202A' },
   { href: '/transmog', label: 'Xmog', full: 'Transmog', icon: '/icons/section/transmog.jpg', count: `${tmogPct}%`, color: '#9B4DCA' },
+  { href: '/mount', label: 'Mount', full: 'Cavalcature', icon: '/icons/section/mount.jpg', count: `${mountStats.pct}%`, color: '#2F8F4E' },
   { href: '/ui', label: 'UI', full: 'UI', icon: '/icons/section/ui.jpg', count: `${getScreenshotCount()}`, color: '#159A8C' },
   { href: '/extra', label: 'Extra', full: 'Extra', icon: '/icons/section/extra.jpg', count: `${getExtra().length}`, color: '#5B6470' },
 ];

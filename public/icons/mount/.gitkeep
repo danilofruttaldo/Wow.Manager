@@ -1,0 +1,4 @@
+Icone delle cavalcature, scaricate da scripts/mount-sync.ps1 (nome file = nome
+dell'icona su Wowhead, non nome della mount: le mount che condividono l'aspetto
+condividono il file). Il segnaposto tiene la cartella nel repo anche quando e'
+vuota, cosi' il glob di content.ts trova sempre il percorso.

@@ -1,0 +1,190 @@
+---
+import Base from '../layouts/Base.astro';
+import { getMounts, getMountSources, getMountStats, MOUNT_CATS } from '../lib/content';
+
+const mounts = getMounts();
+const sources = getMountSources();
+const stats = getMountStats();
+
+// Etichetta della provenienza: il testo per esteso che scrive il gioco ("Drop: Attumen
+// the Huntsman\nKarazhan") quando c'e', altrimenti la sola categoria di sorgente. Le
+// righe si uniscono con un punto medio: nella card ci sta una riga sola.
+const srcLabel = (m: (typeof mounts)[number]) =>
+  (m.srcText ?? '').split('\n').map((s) => s.trim()).filter(Boolean).join(' · ')
+  || sources[String(m.src)] || 'Provenienza ignota';
+
+const catCount = (key: string) => mounts.filter((m) => m.cat === key).length;
+// Categorie senza nemmeno una mount non diventano chip: la mappa dei mountTypeID copre
+// piu' casi di quanti ne esistano davvero in una data patch (es. "Altro" a zero = tutti
+// i tipi sono classificati, ed e' la situazione buona).
+const cats = MOUNT_CATS.filter((c) => catCount(c.key) > 0);
+
+// Fonti presenti nei dati, per la tendina: ordinate per numero di mount (le grosse in
+// testa), con il conteggio accanto.
+const srcCounts = new Map<string, number>();
+for (const m of mounts) {
+  const k = String(m.src);
+  srcCounts.set(k, (srcCounts.get(k) ?? 0) + 1);
+}
+const srcOptions = [...srcCounts.entries()]
+  .map(([k, n]) => ({ k, n, label: sources[k] ?? 'Altro' }))
+  .sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
+
+const facLabel: Record<string, string> = { horde: 'Solo Orda', alliance: 'Solo Alleanza' };
+---
+<Base title="Mount" description="Collezione cavalcature: tutte le mount del gioco, quelle sbloccate e quelle che mancano, con la provenienza.">
+  <div class="wrap">
+    <div class="filters row">
+      <input id="mount-search" class="search" type="search" inputmode="search" autocomplete="off"
+             placeholder="Cerca cavalcatura…" aria-label="Cerca cavalcatura" />
+      <div class="chips" id="mount-state" role="group" aria-label="Filtra per stato">
+        <button class="chip" data-state="1" type="button" aria-pressed="false"><img class="chip-ico" src="/icons/ui/ok.jpg" alt="" width="18" height="18" /> Sbloccate<span class="c">{stats.got}</span></button>
+        <button class="chip" data-state="0" type="button" aria-pressed="false"><img class="chip-ico" src="/icons/ui/warn.jpg" alt="" width="18" height="18" /> Mancanti<span class="c">{stats.total - stats.got}</span></button>
+      </div>
+      <div class="chips" id="mount-cats" role="group" aria-label="Filtra per categoria">
+        {cats.map(c => (
+          <button class="chip" data-cat={c.key} type="button" aria-pressed="false"><img class="chip-ico" src={c.icon} alt="" width="18" height="18" /> {c.label}<span class="c">{catCount(c.key)}</span></button>
+        ))}
+      </div>
+      <label class="sr-only" for="mount-src">Filtra per provenienza</label>
+      <select id="mount-src" class="select">
+        <option value="">Tutte le provenienze</option>
+        {srcOptions.map(o => <option value={o.k}>{o.label} ({o.n})</option>)}
+      </select>
+      <span class="tally" id="tally">{stats.got} / {stats.total} · {stats.pct}%</span>
+    </div>
+
+    <div class="mount-grid" id="mount-grid">
+      {mounts.map(m => (
+        <article class="mcard" data-got={String(m.got)} data-cat={m.cat} data-src={String(m.src)}
+                 data-search={`${m.name} ${srcLabel(m)} ${sources[String(m.src)] ?? ''}`.toLowerCase()}>
+          {m.icon
+            ? <img class="mico" src={`/icons/mount/${m.icon}.jpg`} alt="" width="36" height="36" loading="lazy" decoding="async" />
+            : <span class="mono" aria-hidden="true">{m.name.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase()}</span>}
+          <div class="mbody">
+            <span class="mname">{m.name}</span>
+            <span class="msrc">{srcLabel(m)}</span>
+          </div>
+          {m.faction && <span class="mfac">{facLabel[m.faction]}</span>}
+        </article>
+      ))}
+    </div>
+    <p class="empty" id="empty" role="status" hidden>Nessuna cavalcatura trovata.</p>
+    {mounts.length === 0 && (
+      <p class="empty">Nessun dato: lancia <code>scripts\mount-sync.ps1</code> dopo un <code>/reload</code> in gioco.</p>
+    )}
+  </div>
+</Base>
+
+<style>
+/* Card fitte: sono ~un migliaio, quindi la griglia sta stretta (auto-fill su 250px) e
+   ogni card e' una riga sola di icona + nome + provenienza. */
+.mount-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--grid-gap); padding-top: 0.6rem; }
+
+/* Lo stato e' una barretta a sinistra, non un colore di fondo: verde = presa, rosso =
+   manca. Stessi token della rampa transmog, ma qui il dato e' binario e non c'e' una
+   rampa da percorrere. `inset` invece di un border per non spostare il contenuto. */
+.mcard {
+  position: relative; display: flex; align-items: center; gap: 0.7rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 0.55rem 0.7rem; box-shadow: inset 3px 0 0 var(--ok); overflow: hidden;
+}
+.mcard[data-got="0"] { box-shadow: inset 3px 0 0 var(--bad); background: var(--surface-2); }
+/* Mancante: l'icona resta leggibile ma smorzata, cosi' la griglia si legge a colpo
+   d'occhio senza doverla percorrere card per card. */
+.mcard[data-got="0"] .mico { filter: grayscale(1); opacity: 0.55; }
+.mcard[data-got="0"] .mname { color: var(--text-muted); }
+.mcard[hidden] { display: none !important; }  /* display:flex vince su [hidden]: forziamo */
+
+.mico { flex-shrink: 0; width: 36px; height: 36px; min-width: 36px; border-radius: var(--radius-md); border: 1px solid var(--border); object-fit: cover; max-width: none; }
+.mono { flex-shrink: 0; display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--radius-md); background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.mbody { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
+.mname { font-size: var(--fs-md); font-weight: 600; line-height: 1.25; }
+/* Provenienza su una riga sola: il testo del gioco puo' essere lungo (boss + zona) e
+   qui conta il colpo d'occhio, non il testo integrale. */
+.msrc { font-size: var(--fs-xs); color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mfac { flex-shrink: 0; align-self: flex-start; font-size: var(--fs-2xs); font-weight: 600; color: var(--text-muted); background: var(--border-light); border-radius: 999px; padding: 0.05rem 0.4rem; }
+
+/* Tendina delle provenienze: stessa altezza dei controlli della barra filtri. */
+.select { font-family: inherit; font-size: var(--fs-base); color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.7rem; min-height: var(--control-h); cursor: pointer; }
+.select:hover { border-color: var(--section, var(--accent)); }
+.tally { margin-left: auto; font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+</style>
+
+<script>
+  import { loadFilters, saveFilters } from '../lib/filter-state';
+
+  function initMounts() {
+    const grid = document.getElementById('mount-grid');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('.mcard')) as HTMLElement[];
+    const search = document.getElementById('mount-search') as HTMLInputElement;
+    const stateChips = Array.from(document.querySelectorAll('#mount-state .chip')) as HTMLButtonElement[];
+    const catChips = Array.from(document.querySelectorAll('#mount-cats .chip')) as HTMLButtonElement[];
+    const srcSel = document.getElementById('mount-src') as HTMLSelectElement;
+    const empty = document.getElementById('empty') as HTMLElement;
+    const tally = document.getElementById('tally') as HTMLElement;
+    const totali = tally?.textContent ?? '';
+
+    const saved = loadFilters('mounts', { q: '', stato: '', cat: '', src: '' });
+    let query = (saved.q || '').trim().toLowerCase();
+    let stato = saved.stato || '';   // '' = tutte, '1' = sbloccate, '0' = mancanti
+    let cat = saved.cat || '';
+    let src = saved.src || '';
+    const persist = () => saveFilters('mounts', { q: search?.value || '', stato, cat, src });
+
+    const apply = () => {
+      let shown = 0;
+      for (const card of cards) {
+        const show = (query === '' || (card.dataset.search || '').includes(query))
+          && (stato === '' || card.dataset.got === stato)
+          && (cat === '' || card.dataset.cat === cat)
+          && (src === '' || card.dataset.src === src);
+        card.hidden = !show;
+        if (show) shown++;
+      }
+      if (empty) empty.hidden = shown > 0;
+      // Il totale resta sempre visibile: il numero filtrato da solo non direbbe
+      // quanto manca alla collezione, che e' il dato per cui la pagina esiste.
+      if (tally) tally.textContent = shown === cards.length ? totali : `${shown} mostrate · ${totali}`;
+    };
+
+    // Un gruppo di chip a selezione singola con ri-click che deseleziona: lo stesso
+    // comportamento di /addons, qui riusato per stato e categoria.
+    const gruppo = (chips: HTMLButtonElement[], attr: string, get: () => string, set: (v: string) => void) => {
+      for (const chip of chips) {
+        chip.addEventListener('click', () => {
+          const v = chip.dataset[attr] || '';
+          set(get() === v ? '' : v);
+          for (const c of chips) {
+            const on = c === chip && get() !== '';
+            c.classList.toggle('is-active', on);
+            c.setAttribute('aria-pressed', on ? 'true' : 'false');
+          }
+          apply();
+          persist();
+        });
+      }
+    };
+    gruppo(stateChips, 'state', () => stato, (v) => { stato = v; });
+    gruppo(catChips, 'cat', () => cat, (v) => { cat = v; });
+
+    if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); apply(); persist(); });
+    if (srcSel) srcSel.addEventListener('change', () => { src = srcSel.value; apply(); persist(); });
+
+    // Ripristino dello stato salvato sul DOM, poi si filtra.
+    if (search && saved.q) search.value = saved.q;
+    if (srcSel && src) srcSel.value = src;
+    for (const [chips, val, attr] of [[stateChips, stato, 'state'], [catChips, cat, 'cat']] as const) {
+      if (!val) continue;
+      for (const c of chips) {
+        const on = (c.dataset[attr] || '') === val;
+        c.classList.toggle('is-active', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+    }
+    apply();
+  }
+
+  document.addEventListener('astro:page-load', initMounts);
+</script>

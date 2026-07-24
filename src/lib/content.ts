@@ -9,6 +9,7 @@ import macrosManifest from '../../macros/manifest.json';
 import professionsManifest from '../../professions/manifest.json';
 import extraManifest from '../../scripts/manifest.json';
 import transmogManifest from '../../transmog/manifest.json';
+import mountsManifest from '../../mounts/manifest.json';
 import profTreesManifest from '../../professions/trees.json';
 import profLevelingManifest from '../../professions/leveling.json';
 import profBuildsManifest from '../../professions/builds.json';
@@ -244,6 +245,62 @@ export function getExtra(): Extra[] {
     .map(([key, v]: [string, any]) => ({ key, ...v, body: v.body ?? extraBody(v.body_file) }))
     .sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '')));
 }
+
+// ── Mount (collezione cavalcature) ────────────────
+// mounts/manifest.json e' INTERAMENTE macchina-generato (scripts/mount-dump.lua +
+// scripts/mount-sync.ps1): elenca tutte le mount che il gioco conosce, prese e
+// mancanti, come le vede il diario. Niente di redazionale qui dentro: si riscrive per
+// intero a ogni sync, quindi non aggiungere campi a mano -- andrebbero persi.
+export interface Mount {
+  id: number;
+  spell: number;
+  name: string;
+  src: number;             // indice sourceType del client (chiave di `sources`)
+  srcText?: string;        // provenienza per esteso, multiriga come la scrive il gioco
+  type: number;            // mountTypeID grezzo, per ricostruire `cat` se la mappa cambia
+  cat: string;             // terra | volo | acqua | drago | '?' (tipo non ancora classificato)
+  faction: 'horde' | 'alliance' | null;
+  got: 0 | 1;
+  icon?: string;           // nome icona Wowhead -> public/icons/mount/<icon>.jpg
+}
+
+// Esistenza del file icona, senza `eager`: qui i file sono ~un migliaio e servono le
+// sole CHIAVI (che il glob espone anche pigro), non i moduli. Con eager si importerebbero
+// mille asset a ogni build per poi guardarne il nome.
+const mountIcons = import.meta.glob('/public/icons/mount/*.jpg');
+let _mounts: Mount[] | null = null;
+export function getMounts(): Mount[] {
+  if (_mounts) return _mounts;
+  const raw = ((mountsManifest as any).mounts ?? []) as Mount[];
+  // Icona dichiarata ma file assente (download fallito) -> si scarta qui, cosi' la card
+  // ripiega sul monogramma invece di mostrare un'immagine rotta.
+  return (_mounts = raw.map((m) => ({
+    ...m,
+    icon: m.icon && `/public/icons/mount/${m.icon}.jpg` in mountIcons ? m.icon : undefined,
+  })));
+}
+
+// sourceType -> etichetta, presa dal client (BATTLE_PET_SOURCE_n): non e' trascritta,
+// quindi non puo' divergere dal gioco.
+export function getMountSources(): Record<string, string> {
+  return ((mountsManifest as any).sources ?? {}) as Record<string, string>;
+}
+
+export function getMountStats(): { got: number; total: number; pct: number } {
+  const all = getMounts();
+  const got = all.filter((m) => m.got === 1).length;
+  return { got, total: all.length, pct: all.length ? Math.round((got / all.length) * 100) : 0 };
+}
+
+// Etichette delle categorie. '?' = mountTypeID che il dump non sa ancora classificare:
+// si dice "Altro" invece di indovinare (vedi CAT in scripts/mount-dump.lua).
+export const MOUNT_CATS: { key: string; label: string; icon: string }[] = [
+  { key: 'terra', label: 'Terra', icon: '/icons/mountcat/terra.jpg' },
+  { key: 'volo', label: 'Volo', icon: '/icons/mountcat/volo.jpg' },
+  { key: 'drago', label: 'Skyriding', icon: '/icons/mountcat/drago.jpg' },
+  { key: 'acqua', label: 'Acqua', icon: '/icons/mountcat/acqua.jpg' },
+  { key: '?', label: 'Altro', icon: '/icons/mountcat/altro.jpg' },
+];
 
 // ── Transmog (tier set per classe) ────────────────
 // Matrice tier × versione, una per classe. Le 4 colonne sono SLOT di versione, non

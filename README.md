@@ -14,6 +14,7 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 | [macros/](macros/) | Macro per classe/spec con body, slot, icon | `macros/manifest.json` |
 | [professions/](professions/) | Alberi di specializzazione (dal client) + leveling 1→max (web) per professione | `professions/` (`trees.json`, `leveling.json`, `manifest.json`) |
 | [transmog/](transmog/) | Set dei raid per classe: righe tier, versioni, pezzi collezionati | `transmog/manifest.json` |
+| [mounts/](mounts/) | Cavalcature: tutte quelle del gioco, prese e mancanti, con provenienza (macchina-generato) | `mounts/manifest.json` |
 | [ui-profiles/](ui-profiles/) | Profili addon (Plater, Details, ecc.) | `ui-profiles/manifest.json` |
 | [fonts/](fonts/) | Override font UI Blizzard (nomi-override in `Fonts/`) | `fonts/manifest.json` |
 | [pg.md](pg.md) | Tracker PG per razza × classe, Orda + Alleanza (copertura combo) | `pg.md` |
@@ -34,7 +35,7 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 
 ## Sito
 
-Il repo pubblica anche un sito statico che presenta i dati (addon, macro, professioni, PG, transmog, UI, extra):
+Il repo pubblica anche un sito statico che presenta i dati (addon, macro, professioni, PG, transmog, mount, UI, extra):
 
 - **URL**: <https://wow.danilofruttaldo.com>
 - **Stack**: [Astro](https://astro.build) (statico), sorgente in `src/`, dati letti dai manifest/markdown del repo.

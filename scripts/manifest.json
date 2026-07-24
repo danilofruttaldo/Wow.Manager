@@ -72,6 +72,26 @@
       "body_file": "transmog-raid.ps1",
       "notes": "Sola lettura, non tocca il manifest. La metrica principale e' il MYTHIC perche' completarlo sblocca da solo anche LFR/Normal/Heroic dello stesso tier: verificato sul blocco collected, 30 casi su 30 con Mythic pieno hanno tutte le inferiori piene, zero controesempi. Quindi il bersaglio vero di un raid e' il Mythic e le inferiori sono solo dettaglio. Sui tier vecchi senza chiave mythic (T6 e simili) la metrica ripiega sul totale di tutte le versioni, e l'etichetta della colonna diventa Totale. Risoluzione del raid: la chiave esatta vince sempre, altrimenti sigla tier o pezzo di nome -- serve perche' t6 e t6-swp condividono la sigla T6 e senza precedenza alla chiave 't6' usciva ambiguo. Le classi che a quel raid non esistevano non compaiono (non hanno la voce nel collected, stesso effetto di classStart sul sito): su ToS l'Evoker e' giustamente assente."
     },
+    "mount-dump": {
+      "kind": "script",
+      "name": "Dump collezione cavalcature",
+      "desc": "Addon locale che legge il diario delle cavalcature e scrive l'elenco completo delle mount del gioco — prese e mancanti, con provenienza e categoria — già in JSON per mounts/manifest.json.",
+      "lang": "lua",
+      "when": "Installalo come addon (istruzioni in testa al file), riavvia il client, poi basta un /reload: il dump si rigenera da solo. Il /wmmount serve solo per vederlo subito in chat.",
+      "warn": "Un addon nuovo richiede il riavvio del client: il /reload non lo vede. Se il campo sospetto è valorizzato NON sincronizzare: vuol dire che il client non aveva ancora caricato la collezione e nessuna mount risulta presa.",
+      "body_file": "mount-dump.lua",
+      "notes": "Fonte: C_MountJournal.GetMountIDs + GetMountInfoByID + GetMountInfoExtraByID. Account-wide (Warband), come le apparenze transmog. Due cose che il client NON da': (a) la categoria terra/volo/acqua/skyriding, che si deduce dal mountTypeID -- la mappa CAT copre i valori certi e ogni ID sconosciuto finisce in `tipiIgnoti` con nomi d'esempio, da classificare guardando i dati veri invece di indovinare; (b) il NOME dell'icona, perche' il gioco espone solo un fileID numerico inutilizzabile sul web -- lo risolve mount-sync.ps1 su Wowhead. Le etichette delle sorgenti non sono trascritte: il diario delle cavalcature riusa le stringhe BATTLE_PET_SOURCE_n, che si leggono dal client. Stessa GUARDIA del dump transmog: un dump preso prima che la collezione sia caricata elenca tutte le mount con nessuna presa ed e' internamente coerente, quindi c'e' il campo `sospetto` e non si sovrascrive un dump buono."
+    },
+    "mount-sync": {
+      "kind": "script",
+      "name": "Sync collezione cavalcature",
+      "desc": "Aspetta il dump del gioco, rigenera mounts/manifest.json, scarica le icone delle mount nuove, poi committa e pusha. Si rifiuta di procedere se il dump non è affidabile.",
+      "lang": "powershell",
+      "when": "Dopo aver sbloccato cavalcature. Lancialo, fai un /reload quando te lo chiede, e da lì fa tutto da solo. Con -Subito usa il dump già sul disco, con -NoGit si ferma prima del commit, con -NoIcone salta la parte web.",
+      "warn": "Il manifest delle mount è interamente generato: si riscrive per intero a ogni giro, quindi non metterci dentro campi a mano — andrebbero persi.",
+      "body_file": "mount-sync.ps1",
+      "notes": "Differenza dal sync transmog: li' si sostituiscono due blocchi dentro un manifest redazionale, qui il file e' tutto macchina-generato e si riscrive intero. L'unico dato non di gioco e' il nome dell'icona: il client espone un fileID numerico, che sul web non serve a nulla, quindi si risolve su Wowhead (endpoint tooltip JSON, ripiego sull'og:image della pagina spell -- lo stesso trucco degli avatar addon) e si CONSERVA nel manifest, cosi' ogni mount si cerca una volta sola nella vita del repo. Le icone stanno in public/icons/mount/<nome>.jpg, nominate come l'icona e non come la mount, cosi' le mount che condividono l'aspetto condividono il file. Se il download fallisce il campo icon si omette e la card ripiega sul monogramma; il sito ricontrolla comunque l'esistenza del file col glob, per non mostrare immagini rotte."
+    },
     "make-thumbs": {
       "kind": "script",
       "name": "Miniature screenshot UI",
