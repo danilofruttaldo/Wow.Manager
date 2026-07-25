@@ -476,6 +476,19 @@
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-07-13 ('nuova macro hunter marksmanship'). Piazza Volley sulla posizione del mouse (@cursor): incanala una pioggia di frecce ad area a terra (danno AoE; in MM alimenta/interagisce con Trick Shots). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di flare/binding-shot e degli altri @cursor). spec:marksmanship: Volley è abilità/talento della spec MM. #showtooltip nudo mostra Volley."
     },
+    "hunter-aspect-eagle-blood-fury": {
+      "name": "Aspect of the Eagle + Blood Fury",
+      "desc": "Aspect of the Eagle + razziale Blood Fury (inerte se non orco).",
+      "scope": "account",
+      "class": "hunter",
+      "spec": "survival",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "hunter/survival/aspect-eagle-blood-fury.txt",
+      "body": null,
+      "notes": "Richiesta utente 2026-07-25 ('nuova macro hunter survival + razziale orco (condizionale)'), body fornito con /use e con Blood Fury nudo. PRIMA macro Survival del repertorio (hunter/survival/ era vuota). DUE NORMALIZZAZIONI sul body fornito: (1) /use → /cast sulle righe di spell — in gioco sono sinonimi, ma nel repertorio /use resta riservato agli slot equipaggiamento (/use 13, /use 14 dei trinket) e tutte le altre 79 righe di spell usano /cast; (2) il razziale è guardato da [known:Blood Fury], che è il 'condizionale' chiesto — stesso pattern di warlock-darkglare-blood-fury e shaman-ascendance-ancestral-call. Serve perché le macro qui si tracciano per classe/spec e mai per personaggio: dei quattro hunter (Orconauta orco, Arconauta troll, Rockbiter earthen, Shottini mechagnome) solo Orconauta ha Blood Fury, e senza il known: sugli altri tre la riga darebbe 'spell sconosciuta'; con il known: è semplicemente inerte e il resto della macro parte lo stesso. Blood Fury è OFF-GCD → non ruba il GCD ad Aspect of the Eagle, partono nello stesso press. #showtooltip nudo: risolve sul primo /cast → mostra icona e cooldown di Aspect of the Eagle (regola del repertorio: showtooltip nudo quando nominerebbe la stessa spell della prima riga). CAVEAT CD DISALLINEATI: Blood Fury è 2 min / 15s (Wowhead 12.0.7), Aspect of the Eagle dura 15s ma ha un CD più corto — Icy Veins 12.0.7 dice 1 min, la scheda spell di Wowhead 1.5 min (le fonti non concordano, probabilmente per riduzioni da talento): in ogni caso l'Aspect torna prima del razziale, quindi premendo a CD il razziale si accompagna solo a un Aspect su due. Nessuno spreco (ogni /cast parte solo se disponibile), ma non è un burst allineato. NB SCELTA DI PAIRING: Aspect of the Eagle non è il CD di danno di Survival — è la finestra che porta le abilità melee a 40y; nella 12.0.7 sia Icy Veins sia method.gg indicano TAKEDOWN come cooldown primario della spec. Se un giorno si vuole il razziale sul burst vero, la riga [known:Blood Fury] va spostata su una macro di Takedown; qui resta com'è perché è quello che l'utente ha chiesto. NON aggiunti /use 13 e /use 14: le altre macro razziale+CD del repertorio (warlock, shaman, warrior, rogue, DK) li hanno, ma l'utente ha fornito un body a tre righe senza trinket e aggiungerli cambierebbe il comportamento del bottone. CAVEAT: se Aspect of the Eagle non fosse disponibile nel loadout corrente la riga è inerte e resta solo il razziale."
+    },
     "demon-hunter-sigil-of-misery": {
       "name": "Sigil of Misery",
       "desc": "Sigil of Misery sulla posizione del mouse (fear AoE).",

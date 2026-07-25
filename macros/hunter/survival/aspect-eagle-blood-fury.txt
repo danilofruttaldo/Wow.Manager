@@ -1,0 +1,3 @@
+#showtooltip
+/cast Aspect of the Eagle
+/cast [known:Blood Fury] Blood Fury
