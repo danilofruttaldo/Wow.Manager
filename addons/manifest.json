@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-07-15"
+    "last_sync": "2026-07-25"
   },
   "addons": {
     "BigWigs": {
@@ -143,13 +143,13 @@
     "WIM": {
       "name": "WIM (WoW Instant Messenger) v3",
       "desc": "Whisper in finestre di chat con tab e storico, in stile messaggistica istantanea.",
-      "version": "3.16.14",
-      "interface": "11508, 20505, 30405, 40402, 50503, 120000, 120001, 120005",
+      "version": "3.16.15",
+      "interface": "11509, 20506, 30405, 40402, 50503, 120000, 120001, 120005",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/wim-3",
-      "installed": "2026-05-27",
+      "installed": "2026-07-25",
       "folders": ["WIM"],
-      "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. TOC compatibile 120005. Download via forgecdn files/8151/363"
+      "notes": "Gestione whisper/messaggi in-game con finestre/tab tipo IM, history, filtri. Aggiornato 2026-07-25 3.16.14->3.16.15 via forgecdn files/8501/518 (WIM-3.16.15.zip). TOC si ferma a 120005 (12.0.5), non dichiara 120007: si carica lo stesso ma il gioco può segnarlo out of date senza il flag \"Carica addon obsoleti\". Download precedente: files/8151/363"
     },
     "CursorRing": {
       "name": "Cursor Ring",
