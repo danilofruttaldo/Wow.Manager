@@ -917,6 +917,32 @@
       "body_file": "demon-hunter/vengeance/sigil-of-spite.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Spite (ex Elysian Decree) sulla posizione del mouse (@cursor): sigillo di danno ad area che frantuma le anime dei colpiti generando Soul Fragment. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance, NON spec:null — spostata dall'albero di classe a quello di spec in Midnight: maxroll 12.0.7 verbatim 'Sigil of Spite, Soul Sigils, and Quickened Sigils moved to the Vengeance talent tree (was class talents)' e 'Sigil of Spite has been made unique to the Vengeance spec'. Stesso caveat di sigil-of-flame: le guide pre-Midnight la danno di classe. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Spite."
+    },
+    "evoker-deep-breath": {
+      "name": "Deep Breath",
+      "desc": "Deep Breath sulla posizione del mouse (volo in linea con danno da fuoco).",
+      "scope": "account",
+      "class": "evoker",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "evoker/deep-breath.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-27 (prime due macro Evoker, pg _Dragoncelloh Devastation in leveling). Vola fino alla posizione del mouse sputando cenere fusa sui nemici lungo il percorso. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema di warrior-heroic-leap-cursor e degli altri @cursor). CLASSIFICAZIONE spec:null — e' BASELINE di classe, non un talento: warcraft.wiki.gg la da' 'learned at Level 10 from the quest Stormsunder Crater' e la descrizione dice verbatim 'Take in a deep breath and fly to the targeted location, spewing molten cinders' + 'Removes all root effects' e immunita' ai rallentamenti mentre vola -> vale su tutte e tre le spec senza dipendere dal loadout. CAVEAT AUGMENTATION: il talento spec Breath of Eons (row 4 dell'albero Augmentation) dichiara verbatim 'Replaces [Deep Breath]' -> su un Aug che lo talenta il nome 'Deep Breath' non esiste piu' sulle barre e la macro e' INERTE. Se un giorno serve un bind unico anche in Aug, la forma e' un ramo known: (come warrior-ravager-bladestorm: [@cursor,known:Breath of Eons]Breath of Eons;[@cursor]Deep Breath) — non riclassificare a spec:devastation, perche' Preservation la ha eccome (12.0.7 nomina il volo 'during Breath of Eons or Deep Breath' come due abilita' distinte). #showtooltip nudo mostra Deep Breath."
+    },
+    "evoker-landslide": {
+      "name": "Landslide",
+      "desc": "Landslide verso la posizione del mouse: radica i nemici sul percorso.",
+      "scope": "account",
+      "class": "evoker",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "evoker/landslide.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-27 (prime due macro Evoker). Root ad area sul percorso verso il cursore: warcraft.wiki.gg descrive verbatim 'Conjure a path of shifting stone towards the target location, rooting enemies for 15 sec. Damage may cancel the effect.' Ground-target confermato anche dai dati spell su Wowhead (range 10-40 yd 'Donut 10-40', raggio 6 yd, 'Always Show Ground Texture', CD 1.5 min, istantanea) -> @cursor esplicito, niente prompt di targeting verde. CLASSIFICAZIONE spec:null — talento di CLASSE (wiki: 'Class talent, Row 1' dell'albero evoker), quindi aperto a tutte e tre le spec. CAVEAT: la wiki lo da' 'Automatically learned for Devastation and Augmentation evokers', in Preservation va speso il punto -> se non e' nel loadout la macro e' inerte (stesso caveat dei sigilli DH). Ruolo = control AoE (ancora keybind X, stun/slow) — nessun keybinds-evoker.md ancora, quando nasce va allineato. #showtooltip nudo mostra Landslide."
     }
   }
 }
