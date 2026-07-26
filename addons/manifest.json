@@ -88,13 +88,13 @@
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
       "desc": "Plugin HandyNotes per Midnight: tesori, rare, mascotte e punti d’interesse sulla mappa.",
-      "version": "v146",
+      "version": "v147",
       "interface": "120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
-      "installed": "2026-07-13",
+      "installed": "2026-07-26",
       "folders": ["HandyNotes_Midnight"],
-      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita."
+      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. Aggiornato 2026-07-26 v146->v147, forgecdn files/8507/133, 162 file, cartella rimossa e reinstallata da zero. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Il .toc ha un BOM UTF-8 in testa: un grep '^## Interface' NON aggancia la prima riga, va letta con head/cat -A. Nel .toc la versione e' '147' senza la 'v' (il prefisso sta solo nel nome del file su CurseForge). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita."
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
