@@ -1,0 +1,2 @@
+#showtooltip
+/cast [mod]Flying Serpent Kick;Roll
