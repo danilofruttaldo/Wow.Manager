@@ -10,7 +10,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Orc | | X | Orconauta·P | | | | _Shockandroll·N | | Dotandroll·P | | X | X | X |
 | Undead | | X | | Undeadpool·P | _Pretaporter·P | | X | | | | X | X | X |
-| Tauren | | _Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
+| Tauren | | Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
 | Troll | | X | Arconauta·N | | | | *Voodoochild | Snowwipe·P | | | *Bloomanjaro | X | X |
 | Goblin | | X | | | | _Moneystrike·N | *Voltron | | Tearsforfear·N | | X | X | X |
 | Blood Elf | | Blessismore·P | | Cereanor·N | | | X | Repository·N | | | X | Illidanielle·N<br>Demoversion·P | X |
