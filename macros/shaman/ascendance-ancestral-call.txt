@@ -1,5 +1,6 @@
 #showtooltip
 /cast Ascendance
 /cast [known:Ancestral Call] Ancestral Call
+/cast [known:Blood Fury] Blood Fury
 /use 13
 /use 14
