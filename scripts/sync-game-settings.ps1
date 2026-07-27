@@ -33,7 +33,7 @@ $Keys = @(
   'nameplateTargetBehindMaxDistance', 'nameplateShowDebuffsOnFriendly',
   'cameraSavedDistance', 'cameraSavedPitch', 'cameraSavedVehicleDistance', 'cameraSavedPetBattleDistance',
   'calendarShowBattlegrounds', 'characterNeedsTurnStrafeDialog',
-  'miniDressUpFrame', 'showTokenFrame', 'showTamers', 'dragonRidingRacesFilter'
+  'miniDressUpFrame', 'showTokenFrame', 'showTamers'
 )
 
 # Chiavi ACCOUNT-WIDE = opzioni che il client NON scrive nei file per-PG ma nel
