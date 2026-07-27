@@ -110,7 +110,7 @@
       "when": "Con WoW completamente chiuso.",
       "warn": "Sovrascrive i config-cache.wtf: esegui a gioco chiuso o perdi le modifiche.",
       "body_file": "sync-game-settings.ps1",
-      "notes": "Allowlist di CVar in testa allo script (KEYS). Prende i valori dal config-cache.wtf di Stantu (Pozzo dell'Eternità). Salta il file account-level e le cartelle _backup-*. Aggiorna KEYS quando vuoi propagare nuove opzioni."
+      "notes": "DUE allowlist in testa allo script, perché il client salva i CVar in due posti. (1) KEYS = per-PG: i valori vengono dal config-cache.wtf di Stantu (Pozzo dell'Eternità) e si copiano su tutti gli altri PG; salta il file account-level e le cartelle _backup-*. (2) ACCOUNTVALUES = account-wide: quei CVar nei file per-PG non ci sono proprio, stanno solo in Account/<ACC>/config-cache.wtf, quindi non si copiano da Stantu ma si fissano al valore voluto — oggi solo whisperMode = popout_and_inline (Social > New Whispers = Both; gli altri valori sono inline e popout). ⚠️ Non spostare una chiave dall'una all'altra a occhio: verifica in quale file il client la scrive davvero (grep del nome nel WTF), perché una chiave account-wide scritta per-PG non fa nulla e viceversa."
     }
   }
 }

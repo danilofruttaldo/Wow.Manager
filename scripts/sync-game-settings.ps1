@@ -1,6 +1,8 @@
 #Requires -Version 5.1
 # Allinea le "impostazioni di gioco" di tutti i personaggi a quelle di Stantu.
 # Copia SOLO le chiavi nell'allowlist; lo stato per-personaggio resta intatto.
+# Due allowlist, perche' il client salva i CVar in due posti: $Keys (per-PG, copiate da
+# Stantu) e $AccountValues (account-wide, fissate al valore voluto nel file di account).
 # IMPORTANTE: eseguire con WoW COMPLETAMENTE CHIUSO.
 $ErrorActionPreference = 'Stop'
 
@@ -20,7 +22,7 @@ $Src = (Get-ChildItem -LiteralPath $Acc -Recurse -File -Filter 'config-cache.wtf
   Where-Object { $_.Directory.Name -eq $SrcChar -and $_.FullName -notmatch '\\_backup-' } |
   Select-Object -First 1).FullName
 
-# Chiavi = vere opzioni di gioco da sincronizzare
+# Chiavi PER-PG = vere opzioni di gioco da copiare da Stantu a tutti gli altri
 $Keys = @(
   'enableMouseoverCast', 'autoLootDefault', 'AutoPushSpellToActionBar', 'enableMultiActionBars', 'SoftTargetEnemy',
   'assistedCombatHighlight', 'cooldownViewerEnabled', 'damageMeterEnabled', 'damageMeterResetOnNewInstance',
@@ -33,6 +35,14 @@ $Keys = @(
   'calendarShowBattlegrounds', 'characterNeedsTurnStrafeDialog',
   'miniDressUpFrame', 'showTokenFrame', 'showTamers', 'dragonRidingRacesFilter'
 )
+
+# Chiavi ACCOUNT-WIDE = opzioni che il client NON scrive nei file per-PG ma nel
+# config-cache.wtf di account: copiarle da Stantu non ha senso (li' non ci sono) e
+# scriverle per-PG non serve a niente. Si fissano qui al valore voluto, una volta sola.
+$AccountValues = [ordered]@{
+  # Social > New Whispers = Both. Valori del client: inline | popout | popout_and_inline
+  whisperMode = 'popout_and_inline'
+}
 
 if (-not $Src) { throw "Sorgente ($SrcChar) non trovata sotto: $Acc" }
 
@@ -78,5 +88,32 @@ foreach ($f in $targets) {
   }
   Write-Host ("Aggiornato: " + $f.FullName.Substring($Acc.Length + 1))
 }
+
+# Account-wide: un file solo, e il valore e' quello dichiarato sopra (non viene da Stantu).
+if ($AccountValues.Count -gt 0 -and (Test-Path -LiteralPath $accCache)) {
+  Write-Host ""
+  Write-Host "Chiavi account-wide (config-cache.wtf di account):"
+  $lines = @(Get-Content -LiteralPath $accCache)
+  $changed = $false
+  foreach ($k in $AccountValues.Keys) {
+    $new = 'SET ' + $k + ' "' + $AccountValues[$k] + '"'
+    $rx = '^SET ' + [regex]::Escape($k) + ' ".*"\s*$'
+    $idx = -1
+    for ($i = 0; $i -lt $lines.Count; $i++) { if ($lines[$i] -match $rx) { $idx = $i; break } }
+    if ($idx -ge 0) {
+      if ($lines[$idx] -ne $new) { $lines[$idx] = $new; $changed = $true }
+    }
+    else {
+      $lines += $new; $changed = $true
+    }
+    Write-Host ("  {0,-32} = {1}" -f $k, $AccountValues[$k])
+  }
+  if ($changed) {
+    $text = ($lines -join "`r`n") + "`r`n"
+    [System.IO.File]::WriteAllText($accCache, $text, [System.Text.UTF8Encoding]::new($false))
+    Write-Host "Aggiornato: config-cache.wtf (account)"
+  }
+}
+
 Write-Host ""
 Write-Host "Fatto."
