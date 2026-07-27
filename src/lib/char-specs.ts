@@ -52,6 +52,7 @@ export const CHAR_SPEC: Record<string, string> = {
   plateatico: 'protection',   // "plate" → tank in piastra
   shottini: 'beastmastery',
   dayandknight: 'unholy',     // "knight" notturno/oscuro; evita doppione con furricane (frost)
+  dwarfenstein: 'blood',      // spec attiva nei dati di gioco (250=blood); completa il trio DK Alleanza
   demongear: 'vengeance',     // "demon…gear" → tank demoniaco
   proctolodin: 'holy',        // proctologo → medico/cura
   blinkette: 'fire',          // gnomo = esplosivi/tinker → Fire; evita doppione con spellstill (arcane)
