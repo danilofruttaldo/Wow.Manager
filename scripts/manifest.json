@@ -102,15 +102,35 @@
       "body_file": "make-thumbs.ps1",
       "notes": "Niente ImageMagick e niente Node su questa macchina: usa System.Drawing di .NET (presente in PS 5.1) con InterpolationMode HighQualityBicubic e qualita' JPEG 82 via EncoderParameter. Dispose() di Graphics/Bitmap/Image e' obbligatorio, altrimenti FromFile tiene il .jpg lockato e la riesecuzione fallisce. 640px = il doppio della card da ~300px, cosi' resta nitida sui display retina. Il glob della pagina (/public/screenshots/*.jpg) non attraversa lo slash, quindi thumb/ non finisce nella griglia come screenshot a se'; lo script a sua volta legge solo la radice e non rimpicciolisce le proprie miniature. Parametri: -Larghezza, -Qualita, -Forza. Misurato al primo giro: 9.16 MB -> 0.63 MB su 16 file (-93%)."
     },
+    "cvar-dump": {
+      "kind": "script",
+      "name": "Dump impostazioni del client",
+      "desc": "Addon locale che scrive l'elenco di TUTTE le impostazioni (CVar) del gioco: valore attuale, valore di default, categoria e testo d'aiuto — cioè quello che serve per decidere cosa propagare a tutti i personaggi.",
+      "lang": "lua",
+      "when": "Installalo come addon (istruzioni in testa al file), riavvia il client, poi basta un /reload: il dump si rigenera da solo. /wmcvar lo riscrive subito; /wmcvar parola cerca fra nomi, categorie e aiuto direttamente in chat.",
+      "warn": "Un addon nuovo richiede il riavvio del client: il /reload non lo vede.",
+      "body_file": "cvar-dump.lua",
+      "notes": "Valore e default arrivano da DUE chiamate a un solo ritorno (C_CVar.GetCVar e C_CVar.GetCVarDefault) invece che dai sette ritorni di GetCVarInfo: così la coppia valore/default non dipende dall'ordine dei ritorni. ⚠️ Dall'ordine dipendono i soli flag di scope (srvAccount, srvChar, soloLettura), che vengono dalle posizioni 3, 4 e 7 di GetCVarInfo: sono informativi, e la prova che stiano al posto giusto è che le chiavi scritte nei config-cache.wtf per-PG escano a 0/0. ⚠️ Un comando della console è trattato come CVar se GetCVar risponde: non si guarda commandType, il cui enum non è garantito fra le patch. Le righe sono testo con separatore ~|~ e nei campi le virgolette diventano apostrofi, i backslash barre e i ritorni a capo spazi: così il file NON ha il doppio-escape che gli altri dump del repo si portano dietro, al prezzo di un aiuto non verbatim al carattere. Stessa guardia degli altri dump: se legge zero CVar non sovrascrive un dump buono."
+    },
+    "settings-report": {
+      "kind": "script",
+      "name": "Report impostazioni",
+      "desc": "Incrocia il dump dei CVar, il preset di sync-game-settings.ps1 e i config-cache.wtf di tutti i PG, e scrive un report markdown: cosa hai cambiato rispetto al default, cosa il preset già propaga, dove i personaggi divergono.",
+      "lang": "powershell",
+      "when": "Dopo un /reload in gioco, quando devi decidere cosa aggiungere al preset. Con -Subito usa il dump già sul disco, con -Md path scrive il report dove vuoi (default: %TEMP%\\wow-impostazioni.md).",
+      "warn": "Non tocca niente nel gioco: legge e produce un report.",
+      "body_file": "settings-report.ps1",
+      "notes": "La sezione da leggere è la 2: le impostazioni fuori dal default che il preset non propaga ancora. La colonna nei file dice su quanti config-cache.wtf la chiave compare e con quanti valori distinti, cioè se i PG oggi divergono. ⚠️ La sezione 4 è quasi tutta STATO, non impostazioni: i config-cache per-PG contengono 118 chiavi e la gran parte sono tutorial visti, header chiusi, filtri del Dungeon Journal, config di talenti salvate. Serve per capire cosa NON mettere nel preset. Il preset non è duplicato qui: lo script lo legge dai blocchi CharValues e AccountValues di sync-game-settings.ps1 e si ferma se non ne cava chiavi, così i due file non possono divergere in silenzio."
+    },
     "sync-game-settings": {
       "kind": "script",
       "name": "Sync impostazioni di gioco",
-      "desc": "Allinea le impostazioni di gioco di tutti i personaggi a quelle di Stantu: copia solo le chiavi nell'allowlist, lo stato per-PG resta intatto.",
+      "desc": "Applica un preset di impostazioni di gioco a tutti i personaggi: scrive solo le chiavi dichiarate nello script, il resto dello stato per-PG resta intatto.",
       "lang": "powershell",
-      "when": "Con WoW completamente chiuso.",
+      "when": "Con WoW completamente chiuso (lo script si ferma se il gioco è aperto). Con -Prova dice cosa cambierebbe senza scrivere niente.",
       "warn": "Sovrascrive i config-cache.wtf: esegui a gioco chiuso o perdi le modifiche.",
       "body_file": "sync-game-settings.ps1",
-      "notes": "DUE allowlist in testa allo script, perché il client salva i CVar in due posti. (1) KEYS = per-PG: i valori vengono dal config-cache.wtf di Stantu (Pozzo dell'Eternità) e si copiano su tutti gli altri PG; salta il file account-level e le cartelle _backup-*. (2) ACCOUNTVALUES = account-wide: quei CVar nei file per-PG non ci sono proprio, stanno solo in Account/<ACC>/config-cache.wtf, quindi non si copiano da Stantu ma si fissano al valore voluto — oggi solo whisperMode = popout_and_inline (Social > New Whispers = Both; gli altri valori sono inline e popout). ⚠️ Non spostare una chiave dall'una all'altra a occhio: verifica in quale file il client la scrive davvero (grep del nome nel WTF), perché una chiave account-wide scritta per-PG non fa nulla e viceversa. ⚠️ Una chiave in KEYS che Stantu NON ha viene saltata in silenzio: lo script non lo segnala, quindi sembra sincronizzata e non lo è. Era il caso di dragonRidingRacesFilter (filtro delle corse di skyriding, presente su 43 PG con valore 1 ma non su Stantu), rimossa il 2026-07-27 perché inerte dal primo commit. Prima di aggiungere una chiave, controlla che nel config-cache.wtf di Stantu ci sia davvero."
+      "notes": "DUE preset in testa allo script, perché il client salva i CVar in due posti. (1) CHARVALUES = per-PG: il valore è dichiarato lì e si scrive su TUTTI i personaggi, Stantu compreso — non è più la sorgente, è un bersaglio come gli altri; salta il file account-level e le cartelle _backup-*. (2) ACCOUNTVALUES = account-wide: quei CVar nei file per-PG non ci sono proprio, stanno solo in Account/<ACC>/config-cache.wtf, quindi scriverli per-PG non farebbe nulla — oggi solo whisperMode = popout_and_inline (Social > New Whispers = Both; gli altri valori sono inline e popout). ⚠️ Non spostare una chiave dall'una all'altra a occhio: verifica in quale file il client la scrive davvero (grep del nome nel WTF), perché una chiave account-wide scritta per-PG non fa nulla e viceversa. Col preset il vecchio inganno non esiste più: quando i valori venivano copiati da Stantu, una chiave che lui non aveva veniva saltata in silenzio e sembrava sincronizzata — era il caso di dragonRidingRacesFilter (filtro delle corse di skyriding, presente su 43 PG ma non su Stantu), rimossa il 2026-07-27 perché inerte dal primo commit e oggi riaggiungibile. ⚠️ Le quattro chiavi camera* le riscrive il client a ogni sessione: divergono da sole e ogni giro le riporta al preset, ed è il motivo per cui cameraSavedPitch risulta l'unica differenza su quasi tutti i PG. ⚠️ Il blocco degli inviti in gilda NON è sincronizzabile: non è un CVar (verificato enumerando le stringhe di Wow.exe sul client 12.0.7) ma un flag server-side per personaggio, C_GuildInfo.SetAutoDeclineGuildInvites, che non passa da nessun file WTF."
     }
   }
 }
