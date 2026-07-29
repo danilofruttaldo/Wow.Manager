@@ -9,11 +9,11 @@
     "BigWigs": {
       "name": "BigWigs",
       "desc": "Boss mod per raid: timer, barre e avvisi sonori e visivi sulle abilità dei boss.",
-      "version": "v419.1",
+      "version": "v419.2",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
-      "installed": "2026-07-22",
+      "installed": "2026-07-29",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -26,7 +26,7 @@
         "BigWigs_MarchOnQuelDanas",
         "BigWigs_TheVenomousAbyss"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-15 v418.4->v419 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1562): RI-APPLICATA il 2026-07-15 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE. Aggiornato 2026-07-22 v419->v419.1 via /aggiorna-addon (workflow) GitHub release; PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1562) dopo l'update."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-15 v418.4->v419 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1562): RI-APPLICATA il 2026-07-15 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE. Aggiornato 2026-07-22 v419->v419.1 via /aggiorna-addon (workflow) GitHub release; PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1562) dopo l'update. Aggiornato 2026-07-29 v419.1->v419.2 via /aggiorna-addon (workflow) GitHub release; PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1544) dopo l'update."
     },
     "LittleWigs": {
       "name": "LittleWigs",
