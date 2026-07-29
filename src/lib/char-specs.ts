@@ -57,7 +57,7 @@ export const CHAR_SPEC: Record<string, string> = {
   proctolodin: 'holy',        // proctologo → medico/cura
   blinkette: 'fire',          // gnomo = esplosivi/tinker → Fire; evita doppione con spellstill (arcane)
   hadruidken: 'balance',      // "hadouken" → colpo a distanza
-  totemizer: 'restoration',   // "totem" → totem di cura
+  totemizer: 'enhancement',   // spec attiva in gioco
   periodrage: 'fury',         // "rage" → ira
   demonstrate: 'havoc',       // tema demoniaco, DPS melee
   // TODO — PG pianificati (da creare) per riempire le classi a scelta di razza limitata
