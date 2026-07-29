@@ -1515,7 +1515,7 @@
     "hunter": {
       "t1": { "normal": [8, 8] },
       "t2": { "normal": [8, 8] },
-      "t25": { "normal": [1, 6] },
+      "t25": { "normal": [2, 6] },
       "t3": { "normal": [0, 8] },
       "t4": { "normal": [4, 8] },
       "t5": { "normal": [0, 8] },
@@ -1599,7 +1599,7 @@
     "priest": {
       "t1": { "normal": [6, 8] },
       "t2": { "normal": [6, 8] },
-      "t25": { "normal": [0, 6] },
+      "t25": { "normal": [1, 6] },
       "t3": { "normal": [0, 8] },
       "t4": { "normal": [3, 8] },
       "t5": { "normal": [6, 7] },
@@ -1828,7 +1828,7 @@
     "druid": {
       "t1": { "normal": [8, 8] },
       "t2": { "normal": [8, 8] },
-      "t25": { "normal": [1, 6] },
+      "t25": { "normal": [3, 6] },
       "t3": { "normal": [0, 8] },
       "t4": { "normal": [7, 8] },
       "t5": { "normal": [7, 7] },
@@ -1995,7 +1995,7 @@
     "hunter": {
       "t1": { "normal": [["Chest (Golemagg the Incinerator, Molten Core)", 1], ["Feet (Gehennas, Molten Core)", 1], ["Hands (Shazzrah, Molten Core)", 1], ["Head (Garr, Molten Core)", 1], ["Legs (Magmadar, Molten Core)", 1], ["Shoulder (Sulfuron Harbinger, Molten Core)", 1], ["Waist", 1], ["Wrist", 1]] },
       "t2": { "normal": [["Chest (Nefarian, Blackwing Lair)", 1], ["Feet (Broodlord Lashlayer, Blackwing Lair)", 1], ["Hands (Firemaw, Blackwing Lair)", 1], ["Head (Nefarian, Blackwing Lair)", 1], ["Legs (Ragnaros, Molten Core)", 1], ["Shoulder (Chromaggus, Blackwing Lair)", 1], ["Waist (Vaelastrasz the Corrupt, Blackwing Lair)", 1], ["Wrist (Razorgore the Untamed, Blackwing Lair)", 1]] },
-      "t25": { "normal": [["Chest", 0], ["Hands (The Twin Emperors, Temple of Ahn'Qiraj)", 0], ["Head", 0], ["Legs", 0], ["Shoulder", 0], ["Feet", 1]] },
+      "t25": { "normal": [["Chest", 0], ["Head", 0], ["Legs", 0], ["Shoulder", 0], ["Feet", 1], ["Hands (The Twin Emperors, Temple of Ahn'Qiraj)", 1]] },
       "t3": { "normal": [["Chest", 0], ["Feet", 0], ["Hands", 0], ["Head", 0], ["Legs", 0], ["Shoulder", 0], ["Waist", 0], ["Wrist", 0]] },
       "t4": { "normal": [["Chest", 0], ["Feet (Chess Event, Karazhan)", 0], ["Hands", 0], ["Head", 0], ["Legs", 1], ["Shoulder", 1], ["Waist (Terestian Illhoof, Karazhan)", 1], ["Wrist (Attumen the Huntsman, Karazhan)", 1]] },
       "t5": { "normal": [["Chest", 0], ["Feet (Lady Vashj, Serpentshrine Cavern)", 0], ["Hands", 0], ["Head", 0], ["Legs", 0], ["Shoulder", 0], ["Waist", 0], ["Wrist", 0]] },
@@ -2079,7 +2079,7 @@
     "priest": {
       "t1": { "normal": [["Chest (Golemagg the Incinerator, Molten Core)", 0], ["Legs (Magmadar, Molten Core)", 0], ["Feet (Shazzrah, Molten Core)", 1], ["Hands (Gehennas, Molten Core)", 1], ["Head (Garr, Molten Core)", 1], ["Shoulder (Sulfuron Harbinger, Molten Core)", 1], ["Waist", 1], ["Wrist", 1]] },
       "t2": { "normal": [["Hands (Firemaw, Blackwing Lair)", 0], ["Legs (Ragnaros, Molten Core)", 0], ["Chest (Nefarian, Blackwing Lair)", 1], ["Feet (Broodlord Lashlayer, Blackwing Lair)", 1], ["Head (Nefarian, Blackwing Lair)", 1], ["Shoulder (Chromaggus, Blackwing Lair)", 1], ["Waist (Vaelastrasz the Corrupt, Blackwing Lair)", 1], ["Wrist (Razorgore the Untamed, Blackwing Lair)", 1]] },
-      "t25": { "normal": [["Chest", 0], ["Feet", 0], ["Hands (Princess Huhuran, Temple of Ahn'Qiraj)", 0], ["Head", 0], ["Shoulder", 0], ["Wrist (The Twin Emperors, Temple of Ahn'Qiraj)", 0]] },
+      "t25": { "normal": [["Chest", 0], ["Feet", 0], ["Head", 0], ["Shoulder", 0], ["Wrist (The Twin Emperors, Temple of Ahn'Qiraj)", 0], ["Hands (Princess Huhuran, Temple of Ahn'Qiraj)", 1]] },
       "t3": { "normal": [["Chest", 0], ["Feet", 0], ["Hands", 0], ["Head", 0], ["Legs", 0], ["Shoulder", 0], ["Waist", 0], ["Wrist (Ick and Krick, Pit of Saron)", 0]] },
       "t4": { "normal": [["Chest", 0], ["Feet (Shade of Aran, Karazhan)", 0], ["Hands", 0], ["Head", 0], ["Shoulder", 0], ["Legs", 1], ["Waist (Terestian Illhoof, Karazhan)", 1], ["Wrist (Maiden of Virtue, Karazhan)", 1]] },
       "t5": { "normal": [["Feet (Fathom-Lord Karathress, Serpentshrine Cavern)", 0], ["Chest", 1], ["Hands", 1], ["Head", 1], ["Legs", 1], ["Shoulder", 1], ["Waist (High King Maulgar, Gruul's Lair)", 1]] },
@@ -2308,7 +2308,7 @@
     "druid": {
       "t1": { "normal": [["Chest (Golemagg the Incinerator, Molten Core)", 1], ["Feet (Lucifron, Molten Core)", 1], ["Hands (Shazzrah, Molten Core)", 1], ["Head (Garr, Molten Core)", 1], ["Legs (Magmadar, Molten Core)", 1], ["Shoulder (Baron Geddon, Molten Core)", 1], ["Waist", 1], ["Wrist", 1]] },
       "t2": { "normal": [["Chest (Nefarian, Blackwing Lair)", 1], ["Feet (Broodlord Lashlayer, Blackwing Lair)", 1], ["Hands (Firemaw, Blackwing Lair)", 1], ["Head (Nefarian, Blackwing Lair)", 1], ["Legs (Ragnaros, Molten Core)", 1], ["Shoulder (Chromaggus, Blackwing Lair)", 1], ["Waist (Vaelastrasz the Corrupt, Blackwing Lair)", 1], ["Wrist (Razorgore the Untamed, Blackwing Lair)", 1]] },
-      "t25": { "normal": [["Chest", 0], ["Feet", 0], ["Head", 0], ["Legs", 0], ["Shoulder", 0], ["Hands (Princess Huhuran, Temple of Ahn'Qiraj)", 1]] },
+      "t25": { "normal": [["Chest", 0], ["Legs", 0], ["Shoulder", 0], ["Feet", 1], ["Hands (Princess Huhuran, Temple of Ahn'Qiraj)", 1], ["Head", 1]] },
       "t3": { "normal": [["Chest", 0], ["Feet", 0], ["Hands", 0], ["Head", 0], ["Legs", 0], ["Shoulder", 0], ["Waist", 0], ["Wrist", 0]] },
       "t4": { "normal": [["Feet (Chess Event, Karazhan)", 0], ["Chest", 1], ["Hands", 1], ["Head", 1], ["Legs", 1], ["Shoulder", 1], ["Waist (Terestian Illhoof, Karazhan)", 1], ["Wrist (Attumen the Huntsman, Karazhan)", 1]] },
       "t5": { "normal": [["Chest", 1], ["Feet (Leotheras the Blind, Serpentshrine Cavern)", 1], ["Hands", 1], ["Head", 1], ["Legs", 1], ["Shoulder", 1], ["Waist (Void Reaver, The Eye)", 1]] },
