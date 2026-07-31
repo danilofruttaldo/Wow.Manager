@@ -66,13 +66,13 @@
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "desc": "Comodità varie: quest automatiche, riparazione e vendita delle cianfrusaglie, skip cinematiche.",
-      "version": "12.0.28",
+      "version": "12.0.29",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "installed": "2026-07-23",
+      "installed": "2026-07-31",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-23 12.0.27->12.0.28 via /aggiorna-addon (workflow) forgecdn files/8490/258 (Leatrix_Plus-12.0.28.zip). TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-31 12.0.28->12.0.29 via /aggiorna-addon (workflow) forgecdn files/8536/716 (Leatrix_Plus-12.0.29.zip), changelog solo 'Updated deprecated functions', nessuna opzione nuova. Prima: 2026-07-23 12.0.27->12.0.28 forgecdn files/8490/258. TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
     },
     "HandyNotes": {
       "name": "HandyNotes",
@@ -165,13 +165,13 @@
     "Molinari": {
       "name": "Molinari",
       "desc": "Pulsanti contestuali sugli oggetti per macinare, prospettare e disincantare in massa.",
-      "version": "120000.145-Release",
-      "interface": "120007, 120100, 50504, 38001, 20505, 11508",
+      "version": "120000.146-Release",
+      "interface": "120007, 120100, 50504, 38002, 20506, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/molinari",
-      "installed": "2026-06-30",
+      "installed": "2026-07-31",
       "folders": ["Molinari"],
-      "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. Aggiornato 2026-06-30 120000.144->120000.145 via /aggiorna-addon (workflow) forgecdn files/8346/985. TOC ora include 120007/120100 match build 12.0.7."
+      "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. Aggiornato 2026-07-31 120000.145->120000.146 via /aggiorna-addon (workflow) forgecdn files/8543/488, changelog 'Update Interface versions for wrath': solo bump delle Interface classic (38002/20506/11509), nessuna modifica funzionale. Prima: 2026-06-30 120000.144->120000.145 forgecdn files/8346/985. TOC include 120007/120100 match build 12.0.7."
     },
     "SimpleItemLevel": {
       "name": "Simple Item Level",
