@@ -133,7 +133,8 @@
                                            "class":  "priest",
                                            "level":  70,
                                            "professions":  [
-
+                                                               "Inscription",
+                                                               "Tailoring"
                                                            ],
                                            "midnightSpecs":  [
 
