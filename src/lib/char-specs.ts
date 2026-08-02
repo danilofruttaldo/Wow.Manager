@@ -72,7 +72,7 @@ export const CHAR_SPEC: Record<string, string> = {
   rainmaker: 'restoration',    // TODO Highmountain Sha — Healing Rain (resto)
   stonestrike: 'enhancement',  // TODO Earthen Sha — Stormstrike + pietra=Earthen (enh)
   chlorophil: 'restoration',   // TODO Haranir Sha — natura/foglie (resto)
-  naaruto: 'enhancement',      // TODO Draenei Sha — Naruto→Naaru, mischia (enh)
+  naaruto: 'restoration',      // TODO Draenei Sha — Naaru = esseri di Luce; porta gli sciamani a 5/5/5
   lavalamp: 'elemental',       // TODO Dark Iron Sha — Lava Burst + Dark Iron (ele)
   bloomanjaro: 'restoration',  // TODO Troll Dru — Kilimanjaro → Lifebloom (resto)
   furocious: 'feral',          // TODO Worgen Dru — ferocious/fur = feral
@@ -81,9 +81,6 @@ export const CHAR_SPEC: Record<string, string> = {
   mistfits: 'mistweaver',      // TODO Mechagnome Mon — Misfits → mistweaver; razza in minoranza
   preservative: 'preservation',// TODO Dracthyr Evo — "preservative" contiene preservation
   augmentin: 'augmentation',   // TODO Dracthyr Evo — brand → augmentation
-  deadbolt: 'protection',      // TODO Undead War — chiavistello = protezione; unica prot Orda
-  rockofages: 'discipline',    // TODO Earthen Pri — inno "Rock of Ages" + razza di pietra
-  orcopuntura: 'mistweaver',   // TODO Mag'har Mon — agopuntura; unico mistweaver Orda
 };
 
 // Disambiguazione per PG omonimi: chiave `nome|razza` (minuscolo). Ha precedenza su CHAR_SPEC.

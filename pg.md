@@ -9,19 +9,19 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Razza | War | Pal | Hun | Rog | Pri | DK | Sha | Mag | Loc | Mon | Dru | DH | Evo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Orc | | X | Orconauta·P | | | | Shockandroll·N | | Dotandroll·P | | X | X | X |
-| Undead | *Deadbolt | X | | Undeadpool·P | Pretaporter·P | | X | | | | X | X | X |
+| Undead | | X | | Undeadpool·P | Pretaporter·P | | X | | | | X | X | X |
 | Tauren | | Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
 | Troll | | X | Arconauta·N | | | | *Voodoochild | Snowwipe·P | | | *Bloomanjaro | X | X |
 | Goblin | | X | | | | _Moneystrike·N | *Voltron | | Tearsforfear·N | | X | X | X |
 | Blood Elf | | Blessismore·P | | Cereanor·N | | | X | Repository·N | | | X | Illidanielle·N<br>Demoversion·P | X |
 | Nightborne | | X | | | Nightform·P | | X | Spelling·P | Menagerie·N | | X | X | X |
 | Highmountain Tauren | Stantu·P | X | | | | | *Rainmaker | | | | _Ecoterrorist·N | X | X |
-| Mag'har Orc | _Axetomouth·N | X | | | | | Blondelust·P | | | *Orcopuntura | X | X | X |
+| Mag'har Orc | _Axetomouth·N | X | | | | | Blondelust·P | | | | X | X | X |
 | Zandalari Troll | | _Divinetroll·P | | | | _Trollminator·P | *Stormsaurus | | | | _Shiftzord·N | X | X |
 | Vulpera | | X | | | | Rotandroll·N | _Foxlust·N | | | Furricane·P | X | X | X |
 | Pandaren | | X | | | | | _Pandacoil·P | | | Windwasher·N | X | X | X |
 | Dracthyr | | X | | | | X | X | | | X | X | X | _Dragoncelloh·P<br>*Preservative<br>*Augmentin |
-| Earthen | | X | Rockbiter·P | | *Rockofages | X | *Stonestrike | | | | X | X | X |
+| Earthen | | X | Rockbiter·P | | | X | *Stonestrike | | | | X | X | X |
 | Haranir | | X | | *Backstabbath | | X | *Chlorophil | | | | _Catatonic·N | X | X |
 
 ## Alleanza
