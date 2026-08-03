@@ -63,6 +63,17 @@
       "folders": ["MythicDungeonTools"],
       "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-07-05 6.1.19->6.1.20 via /aggiorna-addon (workflow) GitHub release Nnoggie/MythicDungeonTools (cfwidget rotto per MDT). TOC include 120007 match build 12.0.7."
     },
+    "HekiLight": {
+      "name": "HekiLight",
+      "desc": "Striscia di icone con l'abilità da premere e le successive, presa dall'assistente di rotazione del gioco.",
+      "version": "v0.6.5",
+      "interface": "120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/hekilight",
+      "installed": "2026-08-03",
+      "folders": ["HekiLight"],
+      "notes": "Autore Meruuke (github.com/meruuke/HekiLight). Installato 2026-08-03 da forgecdn files/8265177 (HekiLight-v0.6.5.zip, 34 KB). Non calcola nessuna rotazione: legge C_AssistedCombat (Rotation Assistant / Assisted Highlight, nativo dalla 12.0) e ne ridisegna i suggerimenti come strip di max 5 icone spostabile, con keybind, spirale cooldown, bordo sui proc e tinta fuori range. Niente moduli per classe: vale per tutte le spec. RICHIEDE l'assistente di rotazione attivo nelle opzioni di gioco, altrimenti la strip resta vuota. Scelto perche' HEKILI E' CHIUSO: ultima release v11.2.5-1.0.0 del 2025-11-01 (The War Within), l'autore ha annunciato il sunset con la pre-patch Midnight 12.0 - non riproporlo. Alternative valutate: Simple Assisted Combat Icon (197k download, ma icona singola), Synaptic (fermo alla 12.0.5), MaxDps (vivo, core v11.3.28 per 12.0.7, ma un modulo per classe = 13 moduli da mantenere per i PG di questo account). NB il TOC dichiara 'Version: 0.6.4': la 0.6.5 e' solo il bump di Interface a 120007 e l'autore non ha aggiornato il campo - non e' il file sbagliato. NB il TOC punta a IconTexture assets/icon, cartella che nello zip non esiste: innocuo, solo l'icona nella lista addon di gioco."
+    },
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "desc": "Comodità varie: quest automatiche, riparazione e vendita delle cianfrusaglie, skip cinematiche.",
