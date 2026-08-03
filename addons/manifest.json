@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-07-27"
+    "last_sync": "2026-08-03"
   },
   "addons": {
     "BigWigs": {
@@ -110,24 +110,24 @@
     "TomTom": {
       "name": "TomTom",
       "desc": "Freccia di navigazione verso il waypoint attivo, con distanza, coordinate e pin su mappa.",
-      "version": "v4.3.6-release",
-      "interface": "120007",
+      "version": "v4.3.8-release",
+      "interface": "11509, 20506, 38002, 50504, 120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/tomtom",
-      "installed": "2026-07-14",
+      "installed": "2026-08-03",
       "folders": ["TomTom"],
-      "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-07-14 v4.3.5-release->v4.3.6-release via /aggiorna-addon (workflow) forgecdn files/8426/585. TOC 120007 puro match build 12.0.7."
+      "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-07-14 v4.3.5-release->v4.3.6-release via /aggiorna-addon (workflow) forgecdn files/8426/585. Aggiornato 2026-08-03 v4.3.6-release->v4.3.8-release via /aggiorna-addon (workflow) forgecdn files/8560/433 (11.8 MB). Il TOC e' passato da 120007 puro a multi-flavor (aggiunge 11509/20506/38002/50504 dei client classic e 120100): nessuna azione, il retail usa il valore che gli compete."
     },
     "Baganator": {
       "name": "Baganator",
       "desc": "Borse in un inventario unico: categorie, ricerca istantanea e item level sugli oggetti.",
-      "version": "814",
+      "version": "815",
       "interface": "120007, 50504, 38001, 20506, 11508, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/baganator",
-      "installed": "2026-07-22",
+      "installed": "2026-08-03",
       "folders": ["Baganator"],
-      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-22 812->814 via /aggiorna-addon (workflow) forgecdn files/8481/597 (Baganator-814.zip); TOC 120007 match build 12.0.7."
+      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-22 812->814 via /aggiorna-addon (workflow) forgecdn files/8481/597 (Baganator-814.zip); TOC 120007 match build 12.0.7. Aggiornato 2026-08-03 814->815 via /aggiorna-addon (workflow) forgecdn files/8557/56 (Baganator-815.zip, 168 file); riga ## Interface invariata."
     },
     "Syndicator": {
       "name": "Syndicator",
@@ -143,13 +143,13 @@
     "Prat-3.0": {
       "name": "Prat 3.0",
       "desc": "Chat su misura a moduli: timestamp, copia del testo, colori, filtri e scorciatoie sui canali.",
-      "version": "3.9.101",
-      "interface": "120005, 120007",
+      "version": "3.9.103",
+      "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/prat-3-0",
-      "installed": "2026-07-26",
+      "installed": "2026-08-03",
       "folders": ["Prat-3.0"],
-      "notes": "Framework di moduli per la chat (timestamp, copy, alias/colori canale, sostituzioni, tab). Installato 2026-07-26 al posto di [[WIM]], rimosso su richiesta. Release stabile 3.9.101 via forgecdn files/8250/962 (Prat-3.0-3.9.101.zip); TOC 120005,120007 match build 12.0.7. NB su CurseForge ci sono alpha piu' recenti (3.9.101-3-g2c846fb del 2026-07-18): si resta sulla release. Cartella unica Prat-3.0, SavedVariables Prat3DB. Le SavedVariables di WIM (WTF/Account/STANTUFFO/SavedVariables/WIM.lua + .bak, ~340 KB con lo storico whisper) NON sono state cancellate: inerti senza l'addon, si possono togliere a mano."
+      "notes": "Framework di moduli per la chat (timestamp, copy, alias/colori canale, sostituzioni, tab). Installato 2026-07-26 al posto di [[WIM]], rimosso su richiesta. Release stabile 3.9.101 via forgecdn files/8250/962 (Prat-3.0-3.9.101.zip); TOC 120005,120007 match build 12.0.7. NB su CurseForge ci sono alpha piu' recenti (3.9.101-3-g2c846fb del 2026-07-18): si resta sulla release. Cartella unica Prat-3.0, SavedVariables Prat3DB. Le SavedVariables di WIM (WTF/Account/STANTUFFO/SavedVariables/WIM.lua + .bak, ~340 KB con lo storico whisper) NON sono state cancellate: inerti senza l'addon, si possono togliere a mano. Aggiornato 2026-08-03 3.9.101->3.9.103 via /aggiorna-addon (workflow) forgecdn files/8557/365 (release stabile); il TOC ora dichiara 120007,120100 (non piu' 120005). Nello zip anche i toc per i client classic (_Mists/_TBC/_Vanilla/_Wrath), irrilevanti per retail."
     },
     "CursorRing": {
       "name": "Cursor Ring",
@@ -187,13 +187,13 @@
     "AllTheThings": {
       "name": "All The Things",
       "desc": "Tracker di collezioni: per ogni transmog, mount o pet elenca i pezzi mancanti e la fonte.",
-      "version": "5.2.12",
+      "version": "5.2.13",
       "interface": "11508, 11509, 20506, 30405, 38001, 40402, 50504, 120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/all-the-things",
-      "installed": "2026-07-27",
+      "installed": "2026-08-03",
       "folders": ["AllTheThings"],
-      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Aggiornato 2026-07-13 5.2.9->5.2.10 via /aggiorna-addon (workflow) forgecdn files/8418/228 (release stabile) (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). Aggiornato 2026-07-20 5.2.10->5.2.11 via /aggiorna-addon (workflow) forgecdn files/8465/698 (release stabile). Aggiornato 2026-07-27 5.2.11->5.2.12 via /aggiorna-addon (workflow) forgecdn files/8512/510 (release stabile, 16 MB); riga ## Interface invariata rispetto alla 5.2.11. TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
+      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Aggiornato 2026-07-13 5.2.9->5.2.10 via /aggiorna-addon (workflow) forgecdn files/8418/228 (release stabile) (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). Aggiornato 2026-07-20 5.2.10->5.2.11 via /aggiorna-addon (workflow) forgecdn files/8465/698 (release stabile). Aggiornato 2026-07-27 5.2.11->5.2.12 via /aggiorna-addon (workflow) forgecdn files/8512/510 (release stabile, 16 MB); riga ## Interface invariata rispetto alla 5.2.11. Aggiornato 2026-08-03 5.2.12->5.2.13 via /aggiorna-addon (workflow) forgecdn files/8557/751 (release stabile, 16 MB); riga ## Interface invariata. TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
     }
   }
 }
