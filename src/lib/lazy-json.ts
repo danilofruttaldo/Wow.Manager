@@ -30,14 +30,24 @@ export function jsonLazy<T = any>(url: string): Promise<T> {
   const gia = in_volo.get(url);
   if (gia) return gia;
   const p = fetch(url)
-    .then((r) => (r.ok ? r.json() : {}))
-    .catch(() => ({}))
-    // ⚠️ Si assegna e si restituisce in due passi: `(x) => (v = x)` varrebbe il TIPO DELLA
-    // VARIABILE, e la catena non combacerebbe piu' con quel che la funzione promette.
+    // ⚠️ Una risposta non-ok e' un ERRORE, non un contenuto: va nel `catch` qui sotto.
+    // Trattandola come `{}` la si sarebbe messa in cache, e un 502 di passaggio sarebbe
+    // diventato «questa pagina non ha dettagli» per tutta la sessione.
+    .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+    // ⚠️ Si mette in cache e si restituisce in due passi: `(x) => (v = x)` varrebbe il TIPO
+    // DELLA VARIABILE, e la catena non combacerebbe piu' con quel che la funzione promette.
     .then((d: any) => {
       fatti.set(url, d);
       in_volo.delete(url);
       return d as T;
+    })
+    // ⚠️ L'errore NON si mette in cache: si sgancia solo la richiesta in volo, cosi' il
+    // tentativo dopo riparte davvero. Chi chiama riceve l'oggetto vuoto e disegna quel che
+    // sa gia' dal DOM — ma alla prossima apertura ci riprova, che e' come si comportava il
+    // codice di /transmog prima che questo modulo lo assorbisse.
+    .catch(() => {
+      in_volo.delete(url);
+      return {} as T;
     });
   in_volo.set(url, p);
   return p;
