@@ -37,7 +37,6 @@ export const CHAR_SPEC: Record<string, string> = {
   demoversion: 'vengeance',
   foxlust: 'elemental',   // Vulpera: flavor volpe/fuoco; evita il 3° enhancement Orda
   tearsforfear: 'destruction', // Goblin: esplosivi/caos; completa la varietà stregoni Orda
-  backstabbath: 'subtlety',    // TODO (Haranir, da creare): razza poco usata; completa il trio rogue Orda
   // Alleanza (nuovi PG). Spec note; il resto è '?' finché non confermate.
   spellstill: 'arcane',
   gnomorrage: 'assassination',
@@ -54,33 +53,47 @@ export const CHAR_SPEC: Record<string, string> = {
   dayandknight: 'unholy',     // "knight" notturno/oscuro; evita doppione con furricane (frost)
   dwarfenstein: 'blood',      // spec attiva nei dati di gioco (250=blood); completa il trio DK Alleanza
   demongear: 'vengeance',     // "demon…gear" → tank demoniaco
-  proctolodin: 'holy',        // proctologo → medico/cura
   blinkette: 'fire',          // gnomo = esplosivi/tinker → Fire; evita doppione con spellstill (arcane)
   hadruidken: 'balance',      // "hadouken" → colpo a distanza
   totemizer: 'enhancement',   // spec attiva in gioco
   periodrage: 'fury',         // "rage" → ira
   demonstrate: 'havoc',       // tema demoniaco, DPS melee
-  // TODO — PG pianificati (da creare) per riempire le classi a scelta di razza limitata
-  // (Pal/Sha/Dru). Spec scelte per bilanciare le minoranze: Pal holy3/prot2/ret3,
-  // Sha enh5/ele5/resto5, Dru balance2/feral2/guardian2/resto2.
-  hammertime: 'retribution',   // TODO Human Pal — "Hammertime" (Hammer of Wrath, ret)
-  holytoledo: 'holy',          // TODO Draenei Pal — "Holy Toledo!" (holy)
-  verdictorian: 'retribution', // TODO Lightforged Pal — valedictorian → Templar's Verdict (ret)
-  voodoochild: 'restoration',  // TODO Troll Sha — voodoo/witch-doctor troll, guaritore (resto)
-  voltron: 'elemental',        // TODO Goblin Sha — volt = fulmini (ele)
-  stormsaurus: 'enhancement',  // TODO Zandalari Sha — dino + Stormstrike (enh)
-  rainmaker: 'restoration',    // TODO Highmountain Sha — Healing Rain (resto)
-  stonestrike: 'enhancement',  // TODO Earthen Sha — Stormstrike + pietra=Earthen (enh)
-  chlorophil: 'restoration',   // TODO Haranir Sha — natura/foglie (resto)
-  naaruto: 'restoration',      // TODO Draenei Sha — Naaru = esseri di Luce; porta gli sciamani a 5/5/5
-  lavalamp: 'elemental',       // TODO Dark Iron Sha — Lava Burst + Dark Iron (ele)
-  bloomanjaro: 'restoration',  // TODO Troll Dru — Kilimanjaro → Lifebloom (resto)
-  furocious: 'feral',          // TODO Worgen Dru — ferocious/fur = feral
-  bearnacle: 'guardian',       // TODO Kul Tiran Dru — bear=guardian + barnacle=mare
-  // TODO — spec ancora scoperte tra tutti i PG (Monk/Evoker non erano tra le classi limitate).
-  mistfits: 'mistweaver',      // TODO Mechagnome Mon — Misfits → mistweaver; razza in minoranza
-  preservative: 'preservation',// TODO Dracthyr Evo — "preservative" contiene preservation
-  augmentin: 'augmentation',   // TODO Dracthyr Evo — brand → augmentation
+
+  // ── PARCHEGGIATE: nomi che oggi NON sono in pg.md ────────────────────────────────
+  // Le 19 righe qui sotto sono PG pianificati e mai creati, tolti dalla tabella il
+  // 2026-08-04 («PG: rimossi i 19 pianificati») insieme alla decisione — scritta in quel
+  // commit — di tenere la convenzione `*nome` in legenda **per reintrodurli**. Le spec
+  // restano quindi apposta: sono scelte già fatte, e riscrivendo un `*Nome` in pg.md la
+  // sua icona ricompare senza doverle ripensare.
+  //
+  // ⚠️ Non sono un residuo da ripulire, ma non sono nemmeno «da fare»: erano etichettate
+  // TODO e questa parola le faceva sembrare righe vive della tabella. A runtime sono
+  // inerti — `annotateSpec` cerca solo i nomi che pg.md contiene davvero — quindi l'unico
+  // costo era il malinteso.
+  //
+  // Il criterio con cui furono scelte, per chi le riprende in mano: riempivano le classi a
+  // scelta di razza limitata (Pal/Sha/Dru) bilanciando le spec in minoranza — Pal
+  // holy3/prot2/ret3, Sha enh5/ele5/resto5, Dru balance2/feral2/guardian2/resto2 — più le
+  // spec allora scoperte fra tutti i PG (Monk/Evoker).
+  backstabbath: 'subtlety',    // Haranir Rog — razza poco usata; completava il trio rogue Orda
+  proctolodin: 'holy',         // Dark Iron Pal — proctologo → medico/cura
+  hammertime: 'retribution',   // Human Pal — "Hammertime" (Hammer of Wrath, ret)
+  holytoledo: 'holy',          // Draenei Pal — "Holy Toledo!" (holy)
+  verdictorian: 'retribution', // Lightforged Pal — valedictorian → Templar's Verdict (ret)
+  voodoochild: 'restoration',  // Troll Sha — voodoo/witch-doctor troll, guaritore (resto)
+  voltron: 'elemental',        // Goblin Sha — volt = fulmini (ele)
+  stormsaurus: 'enhancement',  // Zandalari Sha — dino + Stormstrike (enh)
+  rainmaker: 'restoration',    // Highmountain Sha — Healing Rain (resto)
+  stonestrike: 'enhancement',  // Earthen Sha — Stormstrike + pietra=Earthen (enh)
+  chlorophil: 'restoration',   // Haranir Sha — natura/foglie (resto)
+  naaruto: 'restoration',      // Draenei Sha — Naaru = esseri di Luce; portava gli sciamani a 5/5/5
+  lavalamp: 'elemental',       // Dark Iron Sha — Lava Burst + Dark Iron (ele)
+  bloomanjaro: 'restoration',  // Troll Dru — Kilimanjaro → Lifebloom (resto)
+  furocious: 'feral',          // Worgen Dru — ferocious/fur = feral
+  bearnacle: 'guardian',       // Kul Tiran Dru — bear=guardian + barnacle=mare
+  mistfits: 'mistweaver',      // Mechagnome Mon — Misfits → mistweaver; razza in minoranza
+  preservative: 'preservation',// Dracthyr Evo — "preservative" contiene preservation
+  augmentin: 'augmentation',   // Dracthyr Evo — brand → augmentation
 };
 
 // Disambiguazione per PG omonimi: chiave `nome|razza` (minuscolo). Ha precedenza su CHAR_SPEC.
