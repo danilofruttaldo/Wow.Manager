@@ -38,18 +38,31 @@ export interface Dialog {
 
 // Stato che deve sopravvivere alla singola pagina, perche' il listener da tastiera sta su
 // `document` e si aggancia una volta sola per sessione (vedi initKeys).
+// ⚠️ `vivo` serve SOLO alle frecce, che hanno bisogno della closure della pagina. Aprire e
+// chiudere non ci passano: vedi `chiudi`.
 let lastFocus: HTMLElement | null = null;
-let vivo: { id: string; mainId: string; step: (dir: number) => void } | null = null;
+let vivo: { id: string; step: (dir: number) => void } | null = null;
 
+/** La modale aperta, letta dal DOM. Non c'e' registro che tenga: o ha la classe o no. */
+const aperta = () => document.querySelector<HTMLElement>('.dlg.open');
+
+// ⚠️ LA CHIUSURA NON PASSA DA `vivo`, ED E' IL PUNTO. Prima cominciava con `if (!vivo)
+// return`, e quando quel registro si sporcava la modale si apriva ma non si chiudeva piu':
+// ne' la ×, ne' il click sullo sfondo, ne' Esc — con la pagina dietro `inert` e lo scroll
+// bloccato, cioe' bisognava ricaricare. E' successo davvero (vedi `releaseDialog`).
+// La lezione non e' «quel registro andava tenuto meglio»: e' che la via d'USCITA non deve
+// dipendere da bookkeeping. Un errore di stato, cosi', al massimo fa sbagliare una freccia.
 function chiudi() {
-  if (!vivo) return;
-  const lb = document.getElementById(vivo.id);
+  const lb = aperta();
   if (!lb) return;
   lb.classList.remove('open');
   document.body.style.overflow = '';
-  // Griglia e filtri tornano navigabili: erano inerti dietro l'overlay. NON si tocca
-  // l'elemento che contiene la modale stessa, solo il contenitore dei contenuti.
-  document.getElementById(vivo.mainId)?.removeAttribute('inert');
+  // Griglia e filtri tornano navigabili: erano inerti dietro l'overlay. Quale sia il
+  // contenitore da riabilitare sta scritto sulla modale stessa (`data-main`, lo mette
+  // initDialog) e non in memoria — per la stessa ragione. NON si tocca l'elemento che
+  // contiene la modale, solo il contenitore dei contenuti.
+  const main = lb.dataset.main;
+  if (main) document.getElementById(main)?.removeAttribute('inert');
   lastFocus?.focus();
   lastFocus = null;
 }
@@ -60,12 +73,14 @@ function initKeys() {
   if ((window as any).__dlgKeys) return;
   (window as any).__dlgKeys = true;
   document.addEventListener('keydown', (e) => {
-    if (!vivo) return;
-    const lb = document.getElementById(vivo.id);
-    if (!lb || !lb.classList.contains('open')) return;
+    // Anche qui si parte dal DOM: Esc e la trappola del Tab devono funzionare comunque,
+    // pure se `vivo` fosse sbagliato. Solo le frecce ne hanno davvero bisogno, perche'
+    // scorrono le card della pagina e quella closure sta li'.
+    const lb = aperta();
+    if (!lb) return;
     if (e.key === 'Escape') { chiudi(); return; }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); vivo.step(-1); return; }
-    if (e.key === 'ArrowRight') { e.preventDefault(); vivo.step(1); return; }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); vivo?.step(-1); return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); vivo?.step(1); return; }
     if (e.key !== 'Tab') return;
     // Trappola del focus: dentro un dialog il Tab non deve uscire sulla pagina.
     // ⚠️ `:not([disabled])` conta: con una sola card visibile le frecce sono disabilitate,
@@ -87,17 +102,24 @@ function initKeys() {
 
 /**
  * Stacca il ponte verso la pagina precedente. Da chiamare a OGNI `astro:page-load`, per
- * PRIMA cosa e comunque — anche quando la pagina non ha una modale.
+ * PRIMA cosa e comunque — anche quando la pagina non ha una modale — passando l'id della
+ * PROPRIA modale.
  *
- * ⚠️ Non basta farlo dentro `initDialog`: le pagine escono prima («la mia griglia non c'e',
- * non e' la mia pagina») e quel ritorno anticipato scavalcherebbe il rilascio. E' esattamente
- * il bug che c'era: `vivo` restava a puntare la modale di /mount, e con lei la closure su
- * `visible`/`current`/`fill` — cioe' 1525 card staccate dal DOM piu' il loro indice, vive
- * fino al primo reload vero. Prima del guscio condiviso il reset stava nella pagina, sopra
- * l'uscita anticipata; portandolo qui dentro ha smesso di essere raggiunto.
+ * Serve perche' `initDialog` non basta: le pagine escono prima («la mia griglia non c'e',
+ * non e' la mia pagina») e quel ritorno anticipato scavalcherebbe il rilascio, lasciando
+ * viva la closure su `visible`/`current`/`fill` — su /mount sono 1525 card staccate dal DOM.
+ *
+ * ⚠️ **L'`id` non e' un ornamento: senza, questa funzione ROMPE la modale.** `vivo` e' uno
+ * solo per tutta la sessione, ma la chiamano tutte le pagine, e i listener di
+ * `astro:page-load` scattano nell'ordine in cui i moduli sono stati caricati — non in
+ * quello che serve. Dopo il giro /mount → /addons → /mount l'ordine e' [initMounts,
+ * initAddons]: al ritorno su /mount, `initMounts` imposta `vivo` e subito dopo `initAddons`
+ * — che su quella pagina non ha nulla da fare — lo azzerava. Da li' le frecce smettevano di
+ * scorrere, e quando anche `chiudi` dipendeva da `vivo` la modale si apriva e non si
+ * chiudeva piu'. Rilasciando solo la PROPRIA, una pagina non puo' piu' sabotare l'altra.
  */
-export function releaseDialog() {
-  vivo = null;
+export function releaseDialog(id: string) {
+  if (vivo?.id === id) vivo = null;
 }
 
 /**
@@ -107,8 +129,11 @@ export function releaseDialog() {
  */
 export function initDialog(o: DialogOpts): Dialog | null {
   const lb = document.getElementById(o.id);
-  releaseDialog();
+  releaseDialog(o.id);
   if (!lb) return null;
+  // Quale contenitore rendere inerte (e poi riabilitare) sta sulla modale, non in memoria:
+  // e' quel che permette a `chiudi` di lavorare senza sapere nulla della pagina.
+  lb.dataset.main = o.mainId;
 
   // Card attualmente mostrata: e' il punto di partenza delle frecce.
   let current: HTMLElement | null = null;
@@ -138,7 +163,7 @@ export function initDialog(o: DialogOpts): Dialog | null {
     (lb.querySelector('.dlg-panel') as HTMLElement | null)?.focus();
   };
 
-  vivo = { id: o.id, mainId: o.mainId, step };
+  vivo = { id: o.id, step };
 
   // Un listener solo sulla griglia invece di uno per card: su /mount sono 1525, e ognuna
   // col suo handler peserebbe sulla memoria senza motivo.

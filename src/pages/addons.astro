@@ -189,7 +189,9 @@ const outdatedCount = addons.length - updatedCount;
     const grid = document.getElementById('addon-grid');
     // ⚠️ PRIMA dell'uscita anticipata: se siamo su un'altra pagina la modale di questa non
     // c'e', ma il ponte verso la griglia precedente va staccato lo stesso.
-    releaseDialog();
+    // ⚠️ E si passa il PROPRIO id: senza, girando dopo l'init di /mount le azzeravamo la
+    // modale, che da li' non si chiudeva piu'.
+    releaseDialog('alb');
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.acard')) as HTMLElement[];
     const search = document.getElementById('addon-search') as HTMLInputElement;

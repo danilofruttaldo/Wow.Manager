@@ -286,7 +286,9 @@ const srcOptions = [...srcCounts.entries()]
     // ⚠️ PRIMA dell'uscita anticipata: se la modale di questa pagina non c'e' perche' siamo
     // altrove, il ponte verso la griglia precedente va staccato lo stesso — altrimenti la
     // closure resta viva e trattiene 1525 card staccate dal DOM.
-    releaseDialog();
+    // ⚠️ E si passa il PROPRIO id: senza, questa riga azzererebbe anche la modale di
+    // /addons quando il suo init gira dopo il nostro, e quella smetterebbe di chiudersi.
+    releaseDialog('mlb');
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.mcard')) as HTMLElement[];
     const search = document.getElementById('mount-search') as HTMLInputElement;
