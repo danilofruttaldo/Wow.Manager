@@ -165,14 +165,21 @@ a.xcard:hover { border-color: var(--accent); }
     // Il corpo dello script e' gia' nel DOM in .xsrc (lo legge la modale): lo si indicizza
     // da li' invece di duplicarlo minuscolo in data-search, che raddoppiava l'HTML della
     // pagina. La ricerca full-text nel corpo resta identica.
-    const bodyLower = new Map<HTMLElement, string>(
+    //
+    // ⚠️ L'indice si costruisce alla PRIMA ricerca, non al caricamento: sono ~270 KB di
+    // sorgenti da minuscolizzare e tenere in memoria in copia, e a ricerca vuota non
+    // servono a niente. Chi apre /extra per copiare uno script — cioe' il caso normale —
+    // non li paga affatto.
+    let indice: Map<HTMLElement, string> | null = null;
+    const corpi = () => (indice ??= new Map(
       wraps.map((w) => [w, (w.querySelector('.xsrc')?.textContent ?? '').toLowerCase()]),
-    );
+    ));
     const applySearch = () => {
       const q = (search?.value || '').trim().toLowerCase();
+      const dentro = q === '' ? null : corpi();
       let shown = 0;
       for (const w of wraps) {
-        const show = q === '' || (w.dataset.search || '').includes(q) || (bodyLower.get(w) ?? '').includes(q);
+        const show = q === '' || (w.dataset.search || '').includes(q) || (dentro!.get(w) ?? '').includes(q);
         w.hidden = !show;
         if (show) shown++;
       }

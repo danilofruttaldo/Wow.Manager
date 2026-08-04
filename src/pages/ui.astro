@@ -203,6 +203,14 @@ function initLbKeys() {
 }
 
 document.addEventListener('astro:page-load', () => {
+  // ⚠️ PRIMA delle uscite anticipate qui sotto: `lbList` vive nel modulo, che con
+  // ClientRouter sopravvive alla navigazione. Uscendo da /ui verso un'altra pagina
+  // resterebbe a trattenere i bottoni della galleria di prima, che a quel punto sono
+  // staccati dal DOM. E' lo stesso motivo per cui `dialog.ts` ha `releaseDialog()`: li'
+  // sono 1525 card e si vede, qui sono 26 e non si vede — ma il difetto e' lo stesso, e
+  // un solo posto sistemato su due e' peggio che nessuno, perche' sembra una scelta.
+  lbList = [];
+  lbLastFocus = null;
   const lb = document.getElementById('lb');
   if (!lb) return;
   const allShots = Array.from(document.querySelectorAll<HTMLButtonElement>('.shot'));

@@ -327,6 +327,26 @@ Copre: le chiavi delle cinque tabelle professioni e i nomi-nodo di `builds`/`spe
 
 ⚠️ **Le chiavi di `CHAR_SPEC` che non compaiono in `pg.md` NON sono un errore**, e il validatore le conta soltanto: sono i pianificati mai creati, tenuti apposta (blocco «PARCHEGGIATE» in char-specs.ts) per quando li si reintroduce con `*Nome`.
 
+### Peso delle pagine: si misura in gzip, non in byte di HTML
+
+⚠️ **Misurato sul sito servito il 2026-08-04** (`Accept-Encoding: gzip`, GitHub Pages comprime tutto):
+
+| | gzip | HTML | rapporto |
+|---|---|---|---|
+| `/mount` | 99 KB | 954 KB | 9,6x |
+| `/extra` | 85 KB | 287 KB | **3,4x** |
+| `/transmog` | 64 KB | 851 KB | **13,3x** |
+| `/professioni` | 27 KB | 265 KB | 9,7x |
+| il resto | 3–11 KB | | |
+
+⚠️ **Il numero non compresso porta fuori strada, ed e' gia' successo.** `/transmog` a 851 KB sembrava la prossima cosa da spezzare — 13 pannelli di classe nel DOM, 12 nascosti — ma quella ripetizione e' esattamente cio' che gzip mangia: sul filo sono 64 KB, meno di `/extra` che ne mostra 287. Il costo residuo li' e' il DOM (605 `<tr>`, 1937 `<td>`), non la banda, e i pannelli nascosti sono `display:none`, quindi non li si impagina nemmeno. **Non spezzarlo**: servirebbe un frammento HTML per classe, e il CSS scopato di quella pagina non sopravvive a un `innerHTML` — molto rischio per byte che non si pagano.
+
+⚠️ **E `/extra` non e' contenuto dietro un click**, benche' lo sembri: i corpi degli script alimentano la **ricerca full-text** (`corpi()` nel suo JS). Spostarli in un JSON a domanda romperebbe la ricerca o la farebbe aspettare una richiesta alla prima battuta. Comprime poco (3,4x) perche' e' codice, ed e' il prezzo giusto per quello che la pagina fa. Quel che invece si e' potuto togliere e' l'**indice**: la copia minuscola dei ~270 KB di sorgenti ora si costruisce alla prima ricerca, non al caricamento.
+
+- **La regola generale**: si sposta fuori dall'HTML cio' che **nessuno usa finche' non lo chiede** (i dettagli della modale di `/mount`, i pezzi di `/transmog`), non cio' che e' semplicemente lungo. E prima di spostare, si misura in gzip.
+- ⚠️ **E il gancio con cui si scalda conta quanto lo spostamento.** Su `/mount` era `pointerover` sulla griglia: scatta appena il cursore sfiora una card mentre si scorre, quindi scaricava i 109 KB del JSON anche a chi stava solo guardando. Ora e' `pointerdown` + `focusin`, cioe' «sta per aprirne una». Chi apre non ci perde: la testata della modale si disegna comunque dai dati della griglia.
+- **[src/lib/lazy-json.ts](src/lib/lazy-json.ts)** = il posto unico dove vive «chiedi una volta sola e tieni»: cache per URL, richieste concorrenti condivise, errore di rete che restituisce l'oggetto vuoto invece di rilanciare. `jsonSeCe()` dice cosa c'e' gia' senza far partire nulla — serve a disegnare subito il disegnabile. Erano due copie, in `/transmog` e `/mount`.
+
 **In CI ci sono DUE workflow, separati apposta**: [deploy.yml](.github/workflows/deploy.yml) pubblica, [verifica.yml](.github/workflows/verifica.yml) fa `npm run validate`. Il deploy non deve fermarsi per un controllo di manutenzione — un rosso sulla verifica è un lavoro da fare, non un sito da tenere offline. ⚠️ Gli errori finiscono anche in un'**annotazione**, non solo nel log: il log di un run vuole l'autenticazione anche su un repo pubblico (l'API risponde **403** in anonimo), mentre le annotazioni si leggono dalla pagina del commit e dall'endpoint `check-runs`.
 
 ⚠️ **`astro check` NON è in CI, ed è una scelta verificata.** Provato il 2026-08-04: riporta **91 errori su codice che builda e funziona**. La causa è una sola e si legge nell'output — le **generiche dentro le espressioni del template**: `@astrojs/check` 0.9.8 prende il `<string>` di `new Set<string>()` per l'apertura di un tag, quindi `new Set < string > ()` diventa un confronto, e da lì cascano «Property 'has' does not exist on type 'boolean'», «HTML element 'section' has no corresponding closing tag», «Cannot find name 'cerca'». Il compilatore vero non ha il problema: il deploy è verde e le pagine funzionano. Il checker è indietro rispetto ad Astro 7. **Prima di rimetterlo va aggiornato** (`@astrojs/check` e `typescript`) e riprovato: se torna pulito è un guadagno vero, perché il build il typecheck non lo fa. Lo script `npm run check` resta in package.json apposta.

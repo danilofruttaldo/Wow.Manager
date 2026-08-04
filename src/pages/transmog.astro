@@ -338,23 +338,13 @@ const daScrivere = (cell: { slot: string; label: string }) =>
 
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
+  import { jsonLazy, jsonSeCe } from '../lib/lazy-json';
 
-  // Elenco pezzi per classe, caricato da /transmog/<classe>.json alla prima apertura
-  // del tab e tenuto in cache. Modulo eseguito una volta sola, quindi la cache
-  // sopravvive alle navigazioni ClientRouter (come la guardia __tmogTip).
-  const tipCache = new Map<string, any>();
-  const tipPending = new Map<string, Promise<any>>();
-  function ensureTips(slug: string): Promise<any> {
-    if (!slug) return Promise.resolve(null);
-    if (tipCache.has(slug)) return Promise.resolve(tipCache.get(slug));
-    if (tipPending.has(slug)) return tipPending.get(slug)!;
-    const p = fetch(`/transmog/${slug}.json`)
-      .then(r => (r.ok ? r.json() : null))
-      .then(d => { if (d) tipCache.set(slug, d); tipPending.delete(slug); return d; })
-      .catch(() => { tipPending.delete(slug); return null; });
-    tipPending.set(slug, p);
-    return p;
-  }
+  // Elenco pezzi per classe, caricato da /transmog/<classe>.json alla prima apertura del
+  // tab. Cache e richiesta condivisa stanno in `lib/lazy-json`: erano scritte qui, e la
+  // stessa manciata di righe si e' poi ripetuta in /mount.
+  const tipUrl = (slug: string) => `/transmog/${slug}.json`;
+  const ensureTips = (slug: string) => (slug ? jsonLazy(tipUrl(slug)) : Promise.resolve(null));
 
   function initTransmog() {
     const chips = Array.from(document.querySelectorAll('#tmog-chips .chip')) as HTMLButtonElement[];
@@ -523,7 +513,7 @@ const daScrivere = (cell: { slot: string; label: string }) =>
       cell.setAttribute('aria-describedby', 'tmog-tip');
       const slug = (cell.closest('.tmog-panel') as HTMLElement | null)?.dataset.class || '';
       const tier = cell.dataset.tier || '', ver = cell.dataset.ver || '';
-      const data = tipCache.get(slug);
+      const data = slug ? jsonSeCe<any>(tipUrl(slug)) : null;
       render(cell, data?.[tier]?.[ver] ?? []);
       // Se i pezzi non sono ancora arrivati, mostra subito il titolo e riempi appena
       // il fetch risolve — ma solo se il mouse e' ancora su questa cella.

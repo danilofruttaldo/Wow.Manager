@@ -273,27 +273,13 @@ const srcOptions = [...srcCounts.entries()]
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
   import { initDialog, dialogPos, dialogField, releaseDialog } from '../lib/dialog';
+  import { jsonLazy, jsonSeCe } from '../lib/lazy-json';
 
-  // Dettagli della modale, chiesti a /mount/dettagli.json invece di stare negli attributi
-  // delle card (erano 272 KB su 1525 elementi, vedi il commento sull'endpoint). Cache a
-  // livello di MODULO, non di pagina: con ClientRouter il modulo sopravvive alla
-  // navigazione, quindi tornando su /mount il JSON non si riscarica. Stesso schema della
-  // cache dei pezzi in /transmog.
-  let dett: Record<string, any> | null = null;
-  let dettP: Promise<Record<string, any>> | null = null;
-  function ensureDett(): Promise<Record<string, any>> {
-    if (dett) return Promise.resolve(dett);
-    if (!dettP) {
-      // ⚠️ L'ultimo `then` non e' `(d) => (dett = d)`: un'assegnazione vale il TIPO DELLA
-      // VARIABILE, quindi la catena diventava Promise<Record | null> e non combaciava piu'
-      // con quel che `ensureDett` promette. Si assegna e si restituisce, separatamente.
-      dettP = fetch('/mount/dettagli.json')
-        .then((r) => (r.ok ? r.json() : {}))
-        .catch(() => ({}))          // rete giu': la modale resta alla sola testata
-        .then((d: Record<string, any>) => { dett = d; return d; });
-    }
-    return dettP;
-  }
+  // Dettagli della modale: non stanno negli attributi delle card (erano 272 KB su 1525
+  // elementi, vedi il commento sull'endpoint) ma in /mount/dettagli.json, chiesto quando
+  // serve. Cache e richiesta condivisa stanno in `lib/lazy-json`, come per i pezzi di
+  // /transmog.
+  const DETTAGLI = '/mount/dettagli.json';
 
   function initMounts() {
     const grid = document.getElementById('mount-grid');
@@ -403,10 +389,18 @@ const srcOptions = [...srcCounts.entries()]
       const elImg = el('mlb-img') as HTMLImageElement;
       const elLink = el('mlb-link') as HTMLAnchorElement;
 
-      // Il JSON si scalda appena il puntatore tocca la griglia: al click e' gia' arrivato,
-      // e la modale si apre piena. Da tastiera o da touch non scatta, ma ci pensa `fill`,
-      // che lo chiede comunque. `once` perche' basta la prima volta.
-      grid.addEventListener('pointerover', () => { ensureDett(); }, { once: true });
+      // Il JSON si scalda quando una card sta per essere aperta: `pointerdown` precede il
+      // click di un'ottantina di millisecondi, `focusin` copre chi naviga da tastiera e
+      // sta per premere Invio. `once` perche' basta la prima volta.
+      //
+      // ⚠️ Era `pointerover`, ed era troppo largo: quell'evento scatta appena il cursore
+      // sfiora una card mentre si scorre la pagina, quindi lo scaricava (109 KB gzip)
+      // anche a chi stava solo guardando l'elenco — che e' la maggior parte delle visite.
+      // Chi apre davvero non ci perde nulla: la testata della modale si disegna comunque
+      // subito dai dati della griglia, e il resto arriva un attimo dopo.
+      for (const evento of ['pointerdown', 'focusin']) {
+        grid.addEventListener(evento, () => { jsonLazy(DETTAGLI); }, { once: true });
+      }
 
       const pill = (label: string, icon?: string) => {
         const s = document.createElement('span');
@@ -509,8 +503,11 @@ const srcOptions = [...srcCounts.entries()]
 
           atteso = card;
           const id = card.dataset.id || '';
-          dettagli(card, dett ? (dett[id] ?? {}) : null);
-          if (!dett) ensureDett().then((tutti) => { if (atteso === card) dettagli(card, tutti[id] ?? {}); });
+          const gia = jsonSeCe<Record<string, any>>(DETTAGLI);
+          dettagli(card, gia ? (gia[id] ?? {}) : null);
+          if (!gia) jsonLazy<Record<string, any>>(DETTAGLI).then((tutti) => {
+            if (atteso === card) dettagli(card, tutti[id] ?? {});
+          });
 
           // Posizione nel sottoinsieme filtrato: con 1525 cavalcature dice quanto resta
           // da sfogliare, come il contatore in barra dice quanto manca alla collezione.
