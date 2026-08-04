@@ -34,5 +34,18 @@ jobs:
       - name: Coerenza dei dati
         run: npm run validate
 
+      # ⚠️ Gli errori finiscono anche in un'ANNOTAZIONE, non solo nel log. Il log di un run
+      # vuole l'autenticazione anche su un repo pubblico (l'API risponde 403 in anonimo),
+      # mentre le annotazioni si leggono dalla pagina del commit e dall'endpoint
+      # `check-runs`: cosi' il motivo di un rosso si vede senza scaricare nulla.
       - name: Tipi (astro check)
-        run: npm run check
+        run: |
+          set +e
+          out=$(npm run check 2>&1)
+          esito=$?
+          echo "$out"
+          if [ $esito -ne 0 ]; then
+            msg=$(printf '%s' "$out" | tail -c 4000 | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')
+            printf '::error title=astro check::%s\n' "$msg"
+          fi
+          exit $esito
