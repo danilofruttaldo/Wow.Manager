@@ -115,8 +115,10 @@ code { font-family: var(--font-mono); font-size: 0.82em; background: var(--borde
 .ico-sm { width: 20px; height: 20px; min-width: 20px; border-radius: 4px; }
 /* Icona spec inline accanto al nome del PG nella tabella */
 .ico-spec { width: 16px; height: 16px; min-width: 16px; border-radius: 3px; vertical-align: -3px; margin-left: 2px; }
-/* Segnaposto "spec da confermare" (?) */
-.spec-q { display: inline-block; width: 16px; height: 16px; min-width: 16px; line-height: 16px; text-align: center; font-size: 0.68rem; font-weight: 700; color: var(--text-subtle); background: var(--border-light); border: 1px solid var(--border); border-radius: 3px; vertical-align: -3px; margin-left: 2px; }
+/* Segnaposto "?": spec da confermare (.spec-q) e professioni ignote (.prof-q, due per PG).
+   Stessa resa perche' dicono la stessa cosa — «questo dato non ce l'ho» — al posto di
+   un'icona; classi distinte perche' il title, e quindi il significato, e' diverso. */
+.spec-q, .prof-q { display: inline-block; width: 16px; height: 16px; min-width: 16px; line-height: 16px; text-align: center; font-size: 0.68rem; font-weight: 700; color: var(--text-subtle); background: var(--border-light); border: 1px solid var(--border); border-radius: 3px; vertical-align: -3px; margin-left: 2px; }
 /* PG pianificato (TODO, non ancora creato): nome smorzato in corsivo + sottolineatura punteggiata */
 .pg--todo .pg-name { color: var(--text-subtle); font-style: italic; text-decoration: underline dotted var(--border); text-underline-offset: 2px; }
 /* PG esistente ma non ancora al level cap (in leveling): nome in corsivo */

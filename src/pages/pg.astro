@@ -20,16 +20,28 @@ const html = getPgHtml();
     font-size: var(--fs-sm); width: 100%; table-layout: fixed;
     overflow: hidden; background: var(--surface);
   }
+  /* Misura UNICA delle icone dentro la cella PG (spec, wildcard, professioni). Sta qui e non
+     a valori sparsi perche' e' anche l'altezza riservata alla fila: cambiandola si muovono
+     insieme icone e altezza di cella. 16px = la stessa misura degli attributi width/height
+     nell'HTML (content.ts) e di .spec-q in global.css, cosi' il "?" della spec da confermare
+     e' largo quanto un'icona. */
+  /* `--pg-cell-px` = padding orizzontale della cella. E' una variabile perche' serve DUE volte
+     con segno opposto: qui, e come margine negativo in `.pg-multi`, dove il filetto fra due PG
+     deve arrivare ai bordi della casella. Cambiandone uno solo, il filetto sfora o resta corto. */
+  .pg-prose { --pg-ico: 16px; --pg-cell-px: 0.16rem; }
   .pg-prose :global(th), .pg-prose :global(td) {
-    padding: 0.3rem 0.22rem; text-align: center; vertical-align: middle;
+    padding: 0.22rem var(--pg-cell-px); text-align: center; vertical-align: middle;
     white-space: normal; overflow-wrap: anywhere; line-height: 1.25;
     border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);
   }
   .pg-prose :global(th:first-child), .pg-prose :global(td:first-child) { width: 56px; }
   /* Ultima colonna: niente border-right, si sdoppiava contro il bordo del .table-scroll. */
   .pg-prose :global(th:last-child), .pg-prose :global(td:last-child) { border-right: none; }
-  .pg-prose :global(thead th) { background: var(--surface-2); padding: 0.4rem 0.2rem; }
-  .pg-prose :global(.ico) { width: 24px; height: 24px; }
+  .pg-prose :global(thead th) { background: var(--surface-2); padding: 0.32rem 0.16rem; }
+  /* ⚠️ `min-width` va SEMPRE ridichiarato insieme a width: `.ico` in global.css porta
+     `min-width: 26px`, e in un contenitore flex quel minimo VINCE sulla width. Senza questa
+     riga le icone di razza e classe restavano a 26px pur essendo dichiarate 24. */
+  .pg-prose :global(.ico) { width: 24px; height: 24px; min-width: 24px; }
   .pg-prose :global(.race-txt) { font-size: var(--fs-xs); font-weight: 600; }
   /* Nome sulla PRIMA riga, icone (spec + professioni) SEMPRE a capo sulla seconda: il gruppo
      e' una colonna, non piu' una riga che manda l'icona sotto solo quando non ci sta. Con tre
@@ -37,14 +49,47 @@ const html = getPgHtml();
      della lunghezza del nome; in colonna hanno tutte la stessa forma. `max-width: 100%` (sul
      gruppo e sul nome) tiene tutto dentro la colonna: un nome piu' largo della cella si spezza
      dall'overflow-wrap invece di sforare. La fila di icone va a capo da sola se sono troppe. */
-  .pg-prose :global(.pg) { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; max-width: 100%; vertical-align: middle; line-height: 1.2; }
+  .pg-prose :global(.pg) { display: inline-flex; flex-direction: column; align-items: center; gap: 1px; max-width: 100%; vertical-align: middle; line-height: 1.2; }
   .pg-prose :global(.pg .pg-name) { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
-  .pg-prose :global(.pg-icons) { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 4px; max-width: 100%; }
-  .pg-prose :global(.pg .ico-spec), .pg-prose :global(.pg .ico-prof) { width: 18px; height: 18px; margin: 0; }
-  .pg-prose :global(.pg .spec-q) { margin: 0; }
-  .pg-prose :global(.pg .spec-l) { color: var(--text-muted); font-weight: 600; }
-  /* Marcatore wildcard (gioca tutte le spec) accanto all'icona */
-  .pg-prose :global(.pg .wild) { color: var(--accent); font-size: 0.85em; font-weight: 700; margin-left: -1px; }
+  /* `min-height` = altezza di un'icona: la fila e' emessa sempre (anche vuota) e occupa
+     comunque la sua banda, cosi' le icone di tutte le celle di una riga sono allineate. */
+  .pg-prose :global(.pg-icons) {
+    display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center;
+    gap: 2px 6px; max-width: 100%; min-height: var(--pg-ico); line-height: 1;
+  }
+  /* Il gap di `.pg-icons` (6px) separa i due GRUPPI — spec e professioni — mentre dentro il
+     gruppo le icone stanno strette (2px): sono coppie, si leggono come un blocco solo. */
+  .pg-prose :global(.pg-icons .ig) { display: inline-flex; align-items: center; gap: 1px; }
+  /* Una regola sola per TUTTE le icone della fila (spec, wildcard, professioni): si prendono
+     per elemento, non per classe, cosi' un'icona nuova nasce gia' della misura giusta.
+     ⚠️ `min-width` e' obbligatorio: `.ico-prof` non ha una regola sua in global.css, quindi
+     ereditava il `min-width: 26px` di `.ico` e le professioni uscivano larghe 26 e alte 18 —
+     piu' grandi dell'icona spec accanto, e schiacciate. Con la wildcard le quattro icone
+     sforavano la colonna e andavano a capo: quella cella era alta 20px piu' delle altre. */
+  .pg-prose :global(.pg-icons img) {
+    width: var(--pg-ico); height: var(--pg-ico); min-width: var(--pg-ico);
+    border-radius: 3px; margin: 0; vertical-align: middle;
+  }
+  /* Ripieghi testuali (spec da confermare "?", iniziale fra parentesi): stessa banda delle
+     icone, cosi' non allungano la riga quando compaiono al posto di un'immagine. */
+  .pg-prose :global(.pg .spec-q), .pg-prose :global(.pg .prof-q) { margin: 0; width: var(--pg-ico); height: var(--pg-ico); min-width: var(--pg-ico); line-height: var(--pg-ico); vertical-align: middle; }
+  .pg-prose :global(.pg .spec-l) { color: var(--text-muted); font-weight: 600; line-height: var(--pg-ico); }
+
+  /* Piu' PG nella stessa casella: la casella si divide ORIZZONTALMENTE, un PG per fascia,
+     con un filetto che la taglia da bordo a bordo (i margini negativi annullano il padding
+     orizzontale del td). Prima erano solo due nomi impilati da un <br>: con due righe di
+     icone a testa non si capiva dove finisse un PG e cominciasse l'altro. */
+  .pg-prose :global(.pg-multi) {
+    display: flex; flex-direction: column;
+    margin-inline: calc(-1 * var(--pg-cell-px));
+  }
+  /* Il padding tolto al contenitore torna a ogni fascia, cosi' i nomi restano allineati
+     con quelli delle celle a un PG solo. */
+  .pg-prose :global(.pg-multi > .pg) { padding-inline: var(--pg-cell-px); }
+  .pg-prose :global(.pg-multi > .pg + .pg) {
+    border-top: 1px solid var(--border);
+    margin-top: 0.22rem; padding-top: 0.22rem;
+  }
 
   /* Tinta fazione tenue e uniforme per riga (identità Orda/Alleanza) */
   .pg-prose :global(tr.fac-horde)    { background: color-mix(in srgb, #C0202A 6%, var(--surface)); }

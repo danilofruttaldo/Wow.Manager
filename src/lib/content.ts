@@ -731,19 +731,21 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     const raw = CHAR_SPEC_BY_RACE[`${name}|${race}`.toLowerCase()] ?? CHAR_SPEC[name.toLowerCase()];
     const specs = raw ? String(raw).split(',').map((s) => s.trim()).filter(Boolean) : [];
     const tail = specs.map((raw2) => {
-      // Suffisso "*" = wildcard: gioca tutte le spec (mostra l'icona base + ✦).
+      // Suffisso "*" = wildcard: gioca tutte le spec. Il "*" NUDO (valore `'*'`, senza spec
+      // davanti) e' il caso "nessuna spec preferita": mostra la sola icona wildcard. Con una
+      // spec davanti (`'arms*'`) restano tutte e due, l'icona della spec base piu' la wildcard.
       const wild = raw2.endsWith('*');
       const spec = wild ? raw2.slice(0, -1) : raw2;
-      if (spec === '?') return '<span class="spec-q" title="spec da confermare">?</span>';
+      const star = wild ? '<img class="ico ico-wild" src="/icons/ui/wildcard.jpg" alt="wildcard — tutte le spec" title="wildcard — tutte le spec" width="16" height="16">' : '';
+      if (spec === '?') return `<span class="spec-q" title="spec da confermare">?</span>${star}`;
       if (SPEC_ICON[classSlug]?.includes(spec)) {
         const label = titleCase(spec);
         const title = wild ? `${label} · wildcard (gioca tutte le spec)` : label;
-        const star = wild ? '<img class="ico-spec" src="/icons/ui/wildcard.jpg" alt="wildcard — tutte le spec" title="wildcard — tutte le spec">' : '';
         return `<img class="ico ico-spec" src="/icons/spec/${classSlug}-${spec}.jpg" alt="${title}" title="${title}" width="16" height="16">${star}`;
       }
-      // fallback se manca l'icona; spec vuota (es. wildcard "*" nuda) -> niente, per non
-      // chiamare spec[0] su stringa vuota e far crashare il build.
-      return spec ? `<span class="spec-l">(${spec[0].toUpperCase()})</span>` : '';
+      // Ripiego se l'icona della spec manca. Con spec vuota resta la sola wildcard: niente
+      // `spec[0]` su stringa vuota, che farebbe crashare il build.
+      return spec ? `<span class="spec-l">(${spec[0].toUpperCase()})</span>${star}` : star;
     }).join('');
     // "nome sopra, icone sotto" = inline-flex in colonna (vedi .pg in pg.astro).
     // Tooltip nativo (abbozzo): realm e livello. Ne' la spec ne' le professioni ci vanno --
@@ -769,22 +771,43 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     tipLines.push(`Livello: ${level}`);
     const nameAttr = ` title="${escAttr(tipLines.join('\n'))}"`;
     // Professioni PRIMARIE dal tracker characters.json (popolato durante il grind, quindi
-    // ancora parziale: chi non c'e' mostra la sola icona spec). Le secondarie sono escluse
-    // gia' nel dump. Nome della professione nel title dell'icona, come per la spec.
-    const profTail = (info?.professions ?? []).filter(Boolean).map((p) => {
-      const key = PROF_KEY[p.toLowerCase()];
-      const label = escAttr(p);
-      // Ripiego coerente con quello della spec: iniziale fra parentesi se manca la chiave
-      // (professione fuori dal manifest), cosi' il dato non sparisce in silenzio.
-      return key
-        ? `<img class="ico ico-prof" src="/icons/prof/${key}.jpg" alt="${label}" title="${label}" width="16" height="16">`
-        : `<span class="spec-l" title="${label}">(${p[0].toUpperCase()})</span>`;
-    }).join('');
-    const icons = tail + profTail;
+    // ancora parziale). Le secondarie sono escluse gia' nel dump. Nome della professione nel
+    // title dell'icona, come per la spec.
+    const profs = (info?.professions ?? []).filter(Boolean);
+    const profTail = profs.length === 0
+      // PG non ancora passato dal dump: due "?" al posto delle due professioni primarie.
+      // Meglio del vuoto — dice «dato che non ho» invece di far sembrare che il PG non ne
+      // abbia, e tiene la fila di icone lunga uguale a quella dei PG tracciati.
+      ? '<span class="prof-q" title="professioni ignote (PG non ancora passato dal dump)">?</span>'.repeat(2)
+      : profs.map((p) => {
+          const key = PROF_KEY[p.toLowerCase()];
+          const label = escAttr(p);
+          // Ripiego coerente con quello della spec: iniziale fra parentesi se manca la chiave
+          // (professione fuori dal manifest), cosi' il dato non sparisce in silenzio.
+          return key
+            ? `<img class="ico ico-prof" src="/icons/prof/${key}.jpg" alt="${label}" title="${label}" width="16" height="16">`
+            : `<span class="spec-l" title="${label}">(${p[0].toUpperCase()})</span>`;
+        }).join('');
+    // Due GRUPPI dentro la fila, non icone tutte in fila: spec (+ wildcard) e professioni.
+    // Serve a spaziarli in modo diverso — largo fra i due gruppi, stretto dentro — e a farli
+    // andare a capo interi invece di spezzare le professioni. Il gruppo vuoto non si emette,
+    // altrimenti il suo gap resterebbe come un buco.
+    const grp = (inner: string) => (inner ? `<span class="ig">${inner}</span>` : '');
+    const icons = grp(tail) + grp(profTail);
     const pgClass = todo ? ' pg--todo' : wip ? ' pg--wip' : '';
-    return `<span class="pg${pgClass}"><span class="pg-name"${nameAttr}>${escHtml(name)}</span>${icons ? `<span class="pg-icons">${icons}</span>` : ''}</span>`;
+    // La fila icone si emette SEMPRE, anche vuota: le riserva l'altezza il CSS (min-height),
+    // cosi' le icone di tutti i PG di una riga stanno sulla stessa linea. Emettendola solo
+    // quando c'e' qualcosa, un PG senza spec ne' professioni restava piu' corto dei vicini
+    // e la fila di icone della cella accanto si disallineava.
+    return `<span class="pg${pgClass}"><span class="pg-name"${nameAttr}>${escHtml(name)}</span><span class="pg-icons">${icons}</span></span>`;
   });
-  return ` ${out.join('<br>')} `;
+  // Piu' PG nella stessa cella: NON piu' separati da <br> (che li impilava e basta, senza far
+  // vedere dove finiva l'uno e cominciava l'altro) ma avvolti in `.pg-multi`, che il CSS
+  // divide con un filetto orizzontale da bordo a bordo della casella. Con un solo PG resta
+  // esattamente il markup di prima: niente contenitore in piu' su 50 celle su 52.
+  const parts = out.filter((s) => s.trim());
+  if (parts.length > 1) return `<span class="pg-multi">${parts.join('')}</span>`;
+  return parts.join('');
 }
 
 const stripRealm = (cell: string): string => cell.replace(/·[A-Z]/g, '');
