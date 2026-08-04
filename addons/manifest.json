@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.0.7.68235",
-    "last_sync": "2026-08-03"
+    "last_sync": "2026-08-04"
   },
   "addons": {
     "BigWigs": {
@@ -163,14 +163,14 @@
     "Prat-3.0": {
       "name": "Prat 3.0",
       "desc": "Chat su misura a moduli: timestamp, copia del testo, colori, filtri e scorciatoie sui canali.",
-      "version": "3.9.103",
+      "version": "3.9.104",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/prat-3-0",
       "preview": "https://media.forgecdn.net/attachments/293/722/2020-05-24_1-56-57.jpg",
-      "installed": "2026-08-03",
+      "installed": "2026-08-04",
       "folders": ["Prat-3.0"],
-      "notes": "Framework di moduli per la chat (timestamp, copy, alias/colori canale, sostituzioni, tab). Installato 2026-07-26 al posto di [[WIM]], rimosso su richiesta. Release stabile 3.9.101 via forgecdn files/8250/962 (Prat-3.0-3.9.101.zip); TOC 120005,120007 match build 12.0.7. NB su CurseForge ci sono alpha piu' recenti (3.9.101-3-g2c846fb del 2026-07-18): si resta sulla release. Cartella unica Prat-3.0, SavedVariables Prat3DB. Le SavedVariables di WIM (WTF/Account/STANTUFFO/SavedVariables/WIM.lua + .bak, ~340 KB con lo storico whisper) NON sono state cancellate: inerti senza l'addon, si possono togliere a mano. Aggiornato 2026-08-03 3.9.101->3.9.103 via /aggiorna-addon (workflow) forgecdn files/8557/365 (release stabile); il TOC ora dichiara 120007,120100 (non piu' 120005). Nello zip anche i toc per i client classic (_Mists/_TBC/_Vanilla/_Wrath), irrilevanti per retail."
+      "notes": "Framework di moduli per la chat (timestamp, copy, alias/colori canale, sostituzioni, tab). Installato 2026-07-26 al posto di [[WIM]], rimosso su richiesta. Release stabile 3.9.101 via forgecdn files/8250/962 (Prat-3.0-3.9.101.zip); TOC 120005,120007 match build 12.0.7. NB su CurseForge ci sono alpha piu' recenti (3.9.101-3-g2c846fb del 2026-07-18): si resta sulla release. Cartella unica Prat-3.0, SavedVariables Prat3DB. Le SavedVariables di WIM (WTF/Account/STANTUFFO/SavedVariables/WIM.lua + .bak, ~340 KB con lo storico whisper) NON sono state cancellate: inerti senza l'addon, si possono togliere a mano. Aggiornato 2026-08-03 3.9.101->3.9.103 via /aggiorna-addon (workflow) forgecdn files/8557/365 (release stabile); il TOC ora dichiara 120007,120100 (non piu' 120005). Nello zip anche i toc per i client classic (_Mists/_TBC/_Vanilla/_Wrath), irrilevanti per retail. Aggiornato 2026-08-04 3.9.103->3.9.104 via /aggiorna-addon (workflow) forgecdn files/8575/36 (release stabile, 1.5 MB, 213 file); riga ## Interface invariata."
     },
     "CursorRing": {
       "name": "Cursor Ring",
