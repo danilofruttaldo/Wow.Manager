@@ -11,8 +11,8 @@
 #
 # In gioco basta UN /reload: l'addon rigenera il dump su PLAYER_LOGOUT, che scatta
 # anche col reload. Il /wmmount serve solo se lo vuoi vedere subito in chat.
-# Due reload servono solo dopo aver modificato mount-dump.lua: il primo scrive
-# ancora col codice vecchio, il secondo col nuovo.
+# Se l'addon installato e' indietro rispetto al repo lo script lo aggiorna da se'
+# (vedi §0) e allora i reload diventano due: te lo chiede lui, uno alla volta.
 #
 # A differenza del transmog qui il manifest e' INTERAMENTE generato: non contiene
 # nulla di redazionale, quindi si riscrive per intero a ogni giro. L'unico dato che
@@ -66,25 +66,71 @@ function TrovaDump {
            Sort-Object LastWriteTime -Descending | Select-Object -First 1
 }
 
+# --- 0. l'addon nella cartella di gioco -----------------------------------------
+# Il gioco legge la copia in Interface/AddOns, NON il .lua del repo: finche' non la
+# si sovrascrive il dump esce col codice vecchio e il sync reincolla i dati vecchi
+# senza che nulla lo segnali -- i dati restano coerenti, quindi nessuna guardia a
+# valle se ne accorge. E' successo il 2026-08-04: l'addon installato era fermo alla
+# versione che filtrava il solo "(PH)" e cinque cavalcature finte sono tornate in
+# pagina. Percio' la copia la fa lo script, non la memoria di chi lo lancia.
+$AddonDir = Join-Path $Wow "_retail_\Interface\AddOns\WowManagerMountDump"
+$Reload = 1
+if (Test-Path $AddonDir) {
+    $copiati = @()
+    foreach ($f in @(@{ src = "mount-dump.lua"; dst = "WowManagerMountDump.lua" },
+                     @{ src = "WowManagerMountDump.toc"; dst = "WowManagerMountDump.toc" })) {
+        $src = Join-Path $PSScriptRoot $f.src
+        $dst = Join-Path $AddonDir $f.dst
+        if (-not (Test-Path $src)) { continue }
+        if ((Test-Path $dst) -and (Get-FileHash $src).Hash -eq (Get-FileHash $dst).Hash) { continue }
+        Copy-Item $src $dst -Force
+        $copiati += $f.dst
+    }
+    if ($copiati.Count -gt 0) {
+        Write-Host ("addon aggiornato nella cartella di gioco: {0}" -f ($copiati -join ", ")) -ForegroundColor Yellow
+        # Si puo' sovrascrivere a gioco aperto, ma il PLAYER_LOGOUT del primo /reload
+        # scrive ancora col codice GIA' CARICATO: il dump buono e' quello del secondo.
+        $Reload = 2
+    }
+} else {
+    Write-Host "addon non installato in $AddonDir : uso il dump che trovo." -ForegroundColor Yellow
+}
+
 # --- 1. il dump ----------------------------------------------------------------
 $dump = TrovaDump
 if (-not $dump) { Errore "WowManagerMountDump.lua non trovato sotto $Wow. L'addon e' installato e il client riavviato?" }
 
+# -Subito prende il dump gia' sul disco, che pero' e' stato scritto PRIMA della copia
+# qui sopra: sarebbe esattamente il caso che questo blocco esiste per evitare.
+if ($Subito -and $Reload -gt 1) {
+    Errore "l'addon era indietro e l'ho appena aggiornato: il dump sul disco e' ancora del codice vecchio. Rilancia senza -Subito."
+}
+
 if (-not $Subito) {
-    $prima = $dump.LastWriteTime
-    Write-Host ""
-    Write-Host "  In gioco: /reload" -ForegroundColor Cyan
-    Write-Host ("  (aspetto un dump nuovo, max {0}s - Ctrl+C per annullare)" -f $AttesaMax)
-    $scaduto = (Get-Date).AddSeconds($AttesaMax)
-    while ((Get-Date) -lt $scaduto) {
-        Start-Sleep -Seconds 2
-        $dump = TrovaDump
-        if ($dump.LastWriteTime -gt $prima) { break }
+    for ($giro = 1; $giro -le $Reload; $giro++) {
+        $prima = $dump.LastWriteTime
+        Write-Host ""
+        if ($Reload -gt 1) {
+            Write-Host ("  In gioco: /reload  ({0} di {1})" -f $giro, $Reload) -ForegroundColor Cyan
+        } else {
+            Write-Host "  In gioco: /reload" -ForegroundColor Cyan
+        }
+        Write-Host ("  (aspetto un dump nuovo, max {0}s - Ctrl+C per annullare)" -f $AttesaMax)
+        $scaduto = (Get-Date).AddSeconds($AttesaMax)
+        while ((Get-Date) -lt $scaduto) {
+            Start-Sleep -Seconds 2
+            $dump = TrovaDump
+            if ($dump.LastWriteTime -gt $prima) { break }
+        }
+        if ($dump.LastWriteTime -le $prima) {
+            Errore "nessun dump nuovo entro $AttesaMax secondi. Rilancia, oppure usa -Subito per prendere quello vecchio."
+        }
+        if ($giro -lt $Reload) {
+            Write-Host "  dump di scarto (codice vecchio), ne aspetto un altro." -ForegroundColor DarkGray
+        } else {
+            Write-Host "  dump ricevuto." -ForegroundColor Green
+        }
     }
-    if ($dump.LastWriteTime -le $prima) {
-        Errore "nessun dump nuovo entro $AttesaMax secondi. Rilancia, oppure usa -Subito per prendere quello vecchio."
-    }
-    Write-Host "  dump ricevuto." -ForegroundColor Green
 }
 
 $lua = Get-Content -Raw -Encoding UTF8 $dump.FullName
