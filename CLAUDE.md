@@ -316,7 +316,6 @@ La topbar mostra `build <build> · sync <data>`. Il `build` = `_meta.wow_build` 
 
 ```bash
 npm run validate   # coerenza dei dati: nomi che devono combaciare, file che devono esistere
-npm run check      # tipi (astro check) — il build NON lo fa
 npm run build      # deve completare senza errori; poi: rm -rf .astro dist
 ```
 
@@ -328,7 +327,9 @@ Copre: le chiavi delle cinque tabelle professioni e i nomi-nodo di `builds`/`spe
 
 ⚠️ **Le chiavi di `CHAR_SPEC` che non compaiono in `pg.md` NON sono un errore**, e il validatore le conta soltanto: sono i pianificati mai creati, tenuti apposta (blocco «PARCHEGGIATE» in char-specs.ts) per quando li si reintroduce con `*Nome`.
 
-**In CI ci sono DUE workflow, separati apposta**: [deploy.yml](.github/workflows/deploy.yml) pubblica, [verifica.yml](.github/workflows/verifica.yml) fa `npm run validate` + `npm run check`. Il deploy non deve fermarsi per un typecheck — un rosso sulla verifica è un lavoro da fare, non un sito da tenere offline.
+**In CI ci sono DUE workflow, separati apposta**: [deploy.yml](.github/workflows/deploy.yml) pubblica, [verifica.yml](.github/workflows/verifica.yml) fa `npm run validate`. Il deploy non deve fermarsi per un controllo di manutenzione — un rosso sulla verifica è un lavoro da fare, non un sito da tenere offline. ⚠️ Gli errori finiscono anche in un'**annotazione**, non solo nel log: il log di un run vuole l'autenticazione anche su un repo pubblico (l'API risponde **403** in anonimo), mentre le annotazioni si leggono dalla pagina del commit e dall'endpoint `check-runs`.
+
+⚠️ **`astro check` NON è in CI, ed è una scelta verificata.** Provato il 2026-08-04: riporta **91 errori su codice che builda e funziona**. La causa è una sola e si legge nell'output — le **generiche dentro le espressioni del template**: `@astrojs/check` 0.9.8 prende il `<string>` di `new Set<string>()` per l'apertura di un tag, quindi `new Set < string > ()` diventa un confronto, e da lì cascano «Property 'has' does not exist on type 'boolean'», «HTML element 'section' has no corresponding closing tag», «Cannot find name 'cerca'». Il compilatore vero non ha il problema: il deploy è verde e le pagine funzionano. Il checker è indietro rispetto ad Astro 7. **Prima di rimetterlo va aggiornato** (`@astrojs/check` e `typescript`) e riprovato: se torna pulito è un guadagno vero, perché il build il typecheck non lo fa. Lo script `npm run check` resta in package.json apposta.
 Per il debug visivo usa **F5** (o `npm run dev`). ⚠️ **NON** eseguire `astro dev stop` a cuor leggero: ferma il daemon dev **condiviso** di Astro, quindi ammazza anche il tuo server F5.
 
 ⚠️ **Il dev server è UNO SOLO per progetto, e una porta dedicata non lo aggira.** Verificato su Astro 7.0.7: un secondo `astro dev` non avvia niente, riconosce quello già vivo, stampa *"Dev server already running at http://localhost:4321"* ed **esce** — `--port 4399` viene ignorato. Quindi «per test isolati usa una porta dedicata» non funziona: o riusi il server che c'è, o fermi quello.
@@ -363,7 +364,9 @@ git config core.hooksPath .githooks
 
 Senza quel comando l'hook c'è ma non gira.
 
-**I fine riga invece NON sono più un passo per-clone**: li decide [.gitattributes](.gitattributes). ⚠️ Prima reggeva solo perché su questa postazione c'è `core.autocrlf=true`, che è una scelta **locale e non versionata**: su un clone senza quel `git config`, il primo sync PowerShell avrebbe riscritto `mounts/manifest.json` (570 KB) in CRLF e il diff sarebbe stato il file intero. Non era teoria — la regex di `mount-classes.mjs` deve già tollerare un `` di troppo. Nel repo resta tutto **LF** (che è già lo stato di ogni file tracciato, quindi il file non ha rinormalizzato nulla); nella copia di lavoro `.ps1`, `.lua` e `.toc` restano **CRLF** perché si aprono su Windows, mentre `.githooks/*` e `.sh` restano **LF** perché li esegue `sh` e uno shebang `#!/bin/sh` non parte. Fino al 2026-07-20 questi vincoli erano documentati come "bloccati" senza che esistesse alcun hook: se ti accorgi che un commit li viola, controlla prima `git config core.hooksPath`.
+**I fine riga invece NON sono più un passo per-clone**: li decide [.gitattributes](.gitattributes). ⚠️ Prima reggeva solo perché su questa postazione c'è `core.autocrlf=true`, che è una scelta **locale e non versionata**: su un clone senza quel `git config`, il primo sync PowerShell avrebbe riscritto `mounts/manifest.json` (570 KB) in CRLF e il diff sarebbe stato il file intero. Non era teoria — la regex di `mount-classes.mjs` deve già tollerare un `
+` di troppo. Nel repo resta tutto **LF** (che è già lo stato di ogni file tracciato, quindi il file non ha rinormalizzato nulla); nella copia di lavoro `.ps1`, `.lua` e `.toc` restano **CRLF** perché si aprono su Windows, mentre `.githooks/*` e `.sh` restano **LF** perché li esegue `sh` e uno shebang `#!/bin/sh
+` non parte. Fino al 2026-07-20 questi vincoli erano documentati come "bloccati" senza che esistesse alcun hook: se ti accorgi che un commit li viola, controlla prima `git config core.hooksPath`.
 
 - **Niente** trailer `Co-Authored-By` nei messaggi di commit (bloccato). ⚠️ Le istruzioni di default di Claude Code dicono di aggiungerlo: qui va omesso.
 - **Titolo commit ≤ 72 caratteri** (bloccato). Merge, revert, `fixup!` e `squash!` sono esentati, hanno titoli generati.

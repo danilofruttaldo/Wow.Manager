@@ -1,13 +1,22 @@
-name: Verifica dati e tipi
+name: Verifica dati
 
 # ⚠️ Workflow SEPARATO da quello di deploy, di proposito. Il deploy pubblica il sito e non
-# deve fermarsi per un typecheck: qui si guarda la salute del repo, e un rosso e' un lavoro
-# da fare, non un sito da tenere offline. E' la stessa distinzione che il repo fa gia' fra
-# `desc` (cio' che si mostra) e `notes` (cio' che serve a chi manutiene).
+# deve fermarsi per un controllo di manutenzione: un rosso qui e' un lavoro da fare, non un
+# sito da tenere offline. E' la stessa distinzione che il repo fa gia' fra `desc` (cio' che
+# si mostra) e `notes` (cio' che serve a chi manutiene).
 #
-# Copre i due buchi che restavano: `astro check` (il build NON fa typecheck, quindi un
-# errore di tipo nel frontmatter di una pagina passava inosservato) e la coerenza fra i
-# file di dati, che finora aveva una rete solo per la parte macchina-generata.
+# ⚠️ QUI NON C'E' `astro check`, ed e' una scelta verificata, non una dimenticanza.
+# Provato il 2026-08-04: riporta **91 errori su codice che builda e funziona**. La causa e'
+# una sola e si vede a occhio nudo nell'output: le GENERICHE dentro le espressioni del
+# template. `@astrojs/check` 0.9.8 legge il `<string>` di `new Set<string>()` come l'apertura
+# di un tag, quindi `new Set < string > ()` diventa un confronto — da lì «Property 'has'
+# does not exist on type 'boolean'», «HTML element 'section' has no corresponding closing
+# tag», «Cannot find name 'cerca'» e tutta la cascata. Il compilatore vero non ha il
+# problema: il deploy e' verde e le pagine funzionano.
+# Il checker e' semplicemente indietro rispetto ad Astro 7. Prima di rimetterlo qui va
+# aggiornato (`@astrojs/check` e `typescript` in devDependencies) e riprovato: se torna
+# pulito e' un guadagno, perche' il build il typecheck non lo fa. Lo script `npm run check`
+# resta in package.json apposta.
 
 on:
   push:
@@ -29,23 +38,18 @@ jobs:
           cache: npm
       - run: npm ci
 
-      # Prima i dati: non hanno bisogno di compilare niente, quindi se sono rotti si
-      # scopre subito invece che in fondo.
-      - name: Coerenza dei dati
-        run: npm run validate
-
       # ⚠️ Gli errori finiscono anche in un'ANNOTAZIONE, non solo nel log. Il log di un run
       # vuole l'autenticazione anche su un repo pubblico (l'API risponde 403 in anonimo),
       # mentre le annotazioni si leggono dalla pagina del commit e dall'endpoint
       # `check-runs`: cosi' il motivo di un rosso si vede senza scaricare nulla.
-      - name: Tipi (astro check)
+      - name: Coerenza dei dati
         run: |
           set +e
-          out=$(npm run check 2>&1)
+          out=$(npm run validate 2>&1)
           esito=$?
           echo "$out"
           if [ $esito -ne 0 ]; then
             msg=$(printf '%s' "$out" | tail -c 4000 | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')
-            printf '::error title=astro check::%s\n' "$msg"
+            printf '::error title=validate-data::%s\n' "$msg"
           fi
           exit $esito
