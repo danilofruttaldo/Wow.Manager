@@ -287,7 +287,25 @@ La topbar mostra `build <build> · sync <data>`. Il `build` = `_meta.wow_build` 
 ```bash
 npm run build      # deve completare senza errori; poi: rm -rf .astro dist
 ```
-Per il debug visivo usa **F5** (o `npm run dev`). ⚠️ **NON** eseguire `astro dev stop`: ferma il daemon dev **condiviso** di Astro, quindi ammazza anche il tuo server F5. Per test isolati usa una porta dedicata e chiudi solo quel processo.
+Per il debug visivo usa **F5** (o `npm run dev`). ⚠️ **NON** eseguire `astro dev stop` a cuor leggero: ferma il daemon dev **condiviso** di Astro, quindi ammazza anche il tuo server F5.
+
+⚠️ **Il dev server è UNO SOLO per progetto, e una porta dedicata non lo aggira.** Verificato su Astro 7.0.7: un secondo `astro dev` non avvia niente, riconosce quello già vivo, stampa *"Dev server already running at http://localhost:4321"* ed **esce** — `--port 4399` viene ignorato. Quindi «per test isolati usa una porta dedicata» non funziona: o riusi il server che c'è, o fermi quello.
+
+- **Se lo stdout non è un terminale, il CLI si stacca in daemon** (`astro dev --json`, processo padre morto). È quello che succede lanciandolo da uno script o da un tool: il comando ritorna exit 0 e il server resta su per conto suo. Conseguenza pratica: con un daemon già vivo **F5 si chiude in un secondo** (npm trova il server, stampa "already running", esce) e `--open` non apre nulla. Per riavere il ciclo F5 normale: `npx astro dev stop`, poi F5.
+- **Ascolta solo su `[::1]:4321`**, non su `127.0.0.1`. `http://localhost:4321` va, l'IP numerico dà connessione rifiutata: non è un server morto, è il binding.
+- `astro dev logs` funziona **solo** se il server è partito con `--background`; su quello di F5 risponde che i log stanno nel terminale che l'ha lanciato.
+
+#### Il dev server risponde 500: `transport invoke timed out`
+
+Sintomo: l'overlay di errore di Astro (quello col pulsante *"Use dark theme"*, che nel copia-incolla sembra un messaggio ma è il bottone) con `transport invoke timed out after 60000ms … fetchModule … virtual:astro:dev-css-all`. Vuol dire che il module runner di Vite ha chiesto un modulo al server e non ha mai avuto risposta.
+
+**Non è il progetto**: è stato di dev sporco. Successo il 2026-08-04 con un `npm run dev` **orfano del giorno prima** ancora in memoria (senza più il figlio astro) accanto al server di F5. Ricetta:
+
+1. `Get-CimInstance Win32_Process -Filter "Name='node.exe'"` e ammazza **tutti** gli `astro dev` / `npm run dev` del repo, orfani compresi — guarda il `CreationDate`, quelli di sessioni vecchie sono il sospetto numero uno.
+2. Cancella `.astro`, `node_modules/.vite`, `dist`.
+3. Riavvia.
+
+⚠️ Prima di dare la colpa al codice, **prova le rotte**: se dopo il riavvio pulito rispondono 200 (`Invoke-WebRequest http://[::1]:4321/pg`), il repo non c'entrava.
 
 ## Deploy
 
