@@ -676,6 +676,13 @@ const SPEC_ICON: Record<string, string[]> = {
   evoker: ['devastation', 'preservation', 'augmentation'],
 };
 
+// Nome professione come lo scrive il tracker (inglese, dal client) -> chiave del manifest,
+// che e' anche il nome del file icona (public/icons/prof/<key>.jpg). Derivata dal manifest
+// invece che scritta a mano: una professione nuova prende l'icona senza toccare questo file.
+const PROF_KEY: Record<string, string> = Object.fromEntries(
+  getProfessions().map((p) => [p.name.toLowerCase(), p.key]),
+);
+
 // Info per-PG dal tracker (professions/characters.json): realm + professioni, raccolte
 // durante il grind degli alberi. Si uniscono per nome (minuscolo) nel tooltip.
 const CHAR_INFO: Record<string, { realm?: string; professions?: string[]; class?: string; level?: number }> =
@@ -698,7 +705,8 @@ const escAttr = (s: string) =>
 const escHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// Accanto a ogni nome PG mette l'ICONA della spec (se nota) o "?" se da confermare.
+// Sotto ogni nome PG mette la fila di ICONE: prima la spec (se nota) o "?" se da confermare,
+// poi le professioni primarie del tracker. Nome sopra, icone a capo.
 // Disambigua i PG omonimi via `nome|razza` (CHAR_SPEC_BY_RACE), altrimenti CHAR_SPEC.
 // classSlug = classe della colonna: serve a scegliere l'icona giusta per le spec omonime.
 // Una cella può contenere più nomi separati da <br>.
@@ -737,13 +745,12 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
       // chiamare spec[0] su stringa vuota e far crashare il build.
       return spec ? `<span class="spec-l">(${spec[0].toUpperCase()})</span>` : '';
     }).join('');
-    // "nome + icone" = inline-flex centrato: scritte e icone allineate verticalmente.
-    // Tooltip nativo (abbozzo): realm, livello, professioni PRIMARIE. La spec di combat
-    // NON va nel tooltip -- e' gia' l'icona accanto al nome, sarebbe ridondante. Il
+    // "nome sopra, icone sotto" = inline-flex in colonna (vedi .pg in pg.astro).
+    // Tooltip nativo (abbozzo): realm e livello. Ne' la spec ne' le professioni ci vanno --
+    // sono gia' icone sotto il nome, col proprio title, e ripeterle sarebbe ridondante. Il
     // livello e' GREZZO, dai prefissi della tabella PG (0 se non creato, "in leveling" per "_",
     // 90 al cap): i numeri reali vivono in AllTheThings.lua (chiave `lvl`) e si agganciano
-    // a parte, gestendo gli omonimi per realm. Le professioni vengono dal tracker
-    // characters.json, popolato durante il grind (quindi ancora parziale).
+    // a parte, gestendo gli omonimi per realm.
     const realmCandidate = realmCode ? (REALM_ABBR[realmCode] ?? realmCode) : undefined;
     // Omonimi (Furricane vulpera·P vs worgen·N): la chiave "nome|realm" vince sul nome nudo,
     // come CHAR_SPEC_BY_RACE fa per la spec. Difesa extra: le professioni valgono solo se il
@@ -760,11 +767,22 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     const tipLines = [name];
     if (realmName) tipLines.push(`Realm: ${realmName}`);
     tipLines.push(`Livello: ${level}`);
-    const profs = info?.professions;
-    if (profs?.length) tipLines.push(`Professioni: ${profs.join(', ')}`);
     const nameAttr = ` title="${escAttr(tipLines.join('\n'))}"`;
+    // Professioni PRIMARIE dal tracker characters.json (popolato durante il grind, quindi
+    // ancora parziale: chi non c'e' mostra la sola icona spec). Le secondarie sono escluse
+    // gia' nel dump. Nome della professione nel title dell'icona, come per la spec.
+    const profTail = (info?.professions ?? []).filter(Boolean).map((p) => {
+      const key = PROF_KEY[p.toLowerCase()];
+      const label = escAttr(p);
+      // Ripiego coerente con quello della spec: iniziale fra parentesi se manca la chiave
+      // (professione fuori dal manifest), cosi' il dato non sparisce in silenzio.
+      return key
+        ? `<img class="ico ico-prof" src="/icons/prof/${key}.jpg" alt="${label}" title="${label}" width="16" height="16">`
+        : `<span class="spec-l" title="${label}">(${p[0].toUpperCase()})</span>`;
+    }).join('');
+    const icons = tail + profTail;
     const pgClass = todo ? ' pg--todo' : wip ? ' pg--wip' : '';
-    return `<span class="pg${pgClass}"><span class="pg-name"${nameAttr}>${escHtml(name)}</span>${tail}</span>`;
+    return `<span class="pg${pgClass}"><span class="pg-name"${nameAttr}>${escHtml(name)}</span>${icons ? `<span class="pg-icons">${icons}</span>` : ''}</span>`;
   });
   return ` ${out.join('<br>')} `;
 }

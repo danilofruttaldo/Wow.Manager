@@ -31,17 +31,16 @@ const html = getPgHtml();
   .pg-prose :global(thead th) { background: var(--surface-2); padding: 0.4rem 0.2rem; }
   .pg-prose :global(.ico) { width: 24px; height: 24px; }
   .pg-prose :global(.race-txt) { font-size: var(--fs-xs); font-weight: 600; }
-  /* Nome e icona/e spec sulla STESSA riga quando ci stanno; se non ci stanno, e' l'ICONA a
-     scendere sotto -- il nome non si accorcia mai. La chiave e' `flex: 0 0 auto` sul nome:
-     non si stringe per far posto all'icona di fianco (era il vecchio difetto, nome tagliato
-     a meta'), quindi resta intero e semmai spinge l'icona a capo. `max-width: 100%` lo tiene
-     dentro la colonna: un nome piu' largo della cella si spezza dal `overflow-wrap` invece di
-     sforare. `.pg` a `max-width: 100%` fa lo stesso per l'intero gruppo. flex-wrap manda
-     l'icona a capo quando la riga e' piena, mai fuori dalla cella. Cosi' i nomi corti stanno
-     su una riga sola -- meno spazio verticale sprecato e righe piu' uniformi. */
-  .pg-prose :global(.pg) { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 4px; max-width: 100%; vertical-align: middle; line-height: 1.2; }
-  .pg-prose :global(.pg .pg-name) { flex: 0 0 auto; max-width: 100%; text-align: center; overflow-wrap: anywhere; }
-  .pg-prose :global(.pg .ico-spec) { width: 18px; height: 18px; margin: 0; }
+  /* Nome sulla PRIMA riga, icone (spec + professioni) SEMPRE a capo sulla seconda: il gruppo
+     e' una colonna, non piu' una riga che manda l'icona sotto solo quando non ci sta. Con tre
+     icone accanto al nome la vecchia resa alternava celle su una riga e celle su due a seconda
+     della lunghezza del nome; in colonna hanno tutte la stessa forma. `max-width: 100%` (sul
+     gruppo e sul nome) tiene tutto dentro la colonna: un nome piu' largo della cella si spezza
+     dall'overflow-wrap invece di sforare. La fila di icone va a capo da sola se sono troppe. */
+  .pg-prose :global(.pg) { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; max-width: 100%; vertical-align: middle; line-height: 1.2; }
+  .pg-prose :global(.pg .pg-name) { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
+  .pg-prose :global(.pg-icons) { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px 4px; max-width: 100%; }
+  .pg-prose :global(.pg .ico-spec), .pg-prose :global(.pg .ico-prof) { width: 18px; height: 18px; margin: 0; }
   .pg-prose :global(.pg .spec-q) { margin: 0; }
   .pg-prose :global(.pg .spec-l) { color: var(--text-muted); font-weight: 600; }
   /* Marcatore wildcard (gioca tutte le spec) accanto all'icona */
