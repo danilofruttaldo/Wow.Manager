@@ -142,6 +142,119 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .badge { display: inline-block; font-size: var(--fs-2xs); font-weight: 600; padding: 0.08rem 0.42rem; border-radius: var(--radius-sm); background: var(--border-light); color: var(--text-muted); white-space: nowrap; }
 .badge--accent { background: var(--accent-soft); color: var(--accent); }
 
+/* ── Link esterni ──────────────────────────────────
+   Un solo componente per ogni link che PORTA FUORI dal sito: oggi la scheda Wowhead nella
+   modale di /mount e quella CurseForge in quella di /addons. Prima erano testo blu
+   sottolineato all'hover, cioe' si leggevano come una didascalia e non come una cosa da
+   premere — nelle modali soprattutto, dove il link sta in fondo a una lista di campi.
+   Il linguaggio e' quello di `.chip` (pastiglia bordata, hover nella tinta di sezione),
+   perche' e' la forma che il sito usa gia' per «questo si preme»; ma senza `--control-h`
+   e con imbottitura minore, cosi' resta un link e non sembra un filtro attivo.
+   ⚠️ `--section` sta solo su bordo e testo, mai come riempimento: e' la stessa regola
+   di `.chip`, l'arancio Prof e il teal UI non reggono il contrasto come sfondo pieno. */
+.extlink {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 999px;
+  transition: color var(--transition), background var(--transition), border-color var(--transition);
+}
+.extlink:hover { color: var(--section, var(--accent)); border-color: var(--section, var(--accent)); background: var(--surface); }
+/* L'icona «apre fuori» sta in secondo piano finche' non si punta il link: e' un chiarimento
+   del verso, non il contenuto. Smorzata con opacity e non con un'icona grigia a parte,
+   cosi' resta un file solo. */
+.extlink img { opacity: 0.5; transition: opacity var(--transition); }
+.extlink:hover img { opacity: 1; }
+/* ⚠️ `display: inline-flex` vince su `[hidden]`: senza questa riga, un link nascosto dal
+   JS (la modale addon lo fa quando l'addon non ha `url`) resterebbe visibile e punterebbe
+   a niente. E' lo stesso inganno gia' documentato per `.xcard-wrap`, `.mcard` e le liste
+   di campi delle modali. */
+.extlink[hidden] { display: none !important; }
+
+/* ── Modale di dettaglio ───────────────────────────
+   Il guscio condiviso da /mount e /addons: overlay, pannello, testata (icona, titolo,
+   stato, posizione, frecce, chiusura) e corpo scorrevole. Nasceva duplicato in `.mlb-*`
+   e `.alb-*` — due copie quasi identiche che sarebbero divergite alla prima modifica di
+   una sola. Ogni pagina tiene solo il PROPRIO: la fascia col render in /mount, l'elenco
+   delle cartelle in /addons.
+   ⚠️ Non si chiama `.lb`: quel nome e' gia' il lightbox delle immagini di /ui, che e' un
+   componente diverso (niente pannello, comandi chiari sul nero) e collidereb be.
+   ⚠️ Le righe dei campi le crea il JS a runtime. Nelle pagine servivano dentro `:global()`
+   perche' Astro scopa gli stili per attributo e quelle righe l'attributo non ce l'hanno;
+   qui il problema NON esiste, global.css non e' scopato. E' un motivo in piu' per tenerle
+   qui invece che in due copie scopate. */
+.dlg { position: fixed; inset: 0; z-index: 100; background: rgba(10,12,16,0.94); display: none; align-items: center; justify-content: center; padding: 1rem; }
+.dlg.open { display: flex; }
+.dlg-panel { display: flex; flex-direction: column; width: min(560px, 96vw); max-height: 92vh; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+/* Il pannello prende il focus all'apertura (tabindex nel template) ma non e' un controllo:
+   un anello attorno all'intera modale non indica nulla di azionabile. L'indicazione di
+   focus resta su frecce, chiusura e link, che sono le cose su cui si preme. */
+.dlg-panel:focus, .dlg-panel:focus-visible { outline: none; }
+.dlg-head { flex: none; display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); }
+.dlg-ico { width: 44px; height: 44px; min-width: 44px; max-width: none; border-radius: var(--radius-lg); border: 1px solid var(--border); object-fit: cover; }
+/* flex:1 — i titoli arrivano a 46 caratteri: senza, uno lungo spingerebbe frecce e
+   chiusura fuori dal pannello. Qui va a capo invece di essere tagliato, e' il dato
+   principale della modale. */
+.dlg-htext { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+.dlg-title { font-size: var(--fs-lg); font-weight: 700; letter-spacing: -0.01em; }
+/* Stato scritto in CHIARO, non affidato al solo colore: pastiglia con icona e testo.
+   --ok-text/--warn-text sono le varianti pensate per il testo piccolo, su un velo della
+   stessa tinta. Le due varianti si chiamano `ok`/`warn` come le icone che le accompagnano
+   (ui/ok.jpg, ui/warn.jpg), non col nome del dominio: valgono per mount e per addon. */
+.dlg-state { display: inline-flex; align-items: center; gap: 0.3rem; font-size: var(--fs-xs); font-weight: 700; border-radius: 999px; padding: 0.1rem 0.5rem 0.1rem 0.22rem; }
+.dlg-state.ok { color: var(--ok-text); background: color-mix(in srgb, var(--ok) 12%, var(--surface)); }
+/* Ambra e non rosso: l'icona accanto e' `warn.jpg`, e un testo rosso accanto a un'icona
+   ambra sono due colori che dicono due cose. */
+.dlg-state.warn { color: var(--warn-text); background: color-mix(in srgb, var(--warn) 12%, var(--surface)); }
+.dlg-state-ico { width: 14px; height: 14px; min-width: 14px; max-width: none; border-radius: 3px; object-fit: cover; }
+/* Posizione nel sottoinsieme FILTRATO: dice quanto resta da sfogliare. */
+.dlg-pos { margin-left: auto; padding-left: 0.5rem; font-size: var(--fs-xs); font-weight: 600; color: var(--text-subtle); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* Frecce e chiusura sono un gruppo solo: stessa area cliccabile (40px, oltre il minimo
+   AA di 24px) e stesso colore, cosi' la testata non ha tre pesi diversi. */
+.dlg-step, .dlg-close { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: none; background: none; border: 0; color: var(--text-subtle); font-size: 1.5rem; line-height: 1; cursor: pointer; transition: color var(--transition); }
+.dlg-step:hover, .dlg-close:hover { color: var(--text); }
+.dlg-step[disabled] { opacity: 0.3; cursor: default; }
+/* Fascia dell'immagine: fuori dal corpo scorrevole, quindi resta ferma mentre si leggono
+   i campi. Il fondo scuro continua fino ai bordi, cosi' il soggetto sta su un palco
+   invece che dentro un francobollo incollato sul bianco.
+   ⚠️ #181818 non e' un colore scelto: e' ESATTAMENTE il fondo dei render di Blizzard
+   (misurato sui pixel, piatto su tutta l'immagine). Serve che combaci, altrimenti si
+   vede il quadrato dell'immagine stagliarsi sulla fascia. Se cambia la fonte delle
+   immagini delle mount, va rimisurato.
+   ⚠️ Va bene anche per i loghi degli addon, e NON per intuizione: 5 dei 15 hanno lo
+   sfondo trasparente, e composti sui due fondi si vede che su scuro si leggono tutti,
+   mentre su chiaro Prat-3.0 — contorno bianco su trasparente — sparisce del tutto. */
+.dlg-hero { flex: none; display: flex; align-items: center; justify-content: center; padding: 0.5rem; background: #181818; border-bottom: 1px solid var(--border); }
+.dlg-hero[hidden] { display: none; }
+/* Vincolata in ALTEZZA, non in larghezza: il tetto e' 320px, cioe' meta' dei 640 con cui
+   le immagini sono salvate — la riserva di risoluzione che serve agli schermi a densita'
+   doppia. Su schermi bassi cede in altezza invece di spingere i campi fuori dalla modale.
+   ⚠️ Prima era `width: min(320px,100%)` + `aspect-ratio: 1`: andava bene finche' le
+   sorgenti erano quadrate (i render delle mount, e i loghi degli addon), ma da quando
+   l'anteprima addon e' uno SCREENSHOT della galleria — panoramico, fino a 1093x866 —
+   quel riquadro lo rimpiccioliva a 320x232 lasciando due bande vuote ai lati. Legando il
+   tetto all'altezza, uno screenshot 4:3 arriva a ~440px di larghezza dentro un pannello
+   che ne ha 544: si legge. Il render quadrato di /mount resta 320x320, identico a prima. */
+.dlg-img { max-width: 100%; max-height: min(320px, 40vh); width: auto; height: auto; object-fit: contain; }
+.dlg-body { flex: 1; min-height: 0; padding: 0.85rem 0.9rem 1rem; overflow: auto; display: flex; flex-direction: column; gap: 0.8rem; }
+.dlg-desc { margin: 0; font-size: var(--fs-md); color: var(--text-muted); line-height: 1.5; border-left: 2px solid var(--border); padding-left: 0.7rem; }
+/* Campi «Etichetta: valore»: righe separate da un filetto come le tabelle del sito —
+   arrivano a 8, e in blocco si leggono male. */
+.dlg-fields { display: grid; grid-template-columns: auto 1fr; gap: 0 0.8rem; margin: 0; font-size: var(--fs-md); }
+.dlg-fields[hidden] { display: none; }  /* display:grid vince su [hidden]: forziamo */
+.dlg-fields dt, .dlg-fields dd { padding: 0.34rem 0; }
+.dlg-fields dt { color: var(--text-subtle); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.dlg-fields dd { margin: 0; color: var(--text); }
+.dlg-fields dt:not(:first-of-type), .dlg-fields dd:not(:first-of-type) { border-top: 1px solid var(--border-light); }
+/* Valore fatto di piu' voci brevi (le cartelle di un addon, fino a 12): pastiglie invece
+   di una riga di testo separata da virgole. */
+.dlg-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.dlg-chips code { font-size: var(--fs-xs); }
+/* Il link esterno chiude il corpo: pastiglia larga quanto il testo, non stirata dallo
+   stretch del contenitore in colonna. La misura del testo la porta `.extlink`. */
+.dlg-link { align-self: flex-start; }
+
 /* ── Barra filtri (search + chips) — condivisa da addons, macros, professioni,
    ui, extra e transmog ──
    Shell base = sticky sotto l'header. La variante `.row` mette search e chips in

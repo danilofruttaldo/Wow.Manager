@@ -110,21 +110,23 @@ const srcOptions = [...srcCounts.entries()]
   <script type="application/json" id="mount-maps" set:html={JSON.stringify(
     Object.fromEntries(MOUNT_CATS.map(c => [c.key, { label: c.label, icon: c.icon }])))}></script>
 
-  <div class="mlb" id="mlb" role="dialog" aria-modal="true" aria-labelledby="mlb-title">
+  {/* Guscio condiviso `.dlg*` (global.css), lo stesso di /addons: qui restano solo le
+      parti proprie di questa modale — la fascia col render e le pastiglie. */}
+  <div class="dlg" id="mlb" role="dialog" aria-modal="true" aria-labelledby="mlb-title">
     {/* `tabindex=-1`: all'apertura il focus va sul PANNELLO, non sulla ×. Portandolo
         sul bottone di chiusura la prima cosa che si vedeva era un grosso anello di
         focus verde sulla × -- l'occhio finiva li' invece che sulla cavalcatura. Il
         lettore di schermo annuncia comunque il dialog, e il Tab entra nella trappola
         dal primo controllo. */}
-    <div class="mlb-panel" id="mlb-panel" tabindex="-1">
-      <div class="mlb-head">
-        <img class="mlb-ico" id="mlb-ico" src="/icons/section/mount.jpg" alt="" width="44" height="44" />
-        <div class="mlb-htext">
-          <strong id="mlb-title"></strong>
+    <div class="dlg-panel" id="mlb-panel" tabindex="-1">
+      <div class="dlg-head">
+        <img class="dlg-ico" id="mlb-ico" src="/icons/section/mount.jpg" alt="" width="44" height="44" />
+        <div class="dlg-htext">
+          <strong class="dlg-title" id="mlb-title"></strong>
           {/* Stato a pastiglia con la stessa icona delle chip del filtro (ok/warn):
               scritto in chiaro, non affidato al solo colore. */}
-          <span class="mlb-state" id="mlb-state">
-            <img class="mlb-state-ico" id="mlb-state-ico" src="/icons/ui/ok.jpg" alt="" width="14" height="14" />
+          <span class="dlg-state" id="mlb-state">
+            <img class="dlg-state-ico" id="mlb-state-ico" src="/icons/ui/ok.jpg" alt="" width="14" height="14" />
             <span id="mlb-state-txt"></span>
           </span>
         </div>
@@ -132,27 +134,30 @@ const srcOptions = [...srcCounts.entries()]
             stesso giro circolare). Scorrono le card VISIBILI, cioe' rispettano il
             filtro attivo: con 1527 cavalcature sfogliare il sottoinsieme e' il modo
             normale di usarle. In testata e non sull'immagine, che 8 mount non hanno. */}
-        <span class="mlb-pos" id="mlb-pos"></span>
-        <button class="mlb-step" id="mlb-prev" type="button" aria-label="Precedente">&lsaquo;</button>
-        <button class="mlb-step" id="mlb-next" type="button" aria-label="Successiva">&rsaquo;</button>
-        <button class="mlb-close" id="mlb-close" aria-label="Chiudi">&times;</button>
+        <span class="dlg-pos" id="mlb-pos"></span>
+        <button class="dlg-step dlg-prev" id="mlb-prev" type="button" aria-label="Precedente">&lsaquo;</button>
+        <button class="dlg-step dlg-next" id="mlb-next" type="button" aria-label="Successiva">&rsaquo;</button>
+        <button class="dlg-close" id="mlb-close" aria-label="Chiudi">&times;</button>
       </div>
       {/* Immagine del modello: il src lo mette il JS all'apertura, quindi le ~1500
-          immagini non pesano sul caricamento della pagina. Fuori da .mlb-body per
+          immagini non pesano sul caricamento della pagina. Fuori da .dlg-body per
           restare a piena larghezza e ferma mentre i campi scorrono. Le sorgenti sono
           600x600 (render ufficiali Blizzard): si mostrano a 320 CSS, cioe' con la
           riserva di risoluzione che serve agli schermi a densita' doppia. */}
-      <div class="mlb-hero" id="mlb-hero" hidden>
+      <div class="dlg-hero" id="mlb-hero" hidden>
         {/* Niente `src=""`: un src vuoto il browser lo risolve sull'URL della pagina e
             se la va a scaricare. L'attributo lo crea il JS quando serve. */}
-        <img class="mlb-img" id="mlb-img" alt="" decoding="async" />
+        <img class="dlg-img" id="mlb-img" alt="" decoding="async" />
       </div>
-      <div class="mlb-body">
+      <div class="dlg-body">
         <div class="mlb-badges" id="mlb-badges"></div>
-        <dl class="mlb-fields" id="mlb-fields"></dl>
-        <p class="mlb-desc" id="mlb-desc" hidden></p>
-        <a class="mlb-link" id="mlb-link" href="#" target="_blank" rel="noopener noreferrer">
-          Scheda su Wowhead <img class="stat-ico" src="/icons/ui/external.jpg" alt="" width="14" height="14" /><span class="sr-only"> (apre in una nuova scheda)</span>
+        <dl class="dlg-fields" id="mlb-fields"></dl>
+        <p class="dlg-desc mlb-desc" id="mlb-desc" hidden></p>
+        <a class="dlg-link extlink" id="mlb-link" href="#" target="_blank" rel="noopener noreferrer">
+          {/* Niente spazio fra testo e icona: la spaziatura la da' il `gap` di `.extlink`,
+              e uno spazio letterale ci si sommerebbe — la pastiglia della modale addon,
+              che lo spazio non ce l'ha, risulterebbe piu' stretta a parita' di regola. */}
+          <span>Scheda su Wowhead</span><img class="stat-ico" src="/icons/ui/external.jpg" alt="" width="14" height="14" /><span class="sr-only"> (apre in una nuova scheda)</span>
         </a>
       </div>
     </div>
@@ -234,57 +239,9 @@ const srcOptions = [...srcCounts.entries()]
 .prog { margin-left: auto; flex: none; width: 88px; height: 6px; border-radius: 999px; background: var(--border-light); border: 1px solid var(--border); overflow: hidden; }
 .prog::after { content: ""; display: block; width: calc(var(--pct, 0) * 1%); height: 100%; background: var(--ok); border-radius: 999px; }
 
-/* ── Modale di dettaglio (pattern lightbox di /extra e /ui) ── */
-.mlb { position: fixed; inset: 0; z-index: 100; background: rgba(10,12,16,0.94); display: none; align-items: center; justify-content: center; padding: 1rem; }
-.mlb.open { display: flex; }
-.mlb-panel { display: flex; flex-direction: column; width: min(560px, 96vw); max-height: 92vh; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
-/* Il pannello prende il focus all'apertura (vedi il tabindex nel template) ma non e'
-   un controllo: un anello attorno all'intera modale non indica nulla di azionabile e
-   incornicia la cavalcatura. L'indicazione di focus resta su frecce, chiusura e link,
-   che sono le cose su cui si preme. */
-.mlb-panel:focus, .mlb-panel:focus-visible { outline: none; }
-.mlb-head { flex: none; display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); }
-.mlb-ico { width: 44px; height: 44px; min-width: 44px; max-width: none; border-radius: var(--radius-lg); border: 1px solid var(--border); object-fit: cover; }
-/* flex:1 — i nomi arrivano a 46 caratteri: senza, un titolo lungo spingerebbe frecce e
-   chiusura fuori dal pannello. Qui il nome va a capo invece di essere tagliato: e' il
-   dato principale della modale, e la testata ha spazio per crescere. */
-.mlb-htext { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
-.mlb-htext #mlb-title { font-size: var(--fs-lg); font-weight: 700; letter-spacing: -0.01em; }
-/* Stato: pastiglia con icona, in tinta ma leggibile — --ok-text/--bad sono le varianti
-   pensate per il testo piccolo, su un velo chiarissimo della stessa tinta. */
-.mlb-state { display: inline-flex; align-items: center; gap: 0.3rem; font-size: var(--fs-xs); font-weight: 700; border-radius: 999px; padding: 0.1rem 0.5rem 0.1rem 0.22rem; }
-.mlb-state.got { color: var(--ok-text); background: color-mix(in srgb, var(--ok) 12%, var(--surface)); }
-/* Ambra, non rosso: l'icona accanto e' `warn.jpg` -- la stessa della chip «Mancanti» --
-   e un testo rosso accanto a un'icona ambra sono due colori che dicono due cose. */
-.mlb-state.missing { color: var(--warn-text); background: color-mix(in srgb, var(--warn) 12%, var(--surface)); }
-.mlb-state-ico { width: 14px; height: 14px; min-width: 14px; max-width: none; border-radius: 3px; object-fit: cover; }
-/* Posizione nel sottoinsieme filtrato: dice quanto resta da sfogliare, come il
-   contatore della barra dice quanto manca alla collezione. */
-.mlb-pos { margin-left: auto; padding-left: 0.5rem; font-size: var(--fs-xs); font-weight: 600; color: var(--text-subtle); font-variant-numeric: tabular-nums; white-space: nowrap; }
-/* Frecce e chiusura sono un gruppo solo: stessa area cliccabile (40px, oltre il minimo
-   AA di 24px) e stesso colore, cosi' la testata non ha tre pesi diversi. */
-.mlb-step, .mlb-close { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: none; background: none; border: 0; color: var(--text-subtle); line-height: 1; cursor: pointer; transition: color var(--transition); }
-.mlb-step { font-size: 1.5rem; }
-.mlb-close { font-size: 1.5rem; }
-.mlb-step:hover, .mlb-close:hover { color: var(--text); }
-.mlb-step[disabled] { opacity: 0.3; cursor: default; }
-
-/* I render ufficiali hanno il loro fondo scuro: la fascia lo continua fino ai bordi
-   della modale, cosi' il modello sta su un palco invece che dentro un francobollo
-   incollato sul bianco. Il gradiente e' appena percettibile, serve solo a non avere
-   un rettangolo piatto. Fuori dal corpo scorrevole, quindi resta ferma mentre si
-   leggono i campi. */
-/* ⚠️ #181818 non e' un colore scelto: e' ESATTAMENTE il fondo dei render di Blizzard
-   (misurato sui pixel, e' piatto su tutta l'immagine). Serve che combaci al valore,
-   altrimenti si vede il quadrato dell'immagine stagliarsi sulla fascia e la testata
-   sembra avere un buco rettangolare in mezzo. Se un giorno cambia la fonte delle
-   immagini, va rimisurato. */
-.mlb-hero { flex: none; display: flex; align-items: center; justify-content: center; padding: 0.5rem; background: #181818; border-bottom: 1px solid var(--border); }
-.mlb-hero[hidden] { display: none; }
-/* La sorgente e' 600x600: si mostra a 320 (riserva per gli schermi a densita' doppia);
-   su schermi bassi cede in altezza invece di spingere i campi fuori dalla modale. */
-.mlb-img { width: min(320px, 100%); height: auto; aspect-ratio: 1; max-height: min(320px, 40vh); object-fit: contain; }
-.mlb-body { flex: 1; min-height: 0; padding: 0.85rem 0.9rem 1rem; overflow: auto; display: flex; flex-direction: column; gap: 0.8rem; }
+/* ── Modale di dettaglio ───────────────────────────
+   Il guscio (overlay, pannello, testata, corpo, campi, link) e' `.dlg*` in global.css,
+   condiviso con /addons. Qui resta solo quello che e' di questa modale. */
 
 /* Qui le icone portano l'etichetta ACCANTO, non solo nel tooltip: nella card lo
    spazio non c'e', nella modale si'. */
@@ -297,86 +254,19 @@ const srcOptions = [...srcCounts.entries()]
 .mlb-badges :global(span) { display: inline-flex; align-items: center; gap: 0.32rem; font-size: var(--fs-xs); font-weight: 600; color: var(--text-muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 0.12rem 0.5rem 0.12rem 0.22rem; }
 .mlb-badges :global(img) { width: 18px; height: 18px; min-width: 18px; max-width: none; border-radius: 999px; object-fit: cover; }
 
-/* Provenienza: il gioco la scrive gia' come "Etichetta: valore" (Vendor, Zone, Cost,
-   Faction), quindi diventa una lista di campi senza doverla interpretare. Righe separate
-   da un filetto come le tabelle del sito: i campi arrivano a 8, e in blocco si leggono male.
-   ⚠️ Anche qui le righe (dt/dd) le crea il JS: senza :global() restano senza stile, cioe'
-   etichette non maiuscole e valori a capo con l'indentazione di default del browser. */
-.mlb-fields { display: grid; grid-template-columns: auto 1fr; gap: 0 0.8rem; margin: 0; font-size: var(--fs-md); }
-.mlb-fields[hidden] { display: none; }  /* display:grid vince su [hidden]: forziamo */
-.mlb-fields :global(dt), .mlb-fields :global(dd) { padding: 0.34rem 0; }
-.mlb-fields :global(dt) { color: var(--text-subtle); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
-.mlb-fields :global(dd) { margin: 0; color: var(--text); }
-.mlb-fields :global(dt:not(:first-of-type)), .mlb-fields :global(dd:not(:first-of-type)) { border-top: 1px solid var(--border-light); }
-.mlb-desc { margin: 0; font-size: var(--fs-md); font-style: italic; color: var(--text-muted); line-height: 1.5; border-left: 2px solid var(--border); padding-left: 0.7rem; }
-.mlb-link { align-self: flex-start; font-size: var(--fs-sm); font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 0.3rem; }
-.mlb-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+/* La provenienza (Vendor, Zone, Cost, Faction) usa i campi condivisi `.dlg-fields`.
+   Qui l'unica differenza: il testo di COLORE del gioco e' in corsivo, perche' e' prosa
+   di sapore e non un dato — sulla modale addon la stessa riga e' la descrizione di cosa
+   fa l'addon, che prosa non e'. E' l'unico scostamento voluto fra le due modali. */
+.mlb-desc { font-style: italic; }
 </style>
 
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
-
-  // Da dove si era arrivati alla modale, per restituire il focus alla chiusura.
-  let mlbLastFocus: HTMLElement | null = null;
-  // Scorrimento fra card: la funzione la costruisce initMounts (ha bisogno della lista
-  // filtrata e di `open`), ma la chiama anche il listener da tastiera, che sta su
-  // `document` e si aggancia una volta sola — quindi il ponte deve stare qui, fuori
-  // dalle closure di pagina. Stessa ragione per cui /ui tiene lbList/lbIdx nel modulo.
-  let mlbStep: ((d: number) => void) | null = null;
-
-  // Il nodo si risolve a ogni chiamata: con ClientRouter la pagina viene sostituita
-  // ma questo modulo resta, quindi un riferimento preso una volta sola sarebbe
-  // quello della pagina precedente.
-  const closeMlb = () => {
-    const lb = document.getElementById('mlb');
-    if (!lb) return;
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-    // Griglia e filtri tornano navigabili: erano inerti dietro l'overlay. Non si
-    // tocca #main, che CONTIENE la modale stessa.
-    document.getElementById('mount-main')?.removeAttribute('inert');
-    mlbLastFocus?.focus();
-    mlbLastFocus = null;
-  };
-
-  // I listener su `document` si agganciano UNA volta sola: `astro:page-load` rispara
-  // a ogni navigazione e ne accumulerebbe una copia per visita (stessa guardia di
-  // /extra e /transmog).
-  function initMlbKeys() {
-    if ((window as any).__mountKeys) return;
-    (window as any).__mountKeys = true;
-    document.addEventListener('keydown', (e) => {
-      const lb = document.getElementById('mlb');
-      if (!lb || !lb.classList.contains('open')) return;
-      if (e.key === 'Escape') { closeMlb(); return; }
-      // Stesse frecce del lightbox di /ui, stesso giro circolare.
-      if (e.key === 'ArrowLeft') { e.preventDefault(); mlbStep?.(-1); return; }
-      if (e.key === 'ArrowRight') { e.preventDefault(); mlbStep?.(1); return; }
-      if (e.key !== 'Tab') return;
-      // Trappola del focus: dentro un dialog il Tab non deve uscire sulla pagina.
-      // `:not([disabled])` conta: con una sola card visibile le frecce sono disabilitate,
-      // e prendere la prima comunque manderebbe il focus su un elemento non focalizzabile
-      // — cioe' fuori dalla trappola, che e' esattamente quello che deve impedire.
-      const f = Array.from(lb.querySelectorAll<HTMLElement>('button:not([disabled]), a[href]'));
-      if (!f.length) return;
-      const first = f[0], last = f[f.length - 1], cur = document.activeElement;
-      // Il pannello e' il punto di partenza (ci va il focus all'apertura) e non e' un
-      // controllo: in avanti il browser scende da solo sul primo bottone, ma
-      // all'indietro uscirebbe dal dialog -- la pagina dietro e' `inert`, quindi il
-      // focus finirebbe sulla barra del browser. Si chiude il giro a mano.
-      const panel = lb.querySelector('.mlb-panel');
-      if (e.shiftKey && cur === panel) { e.preventDefault(); last.focus(); return; }
-      if (e.shiftKey && (cur === first || !lb.contains(cur))) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && (cur === last || !lb.contains(cur))) { e.preventDefault(); first.focus(); }
-    });
-  }
+  import { initDialog, dialogPos, dialogField } from '../lib/dialog';
 
   function initMounts() {
     const grid = document.getElementById('mount-grid');
-    // Si stacca subito il ponte verso la pagina precedente: con ClientRouter il modulo
-    // sopravvive alla navigazione, e una closure viva tratterrebbe in memoria la griglia
-    // di prima, cioe' 1527 card. Lo riassegna piu' sotto chi la griglia ce l'ha davvero.
-    mlbStep = null;
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.mcard')) as HTMLElement[];
     const search = document.getElementById('mount-search') as HTMLInputElement;
@@ -468,25 +358,15 @@ const srcOptions = [...srcCounts.entries()]
     apply();
 
     // ── Modale di dettaglio ────────────────────────────
+    // Apertura, chiusura, Esc, frecce circolari e trappola del focus stanno in
+    // `lib/dialog.ts`, condivisi con /addons: qui resta solo il riempimento.
     const lb = document.getElementById('mlb');
     const maps = JSON.parse(document.getElementById('mount-maps')?.textContent || '{}');
     if (lb) {
-      const elIco = document.getElementById('mlb-ico') as HTMLImageElement;
-      const elTitle = document.getElementById('mlb-title')!;
-      const elState = document.getElementById('mlb-state')!;
-      const elBadges = document.getElementById('mlb-badges')!;
-      const elFields = document.getElementById('mlb-fields')!;
-      const elDesc = document.getElementById('mlb-desc') as HTMLElement;
-      const elLink = document.getElementById('mlb-link') as HTMLAnchorElement;
-      const elImg = document.getElementById('mlb-img') as HTMLImageElement;
-      const elHero = document.getElementById('mlb-hero') as HTMLElement;
-      const elStateIco = document.getElementById('mlb-state-ico') as HTMLImageElement;
-      const elStateTxt = document.getElementById('mlb-state-txt')!;
-      const elPos = document.getElementById('mlb-pos')!;
-      const elPrev = document.getElementById('mlb-prev') as HTMLButtonElement;
-      const elNext = document.getElementById('mlb-next') as HTMLButtonElement;
-      // Card attualmente mostrata: e' il punto di partenza delle frecce.
-      let current: HTMLElement | null = null;
+      const el = (id: string) => document.getElementById(id)!;
+      const elBadges = el('mlb-badges');
+      const elFields = el('mlb-fields');
+      const elImg = el('mlb-img') as HTMLImageElement;
 
       const pill = (label: string, icon?: string) => {
         const s = document.createElement('span');
@@ -499,117 +379,79 @@ const srcOptions = [...srcCounts.entries()]
         return s;
       };
 
-      // Riempimento separato dall'apertura: le frecce cambiano il CONTENUTO senza
-      // riaprire la modale e senza spostare il focus, che altrimenti verrebbe strappato
-      // dal bottone freccia a ogni passo.
-      const fill = (card: HTMLElement) => {
-        const got = card.dataset.got === '1';
-        elTitle.textContent = card.querySelector('.mname')?.textContent || '';
-        const ico = card.querySelector('.mico') as HTMLImageElement | null;
-        elIco.src = ico?.getAttribute('src') || '/icons/section/mount.jpg';
-        elStateTxt.textContent = got ? 'Sbloccata' : 'Mancante';
-        elStateIco.src = got ? '/icons/ui/ok.jpg' : '/icons/ui/warn.jpg';
-        elState.className = 'mlb-state ' + (got ? 'got' : 'missing');
+      initDialog({
+        id: 'mlb', mainId: 'mount-main', grid, cardSel: '.mcard',
+        visible: () => visible,
+        fill: (card) => {
+          const got = card.dataset.got === '1';
+          const nome = card.querySelector('.mname')?.textContent || '';
+          el('mlb-title').textContent = nome;
+          const ico = card.querySelector('.mico');
+          (el('mlb-ico') as HTMLImageElement).src = ico?.getAttribute('src') || '/icons/section/mount.jpg';
+          el('mlb-state-txt').textContent = got ? 'Sbloccata' : 'Mancante';
+          (el('mlb-state-ico') as HTMLImageElement).src = got ? '/icons/ui/ok.jpg' : '/icons/ui/warn.jpg';
+          // ⚠️ `className =` sostituisce l'attributo intero: va riscritta anche `dlg-state`.
+          el('mlb-state').className = 'dlg-state ' + (got ? 'ok' : 'warn');
 
-        // Non tutte hanno il modello (8 su 1527): senza, sparisce la fascia INTERA,
-        // invece di lasciare una banda vuota sotto la testata.
-        const img = card.dataset.img || '';
-        elHero.hidden = !img;
-        if (img) { elImg.src = img; elImg.alt = elTitle.textContent || ''; } else { elImg.removeAttribute('src'); }
+          // Non tutte hanno il modello (8 su 1527): senza, sparisce la fascia INTERA,
+          // invece di lasciare una banda vuota sotto la testata.
+          const img = card.dataset.img || '';
+          el('mlb-hero').hidden = !img;
+          if (img) { elImg.src = img; elImg.alt = nome; } else { elImg.removeAttribute('src'); }
 
-        // Categorie (dalle chiavi in data-cats) + vincoli (gia' risolti a build-time
-        // in data-badges, che c'e' solo dove serve).
-        elBadges.textContent = '';
-        for (const k of (card.dataset.cats || '').split(' ').filter(Boolean)) {
-          const c = maps[k];
-          if (c) elBadges.appendChild(pill(c.label, c.icon));
-        }
-        for (const b of JSON.parse(card.dataset.badges || '[]')) {
-          elBadges.appendChild(pill(b.label, b.icon));
-        }
+          // Categorie (dalle chiavi in data-cats) + vincoli (gia' risolti a build-time
+          // in data-badges, che c'e' solo dove serve).
+          elBadges.textContent = '';
+          for (const k of (card.dataset.cats || '').split(' ').filter(Boolean)) {
+            const c = maps[k];
+            if (c) elBadges.appendChild(pill(c.label, c.icon));
+          }
+          for (const b of JSON.parse(card.dataset.badges || '[]')) {
+            elBadges.appendChild(pill(b.label, b.icon));
+          }
 
-        // Provenienza: il gioco la scrive gia' come "Etichetta: valore" una riga per
-        // volta (Vendor, Zone, Cost, Faction), quindi diventa una lista di campi.
-        // Le righe senza due punti (es. "Trading Post") restano valore senza etichetta.
-        elFields.textContent = '';
-        const riga = (dt: string, dd: string) => {
-          const a = document.createElement('dt'); a.textContent = dt;
-          const b = document.createElement('dd'); b.textContent = dd;
-          elFields.append(a, b);
-        };
-        const srcLab = card.dataset.srclabel || '';
-        const righe = (card.dataset.full || '').split('\n').map(s => s.trim()).filter(Boolean);
-        // La categoria di sorgente («Drop», «Trading Post», «Vendor») si scrive solo se
-        // le righe del gioco non la dicono gia' -- e quasi sempre la dicono, o come
-        // riga nuda («Trading Post» sotto «SORGENTE: Trading Post», 198 mount) o come
-        // etichetta della riga di dettaglio («DROP: Mistress Sassz'ine»). Prima usciva
-        // comunque, e la lista si apriva con la stessa parola due volte di fila.
-        const uguale = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
-        // ⚠️ Solo quando l'ETICHETTA di una riga di dettaglio ripete la sorgente: se a
-        // ripeterla e' una riga nuda («Trading Post»), la riga «Sorgente» va scritta
-        // lo stesso -- e' quella nuda a essere saltata sotto -- altrimenti la modale
-        // resterebbe senza nessun campo.
-        const gia = righe.some(l => l.includes(': ') && uguale(l.slice(0, l.indexOf(': ')), srcLab));
-        if (srcLab && !gia) riga('Sorgente', srcLab);
-        for (const l of righe) {
-          if (uguale(l, srcLab)) continue;
-          const sep = l.indexOf(': ');
-          if (sep > 0) riga(l.slice(0, sep), l.slice(sep + 2));
-          else riga('', l);
-        }
-        // 7 mount non hanno ne' provenienza ne' etichetta di sorgente: si nasconde la
-        // lista invece di lasciare la sua fetta di gap fra pastiglie e testo di colore.
-        elFields.hidden = elFields.children.length === 0;
+          // Provenienza: il gioco la scrive gia' come "Etichetta: valore" una riga per
+          // volta (Vendor, Zone, Cost, Faction), quindi diventa una lista di campi.
+          // Le righe senza due punti (es. "Trading Post") restano valore senza etichetta.
+          elFields.textContent = '';
+          const srcLab = card.dataset.srclabel || '';
+          const righe = (card.dataset.full || '').split('\n').map(s => s.trim()).filter(Boolean);
+          // La categoria di sorgente («Drop», «Trading Post», «Vendor») si scrive solo se
+          // le righe del gioco non la dicono gia' -- e quasi sempre la dicono, o come
+          // riga nuda («Trading Post» sotto «SORGENTE: Trading Post», 198 mount) o come
+          // etichetta della riga di dettaglio («DROP: Mistress Sassz'ine»). Prima usciva
+          // comunque, e la lista si apriva con la stessa parola due volte di fila.
+          const uguale = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+          // ⚠️ Solo quando l'ETICHETTA di una riga di dettaglio ripete la sorgente: se a
+          // ripeterla e' una riga nuda («Trading Post»), la riga «Sorgente» va scritta
+          // lo stesso -- e' quella nuda a essere saltata sotto -- altrimenti la modale
+          // resterebbe senza nessun campo.
+          const gia = righe.some(l => l.includes(': ') && uguale(l.slice(0, l.indexOf(': ')), srcLab));
+          if (srcLab && !gia) dialogField(elFields, 'Sorgente', srcLab);
+          for (const l of righe) {
+            if (uguale(l, srcLab)) continue;
+            const sep = l.indexOf(': ');
+            // ⚠️ Etichetta vuota: `dialogField` scarta il VALORE vuoto, non l'etichetta,
+            // quindi le righe nude restano (sono 198 mount col solo «Trading Post»).
+            if (sep > 0) dialogField(elFields, l.slice(0, sep), l.slice(sep + 2));
+            else dialogField(elFields, '', l);
+          }
+          // 7 mount non hanno ne' provenienza ne' etichetta di sorgente: si nasconde la
+          // lista invece di lasciare la sua fetta di gap fra pastiglie e testo di colore.
+          elFields.hidden = elFields.children.length === 0;
 
-        const desc = card.dataset.desc || '';
-        elDesc.textContent = desc;
-        elDesc.hidden = !desc;
-        elLink.href = `https://www.wowhead.com/spell=${card.dataset.spell || ''}`;
+          const desc = card.dataset.desc || '';
+          el('mlb-desc').textContent = desc;
+          el('mlb-desc').hidden = !desc;
+          (el('mlb-link') as HTMLAnchorElement).href = `https://www.wowhead.com/spell=${card.dataset.spell || ''}`;
 
-        // Posizione nel sottoinsieme filtrato: con 1527 cavalcature dice quanto resta
-        // da sfogliare, come il contatore in barra dice quanto manca alla collezione.
-        const pos = visible.indexOf(card);
-        elPos.textContent = pos >= 0 && visible.length > 1 ? `${pos + 1} / ${visible.length}` : '';
-        const sola = visible.length < 2;
-        elPrev.disabled = sola;
-        elNext.disabled = sola;
-        current = card;
-      };
-
-      const open = (card: HTMLElement) => {
-        fill(card);
-        mlbLastFocus = card;
-        lb.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        document.getElementById('mount-main')?.setAttribute('inert', '');
-        (document.getElementById('mlb-panel') as HTMLElement)?.focus();
-      };
-
-      // Giro circolare come il lightbox di /ui: dall'ultima si torna alla prima.
-      // `mlbLastFocus` segue la card mostrata, cosi' alla chiusura il focus (e con esso
-      // lo scorrimento) torna su quella che si stava guardando, non su quella d'ingresso.
-      mlbStep = (d: number) => {
-        if (!current || visible.length < 2) return;
-        const i = visible.indexOf(current);
-        if (i < 0) return;
-        const next = visible[(i + d + visible.length) % visible.length];
-        fill(next);
-        mlbLastFocus = next;
-      };
-      elPrev.addEventListener('click', () => mlbStep?.(-1));
-      elNext.addEventListener('click', () => mlbStep?.(1));
-
-      // Un listener solo sulla griglia invece di ~1500: le card sono tante e ognuna
-      // con il suo handler peserebbe sulla memoria senza motivo.
-      grid.addEventListener('click', (e) => {
-        const card = (e.target as HTMLElement).closest('.mcard') as HTMLElement | null;
-        if (card) open(card);
+          // Posizione nel sottoinsieme filtrato: con 1527 cavalcature dice quanto resta
+          // da sfogliare, come il contatore in barra dice quanto manca alla collezione.
+          dialogPos(lb, card, visible);
+        },
       });
-      document.getElementById('mlb-close')?.addEventListener('click', closeMlb);
-      lb.addEventListener('click', (e) => { if (e.target === lb) closeMlb(); });
     }
   }
 
   document.addEventListener('astro:page-load', initMounts);
-  document.addEventListener('astro:page-load', initMlbKeys);
 </script>

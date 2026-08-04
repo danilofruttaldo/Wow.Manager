@@ -10,19 +10,24 @@ const build: string = addonsMeta?.wow_build ?? '';
 const [bMaj, bMin, bPat] = build.split('.');
 const buildShort = bMaj && bMin != null && bPat != null ? `${bMaj}.${bMin}.${bPat}` : '';
 const buildToc = buildShort ? String(Number(bMaj) * 10000 + Number(bMin) * 100 + Number(bPat)) : '';
-const matchesBuild = (iface: string) => !!buildToc && iface.replace(/\s/g, '').split(',').includes(buildToc);
+// Il campo `interface` è una lista di codici TOC ("120100, 120005, 120007"): si legge una
+// volta sola qui, in ordine decrescente, e tutto il resto ne discende. Erano tre funzioni
+// che rifacevano lo stesso `replace/split` in tre modi appena diversi.
+const codici = (iface: string) =>
+  iface.replace(/\s/g, '').split(',').map(Number).filter(Boolean).sort((a, b) => b - a);
+const matchesBuild = (iface: string) => !!buildToc && codici(iface).includes(Number(buildToc));
 // Codice TOC (es. 120005) → versione leggibile (12.0.5).
 const tocToVer = (toc: number) => `${Math.floor(toc / 10000)}.${Math.floor(toc / 100) % 100}.${toc % 100}`;
-// Se non combacia col build, la versione di gioco più alta che l'addon dichiara di supportare.
-const lastSupported = (iface: string) => {
-  const codes = iface.replace(/\s/g, '').split(',').map(Number).filter(Boolean);
-  return codes.length ? tocToVer(Math.max(...codes)) : '';
-};
+// La versione di gioco più alta che l'addon dichiara di supportare: è il primo codice,
+// visto che `codici` ordina già dal più recente. È l'unica che si mostra — il `.toc`
+// elenca anche i flavour Classic (fino a nove voci, e una, `38001`, non corrisponde a
+// nessuna versione reale), che su un sito di solo Retail sono rumore.
+const lastSupported = (iface: string) => { const c = codici(iface); return c.length ? tocToVer(c[0]) : ''; };
 const updatedCount = addons.filter(a => matchesBuild(a.interface)).length;
 const outdatedCount = addons.length - updatedCount;
 ---
 <Base title="Addon" description="Addon WoW Retail installati: versione, cosa fanno e link, con ricerca in tempo reale.">
-  <div class="wrap">
+  <div class="wrap" id="addon-main">
     <div class="filters row">
       <input id="addon-search" class="search" type="search" inputmode="search" autocomplete="off"
              placeholder="Cerca addon…" aria-label="Cerca addon" />
@@ -32,63 +37,153 @@ const outdatedCount = addons.length - updatedCount;
       </div>
     </div>
 
+    {/* Card come quelle di /mount: una fascia bassa cliccabile — barretta di stato,
+        icona, nome e riga descrittiva — e tutto il resto nella modale. Il link a
+        CurseForge NON sta piu' sulla card: e' nella modale, come la scheda Wowhead
+        delle mount. Sulla card sarebbe anche markup non valido, un <a> dentro il
+        <button> che apre il dettaglio. */}
     <div class="addon-grid" id="addon-grid">
       {addons.map(a => {
+        const ok = matchesBuild(a.interface);
         return (
-          <article class="acard" data-updated={matchesBuild(a.interface) ? '1' : '0'} data-search={`${a.name} ${a.desc ?? ''} ${a.version} ${a.source} ${(a.folders ?? []).join(' ')}`.toLowerCase()}>
+          <button type="button" class="acard"
+                  data-updated={ok ? '1' : '0'}
+                  data-search={`${a.name} ${a.desc ?? ''} ${a.version} ${a.source} ${(a.folders ?? []).join(' ')}`.toLowerCase()}
+                  data-name={a.name} data-ver={a.version} data-desc={a.desc ?? ''}
+                  data-state={ok ? buildShort : lastSupported(a.interface)}
+                  data-iface={lastSupported(a.interface)} data-installed={a.installed ?? ''}
+                  data-srclabel={sourceLabel(a.source)} data-url={a.url ?? ''}
+                  data-folders={JSON.stringify(a.folders ?? [])} data-img={a.img ?? ''}>
             {a.icon
-              ? <img class="aico" src={a.icon} alt="" width="38" height="38" loading="lazy" />
+              ? <img class="aico" src={a.icon} alt="" width="36" height="36" loading="lazy" />
               : <span class="mono" aria-hidden="true">{a.name.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase()}</span>}
             <div class="acard-body">
-              <div class="acard-head">
-                {a.url
-                  ? <a href={a.url} target="_blank" rel="noopener noreferrer" class="acard-name">{a.name}</a>
-                  : <span class="acard-name">{a.name}</span>}
-                <span class="badge badge--accent acard-ver">{a.version}</span>
-              </div>
-              {a.desc && <p class="acard-desc">{a.desc}</p>}
-              <div class="acard-meta">
-                {matchesBuild(a.interface)
-                  ? <span class="ok" title={`Interface: ${a.interface}`}><img class="stat-ico" src="/icons/ui/ok.jpg" alt="" width="14" height="14" /> <span class="sr-only">Aggiornato: </span>{buildShort}</span>
-                  : <span class="warn" title={`Non aggiornato al build ${buildShort}. Interface: ${a.interface}`}><img class="stat-ico" src="/icons/ui/warn.jpg" alt="" width="14" height="14" /> <span class="sr-only">Da aggiornare: </span>{lastSupported(a.interface)}</span>}
-                {a.installed && <span title="Ultimo aggiornamento/installazione">agg. {a.installed}</span>}
-                {a.url && <a href={a.url} target="_blank" rel="noopener noreferrer" class="acard-src">{sourceLabel(a.source)} <img class="stat-ico" src="/icons/ui/external.jpg" alt="" width="14" height="14" /><span class="sr-only"> (apre in una nuova scheda)</span></a>}
-              </div>
+              <span class="acard-name">{a.name}</span>
+              {a.desc && <span class="acard-desc">{a.desc}</span>}
             </div>
-          </article>
+            {/* A destra come le icone-vincolo di /mount: la versione, che e' il dato
+                per cui si guarda la griglia.
+                ⚠️ L'icona `warn` compare SOLO sugli addon da aggiornare. Il segnale in
+                pagina ne indica uno solo — «qui c'e' da fare» — come la barretta verde
+                di /mount indica solo le prese: un bollino `ok` su tutti e 16 sarebbe
+                rumore, e oggi sono tutti aggiornati.
+                ⚠️ Lo stato NON resta affidato al solo colore: il testo `sr-only` qui sotto
+                lo scrive per chi usa uno screen reader. Perche' venga letto, pero', il
+                bottone non puo' avere un `aria-label`: su un bottone quello SOSTITUISCE il
+                nome calcolato dal contenuto, quindi nome, descrizione, versione e stato
+                non verrebbero annunciati affatto. Il contenuto basta gia' a nominarlo. */}
+            <span class="acard-tail">
+              {!ok && <img class="stat-ico" src="/icons/ui/warn.jpg" alt="" width="14" height="14" />}
+              <span class="sr-only">{ok ? `Aggiornato al build ${buildShort}. ` : `Da aggiornare, supporta fino a ${lastSupported(a.interface)}. `}Versione </span>
+              <span class="acard-ver badge badge--accent">{a.version}</span>
+            </span>
+          </button>
         );
       })}
     </div>
     <p class="empty" id="empty" role="status" hidden>Nessun addon trovato.</p>
   </div>
+
+  {/* Modale di dettaglio: stesso pattern della modale di /mount (overlay, ×, Esc,
+      frecce ‹ ›, trappola del focus). Mostra quello che nella card non ci sta —
+      l'elenco delle CARTELLE (fino a 12) e tutte le versioni di gioco dichiarate nel
+      .toc, che oggi vivono solo dentro un tooltip.
+      ⚠️ `notes` NON entra qui: e' memoria interna di manutenzione (storia degli update,
+      «DA RI-APPLICARE», patch locali) e il sito non la mostra. */}
+  <div class="dlg" id="alb" role="dialog" aria-modal="true" aria-labelledby="alb-title">
+    {/* `tabindex=-1`: all'apertura il focus va sul PANNELLO, non sulla ×, che altrimenti
+        si prenderebbe un grosso anello di focus come prima cosa visibile. */}
+    <div class="dlg-panel" id="alb-panel" tabindex="-1">
+      <div class="dlg-head">
+        <img class="dlg-ico" id="alb-ico" src="/icons/section/addon.jpg" alt="" width="44" height="44" />
+        <div class="dlg-htext">
+          <strong class="dlg-title" id="alb-title"></strong>
+          <span class="dlg-state" id="alb-state">
+            <img class="dlg-state-ico" id="alb-state-ico" src="/icons/ui/ok.jpg" alt="" width="14" height="14" />
+            <span id="alb-state-txt"></span>
+          </span>
+        </div>
+        <span class="dlg-pos" id="alb-pos"></span>
+        <button class="dlg-step dlg-prev" id="alb-prev" type="button" aria-label="Precedente">&lsaquo;</button>
+        <button class="dlg-step dlg-next" id="alb-next" type="button" aria-label="Successivo">&rsaquo;</button>
+        <button class="dlg-close" id="alb-close" aria-label="Chiudi">&times;</button>
+      </div>
+      {/* Fascia dell'anteprima: la stessa `.dlg-hero` di /mount, fondo compreso. Il `src`
+          lo mette il JS all'apertura — con 16 addon non peserebbe, ma e' lo stesso codice
+          della modale mount e non ha senso divergere. Niente `src=""` nel template: un
+          src vuoto il browser lo risolve sull'URL della pagina e se lo scarica. */}
+      <div class="dlg-hero" id="alb-hero" hidden>
+        <img class="dlg-img" id="alb-img" alt="" decoding="async" />
+      </div>
+      {/* Stesso ordine del corpo di /mount: campi, prosa, link. Le cartelle sono una RIGA
+          DEI CAMPI (pastiglie nel valore) e non un blocco a parte: cosi' i due corpi
+          hanno gli stessi componenti nella stessa sequenza. */}
+      <div class="dlg-body">
+        <dl class="dlg-fields" id="alb-fields"></dl>
+        <p class="dlg-desc" id="alb-desc" hidden></p>
+        <a class="dlg-link extlink" id="alb-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span id="alb-link-txt"></span><img class="stat-ico" src="/icons/ui/external.jpg" alt="" width="14" height="14" /><span class="sr-only"> (apre in una nuova scheda)</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </Base>
 
 <style>
-/* Griglia a card in auto-fill (come ui e professioni): reflow continuo, niente breakpoint
-   scelti a mano. min(340px,100%) evita l'overflow orizzontale sotto i 340px di contenitore.
-   Ordine alfabetico row-major, si legge per righe. (Il `.filters { top:0 }` su mobile è già
-   globale in global.css: non va ripetuto qui.) */
-.addon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: var(--grid-gap); padding-top: 0.6rem; }
+/* Griglia e card ricalcate su /mount: stesso auto-fill, stessa fascia bassa cliccabile,
+   stessa barretta di stato a sinistra. Prima erano card alte con testata, paragrafo e
+   footer bordato, cioe' un componente diverso per un contenuto dello stesso tipo.
+   ⚠️ La colonna minima e' 300px e non i 260 di /mount: la riga descrittiva qui arriva a
+   105 caratteri contro i ~40 della provenienza delle mount, e a 260 finiva quasi tutta
+   in ellissi. Le card restano della stessa FORMA, e' la misura a seguire il contenuto. */
+.addon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: var(--grid-gap); padding-top: 0.6rem; }
 
-/* align-items:stretch (default della grid) → card della stessa riga ad altezza uguale, footer allineati. */
-.acard { display: flex; align-items: stretch; gap: 0.9rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-pad); }
+/* Stato = barretta a sinistra, come /mount: verde = aggiornato, ambra = da aggiornare.
+   ⚠️ Qui l'ambra e' il verso giusto e NON contraddice la scelta di /mount, dove il
+   «manca» e' grigio: una mount che non hai e' il default, un addon non aggiornato e'
+   una cosa da fare. Oggi sono aggiornati tutti e 16, quindi l'ambra e' un'eccezione
+   che si nota, non un muro di colore.
+   `inset` invece di un border per non spostare il contenuto. */
+.acard {
+  --bar: var(--ok);
+  display: flex; align-items: center; gap: 0.7rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 0.55rem 0.7rem; box-shadow: inset 3px 0 0 var(--bar); overflow: hidden;
+  font: inherit; color: inherit; text-align: left; cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+/* L'hover RIPETE la barretta: aggiungendo la sola ombra la si spegnerebbe e la card
+   sembrerebbe cambiare stato al passaggio. Via `--bar`, cosi' vale per tutti e due gli
+   stati. Stesso `translateY(-1px)` delle altre card cliccabili del sito. */
+.acard:hover { border-color: var(--section, var(--accent)); box-shadow: inset 3px 0 0 var(--bar), var(--shadow-md); transform: translateY(-1px); }
+.acard[data-updated="0"] { --bar: var(--warn); background: var(--surface-2); }
 .acard[hidden] { display: none !important; }  /* display:flex vince su [hidden]: forziamo */
-.mono { align-self: flex-start; flex-shrink: 0; display: grid; place-items: center; width: 38px; height: 38px; border-radius: var(--radius-lg); background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 1.1rem; }
-.aico { align-self: flex-start; flex-shrink: 0; width: 38px; height: 38px; min-width: 38px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); object-fit: cover; }
-.acard-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.45rem; }
-.acard-head { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
-.acard-name { font-weight: 600; font-size: var(--fs-lg); line-height: 1.2; color: var(--text); }
-a.acard-name:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
-.acard-desc { font-size: var(--fs-md); color: var(--text-muted); line-height: 1.5; margin: 0; }
-/* Footer in fondo alla card, separato da una linea. */
-.acard-meta { margin-top: auto; padding-top: 0.55rem; border-top: 1px solid var(--border-light); display: flex; flex-wrap: wrap; align-items: center; gap: 0.15rem 0.7rem; font-size: 0.74rem; color: var(--text-subtle); }.acard-meta .ok { color: var(--ok-text); font-weight: 600; display: inline-flex; align-items: center; gap: 0.28rem; }
-.acard-meta .warn { color: var(--warn-text); font-weight: 600; display: inline-flex; align-items: center; gap: 0.28rem; }
-.acard-src { margin-left: auto; color: var(--accent); font-weight: 600; }
-.acard-src:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* 36px come `.mico`: le icone-card del sito condividono il raggio (--radius-lg), qui
+   si allinea anche la misura. */
+.aico { flex-shrink: 0; width: 36px; height: 36px; min-width: 36px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); object-fit: cover; max-width: none; }
+.mono { flex-shrink: 0; display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--radius-lg); background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.acard-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
+/* ⚠️ Ritmo uguale a /mount — tre righe di testo al massimo — ma distribuite al
+   contrario, perche' i dati sono all'opposto: li' i nomi arrivano a 46 caratteri e la
+   provenienza sta in una riga, qui i nomi si fermano a 20 e la descrizione arriva a
+   105. Quindi nome su UNA riga e descrizione su DUE. Il testo intero e' nella modale. */
+.acard-name { font-size: var(--fs-md); font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.acard-desc { font-size: var(--fs-xs); color: var(--text-subtle); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+/* Coda a destra, al posto delle icone-vincolo di /mount: versione ed eventuale bollino
+   «da aggiornare». `align-self: center` come `.mreq`. */
+.acard-tail { flex-shrink: 0; align-self: center; display: flex; align-items: center; gap: 0.3rem; }
+.acard-ver { font-variant-numeric: tabular-nums; }
+
+/* ── Modale di dettaglio ───────────────────────────
+   Non ha piu' CSS proprio: e' interamente il guscio condiviso `.dlg*` di global.css,
+   fascia dell'immagine e pastiglie delle cartelle comprese. Se serve ritoccarla, si
+   tocca la' — e cambia insieme a quella di /mount, che e' il punto. */
 </style>
 
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
+  import { initDialog, dialogPos, dialogField } from '../lib/dialog';
 
   function initAddons() {
     const grid = document.getElementById('addon-grid');
@@ -104,16 +199,20 @@ a.acard-name:hover { color: var(--accent); text-decoration: underline; text-unde
     let filter = saved.filter || ''; // '' = tutti, 'updated', 'outdated'
     const persist = () => saveFilters('addons', { q: search?.value || '', filter });
 
+    // Card visibili nell'ordine della griglia: le frecce della modale scorrono QUESTE,
+    // cosi' «successivo» segue il filtro attivo invece di saltare fra le nascoste.
+    let visible: HTMLElement[] = [];
+
     const apply = () => {
-      let shown = 0;
+      visible = [];
       for (const card of cards) {
         const okText = query === '' || (card.dataset.search || '').includes(query);
         const okFilter = filter === '' || card.dataset.updated === (filter === 'updated' ? '1' : '0');
         const show = okText && okFilter;
         card.hidden = !show;
-        if (show) shown++;
+        if (show) visible.push(card);
       }
-      if (empty) empty.hidden = shown > 0;
+      if (empty) empty.hidden = visible.length > 0;
     };
 
     if (search) search.addEventListener('input', () => { query = search.value.trim().toLowerCase(); apply(); persist(); });
@@ -143,6 +242,82 @@ a.acard-name:hover { color: var(--accent); text-decoration: underline; text-unde
       }
     }
     apply();
+
+    // ── Modale di dettaglio ────────────────────────────
+    // Apertura, chiusura, Esc, frecce circolari e trappola del focus stanno in
+    // `lib/dialog.ts`, condivisi con /mount: qui resta solo il riempimento, che e'
+    // l'unica cosa davvero di questa pagina.
+    const lb = document.getElementById('alb');
+    if (lb) {
+      const el = (id: string) => document.getElementById(id)!;
+      const elImg = el('alb-img') as HTMLImageElement;
+      const elFields = el('alb-fields');
+      const elLink = el('alb-link') as HTMLAnchorElement;
+
+      initDialog({
+        id: 'alb', mainId: 'addon-main', grid, cardSel: '.acard',
+        visible: () => visible,
+        fill: (card) => {
+          const d = card.dataset;
+          const ok = d.updated === '1';
+          el('alb-title').textContent = d.name || '';
+          // L'icona della card e' l'avatar CurseForge; senza, resta quella di sezione.
+          const ico = card.querySelector('.aico');
+          (el('alb-ico') as HTMLImageElement).src = ico?.getAttribute('src') || '/icons/section/addon.jpg';
+          el('alb-state-txt').textContent = ok
+            ? `Aggiornato · ${d.state || ''}`
+            : `Da aggiornare · supporta fino a ${d.state || ''}`;
+          (el('alb-state-ico') as HTMLImageElement).src = ok ? '/icons/ui/ok.jpg' : '/icons/ui/warn.jpg';
+          // ⚠️ `className =` SOSTITUISCE l'intero attributo: va riscritta anche `dlg-state`,
+          // che sta nel template. Scrivendo solo la variante, la pastiglia perdeva sfondo,
+          // imbottitura e misura del testo, e in testata restavano un'icona e una riga di
+          // testo nude — la differenza piu' vistosa fra questa modale e quella di /mount.
+          el('alb-state').className = 'dlg-state ' + (ok ? 'ok' : 'warn');
+
+          // Non tutti hanno l'anteprima (oggi 1 su 16): senza, sparisce la fascia INTERA
+          // invece di lasciare una banda vuota sotto la testata — come in /mount.
+          const img = d.img || '';
+          el('alb-hero').hidden = !img;
+          if (img) { elImg.src = img; elImg.alt = d.name || ''; } else { elImg.removeAttribute('src'); }
+
+          const desc = d.desc || '';
+          el('alb-desc').textContent = desc;
+          el('alb-desc').hidden = !desc;
+
+          elFields.textContent = '';
+          dialogField(elFields, 'Versione', d.ver || '');
+          // Solo la versione di gioco più alta dichiarata nel .toc: l'elenco intero
+          // includeva i flavour Classic, che qui non dicono nulla.
+          dialogField(elFields, 'Compatibile con', d.iface || '');
+          dialogField(elFields, 'Aggiornato il', d.installed || '');
+          // Niente riga «Sorgente»: il link in fondo dice gia' «Scheda su CurseForge».
+          // `srclabel` resta nei dati perche' e' quel link a usarlo.
+          // Cartelle dentro Interface/AddOns: e' il dato che il sito non mostrava da
+          // nessuna parte (fino a 12 per un addon solo). E' una riga dei campi come le
+          // altre — col valore fatto di pastiglie invece che di testo — cosi' il corpo ha
+          // gli stessi componenti di quello di /mount invece di un blocco in piu'.
+          const folders: string[] = JSON.parse(d.folders || '[]');
+          if (folders.length) {
+            const box = document.createElement('div');
+            box.className = 'dlg-chips';
+            for (const f of folders) {
+              const c = document.createElement('code');
+              c.textContent = f;
+              box.appendChild(c);
+            }
+            dialogField(elFields, folders.length === 1 ? 'Cartella' : `Cartelle (${folders.length})`, box);
+          }
+          elFields.hidden = elFields.children.length === 0;
+
+          const url = d.url || '';
+          elLink.href = url;
+          el('alb-link-txt').textContent = `Scheda su ${d.srclabel || 'sito ufficiale'}`;
+          elLink.hidden = !url;
+
+          dialogPos(lb, card, visible);
+        },
+      });
+    }
   }
 
   document.addEventListener('astro:page-load', initAddons);

@@ -21,6 +21,7 @@ export interface Addon {
   key: string;
   name: string;
   icon?: string;          // path icona addon (avatar CurseForge in public/icons/addon/)
+  img?: string;           // anteprima per la modale (public/addon-img/<key>.webp), se scaricata
   desc?: string;          // riga breve mostrata sul sito (cosa fa l'addon)
   version: string;
   interface: string;
@@ -101,12 +102,19 @@ function addonIcon(key: string): string | undefined {
   }
   return undefined;
 }
+// Immagine di anteprima per la modale (public/addon-img/<key>.webp, la scarica
+// scripts/addon-images.mjs). Stessa risoluzione a build-time via glob dell'icona: se il
+// file non c'e' il campo resta undefined e la modale non mostra la fascia — oggi capita
+// a MythicDungeonTools, che sulla fonte l'immagine non ce l'ha.
+const addonImages = import.meta.glob('/public/addon-img/*.webp', { eager: true });
+const addonImage = (key: string): string | undefined =>
+  `/public/addon-img/${key}.webp` in addonImages ? `/addon-img/${key}.webp` : undefined;
 let _addons: Addon[] | null = null;
 export function getAddons(): Addon[] {
   if (_addons) return _addons;
   const raw = (addonsManifest as any).addons ?? {};
   return (_addons = Object.entries(raw)
-    .map(([key, v]: [string, any]) => ({ key, folders: [], ...v, icon: v.icon ?? addonIcon(key) }))
+    .map(([key, v]: [string, any]) => ({ key, folders: [], ...v, icon: v.icon ?? addonIcon(key), img: addonImage(key) }))
     .sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '')));
 }
 
