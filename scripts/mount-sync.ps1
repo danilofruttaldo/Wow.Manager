@@ -45,8 +45,9 @@ param(
 $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path $PSScriptRoot -Parent
 $IconDir  = Join-Path $RepoRoot "public\icons\mount"
-# Le immagini del modello le gestisce scripts/mount-images.mjs (vedi §5a): qui la
-# cartella non serve piu'.
+# Le immagini del modello le SCRIVE scripts/mount-images.mjs (vedi §5a); qui la
+# cartella serve solo a contare quelle che mancano, quando Node non c'e'.
+$ImgDir   = Join-Path $RepoRoot "public\mounts"
 # PS 5.1: senza TLS 1.2 esplicito le chiamate https falliscono, e la barra di
 # avanzamento di Invoke-WebRequest rallenta ogni download di ordini di grandezza.
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -174,6 +175,19 @@ $mounts   = Blocco "mountsJson"
 $sorgenti = Blocco "sorgentiJson"
 $build    = ""
 if ($lua -match '\["build"\]\s*=\s*"([^"]*)"') { $build = $matches[1] }
+
+# Terza guardia, e non e' teorica: il 2026-08-04 un dump e' uscito con `spell` a ZERO
+# su tutte e 1617 le voci -- nomi, provenienze e collezionate giuste, `presi` a 699,
+# `sospetto` vuoto. Cioe' ha passato tutte le guardie di sopra. Ma la spell e' la
+# chiave con cui si ritrova l'icona nel manifest precedente: a zero, la cache non
+# aggancia niente, tutte le mount risultano "senza icona", e al §5c quelle 1184 icone
+# diventano orfane e vengono CANCELLATE. Un dump buono ne ha zero, quindi la soglia
+# puo' essere stretta.
+$conSpell  = ([regex]::Matches($mounts, '"spell":')).Count
+$spellZero = ([regex]::Matches($mounts, '"spell":0[,}]')).Count
+if ($conSpell -gt 0 -and $spellZero -gt [Math]::Max(20, $conSpell * 0.05)) {
+    Errore "$spellZero mount su $conSpell hanno spell 0: il client non ha dato gli spellID. Rifai /reload e rilancia."
+}
 
 # --- 4bis. nomi degli oggetti usati come prezzo ----------------------------------
 # Il dump lascia un segnaposto {item:ID} dove il vendor vuole un OGGETTO invece di
@@ -460,6 +474,19 @@ $testo = @(
 
 try { $null = $testo | ConvertFrom-Json } catch { Errore "il risultato non e' JSON valido: $_" }
 
+# Guardia generale, complementare a quella sugli spell: il manifest E' la cache delle
+# icone (e di classe/razza), quindi un giro non deve MAI perderne in massa. Vale
+# qualunque sia la causa, anche una che oggi non sappiamo prevedere -- la si prende
+# guardando il risultato invece del sintomo. Sotto la soglia si ferma PRIMA di
+# scrivere, cosi' non c'e' niente da ripristinare: senza questo controllo il §5c
+# avrebbe poi cancellato dal disco anche i file delle icone rimaste orfane.
+$iconeVecchie = 0
+if ($vecchio) { $iconeVecchie = @($vecchio.mounts | Where-Object { $_.icon }).Count }
+$iconeNuove = ([regex]::Matches($testo, '"icon":"')).Count
+if ($iconeVecchie -gt 50 -and $iconeNuove -lt ($iconeVecchie - 10)) {
+    Errore "il manifest passerebbe da $iconeVecchie icone a $iconeNuove : non scrivo. Dump sospetto, rifai /reload e rilancia."
+}
+
 $primaPrese = 0
 if (Test-Path $Manifest) {
     $v = Get-Content -Raw -Encoding UTF8 $Manifest | ConvertFrom-Json
@@ -480,12 +507,26 @@ if ($rimandate -gt 0) {
     Write-Host ("senza icona: {0} (la card mostra l'iniziale)" -f $senzaIcona) -ForegroundColor Yellow
 }
 
+# --- 5ab. i due passi che vogliono Node -----------------------------------------
+# ATTENZIONE: su QUESTA postazione Node non c'e', ed e' la norma, non un intoppo. Il
+# repo si lavora da due macchine con capacita' disgiunte: qui c'e' WoW (quindi i dump
+# e i sync dei dati) e non c'e' Node; sull'altra c'e' Node per il dev server ma non
+# c'e' WoW, quindi un sync non potrebbe nemmeno partire.
+#
+# Senza questa guardia lo script MORIVA qui: `& node` su un comando inesistente alza
+# una CommandNotFoundException che, con $ErrorActionPreference = "Stop", porta via
+# anche il §6 -- cioe' il manifest restava aggiornato ma non committato, in silenzio.
+#
+# I due .mjs non hanno bisogno del gioco: leggono solo mounts/manifest.json e il web.
+# Quindi il pendente si smaltisce dall'altra postazione, dopo un git pull.
+$HaNode = [bool](Get-Command node -ErrorAction SilentlyContinue)
+
 # --- 5b. vincolo di classe ------------------------------------------------------
 # Lo risolve scripts/mount-classes.mjs sul manifest appena scritto, e tocca solo le
 # mount che il campo `class` non ce l'hanno ancora (le altre sono cache). Tre segnali
 # diversi su Wowhead piu' le sedi di classe di Legion: vedi il commento in testa allo
 # script. `--rifai` le ricontrolla tutte, ed e' una richiesta per mount.
-if (-not $NoIcone) {
+if (-not $NoIcone -and $HaNode) {
     & node (Join-Path $PSScriptRoot "mount-classes.mjs")
     if ($LASTEXITCODE -ne 0) { Write-Host "  (lo script delle classi ha segnalato un errore: i vincoli restano quelli di prima)" -ForegroundColor Yellow }
 }
@@ -496,10 +537,31 @@ if (-not $NoIcone) {
 # webp e pulizia delle orfane. E' in JS perche' il render arriva in JPEG e serve un
 # convertitore: `sharp`, che il repo ha gia'. Il file su disco e' la cache, quindi
 # scarica solo le novita' e un'interruzione non fa perdere lavoro.
-if (-not $NoIcone) {
+if (-not $NoIcone -and $HaNode) {
     Write-Host "immagini del modello..."
     & node (Join-Path $PSScriptRoot "mount-images.mjs")
     if ($LASTEXITCODE -ne 0) { Write-Host "  (lo script immagini ha segnalato un errore: le immagini restano quelle di prima)" -ForegroundColor Yellow }
+}
+
+# Senza Node si dice COSA resta indietro, non un generico "saltato": quasi sempre e'
+# zero (le due cose cambiano solo quando una patch aggiunge cavalcature), e allora la
+# trasferta sull'altra macchina non serve affatto.
+if (-not $NoIcone -and -not $HaNode) {
+    $classeDaFare = 0
+    $imgDaFare = 0
+    foreach ($l in $righe) {
+        if ($l -match '"spell":(\d+)' -and $l -notmatch '"class":') { $classeDaFare++ }
+        if ($l -match '"display":(\d+)' -and -not (Test-Path (Join-Path $ImgDir ($matches[1] + ".webp")))) { $imgDaFare++ }
+    }
+    Write-Host "node non installato qui: vincoli di classe e immagini del modello non toccati." -ForegroundColor Yellow
+    if ($classeDaFare -gt 0 -or $imgDaFare -gt 0) {
+        Write-Host ("  in sospeso: {0} mount da controllare, {1} immagini da scaricare." -f $classeDaFare, $imgDaFare) -ForegroundColor Yellow
+        Write-Host "  dalla postazione col dev server: git pull, poi"
+        Write-Host "     node scripts/mount-classes.mjs"
+        Write-Host "     node scripts/mount-images.mjs"
+    } else {
+        Write-Host "  niente in sospeso: nessuna mount nuova da controllare." -ForegroundColor Green
+    }
 }
 
 # --- 5c. icone rimaste senza padrone ----------------------------------
@@ -508,8 +570,15 @@ if (-not $NoIcone) {
 # ci sono mount che non hanno ancora il campo icon, e il loro file sembrerebbe
 # orfano pur non essendolo. Chi condivide l'icona con una mount rimasta si salva da
 # se': il confronto e' sui nomi ancora referenziati.
+# ATTENZIONE: le icone stanno in public/icons/mount, che appartiene al REPO e non al
+# manifest -- quindi con -Manifest puntato altrove (una copia di prova) questa pulizia
+# cancellerebbe lo stesso i file veri, confrontandoli con un manifest che non e' il
+# loro. E' successo davvero durante un test: 18 icone tolte dal repo. Se il manifest
+# non e' quello del repo, la pulizia non ha senso e si salta.
+$ManifestRepo = [IO.Path]::GetFullPath((Join-Path $RepoRoot "mounts\manifest.json"))
+$suoManifest = ([IO.Path]::GetFullPath($Manifest) -eq $ManifestRepo)
 $orfane = 0
-if (-not $NoIcone -and $rimandate -eq 0) {
+if (-not $NoIcone -and $rimandate -eq 0 -and $suoManifest) {
     $usate = @{}
     foreach ($l in $righe) { if ($l -match '"icon":"([^"]+)"') { $usate[$matches[1]] = $true } }
     foreach ($f in Get-ChildItem $IconDir -Filter *.jpg -ErrorAction SilentlyContinue) {
