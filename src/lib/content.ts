@@ -1,6 +1,8 @@
 // Accesso ai dati della repo Wow.Manager (manifest JSON + markdown).
 // I file vivono fuori da src/: sono la fonte di verità, il sito li legge in sola lettura.
 import { execSync } from 'node:child_process';
+import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 import { CHAR_SPEC, CHAR_SPEC_BY_RACE } from './char-specs';
 
@@ -90,25 +92,60 @@ export function sourceDate(relPath = '.'): string {
   return out;
 }
 
+// ── Esistenza dei file in public/ ─────────────────
+// Le pagine chiedono di continuo «questo file c'è?» per non mostrare un'immagine rotta:
+// icone addon, anteprime addon, icone mount, render mount, screenshot UI.
+//
+// ⚠️ NON si usa `import.meta.glob('/public/…')`, che pure sarebbe la via ovvia: di quei
+// glob si usano solo le CHIAVI, mai i moduli, ma il solo fatto di dichiararli fa passare
+// i file nella pipeline asset di Vite, che ne emette una **seconda copia hashata** in
+// `dist/_astro` che nessuno referenzia — le pagine puntano ai file serviti da `public/`.
+// Misurato: `dist` pesava 86 MB, di cui **40 MB di duplicati** (1521 webp + 1212 jpg)
+// contro 107 KB di codice vero. `eager: false` non cambia nulla: emette lo stesso.
+//
+// ⚠️ La cache SCADE dopo un secondo, e non è un dettaglio: senza cache la pagina mount
+// farebbe 1527 letture di una directory da 1507 file (secondi), ma una cache eterna
+// toglierebbe l'hot-reload — aggiungi uno screenshot in dev e non compare finché non
+// riavvii. Con la scadenza breve il build rilegge una manciata di volte in 17 secondi
+// (niente) e in dev basta ricaricare la pagina.
+// ⚠️ La radice è `process.cwd()`, NON un path ricavato da `import.meta.url`: in build il
+// modulo è già impacchettato, quindi `import.meta.url` punta al chunk e non al sorgente —
+// provato, e le icone di /addons e /mount sparivano tutte in silenzio. `cwd` è la radice
+// del progetto sia in build sia in dev, ed è la stessa assunzione su cui `sourceDate` fa
+// girare `git log` da sempre.
+const publicDir = join(process.cwd(), 'public');
+const _ls = new Map<string, { t: number; f: Set<string> }>();
+const TTL = 1000;
+function filesIn(rel: string): Set<string> {
+  const hit = _ls.get(rel);
+  const ora = Date.now();
+  if (hit && ora - hit.t < TTL) return hit.f;
+  let f: Set<string>;
+  try {
+    f = new Set(readdirSync(join(publicDir, rel)));
+  } catch {
+    f = new Set();   // cartella assente: nessun file, non un errore di build
+  }
+  _ls.set(rel, { t: ora, f });
+  return f;
+}
+
 // ── Addon ─────────────────────────────────────────
 export const addonsMeta = (addonsManifest as any)._meta;
 // Icona addon (avatar CurseForge scaricato in public/icons/addon/<key>.<ext>).
-// Estensioni miste (png/jpg/jpeg) → risolte via glob (solo le chiavi): a differenza di un
-// existsSync su path relativo, il glob non dipende dalla cwd del processo di build.
-const addonIcons = import.meta.glob('/public/icons/addon/*.{png,jpg,jpeg}', { eager: true });
+// Estensioni miste (png/jpg/jpeg), quindi si prova una per una.
 function addonIcon(key: string): string | undefined {
+  const files = filesIn('icons/addon');
   for (const ext of ['png', 'jpg', 'jpeg']) {
-    if (`/public/icons/addon/${key}.${ext}` in addonIcons) return `/icons/addon/${key}.${ext}`;
+    if (files.has(`${key}.${ext}`)) return `/icons/addon/${key}.${ext}`;
   }
   return undefined;
 }
 // Immagine di anteprima per la modale (public/addon-img/<key>.webp, la scarica
-// scripts/addon-images.mjs). Stessa risoluzione a build-time via glob dell'icona: se il
-// file non c'e' il campo resta undefined e la modale non mostra la fascia — oggi capita
-// a MythicDungeonTools, che sulla fonte l'immagine non ce l'ha.
-const addonImages = import.meta.glob('/public/addon-img/*.webp', { eager: true });
+// scripts/addon-images.mjs): se il file non c'e' il campo resta undefined e la modale non
+// mostra la fascia.
 const addonImage = (key: string): string | undefined =>
-  `/public/addon-img/${key}.webp` in addonImages ? `/addon-img/${key}.webp` : undefined;
+  filesIn('addon-img').has(`${key}.webp`) ? `/addon-img/${key}.webp` : undefined;
 let _addons: Addon[] | null = null;
 export function getAddons(): Addon[] {
   if (_addons) return _addons;
@@ -314,17 +351,12 @@ export function mountBadges(m: Mount): MountBadge[] {
   return out;
 }
 
-// Esistenza del file icona, senza `eager`: qui i file sono ~un migliaio e servono le
-// sole CHIAVI (che il glob espone anche pigro), non i moduli. Con eager si importerebbero
-// mille asset a ogni build per poi guardarne il nome.
-const mountIcons = import.meta.glob('/public/icons/mount/*.jpg');
 // Immagini del modello: non esistono per tutte, quindi si guarda il file. Sono i
 // render UFFICIALI di Blizzard (600x600 su fondo scuro), scaricati e convertiti in
 // webp da scripts/mount-images.mjs; dove il render non c'e' (7 su 1516) resta la
 // vecchia miniatura del model viewer di Wowhead, 300x300 su fondo trasparente.
-const mountImgs = import.meta.glob('/public/mounts/*.webp');
 function mountImg(display: number | undefined): string | undefined {
-  return display && `/public/mounts/${display}.webp` in mountImgs ? `/mounts/${display}.webp` : undefined;
+  return display && filesIn('mounts').has(`${display}.webp`) ? `/mounts/${display}.webp` : undefined;
 }
 let _mounts: Mount[] | null = null;
 export function getMounts(): Mount[] {
@@ -334,7 +366,7 @@ export function getMounts(): Mount[] {
   // ripiega sul monogramma invece di mostrare un'immagine rotta.
   return (_mounts = raw.map((m) => ({
     ...m,
-    icon: m.icon && `/public/icons/mount/${m.icon}.jpg` in mountIcons ? m.icon : undefined,
+    icon: m.icon && filesIn('icons/mount').has(`${m.icon}.jpg`) ? m.icon : undefined,
     img: mountImg(m.display),
   })));
 }
@@ -920,14 +952,14 @@ export function getPgCount(): number {
 // ── Screenshot UI ─────────────────────────────────
 // Quanti screenshot ha la pagina /ui. Serve alla card della home, che fino al
 // 2026-07-20 portava il numero scritto a mano e andava ritoccato a ogni file
-// aggiunto o tolto. Stesso glob di ui.astro: `*` non attraversa lo slash, quindi
-// prende solo la radice e NON le miniature in thumb/, che raddoppierebbero il conto.
-// `eager` come in ui.astro: servirebbero solo le chiavi, ma quella e' la forma gia'
-// in produzione qui, e una variante piu' magra non compilata in locale non vale il
-// rischio su un conteggio da una riga.
-const screenshotFiles = import.meta.glob('/public/screenshots/*.jpg', { eager: true });
+// aggiunto o tolto.
+// ⚠️ Il filtro `.jpg` fa anche il lavoro che nel glob faceva lo slash: `readdirSync`
+// elenca anche la sottocartella `thumb/`, che pero' `.jpg` non e' — quindi le miniature
+// restano fuori dal conto, come prima. Se un giorno si mettessero miniature in radice,
+// il numero raddoppierebbe.
+const screenshots = (): string[] => [...filesIn('screenshots')].filter((f) => f.endsWith('.jpg'));
 export function getScreenshotCount(): number {
-  return Object.keys(screenshotFiles).length;
+  return screenshots().length;
 }
 
 // ── Stats per classe (matrice della home) ─────────
@@ -977,8 +1009,8 @@ export function getClassStats(): ClassStat[] {
 
   // Screenshot: la classe e' il prefisso del filename (<classe>-<spec>-<nome>.jpg).
   const shotsBy: Record<string, number> = {};
-  for (const path of Object.keys(screenshotFiles)) {
-    const prefix = (path.split('/').pop() ?? '').split('-')[0];
+  for (const nome of screenshots()) {
+    const prefix = nome.split('-')[0];
     const slug = toDashedSlug(prefix);
     if (slug in CLASS_LABELS) shotsBy[slug] = (shotsBy[slug] ?? 0) + 1;
   }
