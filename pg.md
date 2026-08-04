@@ -11,34 +11,34 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Orc | | X | Orconauta·P | | | | Shockandroll·N | | Dotandroll·P | | X | X | X |
 | Undead | | X | | Undeadpool·P | Pretaporter·P | | X | | | | X | X | X |
 | Tauren | | Cowadin·N | | | | | Totemtanz·N | | | | Mustaina·P | X | X |
-| Troll | | X | Arconauta·N | | | | *Voodoochild | Snowwipe·P | | | *Bloomanjaro | X | X |
-| Goblin | | X | | | | _Moneystrike·N | *Voltron | | Tearsforfear·N | | X | X | X |
+| Troll | | X | Arconauta·N | | | | | Snowwipe·P | | | | X | X |
+| Goblin | | X | | | | _Moneystrike·N | | | Tearsforfear·N | | X | X | X |
 | Blood Elf | | Blessismore·P | | Cereanor·N | | | X | Repository·N | | | X | Illidanielle·N<br>Demoversion·P | X |
 | Nightborne | | X | | | Nightform·P | | X | Spelling·P | Menagerie·N | | X | X | X |
-| Highmountain Tauren | Stantu·P | X | | | | | *Rainmaker | | | | _Ecoterrorist·N | X | X |
+| Highmountain Tauren | Stantu·P | X | | | | | | | | | _Ecoterrorist·N | X | X |
 | Mag'har Orc | _Axetomouth·N | X | | | | | Blondelust·P | | | | X | X | X |
-| Zandalari Troll | | _Divinetroll·P | | | | _Trollminator·P | *Stormsaurus | | | | _Shiftzord·N | X | X |
+| Zandalari Troll | | _Divinetroll·P | | | | _Trollminator·P | | | | | _Shiftzord·N | X | X |
 | Vulpera | | X | | | | Rotandroll·N | _Foxlust·N | | | Furricane·P | X | X | X |
 | Pandaren | | X | | | | | _Pandacoil·P | | | Windwasher·N | X | X | X |
-| Dracthyr | | X | | | | X | X | | | X | X | X | _Dragoncelloh·P<br>*Preservative<br>*Augmentin |
-| Earthen | | X | Rockbiter·P | | | X | *Stonestrike | | | | X | X | X |
-| Haranir | | X | | *Backstabbath | | X | *Chlorophil | | | | _Catatonic·N | X | X |
+| Dracthyr | | X | | | | X | X | | | X | X | X | _Dragoncelloh·P |
+| Earthen | | X | Rockbiter·P | | | X | | | | | X | X | X |
+| Haranir | | X | | | | X | | | | | _Catatonic·N | X | X |
 
 ## Alleanza
 
 | Razza | War | Pal | Hun | Rog | Pri | DK | Sha | Mag | Loc | Mon | Dru | DH | Evo |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Human | | *Hammertime | | | | | X | _Spellstill·P | | | X | X | X |
-| Dwarf | _Dwarfnought·R | *Proctolodin·S | | | | | _Shockolat·N | | | | X | X | X |
+| Human | | | | | | | X | _Spellstill·P | | | X | X | X |
+| Dwarf | _Dwarfnought·R | | | | | | _Shockolat·N | | | | X | X | X |
 | Night Elf | | X | | | | _Dayandknight·P | X | | | _Ipelf·R | _Hadruidken·S | _Demongear·R<br>_Demonstrate·S | X |
 | Gnome | _Tinytank·P | X | | _Gnomorrage·P | | | X | _Blinkette·S | | | X | X | X |
-| Draenei | | *Holytoledo | | | _Holytude·N | | *Naaruto | | | | X | X | X |
-| Worgen | | X | | | | Furricane·N | X | | | | *Furocious | X | X |
+| Draenei | | | | | _Holytude·N | | | | | | X | X | X |
+| Worgen | | X | | | | Furricane·N | X | | | | | X | X |
 | Void Elf | | X | | | _Discoteque·S | | X | | _Dotnetcore·N | | X | _Vanillidan·N | X |
-| Lightforged Draenei | _Periodrage·S | *Verdictorian | | | | | X | | | | X | X | X |
-| Dark Iron Dwarf | | _Plateatico·P | | | | _Dwarfenstein·S | *Lavalamp | | | | X | X | X |
-| Kul Tiran | | X | | | | | _Totemizer·S | | | | *Bearnacle | X | X |
-| Mechagnome | | X | _Shottini·P | | | | X | | | *Mistfits | X | X | X |
+| Lightforged Draenei | _Periodrage·S | | | | | | X | | | | X | X | X |
+| Dark Iron Dwarf | | _Plateatico·P | | | | _Dwarfenstein·S | | | | | X | X | X |
+| Kul Tiran | | X | | | | | _Totemizer·S | | | | | X | X |
+| Mechagnome | | X | _Shottini·P | | | | X | | | | X | X | X |
 
 ## Note sulle X (verificato su Warcraft Wiki / Wowhead, retail Midnight 12.0)
 
