@@ -148,9 +148,13 @@ end
 -- ⚠️ Le PARENTESI QUADRE vanno accettate quanto le tonde: la prima stesura cercava il
 -- solo "(PH)" e lasciava passare cinque voci "[PH] ..." -- fra cui "[PH] Horse with
 -- Hat" -- che sono finite in pagina come cavalcature mancanti da collezionare.
+-- ⚠️ E il marchio NON sta sempre in testa: "Green Rocket Mount [PH]" e "Pink Rocket
+-- Mount [PH]" ce l'hanno in CODA, quindi con i pattern ancorati a "^" sono rimaste in
+-- pagina per tutto il tempo, anche col filtro a quattro forme. Si cerca ovunque nel
+-- nome: verificato sul manifest, le sole voci con quelle parentesi sono i 7 segnaposto.
 local function segnaposto(name)
-    return name:find("^%(PH%)") ~= nil or name:find("^%[PH%]") ~= nil
-        or name:find("^%[DND%]") ~= nil or name:find("^%(DND%)") ~= nil
+    return name:find("%(PH%)") ~= nil or name:find("%[PH%]") ~= nil
+        or name:find("%[DND%]") ~= nil or name:find("%(DND%)") ~= nil
 end
 
 -- Indice del filtro "Type" del diario -> chiave usata dal sito.
