@@ -96,11 +96,11 @@
       "kind": "script",
       "name": "Miniature screenshot UI",
       "desc": "Genera in public/screenshots/thumb/ una copia a 640px di ogni screenshot, che la griglia della pagina UI usa al posto dell'originale da 2560px. Gli originali restano intatti: il lightbox continua a usare quelli.",
-      "lang": "powershell",
+      "lang": "javascript",
       "when": "Ogni volta che aggiungi o sostituisci uno screenshot in public/screenshots/. Esegui dalla cartella del repo; rigenera solo le miniature piu' vecchie dell'originale.",
-      "warn": "Le miniature vanno committate insieme agli screenshot: senza, la griglia ripiega sull'originale e la pagina torna a pesare ~9 MB.",
-      "body_file": "make-thumbs.ps1",
-      "notes": "Niente ImageMagick e niente Node su questa macchina: usa System.Drawing di .NET (presente in PS 5.1) con InterpolationMode HighQualityBicubic e qualita' JPEG 82 via EncoderParameter. Dispose() di Graphics/Bitmap/Image e' obbligatorio, altrimenti FromFile tiene il .jpg lockato e la riesecuzione fallisce. 640px = il doppio della card da ~300px, cosi' resta nitida sui display retina. Il glob della pagina (/public/screenshots/*.jpg) non attraversa lo slash, quindi thumb/ non finisce nella griglia come screenshot a se'; lo script a sua volta legge solo la radice e non rimpicciolisce le proprie miniature. Parametri: -Larghezza, -Qualita, -Forza. Misurato al primo giro: 9.16 MB -> 0.63 MB su 16 file (-93%)."
+      "warn": "Le miniature vanno committate insieme agli screenshot: senza, la griglia ripiega sull'originale e la pagina torna a pesare diversi MB.",
+      "body_file": "make-thumbs.mjs",
+      "notes": "Era in PowerShell con System.Drawing di .NET, per non dipendere da Node. Non e' piu' possibile: dal 2026-08-04 gli screenshot sono webp (15.7 MB -> 7.9 MB su 52 file) e System.Drawing il webp non lo legge ne' lo scrive. Ora usa sharp, come mount-images.mjs e addon-images.mjs: e' l'eccezione gia' prevista alla regola «manutenzione in PowerShell», non uno strappo. 640px = il doppio della card da ~300px, cosi' resta nitida sui display retina. Legge solo la radice di screenshots/, altrimenti alla seconda esecuzione rimpicciolirebbe le proprie miniature. Parametri: --larghezza, --forza."
     },
     "cvar-dump": {
       "kind": "script",

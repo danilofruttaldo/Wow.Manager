@@ -268,8 +268,8 @@ Non compaiono in pagina **e non vengono nemmeno cercate su Wowhead**: il taglio 
 
 ### Extra → [scripts/manifest.json](scripts/manifest.json)
 Sezione contenitore libero: script di manutenzione, link, appunti tecnici. Oggetto `extra` con chiave = slug. Ogni voce ha `kind`:
-- **`script`**: `name, desc, lang, when, warn, body_file, notes`. Il **corpo reale** vive in un file dentro [scripts/](scripts/) (es. `sync-game-settings.ps1`) e viene letto a build-time (glob `*.{sh,txt,lua,ps1,bat,py}`); la card mostra `desc`, `when` (quando eseguirlo), `warn` (avvertenza, con icona `warn.jpg`) e il corpo con bottone "Copia".
-- **Windows/WoW → script in PowerShell** (`.ps1`): il gioco gira su Windows, quindi gli script di manutenzione si scrivono in PowerShell, non bash.
+- **`script`**: `name, desc, lang, when, warn, body_file, notes`. Il **corpo reale** vive in un file dentro [scripts/](scripts/) (es. `sync-game-settings.ps1`) e viene letto a build-time (glob `*.{sh,txt,lua,ps1,bat,py,mjs}`); la card mostra `desc`, `when` (quando eseguirlo), `warn` (avvertenza, con icona `warn.jpg`) e il corpo con bottone "Copia".
+- **Windows/WoW → script in PowerShell** (`.ps1`): il gioco gira su Windows, quindi gli script di manutenzione si scrivono in PowerShell, non bash. ⚠️ **L'unica eccezione è il webp**: PowerShell non ha nulla per scriverlo e l'unico convertitore che il repo abbia già è `sharp` (dipendenza di Astro). Per questo `mount-images.mjs`, `addon-images.mjs` e `make-thumbs.mjs` sono in JS. Non è un precedente per il resto.
 - **`link`**: `name, desc, url` → card con link esterno.
 - **`note`**: `name, desc` → solo testo.
 - **`desc` = testo mostrato sul sito** (riga breve). **`notes` = memoria interna, NON mostrata** (allowlist, caveat, storia).
@@ -277,10 +277,10 @@ Sezione contenitore libero: script di manutenzione, link, appunti tecnici. Ogget
 - **Aggiungi uno script**: metti il file in `scripts/` + voce in `extra` con `kind: "script"` e `body_file`. La card compare da sola.
 
 ### UI / screenshot → [public/screenshots/](public/screenshots/)
-- **Aggiungi**: metti un file `<classe>-<spec>-<nome>.jpg` (es. `warrior-fury-stantu.jpg`). La pagina `/ui` lo raggruppa **per classe** leggendo classe/spec dal **nome file**.
+- **Aggiungi**: metti un file `<classe>-<spec>-<nome>.webp` (es. `warrior-fury-stantu.webp`). La pagina `/ui` lo raggruppa **per classe** leggendo classe/spec dal **nome file**. ⚠️ **Erano `.jpg` fino al 2026-08-04**: convertiti in webp q82, che a parità di resa pesa la metà (misurato: 15,7 MB → 7,9 MB su 52 file fra pieni e miniature, e il lightbox si apre in metà tempo). La ricodifica è stata confrontata a 1:1 su una zona fitta di testo e UI prima di applicarla: indistinguibile. Gli originali `.jpg` restano nella storia git.
 - Alias classe nel filename: `deathknight`→Death Knight, `demonhunter`→Demon Hunter.
 - **Rimuovi**: cancella il file. Non c'è nessun conteggio da aggiornare: la card UI in home legge `getScreenshotCount()` ([content.ts](src/lib/content.ts)), che conta i file. Fino al 2026-07-20 quel numero era scritto a mano — ora **tutti** i contatori della home derivano dai dati.
-- ⚠️ Le **miniature** stanno in `public/screenshots/thumb/` e il glob del conteggio (`*.jpg`, che non attraversa lo slash) le esclude apposta: se le sposti nella radice il numero raddoppia.
+- ⚠️ Le **miniature** stanno in `public/screenshots/thumb/` e il conteggio le esclude apposta: se le sposti nella radice il numero raddoppia. Le genera **[scripts/make-thumbs.mjs](scripts/make-thumbs.mjs)** (`node scripts/make-thumbs.mjs`, `--forza` per rifarle tutte, `--larghezza N`). ⚠️ **Era in PowerShell** con System.Drawing di .NET, per non dipendere da Node: non è più possibile, System.Drawing il webp non lo legge né lo scrive. Ora usa `sharp` come gli altri `.mjs` — è l'eccezione già prevista alla regola sotto, non uno strappo.
 
 ### Icone (classe / razza / professione) → [public/icons/](public/icons/)
 Immagini WoW dal CDN Wowhead: `https://wow.zamimg.com/images/wow/icons/large/<slug>.jpg`.

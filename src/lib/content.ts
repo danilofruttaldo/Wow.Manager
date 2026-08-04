@@ -276,7 +276,7 @@ export function getProfessionBuilds(): Record<string, Record<string, ProfBuild>>
 }
 
 // ── Extra (script / link / appunti) ───────────────// Corpi degli script (file eseguibili fuori da src/, letti a build-time in sola lettura).
-const extraBodies = import.meta.glob('../../scripts/**/*.{sh,txt,lua,ps1,bat,py}', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const extraBodies = import.meta.glob('../../scripts/**/*.{sh,txt,lua,ps1,bat,py,mjs}', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 function extraBody(bodyFile?: string | null): string | undefined {
   if (!bodyFile) return undefined;
   const hit = Object.entries(extraBodies).find(([p]) => p.endsWith('/' + bodyFile));
@@ -953,11 +953,11 @@ export function getPgCount(): number {
 // Quanti screenshot ha la pagina /ui. Serve alla card della home, che fino al
 // 2026-07-20 portava il numero scritto a mano e andava ritoccato a ogni file
 // aggiunto o tolto.
-// ⚠️ Il filtro `.jpg` fa anche il lavoro che nel glob faceva lo slash: `readdirSync`
-// elenca anche la sottocartella `thumb/`, che pero' `.jpg` non e' — quindi le miniature
+// ⚠️ Il filtro `.webp` fa anche il lavoro che nel glob faceva lo slash: `readdirSync`
+// elenca anche la sottocartella `thumb/`, che pero' `.webp` non e' — quindi le miniature
 // restano fuori dal conto, come prima. Se un giorno si mettessero miniature in radice,
 // il numero raddoppierebbe.
-const screenshots = (): string[] => [...filesIn('screenshots')].filter((f) => f.endsWith('.jpg'));
+const screenshots = (): string[] => [...filesIn('screenshots')].filter((f) => f.endsWith('.webp'));
 export function getScreenshotCount(): number {
   return screenshots().length;
 }

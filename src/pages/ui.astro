@@ -4,7 +4,7 @@ import { classLabel, titleCase } from '../lib/content';
 
 // `*` non attraversa lo slash: questo glob prende solo la radice, non thumb/.
 const files = Object.keys(
-  import.meta.glob('/public/screenshots/*.jpg', { eager: true }),
+  import.meta.glob('/public/screenshots/*.webp', { eager: true }),
 ).map((p) => p.replace('/public', ''));
 
 // Miniature a 640px generate da scripts/make-thumbs.ps1 (stesso nome file).
@@ -12,7 +12,7 @@ const files = Object.keys(
 // resi a ~300, cioe' ~9 MB scaricati per niente. Se la miniatura manca (script
 // non ancora rilanciato dopo un nuovo screenshot) si ripiega sull'originale.
 const thumbs = new Set(
-  Object.keys(import.meta.glob('/public/screenshots/thumb/*.jpg', { eager: true }))
+  Object.keys(import.meta.glob('/public/screenshots/thumb/*.webp', { eager: true }))
     .map((p) => p.replace('/public', '')),
 );
 
@@ -23,7 +23,7 @@ const shots = files.map((src) => {
   const className = ALIAS[parts[0]] ?? parts[0];
   const spec = parts[1] ?? '';
   const char = parts.slice(2).join('-') || parts[parts.length - 1];
-  const thumbPath = `/screenshots/thumb/${stem}.jpg`;
+  const thumbPath = `/screenshots/thumb/${stem}.webp`;
   const thumb = thumbs.has(thumbPath) ? thumbPath : src;
   return { src, thumb, className, spec, char };
 });
