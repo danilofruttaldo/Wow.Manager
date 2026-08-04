@@ -620,7 +620,17 @@ if ($delta -eq 0) {
 } else {
     git commit -q -m ("Mount: collezione aggiornata, {0:+#;-#;0} mount" -f $delta)
 }
+# ⚠️ L'esito del push si GUARDA. Prima si stampava «committato e pushato» comunque, quindi
+# una rete giu' o un token scaduto passavano inosservati: il commit restava locale, e
+# siccome e' il push a far ripartire GitHub Actions, il sito continuava a mostrare i dati
+# vecchi con la data «sync» ferma. Il commit e' fatto e resta buono: si dice solo la verita'
+# su cosa manca.
 git push -q
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "committato, ma il PUSH E' FALLITO (git ha risposto $LASTEXITCODE)." -ForegroundColor Red
+    Write-Host "  il commit e' in locale: rilancia 'git push' quando la rete torna." -ForegroundColor Yellow
+    exit 1
+}
 Write-Host "committato e pushato." -ForegroundColor Green
 
 } finally { Pop-Location }

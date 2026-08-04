@@ -1,0 +1,52 @@
+# Fine riga: normalizzazione decisa DAL REPO, non dalla configurazione della postazione.
+#
+# ⚠️ Perche' serve. Il repo si lavora da due macchine e i file di dati li scrivono tool
+# diversi: PowerShell (i sync di mount e transmog) e Node (i .mjs delle immagini). Finora
+# reggeva solo perche' su questa postazione c'e' `core.autocrlf=true`, che e' una scelta
+# LOCALE e non versionata — CLAUDE.md documenta `core.hooksPath` come passo per-clone, non
+# questo. Su un clone senza quel `git config`, il primo sync riscriverebbe
+# `mounts/manifest.json` (570 KB) con fine riga CRLF e il diff sarebbe il file intero.
+# Non e' teoria: la regex di `mount-classes.mjs` deve gia' tollerare un `\r` di troppo.
+#
+# `text=auto` = git decide da se' cosa e' testo e lo conserva con LF nell'oggetto, che e'
+# gia' lo stato di TUTTI i file tracciati oggi (verificato): quindi questo file non
+# rinormalizza nulla, mette solo al riparo i cloni futuri.
+* text=auto
+
+# Windows: nella copia di lavoro vogliono CRLF a prescindere da come e' configurato il
+# clone. Nel repo restano LF come tutto il resto.
+*.ps1   text eol=crlf
+*.psm1  text eol=crlf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# Gli hook li esegue `sh` (Git for Windows): con CRLF lo shebang diventa `#!/bin/sh\r` e
+# in certi ambienti non parte. Restano LF anche nella copia di lavoro.
+.githooks/*  text eol=lf
+*.sh         text eol=lf
+
+# Addon di gioco: il client legge indifferentemente, ma si aprono e si modificano su
+# Windows, quindi CRLF nella copia di lavoro come gli .ps1 accanto a cui vivono.
+*.lua   text eol=crlf
+*.toc   text eol=crlf
+
+# Binari: dichiarati, cosi' non dipendono dall'euristica e nessun diff prova a leggerli
+# come testo.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.zip   binary
+*.7z    binary
+
+# Diff piu' leggibili sulle sole cose che si leggono a mano. I manifest macchina-generati
+# (mounts, transmog) sono una riga per voce: `git diff` ci lavora gia' bene.
+*.md    diff=markdown
+*.json  diff=json
+*.ts    diff=typescript

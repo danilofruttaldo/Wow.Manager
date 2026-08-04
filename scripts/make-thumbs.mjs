@@ -22,10 +22,15 @@
 // esecuzione rimpicciolirebbe le proprie miniature.
 
 import { readdirSync, existsSync, statSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import sharp from 'sharp';
 
-const root = process.cwd();
+// ⚠️ La radice viene dal PERCORSO DELLO SCRIPT, non da `process.cwd()`: come in
+// mount-images.mjs e addon-images.mjs. Con la cwd, lanciarlo da una cartella diversa dal
+// repo non falliva — creava `./public/screenshots/thumb` li' dov'era, vuoto, e stampava
+// «Nessuno screenshot da elaborare» come se fosse tutto a posto.
+const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const src = join(root, 'public', 'screenshots');
 const dest = join(src, 'thumb');
 const forza = process.argv.includes('--forza');
