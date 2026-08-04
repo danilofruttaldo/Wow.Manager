@@ -86,14 +86,28 @@ function initKeys() {
 }
 
 /**
+ * Stacca il ponte verso la pagina precedente. Da chiamare a OGNI `astro:page-load`, per
+ * PRIMA cosa e comunque — anche quando la pagina non ha una modale.
+ *
+ * ⚠️ Non basta farlo dentro `initDialog`: le pagine escono prima («la mia griglia non c'e',
+ * non e' la mia pagina») e quel ritorno anticipato scavalcherebbe il rilascio. E' esattamente
+ * il bug che c'era: `vivo` restava a puntare la modale di /mount, e con lei la closure su
+ * `visible`/`current`/`fill` — cioe' 1525 card staccate dal DOM piu' il loro indice, vive
+ * fino al primo reload vero. Prima del guscio condiviso il reset stava nella pagina, sopra
+ * l'uscita anticipata; portandolo qui dentro ha smesso di essere raggiunto.
+ */
+export function releaseDialog() {
+  vivo = null;
+}
+
+/**
  * Aggancia la modale alla griglia. Da chiamare a ogni `astro:page-load`: rimpiazza il
  * riferimento alla pagina precedente, cosi' una closure viva non trattiene la griglia di
- * prima (su /mount sono 1527 card).
+ * prima (su /mount sono 1525 card).
  */
 export function initDialog(o: DialogOpts): Dialog | null {
   const lb = document.getElementById(o.id);
-  // Si stacca comunque il ponte verso la pagina precedente, anche se qui la modale non c'e'.
-  vivo = null;
+  releaseDialog();
   if (!lb) return null;
 
   // Card attualmente mostrata: e' il punto di partenza delle frecce.
@@ -126,7 +140,7 @@ export function initDialog(o: DialogOpts): Dialog | null {
 
   vivo = { id: o.id, mainId: o.mainId, step };
 
-  // Un listener solo sulla griglia invece di uno per card: su /mount sono 1527, e ognuna
+  // Un listener solo sulla griglia invece di uno per card: su /mount sono 1525, e ognuna
   // col suo handler peserebbe sulla memoria senza motivo.
   o.grid.addEventListener('click', (e) => {
     const card = (e.target as HTMLElement).closest(o.cardSel) as HTMLElement | null;

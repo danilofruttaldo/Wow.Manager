@@ -183,10 +183,13 @@ const outdatedCount = addons.length - updatedCount;
 
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
-  import { initDialog, dialogPos, dialogField } from '../lib/dialog';
+  import { initDialog, dialogPos, dialogField, releaseDialog } from '../lib/dialog';
 
   function initAddons() {
     const grid = document.getElementById('addon-grid');
+    // ⚠️ PRIMA dell'uscita anticipata: se siamo su un'altra pagina la modale di questa non
+    // c'e', ma il ponte verso la griglia precedente va staccato lo stesso.
+    releaseDialog();
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.acard')) as HTMLElement[];
     const search = document.getElementById('addon-search') as HTMLInputElement;
@@ -274,8 +277,9 @@ const outdatedCount = addons.length - updatedCount;
           // testo nude — la differenza piu' vistosa fra questa modale e quella di /mount.
           el('alb-state').className = 'dlg-state ' + (ok ? 'ok' : 'warn');
 
-          // Non tutti hanno l'anteprima (oggi 1 su 16): senza, sparisce la fascia INTERA
-          // invece di lasciare una banda vuota sotto la testata — come in /mount.
+          // Oggi ce l'hanno tutti e 16, ma un addon appena aggiunto resta senza finche'
+          // non gira `addon-images.mjs`: senza, sparisce la fascia INTERA invece di
+          // lasciare una banda vuota sotto la testata — come in /mount.
           const img = d.img || '';
           el('alb-hero').hidden = !img;
           if (img) { elImg.src = img; elImg.alt = d.name || ''; } else { elImg.removeAttribute('src'); }
