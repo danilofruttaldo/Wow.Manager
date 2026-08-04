@@ -35,7 +35,7 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 | Draenei | | *Holytoledo | | | _Holytude·N | | *Naaruto | | | | X | X | X |
 | Worgen | | X | | | | Furricane·N | X | | | | *Furocious | X | X |
 | Void Elf | | X | | | _Discoteque·S | | X | | _Dotnetcore·N | | X | _Vanillidan·N | X |
-| Lightforged Draenei | *Periodrage·S | *Verdictorian | | | | | X | | | | X | X | X |
+| Lightforged Draenei | _Periodrage·S | *Verdictorian | | | | | X | | | | X | X | X |
 | Dark Iron Dwarf | | _Plateatico·P | | | | _Dwarfenstein·S | *Lavalamp | | | | X | X | X |
 | Kul Tiran | | X | | | | | _Totemizer·S | | | | *Bearnacle | X | X |
 | Mechagnome | | X | _Shottini·P | | | | X | | | *Mistfits | X | X | X |
