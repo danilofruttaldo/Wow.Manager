@@ -72,11 +72,14 @@ const srcOptions = [...srcCounts.entries()]
     </div>
 
     <div class="mount-grid" id="mount-grid">
+      {/* ⚠️ Sulla card restano SOLO gli attributi che servono al filtro, piu' `data-id` che
+          e' la chiave dei dettagli. Provenienza per esteso, testo di colore, vincoli,
+          render e spell stavano qui e sono stati misurati: **272 KB** di `data-*` su 1525
+          elementi, spediti a chiunque apra la pagina per un dato che si legge solo aprendo
+          una card. Ora arrivano da /mount/dettagli.json, chiesto quando serve davvero. */}
       {mounts.map(m => (
-        <button type="button" class="mcard" data-got={String(m.got)} data-cats={mountCats(m).join(' ')} data-src={String(m.src)}
-                 data-full={m.srcText ?? ''} data-desc={m.desc ?? ''} data-spell={String(m.spell)} data-img={m.img}
-                 data-srclabel={sources[String(m.src)] ?? ''}
-                 data-badges={mountBadges(m).length ? JSON.stringify(mountBadges(m)) : undefined}
+        <button type="button" class="mcard" data-id={String(m.id)} data-got={String(m.got)}
+                 data-cats={mountCats(m).join(' ')} data-src={String(m.src)}
                  data-search={`${m.name} ${srcLines(m).join(' ')} ${sources[String(m.src)] ?? ''} ${m.class ?? ''} ${m.race ?? ''}`.toLowerCase()}>
           {m.icon
             ? <img class="mico" src={`/icons/mount/${m.icon}.jpg`} alt="" width="36" height="36" loading="lazy" decoding="async" />
@@ -105,10 +108,16 @@ const srcOptions = [...srcCounts.entries()]
       : <p class="empty" id="empty" role="status" hidden>Nessuna cavalcatura trovata.</p>}
   </div>
 
-  {/* Etichette e icone delle categorie, una volta sola: la modale le rimonta dalle
-      chiavi in data-cats invece di ripeterle su ognuna delle ~1500 card. */}
-  <script type="application/json" id="mount-maps" set:html={JSON.stringify(
-    Object.fromEntries(MOUNT_CATS.map(c => [c.key, { label: c.label, icon: c.icon }])))}></script>
+  {/* Etichette e icone delle categorie + nomi delle provenienze, una volta sola: la
+      modale le rimonta dalle chiavi in data-cats/data-src invece di ripeterle su ognuna
+      delle ~1500 card. Sono in tutto una ventina di voci, quindi restano inline: sono le
+      uniche etichette che servono PRIMA che arrivi /mount/dettagli.json, cosi' aprendo una
+      card categorie e sorgente si vedono subito.
+      `\u003c` come in /macros: un `<` dentro il JSON chiuderebbe lo <script>. */}
+  <script type="application/json" id="mount-maps" set:html={JSON.stringify({
+    cats: Object.fromEntries(MOUNT_CATS.map(c => [c.key, { label: c.label, icon: c.icon }])),
+    sources,
+  }).replace(/</g, '\\u003c')}></script>
 
   {/* Guscio condiviso `.dlg*` (global.css), lo stesso di /addons: qui restano solo le
       parti proprie di questa modale — la fascia col render e le pastiglie. */}
@@ -132,7 +141,7 @@ const srcOptions = [...srcCounts.entries()]
         </div>
         {/* Frecce fra le card, come il lightbox di /ui (stesse ArrowLeft/ArrowRight e
             stesso giro circolare). Scorrono le card VISIBILI, cioe' rispettano il
-            filtro attivo: con 1527 cavalcature sfogliare il sottoinsieme e' il modo
+            filtro attivo: con 1525 cavalcature sfogliare il sottoinsieme e' il modo
             normale di usarle. In testata e non sull'immagine, che 8 mount non hanno. */}
         <span class="dlg-pos" id="mlb-pos"></span>
         <button class="dlg-step dlg-prev" id="mlb-prev" type="button" aria-label="Precedente">&lsaquo;</button>
@@ -165,12 +174,12 @@ const srcOptions = [...srcCounts.entries()]
 </Base>
 
 <style>
-/* Card fitte: sono 1527, quindi la griglia sta stretta (auto-fill su 260px) e ogni card
+/* Card fitte: sono 1525, quindi la griglia sta stretta (auto-fill su 260px) e ogni card
    e' una fascia bassa di icona + nome + provenienza, col nome al massimo su due righe. */
 .mount-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--grid-gap); padding-top: 0.6rem; }
 
 /* Lo stato e' una barretta a sinistra, non un colore di fondo: verde = presa, grigio =
-   manca. ⚠️ La barra delle mancanti era ROSSA: su 832 card mancanti di 1527 la griglia
+   manca. ⚠️ La barra delle mancanti era ROSSA: su 827 card mancanti di 1525 la griglia
    diventava una scacchiera rosso/verde che si leggeva come un elenco di errori, e
    filtrando «Mancanti» era un muro rosso pieno. Ma una mount che non hai non e' un
    guasto: e' il default. Il segnale di «presa» resta pieno (verde), il «manca» torna
@@ -185,7 +194,7 @@ const srcOptions = [...srcCounts.entries()]
   padding: 0.55rem 0.7rem; box-shadow: inset 3px 0 0 var(--bar); overflow: hidden;
   font: inherit; color: inherit; text-align: left; cursor: pointer;
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
-  /* Le card sono 1527 e stanno TUTTE nel DOM (il filtro nasconde, non rimuove): senza
+  /* Le card sono 1525 e stanno TUTTE nel DOM (il filtro nasconde, non rimuove): senza
      contenimento il browser impagina e disegna anche le migliaia fuori schermo a ogni
      giro. `auto` come misura di riserva vuol dire "usa 56px finche' non l'hai vista,
      poi ricordati quella vera", cosi' la barra di scorrimento non salta. */
@@ -263,10 +272,32 @@ const srcOptions = [...srcCounts.entries()]
 
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
-  import { initDialog, dialogPos, dialogField } from '../lib/dialog';
+  import { initDialog, dialogPos, dialogField, releaseDialog } from '../lib/dialog';
+
+  // Dettagli della modale, chiesti a /mount/dettagli.json invece di stare negli attributi
+  // delle card (erano 272 KB su 1525 elementi, vedi il commento sull'endpoint). Cache a
+  // livello di MODULO, non di pagina: con ClientRouter il modulo sopravvive alla
+  // navigazione, quindi tornando su /mount il JSON non si riscarica. Stesso schema della
+  // cache dei pezzi in /transmog.
+  let dett: Record<string, any> | null = null;
+  let dettP: Promise<Record<string, any>> | null = null;
+  function ensureDett(): Promise<Record<string, any>> {
+    if (dett) return Promise.resolve(dett);
+    if (!dettP) {
+      dettP = fetch('/mount/dettagli.json')
+        .then((r) => (r.ok ? r.json() : {}))
+        .catch(() => ({}))          // rete giu': la modale resta alla sola testata
+        .then((d) => (dett = d));
+    }
+    return dettP;
+  }
 
   function initMounts() {
     const grid = document.getElementById('mount-grid');
+    // ⚠️ PRIMA dell'uscita anticipata: se la modale di questa pagina non c'e' perche' siamo
+    // altrove, il ponte verso la griglia precedente va staccato lo stesso — altrimenti la
+    // closure resta viva e trattiene 1525 card staccate dal DOM.
+    releaseDialog();
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.mcard')) as HTMLElement[];
     const search = document.getElementById('mount-search') as HTMLInputElement;
@@ -286,7 +317,7 @@ const srcOptions = [...srcCounts.entries()]
 
     // Indice letto UNA volta sola. `dataset` non e' un oggetto normale: ogni accesso
     // ricalcola il nome dell'attributo, e qui se ne leggevano quattro per ognuna delle
-    // 1527 card a ogni battuta sulla ricerca. Anche lo `split` delle categorie era
+    // 1525 card a ogni battuta sulla ricerca. Anche lo `split` delle categorie era
     // rifatto da capo ogni volta. Ora il filtro lavora su valori gia' pronti.
     const idx = cards.map((card) => ({
       card,
@@ -309,7 +340,7 @@ const srcOptions = [...srcCounts.entries()]
           && (stato === '' || it.got === stato)
           && (cat === '' || it.cats.includes(cat))
           && (src === '' || it.src === src);
-        // Si scrive solo quando cambia davvero: riassegnare `hidden` a tutte e 1527
+        // Si scrive solo quando cambia davvero: riassegnare `hidden` a tutte e 1525
         // invalida lo stile di ognuna anche dove non e' cambiato nulla.
         if (it.card.hidden === show) it.card.hidden = !show;
         if (show) visible.push(it.card);
@@ -367,6 +398,12 @@ const srcOptions = [...srcCounts.entries()]
       const elBadges = el('mlb-badges');
       const elFields = el('mlb-fields');
       const elImg = el('mlb-img') as HTMLImageElement;
+      const elLink = el('mlb-link') as HTMLAnchorElement;
+
+      // Il JSON si scalda appena il puntatore tocca la griglia: al click e' gia' arrivato,
+      // e la modale si apre piena. Da tastiera o da touch non scatta, ma ci pensa `fill`,
+      // che lo chiede comunque. `once` perche' basta la prima volta.
+      grid.addEventListener('pointerover', () => { ensureDett(); }, { once: true });
 
       const pill = (label: string, icon?: string) => {
         const s = document.createElement('span');
@@ -379,13 +416,87 @@ const srcOptions = [...srcCounts.entries()]
         return s;
       };
 
+      // Card per cui si sta aspettando il JSON: le frecce cambiano card senza riaprire la
+      // modale, quindi una richiesta partita per la card di prima non deve riempire quella
+      // che si sta guardando adesso.
+      let atteso: HTMLElement | null = null;
+
+      // Tutto cio' che dipende da /mount/dettagli.json. `d` nullo = non e' ancora arrivato:
+      // si disegna quel che la griglia sa gia' (categorie e sorgente stanno negli attributi
+      // del filtro) e si torna qui appena c'e' il resto.
+      const dettagli = (card: HTMLElement, d: any | null) => {
+        const nome = card.querySelector('.mname')?.textContent || '';
+
+        // Categorie (dalle chiavi in data-cats, che servono gia' al filtro) + vincoli
+        // d'uso, che invece arrivano col JSON gia' risolti in icona + etichetta.
+        elBadges.textContent = '';
+        for (const k of (card.dataset.cats || '').split(' ').filter(Boolean)) {
+          const c = maps.cats?.[k];
+          if (c) elBadges.appendChild(pill(c.label, c.icon));
+        }
+        for (const b of d?.badges ?? []) elBadges.appendChild(pill(b.label, b.icon));
+
+        // Non tutte hanno il modello (7 su 1525): senza, sparisce la fascia INTERA,
+        // invece di lasciare una banda vuota sotto la testata.
+        const img = d?.img || '';
+        el('mlb-hero').hidden = !img;
+        if (img) { elImg.src = img; elImg.alt = nome; } else { elImg.removeAttribute('src'); }
+
+        // Provenienza: il gioco la scrive gia' come "Etichetta: valore" una riga per
+        // volta (Vendor, Zone, Cost, Faction), quindi diventa una lista di campi.
+        // Le righe senza due punti (es. "Trading Post") restano valore senza etichetta.
+        elFields.textContent = '';
+        const srcLab = maps.sources?.[card.dataset.src || ''] || '';
+        const righe = String(d?.src || '').split('\n').map(s => s.trim()).filter(Boolean);
+        // La categoria di sorgente («Drop», «Trading Post», «Vendor») si scrive solo se
+        // le righe del gioco non la dicono gia' -- e quasi sempre la dicono, o come
+        // riga nuda («Trading Post» sotto «SORGENTE: Trading Post», 198 mount) o come
+        // etichetta della riga di dettaglio («DROP: Mistress Sassz'ine»). Prima usciva
+        // comunque, e la lista si apriva con la stessa parola due volte di fila.
+        const uguale = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+        // ⚠️ Solo quando l'ETICHETTA di una riga di dettaglio ripete la sorgente: se a
+        // ripeterla e' una riga nuda («Trading Post»), la riga «Sorgente» va scritta
+        // lo stesso -- e' quella nuda a essere saltata sotto -- altrimenti la modale
+        // resterebbe senza nessun campo.
+        const gia = righe.some(l => l.includes(': ') && uguale(l.slice(0, l.indexOf(': ')), srcLab));
+        if (srcLab && !gia) dialogField(elFields, 'Sorgente', srcLab);
+        for (const l of righe) {
+          if (uguale(l, srcLab)) continue;
+          const sep = l.indexOf(': ');
+          // ⚠️ Etichetta vuota: `dialogField` scarta il VALORE vuoto, non l'etichetta,
+          // quindi le righe nude restano (sono 198 mount col solo «Trading Post»).
+          if (sep > 0) dialogField(elFields, l.slice(0, sep), l.slice(sep + 2));
+          else dialogField(elFields, '', l);
+        }
+        // 5 mount non hanno ne' provenienza ne' etichetta di sorgente: si nasconde la
+        // lista invece di lasciare la sua fetta di gap fra pastiglie e testo di colore.
+        elFields.hidden = elFields.children.length === 0;
+
+        const desc = d?.desc || '';
+        el('mlb-desc').textContent = desc;
+        el('mlb-desc').hidden = !desc;
+        // Senza spell il link non porta da nessuna parte: si nasconde invece di puntare a
+        // una scheda inesistente. Capita nell'attimo fra l'apertura e l'arrivo del JSON.
+        // ⚠️ Si toglie anche l'`href`, non basta `hidden`: la trappola del focus in
+        // dialog.ts raccoglie `a[href]`, e un ancora nascosta ma con href finirebbe nel
+        // giro del Tab — `focus()` su un elemento `display:none` non fa nulla, quindi il
+        // focus uscirebbe dal dialog. `.extlink[hidden]` in global.css forza il display:none.
+        if (d?.spell) {
+          elLink.href = `https://www.wowhead.com/spell=${d.spell}`;
+          elLink.hidden = false;
+        } else {
+          elLink.removeAttribute('href');
+          elLink.hidden = true;
+        }
+      };
+
       initDialog({
         id: 'mlb', mainId: 'mount-main', grid, cardSel: '.mcard',
         visible: () => visible,
         fill: (card) => {
+          // Testata: viene tutta dalla griglia, quindi si disegna comunque subito.
           const got = card.dataset.got === '1';
-          const nome = card.querySelector('.mname')?.textContent || '';
-          el('mlb-title').textContent = nome;
+          el('mlb-title').textContent = card.querySelector('.mname')?.textContent || '';
           const ico = card.querySelector('.mico');
           (el('mlb-ico') as HTMLImageElement).src = ico?.getAttribute('src') || '/icons/section/mount.jpg';
           el('mlb-state-txt').textContent = got ? 'Sbloccata' : 'Mancante';
@@ -393,59 +504,12 @@ const srcOptions = [...srcCounts.entries()]
           // ⚠️ `className =` sostituisce l'attributo intero: va riscritta anche `dlg-state`.
           el('mlb-state').className = 'dlg-state ' + (got ? 'ok' : 'warn');
 
-          // Non tutte hanno il modello (8 su 1527): senza, sparisce la fascia INTERA,
-          // invece di lasciare una banda vuota sotto la testata.
-          const img = card.dataset.img || '';
-          el('mlb-hero').hidden = !img;
-          if (img) { elImg.src = img; elImg.alt = nome; } else { elImg.removeAttribute('src'); }
+          atteso = card;
+          const id = card.dataset.id || '';
+          dettagli(card, dett ? (dett[id] ?? {}) : null);
+          if (!dett) ensureDett().then((tutti) => { if (atteso === card) dettagli(card, tutti[id] ?? {}); });
 
-          // Categorie (dalle chiavi in data-cats) + vincoli (gia' risolti a build-time
-          // in data-badges, che c'e' solo dove serve).
-          elBadges.textContent = '';
-          for (const k of (card.dataset.cats || '').split(' ').filter(Boolean)) {
-            const c = maps[k];
-            if (c) elBadges.appendChild(pill(c.label, c.icon));
-          }
-          for (const b of JSON.parse(card.dataset.badges || '[]')) {
-            elBadges.appendChild(pill(b.label, b.icon));
-          }
-
-          // Provenienza: il gioco la scrive gia' come "Etichetta: valore" una riga per
-          // volta (Vendor, Zone, Cost, Faction), quindi diventa una lista di campi.
-          // Le righe senza due punti (es. "Trading Post") restano valore senza etichetta.
-          elFields.textContent = '';
-          const srcLab = card.dataset.srclabel || '';
-          const righe = (card.dataset.full || '').split('\n').map(s => s.trim()).filter(Boolean);
-          // La categoria di sorgente («Drop», «Trading Post», «Vendor») si scrive solo se
-          // le righe del gioco non la dicono gia' -- e quasi sempre la dicono, o come
-          // riga nuda («Trading Post» sotto «SORGENTE: Trading Post», 198 mount) o come
-          // etichetta della riga di dettaglio («DROP: Mistress Sassz'ine»). Prima usciva
-          // comunque, e la lista si apriva con la stessa parola due volte di fila.
-          const uguale = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
-          // ⚠️ Solo quando l'ETICHETTA di una riga di dettaglio ripete la sorgente: se a
-          // ripeterla e' una riga nuda («Trading Post»), la riga «Sorgente» va scritta
-          // lo stesso -- e' quella nuda a essere saltata sotto -- altrimenti la modale
-          // resterebbe senza nessun campo.
-          const gia = righe.some(l => l.includes(': ') && uguale(l.slice(0, l.indexOf(': ')), srcLab));
-          if (srcLab && !gia) dialogField(elFields, 'Sorgente', srcLab);
-          for (const l of righe) {
-            if (uguale(l, srcLab)) continue;
-            const sep = l.indexOf(': ');
-            // ⚠️ Etichetta vuota: `dialogField` scarta il VALORE vuoto, non l'etichetta,
-            // quindi le righe nude restano (sono 198 mount col solo «Trading Post»).
-            if (sep > 0) dialogField(elFields, l.slice(0, sep), l.slice(sep + 2));
-            else dialogField(elFields, '', l);
-          }
-          // 7 mount non hanno ne' provenienza ne' etichetta di sorgente: si nasconde la
-          // lista invece di lasciare la sua fetta di gap fra pastiglie e testo di colore.
-          elFields.hidden = elFields.children.length === 0;
-
-          const desc = card.dataset.desc || '';
-          el('mlb-desc').textContent = desc;
-          el('mlb-desc').hidden = !desc;
-          (el('mlb-link') as HTMLAnchorElement).href = `https://www.wowhead.com/spell=${card.dataset.spell || ''}`;
-
-          // Posizione nel sottoinsieme filtrato: con 1527 cavalcature dice quanto resta
+          // Posizione nel sottoinsieme filtrato: con 1525 cavalcature dice quanto resta
           // da sfogliare, come il contatore in barra dice quanto manca alla collezione.
           dialogPos(lb, card, visible);
         },

@@ -104,7 +104,7 @@ export function sourceDate(relPath = '.'): string {
 // contro 107 KB di codice vero. `eager: false` non cambia nulla: emette lo stesso.
 //
 // ⚠️ La cache SCADE dopo un secondo, e non è un dettaglio: senza cache la pagina mount
-// farebbe 1527 letture di una directory da 1507 file (secondi), ma una cache eterna
+// farebbe 1525 letture di una directory da 1508 file (secondi), ma una cache eterna
 // toglierebbe l'hot-reload — aggiungi uno screenshot in dev e non compare finché non
 // riavvii. Con la scadenza breve il build rilegge una manciata di volte in 17 secondi
 // (niente) e in dev basta ricaricare la pagina.
