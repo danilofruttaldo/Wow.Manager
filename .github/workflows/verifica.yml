@@ -1,0 +1,38 @@
+name: Verifica dati e tipi
+
+# ⚠️ Workflow SEPARATO da quello di deploy, di proposito. Il deploy pubblica il sito e non
+# deve fermarsi per un typecheck: qui si guarda la salute del repo, e un rosso e' un lavoro
+# da fare, non un sito da tenere offline. E' la stessa distinzione che il repo fa gia' fra
+# `desc` (cio' che si mostra) e `notes` (cio' che serve a chi manutiene).
+#
+# Copre i due buchi che restavano: `astro check` (il build NON fa typecheck, quindi un
+# errore di tipo nel frontmatter di una pagina passava inosservato) e la coerenza fra i
+# file di dati, che finora aveva una rete solo per la parte macchina-generata.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verifica:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # Prima i dati: non hanno bisogno di compilare niente, quindi se sono rotti si
+      # scopre subito invece che in fondo.
+      - name: Coerenza dei dati
+        run: npm run validate
+
+      - name: Tipi (astro check)
+        run: npm run check

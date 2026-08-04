@@ -97,10 +97,60 @@
       "name": "Miniature screenshot UI",
       "desc": "Genera in public/screenshots/thumb/ una copia a 640px di ogni screenshot, che la griglia della pagina UI usa al posto dell'originale da 2560px. Gli originali restano intatti: il lightbox continua a usare quelli.",
       "lang": "javascript",
-      "when": "Ogni volta che aggiungi o sostituisci uno screenshot in public/screenshots/. Esegui dalla cartella del repo; rigenera solo le miniature piu' vecchie dell'originale.",
+      "when": "Ogni volta che aggiungi o sostituisci uno screenshot in public/screenshots/. Rigenera solo le miniature piu' vecchie dell'originale.",
       "warn": "Le miniature vanno committate insieme agli screenshot: senza, la griglia ripiega sull'originale e la pagina torna a pesare diversi MB.",
       "body_file": "make-thumbs.mjs",
       "notes": "Era in PowerShell con System.Drawing di .NET, per non dipendere da Node. Non e' piu' possibile: dal 2026-08-04 gli screenshot sono webp (15.7 MB -> 7.9 MB su 52 file) e System.Drawing il webp non lo legge ne' lo scrive. Ora usa sharp, come mount-images.mjs e addon-images.mjs: e' l'eccezione gia' prevista alla regola «manutenzione in PowerShell», non uno strappo. 640px = il doppio della card da ~300px, cosi' resta nitida sui display retina. Legge solo la radice di screenshots/, altrimenti alla seconda esecuzione rimpicciolirebbe le proprie miniature. Parametri: --larghezza, --forza."
+    },
+    "validate-data": {
+      "kind": "script",
+      "name": "Verifica di coerenza dei dati",
+      "desc": "Controlla che i file di dati si tengano fra loro: nomi che devono combaciare, file referenziati che devono esistere, conteggi dichiarati che devono tornare. Esce con errore se trova un'incoerenza.",
+      "lang": "javascript",
+      "when": "Prima di un commit che tocca i dati, e a ogni push (la lancia GitHub Actions). Con --tutto stampa anche i conteggi quando va tutto bene.",
+      "warn": "Non corregge niente: legge e riferisce. E' un controllo di integrita' referenziale, non di merito -- non entra mai nelle scelte redazionali.",
+      "body_file": "validate-data.mjs",
+      "notes": "Nasce perche' le guardie forti del repo (il campo `sospetto` dei dump, la soglia sulla perdita di icone, `mismatches`) stanno dentro gli script di sync, quindi coprono il solo dato macchina-generato: pg.md, char-specs.ts, builds.json e i manifest non avevano nessuna rete. E' successo davvero -- i 19 PG pianificati tolti da pg.md il 2026-08-04 hanno lasciato le loro spec in char-specs.ts e nulla lo ha segnalato per giorni. Copre: chiavi delle cinque tabelle professioni + nomi-nodo di builds/specs contro l'albero del client, body_file delle macro e .txt orfani, campi e icone degli addon, script dichiarati in questo stesso manifest, PG di pg.md contro char-specs (spec valida per la classe, icona presente, omonimi disambiguati), _meta e icone/render delle mount, e per il transmog il triangolo versions/collected/pieceList piu' le virgole vietate in `fonte`. ⚠️ Le chiavi di CHAR_SPEC che non compaiono in pg.md NON sono un errore: sono i pianificati parcheggiati apposta, e si contano soltanto. Niente dipendenze: solo node:fs."
+    },
+    "mount-images": {
+      "kind": "script",
+      "name": "Immagini dei modelli mount",
+      "desc": "Scarica il render ufficiale Blizzard di ogni cavalcatura (600x600), lo normalizza d'inquadratura e lo converte in webp dentro public/mounts/, che alimenta la fascia della modale di /mount.",
+      "lang": "javascript",
+      "when": "Dalla postazione col dev server, dopo un git pull, quando mount-sync.ps1 segnala immagini in sospeso. Lo lancia da se' anche mount-sync.ps1 al punto 5a, ma solo se Node c'e'.",
+      "warn": "Cancella le immagini rimaste senza padrone: lanciarlo con un manifest non aggiornato toglie file che servono ancora.",
+      "body_file": "mount-images.mjs",
+      "notes": "Il nome del file e' il creatureDisplayInfoID, che sta gia' nei dati: quindi il file su disco E' la cache e un'interruzione non fa perdere lavoro. Due fonti: il render ufficiale copre 1509 modelli su 1516, i 7 che Blizzard non pubblica ripiegano sulla vecchia miniatura del model viewer di Wowhead (quei 7 rispondono 403, non 404: e' stabile, riprovare non serve). L'inquadratura dei render NON e' uniforme e va normalizzata (l'Abyss Worm sta dentro il quadrato alto 200px su 600), con un tetto di 2.2x per non spappolare i modelli minuscoli. Concorrenza 4: a 8 il CDN risponde 403 a qualcuna, e un 403 da rate limit e' indistinguibile da un 403 da render non pubblicato. `--rifai` le rifa' tutte."
+    },
+    "mount-classes": {
+      "kind": "script",
+      "name": "Vincoli di classe e razza delle mount",
+      "desc": "Riempie i campi class e race di mounts/manifest.json leggendo i dati della spell su Wowhead: il client quei vincoli non li espone affatto.",
+      "lang": "javascript",
+      "when": "Dalla postazione col dev server, dopo un git pull, quando mount-sync.ps1 segnala mount da controllare. Tocca solo quelle senza il campo; con --rifai le ricontrolla tutte (una richiesta per mount).",
+      "warn": "Nel manifest la stringa vuota vale «cercata, nessun vincolo» ed e' diversa da assente: se si perde la distinzione, ogni giro ricerca tutte e 1525 le mount.",
+      "body_file": "mount-classes.mjs",
+      "notes": "TRE segnali diversi, perche' uno solo prendeva 19 mount su 52: (1) `Requires <classe>` nel tooltip JSON, le classiche; (2) la frase «This mount is only available to Hunters.» nella descrizione della spell, le 11 versioni Felscorned di Legion Remix; (3) la `reqclass` della QUEST che consegna la mount, agganciata PER NOME, per le 11 cavalcature di classe di Legion. I ricolori di Legion non hanno nessuno dei tre e si ricavano dalla sede di classe (mappa SEDI). La razza esce dall'intersezione di `races` e `reqrace`, che sbagliano in modi opposti; oltre 3 razze non e' un vincolo razziale ma l'elenco delle razze di una classe o di una fazione. Copertura: 52 di classe, 13 di razza. Mai dedurre la classe dal nome della mount."
+    },
+    "addon-images": {
+      "kind": "script",
+      "name": "Anteprime degli addon",
+      "desc": "Scarica l'immagine di anteprima di ogni addon in public/addon-img/<chiave>.webp, che alimenta la fascia della modale di /addons.",
+      "lang": "javascript",
+      "when": "Quando aggiungi un addon o cambi il suo campo `preview` nel manifest. Con --rifai riscarica anche quelle gia' presenti.",
+      "warn": "La galleria di CurseForge non e' leggibile in automatico: l'URL buono va incollato a mano nel campo `preview`, altrimenti resta il logo di ripiego.",
+      "body_file": "addon-images.mjs",
+      "notes": "Due fonti in ordine: (1) il campo `preview` del manifest, URL scelto a mano dalla galleria del progetto -- e' la fonte buona, mostra l'addon in gioco; (2) ripiego sul logo ufficiale dal campo `thumbnail` di api.cfwidget.com, togliendo dal percorso il segmento thumbnails/<w>/<h> per avere l'originale. La galleria via API e' stata provata su quattro strade e rispondono tutte 403 o sono dismesse. addons/img-fonti.json ricorda da quale URL viene ogni file: senza, cambiare il `preview` lascerebbe il webp vecchio in silenzio, perche' il nome del file e' la chiave dell'addon. Copertura: 16 su 16, di cui 14 dalla galleria."
+    },
+    "make-og-image": {
+      "kind": "script",
+      "name": "Immagine di anteprima social",
+      "desc": "Genera public/og-image.png (1200x630), l'anteprima che compare quando un link al sito viene incollato in chat o sui social.",
+      "lang": "powershell",
+      "when": "Quando cambia il nome o l'identita' visiva del sito. Non serve toccarla per gli aggiornamenti di contenuto: l'immagine non porta numeri.",
+      "warn": "Il file finisce in public/ e viene servito dalla radice: il nome og-image.png e' quello a cui punta il meta tag in Base.astro.",
+      "body_file": "make-og-image.ps1",
+      "notes": "Usa System.Drawing di .NET (presente in PS 5.1), che per il PNG va benissimo -- l'eccezione a sharp riguarda il solo webp. 1200x630 e' la misura che Open Graph e Twitter Card si aspettano, ed e' dichiarata anche nei meta og:image:width/height del layout."
     },
     "cvar-dump": {
       "kind": "script",

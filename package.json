@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "validate": "node scripts/validate-data.mjs"
   },
   "engines": {
     "node": ">=22.12.0"
