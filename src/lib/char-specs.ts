@@ -58,9 +58,10 @@ export const CHAR_SPEC: Record<string, string> = {
   totemizer: 'enhancement',   // spec attiva in gioco
   periodrage: 'fury',         // "rage" → ira
   demonstrate: 'havoc',       // tema demoniaco, DPS melee
+  proctolodin: 'holy',        // Nano Pal recuperato — proctologo → medico/cura
 
   // ── PARCHEGGIATE: nomi che oggi NON sono in pg.md ────────────────────────────────
-  // Le 19 righe qui sotto sono PG pianificati e mai creati, tolti dalla tabella il
+  // Le 18 righe qui sotto sono PG pianificati e mai creati, tolti dalla tabella il
   // 2026-08-04 («PG: rimossi i 19 pianificati») insieme alla decisione — scritta in quel
   // commit — di tenere la convenzione `*nome` in legenda **per reintrodurli**. Le spec
   // restano quindi apposta: sono scelte già fatte, e riscrivendo un `*Nome` in pg.md la
@@ -76,7 +77,6 @@ export const CHAR_SPEC: Record<string, string> = {
   // holy3/prot2/ret3, Sha enh5/ele5/resto5, Dru balance2/feral2/guardian2/resto2 — più le
   // spec allora scoperte fra tutti i PG (Monk/Evoker).
   backstabbath: 'subtlety',    // Haranir Rog — razza poco usata; completava il trio rogue Orda
-  proctolodin: 'holy',         // Dark Iron Pal — proctologo → medico/cura
   hammertime: 'retribution',   // Human Pal — "Hammertime" (Hammer of Wrath, ret)
   holytoledo: 'holy',          // Draenei Pal — "Holy Toledo!" (holy)
   verdictorian: 'retribution', // Lightforged Pal — valedictorian → Templar's Verdict (ret)
