@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
-    "wow_build": "12.0.7.68235",
+    "wow_build": "12.1.0.69273",
     "last_sync": "2026-08-12"
   },
   "addons": {
@@ -92,14 +92,14 @@
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
       "desc": "Plugin HandyNotes per Midnight: tesori, rare, mascotte e punti d’interesse sulla mappa.",
-      "version": "v147",
-      "interface": "120007",
+      "version": "v148",
+      "interface": "120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
       "preview": "https://media.forgecdn.net/attachments/949/33/banner-war-within.png",
-      "installed": "2026-07-26",
+      "installed": "2026-08-12",
       "folders": ["HandyNotes_Midnight"],
-      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. Aggiornato 2026-07-26 v146->v147, forgecdn files/8507/133, 162 file, cartella rimossa e reinstallata da zero. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Il .toc ha un BOM UTF-8 in testa: un grep '^## Interface' NON aggancia la prima riga, va letta con head/cat -A. Nel .toc la versione e' '147' senza la 'v' (il prefisso sta solo nel nome del file su CurseForge). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita."
+      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. Aggiornato 2026-07-26 v146->v147, forgecdn files/8507/133, 162 file, cartella rimossa e reinstallata da zero. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Il .toc ha un BOM UTF-8 in testa: un grep '^## Interface' NON aggancia la prima riga, va letta con head/cat -A. Nel .toc la versione e' '147' senza la 'v' (il prefisso sta solo nel nome del file su CurseForge). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita. Aggiornato 2026-08-12 v147->v148 (patch 12.1.0) forgecdn files/8628/664 (HandyNotes_Midnight-v148.zip, 334 KB); il TOC passa da 120007 a 120100 puro. ATTENZIONE: il workflow /aggiorna-addon dello stesso giorno aveva dichiarato v147 come ultima, ma la v148 era gia' pubblicata dalle 00:50 UTC -> quando esce una patch, ricontrolla a mano invece di fidarti dell'audit."
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
@@ -164,14 +164,14 @@
     "CursorRing": {
       "name": "Cursor Ring",
       "desc": "Anello colorato per classe attorno al cursore, animato su cast, GCD e combattimento.",
-      "version": "1.5.4",
-      "interface": "120007, 120100",
+      "version": "1.5.5",
+      "interface": "120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/cursorring",
       "preview": "https://media.forgecdn.net/attachments/1628/379/screenshot_20260412_133047-png.png",
-      "installed": "2026-08-06",
+      "installed": "2026-08-12",
       "folders": ["CursorRing"],
-      "notes": "Anello class-colored attorno al cursore con animazioni cast/GCD/combat: migliora visibilità del cursore + funge da GCD tracker. TOC 120005,120007 match build. Scelto come miglior/più aggiornato tra i cursor addon (vs CursorTrail/Cursor Ring +). Aggiornato 2026-06-17 1.5.2->1.5.3 via forgecdn files/8261/188 (filename CursorRing-v1.5.3.zip, NB prefisso 'v'; ignorata la 1.5.3-beta più vecchia). Aggiornato 2026-08-06 1.5.3->1.5.4 via /aggiorna-addon (workflow) forgecdn files/8585/113 (CursorRing-v1.5.4.zip, 156 KB); il TOC scrive '## Version: 1.5.4' senza il 'v' del nome file, ed è la stessa versione. Interface da 120005,120007 a 120007,120100: ora dichiara anche la 12.1.0."
+      "notes": "Anello class-colored attorno al cursore con animazioni cast/GCD/combat: migliora visibilità del cursore + funge da GCD tracker. TOC 120005,120007 match build. Scelto come miglior/più aggiornato tra i cursor addon (vs CursorTrail/Cursor Ring +). Aggiornato 2026-06-17 1.5.2->1.5.3 via forgecdn files/8261/188 (filename CursorRing-v1.5.3.zip, NB prefisso 'v'; ignorata la 1.5.3-beta più vecchia). Aggiornato 2026-08-06 1.5.3->1.5.4 via /aggiorna-addon (workflow) forgecdn files/8585/113 (CursorRing-v1.5.4.zip, 156 KB); il TOC scrive '## Version: 1.5.4' senza il 'v' del nome file, ed è la stessa versione. Interface da 120005,120007 a 120007,120100: ora dichiara anche la 12.1.0. Aggiornato 2026-08-12 1.5.4->1.5.5 (patch 12.1.0) forgecdn files/8624/491 (CursorRing-v1.5.5.zip, 157 KB); il TOC ora e' 120100 puro (ha lasciato cadere 120007). Anche questa mancata dall'audit del workflow dello stesso giorno."
     },
     "Molinari": {
       "name": "Molinari",

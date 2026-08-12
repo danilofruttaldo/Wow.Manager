@@ -1,4 +1,4 @@
-## Interface: 120007
+## Interface: 120100
 ## Title: WowManager Prof Dump
 ## Notes: Dumps profession specialization trees (nodes, max ranks, spent points) to SavedVariables.
 ## Version: 1.0

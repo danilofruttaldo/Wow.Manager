@@ -1,4 +1,4 @@
-## Interface: 120007
+## Interface: 120100
 ## Title: WowManager Mount Dump
 ## Notes: Dumps the account-wide mount collection to SavedVariables.
 ## Version: 1.0
