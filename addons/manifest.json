@@ -80,14 +80,14 @@
     "HandyNotes": {
       "name": "HandyNotes",
       "desc": "Framework di note e pin su mappa e minimappa: da solo non mostra nulla, servono i plugin.",
-      "version": "v1.6.30",
+      "version": "v1.6.31",
       "interface": "120100,120007,11509,20506,50504",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes",
       "preview": "https://media.forgecdn.net/attachments/113/544/HandyNotes.jpg",
       "installed": "2026-08-12",
       "folders": ["HandyNotes"],
-      "notes": "Core framework per plugin di mappa. Aggiornato 2026-06-22 1.6.28->v1.6.29 via /aggiorna-addon (workflow) forgecdn files/8297/983 (HandyNotes-v1.6.29.zip). TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date). Aggiornato 2026-08-12 v1.6.29->v1.6.30 via /aggiorna-addon (workflow) forgecdn files/8619/491 (HandyNotes-v1.6.30.zip, 173 KB); riga ## Interface aggiornata ai flavor nuovi (aggiunge 120100, i classic salgono a 11509/20506)."
+      "notes": "Core framework per plugin di mappa. Aggiornato 2026-06-22 1.6.28->v1.6.29 via /aggiorna-addon (workflow) forgecdn files/8297/983 (HandyNotes-v1.6.29.zip). TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date). Aggiornato 2026-08-12 v1.6.29->v1.6.30 via /aggiorna-addon (workflow) forgecdn files/8619/491 (HandyNotes-v1.6.30.zip, 173 KB); riga ## Interface aggiornata ai flavor nuovi (aggiunge 120100, i classic salgono a 11509/20506). Aggiornato 2026-08-12 v1.6.30->v1.6.31 via /aggiorna-addon (workflow) forgecdn files/8629/945 (HandyNotes-v1.6.31.zip, 173 KB); riga ## Interface invariata. Il plugin HandyNotes_Midnight non e' stato toccato."
     },
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
@@ -200,14 +200,14 @@
     "AllTheThings": {
       "name": "All The Things",
       "desc": "Tracker di collezioni: per ogni transmog, mount o pet elenca i pezzi mancanti e la fonte.",
-      "version": "5.3.0",
+      "version": "5.3.0a",
       "interface": "11508, 11509, 20506, 30405, 38001, 40402, 50504, 120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/all-the-things",
       "preview": "https://media.forgecdn.net/attachments/227/368/crieve-2.png",
       "installed": "2026-08-12",
       "folders": ["AllTheThings"],
-      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Aggiornato 2026-07-13 5.2.9->5.2.10 via /aggiorna-addon (workflow) forgecdn files/8418/228 (release stabile) (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). Aggiornato 2026-07-20 5.2.10->5.2.11 via /aggiorna-addon (workflow) forgecdn files/8465/698 (release stabile). Aggiornato 2026-07-27 5.2.11->5.2.12 via /aggiorna-addon (workflow) forgecdn files/8512/510 (release stabile, 16 MB); riga ## Interface invariata rispetto alla 5.2.11. Aggiornato 2026-08-03 5.2.12->5.2.13 via /aggiorna-addon (workflow) forgecdn files/8557/751 (release stabile, 16 MB); riga ## Interface invariata. Aggiornato 2026-08-12 5.2.13->5.3.0 via /aggiorna-addon (workflow) forgecdn files/8627/875 (release stabile, 16 MB, 68 MB installato); riga ## Interface invariata nonostante il salto di minor. TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
+      "notes": "Tracker completista (transmog, mount, pet, toy, achievement): per ogni set transmog mostra i pezzi mancanti e la FONTE/luogo di drop (istanza/boss/vendor/mob) -> risponde a 'dove farmare i pezzi mancanti dei set'. Installato 2026-07-11 su richiesta utente per completare i set transmog. Aggiornato 2026-07-13 5.2.9->5.2.10 via /aggiorna-addon (workflow) forgecdn files/8418/228 (release stabile) (NB: CF pubblica alpha giornaliere 'X-N-gHASH' -> prendere sempre il file type=release, non l'alpha piu recente). Aggiornato 2026-07-20 5.2.10->5.2.11 via /aggiorna-addon (workflow) forgecdn files/8465/698 (release stabile). Aggiornato 2026-07-27 5.2.11->5.2.12 via /aggiorna-addon (workflow) forgecdn files/8512/510 (release stabile, 16 MB); riga ## Interface invariata rispetto alla 5.2.11. Aggiornato 2026-08-03 5.2.12->5.2.13 via /aggiorna-addon (workflow) forgecdn files/8557/751 (release stabile, 16 MB); riga ## Interface invariata. Aggiornato 2026-08-12 5.2.13->5.3.0 via /aggiorna-addon (workflow) forgecdn files/8627/875 (release stabile, 16 MB, 68 MB installato); riga ## Interface invariata nonostante il salto di minor. Aggiornato 2026-08-12 5.3.0->5.3.0a via /aggiorna-addon (workflow) forgecdn files/8628/233 (release stabile, 16 MB); riga ## Interface invariata. TOC 120007,120100 match build 12.0.7, aggiornato di continuo, nessun RequiredDeps. Addon GRANDE (~66M installato, e' un database). Comandi: /att. Addon NUOVO -> serve restart completo del client per caricarlo. Scelto vs Better Wardrobe and Transmog (piu leggero/mirato ma ultima release marzo 2026 dichiarata 12.0.1, compat Midnight incerta)."
     }
   }
 }
