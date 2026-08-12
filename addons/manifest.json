@@ -68,14 +68,14 @@
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "desc": "Comodità varie: quest automatiche, riparazione e vendita delle cianfrusaglie, skip cinematiche.",
-      "version": "12.0.30",
-      "interface": "120007, 120100",
+      "version": "12.1.00",
+      "interface": "120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
       "preview": "https://media.forgecdn.net/attachments/841/496/snap6.jpg",
-      "installed": "2026-08-06",
+      "installed": "2026-08-12",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-31 12.0.28->12.0.29 via /aggiorna-addon (workflow) forgecdn files/8536/716 (Leatrix_Plus-12.0.29.zip), changelog solo 'Updated deprecated functions', nessuna opzione nuova. Prima: 2026-07-23 12.0.27->12.0.28 forgecdn files/8490/258. Aggiornato 2026-08-06 12.0.29->12.0.30 via /aggiorna-addon (workflow) forgecdn files/8585/35 (Leatrix_Plus-12.0.30.zip, 599 KB, 10 file); riga ## Interface invariata. TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update."
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-31 12.0.28->12.0.29 via /aggiorna-addon (workflow) forgecdn files/8536/716 (Leatrix_Plus-12.0.29.zip), changelog solo 'Updated deprecated functions', nessuna opzione nuova. Prima: 2026-07-23 12.0.27->12.0.28 forgecdn files/8490/258. Aggiornato 2026-08-06 12.0.29->12.0.30 via /aggiorna-addon (workflow) forgecdn files/8585/35 (Leatrix_Plus-12.0.30.zip, 599 KB, 10 file); riga ## Interface invariata. TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update. Aggiornato 2026-08-12 12.0.30->12.1.00 (patch 12.1.0) via /aggiorna-addon (workflow) forgecdn files/8630/262 (Leatrix_Plus-12.1.00.zip, 595 KB, 10 file); il TOC passa da '120007, 120100' a 120100 puro. ⚠️ Pubblicata alle 07:02 UTC del giorno stesso della patch: un controllo fatto un'ora prima vedeva ancora la 12.0.30 del 5 agosto come ultima. Nel giorno di una patch le release escono a raffica (Leatrix ha pubblicato i flavor classic alle 07:09, 07:11 e 07:32) -> un solo audit non basta, va ripetuto."
     },
     "HandyNotes": {
       "name": "HandyNotes",
