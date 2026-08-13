@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.1.0.69273",
-    "last_sync": "2026-08-12"
+    "last_sync": "2026-08-13"
   },
   "addons": {
     "BigWigs": {
@@ -140,14 +140,14 @@
     "Syndicator": {
       "name": "Syndicator",
       "desc": "Data layer che indicizza gli oggetti di tutti i personaggi: dipendenza tecnica di Baganator.",
-      "version": "275",
+      "version": "276",
       "interface": "120100, 120007, 50504, 38001, 20506, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/syndicator",
       "preview": "https://media.forgecdn.net/attachments/1083/215/tooltip-2025-01-31.webp",
-      "installed": "2026-08-12",
+      "installed": "2026-08-13",
       "folders": ["Syndicator"],
-      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-07-22 273->274 via /aggiorna-addon (workflow) forgecdn files/8481/593 (Syndicator-274.zip); TOC include 120007 (build 12.0.7). Aggiornato 2026-08-12 274->275 via /aggiorna-addon (workflow) forgecdn files/8620/314 (Syndicator-275.zip, 104 KB, 41 file); ## Interface aggiunge 120100 e toglie 11508, come Baganator 816."
+      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-07-22 273->274 via /aggiorna-addon (workflow) forgecdn files/8481/593 (Syndicator-274.zip); TOC include 120007 (build 12.0.7). Aggiornato 2026-08-12 274->275 via /aggiorna-addon (workflow) forgecdn files/8620/314 (Syndicator-275.zip, 104 KB, 41 file); ## Interface aggiunge 120100 e toglie 11508, come Baganator 816. Aggiornato 2026-08-13 275->276 via /aggiorna-addon (workflow) forgecdn files/8634/264 (Syndicator-276.zip, 104 KB, 41 file); ## Interface invariata; changelog 276: fallback quando manca la catalog info di un oggetto decor."
     },
     "Prat-3.0": {
       "name": "Prat 3.0",
