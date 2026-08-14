@@ -128,14 +128,14 @@
     "Baganator": {
       "name": "Baganator",
       "desc": "Borse in un inventario unico: categorie, ricerca istantanea e item level sugli oggetti.",
-      "version": "816",
+      "version": "821",
       "interface": "120100, 120007, 50504, 38001, 20506, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/baganator",
       "preview": "https://media.forgecdn.net/attachments/974/124/categories-2024-09-23-default.webp",
-      "installed": "2026-08-12",
+      "installed": "2026-08-14",
       "folders": ["Baganator"],
-      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-22 812->814 via /aggiorna-addon (workflow) forgecdn files/8481/597 (Baganator-814.zip); TOC 120007 match build 12.0.7. Aggiornato 2026-08-03 814->815 via /aggiorna-addon (workflow) forgecdn files/8557/56 (Baganator-815.zip, 168 file); riga ## Interface invariata. Aggiornato 2026-08-12 815->816 via /aggiorna-addon (workflow) forgecdn files/8620/311 (Baganator-816.zip, 407 KB); ## Interface aggiunge 120100 e toglie 11508 (stesso movimento di [[Syndicator]] 275, stesso autore e stesso giro di release)."
+      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-22 812->814 via /aggiorna-addon (workflow) forgecdn files/8481/597 (Baganator-814.zip); TOC 120007 match build 12.0.7. Aggiornato 2026-08-03 814->815 via /aggiorna-addon (workflow) forgecdn files/8557/56 (Baganator-815.zip, 168 file); riga ## Interface invariata. Aggiornato 2026-08-12 815->816 via /aggiorna-addon (workflow) forgecdn files/8620/311 (Baganator-816.zip, 407 KB); ## Interface aggiunge 120100 e toglie 11508 (stesso movimento di [[Syndicator]] 275, stesso autore e stesso giro di release). Aggiornato 2026-08-14 816->821 via /aggiorna-addon (workflow) forgecdn files/8648/694 (Baganator-821.zip, 407 KB); salto di 5 release in due giorni, ## Interface invariata. Qui [[Syndicator]] resta alla 276: i due addon dello stesso autore NON si muovono sempre insieme."
     },
     "Syndicator": {
       "name": "Syndicator",
