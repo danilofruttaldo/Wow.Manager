@@ -5,18 +5,19 @@ name: Verifica dati
 # sito da tenere offline. E' la stessa distinzione che il repo fa gia' fra `desc` (cio' che
 # si mostra) e `notes` (cio' che serve a chi manutiene).
 #
-# ⚠️ QUI NON C'E' `astro check`, ed e' una scelta verificata, non una dimenticanza.
-# Provato il 2026-08-04: riporta **91 errori su codice che builda e funziona**. La causa e'
-# una sola e si vede a occhio nudo nell'output: le GENERICHE dentro le espressioni del
-# template. `@astrojs/check` 0.9.8 legge il `<string>` di `new Set<string>()` come l'apertura
-# di un tag, quindi `new Set < string > ()` diventa un confronto — da lì «Property 'has'
-# does not exist on type 'boolean'», «HTML element 'section' has no corresponding closing
-# tag», «Cannot find name 'cerca'» e tutta la cascata. Il compilatore vero non ha il
-# problema: il deploy e' verde e le pagine funzionano.
-# Il checker e' semplicemente indietro rispetto ad Astro 7. Prima di rimetterlo qui va
-# aggiornato (`@astrojs/check` e `typescript` in devDependencies) e riprovato: se torna
-# pulito e' un guadagno, perche' il build il typecheck non lo fa. Lo script `npm run check`
-# resta in package.json apposta.
+# ⚠️ `astro check` E' TORNATO qui il 2026-08-15, e i 91 errori erano NOSTRI, non del checker.
+# La diagnosi precedente (checker indietro rispetto ad Astro 7, da riprovare dopo un upgrade)
+# era sbagliata su due punti: aggiornare non serviva (con la 0.9.10 restavano 91 identici) e
+# la causa non erano le generiche in se'. Il vero innesco e' il TIPO scritto dentro
+# un'ESPRESSIONE DEL TEMPLATE, dove il parser sta leggendo markup e ogni `<` lo prende per un
+# tag: la stessa riga nel frontmatter passa liscia. Erano tre punti in tutto il repo, e da li'
+# nasceva tutta la cascata di «Cannot find name», tag non chiusi e parametri impliciti:
+#   extra.astro        `const props: Record<string, any> = ...`  (annotazione, non generica)
+#   professioni.astro  `new Set<string>()` dentro `autoFor`
+#   transmog.astro     `new Set<string>()` dentro la riga del tier
+# Tolti quei tre tipi (a runtime non cambia niente) il check chiude a 0 errori con la 0.9.9
+# gia' installata. Regola da tenere: i tipi stanno nel frontmatter, nel template si scrive
+# solo codice senza `<`. `as const` va bene, non ha parentesi angolari.
 
 on:
   push:
@@ -51,5 +52,25 @@ jobs:
           if [ $esito -ne 0 ]; then
             msg=$(printf '%s' "$out" | tail -c 4000 | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')
             printf '::error title=validate-data::%s\n' "$msg"
+          fi
+          exit $esito
+
+      # ⚠️ Sta DOPO la coerenza dei dati e non prima: un dato incoerente e' il guasto che
+      # capita davvero lavorando a questo repo (i manifest si scrivono a mano), un tipo rotto
+      # e' l'eccezione. Se cadono tutti e due, il primo messaggio che si legge deve essere
+      # quello che serve. `if: always()` perche' sono guasti indipendenti: fermarsi al primo
+      # nasconderebbe l'altro fino al run successivo.
+      # ⚠️ Il gate serve perche' `npm run build` il typecheck NON lo fa: senza questo step un
+      # tipo sbagliato arriva in produzione verde.
+      - name: Tipi (astro check)
+        if: always()
+        run: |
+          set +e
+          out=$(npm run check 2>&1)
+          esito=$?
+          echo "$out"
+          if [ $esito -ne 0 ]; then
+            msg=$(printf '%s' "$out" | tail -c 4000 | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')
+            printf '::error title=astro-check::%s\n' "$msg"
           fi
           exit $esito

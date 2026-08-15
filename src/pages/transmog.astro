@@ -24,6 +24,23 @@ const spoglia = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 const daScrivere = (cell: { slot: string; label: string }) =>
   !!cell.label && !MUTE.has(cell.label) &&
   spoglia(cell.label) !== spoglia(etichettaCol[cell.slot] ?? '');
+
+// Colonne gia' occupate da una cella che si allarga (il T16 ne copre due): vanno saltate,
+// altrimenti si disegna anche la casella sotto il colspan e la riga esce dalla tabella con una
+// colonna di troppo.
+// ⚠️ Sta QUI e non dentro il template, dove pure sarebbe piu' vicina all'uso: `new Set<string>()`
+// in un'espressione del template rompe il parser di `astro check` (vedi CLAUDE.md), e scritta
+// li' l'unico modo di tenerla era rinunciare al tipo. `cols` resta preso dalla closure: e' una
+// costante di modulo, non un dato della riga.
+const colonneCoperte = (cells: { colonna: string; span: number }[]): Set<string> => {
+  const coperte = new Set<string>();
+  for (const c of cells) {
+    if (c.span < 2) continue;
+    const i = cols.findIndex(x => x.key === c.colonna);
+    for (let k = 1; k < c.span && cols[i + k]; k++) coperte.add(cols[i + k].key);
+  }
+  return coperte;
+};
 ---
 <Base title="Transmog" description="Set dei raid per classe: matrice set × versione, raggruppata per espansione.">
   <div class="wrap tmog-wrap">
@@ -96,15 +113,9 @@ const daScrivere = (cell: { slot: string; label: string }) =>
                     // di tabella per tre numeri.
                     const varianti = (chiave: string) =>
                       r.cells.filter(c => c.colonna === chiave && c.state !== 'na');
-                    // Colonne gia' occupate da una cella che si allarga (il T16 ne copre
-                    // due): vanno saltate, altrimenti si disegna anche la casella sotto
-                    // il colspan e la riga esce dalla tabella con una colonna di troppo.
-                    const coperte = new Set<string>();
-                    for (const c of r.cells) {
-                      if (c.span < 2) continue;
-                      const i = cols.findIndex(x => x.key === c.colonna);
-                      for (let k = 1; k < c.span && cols[i + k]; k++) coperte.add(cols[i + k].key);
-                    }
+                    // Colonne gia' occupate da una cella che si allarga: vedi `colonneCoperte`
+                    // nel frontmatter.
+                    const coperte = colonneCoperte(r.cells);
                     // Testo cercabile della riga: nome del set/raid, tier, espansione e
                     // le sigle+nomi dei raid dove droppa. Alimenta la search della pagina.
                     const cerca = `${r.setName ?? r.name} ${r.tier} ${g.name} ${r.raids.map(([s, f]) => `${s} ${f}`).join(' ')}`.toLowerCase();

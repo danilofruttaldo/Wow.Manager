@@ -87,6 +87,28 @@ function clientDescMap(tree: { specs?: ProfNode[] } | undefined): Map<string, st
   (tree?.specs ?? []).forEach(walk);
   return m;
 }
+// Step di completamento AUTO: dopo i passi curati, ogni nodo dell'albero client NON ancora
+// toccato (in ordine d'albero) diventa una card "riempi il ramo al suo cap", finche' non sono
+// coperti tutti i punti potenziali. Non e' un consiglio inventato: e' "poi completa tutto il
+// resto". Solo le prime 4 card si mostrano, il resto sotto "mostra tutti" (vedi JS).
+// ⚠️ Enumera anche i rami che una scelta curata segna come alternativi ("uno solo"/"scegli
+// una"): li elenca tutti, non e' un errore di lettura.
+// ⚠️ Sta QUI e non dentro il template, dove pure sarebbe piu' vicina all'uso: `new Set<string>()`
+// in un'espressione del template rompe il parser di `astro check` (vedi CLAUDE.md), e scritta
+// li' l'unico modo di tenerla era rinunciare al tipo. `tree` arriva per parametro proprio
+// perche' nel template era una closure.
+function autoSteps(steps: { spec: string; alt?: string; nodes?: string[] }[],
+                   tree: { specs?: ProfNode[] } | undefined): { spec: string; auto: true }[] {
+  const covered = new Set<string>();
+  for (const s of steps) { covered.add(s.spec); if (s.alt) covered.add(s.alt); (s.nodes ?? []).forEach(n => covered.add(n)); }
+  const out: { spec: string; auto: true }[] = [];
+  const walk = (n: ProfNode) => {
+    if (n?.name != null && n.cap != null && !covered.has(n.name)) out.push({ spec: n.name, auto: true });
+    (n?.children ?? []).forEach(walk);
+  };
+  (tree?.specs ?? []).forEach(walk);
+  return out;
+}
 // Descrizione breve della card: specs.json (IT, verificato) col nome-nodo del passo; per i
 // passi composti ("uno solo") si usa il primo dei `nodes`. Fallback: desc del client.
 function stepDesc(step: { spec: string; nodes?: string[] }, specForKey: Record<string, string>, cdesc: Map<string, string>): string | null {
@@ -153,28 +175,12 @@ function stepDesc(step: { spec: string; nodes?: string[] }, specForKey: Record<s
           // Descrizioni brevi delle card: specs.json (IT) col fallback sulla desc del client.
           const specForKey = specDescs[p.key] ?? {};
           const cdesc = clientDescMap(tree);
-          // Step di completamento AUTO: dopo i passi curati, ogni nodo dell'albero client NON
-          // ancora toccato (in ordine d'albero) diventa una card "riempi il ramo al suo cap",
-          // finche' non sono coperti tutti i punti potenziali. Non e' un consiglio inventato:
-          // e' "poi completa tutto il resto". Solo le prime 4 card si mostrano, il resto sotto
-          // "mostra tutti" (vedi JS). ⚠️ Enumera anche i rami che una scelta curata segna come
-          // alternativi ("uno solo"/"scegli una"): li elenca tutti, non e' un errore di lettura.
-          const autoFor = (steps: { spec: string; alt?: string; nodes?: string[] }[]) => {
-            const covered = new Set<string>();
-            for (const s of steps) { covered.add(s.spec); if (s.alt) covered.add(s.alt); (s.nodes ?? []).forEach(n => covered.add(n)); }
-            const out: { spec: string; auto: true }[] = [];
-            const walk = (n: ProfNode) => {
-              if (n?.name != null && n.cap != null && !covered.has(n.name)) out.push({ spec: n.name, auto: true });
-              (n?.children ?? []).forEach(walk);
-            };
-            (tree?.specs ?? []).forEach(walk);
-            return out;
-          };
           // Liste da rendere: default + una per variante (es. Druido); a ciascuna appendiamo i
-          // suoi step auto. La prima e' visibile, le altre nascoste (l'interruttore le scambia).
+          // suoi step auto (vedi `autoSteps` nel frontmatter). La prima e' visibile, le altre
+          // nascoste (l'interruttore le scambia).
           const buildLists: { variant: string; steps: any[] }[] = okBuild
-            ? [{ variant: 'default', steps: [...build!.steps, ...autoFor(build!.steps)] },
-               ...(build!.variants ?? []).map(v => ({ variant: v.key, steps: [...v.steps, ...autoFor(v.steps)] }))]
+            ? [{ variant: 'default', steps: [...build!.steps, ...autoSteps(build!.steps, tree)] },
+               ...(build!.variants ?? []).map(v => ({ variant: v.key, steps: [...v.steps, ...autoSteps(v.steps, tree)] }))]
             : [];
           return (
             <div class="prof-exp" data-exp={exp} data-has={okBuild || okLevel ? '1' : '0'} hidden={exp !== defaultExp}>

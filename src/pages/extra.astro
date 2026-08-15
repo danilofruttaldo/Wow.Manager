@@ -16,10 +16,10 @@ const lineCount = (body?: string) => (body ? body.split('\n').length : 0);
       {items.map(it => {
         const openable = it.kind !== 'link' && !!it.body;
         const Tag = it.kind === 'link' && it.url ? 'a' : (openable ? 'button' : 'div');
-        const props: Record<string, any> = it.kind === 'link' && it.url
+        const props = it.kind === 'link' && it.url
           ? { href: it.url, target: '_blank', rel: 'noopener noreferrer' }
           : openable
-            ? { type: 'button', 'data-title': it.name, 'data-lang': it.lang ?? '' }
+            ? { type: 'button' as const, 'data-title': it.name, 'data-lang': it.lang ?? '' }
             : {};
         return (
           <article class="xcard-wrap" data-kind={it.kind}
