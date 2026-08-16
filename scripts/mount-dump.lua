@@ -435,6 +435,30 @@ local function Sonda(ids)
     return out
 end
 
+-- Il segnale e' l'unico che il client dia davvero su un reload: la chiamata a
+-- ReloadUI. Si AVVOLGE invece di post-agganciarla con hooksecurefunc, perche' quella
+-- scatta dopo il ritorno dell'originale e da li' in poi il client puo' non tornare
+-- piu'. ⚠️ E si avvolgono TUTTE E DUE le forme: nei client recenti il comando
+-- /reload passa da C_UI.Reload e non dal globale, quindi agganciare il solo globale
+-- lascerebbe il segnale muto senza che nulla lo dica. Quali sono andate a segno
+-- finisce nel campo `ganci` del dump: e' un fatto da leggere, non da sperare.
+local ricarica = false
+local ganci = {}
+local function Avvolgi(tabella, chiave, etichetta)
+    if type(tabella) ~= "table" then return end
+    local orig = tabella[chiave]
+    if type(orig) ~= "function" then return end
+    local ok = pcall(function()
+        tabella[chiave] = function(...)
+            ricarica = true
+            return orig(...)
+        end
+    end)
+    if ok then ganci[#ganci + 1] = etichetta end
+end
+Avvolgi(_G, "ReloadUI", "ReloadUI")
+Avvolgi(C_UI, "Reload", "C_UI.Reload")
+
 local function Dump()
     local voci, presi = {}, 0
     local tipi, scartate = {}, {}
@@ -624,6 +648,7 @@ local function Dump()
         api = ApiNames(),        -- funzioni C_MountJournal davvero esposte
         ripieghi = ripieghi,     -- quante spell/display sono arrivate per la strada alternativa
         sonda = Sonda(sondaIds), -- la tupla grezza delle chiamate, per non indovinare
+        ganci = ganci,           -- quali forme di ReloadUI sono state avvolte: vuoto = segnale muto
         filtri = contaFiltri,    -- indice del filtro Type -> quante mount ci stanno
         filtriEsempi = esempiFiltri,  -- e i primi nomi: e' cosi' che si verifica l'accoppiamento
         filtriErrore = erroreFiltri,   -- valorizzato = il diario non ha classificato nulla
@@ -645,12 +670,27 @@ end
 SLASH_WMMOUNT1 = "/wmmount"
 SlashCmdList["WMMOUNT"] = Dump
 
+-- ⚠️ SI RIGENERA SOLO IN UN /reload (o con /wmmount). PLAYER_LOGOUT scatta anche
+-- alla chiusura vera del gioco, e li' il client si sta gia' smontando: ne esce un
+-- dump con spellID e creatureDisplayInfoID a nil, giusto in tutto il resto e quindi
+-- indistinguibile da uno buono senza guardarci dentro.
+--
+-- ⚠️ E la condizione e' scritta al POSITIVO -- «rigenera se so di essere in un
+-- reload» -- non al negativo. L'opposto («rigenera sempre, salvo quando riconosco
+-- l'uscita») ha lo stesso effetto quando il riconoscimento funziona, ma quando
+-- fallisce rimette in circolo proprio il dump difettoso. Cosi' invece il guasto
+-- peggiore e' non rigenerare: il file conserva il dump calcolato al login, vecchio
+-- di qualche minuto ma sano. Sbagliare verso il dato stantio si vede e si rimedia
+-- con un /reload; sbagliare verso il dato corrotto ha gia' cancellato 1184 icone.
+--
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOGIN")
 f:RegisterEvent("PLAYER_LOGOUT")
 f:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_LOGOUT" then
-        Dump()      -- rigenera prima della scrittura: il file e' sempre fresco
+        -- Se non e' un reload non si tocca nulla: quel che sta in memoria e' il dump
+        -- del login (o dell'ultimo /wmmount), ed e' quello che il gioco scrive.
+        if ricarica then Dump() end
     else
         C_Timer.After(5, Dump)
     end

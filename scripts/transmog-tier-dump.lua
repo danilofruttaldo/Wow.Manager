@@ -512,6 +512,28 @@ local function PiecesIn(setID, have, total, tier, versione)
     return out
 end
 
+-- Si AVVOLGE ReloadUI invece di post-agganciarla con hooksecurefunc, perche' quella
+-- scatta dopo il ritorno dell'originale e da li' in poi il client puo' non tornare
+-- piu'. ⚠️ Tutte e due le forme: nei client recenti /reload passa da C_UI.Reload e
+-- non dal globale, quindi agganciare il solo globale lascerebbe il segnale muto
+-- senza che nulla lo dica. Quali sono andate a segno finisce nel campo `ganci`.
+local ricarica = false
+local ganci = {}
+local function Avvolgi(tabella, chiave, etichetta)
+    if type(tabella) ~= "table" then return end
+    local orig = tabella[chiave]
+    if type(orig) ~= "function" then return end
+    local ok = pcall(function()
+        tabella[chiave] = function(...)
+            ricarica = true
+            return orig(...)
+        end
+    end)
+    if ok then ganci[#ganci + 1] = etichetta end
+end
+Avvolgi(_G, "ReloadUI", "ReloadUI")
+Avvolgi(C_UI, "Reload", "C_UI.Reload")
+
 local function Dump()
     local raw, data, dropped, pieces, errors = {}, {}, {}, {}, {}
     -- Set in cui NESSUN pezzo ottiene un boss. Una riga di raid a copertura zero e'
@@ -727,6 +749,7 @@ local function Dump()
         senzaBoss = senzaBoss,        -- set in cui nessun pezzo ha un boss
         sondaSenzaBoss = sondaSenzaBoss,  -- cosa rispondono le API sul primo di quelli
         stats = stats,            -- boss recuperati dalle varianti della stessa apparenza
+        ganci = ganci,            -- quali forme di ReloadUI sono avvolte: vuoto = segnale muto
 
         sets = raw,   -- dump grezzo: serve solo se cambia la mappa TIER/SLOT
     }
@@ -738,12 +761,25 @@ end
 SLASH_WMTIER1 = "/wmtier"
 SlashCmdList["WMTIER"] = Dump
 
+-- ⚠️ SI RIGENERA SOLO IN UN /reload (o con /wmtier), come nel gemello delle mount e
+-- per lo stesso motivo: PLAYER_LOGOUT scatta anche alla chiusura vera del gioco, e
+-- li' il client si sta gia' smontando. Qui il danno si vedeva meno perche' in
+-- chiusura la collezione si legge VUOTA e la guardia dentro Dump() tiene il dump di
+-- meta' sessione -- ma e' una combinazione, non una difesa: bastava che un campo
+-- diverso si perdesse mentre i pezzi si contavano ancora (e' esattamente cio' che e'
+-- successo al dump delle mount) perche' passasse inosservato.
+--
+-- ⚠️ La condizione e' al POSITIVO -- «rigenera se so di essere in un reload» -- non
+-- al negativo: se il riconoscimento fallisce il guasto peggiore e' un dump vecchio
+-- di qualche minuto ma sano, invece di uno corrotto.
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOGIN")
 f:RegisterEvent("PLAYER_LOGOUT")
 f:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_LOGOUT" then
-        Dump()      -- rigenera prima della scrittura: il file e' sempre fresco
+        -- Non e' un reload: si tiene quel che sta in memoria, cioe' il dump del
+        -- login o dell'ultimo /wmtier.
+        if ricarica then Dump() end
     else
         C_Timer.After(5, Dump)
     end

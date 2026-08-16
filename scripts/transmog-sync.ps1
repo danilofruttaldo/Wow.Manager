@@ -94,10 +94,15 @@ if (-not $Subito) {
     for ($giro = 1; $giro -le $Reload; $giro++) {
         $prima = $dump.LastWriteTime
         Write-Host ""
+        # Sull'ultimo giro si chiede /wmtier PRIMA del /reload: cosi' il dump lo calcola
+        # il client mentre e' vivo e il /reload si limita a scriverlo. E' la strada
+        # deterministica -- l'addon riconosce il reload anche da solo, ma quello e' un
+        # di piu' e non la garanzia. Sui giri di scarto basta il /reload.
+        $cmd = if ($giro -eq $Reload) { "/wmtier poi /reload" } else { "/reload" }
         if ($Reload -gt 1) {
-            Write-Host ("  In gioco: /reload  ({0} di {1})" -f $giro, $Reload) -ForegroundColor Cyan
+            Write-Host ("  In gioco: {0}  ({1} di {2})" -f $cmd, $giro, $Reload) -ForegroundColor Cyan
         } else {
-            Write-Host "  In gioco: /reload" -ForegroundColor Cyan
+            Write-Host ("  In gioco: {0}" -f $cmd) -ForegroundColor Cyan
         }
         Write-Host ("  (aspetto un dump nuovo, max {0}s - Ctrl+C per annullare)" -f $AttesaMax)
         $scaduto = (Get-Date).AddSeconds($AttesaMax)
