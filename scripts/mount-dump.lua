@@ -337,10 +337,96 @@ local function ImparaTipi(raccolta, ambigui)
     return out
 end
 
+-- ⚠️ 12.1.0: spellID e creatureDisplayInfoID tornano NIL su tutte le mount, mentre
+-- nome, provenienza, tipo e "collezionata" continuano ad arrivare. Non e' uno
+-- slittamento della tupla -- se lo fosse cadrebbero anche gli altri campi, e invece
+-- nella chiamata Extra la descrizione resta in posizione 2 e il mountTypeID in 5 --
+-- sono proprio quei due, cioe' i soli due ID numerici delle due chiamate.
+--
+-- Non e' un dettaglio: sono le CHIAVI con cui il repo tiene insieme il resto. La
+-- spell aggancia il nome dell'icona gia' risolto nel manifest (a zero il sync le
+-- considera tutte orfane e cancella i file, 1184 nel 2026-08-04) e il display
+-- nomina il file dell'immagine in public/mounts/. Quindi si recuperano per altra
+-- strada, che il client espone ancora -- vedi il campo `api` del dump.
+local function SpellDi(id, spellID)
+    if spellID and spellID > 0 then return spellID, false end
+    -- Il link della mount e' un link di spell: l'id sta li' dentro.
+    local ok, link = pcall(C_MountJournal.GetMountLink, id)
+    if ok and type(link) == "string" then
+        local s = link:match("Hspell:(%d+)")
+        if s then return tonumber(s), true end
+    end
+    return 0, false
+end
+
+-- Il display si ripiglia dalle due funzioni "tutti i display di questa mount": la
+-- prima voce e' l'aspetto di base. Tornano una lista di numeri o di tabelle a
+-- seconda della funzione, quindi si accettano entrambe le forme invece di
+-- indovinare quale sia.
+local function PrimoDisplay(v)
+    if type(v) == "number" then return v end
+    if type(v) == "table" then
+        return v.creatureDisplayID or v.creatureDisplayInfoID or v[1]
+    end
+end
+
+local function DisplayDi(id, displayID)
+    if displayID and displayID > 0 then return displayID, false end
+    for _, nome in ipairs({ "GetAllCreatureDisplayIDsForMountID", "GetMountAllCreatureDisplayInfoByID" }) do
+        local f = C_MountJournal[nome]
+        if f then
+            local ok, t = pcall(f, id)
+            if ok and type(t) == "table" then
+                local d = PrimoDisplay(t[1])
+                if type(d) == "number" and d > 0 then return d, true end
+            end
+        end
+    end
+    return 0, false
+end
+
+-- Sonda: la tupla GREZZA di ogni chiamata, posizione per posizione, con il tipo.
+-- Serve a non dover piu' indovinare dove un campo sia finito -- e' cosi' che si e'
+-- visto che spell e display sono nil e non spostati. Se un giorno tornano, o si
+-- spostano davvero, si legge qui senza rimettere mano al codice.
+local function Sonda(ids)
+    local function mostra(v)
+        if type(v) == "table" then
+            local n = 0
+            for _ in pairs(v) do n = n + 1 end
+            local d = PrimoDisplay(v[1])
+            return ("table(n=%d, primo=%s)"):format(n, tostring(d))
+        end
+        return tostring(v)
+    end
+    local out = {}
+    for _, id in ipairs(ids) do
+        local righe = {}
+        local function tupla(etichetta, ok, ...)
+            if not ok then righe[#righe + 1] = etichetta .. ": ERRORE"; return end
+            local pezzi = {}
+            for i = 1, select("#", ...) do
+                local v = select(i, ...)
+                pezzi[i] = ("%d=%s:%s"):format(i, type(v), mostra(v))
+            end
+            righe[#righe + 1] = etichetta .. ": " .. table.concat(pezzi, "  ")
+        end
+        tupla("GetMountInfoByID", pcall(C_MountJournal.GetMountInfoByID, id))
+        tupla("GetMountInfoExtraByID", pcall(C_MountJournal.GetMountInfoExtraByID, id))
+        tupla("GetMountLink", pcall(C_MountJournal.GetMountLink, id))
+        for _, nome in ipairs({ "GetAllCreatureDisplayIDsForMountID", "GetMountAllCreatureDisplayInfoByID" }) do
+            if C_MountJournal[nome] then tupla(nome, pcall(C_MountJournal[nome], id)) end
+        end
+        out[tostring(id)] = righe
+    end
+    return out
+end
+
 local function Dump()
     local voci, presi = {}, 0
     local tipi, scartate = {}, {}
     local senzaCat, tipiAmbigui = {}, {}
+    local ripieghi = { spell = 0, display = 0, senzaSpell = 0, senzaDisplay = 0 }
     costiGrezzi = {}
     local cop = { diario = 0, perTipo = 0, perNome = 0, niente = 0, nascosteScoperte = 0 }
     residui = {}
@@ -357,18 +443,26 @@ local function Dump()
         -- to..."), diverso da `source` che e' la provenienza. Lo mostra la modale.
         -- `creatureDisplayInfoID` identifica il MODELLO: e' la chiave con cui si
         -- ritrova l'immagine della cavalcatura, che l'icona da sola non da'.
+        -- ⚠️ Dalla 12.1.0 questa posizione e la spellID qui sopra tornano NIL: si
+        -- leggono ancora, ma il valore buono lo danno SpellDi/DisplayDi.
         local displayID, descrizione, source, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(id)
         if name and segnaposto(name) then
             scartate[#scartate + 1] = name
         elseif name then
             mountID = mountID or id
+            local spell, spellDaLink = SpellDi(id, spellID)
+            local display, displayDaLista = DisplayDi(id, displayID)
+            if spellDaLink then ripieghi.spell = ripieghi.spell + 1 end
+            if displayDaLista then ripieghi.display = ripieghi.display + 1 end
+            if spell == 0 then ripieghi.senzaSpell = ripieghi.senzaSpell + 1 end
+            if display == 0 then ripieghi.senzaDisplay = ripieghi.senzaDisplay + 1 end
             tipi[mountTypeID or 0] = (tipi[mountTypeID or 0] or 0) + 1
             if isCollected then presi = presi + 1 end
             raccolta[#raccolta + 1] = {
-                id = mountID, spell = spellID or 0, name = name,
+                id = mountID, spell = spell, name = name,
                 src = sourceType or 0, srcText = pulisci(source) or "",
                 desc = pulisci(descrizione) or "",
-                display = displayID or 0,
+                display = display,
                 type = mountTypeID or 0,
                 nascosta = shouldHideOnChar and true or false,
                 faction = isFactionSpecific and ((faction == 0) and "horde" or "alliance") or nil,
@@ -377,6 +471,11 @@ local function Dump()
             }
         end
     end
+
+    -- Tre mount a campione per la sonda: bastano a vedere la forma delle tuple, e
+    -- tenerle poche fa si' che il campo resti leggibile a occhio nel SavedVariables.
+    local sondaIds = {}
+    for i = 1, math.min(3, #raccolta) do sondaIds[i] = raccolta[i].id end
 
     -- Si impara il dizionario tipo -> categorie, poi lo si applica a chi e' rimasto
     -- fuori dall'elenco del diario.
@@ -461,6 +560,40 @@ local function Dump()
         return
     end
 
+    -- ⚠️ Stessa guardia, per il guasto gemello: la spell e' la chiave con cui il
+    -- manifest fa da cache ai nomi delle icone, quindi un dump che la perde e' pieno
+    -- di nomi e provenienze giuste e intanto manda in fumo public/icons/mount. Un
+    -- dump del genere e' internamente coerente: senza questo controllo passerebbe.
+    if #voci > 0 and ripieghi.senzaSpell > #voci / 20 then
+        local avviso = ("%d mount su %d senza spellID, ripescate dal link %d")
+            :format(ripieghi.senzaSpell, #voci, ripieghi.spell)
+        -- ⚠️ Ma si tiene il dump vecchio solo se e' sano DAVVERO. Quello dell'altra
+        -- guardia basta che abbia mount prese; qui no: il dump di stanotte ha 702
+        -- prese, nessun `sospetto` e le spell tutte a zero, cioe' passerebbe per
+        -- buono e la guardia si incastrerebbe da sola, tenendo per sempre proprio il
+        -- file che stiamo cercando di rifare. Il difetto si vede nei dati, non nei
+        -- contatori: si guarda se la spell c'e'.
+        local vecchio = WowManagerMountDumpDB
+        if vecchio and (vecchio.presi or 0) > 0 and not vecchio.sospetto
+            and type(vecchio.mountsJson) == "string"
+            and not vecchio.mountsJson:find('"spell":0,', 1, true) then
+            print(("|cffff2020WowManagerMountDump: %s -- tengo il dump di %s.|r")
+                :format(avviso, tostring(vecchio.generated)))
+            return
+        end
+        print("|cffff2020WowManagerMountDump: " .. avviso .. ". NON sincronizzare.|r")
+        WowManagerMountDumpDB = {
+            generated = date("%Y-%m-%d %H:%M:%S"),
+            sospetto = avviso .. ". NON sincronizzare.",
+            presi = presi, totale = #voci,
+            build = GetBuildInfo(),
+            api = ApiNames(),
+            ripieghi = ripieghi,
+            sonda = Sonda(sondaIds),
+        }
+        return
+    end
+
     local parti = {}
     for i, v in ipairs(voci) do parti[i] = "    " .. v.json end
 
@@ -476,6 +609,8 @@ local function Dump()
         residui = residui,       -- provenienze con markup non riconosciuto (dovrebbe essere vuoto)
         costiGrezzi = costiGrezzi,  -- righe "Cost:" GREZZE: servono a vedere se la valuta e' stata letta
         api = ApiNames(),        -- funzioni C_MountJournal davvero esposte
+        ripieghi = ripieghi,     -- quante spell/display sono arrivate per la strada alternativa
+        sonda = Sonda(sondaIds), -- la tupla grezza delle chiamate, per non indovinare
         filtri = contaFiltri,    -- indice del filtro Type -> quante mount ci stanno
         filtriEsempi = esempiFiltri,  -- e i primi nomi: e' cosi' che si verifica l'accoppiamento
         filtriErrore = erroreFiltri,   -- valorizzato = il diario non ha classificato nulla
@@ -488,6 +623,10 @@ local function Dump()
 
     print(("|cff33ff99WowManagerMountDump|r: %d mount, %d collezionate. Categorie: %d dal diario, %d dal tipo, %d da omonimo, %d senza. /reload per scrivere.")
         :format(#voci, presi, cop.diario, cop.perTipo, cop.perNome, cop.niente))
+    if ripieghi.spell > 0 or ripieghi.display > 0 or ripieghi.senzaDisplay > 0 then
+        print(("|cffffcc00WowManagerMountDump|r: spell dal link %d, display dalla lista %d; restano senza: spell %d, display %d.")
+            :format(ripieghi.spell, ripieghi.display, ripieghi.senzaSpell, ripieghi.senzaDisplay))
+    end
 end
 
 SLASH_WMMOUNT1 = "/wmmount"
