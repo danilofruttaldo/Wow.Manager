@@ -337,17 +337,30 @@ local function ImparaTipi(raccolta, ambigui)
     return out
 end
 
--- ⚠️ 12.1.0: spellID e creatureDisplayInfoID tornano NIL su tutte le mount, mentre
--- nome, provenienza, tipo e "collezionata" continuano ad arrivare. Non e' uno
--- slittamento della tupla -- se lo fosse cadrebbero anche gli altri campi, e invece
--- nella chiamata Extra la descrizione resta in posizione 2 e il mountTypeID in 5 --
--- sono proprio quei due, cioe' i soli due ID numerici delle due chiamate.
+-- ⚠️ IL DUMP GENERATO MENTRE IL GIOCO SI CHIUDE E' DIFETTOSO, e in un modo che le
+-- guardie non vedevano. PLAYER_LOGOUT scatta sia sul /reload sia all'uscita vera, ma
+-- nell'uscita vera il client si sta gia' smontando: spellID e creatureDisplayInfoID
+-- tornano NIL su TUTTE le mount, mentre nome, provenienza, tipo e "collezionata"
+-- continuano ad arrivare giusti. Non e' un cambio di API -- misurato: lo stesso
+-- codice, sullo stesso client 12.1.0, a meta' sessione li da' tutti (Abyss Worm:
+-- spell 232519, display 74315) -- ed e' l'errore di lettura che avevo fatto io
+-- prima di confrontare i due dump.
 --
--- Non e' un dettaglio: sono le CHIAVI con cui il repo tiene insieme il resto. La
--- spell aggancia il nome dell'icona gia' risolto nel manifest (a zero il sync le
--- considera tutte orfane e cancella i file, 1184 nel 2026-08-04) e il display
--- nomina il file dell'immagine in public/mounts/. Quindi si recuperano per altra
--- strada, che il client espone ancora -- vedi il campo `api` del dump.
+-- E non e' un difetto qualsiasi: quei due sono le CHIAVI con cui il repo tiene
+-- insieme il resto. La spell aggancia il nome dell'icona gia' risolto nel manifest
+-- (a zero il sync le considera tutte orfane e cancella i file, 1184 nel 2026-08-04)
+-- e il display nomina il file dell'immagine in public/mounts/.
+--
+-- Il dump transmog ha lo stesso gancio e si e' salvato da solo: li' all'uscita la
+-- collezione si legge VUOTA, quindi scatta la guardia che gia' c'era e tiene il dump
+-- buono di meta' sessione. Qui no: le mount prese si contavano ancora (702), a
+-- mancare erano i soli ID. Da qui la guardia in fondo, che e' la difesa vera.
+--
+-- ⚠️ Questi due ripieghi invece NON sono verificati: all'uscita non e' detto che
+-- queste altre strade rispondano meglio delle prime. Costano nulla, scattano solo
+-- quando il campo e' gia' perso, e se anche loro tacciono e' la guardia a salvare il
+-- dump buono. Se un giorno il campo `ripieghi` mostra numeri diversi da zero, allora
+-- funzionano davvero e si potra' dirlo.
 local function SpellDi(id, spellID)
     if spellID and spellID > 0 then return spellID, false end
     -- Il link della mount e' un link di spell: l'id sta li' dentro.
@@ -443,8 +456,8 @@ local function Dump()
         -- to..."), diverso da `source` che e' la provenienza. Lo mostra la modale.
         -- `creatureDisplayInfoID` identifica il MODELLO: e' la chiave con cui si
         -- ritrova l'immagine della cavalcatura, che l'icona da sola non da'.
-        -- ⚠️ Dalla 12.1.0 questa posizione e la spellID qui sopra tornano NIL: si
-        -- leggono ancora, ma il valore buono lo danno SpellDi/DisplayDi.
+        -- ⚠️ Questa posizione e la spellID qui sopra sono le due che si perdono nel
+        -- dump generato mentre il gioco si chiude: a meta' sessione arrivano giuste.
         local displayID, descrizione, source, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(id)
         if name and segnaposto(name) then
             scartate[#scartate + 1] = name
