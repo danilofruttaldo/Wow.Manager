@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.1.0.69273",
-    "last_sync": "2026-08-14"
+    "last_sync": "2026-08-16"
   },
   "addons": {
     "BigWigs": {
@@ -92,14 +92,14 @@
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
       "desc": "Plugin HandyNotes per Midnight: tesori, rare, mascotte e punti d’interesse sulla mappa.",
-      "version": "v150",
+      "version": "v151",
       "interface": "120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
       "preview": "https://media.forgecdn.net/attachments/949/33/banner-war-within.png",
-      "installed": "2026-08-14",
+      "installed": "2026-08-16",
       "folders": ["HandyNotes_Midnight"],
-      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. Aggiornato 2026-07-26 v146->v147, forgecdn files/8507/133, 162 file, cartella rimossa e reinstallata da zero. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Il .toc ha un BOM UTF-8 in testa: un grep '^## Interface' NON aggancia la prima riga, va letta con head/cat -A. Nel .toc la versione e' '147' senza la 'v' (il prefisso sta solo nel nome del file su CurseForge). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita. Aggiornato 2026-08-12 v147->v148 (patch 12.1.0) forgecdn files/8628/664 (HandyNotes_Midnight-v148.zip, 334 KB); il TOC passa da 120007 a 120100 puro. ATTENZIONE: il workflow /aggiorna-addon dello stesso giorno aveva dichiarato v147 come ultima, ma la v148 era gia' pubblicata dalle 00:50 UTC -> quando esce una patch, ricontrolla a mano invece di fidarti dell'audit. Aggiornato 2026-08-14 v148->v150 (salta la v149) forgecdn files/8644/507 (HandyNotes_Midnight-v150.zip, 337 KB, 163 file); ## Interface invariata (120100), nel .toc la versione resta nuda ('150')."
+      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. Aggiornato 2026-07-26 v146->v147, forgecdn files/8507/133, 162 file, cartella rimossa e reinstallata da zero. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Il .toc ha un BOM UTF-8 in testa: un grep '^## Interface' NON aggancia la prima riga, va letta con head/cat -A. Nel .toc la versione e' '147' senza la 'v' (il prefisso sta solo nel nome del file su CurseForge). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita. Aggiornato 2026-08-12 v147->v148 (patch 12.1.0) forgecdn files/8628/664 (HandyNotes_Midnight-v148.zip, 334 KB); il TOC passa da 120007 a 120100 puro. ATTENZIONE: il workflow /aggiorna-addon dello stesso giorno aveva dichiarato v147 come ultima, ma la v148 era gia' pubblicata dalle 00:50 UTC -> quando esce una patch, ricontrolla a mano invece di fidarti dell'audit. Aggiornato 2026-08-14 v148->v150 (salta la v149) forgecdn files/8644/507 (HandyNotes_Midnight-v150.zip, 337 KB, 163 file); ## Interface invariata (120100), nel .toc la versione resta nuda ('150'). Aggiornato 2026-08-16 v150->v151 forgecdn files/8659/592 (HandyNotes_Midnight-v151.zip, 339 KB); ## Interface invariata (120100). Quattro release in cinque giorni (v147->v151): e' l'addon che si muove piu' spesso del parco."
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
@@ -133,9 +133,9 @@
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/baganator",
       "preview": "https://media.forgecdn.net/attachments/974/124/categories-2024-09-23-default.webp",
-      "installed": "2026-08-14",
+      "installed": "2026-08-15",
       "folders": ["Baganator"],
-      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-22 812->814 via /aggiorna-addon (workflow) forgecdn files/8481/597 (Baganator-814.zip); TOC 120007 match build 12.0.7. Aggiornato 2026-08-03 814->815 via /aggiorna-addon (workflow) forgecdn files/8557/56 (Baganator-815.zip, 168 file); riga ## Interface invariata. Aggiornato 2026-08-12 815->816 via /aggiorna-addon (workflow) forgecdn files/8620/311 (Baganator-816.zip, 407 KB); ## Interface aggiunge 120100 e toglie 11508 (stesso movimento di [[Syndicator]] 275, stesso autore e stesso giro di release). Aggiornato 2026-08-14 816->821 via /aggiorna-addon (workflow) forgecdn files/8648/694 (Baganator-821.zip, 407 KB); salto di 5 release in due giorni, ## Interface invariata. Qui [[Syndicator]] resta alla 276: i due addon dello stesso autore NON si muovono sempre insieme."
+      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-22 812->814 via /aggiorna-addon (workflow) forgecdn files/8481/597 (Baganator-814.zip); TOC 120007 match build 12.0.7. Aggiornato 2026-08-03 814->815 via /aggiorna-addon (workflow) forgecdn files/8557/56 (Baganator-815.zip, 168 file); riga ## Interface invariata. Aggiornato 2026-08-12 815->816 via /aggiorna-addon (workflow) forgecdn files/8620/311 (Baganator-816.zip, 407 KB); ## Interface aggiunge 120100 e toglie 11508 (stesso movimento di [[Syndicator]] 275, stesso autore e stesso giro di release). Aggiornato 2026-08-15 816->821 via /aggiorna-addon (workflow) forgecdn files/8648/694 (Baganator-821.zip, 407 KB); salto di 5 release in due giorni, ## Interface invariata. Qui [[Syndicator]] resta alla 276: i due addon dello stesso autore NON si muovono sempre insieme."
     },
     "Syndicator": {
       "name": "Syndicator",
@@ -145,9 +145,9 @@
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/syndicator",
       "preview": "https://media.forgecdn.net/attachments/1083/215/tooltip-2025-01-31.webp",
-      "installed": "2026-08-14",
+      "installed": "2026-08-13",
       "folders": ["Syndicator"],
-      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-07-22 273->274 via /aggiorna-addon (workflow) forgecdn files/8481/593 (Syndicator-274.zip); TOC include 120007 (build 12.0.7). Aggiornato 2026-08-12 274->275 via /aggiorna-addon (workflow) forgecdn files/8620/314 (Syndicator-275.zip, 104 KB, 41 file); ## Interface aggiunge 120100 e toglie 11508, come Baganator 816. Aggiornato 2026-08-14 275->276 via /aggiorna-addon (workflow) forgecdn files/8634/264 (Syndicator-276.zip, 104 KB, 41 file); ## Interface invariata; changelog 276: fallback quando manca la catalog info di un oggetto decor."
+      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-07-22 273->274 via /aggiorna-addon (workflow) forgecdn files/8481/593 (Syndicator-274.zip); TOC include 120007 (build 12.0.7). Aggiornato 2026-08-12 274->275 via /aggiorna-addon (workflow) forgecdn files/8620/314 (Syndicator-275.zip, 104 KB, 41 file); ## Interface aggiunge 120100 e toglie 11508, come Baganator 816. Aggiornato 2026-08-13 275->276 via /aggiorna-addon (workflow) forgecdn files/8634/264 (Syndicator-276.zip, 104 KB, 41 file); ## Interface invariata; changelog 276: fallback quando manca la catalog info di un oggetto decor."
     },
     "Prat-3.0": {
       "name": "Prat 3.0",
