@@ -4,9 +4,12 @@
 --   /wmcvar              riscrive il dump e dice quante sono fuori dal default
 --   /wmcvar <parola>     cerca in chat fra nome, categoria e testo d'aiuto
 --
--- Il dump si rigenera anche su PLAYER_LOGOUT, quindi basta UN /reload; il
--- /wmcvar serve solo per vederlo subito. Due reload dopo aver modificato questo
--- file: il primo scrive ancora col codice vecchio.
+-- ⚠️ Il dump lo calcola SOLO /wmcvar: poi serve un /reload (o l'uscita) perche' WoW
+-- scriva il file. Il /wmcvar non e' piu' facoltativo come prima -- non c'e' piu' la
+-- rigenerazione al logout, vedi il perche' in fondo -- e per lo stesso motivo la
+-- data del FILE non dice se il dump e' fresco: lo dice il campo `data`, ed e' quello
+-- che guarda settings-report.ps1. Due reload dopo aver modificato questo file: il
+-- primo scrive ancora col codice vecchio.
 -- SavedVariables: WTF/Account/<ACC>/SavedVariables/WowManagerCVarDump.lua
 --
 -- Valore e default arrivano da DUE chiamate a un solo ritorno (GetCVar e
@@ -90,14 +93,23 @@ local function Scrivi(zitto)
   }
 
   if not zitto then
-    print(("|cff88ff88WowManagerCVarDump|r: %d CVar, %d fuori dal default. Dump scritto al logout/reload.")
+    print(("|cff88ff88WowManagerCVarDump|r: %d CVar, %d fuori dal default. /reload per scriverlo.")
       :format(tot, diversi))
   end
 end
 
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_LOGOUT")
-f:SetScript("OnEvent", function() Scrivi(true) end)
+-- ⚠️ NIENTE dump su PLAYER_LOGOUT, e nessun evento affatto: quell'evento scatta
+-- anche alla chiusura vera del gioco, dove il client si sta gia' smontando. Sulle
+-- CVar il danno non l'ho misurato -- sono stato locale, non dati dal server, quindi
+-- probabilmente reggono -- ma "probabilmente" e' esattamente cio' che si pensava del
+-- dump mount prima che perdesse spellID e display su 1659 voci su 1659.
+--
+-- Qui il calcolo automatico non serve nemmeno: il report lo lanci dopo aver toccato
+-- le impostazioni, e /wmcvar e' gia' il modo documentato di vederle subito. Non c'e'
+-- nessun momento buono che il comando non copra gia'.
+--
+-- Il file lo scrive comunque WoW al /reload e all'uscita: la scrittura non e' mai
+-- stata il problema, perche' li' versa su disco quel che sta in memoria.
 
 SLASH_WMCVAR1 = "/wmcvar"
 SlashCmdList["WMCVAR"] = function(msg)

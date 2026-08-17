@@ -295,13 +295,20 @@ end
 SLASH_WMPROF1 = "/wmprof"
 SlashCmdList["WMPROF"] = Dump
 
+-- ⚠️ NIENTE dump su PLAYER_LOGOUT: quell'evento scatta anche alla chiusura vera del
+-- gioco, dove il client si sta gia' smontando, e da li' escono dump che sembrano
+-- buoni ma hanno campi a nil (nel dump mount ci sono costate 1184 icone). Qui il
+-- rischio e' lo stesso: `knownProfessions` vuoto lo intercetta la guardia qui sopra,
+-- ma i `maxRanks` dei nodi -- i punti, cioe' il motivo per cui questo dump esiste --
+-- potrebbero mancare mentre tutto il resto arriva, e nessuna guardia se ne
+-- accorgerebbe.
+--
+-- ⚠️ Il dump al LOGIN invece resta, e non e' un'incoerenza con gli addon mount e
+-- transmog, dove l'ho tolto. Li' fotografava la collezione all'ingresso e si perdeva
+-- quel che prendevi durante la sessione; qui le professioni note e l'albero speccato
+-- non cambiano mentre giochi, quindi lo scatto al login E' il dato. Ed e' anche il
+-- modo in cui un alt entra nel tracker professioni: basta loggarlo, senza doversi
+-- ricordare /wmprof su ognuno. Se cambi una spec a meta' sessione, /wmprof.
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOGIN")
-f:RegisterEvent("PLAYER_LOGOUT")
-f:SetScript("OnEvent", function(_, event)
-    if event == "PLAYER_LOGOUT" then
-        Dump()
-    else
-        C_Timer.After(5, Dump)
-    end
-end)
+f:SetScript("OnEvent", function() C_Timer.After(5, Dump) end)

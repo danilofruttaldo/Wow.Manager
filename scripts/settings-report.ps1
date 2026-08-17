@@ -35,6 +35,17 @@ function TrovaDump {
     Sort-Object LastWriteTime -Descending | Select-Object -First 1
 }
 
+# ⚠️ La data del FILE non dice se il dump e' fresco: WoW riscrive il SavedVariables a
+# ogni /reload e a ogni uscita, quindi senza /wmcvar riscrive gli stessi dati con una
+# data di modifica nuova. Il campo `data` invece lo mette l'addon quando calcola.
+function CalcolatoIl($file) {
+  try {
+    $t = Get-Content -Raw -Encoding UTF8 $file -ErrorAction Stop
+    if ($t -match '\["?data"?\]\s*=\s*"([^"]+)"') { return $Matches[1] }
+  } catch { }   # letto mentre il gioco lo stava scrivendo: si riprova al giro dopo
+  return $null
+}
+
 # --- 1. il dump ------------------------------------------------------------------
 $dump = TrovaDump
 if (-not $dump) {
@@ -43,18 +54,24 @@ if (-not $dump) {
     "la prima volta serve riavviare il client.")
 }
 if (-not $Subito) {
-  $prima = $dump.LastWriteTime
+  $prima = CalcolatoIl $dump.FullName
   Write-Host ''
-  Write-Host '  In gioco: /reload' -ForegroundColor Cyan
+  # Il comando PRIMA del /reload: /wmcvar calcola, il /reload scrive. L'addon non
+  # rigenera piu' da solo (scattava su PLAYER_LOGOUT, che vale anche per la chiusura
+  # del gioco), quindi un /reload da solo riscriverebbe gli stessi dati.
+  Write-Host '  In gioco: /wmcvar poi /reload' -ForegroundColor Cyan
   Write-Host ("  (aspetto un dump nuovo, max {0}s - Ctrl+C per annullare)" -f $AttesaMax)
   $scaduto = (Get-Date).AddSeconds($AttesaMax)
+  $ora = $prima
   while ((Get-Date) -lt $scaduto) {
     Start-Sleep -Seconds 2
     $dump = TrovaDump
-    if ($dump.LastWriteTime -gt $prima) { break }
+    $ora = CalcolatoIl $dump.FullName
+    if ($ora -and $ora -ne $prima) { break }
   }
-  if ($dump.LastWriteTime -le $prima) {
-    Errore "nessun dump nuovo entro $AttesaMax secondi. Rilancia, oppure -Subito per usare quello vecchio."
+  if (-not $ora -or $ora -eq $prima) {
+    Errore ("nessun dump RICALCOLATO entro $AttesaMax secondi (data ferma a '{0}'). " -f $prima) +
+      "Il /reload da solo riscrive gli stessi dati: serve /wmcvar prima. Oppure -Subito per usare quello che c'e'."
   }
   Write-Host '  dump ricevuto.' -ForegroundColor Green
 }
