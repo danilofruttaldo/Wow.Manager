@@ -10,10 +10,9 @@
 -- forma abbreviata, quindi una reinstallazione da zero lo perdeva.
 -- Un addon nuovo richiede il RIAVVIO del client (il /reload non lo vede).
 --
--- Uso: /wmtier per calcolare il dump -- oppure lascia fare all'addon, che si
---   rifa' da se' quando la collezione cambia (vedi in fondo) -- poi /reload o
---   logout per scriverlo in
+-- Uso: /wmtier per calcolare il dump, poi /reload (o logout) per scriverlo in
 --   WTF/Account/<ACC>/SavedVariables/WowManagerTierDump.lua
+--   Il calcolo lo fa SOLO il comando: niente inneschi automatici, vedi in fondo.
 -- ⚠️ Il calcolo avviene sempre a CLIENT VIVO, mai in chiusura: la scrittura si
 --   limita a versare su disco quel che sta in memoria. La data del file quindi non
 --   dice se il dump e' fresco -- lo dice il campo `generated`, che e' cio' che
@@ -752,31 +751,17 @@ SlashCmdList["WMTIER"] = Dump
 -- mentre i pezzi si contavano ancora (e' esattamente cio' che e' successo al dump
 -- delle mount) perche' passasse inosservato.
 --
--- Ora l'unico innesco automatico e' la collezione che cambia davvero. All'uscita non
--- si ricalcola: WoW scrive quel che sta in memoria, cioe' un dump fatto col client
--- integro. ⚠️ L'attesa e' piu' lunga di quella delle mount perche' questi eventi
--- sono molto piu' chiacchieroni (scattano a ogni apparenza che entra in collezione,
--- non una volta per oggetto) e qui il ricalcolo gira su 11403 pezzi.
-local ATTESA = 60
-local programmato = false
-local function Programma()
-    if programmato then return end
-    programmato = true
-    C_Timer.After(ATTESA, function()
-        programmato = false
-        Dump()
-    end)
-end
-
--- ⚠️ RegisterEvent su un nome che il client non conosce solleva errore, e un errore
--- qui vorrebbe dire addon non caricato, cioe' nessun dump affatto. Si registra in
--- pcall: basta che ne passi uno, e se non passa nessuno resta il comando.
-local f = CreateFrame("Frame")
-f:SetScript("OnEvent", Programma)
-local agganciati = 0
-for _, ev in ipairs({ "TRANSMOG_COLLECTION_UPDATED", "TRANSMOG_COLLECTION_SOURCE_ADDED" }) do
-    if pcall(f.RegisterEvent, f, ev) then agganciati = agganciati + 1 end
-end
-if agganciati == 0 then
-    print("|cffffcc00WowManagerTierDump|r: nessun evento collezione riconosciuto, resta /wmtier.")
-end
+-- ⚠️ E NESSUN INNESCO AUTOMATICO, nemmeno sulla collezione che cambia. C'era --
+-- TRANSMOG_COLLECTION_UPDATED e _SOURCE_ADDED con 60s di attesa anti-raffica -- ed e'
+-- durato meno di un giorno: quegli eventi scattano a OGNI apparenza che entra in
+-- collezione, quindi in istanza sono una raffica continua, e il ricalcolo qui gira su
+-- 11403 pezzi. L'attesa non basta a renderlo innocuo: rimanda la partenza, non la
+-- evita, e il conto lo paghi mentre giochi.
+--
+-- ⚠️ Non estendere il ragionamento al gemello delle mount senza guardare i numeri:
+-- li' l'evento e' NEW_MOUNT_ADDED, che scatta quando impari una cavalcatura, cioe'
+-- qualche volta al mese e mai a raffica. Sono due situazioni diverse dietro la stessa
+-- parola "evento".
+--
+-- Resta quindi il solo /wmtier. Il dump non e' un dato che serva minuto per minuto:
+-- lo si vuole quando si sincronizza, ed e' esattamente quando il comando si da'.
