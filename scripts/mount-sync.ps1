@@ -67,6 +67,20 @@ function TrovaDump {
            Sort-Object LastWriteTime -Descending | Select-Object -First 1
 }
 
+# ⚠️ La data del FILE non dice se il dump e' fresco. L'addon calcola a client vivo
+# (col comando o quando la collezione cambia), mentre WoW scrive il SavedVariables a
+# ogni /reload e a ogni uscita: se dall'ultimo calcolo non e' cambiato nulla, riscrive
+# gli stessi dati con una data di modifica nuova. Aspettare quella vorrebbe dire
+# accettare un dump vecchio credendolo appena fatto. Il campo `generated` invece
+# cambia solo quando il dump viene davvero ricalcolato.
+function GeneratoIl($file) {
+    try {
+        $t = Get-Content -Raw -Encoding UTF8 $file -ErrorAction Stop
+        if ($t -match '\["generated"\]\s*=\s*"([^"]+)"') { return $Matches[1] }
+    } catch { }   # letto mentre il gioco lo stava scrivendo: si riprova al giro dopo
+    return $null
+}
+
 # --- 0. l'addon nella cartella di gioco -----------------------------------------
 # Il gioco legge la copia in Interface/AddOns, NON il .lua del repo: finche' non la
 # si sovrascrive il dump esce col codice vecchio e il sync reincolla i dati vecchi
@@ -109,14 +123,13 @@ if ($Subito -and $Reload -gt 1) {
 
 if (-not $Subito) {
     for ($giro = 1; $giro -le $Reload; $giro++) {
-        $prima = $dump.LastWriteTime
+        $prima = GeneratoIl $dump.FullName
         Write-Host ""
-        # Sull'ultimo giro si chiede /wmmount PRIMA del /reload: cosi' il dump lo
-        # calcola il client mentre e' vivo e il /reload si limita a scriverlo. E' la
-        # strada deterministica -- l'addon riconosce il reload anche da solo, ma quello
-        # e' un di piu' e non la garanzia. Sui giri di scarto basta il /reload: quel
-        # dump si butta comunque.
-        $cmd = if ($giro -eq $Reload) { "/wmmount poi /reload" } else { "/reload" }
+        # Si chiede sempre il comando PRIMA del /reload, anche sui giri di scarto: il
+        # dump non si ricalcola piu' a ogni reload, quindi un /reload da solo non
+        # cambierebbe `generated` e lo script resterebbe li' ad aspettare. Il comando
+        # calcola, il /reload scrive.
+        $cmd = "/wmmount poi /reload"
         if ($Reload -gt 1) {
             Write-Host ("  In gioco: {0}  ({1} di {2})" -f $cmd, $giro, $Reload) -ForegroundColor Cyan
         } else {
@@ -124,13 +137,16 @@ if (-not $Subito) {
         }
         Write-Host ("  (aspetto un dump nuovo, max {0}s - Ctrl+C per annullare)" -f $AttesaMax)
         $scaduto = (Get-Date).AddSeconds($AttesaMax)
+        $ora = $prima
         while ((Get-Date) -lt $scaduto) {
             Start-Sleep -Seconds 2
             $dump = TrovaDump
-            if ($dump.LastWriteTime -gt $prima) { break }
+            $ora = GeneratoIl $dump.FullName
+            if ($ora -and $ora -ne $prima) { break }
         }
-        if ($dump.LastWriteTime -le $prima) {
-            Errore "nessun dump nuovo entro $AttesaMax secondi. Rilancia, oppure usa -Subito per prendere quello vecchio."
+        if (-not $ora -or $ora -eq $prima) {
+            Errore ("nessun dump RICALCOLATO entro $AttesaMax secondi (generated fermo a '{0}'). " -f $prima) `
+                 + "Il /reload da solo riscrive gli stessi dati: serve /wmmount prima. Oppure -Subito per prendere quello che c'e'."
         }
         if ($giro -lt $Reload) {
             Write-Host "  dump di scarto (codice vecchio), ne aspetto un altro." -ForegroundColor DarkGray

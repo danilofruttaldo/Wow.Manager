@@ -10,8 +10,14 @@
 -- forma abbreviata, quindi una reinstallazione da zero lo perdeva.
 -- Un addon nuovo richiede il RIAVVIO del client (il /reload non lo vede).
 --
--- Uso: /wmtier (o aspetta il login), poi /reload o logout per scrivere
+-- Uso: /wmtier per calcolare il dump -- oppure lascia fare all'addon, che si
+--   rifa' da se' quando la collezione cambia (vedi in fondo) -- poi /reload o
+--   logout per scriverlo in
 --   WTF/Account/<ACC>/SavedVariables/WowManagerTierDump.lua
+-- ⚠️ Il calcolo avviene sempre a CLIENT VIVO, mai in chiusura: la scrittura si
+--   limita a versare su disco quel che sta in memoria. La data del file quindi non
+--   dice se il dump e' fresco -- lo dice il campo `generated`, che e' cio' che
+--   guarda transmog-sync.ps1.
 -- Da li' copia DUE campi dentro il manifest:
 --   ["collectedJson"] -> blocco `collected`  (pezzi posseduti / totali)
 --   ["piecesJson"]    -> blocco `pieceList`  (tutti i pezzi, presi e mancanti)
@@ -512,28 +518,6 @@ local function PiecesIn(setID, have, total, tier, versione)
     return out
 end
 
--- Si AVVOLGE ReloadUI invece di post-agganciarla con hooksecurefunc, perche' quella
--- scatta dopo il ritorno dell'originale e da li' in poi il client puo' non tornare
--- piu'. ⚠️ Tutte e due le forme: nei client recenti /reload passa da C_UI.Reload e
--- non dal globale, quindi agganciare il solo globale lascerebbe il segnale muto
--- senza che nulla lo dica. Quali sono andate a segno finisce nel campo `ganci`.
-local ricarica = false
-local ganci = {}
-local function Avvolgi(tabella, chiave, etichetta)
-    if type(tabella) ~= "table" then return end
-    local orig = tabella[chiave]
-    if type(orig) ~= "function" then return end
-    local ok = pcall(function()
-        tabella[chiave] = function(...)
-            ricarica = true
-            return orig(...)
-        end
-    end)
-    if ok then ganci[#ganci + 1] = etichetta end
-end
-Avvolgi(_G, "ReloadUI", "ReloadUI")
-Avvolgi(C_UI, "Reload", "C_UI.Reload")
-
 local function Dump()
     local raw, data, dropped, pieces, errors = {}, {}, {}, {}, {}
     -- Set in cui NESSUN pezzo ottiene un boss. Una riga di raid a copertura zero e'
@@ -749,7 +733,6 @@ local function Dump()
         senzaBoss = senzaBoss,        -- set in cui nessun pezzo ha un boss
         sondaSenzaBoss = sondaSenzaBoss,  -- cosa rispondono le API sul primo di quelli
         stats = stats,            -- boss recuperati dalle varianti della stessa apparenza
-        ganci = ganci,            -- quali forme di ReloadUI sono avvolte: vuoto = segnale muto
 
         sets = raw,   -- dump grezzo: serve solo se cambia la mappa TIER/SLOT
     }
@@ -761,26 +744,39 @@ end
 SLASH_WMTIER1 = "/wmtier"
 SlashCmdList["WMTIER"] = Dump
 
--- ⚠️ SI RIGENERA SOLO IN UN /reload (o con /wmtier), come nel gemello delle mount e
--- per lo stesso motivo: PLAYER_LOGOUT scatta anche alla chiusura vera del gioco, e
--- li' il client si sta gia' smontando. Qui il danno si vedeva meno perche' in
--- chiusura la collezione si legge VUOTA e la guardia dentro Dump() tiene il dump di
--- meta' sessione -- ma e' una combinazione, non una difesa: bastava che un campo
--- diverso si perdesse mentre i pezzi si contavano ancora (e' esattamente cio' che e'
--- successo al dump delle mount) perche' passasse inosservato.
+-- ⚠️ SI RICALCOLA A CLIENT VIVO, MAI IN CHIUSURA, come il gemello delle mount e per
+-- lo stesso motivo: PLAYER_LOGOUT scatta anche all'uscita vera, e li' il client si
+-- sta gia' smontando. Qui il danno si vedeva meno perche' in chiusura la collezione
+-- si legge VUOTA e la guardia dentro Dump() tiene il dump di meta' sessione -- ma
+-- era una combinazione, non una difesa: bastava che si perdesse un campo diverso
+-- mentre i pezzi si contavano ancora (e' esattamente cio' che e' successo al dump
+-- delle mount) perche' passasse inosservato.
 --
--- ⚠️ La condizione e' al POSITIVO -- «rigenera se so di essere in un reload» -- non
--- al negativo: se il riconoscimento fallisce il guasto peggiore e' un dump vecchio
--- di qualche minuto ma sano, invece di uno corrotto.
+-- Ora l'unico innesco automatico e' la collezione che cambia davvero. All'uscita non
+-- si ricalcola: WoW scrive quel che sta in memoria, cioe' un dump fatto col client
+-- integro. ⚠️ L'attesa e' piu' lunga di quella delle mount perche' questi eventi
+-- sono molto piu' chiacchieroni (scattano a ogni apparenza che entra in collezione,
+-- non una volta per oggetto) e qui il ricalcolo gira su 11403 pezzi.
+local ATTESA = 60
+local programmato = false
+local function Programma()
+    if programmato then return end
+    programmato = true
+    C_Timer.After(ATTESA, function()
+        programmato = false
+        Dump()
+    end)
+end
+
+-- ⚠️ RegisterEvent su un nome che il client non conosce solleva errore, e un errore
+-- qui vorrebbe dire addon non caricato, cioe' nessun dump affatto. Si registra in
+-- pcall: basta che ne passi uno, e se non passa nessuno resta il comando.
 local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_LOGIN")
-f:RegisterEvent("PLAYER_LOGOUT")
-f:SetScript("OnEvent", function(_, event)
-    if event == "PLAYER_LOGOUT" then
-        -- Non e' un reload: si tiene quel che sta in memoria, cioe' il dump del
-        -- login o dell'ultimo /wmtier.
-        if ricarica then Dump() end
-    else
-        C_Timer.After(5, Dump)
-    end
-end)
+f:SetScript("OnEvent", Programma)
+local agganciati = 0
+for _, ev in ipairs({ "TRANSMOG_COLLECTION_UPDATED", "TRANSMOG_COLLECTION_SOURCE_ADDED" }) do
+    if pcall(f.RegisterEvent, f, ev) then agganciati = agganciati + 1 end
+end
+if agganciati == 0 then
+    print("|cffffcc00WowManagerTierDump|r: nessun evento collezione riconosciuto, resta /wmtier.")
+end

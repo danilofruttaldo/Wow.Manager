@@ -8,10 +8,23 @@
 --   scripts/WowManagerMountDump.toc -> WowManagerMountDump.toc  (invariato)
 -- Un addon NUOVO richiede il RIAVVIO del client (il /reload non lo vede).
 --
--- Uso: /wmmount (o aspetta il login), poi /reload o logout per scrivere
+-- Uso: /wmmount per calcolare il dump, poi /reload (o logout) per scriverlo in
 --   WTF/Account/<ACC>/SavedVariables/WowManagerMountDump.lua
 -- Da li' ci pensa scripts/mount-sync.ps1: il campo che serve e' uno solo,
 --   ["mountsJson"] -> il blocco `mounts` del manifest.
+--
+-- ⚠️ IL DUMP SI CALCOLA A CLIENT VIVO: col comando, oppure da se' quando la
+-- collezione cambia (vedi in fondo). Mai in chiusura -- li' `PLAYER_LOGOUT` scatta
+-- come sul /reload, ma il client si sta gia' smontando: spellID e
+-- creatureDisplayInfoID tornano nil su TUTTE le mount mentre nome, provenienza,
+-- tipo e collezione restano giusti. Ne esce un dump che sembra buono in tutto il
+-- resto, ed e' cosi' che il 2026-08-04 sono state cancellate 1184 icone.
+--
+-- Conseguenza da tenere a mente: WoW scrive il SavedVariables al /reload e
+-- all'uscita PRENDENDO QUEL CHE STA IN MEMORIA. Se dall'ultimo calcolo non e'
+-- cambiato nulla riscrive lo stesso file con gli stessi dati e una data di modifica
+-- nuova, quindi la data del file NON dice se il dump e' fresco. Lo dice il campo
+-- `generated`, ed e' quello che guardano i due script di sync.
 --
 -- ⚠️ La collezione mount e' ACCOUNT-WIDE (Warband), come le apparenze transmog:
 -- i numeri valgono per l'account, non per il PG loggato.
@@ -435,30 +448,6 @@ local function Sonda(ids)
     return out
 end
 
--- Il segnale e' l'unico che il client dia davvero su un reload: la chiamata a
--- ReloadUI. Si AVVOLGE invece di post-agganciarla con hooksecurefunc, perche' quella
--- scatta dopo il ritorno dell'originale e da li' in poi il client puo' non tornare
--- piu'. ⚠️ E si avvolgono TUTTE E DUE le forme: nei client recenti il comando
--- /reload passa da C_UI.Reload e non dal globale, quindi agganciare il solo globale
--- lascerebbe il segnale muto senza che nulla lo dica. Quali sono andate a segno
--- finisce nel campo `ganci` del dump: e' un fatto da leggere, non da sperare.
-local ricarica = false
-local ganci = {}
-local function Avvolgi(tabella, chiave, etichetta)
-    if type(tabella) ~= "table" then return end
-    local orig = tabella[chiave]
-    if type(orig) ~= "function" then return end
-    local ok = pcall(function()
-        tabella[chiave] = function(...)
-            ricarica = true
-            return orig(...)
-        end
-    end)
-    if ok then ganci[#ganci + 1] = etichetta end
-end
-Avvolgi(_G, "ReloadUI", "ReloadUI")
-Avvolgi(C_UI, "Reload", "C_UI.Reload")
-
 local function Dump()
     local voci, presi = {}, 0
     local tipi, scartate = {}, {}
@@ -648,7 +637,6 @@ local function Dump()
         api = ApiNames(),        -- funzioni C_MountJournal davvero esposte
         ripieghi = ripieghi,     -- quante spell/display sono arrivate per la strada alternativa
         sonda = Sonda(sondaIds), -- la tupla grezza delle chiamate, per non indovinare
-        ganci = ganci,           -- quali forme di ReloadUI sono state avvolte: vuoto = segnale muto
         filtri = contaFiltri,    -- indice del filtro Type -> quante mount ci stanno
         filtriEsempi = esempiFiltri,  -- e i primi nomi: e' cosi' che si verifica l'accoppiamento
         filtriErrore = erroreFiltri,   -- valorizzato = il diario non ha classificato nulla
@@ -670,28 +658,47 @@ end
 SLASH_WMMOUNT1 = "/wmmount"
 SlashCmdList["WMMOUNT"] = Dump
 
--- ⚠️ SI RIGENERA SOLO IN UN /reload (o con /wmmount). PLAYER_LOGOUT scatta anche
--- alla chiusura vera del gioco, e li' il client si sta gia' smontando: ne esce un
--- dump con spellID e creatureDisplayInfoID a nil, giusto in tutto il resto e quindi
--- indistinguibile da uno buono senza guardarci dentro.
+-- ⚠️ IL DUMP SI RICALCOLA A CLIENT VIVO, MAI IN CHIUSURA -- ed e' tutta qui la
+-- differenza. Prima c'erano PLAYER_LOGIN (timer di 5s) e PLAYER_LOGOUT ("rigenera
+-- prima della scrittura, cosi' il file e' sempre fresco"): il secondo scattava anche
+-- all'uscita vera, dove il client si sta gia' smontando, ed e' quello che il
+-- 2026-08-04 ha prodotto il dump con gli spellID a zero e cancellato 1184 icone.
 --
--- ⚠️ E la condizione e' scritta al POSITIVO -- «rigenera se so di essere in un
--- reload» -- non al negativo. L'opposto («rigenera sempre, salvo quando riconosco
--- l'uscita») ha lo stesso effetto quando il riconoscimento funziona, ma quando
--- fallisce rimette in circolo proprio il dump difettoso. Cosi' invece il guasto
--- peggiore e' non rigenerare: il file conserva il dump calcolato al login, vecchio
--- di qualche minuto ma sano. Sbagliare verso il dato stantio si vede e si rimedia
--- con un /reload; sbagliare verso il dato corrotto ha gia' cancellato 1184 icone.
+-- Adesso l'unico innesco automatico e' la collezione che cambia DAVVERO, mentre
+-- giochi. All'uscita non si ricalcola nulla: WoW versa su disco quel che sta in
+-- memoria, che a quel punto e' un dump fatto col client integro. Ne segue una cosa
+-- comoda: dopo aver chiuso il gioco il file e' gia' buono, e il sync gira con
+-- -Subito senza doverci rientrare.
 --
+-- ⚠️ Il ritardo non e' un dettaglio: imparare una cavalcatura fa scattare l'evento
+-- piu' di una volta, e il dump costa (1659 mount piu' il giro sui filtri del
+-- diario). Si programma UN ricalcolo dopo la raffica, non uno per evento.
+--
+-- ⚠️ E se il diario delle collezioni e' APERTO si rimanda, invece di procedere:
+-- questo dump accende e spegne i filtri per tipo e azzera la ricerca testuale (vedi
+-- CategorieDalDiario), quindi farlo mentre lo stai usando ti cambierebbe la finestra
+-- che hai in mano. Al login e al logout la cosa non si notava; a meta' partita si'.
+local ATTESA = 30
+local programmato = false
+local function Programma()
+    if programmato then return end
+    programmato = true
+    C_Timer.After(ATTESA, function()
+        programmato = false
+        if CollectionsJournal and CollectionsJournal:IsShown() then
+            Programma()   -- ci riprova piu' tardi, senza toccare la finestra aperta
+            return
+        end
+        Dump()
+    end)
+end
+
+-- ⚠️ RegisterEvent su un nome che il client non conosce solleva errore, e un errore
+-- qui vorrebbe dire addon non caricato, cioe' nessun dump affatto -- molto peggio del
+-- problema che l'automatismo risolve. Quindi si registra in pcall: se un giorno
+-- l'evento cambiasse nome resta il comando, che e' la strada che non puo' rompersi.
 local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_LOGIN")
-f:RegisterEvent("PLAYER_LOGOUT")
-f:SetScript("OnEvent", function(_, event)
-    if event == "PLAYER_LOGOUT" then
-        -- Se non e' un reload non si tocca nulla: quel che sta in memoria e' il dump
-        -- del login (o dell'ultimo /wmmount), ed e' quello che il gioco scrive.
-        if ricarica then Dump() end
-    else
-        C_Timer.After(5, Dump)
-    end
-end)
+f:SetScript("OnEvent", Programma)
+if not pcall(f.RegisterEvent, f, "NEW_MOUNT_ADDED") then
+    print("|cffffcc00WowManagerMountDump|r: NEW_MOUNT_ADDED non riconosciuto, resta /wmmount.")
+end
