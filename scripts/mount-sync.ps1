@@ -603,8 +603,8 @@ if (-not $NoIcone -and -not $HaNode) {
     if ($classeDaFare -gt 0 -or $imgDaFare -gt 0) {
         Write-Host ("  in sospeso: {0} mount da controllare, {1} immagini da scaricare." -f $classeDaFare, $imgDaFare) -ForegroundColor Yellow
         Write-Host "  dalla postazione col dev server, un comando solo:"
-        Write-Host "     .\scripts\mount-pending.ps1"
-        Write-Host "     (fa git pull, i due .mjs, commit e push)"
+        Write-Host "     .\scripts\node-pending.ps1"
+        Write-Host "     (fa git pull, i passi in JS che servono, commit e push)"
     } else {
         Write-Host "  niente in sospeso: nessuna mount nuova da controllare." -ForegroundColor Green
     }
