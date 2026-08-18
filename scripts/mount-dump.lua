@@ -8,13 +8,23 @@
 --   scripts/WowManagerMountDump.toc -> WowManagerMountDump.toc  (invariato)
 -- Un addon NUOVO richiede il RIAVVIO del client (il /reload non lo vede).
 --
+-- ⚠️ E' un addon `LoadOnDemand`: a ogni sessione non viene caricato affatto finche'
+-- non serve. Il comando lo registra il lanciatore WowManagerDump (vedi
+-- scripts/dump-launcher.lua), che carica questo modulo e chiama
+-- WowManagerMountDump_Run. Cosi' i 596 KB di SavedVariables di questo dump non si
+-- leggono al login, non stanno in memoria tutta la sessione e non si riscrivono a
+-- ogni /reload. Se il lanciatore non c'e', il modulo si registra il comando da se'
+-- (in fondo) e resta usabile caricandolo a mano.
+--
 -- Uso: /wmmount per calcolare il dump, poi /reload (o logout) per scriverlo in
 --   WTF/Account/<ACC>/SavedVariables/WowManagerMountDump.lua
+--   /wmmount diag  aggiunge al file i campi diagnostici (vedi in fondo a Dump)
 -- Da li' ci pensa scripts/mount-sync.ps1: il campo che serve e' uno solo,
 --   ["mountsJson"] -> il blocco `mounts` del manifest.
 --
 -- ⚠️ IL DUMP SI CALCOLA A CLIENT VIVO: col comando, oppure da se' quando la
--- collezione cambia (vedi in fondo). Mai in chiusura -- li' `PLAYER_LOGOUT` scatta
+-- collezione cambia (NEW_MOUNT_ADDED, che oggi aggancia il lanciatore perche' questo
+-- modulo non e' caricato quando l'evento scatta). Mai in chiusura -- li' `PLAYER_LOGOUT` scatta
 -- come sul /reload, ma il client si sta gia' smontando: spellID e
 -- creatureDisplayInfoID tornano nil su TUTTE le mount mentre nome, provenienza,
 -- tipo e collezione restano giusti. Ne esce un dump che sembra buono in tutto il
@@ -209,7 +219,7 @@ local CAT_DA_TIPO = { terra = true, volo = true, acqua = true, skyriding = true 
 --
 -- Una mount puo' stare in PIU' categorie (una volante che porta passeggeri e' in
 -- "volo" e in "passeggero"), quindi il risultato e' una lista, non un valore solo.
-local function CategorieDalDiario()
+local function CategorieDalDiario(diag)
     local J = C_MountJournal
     if not (J.SetTypeFilter and J.IsTypeChecked and J.GetNumDisplayedMounts and J.GetDisplayedMountID) then
         return nil, {}, "API dei filtri assente"
@@ -217,8 +227,14 @@ local function CategorieDalDiario()
 
     -- Si prova OGNI indice noto, valido o no: IsValidTypeFilter serve solo a sapere
     -- se lo stato attuale va salvato, non a decidere se interrogarlo.
+    -- ⚠️ Ma "ogni indice noto" sono i 5 di TIPO_FILTRO, non 8: ogni indice in piu' e'
+    -- un altro giro completo di filtraggio del diario su 1600 cavalcature, e i tre
+    -- oltre il quinto non hanno mai risposto. Restano interrogabili con `diag`, che
+    -- e' il momento in cui la domanda "ne e' comparso uno nuovo?" ha senso.
     local salvaTipi, salvaSorg, salvaColl, tipi = {}, {}, {}, {}
-    for i = 1, 8 do
+    -- ⚠️ 5 scritto, non `#TIPO_FILTRO`: quella tabella ha le chiavi numeriche
+    -- esplicite, e su un costruttore fatto cosi' l'operatore # puo' rispondere 0.
+    for i = 1, (diag and 8 or 5) do
         tipi[#tipi + 1] = i
         local ok, valido = pcall(J.IsValidTypeFilter, i)
         if ok and valido then
@@ -448,7 +464,8 @@ local function Sonda(ids)
     return out
 end
 
-local function Dump()
+local function Dump(diag)
+    local t0 = debugprofilestop()
     local voci, presi = {}, 0
     local tipi, scartate = {}, {}
     local senzaCat, tipiAmbigui = {}, {}
@@ -457,7 +474,7 @@ local function Dump()
     local cop = { diario = 0, perTipo = 0, perNome = 0, niente = 0, nascosteScoperte = 0 }
     residui = {}
 
-    local daDiario, contaFiltri, erroreFiltri, esempiFiltri = CategorieDalDiario()
+    local daDiario, contaFiltri, erroreFiltri, esempiFiltri = CategorieDalDiario(diag)
 
     -- Passata 1: si raccoglie tutto, categorie comprese dove il diario le da'.
     local raccolta = {}
@@ -500,6 +517,8 @@ local function Dump()
 
     -- Tre mount a campione per la sonda: bastano a vedere la forma delle tuple, e
     -- tenerle poche fa si' che il campo resti leggibile a occhio nel SavedVariables.
+    -- La sonda vera si esegue solo con `diag` o quando il dump si auto-segnala: e'
+    -- diagnostica, e a dump sano nessuno la legge.
     local sondaIds = {}
     for i = 1, math.min(3, #raccolta) do sondaIds[i] = raccolta[i].id end
 
@@ -623,6 +642,9 @@ local function Dump()
     local parti = {}
     for i, v in ipairs(voci) do parti[i] = "    " .. v.json end
 
+    -- ⚠️ QUI STA IL DUMP, e sono i soli campi che mount-sync.ps1 legge davvero
+    -- (mountsJson, sorgentiJson, generated, sospetto, presi, totale) piu' quelli
+    -- piccoli che dicono se qualcosa e' andato storto senza doverlo chiedere.
     WowManagerMountDumpDB = {
         generated = date("%Y-%m-%d %H:%M:%S"),
         sospetto = nil,          -- nil = dump buono. Se valorizzato, NON sincronizzare.
@@ -630,33 +652,41 @@ local function Dump()
         build = GetBuildInfo(),
         mountsJson = "[\n" .. table.concat(parti, ",\n") .. "\n  ]",
         sorgentiJson = SorgentiJson(),  -- indice sourceType -> etichetta, presa dal client
-        tipi = tipi,             -- mountTypeID -> quante mount, per vedere cosa esiste
-        scartate = scartate,     -- segnaposto di Blizzard tolti dall'elenco
         residui = residui,       -- provenienze con markup non riconosciuto (dovrebbe essere vuoto)
-        costiGrezzi = costiGrezzi,  -- righe "Cost:" GREZZE: servono a vedere se la valuta e' stata letta
-        api = ApiNames(),        -- funzioni C_MountJournal davvero esposte
         ripieghi = ripieghi,     -- quante spell/display sono arrivate per la strada alternativa
-        sonda = Sonda(sondaIds), -- la tupla grezza delle chiamate, per non indovinare
-        filtri = contaFiltri,    -- indice del filtro Type -> quante mount ci stanno
-        filtriEsempi = esempiFiltri,  -- e i primi nomi: e' cosi' che si verifica l'accoppiamento
-        filtriErrore = erroreFiltri,   -- valorizzato = il diario non ha classificato nulla
-        filtriEtichette = EtichetteFiltri(),  -- le stringhe del menu, per confermare gli indici
         copertura = cop,         -- quante dal diario, quante dal tipo imparato, quante niente
-        tipiImparati = perTipo,  -- il dizionario ricavato: mountTypeID -> categorie
         tipiAmbigui = tipiAmbigui,  -- tipi che classificano in piu' modi (dovrebbe essere vuoto)
+        filtriErrore = erroreFiltri,   -- valorizzato = il diario non ha classificato nulla
         senzaCat = senzaCat,     -- mount rimaste senza nessuna categoria
     }
 
-    print(("|cff33ff99WowManagerMountDump|r: %d mount, %d collezionate. Categorie: %d dal diario, %d dal tipo, %d da omonimo, %d senza. /reload per scrivere.")
-        :format(#voci, presi, cop.diario, cop.perTipo, cop.perNome, cop.niente))
+    -- ⚠️ Il resto e' DIAGNOSTICA, e si scrive solo con `/wmmount diag`. Non e' roba
+    -- da buttare -- e' con questi campi che si e' scoperto che gli indici dei filtri
+    -- non seguono l'ordine del menu, e che 424 non era skyriding -- ma sono domande
+    -- che ci si fa quando qualcosa non torna, non a ogni sync. Tenerli sempre voleva
+    -- dire calcolarli sempre: EtichetteFiltri scandisce tutto _G, Sonda interroga sei
+    -- API per mount, ApiNames elenca C_MountJournal intero.
+    if diag then
+        local d = WowManagerMountDumpDB
+        d.tipi = tipi                 -- mountTypeID -> quante mount, per vedere cosa esiste
+        d.scartate = scartate         -- segnaposto di Blizzard tolti dall'elenco
+        d.costiGrezzi = costiGrezzi   -- righe "Cost:" GREZZE: dicono se la valuta e' stata letta
+        d.api = ApiNames()            -- funzioni C_MountJournal davvero esposte
+        d.sonda = Sonda(sondaIds)     -- la tupla grezza delle chiamate, per non indovinare
+        d.filtri = contaFiltri        -- indice del filtro Type -> quante mount ci stanno
+        d.filtriEsempi = esempiFiltri -- e i primi nomi: e' cosi' che si verifica l'accoppiamento
+        d.filtriEtichette = EtichetteFiltri()  -- le stringhe del menu, per confermare gli indici
+        d.tipiImparati = perTipo      -- il dizionario ricavato: mountTypeID -> categorie
+    end
+
+    print(("|cff33ff99WowManagerMountDump|r: %d mount, %d collezionate in %d ms%s. Categorie: %d dal diario, %d dal tipo, %d da omonimo, %d senza. /reload per scrivere.")
+        :format(#voci, presi, math.floor(debugprofilestop() - t0), diag and " (diag)" or "",
+            cop.diario, cop.perTipo, cop.perNome, cop.niente))
     if ripieghi.spell > 0 or ripieghi.display > 0 or ripieghi.senzaDisplay > 0 then
         print(("|cffffcc00WowManagerMountDump|r: spell dal link %d, display dalla lista %d; restano senza: spell %d, display %d.")
             :format(ripieghi.spell, ripieghi.display, ripieghi.senzaSpell, ripieghi.senzaDisplay))
     end
 end
-
-SLASH_WMMOUNT1 = "/wmmount"
-SlashCmdList["WMMOUNT"] = Dump
 
 -- ⚠️ IL DUMP SI RICALCOLA A CLIENT VIVO, MAI IN CHIUSURA -- ed e' tutta qui la
 -- differenza. Prima c'erano PLAYER_LOGIN (timer di 5s) e PLAYER_LOGOUT ("rigenera
@@ -665,40 +695,25 @@ SlashCmdList["WMMOUNT"] = Dump
 -- 2026-08-04 ha prodotto il dump con gli spellID a zero e cancellato 1184 icone.
 --
 -- Adesso l'unico innesco automatico e' la collezione che cambia DAVVERO, mentre
--- giochi. All'uscita non si ricalcola nulla: WoW versa su disco quel che sta in
--- memoria, che a quel punto e' un dump fatto col client integro. Ne segue una cosa
--- comoda: dopo aver chiuso il gioco il file e' gia' buono, e il sync gira con
--- -Subito senza doverci rientrare.
---
--- ⚠️ Il ritardo non e' un dettaglio: imparare una cavalcatura fa scattare l'evento
--- piu' di una volta, e il dump costa (1659 mount piu' il giro sui filtri del
--- diario). Si programma UN ricalcolo dopo la raffica, non uno per evento.
---
--- ⚠️ E se il diario delle collezioni e' APERTO si rimanda, invece di procedere:
--- questo dump accende e spegne i filtri per tipo e azzera la ricerca testuale (vedi
--- CategorieDalDiario), quindi farlo mentre lo stai usando ti cambierebbe la finestra
--- che hai in mano. Al login e al logout la cosa non si notava; a meta' partita si'.
-local ATTESA = 30
-local programmato = false
-local function Programma()
-    if programmato then return end
-    programmato = true
-    C_Timer.After(ATTESA, function()
-        programmato = false
-        if CollectionsJournal and CollectionsJournal:IsShown() then
-            Programma()   -- ci riprova piu' tardi, senza toccare la finestra aperta
-            return
-        end
-        Dump()
-    end)
+-- giochi -- ed e' agganciato dal lanciatore WowManagerDump, non da qui: questo modulo
+-- e' LoadOnDemand, quindi quando NEW_MOUNT_ADDED scatta non e' nemmeno caricato, e un
+-- evento registrato in questo file non lo vedrebbe mai. Li' stanno anche il ritardo
+-- anti-raffica e il riguardo per il diario aperto (che questo dump manipola).
+-- All'uscita non si ricalcola nulla: WoW versa su disco quel che sta in memoria, che
+-- a quel punto e' un dump fatto col client integro. Ne segue una cosa comoda: dopo
+-- aver chiuso il gioco il file e' gia' buono, e il sync gira con -Subito.
+
+-- Il punto d'ingresso per il lanciatore. `msg` arriva dal comando: "diag" accende i
+-- campi diagnostici, tutto il resto vale dump normale.
+function WowManagerMountDump_Run(msg)
+    Dump(type(msg) == "string" and msg:lower():find("diag", 1, true) ~= nil)
 end
 
--- ⚠️ RegisterEvent su un nome che il client non conosce solleva errore, e un errore
--- qui vorrebbe dire addon non caricato, cioe' nessun dump affatto -- molto peggio del
--- problema che l'automatismo risolve. Quindi si registra in pcall: se un giorno
--- l'evento cambiasse nome resta il comando, che e' la strada che non puo' rompersi.
-local f = CreateFrame("Frame")
-f:SetScript("OnEvent", Programma)
-if not pcall(f.RegisterEvent, f, "NEW_MOUNT_ADDED") then
-    print("|cffffcc00WowManagerMountDump|r: NEW_MOUNT_ADDED non riconosciuto, resta /wmmount.")
+-- ⚠️ Il comando lo registra il lanciatore. Qui si registra SOLO se il lanciatore non
+-- c'e' -- altrimenti sarebbero due handler sulla stessa stringa -- cosi' il modulo
+-- caricato a mano (LoadAddOn) resta utilizzabile da solo.
+local Caricato = (C_AddOns and C_AddOns.IsAddOnLoaded) or IsAddOnLoaded
+if not Caricato("WowManagerDump") then
+    SLASH_WMMOUNT1 = "/wmmount"
+    SlashCmdList["WMMOUNT"] = WowManagerMountDump_Run
 end

@@ -110,9 +110,14 @@ end
 --
 -- Il file lo scrive comunque WoW al /reload e all'uscita: la scrittura non e' mai
 -- stata il problema, perche' li' versa su disco quel che sta in memoria.
+--
+-- ⚠️ E siccome nessun evento serve, questo addon e' `LoadOnDemand`: fuori dai momenti
+-- in cui dai /wmcvar non ha motivo di stare in memoria, ne' di farsi rileggere e
+-- riscrivere i 193 KB del suo SavedVariables a ogni /reload. Il comando lo registra
+-- il lanciatore WowManagerDump (scripts/dump-launcher.lua), che carica questo modulo
+-- e chiama WowManagerCVarDump_Run.
 
-SLASH_WMCVAR1 = "/wmcvar"
-SlashCmdList["WMCVAR"] = function(msg)
+function WowManagerCVarDump_Run(msg)
   msg = (msg or ""):gsub("^%s+", ""):gsub("%s+$", "")
   if msg == "" then
     Scrivi(false)
@@ -131,4 +136,12 @@ SlashCmdList["WMCVAR"] = function(msg)
     end
   end
   print(("WowManagerCVarDump: %d risultati per '%s'%s"):format(n, msg, n > 25 and " (mostrati i primi 25)" or ""))
+end
+
+-- ⚠️ Il comando lo registra il lanciatore: qui si registra SOLO se non c'e', per non
+-- avere due handler sulla stessa stringa.
+local Caricato = (C_AddOns and C_AddOns.IsAddOnLoaded) or IsAddOnLoaded
+if not Caricato("WowManagerDump") then
+  SLASH_WMCVAR1 = "/wmcvar"
+  SlashCmdList["WMCVAR"] = WowManagerCVarDump_Run
 end

@@ -1,7 +1,8 @@
 ## Interface: 120100
 ## Title: WowManager CVar Dump
 ## Notes: Dumps every client CVar (value, default, category, help) to SavedVariables.
-## Version: 1.0
+## Version: 1.1
+## LoadOnDemand: 1
 ## SavedVariables: WowManagerCVarDump
 
 WowManagerCVarDump.lua

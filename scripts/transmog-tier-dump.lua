@@ -10,9 +10,17 @@
 -- forma abbreviata, quindi una reinstallazione da zero lo perdeva.
 -- Un addon nuovo richiede il RIAVVIO del client (il /reload non lo vede).
 --
+-- ⚠️ E' un addon `LoadOnDemand`: nelle sessioni in cui non lo usi non viene caricato
+-- affatto. Il comando lo registra il lanciatore WowManagerDump (vedi
+-- scripts/dump-launcher.lua), che carica questo modulo e chiama
+-- WowManagerTierDump_Run. E' il dump piu' pesante del repo -- 1561 KB di
+-- SavedVariables -- che prima si leggevano al login, stavano in memoria per tutta la
+-- sessione e si riscrivevano a ogni /reload anche senza aver ricalcolato niente.
+--
 -- Uso: /wmtier per calcolare il dump, poi /reload (o logout) per scriverlo in
 --   WTF/Account/<ACC>/SavedVariables/WowManagerTierDump.lua
 --   Il calcolo lo fa SOLO il comando: niente inneschi automatici, vedi in fondo.
+--   /wmtier diag  aggiunge i campi diagnostici (`sets` compreso) -- vedi in fondo.
 -- ⚠️ Il calcolo avviene sempre a CLIENT VIVO, mai in chiusura: la scrittura si
 --   limita a versare su disco quel che sta in memoria. La data del file quindi non
 --   dice se il dump e' fresco -- lo dice il campo `generated`, che e' cio' che
@@ -103,6 +111,9 @@ local FACTION_SLOT = { Alliance = "normal", Horde = "heroic" }   -- T9: l'asse e
 local IGNORE = { Timerunning = true, Timewarped = true, ["Trading Post"] = true }
 local SLOT_ORDER = { "lfr", "normal", "heroic", "mythic" }
 
+-- Restituisce anche la lista delle apparenze primarie, non solo la frazione: e' la
+-- stessa che serve subito dopo a PiecesIn, e richiederla due volte al gioco per lo
+-- stesso set e' una chiamata (e una tabella) buttata per ognuno dei set tenuti.
 local function CountSet(setID)
     local have, total = 0, 0
     local apps = C_TransmogSets.GetSetPrimaryAppearances(setID)
@@ -112,7 +123,24 @@ local function CountSet(setID)
             if a.collected then have = have + 1 end
         end
     end
-    return have, total
+    return have, total, apps
+end
+
+-- ⚠️ Memo di GetSourceInfo, azzerato a ogni dump. Non e' micro-ottimizzazione: dentro
+-- PiecesIn ogni source del set viene interrogata una volta per costruire il gruppo
+-- per visualID, e POI di nuovo per ogni apparenza primaria -- che di quelle source e'
+-- un sottoinsieme. Erano ~11400 chiamate ripetute, una per pezzo dichiarato.
+-- Sicuro perche' dentro un dump la collezione non cambia (e comunque lo stato "preso"
+-- non viene da qui, ma da `a.collected` delle primarie).
+local infoMemo = {}
+local function SourceInfo(sid)
+    if not sid then return nil end
+    local v = infoMemo[sid]
+    if v == nil then
+        v = C_TransmogCollection.GetSourceInfo(sid) or false
+        infoMemo[sid] = v
+    end
+    return v or nil
 end
 
 -- invType -> nome dello slot, per l'elenco dei pezzi mancanti.
@@ -421,7 +449,7 @@ local mismatches = {}
 --
 -- `have`/`total` arrivano da CountSet: verifica che l'elenco combaci con la frazione
 -- mostrata nella cella, altrimenti il tooltip contraddirebbe il numero.
-local function PiecesIn(setID, have, total, tier, versione)
+local function PiecesIn(setID, have, total, tier, versione, apps)
     local out = {}
 
     -- Un'apparenza ha piu' source (le varie difficolta', e dal T28 anche il Catalyst).
@@ -429,16 +457,18 @@ local function PiecesIn(setID, have, total, tier, versione)
     -- il boss ce l'ha: si raggruppano le source per visual per poterle provare tutte.
     local byVisual = {}
     for _, sid in ipairs(C_TransmogSets.GetAllSourceIDs(setID) or {}) do
-        local si = C_TransmogCollection.GetSourceInfo(sid)
+        local si = SourceInfo(sid)
         if si and si.visualID then
             byVisual[si.visualID] = byVisual[si.visualID] or {}
             table.insert(byVisual[si.visualID], sid)
         end
     end
 
-    for _, a in ipairs(C_TransmogSets.GetSetPrimaryAppearances(setID) or {}) do
+    -- `apps` arriva da CountSet, che la lista l'ha gia' chiesta. Il ripiego resta per
+    -- chi chiamasse PiecesIn senza passarla.
+    for _, a in ipairs(apps or C_TransmogSets.GetSetPrimaryAppearances(setID) or {}) do
         local sourceID = a.appearanceID
-        local info = sourceID and C_TransmogCollection.GetSourceInfo(sourceID)
+        local info = SourceInfo(sourceID)
         local invType = info and info.invType
         local slot = SLOT_NAME[invType]
         if not slot then
@@ -517,7 +547,8 @@ local function PiecesIn(setID, have, total, tier, versione)
     return out
 end
 
-local function Dump()
+local function Dump(diag)
+    local t0 = debugprofilestop()
     local raw, data, dropped, pieces, errors = {}, {}, {}, {}, {}
     -- Set in cui NESSUN pezzo ottiene un boss. Una riga di raid a copertura zero e'
     -- anomala: Trial of Valor ha 468 voci e nemmeno un boss, mentre Tomb of Sargeras
@@ -525,21 +556,34 @@ local function Dump()
     -- ognuno cosa rispondono davvero le API sulle sue source.
     local senzaBoss, sondaSenzaBoss = {}, {}
     local seen = {}
-    -- Dump() gira piu' volte per sessione (login, /wmtier, logout): senza azzerare,
-    -- i contatori si sommano fra una passata e l'altra e sembrano il triplo.
+    local letti = 0
+    -- Dump() gira piu' volte per sessione: senza azzerare, i contatori si sommano fra
+    -- una passata e l'altra e sembrano il triplo. Il memo delle source va azzerato per
+    -- lo stesso motivo -- e perche' fra un dump e l'altro la collezione e' cambiata.
     stats.viaVariante, stats.daToken, stats.soppressi = 0, 0, 0
+    infoMemo = {}
 
     local function consider(info)
         if not info or seen[info.setID] then return end
         seen[info.setID] = true
-        local have, total = CountSet(info.setID)
-        raw[#raw + 1] = {
-            setID = info.setID, name = info.name, label = info.label,
-            description = info.description, classMask = info.classMask,
-            requiredFaction = info.requiredFaction, expansionID = info.expansionID,
-            patchID = info.patchID, uiOrder = info.uiOrder,
-            collected = have, total = total,
-        }
+        letti = letti + 1
+        -- ⚠️ IL CONTEGGIO SI CHIEDE DOPO AVER DECISO CHE IL SET CI INTERESSA. Il
+        -- journal ne elenca 3483 (misurato) e le righe del manifest ne usano una
+        -- frazione: contarli tutti in testa voleva dire scorrere 27201 apparenze per
+        -- poi buttarne la maggior parte due righe piu' sotto, al `if not tier`.
+        -- In `diag` invece si conta prima, come faceva sempre: il blocco `sets` serve
+        -- a confrontare i NOMI col client, e deve restare identico a com'era.
+        local have, total, apps
+        if diag then
+            have, total, apps = CountSet(info.setID)
+            raw[#raw + 1] = {
+                setID = info.setID, name = info.name, label = info.label,
+                description = info.description, classMask = info.classMask,
+                requiredFaction = info.requiredFaction, expansionID = info.expansionID,
+                patchID = info.patchID, uiOrder = info.uiOrder,
+                collected = have, total = total,
+            }
+        end
 
         local chiave = (info.expansionID or -1) .. "|" .. (info.label or "")
         local mask = info.classMask or 0
@@ -565,11 +609,13 @@ local function Dump()
             dropped[#dropped + 1] = tier .. ": slot ignoto " .. tostring(info.description)
             return
         end
+        -- Il set ci interessa: adesso i pezzi si contano (se `diag` non l'ha gia' fatto).
+        if not have then have, total, apps = CountSet(info.setID) end
         -- L'elenco dei pezzi si calcola UNA volta: e' lo stesso set, e per un set
         -- condiviso rifarlo per ognuna delle classi sarebbe solo lavoro ripetuto.
         -- Sotto pcall: un errore qui deve degradare il solo elenco dei pezzi,
         -- non far saltare tutto il dump (e con esso `collected`).
-        local ok, list = pcall(PiecesIn, info.setID, have, total, tier, slot)
+        local ok, list = pcall(PiecesIn, info.setID, have, total, tier, slot, apps)
         if not ok then
             errors[#errors + 1] = tier .. "/" .. classi[1] .. ": " .. tostring(list)
             list = nil
@@ -578,7 +624,11 @@ local function Dump()
         -- Nessun pezzo con un boss: si annota il set, e sul PRIMO che capita si
         -- guarda source per source cosa risponde l'API. Serve a distinguere "il
         -- gioco non lo sa" da "lo chiediamo male".
-        if list and #list > 0 then
+        -- ⚠️ Domanda da diagnostica, non da sync: la risposta e' gia' scritta in
+        -- CLAUDE.md (Trial of Valor e' a zero perche' quei set non cadono dai boss).
+        -- Rifarla a ogni dump costava un giro su tutte le source dei set a copertura
+        -- zero, GetAppearanceSourceDrops compreso.
+        if diag and list and #list > 0 then
             local conBoss = 0
             for _, v in ipairs(list) do
                 if v.testo:find(" %(") then conBoss = conBoss + 1 end
@@ -589,7 +639,7 @@ local function Dump()
                     tostring(info.description))
                 if #sondaSenzaBoss == 0 then
                     for _, sid in ipairs(C_TransmogSets.GetAllSourceIDs(info.setID) or {}) do
-                        local si = C_TransmogCollection.GetSourceInfo(sid)
+                        local si = SourceInfo(sid)
                         local okd, drops = pcall(C_TransmogCollection.GetAppearanceSourceDrops, sid)
                         sondaSenzaBoss[#sondaSenzaBoss + 1] = ("src %d | item %s | visual %s | drops %s"):format(
                             sid, tostring(si and si.itemID), tostring(si and si.visualID),
@@ -714,6 +764,10 @@ local function Dump()
     end
     local sospetto = nil
 
+    -- I due blocchi che vanno nel manifest, piu' i campi piccoli che dicono se il
+    -- dump e' da buttare (`sospetto`, `mismatches`, `errors`: li legge il sync) o se
+    -- una mappa e' rimasta indietro (`dropped`, `unmapped`). Sono quelli che si
+    -- guardano senza doverli chiedere.
     WowManagerTierDumpDB = {
         generated = date("%Y-%m-%d %H:%M:%S"),
         sospetto = sospetto,   -- nil = dump buono. Se valorizzato, NON incollare.
@@ -721,27 +775,46 @@ local function Dump()
         build = GetBuildInfo(),
         collectedJson = table.concat(out, "\n"),
         piecesJson = Serializza("pieceList", "testo"),
-        -- Non va nel manifest: e' la lista di lavoro per cercare i drop mancanti.
-        missingItemIdsJson = Serializza("missingItemIds", "itemID"),
         dropped = dropped,
         errors = errors,   -- set il cui elenco pezzi e' fallito (dump comunque valido)
-        probe = probe,     -- quale API ha risposto, e con che campi
-        api = ApiNames(),  -- funzioni davvero esposte: serve quando un'API sparisce
         unmapped = unmapped,  -- invType senza nome in SLOT_NAME -> un itemID d'esempio
         mismatches = mismatches,  -- set con elenco incoerente col conteggio
-        senzaBoss = senzaBoss,        -- set in cui nessun pezzo ha un boss
-        sondaSenzaBoss = sondaSenzaBoss,  -- cosa rispondono le API sul primo di quelli
         stats = stats,            -- boss recuperati dalle varianti della stessa apparenza
-
-        sets = raw,   -- dump grezzo: serve solo se cambia la mappa TIER/SLOT
     }
 
-    print(("|cff33ff99WowManagerTierDump|r: %d set letti, %d scartati, %d errori. /reload per scrivere il file.")
-        :format(#raw, #dropped, #errors))
+    -- ⚠️ La DIAGNOSTICA si scrive solo con `/wmtier diag`, ed e' la meta' abbondante
+    -- del file: `sets` da solo pesa 904 KB dei 1561 misurati, missingItemIdsJson altri
+    -- 72. Sono i campi con cui si risponde a domande che ci si fa una volta -- come si
+    -- chiama davvero questo set nel client, quali invType non sono mappati, perche'
+    -- questo raid non ha boss -- non a ogni sincronizzazione della collezione.
+    if diag then
+        local d = WowManagerTierDumpDB
+        d.sets = raw   -- dump grezzo: e' qui che si controllano i NOMI contro il client
+        d.missingItemIdsJson = Serializza("missingItemIds", "itemID")  -- lista di lavoro per i drop ignoti
+        d.probe = probe    -- quale API ha risposto, e con che campi
+        d.api = ApiNames() -- funzioni davvero esposte: serve quando un'API sparisce
+        d.senzaBoss = senzaBoss            -- set in cui nessun pezzo ha un boss
+        d.sondaSenzaBoss = sondaSenzaBoss  -- cosa rispondono le API sul primo di quelli
+    end
+
+    print(("|cff33ff99WowManagerTierDump|r: %d set letti, %d scartati, %d errori in %d ms%s. /reload per scrivere il file.")
+        :format(letti, #dropped, #errors, math.floor(debugprofilestop() - t0), diag and " (diag)" or ""))
 end
 
-SLASH_WMTIER1 = "/wmtier"
-SlashCmdList["WMTIER"] = Dump
+-- Il punto d'ingresso per il lanciatore WowManagerDump. "diag" nel comando accende i
+-- campi diagnostici.
+function WowManagerTierDump_Run(msg)
+    Dump(type(msg) == "string" and msg:lower():find("diag", 1, true) ~= nil)
+end
+
+-- ⚠️ Il comando lo registra il lanciatore: qui si registra SOLO se non c'e', per non
+-- avere due handler sulla stessa stringa. Cosi' il modulo caricato a mano resta
+-- utilizzabile da solo.
+local Caricato = (C_AddOns and C_AddOns.IsAddOnLoaded) or IsAddOnLoaded
+if not Caricato("WowManagerDump") then
+    SLASH_WMTIER1 = "/wmtier"
+    SlashCmdList["WMTIER"] = WowManagerTierDump_Run
+end
 
 -- ⚠️ SI RICALCOLA A CLIENT VIVO, MAI IN CHIUSURA, come il gemello delle mount e per
 -- lo stesso motivo: PLAYER_LOGOUT scatta anche all'uscita vera, e li' il client si
@@ -765,3 +838,8 @@ SlashCmdList["WMTIER"] = Dump
 --
 -- Resta quindi il solo /wmtier. Il dump non e' un dato che serva minuto per minuto:
 -- lo si vuole quando si sincronizza, ed e' esattamente quando il comando si da'.
+--
+-- ⚠️ Ed e' anche il motivo per cui questo addon e' LoadOnDemand: un attrezzo che si
+-- usa solo col comando non ha ragione di stare in memoria nelle sessioni in cui il
+-- comando non lo dai. Non e' una scelta indipendente da quella qui sopra -- e' la
+-- stessa portata alle conseguenze.

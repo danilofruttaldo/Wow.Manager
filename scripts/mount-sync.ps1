@@ -9,9 +9,9 @@
 #   -NoIcone      salta la risoluzione/scaricamento delle icone (solo dati)
 #   -MaxIcone N   ne risolve al massimo N e rimanda il resto al giro dopo
 #
-# In gioco basta UN /reload: l'addon rigenera il dump su PLAYER_LOGOUT, che scatta
-# anche col reload. Il /wmmount serve solo se lo vuoi vedere subito in chat.
-# Se l'addon installato e' indietro rispetto al repo lo script lo aggiorna da se'
+# In gioco: /wmmount (calcola) poi /reload (scrive). L'ordine conta, e il comando non
+# e' facoltativo: il dump non si ricalcola piu' da se' ne' al login ne' in chiusura.
+# Se gli addon installati sono indietro rispetto al repo lo script li aggiorna da se'
 # (vedi §0) e allora i reload diventano due: te lo chiede lui, uno alla volta.
 #
 # A differenza del transmog qui il manifest e' INTERAMENTE generato: non contiene
@@ -81,34 +81,58 @@ function GeneratoIl($file) {
     return $null
 }
 
-# --- 0. l'addon nella cartella di gioco -----------------------------------------
+# --- 0. gli addon nella cartella di gioco ---------------------------------------
 # Il gioco legge la copia in Interface/AddOns, NON il .lua del repo: finche' non la
 # si sovrascrive il dump esce col codice vecchio e il sync reincolla i dati vecchi
 # senza che nulla lo segnali -- i dati restano coerenti, quindi nessuna guardia a
 # valle se ne accorge. E' successo il 2026-08-04: l'addon installato era fermo alla
 # versione che filtrava il solo "(PH)" e cinque cavalcature finte sono tornate in
 # pagina. Percio' la copia la fa lo script, non la memoria di chi lo lancia.
-$AddonDir = Join-Path $Wow "_retail_\Interface\AddOns\WowManagerMountDump"
+#
+# Gli addon da tenere allineati sono DUE: il modulo del dump e il lanciatore
+# WowManagerDump, che dal momento in cui i moduli sono LoadOnDemand e' quello che
+# registra /wmmount e li carica. Un lanciatore vecchio accanto a un modulo nuovo e'
+# esattamente il tipo di disallineamento che questo blocco esiste per evitare.
+$AddOnsDir = Join-Path $Wow "_retail_\Interface\AddOns"
+$Addon = @(
+    @{ dir = "WowManagerDump"; files = @(
+        @{ src = "dump-launcher.lua";  dst = "WowManagerDump.lua" },
+        @{ src = "WowManagerDump.toc"; dst = "WowManagerDump.toc" }) },
+    @{ dir = "WowManagerMountDump"; files = @(
+        @{ src = "mount-dump.lua";              dst = "WowManagerMountDump.lua" },
+        @{ src = "WowManagerMountDump.toc";     dst = "WowManagerMountDump.toc" }) }
+)
 $Reload = 1
-if (Test-Path $AddonDir) {
+$Riavvio = @()
+foreach ($a in $Addon) {
+    $dir = Join-Path $AddOnsDir $a.dir
+    $nuovo = -not (Test-Path $dir)
+    if ($nuovo) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
     $copiati = @()
-    foreach ($f in @(@{ src = "mount-dump.lua"; dst = "WowManagerMountDump.lua" },
-                     @{ src = "WowManagerMountDump.toc"; dst = "WowManagerMountDump.toc" })) {
+    $toc = $false
+    foreach ($f in $a.files) {
         $src = Join-Path $PSScriptRoot $f.src
-        $dst = Join-Path $AddonDir $f.dst
+        $dst = Join-Path $dir $f.dst
         if (-not (Test-Path $src)) { continue }
         if ((Test-Path $dst) -and (Get-FileHash $src).Hash -eq (Get-FileHash $dst).Hash) { continue }
         Copy-Item $src $dst -Force
         $copiati += $f.dst
+        if ($f.dst -like "*.toc") { $toc = $true }
     }
     if ($copiati.Count -gt 0) {
-        Write-Host ("addon aggiornato nella cartella di gioco: {0}" -f ($copiati -join ", ")) -ForegroundColor Yellow
-        # Si puo' sovrascrivere a gioco aperto, ma il PLAYER_LOGOUT del primo /reload
-        # scrive ancora col codice GIA' CARICATO: il dump buono e' quello del secondo.
+        Write-Host ("addon aggiornato nella cartella di gioco: {0}/{1}" -f $a.dir, ($copiati -join ", ")) -ForegroundColor Yellow
+        # Si puo' sovrascrivere a gioco aperto, ma il modulo gia' caricato in questa
+        # sessione resta quello vecchio: il dump buono e' quello del secondo giro.
         $Reload = 2
     }
-} else {
-    Write-Host "addon non installato in $AddonDir : uso il dump che trovo." -ForegroundColor Yellow
+    # Il .toc lo legge il client all'AVVIO: un addon nuovo, o un .toc cambiato (per
+    # esempio LoadOnDemand aggiunto), il /reload non li vede. Non e' un errore -- fino
+    # al riavvio ogni modulo si registra il comando da se' e il sync funziona
+    # ugualmente -- ma va detto, o il risparmio non entra mai in vigore.
+    if ($nuovo -or $toc) { $Riavvio += $a.dir }
+}
+if ($Riavvio.Count -gt 0) {
+    Write-Host ("addon da attivare col RIAVVIO del client (non basta /reload): {0}" -f ($Riavvio -join ", ")) -ForegroundColor Yellow
 }
 
 # --- 1. il dump ----------------------------------------------------------------

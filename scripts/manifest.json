@@ -32,13 +32,23 @@
       "body_file": "fetch-fonts.ps1",
       "notes": "Nasce da un rilievo di privacy: caricare i font da fonts.googleapis.com manda a Google l'IP di ogni visitatore ed era l'unico host esterno del sito, quindi anche l'ostacolo a una CSP restrittiva. Inter e JetBrains Mono sono font VARIABILI: lo stesso woff2 copre tutti i pesi, per questo i 12 blocchi @font-face puntano a 4 file soli (deduplicati per hash MD5) e il totale sta in 172 KB invece di 605. Tenuti i soli subset latin e latin-ext, gli unici utili all'italiano: erano 40 blocchi con cirillico, greco e vietnamita."
     },
+    "dump-launcher": {
+      "kind": "script",
+      "name": "Lanciatore dei dump",
+      "desc": "Il solo addon del repo sempre caricato: non calcola niente, registra /wmtier /wmmount /wmprof /wmcvar e carica il modulo giusto solo quando serve.",
+      "lang": "lua",
+      "when": "Una volta sola: installalo come addon (istruzioni in testa al file) e riavvia il client, perché un addon nuovo il /reload non lo vede. Da lì in poi lo tengono aggiornato i due sync.",
+      "warn": "Senza questo addon i quattro dump restano usabili solo caricandoli a mano: è lui a registrare i comandi, che un addon LoadOnDemand non può registrare da sé.",
+      "body_file": "dump-launcher.lua",
+      "notes": "Nasce dalla misura: i quattro dump sono attrezzi che si usano qualche volta al mese, ma da addon normali costavano ogni sessione 2,6 MB di SavedVariables letti al login, tenuti in memoria e riscritti a ogni /reload (tier 1561 KB, mount 596, prof 271, cvar 193) piu' 95 KB di Lua compilati. Dichiarandoli LoadOnDemand quel conto sparisce, ma un addon non caricato non puo' registrare il proprio comando: serve un residente minimo, ed e' questo. Tiene anche i due inneschi automatici che devono scattare a modulo scarico: NEW_MOUNT_ADDED (con l'attesa anti-raffica e il riguardo per il diario aperto) e, al login, una FIRMA delle professioni -- poche chiamate, senza caricare nulla -- che fa partire il dump professioni solo se e' cambiato qualcosa, invece di ripercorrere gli alberi a ogni login e a ogni /reload."
+    },
     "transmog-tier-dump": {
       "kind": "script",
       "name": "Dump collezione tier set",
       "desc": "Addon locale che legge dal journal transmog del gioco e genera i due blocchi di transmog/manifest.json: collected (pezzi posseduti su totali) e pieceList (tutti i pezzi, col boss che li droppa), pronti da incollare.",
       "lang": "lua",
-      "when": "Quando vuoi ri-sincronizzare la pagina Transmog, o dopo aver toccato le mappe dentro lo script. Installalo come addon (istruzioni in testa al file), poi /reload, /wmtier, /reload.",
-      "warn": "Un addon nuovo richiede il riavvio del client: il /reload non lo vede. E se nel risultato il campo sospetto è valorizzato NON incollare: vuol dire che il client non aveva ancora caricato la collezione e tutti i pezzi risultano a zero.",
+      "when": "Quando vuoi ri-sincronizzare la pagina Transmog, o dopo aver toccato le mappe dentro lo script: in gioco /wmtier per calcolare e /reload per scrivere. Di norma non si lancia a mano, ci pensa transmog-sync.ps1.",
+      "warn": "L'ordine conta: il /wmtier calcola col client vivo, il /reload si limita a scrivere quel che sta in memoria. Un /reload da solo riscrive gli stessi dati con una data nuova. E se il campo sospetto è valorizzato NON incollare: vuol dire che la collezione non era ancora caricata.",
       "body_file": "transmog-tier-dump.lua",
       "notes": "Fonte: C_TransmogSets.GetAllSets + GetVariantSets + GetSetPrimaryAppearances. Account-wide (Warband). Mappe da aggiornare quando esce un raid nuovo: TIER (expansionID|label -> chiave tier), TIER_ARMOR (set per tipo di armatura, che hanno una riga loro) e TIER_ORDER. SLOT traduce la description in-game nelle 4 colonne: prima di Cata l'asse e' 10/25 uomini, nel T9 e' la fazione (requiredFaction), e SLOT_UNICO copre le righe senza asse (Order Hall, Challenge Mode, Sunwell) a cui il gioco non da' description. I set MULTICLASSE non si scartano piu': hanno il classMask con piu' bit (400 stoffa, 3592 cuoio, 4164 maglia, 35 piastre) e ClassiIn li scrive sotto ogni classe che porta quel tipo -- prima finivano in dropped e le righe di BfA, Nathria, Sanctum e l'LFR di WoD restavano vuote. Restano scartate solo le varianti Timerunning/Timewarped/Trading Post. Sui 5 slot da token dei tier moderni il boss NON si chiede al gioco, che risponde sbagliato: lo da' TOKEN_BOSS, e TOKEN_SENZA_FONTE sopprime dove una fonte da boss non esiste (set da vendor). GUARDIA: se la collezione non e' ancora caricata ogni set esce a zero pezzi ma internamente coerente, quindi mismatches resta vuoto e nulla lo distingue da un dump buono -- per questo c'e' il campo `sospetto`, piu' `presi` e `pezzi` come totali di controllo. Diagnostica: `senzaBoss` elenca i set in cui nessun pezzo ha un boss e `sondaSenzaBoss` mostra cosa rispondono le API sul primo di quelli (e' cosi' che si e' accertato che i set di Trial of Valor vengono da una quest, non da un drop). T0 e T0.5 NON esistono nel journal. Il campo `sets` nel SavedVariables e' il dump grezzo, serve se va rifatta la mappatura."
     },
@@ -47,7 +57,7 @@
       "name": "Dump alberi professioni",
       "desc": "Addon locale che legge in gioco gli alberi di specializzazione delle professioni: per ogni nodo il nome esatto, la descrizione e il numero di punti che accetta. Serve a scrivere le tappe della pagina Professioni con dati veri invece che dedotti dalle guide.",
       "lang": "lua",
-      "when": "Quando serve verificare o correggere una tappa di professione: /wmprof poi /reload, e leggi il campo json da WowManagerProfDump.lua. Un dump copre le professioni del PG loggato: per le altre serve un alt che le conosca.",
+      "when": "Quando serve verificare o correggere una tappa di professione: /wmprof poi /reload, e leggi il campo json da WowManagerProfDump.lua. Al login riparte da sé, ma solo se le professioni del PG sono cambiate.",
       "warn": "Addon nuovo: la prima volta riavvia il client, il /reload non lo vede. Per gli alberi COMPLETI (nomi dei nodi + cap) la professione va appresa dal PG; per le altre escono solo i nomi delle spec, non dei nodi.",
       "body_file": "prof-spec-dump.lua",
       "notes": "Gemello di transmog-tier-dump, ma per C_ProfSpecs / C_Traits. Nato dall'audit del 2026-07-20: le guide web non pubblicano il maxRanks (i punti da mettere in un nodo) ne' la struttura padre-figlio, il client si'. Ha gia' confermato mining.third = Refulgent Copper (nodo reale, cap 40). Restano da chiudere con un dump da alt: jewelcrafting.second (i nodi sotto Glamorous Gems), leatherworking.second/.third (sotto Lasting Leather / Safeguarding Scales) e la grafia Dextrous Diligence/Diligens sotto Calm Hands. Il .toc va accanto al .lua in Interface/AddOns/WowManagerProfDump/."
@@ -77,8 +87,8 @@
       "name": "Dump collezione cavalcature",
       "desc": "Addon locale che legge il diario delle cavalcature e scrive l'elenco completo delle mount del gioco — prese e mancanti, con provenienza e categoria — già in JSON per mounts/manifest.json.",
       "lang": "lua",
-      "when": "Installalo come addon (istruzioni in testa al file), riavvia il client, poi basta un /reload: il dump si rigenera da solo. Il /wmmount serve solo per vederlo subito in chat.",
-      "warn": "Un addon nuovo richiede il riavvio del client: il /reload non lo vede. Se il campo sospetto è valorizzato NON sincronizzare: vuol dire che il client non aveva ancora caricato la collezione e nessuna mount risulta presa.",
+      "when": "Quando vuoi ri-sincronizzare la pagina Mount: in gioco /wmmount per calcolare e /reload per scrivere. Di norma non si lancia a mano, ci pensa mount-sync.ps1; e dopo aver imparato una cavalcatura riparte da sé.",
+      "warn": "L'ordine conta: il /wmmount calcola col client vivo, il /reload si limita a scrivere. Se il campo sospetto è valorizzato NON sincronizzare: vuol dire che il client non aveva ancora caricato la collezione e nessuna mount risulta presa.",
       "body_file": "mount-dump.lua",
       "notes": "Fonte: C_MountJournal.GetMountIDs + GetMountInfoByID + GetMountInfoExtraByID. Account-wide (Warband), come le apparenze transmog. Due cose che il client NON da': (a) la categoria terra/volo/acqua/skyriding, che si deduce dal mountTypeID -- la mappa CAT copre i valori certi e ogni ID sconosciuto finisce in `tipiIgnoti` con nomi d'esempio, da classificare guardando i dati veri invece di indovinare; (b) il NOME dell'icona, perche' il gioco espone solo un fileID numerico inutilizzabile sul web -- lo risolve mount-sync.ps1 su Wowhead. Le etichette delle sorgenti non sono trascritte: il diario delle cavalcature riusa le stringhe BATTLE_PET_SOURCE_n, che si leggono dal client. Stessa GUARDIA del dump transmog: un dump preso prima che la collezione sia caricata elenca tutte le mount con nessuna presa ed e' internamente coerente, quindi c'e' il campo `sospetto` e non si sovrascrive un dump buono."
     },
@@ -157,7 +167,7 @@
       "name": "Dump impostazioni del client",
       "desc": "Addon locale che scrive l'elenco di TUTTE le impostazioni (CVar) del gioco: valore attuale, valore di default, categoria e testo d'aiuto — cioè quello che serve per decidere cosa propagare a tutti i personaggi.",
       "lang": "lua",
-      "when": "Installalo come addon (istruzioni in testa al file), riavvia il client, poi basta un /reload: il dump si rigenera da solo. /wmcvar lo riscrive subito; /wmcvar parola cerca fra nomi, categorie e aiuto direttamente in chat.",
+      "when": "Dopo aver cambiato impostazioni in gioco, prima di lanciare settings-report.ps1: /wmcvar per calcolare e /reload per scrivere. /wmcvar <parola> cerca fra nome, categoria e testo d'aiuto senza riscrivere nulla.",
       "warn": "Un addon nuovo richiede il riavvio del client: il /reload non lo vede.",
       "body_file": "cvar-dump.lua",
       "notes": "Valore e default arrivano da DUE chiamate a un solo ritorno (C_CVar.GetCVar e C_CVar.GetCVarDefault) invece che dai sette ritorni di GetCVarInfo: così la coppia valore/default non dipende dall'ordine dei ritorni. ⚠️ Dall'ordine dipendono i soli flag di scope (srvAccount, srvChar, soloLettura), che vengono dalle posizioni 3, 4 e 7 di GetCVarInfo: sono informativi, e la prova che stiano al posto giusto è che le chiavi scritte nei config-cache.wtf per-PG escano a 0/0. ⚠️ Un comando della console è trattato come CVar se GetCVar risponde: non si guarda commandType, il cui enum non è garantito fra le patch. Le righe sono testo con separatore ~|~ e nei campi le virgolette diventano apostrofi, i backslash barre e i ritorni a capo spazi: così il file NON ha il doppio-escape che gli altri dump del repo si portano dietro, al prezzo di un aiuto non verbatim al carattere. Stessa guardia degli altri dump: se legge zero CVar non sovrascrive un dump buono."

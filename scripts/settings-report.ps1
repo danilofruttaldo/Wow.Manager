@@ -8,7 +8,10 @@
 #
 # Incrocia tre cose:
 #   1. il dump dell'addon WowManagerCVarDump (/wmcvar): ogni CVar del client col
-#      suo valore, il DEFAULT, la categoria e il testo d'aiuto che scrive il gioco;
+#      suo valore, il DEFAULT, la categoria e il testo d'aiuto che scrive il gioco.
+#      L'addon e' LoadOnDemand: il comando lo registra il lanciatore WowManagerDump,
+#      che lo carica al volo. Questo script non installa nulla -- gli addon li
+#      allineano i due sync (mount e transmog, §0);
 #   2. il preset di sync-game-settings.ps1, letto dal file (non duplicato qui);
 #   3. i 53 config-cache.wtf per-PG, per dire su quanti PG una chiave e' presente
 #      e con quanti valori diversi.

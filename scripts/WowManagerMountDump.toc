@@ -1,7 +1,8 @@
 ## Interface: 120100
 ## Title: WowManager Mount Dump
 ## Notes: Dumps the account-wide mount collection to SavedVariables.
-## Version: 1.0
+## Version: 1.1
+## LoadOnDemand: 1
 ## SavedVariables: WowManagerMountDumpDB
 
 WowManagerMountDump.lua

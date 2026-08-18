@@ -19,9 +19,19 @@
 -- Installazione (addon NUOVO -> RIAVVIO del client la prima volta; dopo basta /reload):
 --   _retail_/Interface/AddOns/WowManagerProfDump/WowManagerProfDump.lua  (questo file)
 --   _retail_/Interface/AddOns/WowManagerProfDump/WowManagerProfDump.toc
+--
+-- ⚠️ E' un addon `LoadOnDemand`: lo carica il lanciatore WowManagerDump (vedi
+-- scripts/dump-launcher.lua) quando dai /wmprof, oppure al login SE le professioni
+-- del PG sono cambiate rispetto all'ultimo dump. Prima girava a ogni PLAYER_LOGIN --
+-- che scatta anche a ogni /reload -- e quindi ripercorreva gli alberi per riscrivere
+-- quasi sempre lo stesso file: la firma che decide sta nel lanciatore perche' va
+-- calcolata senza caricare nulla.
+--
 -- Uso: /wmprof poi /reload (o logout) -> scrive
 --   WTF/Account/<ACC>/SavedVariables/WowManagerProfDump.lua
 --   Da li' si legge il campo `json`, gia' pulito e ordinato.
+--   /wmprof tutto  percorre ANCHE gli alberi senza configID e riscrive i campi
+--   diagnostici (`trees` grezzo, `api`) -- vedi il perche' in fondo a Dump.
 
 -- ── Utility ────────────────────────────────────────
 
@@ -163,20 +173,26 @@ end
 
 -- ── Dump ───────────────────────────────────────────
 
-local function Dump()
+local function Dump(tutto)
+    local t0 = debugprofilestop()
     local db = {
         generated = date("%Y-%m-%d %H:%M:%S"),
         build = GetBuildInfo(),
         character = (UnitName("player")) .. "-" .. (GetRealmName() or "?"),
-        api = {
-            ProfSpecs = ApiNames("C_ProfSpecs"),
-            Traits = ApiNames("C_Traits"),
-            TradeSkillUI = ApiNames("C_TradeSkillUI"),
-        },
         knownProfessions = {},
         trees = {},
         notes = {},
     }
+    -- L'elenco delle funzioni esposte serve quando un'API sparisce o cambia nome, cioe'
+    -- a diagnosi, non a ogni dump: pesa 10 KB dentro `json`, e `json` e' il campo che
+    -- si legge a mano.
+    if tutto then
+        db.api = {
+            ProfSpecs = ApiNames("C_ProfSpecs"),
+            Traits = ApiNames("C_Traits"),
+            TradeSkillUI = ApiNames("C_TradeSkillUI"),
+        }
+    end
 
     -- GetProfessions() ritorna nil negli slot vuoti: `ipairs` si fermerebbe al primo nil
     -- saltando le professioni negli slot successivi. Si scandisce per indice con select.
@@ -243,9 +259,18 @@ local function Dump()
                     rootNodeID = tabInfo and tabInfo.rootNodeID,
                     nodes = {},
                 }
-                if tabInfo and tabInfo.rootNodeID then
-                    WalkNode((configID and configID ~= 0) and configID or nil,
-                        tabInfo.rootNodeID, {}, tab.nodes)
+                -- ⚠️ L'albero si percorre SOLO se la professione e' speccata su questa
+                -- skill line (configID valido). Senza configID GetNodeInfo non risponde
+                -- e ogni nodo esce come { nodeID, noConfig = true }: nessun nome,
+                -- nessuna descrizione, nessun maxRanks -- cioe' proprio i tre dati per
+                -- cui questo dump esiste. Misurato sul dump di ieri: 576 nodi vuoti
+                -- contro 151 pieni, meta' abbondante del file e la gran parte del
+                -- lavoro, per zero informazione. Il nome delle spec di primo livello
+                -- resta comunque, perche' viene da `tab.name`, non dai nodi.
+                -- Con `/wmprof tutto` si torna a percorrerli, se un giorno servisse.
+                local usabile = configID and configID ~= 0
+                if tabInfo and tabInfo.rootNodeID and (usabile or tutto) then
+                    WalkNode(usabile and configID or nil, tabInfo.rootNodeID, {}, tab.nodes)
                 end
                 tree.tabs[#tree.tabs + 1] = tab
             end
@@ -255,7 +280,7 @@ local function Dump()
 
     if #db.trees == 0 then
         db.notes[#db.notes + 1] =
-            "Nessun albero. O il PG non ha professioni con spec, o le API non combaciano: guarda `api`."
+            "Nessun albero. O il PG non ha professioni con spec, o le API non combaciano: rifai con /wmprof tutto e guarda `api`."
     end
 
     -- ⚠️ Guardia anti-dump-vuoto (come il dump transmog). Se GetProfessions non ha
@@ -276,8 +301,23 @@ local function Dump()
         return
     end
 
-    WowManagerProfDumpDB = db
-    WowManagerProfDumpDB.json = toJson(db, "")
+    -- ⚠️ `trees` NON si tiene come tabella: e' lo stesso dato che sta gia' dentro
+    -- `json`, che e' il campo da cui si legge. Erano 100 KB di doppione su 271, riletti
+    -- a ogni caricamento dell'addon e riscritti a ogni /reload. Con `/wmprof tutto`
+    -- torna, per quando si vuole guardare la struttura senza sciogliere gli escape.
+    local json = toJson(db, "")
+    WowManagerProfDumpDB = {
+        generated = db.generated,
+        build = db.build,
+        character = db.character,
+        knownProfessions = db.knownProfessions,  -- lo legge la guardia qui sopra
+        notes = db.notes,
+        json = json,
+    }
+    if tutto then
+        WowManagerProfDumpDB.trees = db.trees
+        WowManagerProfDumpDB.api = db.api
+    end
 
     local nNodes, nCap = 0, 0
     for _, tree in ipairs(db.trees) do
@@ -288,12 +328,22 @@ local function Dump()
             end
         end
     end
-    print(("|cff33ff99WowManagerProfDump|r: %s -- %d prof note, %d alberi, %d nodi (%d con cap). /reload per scrivere.")
-        :format(db.character, #db.knownProfessions, #db.trees, nNodes, nCap))
+    print(("|cff33ff99WowManagerProfDump|r: %s -- %d prof note, %d alberi, %d nodi (%d con cap) in %d ms%s. /reload per scrivere.")
+        :format(db.character, #db.knownProfessions, #db.trees, nNodes, nCap,
+            math.floor(debugprofilestop() - t0), tutto and " (tutto)" or ""))
 end
 
-SLASH_WMPROF1 = "/wmprof"
-SlashCmdList["WMPROF"] = Dump
+-- Il punto d'ingresso per il lanciatore WowManagerDump.
+function WowManagerProfDump_Run(msg)
+    Dump(type(msg) == "string" and msg:lower():find("tutto", 1, true) ~= nil)
+end
+
+-- ⚠️ Il comando lo registra il lanciatore: qui si registra SOLO se non c'e'.
+local Caricato = (C_AddOns and C_AddOns.IsAddOnLoaded) or IsAddOnLoaded
+if not Caricato("WowManagerDump") then
+    SLASH_WMPROF1 = "/wmprof"
+    SlashCmdList["WMPROF"] = WowManagerProfDump_Run
+end
 
 -- ⚠️ NIENTE dump su PLAYER_LOGOUT: quell'evento scatta anche alla chiusura vera del
 -- gioco, dove il client si sta gia' smontando, e da li' escono dump che sembrano
@@ -309,6 +359,10 @@ SlashCmdList["WMPROF"] = Dump
 -- non cambiano mentre giochi, quindi lo scatto al login E' il dato. Ed e' anche il
 -- modo in cui un alt entra nel tracker professioni: basta loggarlo, senza doversi
 -- ricordare /wmprof su ognuno. Se cambi una spec a meta' sessione, /wmprof.
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_LOGIN")
-f:SetScript("OnEvent", function() C_Timer.After(5, Dump) end)
+--
+-- ⚠️ Ma l'evento non lo aggancia piu' questo file: un addon LoadOnDemand non e'
+-- caricato quando PLAYER_LOGIN scatta, quindi un listener scritto qui non partirebbe
+-- mai. Sta nel lanciatore (scripts/dump-launcher.lua), che al login calcola una FIRMA
+-- delle professioni -- poche chiamate, senza caricare questo modulo -- e lo carica
+-- solo se e' cambiata. Prima invece si ripercorrevano tutti gli alberi a ogni login E
+-- a ogni /reload per riscrivere quasi sempre lo stesso identico dump.
