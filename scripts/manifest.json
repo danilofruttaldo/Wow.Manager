@@ -142,6 +142,16 @@
       "body_file": "mount-classes.mjs",
       "notes": "TRE segnali diversi, perche' uno solo prendeva 19 mount su 52: (1) `Requires <classe>` nel tooltip JSON, le classiche; (2) la frase «This mount is only available to Hunters.» nella descrizione della spell, le 11 versioni Felscorned di Legion Remix; (3) la `reqclass` della QUEST che consegna la mount, agganciata PER NOME, per le 11 cavalcature di classe di Legion. I ricolori di Legion non hanno nessuno dei tre e si ricavano dalla sede di classe (mappa SEDI). La razza esce dall'intersezione di `races` e `reqrace`, che sbagliano in modi opposti; oltre 3 razze non e' un vincolo razziale ma l'elenco delle razze di una classe o di una fazione. Copertura: 52 di classe, 13 di razza. Mai dedurre la classe dal nome della mount."
     },
+    "mount-pending": {
+      "kind": "script",
+      "name": "Mount: il pendente di Node",
+      "desc": "Dalla postazione col dev server: allinea il repo, risolve i vincoli di classe/razza e scarica le immagini dei modelli, poi committa e pusha.",
+      "lang": "powershell",
+      "when": "Quando mount-sync.ps1 dice «in sospeso: N mount da controllare, N immagini da scaricare»: quella parte vuole Node, che sulla postazione con WoW non c'è. Serve solo dopo che sono comparse cavalcature nuove.",
+      "warn": "Va lanciato dalla postazione col dev server: senza Node si ferma subito. Se la copia di lavoro è sporca salta il pull e non committa il lavoro altrui.",
+      "body_file": "mount-pending.ps1",
+      "notes": "Nasce perché le due postazioni hanno capacità disgiunte: dove c'è WoW (quindi i dump e i sync) non c'è Node, e dove c'è Node non c'è WoW. mount-sync.ps1 salta i suoi §5a/§5b e stampa il pendente; questo script lo smaltisce. Conta le stesse due cose del §5a — mount senza campo `class` e display senza il .webp — e se sono zero non fa nulla ed esce: a collezione invariata non c'è niente da fare. Restare indietro su una parte è normale e non è un errore: 7 modelli Blizzard non li pubblica (403 stabile) e qualche mount un vincolo di classe non ce l'ha."
+    },
     "addon-images": {
       "kind": "script",
       "name": "Anteprime degli addon",

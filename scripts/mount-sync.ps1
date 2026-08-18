@@ -602,9 +602,9 @@ if (-not $NoIcone -and -not $HaNode) {
     Write-Host "node non installato qui: vincoli di classe e immagini del modello non toccati." -ForegroundColor Yellow
     if ($classeDaFare -gt 0 -or $imgDaFare -gt 0) {
         Write-Host ("  in sospeso: {0} mount da controllare, {1} immagini da scaricare." -f $classeDaFare, $imgDaFare) -ForegroundColor Yellow
-        Write-Host "  dalla postazione col dev server: git pull, poi"
-        Write-Host "     node scripts/mount-classes.mjs"
-        Write-Host "     node scripts/mount-images.mjs"
+        Write-Host "  dalla postazione col dev server, un comando solo:"
+        Write-Host "     .\scripts\mount-pending.ps1"
+        Write-Host "     (fa git pull, i due .mjs, commit e push)"
     } else {
         Write-Host "  niente in sospeso: nessuna mount nuova da controllare." -ForegroundColor Green
     }
