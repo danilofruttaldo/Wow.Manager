@@ -89,17 +89,141 @@
       "folders": ["HandyNotes"],
       "notes": "Core framework per plugin di mappa. Aggiornato 2026-06-22 1.6.28->v1.6.29 via /aggiorna-addon (workflow) forgecdn files/8297/983 (HandyNotes-v1.6.29.zip). TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date). Aggiornato 2026-08-12 v1.6.29->v1.6.30 via /aggiorna-addon (workflow) forgecdn files/8619/491 (HandyNotes-v1.6.30.zip, 173 KB); riga ## Interface aggiornata ai flavor nuovi (aggiunge 120100, i classic salgono a 11509/20506). Aggiornato 2026-08-12 v1.6.30->v1.6.31 via /aggiorna-addon (workflow) forgecdn files/8629/945 (HandyNotes-v1.6.31.zip, 173 KB); riga ## Interface invariata. Il plugin HandyNotes_Midnight non e' stato toccato."
     },
+    "HandyNotes_WorldOfWarcraft": {
+      "name": "HandyNotes: Kalimdor & Eastern Kingdoms",
+      "desc": "Plugin HandyNotes per i regni originali: tesori, rare e punti d’interesse in Kalimdor ed Est.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-kalimdor-eastern-kingdoms",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_WorldOfWarcraft"],
+      "notes": "Plugin Zarillion per i regni originali (vanilla): treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_WorldOfWarcraft-v153.zip (395 KB, 198 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Nel .toc il titolo e' 'HandyNotes: World of Warcraft' e la cartella e' HandyNotes_WorldOfWarcraft: su CurseForge il progetto si chiama invece 'Kalimdor & Eastern Kingdoms', che dice quali zone copre. E' la voce 'generica', quella dei regni originali. Senza campo preview: la descrizione CurseForge non porta immagini e la galleria e' resa in JS (la pagina risponde 200 con uno User-Agent da browser, ma gli screenshot non sono nell'HTML) -> addon-images.mjs ripieghera' sul logo del progetto."
+    },
+    "HandyNotes_TheBurningCrusade": {
+      "name": "HandyNotes: The Burning Crusade",
+      "desc": "Plugin HandyNotes per Burning Crusade: tesori, rare, mascotte e punti d’interesse a Outland.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-the-burning-crusade",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_TheBurningCrusade"],
+      "notes": "Plugin Zarillion per The Burning Crusade: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_TheBurningCrusade-v153.zip (288 KB, 159 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Senza campo preview: la descrizione CurseForge non porta immagini e la galleria e' resa in JS (la pagina risponde 200 con uno User-Agent da browser, ma gli screenshot non sono nell'HTML) -> addon-images.mjs ripieghera' sul logo del progetto."
+    },
+    "HandyNotes_WrathOfTheLichKing": {
+      "name": "HandyNotes: Wrath of the Lich King",
+      "desc": "Plugin HandyNotes per Wrath of the Lich King: tesori, rare e punti d’interesse a Northrend.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-wrath-of-the-lich-king",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_WrathOfTheLichKing"],
+      "notes": "Plugin Zarillion per Wrath of the Lich King: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_WrathOfTheLichKing-v153.zip (287 KB, 160 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Senza campo preview: la descrizione CurseForge non porta immagini e la galleria e' resa in JS (la pagina risponde 200 con uno User-Agent da browser, ma gli screenshot non sono nell'HTML) -> addon-images.mjs ripieghera' sul logo del progetto."
+    },
+    "HandyNotes_Cataclysm": {
+      "name": "HandyNotes: Cataclysm",
+      "desc": "Plugin HandyNotes per Cataclysm: tesori, rare, mascotte e punti d’interesse sulla mappa.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-cataclysm",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_Cataclysm"],
+      "notes": "Plugin Zarillion per Cataclysm: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_Cataclysm-v153.zip (298 KB, 155 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Senza campo preview: la descrizione CurseForge non porta immagini e la galleria e' resa in JS (la pagina risponde 200 con uno User-Agent da browser, ma gli screenshot non sono nell'HTML) -> addon-images.mjs ripieghera' sul logo del progetto."
+    },
+    "HandyNotes_MistsOfPandaria": {
+      "name": "HandyNotes: Mists of Pandaria",
+      "desc": "Plugin HandyNotes per Mists of Pandaria: tesori, rare e punti d’interesse a Pandaria.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-mists-of-pandaria",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_MistsOfPandaria"],
+      "notes": "Plugin Zarillion per Mists of Pandaria: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_MistsOfPandaria-v153.zip (309 KB, 160 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Senza campo preview: la descrizione CurseForge non porta immagini e la galleria e' resa in JS (la pagina risponde 200 con uno User-Agent da browser, ma gli screenshot non sono nell'HTML) -> addon-images.mjs ripieghera' sul logo del progetto."
+    },
+    "HandyNotes_WarlordsOfDraenor": {
+      "name": "HandyNotes: Warlords of Draenor",
+      "desc": "Plugin HandyNotes per Warlords of Draenor: tesori, rare e punti d’interesse a Draenor.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-warlords-of-draenor",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_WarlordsOfDraenor"],
+      "notes": "Plugin Zarillion per Warlords of Draenor: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_WarlordsOfDraenor-v153.zip (371 KB, 157 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Senza campo preview: la descrizione CurseForge non porta immagini e la galleria e' resa in JS (la pagina risponde 200 con uno User-Agent da browser, ma gli screenshot non sono nell'HTML) -> addon-images.mjs ripieghera' sul logo del progetto."
+    },
+    "HandyNotes_Legion": {
+      "name": "HandyNotes: Legion",
+      "desc": "Plugin HandyNotes per Legion: tesori, rare, mascotte e punti d’interesse sulle Isole Disperse.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-legion",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_Legion"],
+      "notes": "Plugin Zarillion per Legion: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_Legion-v153.zip (333 KB, 159 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Senza campo preview: la descrizione CurseForge non porta immagini e la galleria e' resa in JS (la pagina risponde 200 con uno User-Agent da browser, ma gli screenshot non sono nell'HTML) -> addon-images.mjs ripieghera' sul logo del progetto."
+    },
+    "HandyNotes_BattleForAzeroth": {
+      "name": "HandyNotes: Battle for Azeroth",
+      "desc": "Plugin HandyNotes per Battle for Azeroth: tesori, rare, mascotte e punti d’interesse sulla mappa.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-battle-for-azeroth",
+      "preview": "https://media.forgecdn.net/attachments/321/685/rares1.png",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_BattleForAzeroth"],
+      "notes": "Plugin Zarillion per Battle for Azeroth: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_BattleForAzeroth-v153.zip (457 KB, 164 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Preview presa dalla descrizione CurseForge (rares1.png): schermata in gioco con i pin dei rare e il tooltip, guardata prima di sceglierla."
+    },
+    "HandyNotes_Shadowlands": {
+      "name": "HandyNotes: Shadowlands",
+      "desc": "Plugin HandyNotes per Shadowlands: tesori, rare, mascotte e punti d’interesse sulla mappa.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-shadowlands",
+      "preview": "https://media.forgecdn.net/attachments/310/702/rares.png",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_Shadowlands"],
+      "notes": "Plugin Zarillion per Shadowlands: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_Shadowlands-v153.zip (557 KB, 165 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Preview presa dalla descrizione CurseForge (rares.png): schermata in gioco, pin dei rare in Ardenweald col tooltip."
+    },
+    "HandyNotes_Dragonflight": {
+      "name": "HandyNotes: Dragonflight",
+      "desc": "Plugin HandyNotes per Dragonflight: tesori, rare, mascotte e punti d’interesse sulla mappa.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-dragonflight",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_Dragonflight"],
+      "notes": "Plugin Zarillion per Dragonflight: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_Dragonflight-v153.zip (672 KB, 164 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Senza campo preview: la descrizione CurseForge non porta immagini e la galleria e' resa in JS (la pagina risponde 200 con uno User-Agent da browser, ma gli screenshot non sono nell'HTML) -> addon-images.mjs ripieghera' sul logo del progetto."
+    },
+    "HandyNotes_TheWarWithin": {
+      "name": "HandyNotes: The War Within",
+      "desc": "Plugin HandyNotes per The War Within: tesori, rare, mascotte e punti d’interesse sulla mappa.",
+      "version": "v153",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-the-war-within",
+      "preview": "https://media.forgecdn.net/attachments/950/30/skycaptains.png",
+      "installed": "2026-08-18",
+      "folders": ["HandyNotes_TheWarWithin"],
+      "notes": "Plugin Zarillion per The War Within: treasure, rare, battle pet, PoI. Installato 2026-08-18 v153 dalla release unica del monorepo GitHub zarillion/handynotes-plugins (uno zip per espansione), asset HandyNotes_TheWarWithin-v153.zip (464 KB, 164 file). ## Interface 120100 = build 12.1.0, RequiredDeps HandyNotes; nel .toc la versione e' nuda ('153') e c'e' un BOM UTF-8 in testa (un grep '^## Interface' NON aggancia la prima riga). Preview presa dalla descrizione CurseForge (skycaptains.png): schermata in gioco, mappa di Hallowfall coi percorsi e il tooltip del tesoro."
+    },
     "HandyNotes_Midnight": {
       "name": "HandyNotes: Midnight",
       "desc": "Plugin HandyNotes per Midnight: tesori, rare, mascotte e punti d’interesse sulla mappa.",
-      "version": "v152",
+      "version": "v153",
       "interface": "120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-midnight",
       "preview": "https://media.forgecdn.net/attachments/949/33/banner-war-within.png",
       "installed": "2026-08-18",
       "folders": ["HandyNotes_Midnight"],
-      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. Aggiornato 2026-07-26 v146->v147, forgecdn files/8507/133, 162 file, cartella rimossa e reinstallata da zero. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Il .toc ha un BOM UTF-8 in testa: un grep '^## Interface' NON aggancia la prima riga, va letta con head/cat -A. Nel .toc la versione e' '147' senza la 'v' (il prefisso sta solo nel nome del file su CurseForge). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita. Aggiornato 2026-08-12 v147->v148 (patch 12.1.0) forgecdn files/8628/664 (HandyNotes_Midnight-v148.zip, 334 KB); il TOC passa da 120007 a 120100 puro. ATTENZIONE: il workflow /aggiorna-addon dello stesso giorno aveva dichiarato v147 come ultima, ma la v148 era gia' pubblicata dalle 00:50 UTC -> quando esce una patch, ricontrolla a mano invece di fidarti dell'audit. Aggiornato 2026-08-14 v148->v150 (salta la v149) forgecdn files/8644/507 (HandyNotes_Midnight-v150.zip, 337 KB, 163 file); ## Interface invariata (120100), nel .toc la versione resta nuda ('150'). Aggiornato 2026-08-16 v150->v151 forgecdn files/8659/592 (HandyNotes_Midnight-v151.zip, 339 KB); ## Interface invariata (120100). Quattro release in cinque giorni (v147->v151): e' l'addon che si muove piu' spesso del parco. Aggiornato 2026-08-18 v151->v152 forgecdn files/8668/788 (HandyNotes_Midnight-v152.zip, 344 KB); ## Interface invariata (120100), nel .toc la versione resta nuda ('152')."
+      "notes": "Plugin Zarillion per Midnight: treasure, rare, battle pet, PoI. Sostituisce MidnightTreasures (rimosso). Aggiornato 2026-07-13 v145->v146 via /aggiorna-addon (workflow) forgecdn files/8422/40. Aggiornato 2026-07-26 v146->v147, forgecdn files/8507/133, 162 file, cartella rimossa e reinstallata da zero. NB dalla v146 il .toc ha '## Interface: 120007' (prima nessuna riga Interface). Il .toc ha un BOM UTF-8 in testa: un grep '^## Interface' NON aggancia la prima riga, va letta con head/cat -A. Nel .toc la versione e' '147' senza la 'v' (il prefisso sta solo nel nome del file su CurseForge). Viene dal monorepo GitHub zarillion/handynotes-plugins (release unica vXXX con uno zip per espansione) -> fallback download se cfwidget rate-limita. Aggiornato 2026-08-12 v147->v148 (patch 12.1.0) forgecdn files/8628/664 (HandyNotes_Midnight-v148.zip, 334 KB); il TOC passa da 120007 a 120100 puro. ATTENZIONE: il workflow /aggiorna-addon dello stesso giorno aveva dichiarato v147 come ultima, ma la v148 era gia' pubblicata dalle 00:50 UTC -> quando esce una patch, ricontrolla a mano invece di fidarti dell'audit. Aggiornato 2026-08-14 v148->v150 (salta la v149) forgecdn files/8644/507 (HandyNotes_Midnight-v150.zip, 337 KB, 163 file); ## Interface invariata (120100), nel .toc la versione resta nuda ('150'). Aggiornato 2026-08-16 v150->v151 forgecdn files/8659/592 (HandyNotes_Midnight-v151.zip, 339 KB); ## Interface invariata (120100). Quattro release in cinque giorni (v147->v151): e' l'addon che si muove piu' spesso del parco. Aggiornato 2026-08-18 v151->v152 forgecdn files/8668/788 (HandyNotes_Midnight-v152.zip, 344 KB); ## Interface invariata (120100), nel .toc la versione resta nuda ('152'). Aggiornato 2026-08-18 v152->v153 insieme all'installazione degli altri 11 plugin dell'autore: zip preso dalla release GitHub v153 (HandyNotes_Midnight-v153.zip, 339 KB, 163 file), ## Interface invariata (120100). Da qui in avanti i 12 plugin Zarillion salgono insieme: una sola release copre tutte le espansioni."
     },
     "TeleportMenu": {
       "name": "Teleport Menu",
