@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@mouseover,nodead,help]Remove Curse;[known:Spellsteal,harm,nodead]Spellsteal;[nodead,help][@player]Remove Curse
+/cast [@mouseover,nodead,help]Remove Curse;[known:Spellsteal]Spellsteal;[@player]Remove Curse
