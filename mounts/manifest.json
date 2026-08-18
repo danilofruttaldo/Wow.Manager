@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "generated": "2026-08-17",
+    "generated": "2026-08-18",
     "build": "12.1.0",
-    "collected": 701,
+    "collected": 702,
     "total": 1565,
     "excluded": 94
   },
@@ -811,7 +811,7 @@
     {"id":961,"spell":247402,"display":78092,"name":"Lucid Nightmare","src":1,"srcText":"Drop: Puzzler's Desire","desc":"When riding this mount, your thoughts often wander to far-off places.","type":424,"cats":["volo"],"faction":null,"got":0,"icon":"inv_horse2purple","class":"","race":""},
     {"id":1291,"spell":308087,"display":93352,"name":"Lucky Yun","src":10,"srcText":"In-Game Shop","desc":"The Pandaren believe that merely rubbing one's hands on the shiny hide of the ox will grant prosperity, the challenge is catching it.","type":424,"cats":["volo"],"faction":null,"got":1,"icon":"inv_oxmount","class":"","race":""},
     {"id":2674,"spell":1251284,"display":100901,"name":"Luminous Mana Ray","src":7,"srcText":"World Event: WoW Remix: Legion","desc":"Mana rays can emit a bright glow to lure in prey.","type":424,"cats":["volo"],"faction":null,"got":0,"icon":"inv_manaraymount_teal","class":"","race":""},
-    {"id":2950,"spell":1284973,"display":142717,"name":"Luminous Sporeglider","src":1,"srcText":"Drop: Rotmire\nLocation: Sporefall","desc":"This sporeglider's voracious appetite for luminescent spores has lent it an exquisite glow.","type":424,"cats":["volo"],"faction":null,"got":0,"icon":"inv_sporebat3mount_purple","class":"","race":""},
+    {"id":2950,"spell":1284973,"display":142717,"name":"Luminous Sporeglider","src":1,"srcText":"Drop: Rotmire\nLocation: Sporefall","desc":"This sporeglider's voracious appetite for luminescent spores has lent it an exquisite glow.","type":424,"cats":["volo"],"faction":null,"got":1,"icon":"inv_sporebat3mount_purple","class":"","race":""},
     {"id":949,"spell":243512,"display":76586,"name":"Luminous Starseeker","src":10,"srcText":"In-Game Shop","desc":"Energetic apex hunters of Argus, the panthara hunt by sensing the energy within living things. A panthara approaching a powerful energy source will visibly change color and become more excited.","type":424,"cats":["volo"],"faction":null,"got":0,"icon":"inv_shadowstalkerpanthermount","class":"","race":""},
     {"id":1811,"spell":423891,"display":114294,"name":"Lunar Dreamstag","src":3,"srcText":"Vendor: Moon Priestess Lasara\nZone: Emerald Dream\nCost: 1200 Dragon Isles Supplies","desc":"The moon's pale light is reflected in the pelt of these elusive nocturnal creatures.","type":230,"cats":["terra"],"faction":null,"got":1,"icon":"inv_emeralddreamstagmount_frost","class":"","race":""},
     {"id":2327,"spell":472253,"display":124223,"name":"Lunar Launcher","src":3,"srcText":"Vendor: Lunar Festival","desc":"It's always a festival when you are on the Lunar Launcher.","type":424,"cats":["volo"],"faction":null,"got":0,"icon":"inv_lunarrocketmount","class":"","race":""},
