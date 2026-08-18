@@ -144,10 +144,10 @@ if ($mini -gt 0)         { Write-Host ("   {0,4} miniature di screenshot da gene
 # Ognuno tiene la propria cache sul disco (il campo `class` nel manifest, il file
 # col nome del displayID, img-fonti.json, la cartella thumb), quindi rilanciarli non
 # rifa' lavoro gia' fatto e un'interruzione non fa perdere niente.
-if ($mount.classe -gt 0) { Write-Host "vincoli di classe e razza..."; Node "mount-classes.mjs" }
-if ($mount.img -gt 0)    { Write-Host "immagini dei modelli...";      Node "mount-images.mjs" }
-if ($addon -gt 0)        { Write-Host "anteprime degli addon...";     Node "addon-images.mjs" }
-if ($mini -gt 0)         { Write-Host "miniature degli screenshot..."; Node "make-thumbs.mjs" }
+if ($mount.classe -gt 0) { Write-Host "vincoli di classe e razza..."; Lancia "mount-classes.mjs" }
+if ($mount.img -gt 0)    { Write-Host "immagini dei modelli...";      Lancia "mount-images.mjs" }
+if ($addon -gt 0)        { Write-Host "anteprime degli addon...";     Lancia "addon-images.mjs" }
+if ($mini -gt 0)         { Write-Host "miniature degli screenshot..."; Lancia "make-thumbs.mjs" }
 
 # --- 4. cosa resta ---------------------------------------------------------------
 # ⚠️ Restare indietro su una parte e' NORMALE e non e' un errore: 7 modelli Blizzard
