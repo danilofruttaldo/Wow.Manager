@@ -17,6 +17,7 @@ import profLevelingManifest from '../../professions/leveling.json';
 import profBuildsManifest from '../../professions/builds.json';
 import profSpecsManifest from '../../professions/specs.json';
 import charactersManifest from '../../professions/characters.json';
+import hardwareManifest from '../../hardware/manifest.json';
 
 // ── Tipi ──────────────────────────────────────────
 export interface Addon {
@@ -71,6 +72,36 @@ export interface Extra {
   body?: string;          // solo script: corpo reale letto da body_file
   url?: string;           // solo link: destinazione
   notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
+}
+
+// Pezzo della postazione di gioco (hardware/manifest.json).
+export interface HwComponent {
+  key: string;
+  label: string;          // etichetta di riga: CPU, Scheda video, Monitor...
+  name: string;
+  detail?: string;        // seconda riga tecnica (frequenze, sigla del kit, driver)
+  desc?: string;          // riga mostrata sul sito: perche' quel pezzo conta per WoW
+  notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
+}
+
+// Impostazione che decide come gira il gioco. `where` = chiave di `places`, cioe' DOVE si
+// tocca: le impostazioni che contano sono sparse fra quattro posti diversi (OSD del
+// monitor, driver, gioco, BIOS) e raggrupparle per luogo e' il senso della pagina.
+export interface HwSetting {
+  key: string;
+  name: string;
+  where: string;
+  value?: string;
+  state: 'ok' | 'todo' | 'warn';
+  desc?: string;
+  notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
+}
+
+// Un gruppo di impostazioni = un posto dove metterci le mani.
+export interface HwGroup {
+  key: string;
+  label: string;
+  items: HwSetting[];
 }
 
 // ── Meta build + data aggiornamento (git) ─────────
@@ -289,6 +320,41 @@ export function getExtra(): Extra[] {
   return (_extra = Object.entries(raw)
     .map(([key, v]: [string, any]) => ({ key, ...v, body: v.body ?? extraBody(v.body_file) }))
     .sort((a, b) => (a.name ?? '').localeCompare(b.name ?? '')));
+}
+
+// ── Hardware (postazione di gioco) ────────────────
+// hardware/manifest.json e' REDAZIONALE, non macchina-generato: i valori sono stati
+// rilevati (WMI/CIM per i componenti, EDID del monitor dal registro, Config.wtf riletto
+// in byte per i CVar), ma il file si aggiorna a mano quando cambia un pezzo. Come
+// altrove nel repo, `desc` si mostra e `notes` no.
+let _hw: { components: HwComponent[]; settings: HwSetting[]; places: Record<string, string> } | null = null;
+function hardware() {
+  if (_hw) return _hw;
+  const m = hardwareManifest as any;
+  return (_hw = {
+    components: (m.components ?? []) as HwComponent[],
+    settings: (m.settings ?? []) as HwSetting[],
+    places: (m.places ?? {}) as Record<string, string>,
+  });
+}
+
+export function getHwComponents(): HwComponent[] {
+  return hardware().components;
+}
+
+// Impostazioni raggruppate per luogo, nell'ordine in cui `places` le dichiara nel
+// manifest (monitor -> driver -> gioco -> BIOS): l'ordine e' un dato redazionale, non
+// alfabetico. I gruppi vuoti non si emettono.
+export function getHwGroups(): HwGroup[] {
+  const { settings, places } = hardware();
+  return Object.entries(places)
+    .map(([key, label]) => ({ key, label, items: settings.filter(s => s.where === key) }))
+    .filter(g => g.items.length > 0);
+}
+
+// Quante impostazioni restano da mettere a posto: alimenta il contatore in pagina.
+export function getHwTodo(): number {
+  return hardware().settings.filter(s => s.state !== 'ok').length;
 }
 
 // ── Mount (collezione cavalcature) ────────────────

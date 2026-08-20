@@ -1,0 +1,152 @@
+---
+import Base from '../layouts/Base.astro';
+import { getHwComponents, getHwGroups, getHwTodo } from '../lib/content';
+
+// Due pannelli: COSA c'e' nella macchina, e DOVE si toccano le impostazioni che
+// decidono come gira il gioco. Il secondo e' il motivo per cui la pagina esiste: le
+// opzioni che contano sono sparse fra quattro posti diversi (OSD del monitor, driver,
+// gioco, BIOS) e da nessuna parte si vedono insieme.
+const components = getHwComponents();
+const groups = getHwGroups();
+const todo = getHwTodo();
+const totale = groups.reduce((n, g) => n + g.items.length, 0);
+
+// Lo stato e' scritto IN CHIARO accanto alla barretta, non affidato al solo colore:
+// una barretta verde e una ambra non si distinguono per tutti.
+const STATE_LABEL: Record<string, string> = {
+  ok: 'Applicato',
+  todo: 'Da fare',
+  warn: 'Da rivedere',
+};
+---
+<Base title="Hardware" description="Postazione di gioco: componenti e le impostazioni che decidono come gira WoW.">
+  <div class="wrap hw">
+
+    <section class="hw-sec">
+      <header class="hw-head">
+        <div class="hw-headtext">
+          <h2 class="hw-title">Componenti</h2>
+          <p class="hw-sub">La macchina su cui gira il gioco. Valori rilevati dal sistema, non scritti a memoria.</p>
+        </div>
+      </header>
+      <div class="hw-body">
+        <ul class="cmp">
+          {components.map(c => (
+            <li class="cmp-row">
+              <span class="cmp-label">{c.label}</span>
+              <span class="cmp-main">
+                <span class="cmp-name">{c.name}</span>
+                {c.detail && <span class="cmp-detail">{c.detail}</span>}
+                {c.desc && <span class="cmp-desc">{c.desc}</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="hw-sec">
+      <header class="hw-head">
+        <div class="hw-headtext">
+          <h2 class="hw-title">Impostazioni</h2>
+          <p class="hw-sub">Raggruppate per dove si mettono le mani: {totale} voci in {groups.length} posti diversi.</p>
+        </div>
+        {todo > 0 && (
+          <span class="hw-todo">
+            <img class="hw-todo-ico" src="/icons/ui/warn.jpg" alt="" width="16" height="16" />
+            {todo} da sistemare
+          </span>
+        )}
+      </header>
+      <div class="hw-body">
+        {groups.map(g => (
+          <div class="grp">
+            <h3 class="grp-title">{g.label}</h3>
+            <ul class="set">
+              {g.items.map(s => (
+                <li class:list={['set-row', s.state]}>
+                  <span class="set-bar" aria-hidden="true"></span>
+                  <span class="set-main">
+                    <span class="set-top">
+                      <span class="set-name">{s.name}</span>
+                      {s.value && <code class="set-val">{s.value}</code>}
+                    </span>
+                    {s.desc && <span class="set-desc">{s.desc}</span>}
+                  </span>
+                  <span class="set-state">
+                    {s.state !== 'ok' && <img class="set-ico" src="/icons/ui/warn.jpg" alt="" width="16" height="16" />}
+                    {STATE_LABEL[s.state]}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+  </div>
+</Base>
+
+<style>
+/* ── Pagina hardware ───────────────────────────────
+   Ricalca il linguaggio dei pannelli di /professioni (testata riquadrata col filetto
+   nella tinta di sezione, corpo sotto), senza estrarre nulla in global.css: e' l'unica
+   pagina che li usa in questa forma. */
+.hw { display: flex; flex-direction: column; gap: var(--grid-gap); padding-top: 0.5rem; }
+
+.hw-sec { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); overflow: hidden; }
+.hw-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; background: var(--surface); border-bottom: 2px solid color-mix(in srgb, var(--section, var(--border)) 42%, var(--border)); }
+.hw-headtext { min-width: 0; display: flex; flex-direction: column; gap: 0.05rem; flex: 1; }
+.hw-title { font-size: var(--fs-lg); font-weight: 700; color: var(--text); margin: 0; }
+.hw-sub { font-size: var(--fs-xs); color: var(--text-subtle); margin: 0; }
+.hw-body { padding: 0.4rem 1rem 0.9rem; }
+
+/* Contatore "da sistemare": si emette SOLO se c'e' qualcosa da fare. A zero sparisce,
+   invece di mostrare un "0 da sistemare" che e' rumore (stessa logica dei bollini
+   sugli addon: l'eccezione si nota, la conferma no). */
+.hw-todo { flex: none; display: inline-flex; align-items: center; gap: 0.35rem; font-size: var(--fs-xs); font-weight: 700; color: var(--warn-text); background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--border)); padding: 0.2rem 0.55rem; border-radius: 999px; white-space: nowrap; }
+.hw-todo-ico { width: 16px; min-width: 16px; height: 16px; border-radius: 3px; object-fit: cover; }
+
+/* ── Componenti ────────────────────────────────────
+   Riga = etichetta a sinistra, contenuto a destra. La colonna etichetta ha larghezza
+   fissa cosi' i nomi si incolonnano; sotto i 620px la riga si impila. */
+.cmp { list-style: none; margin: 0; padding: 0; }
+.cmp-row { display: flex; gap: 1rem; padding: 0.7rem 0; border-top: 1px solid var(--border-light); }
+.cmp-row:first-child { border-top: 0; }
+.cmp-label { flex: none; width: 8.5rem; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-subtle); padding-top: 0.1rem; }
+.cmp-main { min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.cmp-name { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
+.cmp-detail { font-size: var(--fs-xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.cmp-desc { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.5; margin-top: 0.15rem; }
+
+/* ── Impostazioni ──────────────────────────────────
+   Barretta di stato a sinistra come sulle card addon: verde = applicato, ambra = no.
+   Il colore non porta il senso da solo, l'etichetta a destra lo scrive. */
+.grp + .grp { margin-top: 1rem; }
+.grp-title { font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-subtle); margin: 0.8rem 0 0.35rem; }
+.set { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.set-row { display: flex; align-items: stretch; gap: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); padding: 0.55rem 0.75rem 0.55rem 0; overflow: hidden; }
+.set-bar { flex: none; width: 4px; border-radius: 999px; margin: -0.55rem 0; background: var(--border); }
+.set-row.ok .set-bar { background: var(--ok); }
+.set-row.todo .set-bar, .set-row.warn .set-bar { background: var(--warn); }
+.set-main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 0.15rem; }
+.set-top { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+.set-name { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
+.set-val { font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--text-muted); background: var(--border-light); padding: 0.08rem 0.4rem; border-radius: var(--radius-sm); }
+.set-desc { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.5; }
+.set-state { flex: none; align-self: center; display: inline-flex; align-items: center; gap: 0.3rem; font-size: var(--fs-2xs); font-weight: 700; white-space: nowrap; }
+.set-row.ok .set-state { color: var(--ok-text); }
+.set-row.todo .set-state, .set-row.warn .set-state { color: var(--warn-text); }
+/* ⚠️ `min-width` ridichiarata: .ico in global.css ne porta 26px e in un contenitore
+   flex quel minimo vince sulla width. Qui non si eredita .ico, ma la regola vale come
+   promemoria per chiunque cambi queste misure. */
+.set-ico { width: 16px; min-width: 16px; height: 16px; border-radius: 3px; object-fit: cover; }
+
+@media (max-width: 620px) {
+  .cmp-row { flex-direction: column; gap: 0.2rem; }
+  .cmp-label { width: auto; }
+  .set-row { flex-wrap: wrap; }
+  .set-state { align-self: flex-start; margin-left: 0.75rem; }
+}
+</style>

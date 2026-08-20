@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog, getMountStats } from '../lib/content';
+import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog, getMountStats, getHwComponents } from '../lib/content';
 
 interface Props {
   title: string;
@@ -25,6 +25,7 @@ const SOURCE_BY_PATH: Record<string, string> = {
   '/transmog': 'transmog/manifest.json',
   '/mount': 'mounts/manifest.json',
   '/ui': 'public/screenshots',
+  '/hardware': 'hardware/manifest.json',
   '/extra': 'scripts',
 };
 // Il build statico emette /professioni/ con lo slash finale, le chiavi qui sopra no:
@@ -61,6 +62,7 @@ const nav = [
   { href: '/transmog', label: 'Xmog', full: 'Transmog', icon: '/icons/section/transmog.jpg', count: `${tmogPct}%`, color: '#9B4DCA' },
   { href: '/mount', label: 'Mount', full: 'Cavalcature', icon: '/icons/section/mount.jpg', count: `${mountStats.pct}%`, color: '#2F8F4E' },
   { href: '/ui', label: 'UI', full: 'UI', icon: '/icons/section/ui.jpg', count: `${getScreenshotCount()}`, color: '#159A8C' },
+  { href: '/hardware', label: 'HW', full: 'Hardware', icon: '/icons/section/hardware.jpg', count: `${getHwComponents().length}`, color: '#A63A7E' },
   { href: '/extra', label: 'Extra', full: 'Extra', icon: '/icons/section/extra.jpg', count: `${getExtra().length}`, color: '#5B6470' },
 ];
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');

@@ -405,6 +405,43 @@ for (const f of shots) {
 for (const f of thumbs) if (!shots.includes(f)) err('ui', `miniatura orfana: public/screenshots/thumb/${f}`);
 nota(`ui: ${shots.length} screenshot`);
 
+// ── Hardware (postazione di gioco) ─────────────────────────────────────────────
+// Manifest interamente redazionale: nessuno script lo rigenera, quindi non c'e' un dump
+// da confrontare. Qui si controlla solo che si tenga insieme — che ogni impostazione
+// punti a un posto dichiarato, che lo stato sia uno di quelli che la pagina sa
+// disegnare, e che le due icone referenziate esistano davvero.
+const hw = json('hardware/manifest.json');
+const posti = Object.keys(hw.places ?? {});
+const STATI = ['ok', 'todo', 'warn'];
+const chiaviHw = new Set();
+for (const c of hw.components ?? []) {
+  for (const campo of ['key', 'label', 'name']) {
+    if (!c[campo]) err('hardware', `componente ${c.key ?? '(senza key)'}: manca ${campo}`);
+  }
+  if (chiaviHw.has(`c:${c.key}`)) err('hardware', `componente ${c.key}: chiave doppia`);
+  chiaviHw.add(`c:${c.key}`);
+}
+for (const s of hw.settings ?? []) {
+  for (const campo of ['key', 'name', 'where', 'state']) {
+    if (!s[campo]) err('hardware', `impostazione ${s.key ?? '(senza key)'}: manca ${campo}`);
+  }
+  if (s.where && !posti.includes(s.where)) err('hardware', `${s.key}: where «${s.where}» non e' dichiarato in places`);
+  if (s.state && !STATI.includes(s.state)) err('hardware', `${s.key}: state «${s.state}» non e' fra ${STATI.join('/')}`);
+  if (chiaviHw.has(`s:${s.key}`)) err('hardware', `impostazione ${s.key}: chiave doppia`);
+  chiaviHw.add(`s:${s.key}`);
+}
+// Un posto senza impostazioni non rompe nulla (la pagina salta i gruppi vuoti), ma di
+// solito vuol dire che l'ultima voce e' stata tolta e l'etichetta e' rimasta li'.
+for (const p of posti) {
+  if (!(hw.settings ?? []).some((s) => s.where === p)) avviso('hardware', `places.${p} non ha nessuna impostazione`);
+}
+if (!ci_sta('public/icons/section/hardware.jpg')) err('hardware', "manca public/icons/section/hardware.jpg (icona della sezione in nav)");
+if ((hw.settings ?? []).some((s) => s.state !== 'ok') && !ci_sta('public/icons/ui/warn.jpg')) {
+  err('hardware', 'ci sono voci non applicate ma manca public/icons/ui/warn.jpg');
+}
+const daFare = (hw.settings ?? []).filter((s) => s.state !== 'ok').length;
+nota(`hardware: ${(hw.components ?? []).length} componenti · ${(hw.settings ?? []).length} impostazioni in ${posti.length} posti · ${daFare} da sistemare`);
+
 // ── Esito ──────────────────────────────────────────────────────────────────────
 if (verboso || !errori.length) for (const t of note) console.log(`  ${t}`);
 for (const t of avvisi) console.log(`AVVISO  ${t}`);

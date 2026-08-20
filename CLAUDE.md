@@ -6,10 +6,10 @@ Come lavorare a questo repo con Claude Code **da qualsiasi postazione**, per agg
 
 Due nature nello stesso repo:
 
-1. **Dati** = fonte di verità: [addons/](addons/), [macros/](macros/), [professions/](professions/), [pg.md](pg.md), [transmog/](transmog/), [ui-profiles/](ui-profiles/), [fonts/](fonts/), [scripts/](scripts/). Manifest JSON + markdown, mantenuti a mano.
+1. **Dati** = fonte di verità: [addons/](addons/), [macros/](macros/), [professions/](professions/), [pg.md](pg.md), [transmog/](transmog/), [hardware/](hardware/), [ui-profiles/](ui-profiles/), [fonts/](fonts/), [scripts/](scripts/). Manifest JSON + markdown, mantenuti a mano.
 2. **Sito statico** ([src/](src/), Astro) che presenta i dati su <https://wow.danilofruttaldo.com>. Il sito legge i dati in **sola lettura**: non li modifica mai. Ogni pagina si allinea da sola quando cambi il dato corrispondente.
 
-Pagine del sito: **Home** (7 card), **Addon**, **Macro**, **Professioni**, **PG**, **Transmog** (tier set), **Mount** (cavalcature), **UI** (screenshot), **Extra** (script/link/note).
+Pagine del sito: **Home** (7 card), **Addon**, **Macro**, **Professioni**, **PG**, **Transmog** (tier set), **Mount** (cavalcature), **UI** (screenshot), **Hardware** (postazione di gioco), **Extra** (script/link/note).
 
 ## Setup su una postazione nuova
 
@@ -317,6 +317,17 @@ Sezione contenitore libero: script di manutenzione, link, appunti tecnici. Ogget
 - **Rimuovi**: cancella il file. Non c'è nessun conteggio da aggiornare: la card UI in home legge `getScreenshotCount()` ([content.ts](src/lib/content.ts)), che conta i file. Fino al 2026-07-20 quel numero era scritto a mano — ora **tutti** i contatori della home derivano dai dati.
 - ⚠️ Le **miniature** stanno in `public/screenshots/thumb/` e il conteggio le esclude apposta: se le sposti nella radice il numero raddoppia. Le genera **[scripts/make-thumbs.mjs](scripts/make-thumbs.mjs)** (`node scripts/make-thumbs.mjs`, `--forza` per rifarle tutte, `--larghezza N`). ⚠️ **Era in PowerShell** con System.Drawing di .NET, per non dipendere da Node: non è più possibile, System.Drawing il webp non lo legge né lo scrive. Ora usa `sharp` come gli altri `.mjs` — è l'eccezione già prevista alla regola sotto, non uno strappo.
 
+### Hardware → [hardware/manifest.json](hardware/manifest.json)
+La postazione di gioco: **cosa** c'è nella macchina e **dove** si toccano le impostazioni che decidono come gira WoW. Tre blocchi: `components[]`, `settings[]`, `places` (mappa `chiave → etichetta`).
+- ⚠️ **È un manifest REDAZIONALE, non macchina-generato** — l'opposto di `mounts/manifest.json`. I valori sono stati *rilevati* (WMI/CIM per i componenti, EDID del monitor dal registro, `Config.wtf` riletto in byte per i CVar), ma nessuno script lo rigenera: quando cambi un pezzo o un'impostazione, si aggiorna a mano. Vale la regola di sempre: **`desc` si mostra, `notes` no**.
+- **`components[]`**: `key, label, name, detail?, desc?, notes?`. `label` è l'etichetta di riga (CPU, Scheda video…), `detail` la seconda riga tecnica, `desc` il perché quel pezzo conta per il gioco.
+- **`settings[]`**: `key, name, where, value?, state, desc?, notes?`. **`where`** è una chiave di `places`, cioè *dove si mettono le mani*: OSD del monitor, driver NVIDIA, gioco, BIOS. **`state`** è `ok` (applicato), `todo` (da fare), `warn` (fatto ma con una riserva) — il validatore rifiuta qualunque altro valore.
+- ⚠️ **Il raggruppamento per `where` È il senso della pagina**, non un vezzo di impaginazione: le impostazioni che contano per una cosa sola (che il gioco giri fluido) sono sparse fra quattro posti diversi che non si parlano, e da nessun'altra parte si vedono insieme. L'ordine dei gruppi è quello di **dichiarazione** in `places` (monitor → driver → gioco → BIOS), non alfabetico: è un dato redazionale. I gruppi vuoti non si emettono.
+- **Lo stato è scritto in chiaro accanto alla barretta**, non affidato al solo colore: verde/ambra non si distinguono per tutti. La barretta a sinistra è la stessa lingua delle card di `/addons`. ⚠️ Il bollino `warn.jpg` compare **solo** sulle voci non a posto, e il contatore «N da sistemare» **sparisce a zero**: un bollino verde su tutto sarebbe rumore, esattamente come per gli addon.
+- ⚠️ **Alcune cose NON sono verificabili da script, e la pagina lo dice invece di fingere**: le scelte del pannello NVIDIA (G-SYNC Compatible, sincronia verticale) stanno in un database binario, `nvdrsdb0.bin`, non nel registro — vanno confermate a occhio. Per questo restano `todo` finché non le si guarda davvero.
+- **Icona di sezione**: `public/icons/section/hardware.jpg` (`inv_gizmo_khoriumpowercore`). ⚠️ Il primo tentativo aveva preso `inv_misc_gear_01`, che è **già** `addon.jpg`: due voci di nav con la stessa icona. Prima di adottare un'icona nuova, **confronta gli hash** di `public/icons/section/` — la dimensione identica in byte è il primo indizio.
+- Il contatore in nav è il numero di **componenti**; la data «sync» viene dall'ultimo commit di `hardware/manifest.json` ([Base.astro](src/layouts/Base.astro)).
+
 ### Icone (classe / razza / professione) → [public/icons/](public/icons/)
 Immagini WoW dal CDN Wowhead: `https://wow.zamimg.com/images/wow/icons/large/<slug>.jpg`.
 - Classi: `classicon_<slug>.jpg`. Razze: `race_<slug>_male.jpg`. Professioni: icone trade skill (es. `trade_alchemy`, `trade_blacksmithing`).
@@ -355,7 +366,7 @@ npm run build      # deve completare senza errori; poi: rm -rf .astro dist
 
 **[scripts/validate-data.mjs](scripts/validate-data.mjs) = la rete sotto i dati tenuti a mano.** Le guardie forti del repo — il campo `sospetto` dei dump, la soglia sulla perdita di icone, `mismatches` — vivono dentro gli script di sync, quindi coprono il **solo** dato macchina-generato. Tutto il resto (`pg.md`, `char-specs.ts`, `builds.json`, i manifest) non aveva niente: un riferimento rotto restava lì finché non lo notava qualcuno. ⚠️ **È successo davvero e per giorni**: i 19 PG pianificati tolti da `pg.md` il 2026-08-04 hanno lasciato le loro spec in `char-specs.ts` e nulla lo ha segnalato.
 
-Copre: le chiavi delle cinque tabelle professioni e i nomi-nodo di `builds`/`specs` contro l'albero del client, i `body_file` delle macro e i `.txt` orfani, campi e icone degli addon, gli script dichiarati in `scripts/manifest.json`, i PG di `pg.md` contro `char-specs.ts` (spec valida per la classe, icona presente, omonimi disambiguati), `_meta` e icone/render delle mount, e per il transmog il triangolo `versions`/`collected`/`pieceList` più le virgole vietate in `fonte`. ⚠️ **È integrità referenziale, non merito**: dice «questo nome non esiste da nessuna parte», mai «questa scelta è sbagliata».
+Copre: le chiavi delle cinque tabelle professioni e i nomi-nodo di `builds`/`specs` contro l'albero del client, i `body_file` delle macro e i `.txt` orfani, campi e icone degli addon, gli script dichiarati in `scripts/manifest.json`, i PG di `pg.md` contro `char-specs.ts` (spec valida per la classe, icona presente, omonimi disambiguati), `_meta` e icone/render delle mount, per il transmog il triangolo `versions`/`collected`/`pieceList` più le virgole vietate in `fonte`, e per l'hardware che ogni `settings[].where` esista in `places` e che gli `state` siano solo `ok`/`todo`/`warn`. ⚠️ **È integrità referenziale, non merito**: dice «questo nome non esiste da nessuna parte», mai «questa scelta è sbagliata».
 
 ⚠️ Gli step composti di `builds.json` cambiano la regola: dove c'è `nodes`, `spec` e `alt` sono **etichette da leggere** («Sculpted / Large Plate / Articulating Armor») e i nomi veri stanno lì dentro — quindi si validano i `nodes` e non l'etichetta. Senza `nodes`, `spec` e `alt` devono essere nomi di nodo veri.
 

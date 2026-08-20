@@ -1,0 +1,164 @@
+{
+  "_meta": {
+    "rilevato": "2026-08-20",
+    "note": "Postazione di gioco: componenti + le impostazioni che decidono come gira WoW. I componenti sono stati RILEVATI (WMI/CIM, EDID del monitor letto dal registro), non scritti a memoria; le impostazioni sono verificate alla stessa data - Config.wtf riletto in byte, connessione e refresh da WmiMonitorConnectionParams e Win32_VideoController. Ma il file resta REDAZIONALE, non macchina-generato: quando cambi un pezzo o un'impostazione, aggiornalo a mano."
+  },
+
+  "components": [
+    {
+      "key": "cpu",
+      "label": "CPU",
+      "name": "Intel Core i7-8700",
+      "detail": "6 core / 12 thread - 3,2 GHz base",
+      "desc": "Coffee Lake di ottava generazione. Per WoW e' ancora abbondante: il gioco carica poco piu' di un paio di core davvero.",
+      "notes": "Non e' un modello K, ma la memoria si overclocca lo stesso perche' il chipset e' Z370: il moltiplicatore RAM lo gestisce la scheda, non la CPU."
+    },
+    {
+      "key": "mobo",
+      "label": "Scheda madre",
+      "name": "ASUS ROG MAXIMUS X HERO",
+      "detail": "chipset Intel Z370",
+      "desc": "Variante senza Wi-Fi integrato: il Wi-Fi presente e' una scheda Broadcom aggiunta a parte.",
+      "notes": "Come si distingue dalla variante WI-FI AC, che il nome nel SMBIOS non dice: quella monta un Intel Wireless-AC, qui l'adattatore e' un Broadcom 802.11ac, quindi e' aftermarket. Serve saperlo perche' le due varianti hanno BIOS DIVERSI e non intercambiabili. Rete cablata: Intel I219-V."
+    },
+    {
+      "key": "bios",
+      "label": "BIOS",
+      "name": "Versione 1602",
+      "detail": "28 giugno 2018",
+      "desc": "Fermo al 2018, quindi diverse revisioni indietro rispetto all'ultima pubblicata da ASUS.",
+      "notes": "Le revisioni successive portano microcodice Intel aggiornato e miglior compatibilita' DRAM (utile per i 4 moduli). Due contropartite da mettere in conto: il microcodice delle mitigazioni Spectre/MDS costa qualche punto percentuale di prestazioni, e ogni flash AZZERA le impostazioni, XMP compreso."
+    },
+    {
+      "key": "ram",
+      "label": "Memoria",
+      "name": "32 GB DDR4 (4 x 8 GB)",
+      "detail": "Corsair Vengeance LPX CMK16GX4M2B3000C15",
+      "desc": "Dichiarati DDR4-3000, in funzione a 2733 MT/s: con quattro moduli il controller non regge la frequenza nominale.",
+      "notes": "Sono DUE kit da 2x8 accoppiati, non un kit unico da quattro: i moduli non sono stati selezionati insieme in fabbrica, ed e' la causa tipica del ripiego. 2733 non e' una velocita' JEDEC, quindi l'XMP e' applicato - semplicemente non alla frequenza di targa. Misurato con ConfiguredClockSpeed di Win32_PhysicalMemory, che e' la velocita' REALE; il campo Speed su questa macchina riporta lo stesso valore e non quello nominale, quindi da solo non basta per accorgersene."
+    },
+    {
+      "key": "gpu",
+      "label": "Scheda video",
+      "name": "NVIDIA GeForce GTX 1060 6GB",
+      "detail": "driver 32.0.15.8266",
+      "desc": "E' lei il collo di bottiglia: a 1440p decide la scheda video quanti fotogrammi escono, non la CPU ne' la RAM.",
+      "notes": "WMI riporta 4 GB di AdapterRAM: e' l'overflow del campo a 32 bit, la scheda e' da 6 GB. Non riportare quel numero da nessuna parte. Essendo Pascal, l'Adaptive-Sync le funziona SOLO su DisplayPort."
+    },
+    {
+      "key": "monitor",
+      "label": "Monitor",
+      "name": "Samsung Odyssey G5 (LC32G5xT)",
+      "detail": "2560 x 1440 a 144 Hz - FreeSync 48-144 Hz",
+      "desc": "Pannello adattivo con range 48-144 Hz: il rapporto 3:1 e' abbastanza ampio da coprire con la compensazione anche i cali sotto i 48 fps.",
+      "notes": "Espone un EDID DIVERSO per ingresso - SAM7088 su HDMI, SAM7080 su DisplayPort - ma il range dichiarato e' identico sui due, quindi passando a DP non si perde nulla. Range letto dal descrittore 0xFD dell'EDID nel registro."
+    },
+    {
+      "key": "storage",
+      "label": "Archiviazione",
+      "name": "Samsung SSD 970 PRO 512 GB",
+      "detail": "NVMe",
+      "desc": "NVMe MLC: i tempi di caricamento delle zone non sono un problema di questa postazione.",
+      "notes": null
+    },
+    {
+      "key": "os",
+      "label": "Sistema",
+      "name": "Windows 11 Pro",
+      "detail": "build 22631",
+      "desc": "Avvio senza BitLocker e senza TPM attivo.",
+      "notes": "Verificato prima di consigliare un aggiornamento del BIOS: senza BitLocker il flash non fa scattare la richiesta della chiave di ripristino al riavvio, che e' l'incidente classico. Secure Boot non determinabile, quindi probabile avvio legacy/CSM."
+    }
+  ],
+
+  "settings": [
+    {
+      "key": "freesync",
+      "name": "FreeSync",
+      "where": "monitor",
+      "value": "Attivo",
+      "state": "ok",
+      "desc": "Va acceso nell'OSD del monitor: e' il presupposto di tutto il resto, ma da solo non basta.",
+      "notes": null
+    },
+    {
+      "key": "collegamento",
+      "name": "Collegamento video",
+      "where": "monitor",
+      "value": "DisplayPort",
+      "state": "ok",
+      "desc": "Le GeForce gestiscono l'Adaptive-Sync solo su DisplayPort: in HDMI il FreeSync resta acceso nell'OSD e non lavora.",
+      "notes": "Fino al 2026-08-20 era HDMI, ed e' il motivo per cui la voce G-SYNC non compariva affatto nel pannello NVIDIA - non era un'impostazione da trovare, era il cavo. Dopo lo scambio: DisplayPort confermato, e il refresh e' RIMASTO a 144 Hz invece di ricadere a 60, cosa da ricontrollare sempre dopo un cambio di cavo."
+    },
+    {
+      "key": "gsync",
+      "name": "G-SYNC Compatible",
+      "where": "driver",
+      "value": "Da attivare",
+      "state": "todo",
+      "desc": "Pannello NVIDIA, Imposta G-SYNC: abilitare per modalita' finestra e schermo intero.",
+      "notes": "Non verificabile da script: NVIDIA tiene queste scelte in un database binario (nvdrsdb0.bin), non nel registro. Va confermato a occhio, o con la Pendulum Demo."
+    },
+    {
+      "key": "vsync-driver",
+      "name": "Sincronia verticale",
+      "where": "driver",
+      "value": "On",
+      "state": "todo",
+      "desc": "Sembra contraddire il VSync spento in gioco, e invece e' la coppia giusta: qui fa da rete solo sopra i 144 fps, dove il limite non arriva quasi mai.",
+      "notes": "Il VSync del gioco aggiungerebbe latenza sempre; quello del driver interviene solo al superamento del refresh, che con il limite a 141 e' un caso raro."
+    },
+    {
+      "key": "vsync",
+      "name": "VSync in gioco",
+      "where": "gioco",
+      "value": "vsync 0",
+      "state": "ok",
+      "desc": "Spento: con il sync adattivo attivo non serve, e toglierlo restituisce la latenza che si mangiava.",
+      "notes": "Prima valeva 1. ⚠️ Ha senso SOLO con G-SYNC Compatible attivo: senza, si scambia la latenza col tearing."
+    },
+    {
+      "key": "maxfps",
+      "name": "Limite fotogrammi",
+      "where": "gioco",
+      "value": "maxFPS 141 + useMaxFPS 1",
+      "state": "ok",
+      "desc": "Poco sotto i 144 Hz del pannello, cosi' si resta dentro la finestra adattiva invece di sbattere sul tetto del refresh.",
+      "notes": "⚠️ Servono ENTRAMBI i CVar: maxFPS valeva gia' 120 ma useMaxFPS era 0, cioe' il limite era dichiarato e spento. L'aiuto del client lo dice esplicitamente: 'useMaxFPS - Enables or disables FPS limit'."
+    },
+    {
+      "key": "maxfpsbk",
+      "name": "Limite in background",
+      "where": "gioco",
+      "value": "maxFPSBk 30",
+      "state": "ok",
+      "desc": "Gia' cosi' di serie: in alt-tab il gioco scende a 30 fps senza che ci sia nulla da impostare.",
+      "notes": "⚠️ Trappola da non ripetere: questi due CVar erano ASSENTI da Config.wtf e sembravano non impostati, ma WoW ci scrive solo i valori DIVERSI dal default. maxFPSBk 30 e useMaxFPSBk 1 sono i default, quindi il limite era gia' attivo. Prima di dire che un CVar manca, leggilo dal dump del client (/wmcvar), non da Config.wtf."
+    },
+    {
+      "key": "xmp",
+      "name": "XMP",
+      "where": "bios",
+      "value": "Attivo a 2733 MT/s",
+      "state": "warn",
+      "desc": "Applicato, ma sotto i 3000 di targa: con quattro moduli il controller ripiega su una frequenza inferiore.",
+      "notes": "Non vale la pena inseguirlo per WoW - a 1440p il limite e' la scheda video, e fra 2733 e 3000 non si vede la differenza. Se un giorno si vuole provare: BIOS piu' recente (migliore addestramento della memoria), oppure un kit unico da 4 moduli invece di due kit accoppiati."
+    },
+    {
+      "key": "bios-update",
+      "name": "Aggiornamento BIOS",
+      "where": "bios",
+      "value": "In corso da 1602",
+      "state": "warn",
+      "desc": "Il flash riporta il BIOS alle impostazioni di fabbrica: l'XMP va riattivato dopo, altrimenti la memoria torna al valore JEDEC.",
+      "notes": "Aggiornare con EZ Flash 3 da chiavetta FAT32, non da Windows. EZ Flash rifiuta i file che non corrispondono alla scheda, quindi la variante sbagliata non passa. ⚠️ Verificare la variante (questa NON e' la WI-FI AC) e prendere la versione dalla pagina ASUS del modello, che e' l'unica fonte da considerare aggiornata."
+    }
+  ],
+
+  "places": {
+    "monitor": "Monitor (OSD)",
+    "driver": "Driver NVIDIA",
+    "gioco": "Gioco",
+    "bios": "BIOS"
+  }
+}
