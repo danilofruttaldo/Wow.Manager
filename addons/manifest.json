@@ -3,18 +3,18 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.1.0.69273",
-    "last_sync": "2026-08-19"
+    "last_sync": "2026-08-20"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
       "desc": "Boss mod per raid: timer, barre e avvisi sonori e visivi sulle abilità dei boss.",
-      "version": "v420.3",
+      "version": "v421",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
       "preview": "https://media.forgecdn.net/attachments/873/666/gui.png",
-      "installed": "2026-08-19",
+      "installed": "2026-08-20",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -28,7 +28,7 @@
         "BigWigs_TheVenomousAbyss",
         "BigWigs_MidnightLairs"
       ],
-      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-15 v418.4->v419 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1562): RI-APPLICATA il 2026-07-15 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE. Aggiornato 2026-07-22 v419->v419.1 via /aggiorna-addon (workflow) GitHub release; PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1562) dopo l'update. Aggiornato 2026-07-29 v419.1->v419.2 via /aggiorna-addon (workflow) GitHub release; PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1544) dopo l'update. ⚠️ Su cfwidget questo progetto e' FERMO AL 2022 (ultimo file v241.3, 9.2.0): un audit che si fidi di cfwidget proporrebbe un DOWNGRADE di 4 anni. L'unica fonte valida e' la release GitHub BigWigsMods/BigWigs (verificato 2026-08-12: v419.2 = ultima). Aggiornato 2026-08-19 v419.2->v420.3 via /aggiorna-addon (workflow) GitHub release (4,9 MB); PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1538) dopo l'update. Cartelle da 10 a 11: NUOVA BigWigs_MidnightLairs, modulo di sole raid Midnight (il suo .toc dichiara '## Interface: 120100' puro, senza il supporto Classic/MoP degli altri). Riga ## Interface dell'addon primario invariata (120100, 120005, 120007)."
+      "notes": "Raid boss mods, suite Midnight Season 1. Aggiornato 2026-07-15 v418.4->v419 via /aggiorna-addon (workflow) GitHub release (BigWigsMods/BigWigs, cfwidget rotto per BigWigs). TOC 120100,120005,120007 match build 12.0.7, 10 cartelle (incl. BigWigs_TheVenomousAbyss). PATCH LOCALE 'translation nag' itIT (msg chat 15s dopo login) in BigWigs/Loader.lua: prefisso 'if false and ...' al blocco 'if public.isRetail and (language or realmLanguage) then' (~riga 1562): RI-APPLICATA il 2026-07-15 dopo l'update. Nessuna opzione in-game per disattivarlo. BigWigs aggiorna spessissimo -> il patch va perso a ogni update, DA RI-APPLICARE. Aggiornato 2026-07-22 v419->v419.1 via /aggiorna-addon (workflow) GitHub release; PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1562) dopo l'update. Aggiornato 2026-07-29 v419.1->v419.2 via /aggiorna-addon (workflow) GitHub release; PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1544) dopo l'update. ⚠️ Su cfwidget questo progetto e' FERMO AL 2022 (ultimo file v241.3, 9.2.0): un audit che si fidi di cfwidget proporrebbe un DOWNGRADE di 4 anni. L'unica fonte valida e' la release GitHub BigWigsMods/BigWigs (verificato 2026-08-12: v419.2 = ultima). Aggiornato 2026-08-19 v419.2->v420.3 via /aggiorna-addon (workflow) GitHub release (4,9 MB); PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1538) dopo l'update. Cartelle da 10 a 11: NUOVA BigWigs_MidnightLairs, modulo di sole raid Midnight (il suo .toc dichiara '## Interface: 120100' puro, senza il supporto Classic/MoP degli altri). Riga ## Interface dell'addon primario invariata (120100, 120005, 120007). Aggiornato 2026-08-20 v420.3->v421 via /aggiorna-addon (workflow) GitHub release (4,9 MB); PATCH translation nag RI-APPLICATA a Loader.lua (~riga 1540) dopo l'update. Cartelle invariate (11), interface invariata. ⚠️ Il workflow scarica e installa ma NON ri-applica la patch: l'ha dovuta rimettere a mano il turno principale, che ha trovato la riga 1540 senza il prefisso. Se un giro futuro dichiara l'update fatto senza nominare la patch, controlla comunque Loader.lua."
     },
     "LittleWigs": {
       "name": "LittleWigs",
@@ -69,14 +69,14 @@
     "Leatrix_Plus": {
       "name": "Leatrix Plus",
       "desc": "Comodità varie: quest automatiche, riparazione e vendita delle cianfrusaglie, skip cinematiche.",
-      "version": "12.1.00",
+      "version": "12.1.01",
       "interface": "120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
       "preview": "https://media.forgecdn.net/attachments/841/496/snap6.jpg",
-      "installed": "2026-08-12",
+      "installed": "2026-08-20",
       "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-31 12.0.28->12.0.29 via /aggiorna-addon (workflow) forgecdn files/8536/716 (Leatrix_Plus-12.0.29.zip), changelog solo 'Updated deprecated functions', nessuna opzione nuova. Prima: 2026-07-23 12.0.27->12.0.28 forgecdn files/8490/258. Aggiornato 2026-08-06 12.0.29->12.0.30 via /aggiorna-addon (workflow) forgecdn files/8585/35 (Leatrix_Plus-12.0.30.zip, 599 KB, 10 file); riga ## Interface invariata. TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update. Aggiornato 2026-08-12 12.0.30->12.1.00 (patch 12.1.0) via /aggiorna-addon (workflow) forgecdn files/8630/262 (Leatrix_Plus-12.1.00.zip, 595 KB, 10 file); il TOC passa da '120007, 120100' a 120100 puro. ⚠️ Pubblicata alle 07:02 UTC del giorno stesso della patch: un controllo fatto un'ora prima vedeva ancora la 12.0.30 del 5 agosto come ultima. Nel giorno di una patch le release escono a raffica (Leatrix ha pubblicato i flavor classic alle 07:09, 07:11 e 07:32) -> un solo audit non basta, va ripetuto."
+      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-31 12.0.28->12.0.29 via /aggiorna-addon (workflow) forgecdn files/8536/716 (Leatrix_Plus-12.0.29.zip), changelog solo 'Updated deprecated functions', nessuna opzione nuova. Prima: 2026-07-23 12.0.27->12.0.28 forgecdn files/8490/258. Aggiornato 2026-08-06 12.0.29->12.0.30 via /aggiorna-addon (workflow) forgecdn files/8585/35 (Leatrix_Plus-12.0.30.zip, 599 KB, 10 file); riga ## Interface invariata. TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update. Aggiornato 2026-08-12 12.0.30->12.1.00 (patch 12.1.0) via /aggiorna-addon (workflow) forgecdn files/8630/262 (Leatrix_Plus-12.1.00.zip, 595 KB, 10 file); il TOC passa da '120007, 120100' a 120100 puro. ⚠️ Pubblicata alle 07:02 UTC del giorno stesso della patch: un controllo fatto un'ora prima vedeva ancora la 12.0.30 del 5 agosto come ultima. Nel giorno di una patch le release escono a raffica (Leatrix ha pubblicato i flavor classic alle 07:09, 07:11 e 07:32) -> un solo audit non basta, va ripetuto. Aggiornato 2026-08-20 12.1.00->12.1.01 via /aggiorna-addon (workflow) forgecdn files/8682/910 (Leatrix_Plus-12.1.01.zip, 596 KB, 10 file); riga ## Interface invariata (120100 puro). SavedVariables non toccate."
     },
     "HandyNotes": {
       "name": "HandyNotes",
