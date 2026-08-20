@@ -94,10 +94,10 @@
       "key": "gsync",
       "name": "G-SYNC Compatible",
       "where": "driver",
-      "value": "Da attivare",
-      "state": "todo",
-      "desc": "Pannello NVIDIA, Imposta G-SYNC: abilitare per modalita' finestra e schermo intero.",
-      "notes": "Non verificabile da script: NVIDIA tiene queste scelte in un database binario (nvdrsdb0.bin), non nel registro. Va confermato a occhio, o con la Pendulum Demo."
+      "value": "Attivo",
+      "state": "ok",
+      "desc": "Pannello NVIDIA, Imposta G-SYNC: abilitato per modalita' finestra e schermo intero.",
+      "notes": "Attivato il 2026-08-20, confermato a voce. ⚠️ Non verificabile da script: NVIDIA tiene queste scelte in un database binario (nvdrsdb0.bin), non nel registro. L'unico riscontro macchina e' indiretto - la DATA di quel file, che quel giorno risulta riscritto alle 09:54 e 09:56, subito dopo il riavvio delle 09:49: dice che il pannello e' stato usato e salvato, non COSA e' stato scelto. Per una verifica vera servono la Pendulum Demo o l'indicatore G-SYNC."
     },
     {
       "key": "vsync-driver",
@@ -151,7 +151,16 @@
       "value": "In corso da 1602",
       "state": "warn",
       "desc": "Il flash riporta il BIOS alle impostazioni di fabbrica: l'XMP va riattivato dopo, altrimenti la memoria torna al valore JEDEC.",
-      "notes": "Aggiornare con EZ Flash 3 da chiavetta FAT32, non da Windows. EZ Flash rifiuta i file che non corrispondono alla scheda, quindi la variante sbagliata non passa. ⚠️ Verificare la variante (questa NON e' la WI-FI AC) e prendere la versione dalla pagina ASUS del modello, che e' l'unica fonte da considerare aggiornata."
+      "notes": "Aggiornare con EZ Flash 3 da chiavetta FAT32, non da Windows. EZ Flash rifiuta i file che non corrispondono alla scheda, quindi la variante sbagliata non passa. ⚠️ Verificare la variante (questa NON e' la WI-FI AC) e prendere la versione dalla pagina ASUS del modello, che e' l'unica fonte da considerare aggiornata. ⚠️ Armoury Crate NON aggiorna il BIOS di questa scheda: provato il 2026-08-20, ha installato il proprio stack e il driver chipset ma la versione e' rimasta 1602. Su una scheda del 2018 quella strada non esiste."
+    },
+    {
+      "key": "asus-stack",
+      "name": "Servizi ASUS in background",
+      "where": "windows",
+      "value": "13 processi, 286 MB",
+      "state": "warn",
+      "desc": "Armoury Crate e AURA restano installati per l'illuminazione della scheda madre: il prezzo sono quattro servizi ad avvio automatico.",
+      "notes": "Installati il 2026-08-20 insieme al driver Intel Chipset 10.1.18295.8201, che e' l'unica parte utile del giro. Misurato subito dopo: 13 processi per 285,8 MB residenti, i piu' grossi ArmouryCrate.Service (92 MB) e UserSessionHelper (58 MB). ⚠️ Il pacchetto porta di default componenti RGB per hardware che questa macchina NON ha - Patriot Viper DRAM/M2, Kingston AURA DRAM, Universal Holtek RGB DRAM, WD_BLACK AN1500: la RAM e' Corsair Vengeance LPX, che non ha affatto RGB, e il disco e' un Samsung 970 PRO. Rimossi a mano; ogni voce esiste in DUE registrazioni, il pacchetto MSI e il bundle in Package Cache, e va disinstallato il BUNDLE o resta la registrazione orfana."
     }
   ],
 
@@ -159,6 +168,7 @@
     "monitor": "Monitor (OSD)",
     "driver": "Driver NVIDIA",
     "gioco": "Gioco",
-    "bios": "BIOS"
+    "bios": "BIOS",
+    "windows": "Windows"
   }
 }
