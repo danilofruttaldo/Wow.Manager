@@ -79,7 +79,7 @@ const blocks = getHwBlocks();
    pezzo piu' interno verso lo schermo) e' un accostamento, non una sequenza da seguire.
    ⚠️ `break-inside: avoid` col gemello `-webkit-`, e la spaziatura verticale la da' il
    `margin-bottom` del blocco: in multi-colonna il `gap` regge il solo asse orizzontale. */
-.hw { column-width: 320px; column-gap: var(--grid-gap); padding-top: 0.5rem; }
+.hw { column-width: 320px; column-gap: var(--grid-gap); padding-top: 0.6rem; }
 
 .blk { display: flex; flex-direction: column; break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: var(--grid-gap); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); padding: var(--card-pad); }
 .blk-top { display: flex; gap: 0.75rem; }
@@ -117,8 +117,11 @@ const blocks = getHwBlocks();
 .opt + .opt { margin-top: 0.55rem; }
 .opt-top { display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap; margin: 0; }
 .opt-name { font-size: var(--fs-base); font-weight: 600; color: var(--text); }
-/* Il valore e' letterale — «Attivo» oppure il CVar com'e' scritto nel client — quindi
-   sta in `<code>`: e' roba da ricopiare tale e quale, non da parafrasare. */
+/* Il valore e' letterale — «Attivo», la versione del BIOS, il nome del driver com'e'
+   scritto da chi lo pubblica — quindi sta in `<code>`: e' roba da ricopiare tale e
+   quale, non da parafrasare. ⚠️ Per la stessa ragione NON ci vanno misure che scadono
+   (processi, MB residenti, Mbps): un valore che cambia a ogni riavvio, su una pagina che
+   si aggiorna a mano, resta li' a dire il falso. Quelle stanno nelle `notes`. */
 .opt-val { font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--text-muted); background: var(--border-light); padding: 0.08rem 0.4rem; border-radius: var(--radius-sm); }
 
 @media (max-width: 480px) {

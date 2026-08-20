@@ -1,7 +1,7 @@
 {
   "_meta": {
     "rilevato": "2026-08-20",
-    "note": "Postazione di gioco: ogni blocco e' un pezzo con le sue SPEC e, sotto, le IMPOSTAZIONI applicate che lo riguardano - il raffreddamento sulla CPU, BIOS e XMP sulla scheda madre, driver e G-SYNC sulla scheda video, collegamento e FreeSync sul monitor. I blocchi stanno in un MOSAICO unico, senza intestazioni: l'ordine e' quello di dichiarazione qui dentro - dall'interno del case verso l'esterno (cpu, scheda madre, memoria, video, disco, case, monitor, periferiche) e il software per ultimo. ⚠️ Spec e setup erano due pannelli separati e obbligavano a saltare avanti e indietro per mettere insieme un pezzo e cio' che lo configura: `settings[].where` = chiave del componente che ospita l'impostazione. ⚠️ Cosa NON e' un blocco, e sono scelte: il collegamento video (un cavo non sta al pari di CPU o disco), il BIOS (firmware della scheda madre), il driver video (si scarica da NVIDIA, la scheda e' Gigabyte) e il RAFFREDDAMENTO, che pure e' un prodotto con pagina propria ma dice «come si tiene fredda questa CPU». I CVar del client sono stati tolti del tutto: non sono materia di questa pagina. ⚠️ Le fonti sono due e vanno pesate: i componenti interni sono RILEVATI (WMI/CIM, EDID del monitor dal registro), le sigle esatte vengono dal listino PCPartPicker della build - che pero' fotografa la macchina COM'E' STATA COMPRATA: sul dissipatore e sulla variante della scheda madre e' superato o sbagliato, vedi le `notes`. Il file resta REDAZIONALE: nessuno script lo rigenera, si aggiorna a mano. ⚠️ Il testo mostrato dice cosa c'e', non se sia poco o troppo: niente giudizi sulle prestazioni, niente stati «da sistemare». Le valutazioni stanno nelle `notes`, che come sempre nel repo NON si mostrano. `art` = nome del disegno in src/components/HwArt.astro; `url` = pagina ufficiale, per le spec e per i download."
+    "note": "Postazione di gioco: ogni blocco e' un pezzo con le sue SPEC e, sotto, le IMPOSTAZIONI applicate che lo riguardano - il raffreddamento sulla CPU, BIOS/XMP/rete sulla scheda madre, driver e G-SYNC sulla scheda video, collegamento e FreeSync sul monitor. I blocchi stanno in un MOSAICO unico, senza intestazioni: l'ordine e' quello di dichiarazione qui dentro - dall'interno del case verso l'esterno (cpu, scheda madre, memoria, video, disco, alimentatore, case, monitor, periferiche) e il software per ultimo. ⚠️ Spec e setup erano due pannelli separati e obbligavano a saltare avanti e indietro per mettere insieme un pezzo e cio' che lo configura: `settings[].where` = chiave del componente che ospita l'impostazione. ⚠️ Cosa NON e' un blocco, e sono scelte: il collegamento video (un cavo non sta al pari di CPU o disco), il BIOS (firmware della scheda madre), il driver video (si scarica da NVIDIA, la scheda e' Gigabyte) e il RAFFREDDAMENTO, che pure e' un prodotto con pagina propria ma dice «come si tiene fredda questa CPU». I CVar del client sono stati tolti del tutto: non sono materia di questa pagina. ⚠️ Le fonti sono due e vanno pesate: i componenti interni sono RILEVATI (WMI/CIM, EDID del monitor dal registro), le sigle esatte vengono dal listino PCPartPicker della build - che pero' fotografa la macchina COM'E' STATA COMPRATA: sul dissipatore e sulla variante della scheda madre e' superato o sbagliato, vedi le `notes`. ⚠️ Il listino NON e' salvato da nessuna parte nel repo, ne' come file ne' come URL: e' citato in una decina di `notes` come fonte, ma per ricontrollarlo bisogna ritrovarlo. Per l'alimentatore, che Windows non vede affatto, e' la sola fonte esistente. ⚠️ E cio' che WMI non vede va cercato altrove, non dato per assente: l'alimentatore e' rimasto fuori dalla pagina fino al 2026-08-20 solo perche' il giro di rilevazione era partito da li'. Il file resta REDAZIONALE: nessuno script lo rigenera, si aggiorna a mano. ⚠️ Il testo mostrato dice cosa c'e', non se sia poco o troppo: niente giudizi sulle prestazioni, niente stati «da sistemare». Le valutazioni stanno nelle `notes`, che come sempre nel repo NON si mostrano. `art` = nome del disegno in src/components/HwArt.astro; `url` = pagina ufficiale, per le spec e per i download."
   },
   "components": [
     {
@@ -29,10 +29,10 @@
       "label": "Memoria",
       "art": "ram",
       "name": "32 GB DDR4 (4 x 8 GB)",
-      "detail": "Corsair Vengeance LPX - 2733 MT/s",
-      "desc": "Quattro banchi da 8 GB: due kit da 2x8 accoppiati, dichiarati DDR4-3000 e in funzione a 2733 MT/s.",
+      "detail": "Corsair Vengeance LPX - 3000 MT/s",
+      "desc": "Quattro banchi da 8 GB: due kit da 2x8 accoppiati, in funzione alla frequenza di targa DDR4-3000.",
       "url": "https://www.corsair.com/us/en/p/memory/cmk16gx4m2b3000c15/vengeancea-lpx-16gb-2-x-8gb-ddr4-dram-3000mhz-c15-memory-kit-black-cmk16gx4m2b3000c15",
-      "notes": "Sigla CMK16GX4M2B3000C15 (Vengeance LPX, senza RGB). ⚠️ Il listino PCPartPicker della build elenca DUE volte quel kit: e' la conferma indipendente che i quattro banchi sono due kit da 2x8 e non un kit unico da quattro, che era stato dedotto dalla frequenza. Non essendo selezionati insieme in fabbrica, il ripiego di frequenza e' il caso tipico. 2733 non e' una velocita' JEDEC, quindi l'XMP e' applicato - semplicemente non alla frequenza di targa. Non vale la pena inseguirla per WoW: a 1440p il limite e' la scheda video. ⚠️ Misurato con ConfiguredClockSpeed di Win32_PhysicalMemory, che e' la velocita' REALE; su questa macchina anche il campo Speed riporta 2733 e non il nominale, quindi da solo non basta per accorgersene."
+      "notes": "Sigla CMK16GX4M2B3000C15 (Vengeance LPX, senza RGB). ⚠️ Il listino PCPartPicker della build elenca DUE volte quel kit: e' la conferma indipendente che i quattro banchi sono due kit da 2x8 e non un kit unico da quattro, che era stato dedotto dalla frequenza. ⚠️ FINO AL 2026-08-20 giravano a 2733 invece dei 3000 di targa, ed era stato archiviato come il ripiego tipico di due kit non selezionati insieme in fabbrica («non vale la pena inseguirlo per WoW»). Era il BIOS: col flash al 2701 la memoria e' salita alla targa senza toccare altro, quattro banchi su quattro. La diagnosi vecchia non era sbagliata sui fatti, era una causa dedotta e mai messa alla prova - e la prova costava un flash. ⚠️ Misurato con ConfiguredClockSpeed di Win32_PhysicalMemory, che e' la velocita' REALE; su questa macchina anche il campo Speed riporta quella in uso e non il nominale, quindi da solo non basta per accorgersene. Windows scrive 3007 e non 3000: e' l'arrotondamento del clock di base, non un overclock oltre la targa."
     },
     {
       "key": "gpu",
@@ -42,7 +42,7 @@
       "detail": "Pascal - 6 GB GDDR5 - WINDFORCE 2X",
       "desc": "Custom Gigabyte con raffreddamento a due ventole. L'Adaptive-Sync le funziona solo su DisplayPort.",
       "url": "https://www.gigabyte.com/us/Graphics-Card/GV-N1060G1-GAMING-6GD-rev-20",
-      "notes": "Sigla GV-N1060G1 GAMING-6GD rev. 2.0, dal listino PCPartPicker della build. ⚠️ WMI riporta 4 GB di AdapterRAM: e' l'overflow del campo a 32 bit, la scheda e' da 6 GB - non riportare quel numero da nessuna parte. ⚠️ Il link va alla pagina Gigabyte perche' quella e' la scheda fisica (raffreddamento, clock di fabbrica, RGB); il DRIVER invece si scarica da NVIDIA, ed e' per questo che sta in una riga sua col suo link. Il sito Gigabyte risponde 403 a curl e ai fetch automatici: dal browser si apre."
+      "notes": "Sigla GV-N1060G1 GAMING-6GD rev. 2.0, dal listino PCPartPicker della build. ⚠️ WMI riporta 4 GB di AdapterRAM: e' l'overflow del campo a 32 bit, la scheda e' da 6 GB - non riportare quel numero da nessuna parte. ⚠️ La misura che invece FUNZIONA e' `HardwareInformation.qwMemorySize` sotto HKLM\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e968-...}: e' a 64 bit e dice 6 GB tondi (verificato il 2026-08-20). Serve saperlo perche' altrimenti l'unica strada per un numero giusto sembra fidarsi della scatola. ⚠️ Il link va alla pagina Gigabyte perche' quella e' la scheda fisica (raffreddamento, clock di fabbrica, RGB); il DRIVER invece si scarica da NVIDIA, ed e' per questo che sta in una riga sua col suo link. Il sito Gigabyte risponde 403 a curl e ai fetch automatici: dal browser si apre."
     },
     {
       "key": "storage",
@@ -53,6 +53,15 @@
       "desc": "NVMe PCIe 3.0 x4 in formato M.2 2280, memoria V-NAND MLC.",
       "url": "https://www.samsung.com/it/memory-storage/nvme-ssd/970-pro-nvme-m-2-ssd-512gb-mz-v7p512bw/",
       "notes": "Sigla MZ-V7P512BW, confermata dal listino PCPartPicker della build (M.2-2280, PCIe 3.0 x4)."
+    },
+    {
+      "key": "psu",
+      "label": "Alimentatore",
+      "art": "alimentatore",
+      "name": "be quiet! Straight Power 11 650W",
+      "detail": "80+ Gold - completamente modulare",
+      "desc": "ATX modulare da 650 W, ventola Silent Wings 3 da 135 mm.",
+      "notes": "Sigla BN282 in Europa (BN618 negli USA), dal listino PCPartPicker della build, e la conferma a voce del 2026-08-20. ⚠️ E' l'unico pezzo che NON si puo' rilevare da Windows: l'alimentatore non sta nel SMBIOS e non ha un'interfaccia da interrogare (non e' un modello digitale con collegamento USB, quelli comparirebbero in iCUE o HWiNFO). Mancava del tutto dalla pagina fino al 2026-08-20, e non per scelta: il giro di rilevazione era partito da WMI, e cio' che WMI non vede non era stato cercato altrove. ⚠️ Il listino sbaglia su due righe - dissipatore e variante della scheda madre - ma sono le due cose CAMBIATE dopo l'acquisto: sui pezzi mai toccati resta la fonte buona, e l'alimentatore e' fra quelli. ⚠️ NIENTE `url`, ed e' un buco da riempire a mano: bequiet.com sta dietro Cloudflare (403 sia a curl con user-agent da browser sia al fetch automatico, come gia' annotato sul case), le pagine prodotto hanno un id numerico che non si deduce, e quello trovato dai motori - /en/powersupply/1776 - e' il modello PLATINUM, che non e' questo. Da aprire una volta dal browser e incollare qui: 80+ Gold, non Platinum."
     },
     {
       "key": "case",
@@ -72,7 +81,7 @@
       "detail": "2560 x 1440 a 144 Hz - FreeSync 48-144 Hz",
       "desc": "Pannello curvo VA da 32\", con range adattivo dichiarato 48-144 Hz nell'EDID.",
       "url": "https://www.samsung.com/it/monitors/gaming/odyssey-g5-32-inch-144hz-1ms-curved-lc32g55tqbuxen/",
-      "notes": "Range letto dal descrittore 0xFD dell'EDID nel registro. ⚠️ Espone un EDID DIVERSO per ingresso (SAM7088 su HDMI, SAM7080 su DisplayPort), ma il range dichiarato e' identico sui due. Il codice esatto di questa unita' non e' stato letto dall'etichetta: la pagina prodotto e' quella della variante europea LC32G55TQBUXEN."
+      "notes": "Range letto dal descrittore 0xFD dell'EDID nel registro. ⚠️ Espone un EDID DIVERSO per ingresso (SAM7088 su HDMI, SAM7080 su DisplayPort), ma il range dichiarato e' identico sui due. Dopo il passaggio a DisplayPort il sistema vede il solo SAM7080 (WmiMonitorID, 2026-08-20): l'EDID HDMI non e' sparito, semplicemente non c'e' piu' un ingresso collegato che lo esponga - non dedurne che il monitor sia cambiato. L'unita' e' del 2021 (settimana 48). Il codice esatto di questa unita' non e' stato letto dall'etichetta: la pagina prodotto e' quella della variante europea LC32G55TQBUXEN."
     },
     {
       "key": "mouse",
@@ -82,7 +91,7 @@
       "detail": "sensore ottico 5G, 16.000 DPI",
       "desc": "Tre fiancate intercambiabili da 2, 7 e 12 tasti, che si sganciano a magnete.",
       "url": "https://www.razer.com/it-it/gaming-mice/razer-naga-trinity",
-      "notes": "Cablato. ⚠️ Quale delle tre fiancate sia montata NON e' stato rilevato: e' una configurazione, e finche' non la si guarda non si scrive. La configurazione dei tasti sta in Razer Synapse, che qui non risulta censito fra il software installato - da verificare sulla macchina da gioco, non da qui."
+      "notes": "Cablato, e la macchina lo conferma: il mouse compare come «Razer Naga Trinity» (USB VID_1532 PID_0067, verificato il 2026-08-20). ⚠️ Quale delle tre fiancate sia montata NON e' stato rilevato: il PID e' lo stesso per tutte e tre, quindi non lo dice nemmeno il sistema - e' una configurazione, e finche' non la si guarda non si scrive. Razer Synapse c'e' ed e' AVVIATO (4.0.699, 10 processi): il caveat «non risulta censito fra il software installato» valeva quando il censimento era stato fatto dall'altra postazione, quella senza WoW."
     },
     {
       "key": "tastiera",
@@ -92,7 +101,7 @@
       "detail": "meccanica tenkeyless - Cherry MX Red",
       "desc": "Senza tastierino numerico, switch lineari; controlli multimediali dedicati e blocco del tasto Windows.",
       "url": "https://www.corsair.com/it/it/p/keyboards/ch-9115020-it/k63-compact-mechanical-gaming-keyboard-cherry-mx-red-it-ch-9115020-it",
-      "notes": "⚠️ La sigla esatta non e' stata letta dall'etichetta: il link punta alla variante con layout italiano (CH-9115020-IT), che e' la probabile ma non la verificata - stesso caveat del monitor. Il K63 esiste anche in versione wireless (CH-9145030): qui si assume la cablata, che e' quella marchiata «CORSAIR GAMING K63». Tutte le varianti montano Cherry MX Red, quindi lo switch e' certo anche senza la sigla. La retroilluminazione e le macro si configurano in iCUE, che qui non risulta censito fra il software installato."
+      "notes": "⚠️ La sigla esatta non e' stata letta dall'etichetta: il link punta alla variante con layout italiano (CH-9115020-IT), che e' la probabile ma non la verificata - stesso caveat del monitor. Il K63 esiste anche in versione wireless (CH-9145030): qui si assume la cablata, che e' quella marchiata «CORSAIR GAMING K63». Tutte le varianti montano Cherry MX Red, quindi lo switch e' certo anche senza la sigla. ⚠️ Il sistema NON aiuta a chiudere la sigla: la tastiera si presenta come un composito Corsair senza nome (VID_1B1C PID_1B40, descrizione «HID Keyboard Device»), quindi l'unica strada resta l'etichetta sotto la scocca. La retroilluminazione e le macro si configurano in iCUE, che c'e' ed e' AVVIATO (iCUE5 5.49.34, 4 processi, verificato il 2026-08-20): il vecchio «non risulta censito fra il software installato» era il censimento fatto dall'altra postazione, quella senza WoW."
     },
     {
       "key": "cuffie",
@@ -102,17 +111,17 @@
       "detail": "driver da 50 mm - SLIPSTREAM wireless",
       "desc": "Microfono omnidirezionale a braccetto, che si silenzia alzandolo; audio spaziale Dolby Atmos su Windows.",
       "url": "https://www.corsair.com/it/it/p/gaming-headsets/ca-9011235-eu/hs80-rgb-wireless-premium-gaming-headset-with-spatial-audio-carbon-eu-ca-9011235-eu",
-      "notes": "Confermata a voce la variante WIRELESS (2026-08-20): della serie esistono anche la HS80 RGB USB cablata (CA-9011237) e la HS80 MAX, e il link punta alla CA-9011235-EU Carbon. ⚠️ Resta non letta dall'etichetta la sola finitura (Carbon o White): se e' bianca, la sigla e' CA-9011236-EU. Il ricevitore SLIPSTREAM e' USB; profili audio, sidetone e RGB si regolano in iCUE."
+      "notes": "Variante WIRELESS confermata due volte il 2026-08-20: a voce e dalla macchina, che la enumera come «CORSAIR HS80 RGB Wireless Gaming Headset» (VID_1B1C PID_0A6B) ed e' anche uno dei dispositivi audio attivi. Della serie esistono anche la HS80 RGB USB cablata (CA-9011237) e la HS80 MAX, e il link punta alla CA-9011235-EU Carbon. ⚠️ Resta non letta dall'etichetta la sola finitura (Carbon o White): se e' bianca, la sigla e' CA-9011236-EU - il nome USB e' identico nelle due, quindi da qui non si chiude. Il ricevitore SLIPSTREAM e' USB; profili audio, sidetone e RGB si regolano in iCUE, presente e avviato."
     },
     {
       "key": "os",
       "label": "Sistema operativo",
       "art": "finestra",
       "name": "Windows 11 Pro",
-      "detail": "build 22631",
+      "detail": "23H2 - build 22631",
       "desc": "Avvio senza BitLocker e senza TPM attivo.",
       "url": "https://www.microsoft.com/it-it/windows/windows-11",
-      "notes": "Verificato prima di considerare un aggiornamento del BIOS: senza BitLocker il flash non chiede la chiave al riavvio, che e' l'incidente classico. Secure Boot non determinabile, quindi probabile avvio legacy/CSM."
+      "notes": "Verificato PRIMA del flash del BIOS: senza BitLocker il flash non chiede la chiave al riavvio, che e' l'incidente classico - e infatti il 2026-08-20 il passaggio al BIOS 2701 e' filato senza chiedere nulla. Secure Boot non determinabile, quindi probabile avvio legacy/CSM. ⚠️ La revisione esatta il 2026-08-20 era 22631.6199, ma NON sta in pagina di proposito: l'UBR cambia a ogni patch mensile e questo manifest si aggiorna a mano, quindi sarebbe un numero sbagliato per definizione. Versione e UBR si leggono da HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion (DisplayVersion, UBR); Win32_OperatingSystem si ferma a 22631 e la revisione non la dice."
     }
   ],
   "settings": [
@@ -123,33 +132,41 @@
       "value": "AIO 240 mm",
       "desc": "Raffreddamento a liquido: due ventole ML120 RGB PWM sul radiatore, velocita' e illuminazione dal controller Commander CORE incluso.",
       "url": "https://www.corsair.com/it/it/p/cpu-coolers/cw-9060046-ww/icue-h100i-elite-capellix-liquid-cpu-cooler-cw-9060046-ww",
-      "notes": "Sigla CW-9060046-WW (nero); esistono la variante bianca (CW-9060050) e la successiva XT (CW-9060068), l'etichetta non e' stata letta. ⚠️ CONFERMATO a voce il 2026-08-20 che il montato e' questo: il listino PCPartPicker della build elenca un Enermax Liqmax II 120 (ELC-LMR120S-BS, radiatore da 120), che e' il dissipatore ORIGINALE, poi sostituito. Il listino fotografa la build com'era comprata, non com'e' adesso - vale come fonte per le sigle dei pezzi mai toccati, non per quelli cambiati (e sulla scheda madre sbaglia proprio). ⚠️ Il controller Commander CORE si pilota da iCUE, che qui non risulta censito fra il software installato - da verificare sulla macchina da gioco. ⚠️ NON e' un blocco a se': sta dentro la CPU, come il BIOS sta dentro la scheda madre. E' una scelta esplicita - un dissipatore e' pur sempre un prodotto con la sua pagina, ma quello che dice al lettore e' «come si tiene fredda questa CPU», quindi la riga vive li' col suo link."
+      "notes": "Sigla CW-9060046-WW (nero); esistono la variante bianca (CW-9060050) e la successiva XT (CW-9060068), l'etichetta non e' stata letta. ⚠️ CONFERMATO a voce il 2026-08-20 che il montato e' questo: il listino PCPartPicker della build elenca un Enermax Liqmax II 120 (ELC-LMR120S-BS, radiatore da 120), che e' il dissipatore ORIGINALE, poi sostituito. Il listino fotografa la build com'era comprata, non com'e' adesso - vale come fonte per le sigle dei pezzi mai toccati, non per quelli cambiati (e sulla scheda madre sbaglia proprio). ⚠️ Il controller Commander CORE si pilota da iCUE, che c'e' ed e' avviato (iCUE5 5.49.34, verificato il 2026-08-20: cade il vecchio «da verificare sulla macchina da gioco»). Una conferma indiretta del montato c'e' anche nell'enumerazione USB: fra i dispositivi Corsair ce n'e' uno senza funzione di tastiera o mouse (VID_1B1C PID_0C1C), cioe' un controller, che e' quello che l'AIO porta con se'. ⚠️ Non e' la prova del MODELLO: Windows non gli da' un nome («USB Composite Device») e i log di iCUE elencano i sensori di scheda madre, CPU e GPU ma non le periferiche. La sigla resta quella confermata a voce. ⚠️ NON e' un blocco a se': sta dentro la CPU, come il BIOS sta dentro la scheda madre. E' una scelta esplicita - un dissipatore e' pur sempre un prodotto con la sua pagina, ma quello che dice al lettore e' «come si tiene fredda questa CPU», quindi la riga vive li' col suo link."
     },
     {
       "key": "bios",
       "where": "mobo",
       "name": "BIOS",
-      "value": "1602 - 28 giugno 2018",
-      "desc": "Si aggiorna con EZ Flash 3 dal setup della scheda, con l'immagine su una chiavetta FAT32. Il flash riporta tutto ai valori di fabbrica, XMP compreso.",
+      "value": "2701 - 11 agosto 2021",
+      "desc": "L'ultima versione pubblicata per questa scheda. Si aggiorna con EZ Flash 3 dal setup, con l'immagine su una chiavetta FAT32: il flash riporta tutto ai valori di fabbrica, XMP compreso.",
       "url": "https://rog.asus.com/motherboards/rog-maximus/rog-maximus-x-hero-model/helpdesk_bios/",
-      "notes": null
+      "notes": "Aggiornato il 2026-08-20 dal 1602 del 28 giugno 2018, cioe' il BIOS di fabbrica. ⚠️ Non e' stato un aggiornamento a vuoto: ha rimesso la memoria alla frequenza di targa (2733 -> 3000, vedi l'XMP e le note della memoria), che era esattamente il motivo per cui si era pensato di farlo. ⚠️ Ed e' il CAPOLINEA, non una tappa: la 2701 e' l'ultima delle 17 versioni pubblicate per questa scheda (verificato il 2026-08-20 sulla pagina di supporto ASUS e su station-drivers, che concordano), la piattaforma Z370 e' fuori manutenzione dal 2021. Quindi la riga non e' «da tenere aggiornata»: se un giorno compare qualcosa di piu' recente e' una notizia, non l'ordinaria amministrazione. ⚠️ Attenzione alla DATA, che ha due valori entrambi giusti: SMBIOS e registro dicono 13/07/2021 (quando il firmware e' stato compilato), la pagina ASUS 11/08/2021 (quando e' stato pubblicato). In pagina sta la seconda, perche' e' quella che si confronta con il sito quando ci si chiede se si e' indietro. Versione letta da Win32_BIOS (SMBIOSBIOSVersion) e da HKLM\\HARDWARE\\DESCRIPTION\\System\\BIOS, concordi."
     },
     {
       "key": "xmp",
       "where": "mobo",
       "name": "XMP",
-      "value": "Attivo a 2733 MT/s",
-      "desc": "Profilo XMP applicato: la memoria gira a 2733 MT/s invece dei 2133 MT/s del profilo JEDEC.",
-      "notes": "Non vale la pena inseguirlo per WoW - a 1440p il limite e' la scheda video, e fra 2733 e 3000 non si vede la differenza. Se un giorno si vuole provare: BIOS piu' recente (migliore addestramento della memoria), oppure un kit unico da 4 moduli invece di due kit accoppiati. ⚠️ Il flash del BIOS azzera anche questa: da riattivare dopo."
+      "value": "Attivo a 3000 MT/s",
+      "desc": "Profilo XMP applicato: la memoria gira ai 3000 MT/s di targa invece dei 2133 MT/s del profilo JEDEC.",
+      "notes": "⚠️ Il flash del BIOS azzera anche questa: da riattivare dopo, ed e' quello che e' stato fatto il 2026-08-20. Fino a quel giorno il profilo si applicava ma la memoria si fermava a 2733, e la causa data per buona era l'accoppiata di due kit non selezionati insieme in fabbrica; col BIOS 2701 sale ai 3000 pieni senza altre modifiche, quindi era l'addestramento della memoria del BIOS di fabbrica. Restava anche l'ipotesi «kit unico da 4 moduli»: non serve piu' provarla. ⚠️ Vale come esercizio di igiene, non come guadagno in gioco: a 1440p il limite resta la scheda video, e fra 2733 e 3000 in WoW non si vede la differenza - il valore in pagina dice cosa c'e', non che sia servito a qualcosa."
+    },
+    {
+      "key": "rete",
+      "where": "mobo",
+      "name": "Rete",
+      "value": "Wi-Fi",
+      "desc": "Il traffico passa dall'adattatore Broadcom 802.11ac. La porta Ethernet della scheda, una Intel I219-V, e' presente ma scollegata.",
+      "notes": "Rilevato il 2026-08-20 con Get-NetAdapter: Wi-Fi «Up», Ethernet «Disconnected» a 0 bps. Al momento della misura il collegamento era a 2,4 GHz, canale 1, 802.11n, 104 Mbps in trasmissione contro 866 in ricezione, segnale 100%. ⚠️ Quei numeri NON stanno in pagina e non ci devono andare: cambiano a ogni riconnessione, mentre «quale delle due interfacce e' in uso» e' una scelta stabile della postazione, ed e' quello che la riga dice. ⚠️ E NON ci va nemmeno l'SSID, che era nella misura: il sito e' pubblico e il nome di una rete domestica e' geolocalizzabile (esistono database di wardriving che indicizzano SSID e coordinate). Vale come il nome account Battle.net, non come il nome di un PG. ⚠️ Qui una valutazione, che per convenzione resta fuori dalla pagina: il 2,4 GHz sul canale 1 e' la banda peggiore per la latenza - affollata, e con 104 Mbps in salita contro 866 in discesa il collegamento e' asimmetrico in modo sospetto. Per un gioco dove conta il ritardo e non la banda, il cavo che c'e' gia' (I219-V) sarebbe meglio, o almeno la banda 5 GHz. Non e' una cosa «da sistemare» in pagina: e' un appunto per quando si tocchera' la postazione."
     },
     {
       "key": "driver-nvidia",
       "where": "gpu",
       "name": "Driver",
-      "value": "32.0.15.8266",
+      "value": "GeForce 582.66",
       "desc": "Driver GeForce installato. Si scarica da NVIDIA, non da Gigabyte: la scheda e' custom ma il driver e' quello di riferimento.",
       "url": "https://www.nvidia.com/it-it/drivers/",
-      "notes": null
+      "notes": "⚠️ Windows chiama lo stesso driver 32.0.15.8266 (e' il numero che escono da Win32_VideoController e dalla scheda Driver in Gestione dispositivi), e fino al 2026-08-20 in pagina c'era quello. E' un numero che non si puo' confrontare con niente: sul sito NVIDIA, nell'app e nelle note di rilascio la versione si chiama 582.66. La regola per ricavarla: si attaccano gli ultimi due gruppi (15 + 8266 = 158266), si tengono le ultime cinque cifre (58266) e si mette il punto prima delle ultime due -> 582.66. Installato il 2026-06-17."
     },
     {
       "key": "gsync",
@@ -187,9 +204,9 @@
       "key": "asus-stack",
       "where": "os",
       "name": "Stack ASUS",
-      "value": "13 processi, 286 MB",
-      "desc": "Armoury Crate e AURA, installati per l'illuminazione della scheda madre: quattro servizi ad avvio automatico.",
-      "notes": "Installati il 2026-08-20 insieme al driver Intel Chipset 10.1.18295.8201, che e' l'unica parte utile del giro. Misurato subito dopo: 13 processi per 285,8 MB residenti, i piu' grossi ArmouryCrate.Service (92 MB) e UserSessionHelper (58 MB). ⚠️ Il pacchetto porta di default componenti RGB per hardware che questa macchina NON ha - Patriot Viper DRAM/M2, Kingston AURA DRAM, Universal Holtek RGB DRAM, WD_BLACK AN1500: la RAM e' Corsair Vengeance LPX, che non ha affatto RGB, e il disco e' un Samsung 970 PRO. Rimossi a mano; ogni voce esiste in DUE registrazioni, il pacchetto MSI e il bundle in Package Cache, e va disinstallato il BUNDLE o resta la registrazione orfana."
+      "value": "Armoury Crate + AURA",
+      "desc": "Installati per l'illuminazione della scheda madre: restano in memoria come una manciata di processi, con quattro servizi ad avvio automatico.",
+      "notes": "Installati il 2026-08-20 insieme al driver Intel Chipset 10.1.18295.8201, che e' l'unica parte utile del giro. ⚠️ In pagina c'e' stato per mezza giornata il valore «13 processi, 286 MB», misurato SUBITO DOPO l'installazione (i piu' grossi ArmouryCrate.Service 92 MB e UserSessionHelper 58 MB). Rimisurato dopo il riavvio dello stesso giorno: 9 processi per 119,5 MB, cioe' meno della meta' - quello di prima comprendeva installer e aggiornatori ancora vivi. Nessuno dei due numeri e' sbagliato, ma un working set e' una fotografia, e su una pagina che si aggiorna a mano una fotografia invecchia in silenzio: il valore mostrato ora dice CHE COSA c'e', l'ordine di grandezza sta qui. ⚠️ Il pacchetto porta di default componenti RGB per hardware che questa macchina NON ha - Patriot Viper DRAM/M2, Kingston AURA DRAM, Universal Holtek RGB DRAM, WD_BLACK AN1500: la RAM e' Corsair Vengeance LPX, che non ha affatto RGB, e il disco e' un Samsung 970 PRO. Rimossi a mano; ogni voce esiste in DUE registrazioni, il pacchetto MSI e il bundle in Package Cache, e va disinstallato il BUNDLE o resta la registrazione orfana."
     }
   ]
 }
