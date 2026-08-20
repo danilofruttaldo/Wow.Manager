@@ -74,14 +74,40 @@ export interface Extra {
   notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
 }
 
-// Pezzo della postazione di gioco (hardware/manifest.json). La pagina /hardware e' una
-// SCHEDA TECNICA e basta: solo le spec, niente impostazioni ne' storia di aggiornamenti.
+// Pezzo della postazione di gioco (hardware/manifest.json). La pagina /hardware ha due
+// meta': le SPEC (com'e' fatta la macchina) e il SETUP (come e' configurata).
 export interface HwComponent {
   key: string;
-  label: string;          // etichetta di riga: CPU, Scheda video, Monitor...
+  label: string;          // etichetta del blocco: CPU, Scheda video, Monitor...
   name: string;
   detail?: string;        // seconda riga tecnica (frequenze, sigla del kit, driver)
+  desc?: string;          // riga in chiaro mostrata sul sito
+  art?: string;           // nome del disegno in src/components/HwArt.astro
+  url?: string;           // pagina ufficiale del pezzo: spec e download degli aggiornamenti
   notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
+}
+
+// Un'impostazione applicata, attaccata al PEZZO che la porta (`where` = chiave di un
+// componente): il FreeSync al monitor, l'XMP alla scheda madre, il driver alla scheda video.
+// ⚠️ Niente campo di stato: il setup elenca la configurazione che C'E', non una lista di
+// cose da fare — era la deriva per cui il pannello era stato tolto una prima volta. Un
+// compromesso noto resta un fatto della macchina e vive nelle `notes` del componente.
+export interface HwSetting {
+  key: string;
+  where: string;
+  name: string;
+  value?: string;         // il valore letterale: «Attivo», oppure la versione com'e' scritta
+  desc?: string;
+  url?: string;           // dove si scarica cio' che serve: BIOS dalla scheda madre, driver da NVIDIA
+  notes?: string;         // memoria interna: NON mostrata sul sito
+}
+
+// Il componente con attaccate le impostazioni che lo riguardano: e' quello che la pagina
+// disegna, un blocco per pezzo. ⚠️ Spec e setup NON sono due elenchi separati — il
+// FreeSync sta dentro il monitor, il G-SYNC dentro la scheda video, BIOS e XMP dentro la
+// scheda madre, il raffreddamento dentro la CPU.
+export interface HwBlock extends HwComponent {
+  items: HwSetting[];
 }
 
 // ── Meta build + data aggiornamento (git) ─────────
@@ -304,15 +330,29 @@ export function getExtra(): Extra[] {
 
 // ── Hardware (postazione di gioco) ────────────────
 // hardware/manifest.json e' REDAZIONALE, non macchina-generato: i valori sono stati
-// rilevati (WMI/CIM per i componenti, EDID del monitor dal registro, Config.wtf riletto
-// in byte per i CVar), ma il file si aggiorna a mano quando cambia un pezzo. Come
-// altrove nel repo, `desc` si mostra e `notes` no.
-// L'ordine e' quello di dichiarazione nel manifest: e' un dato redazionale (si legge dal
-// pezzo piu' interno alla macchina verso lo schermo), non alfabetico.
+// rilevati (WMI/CIM per i componenti interni, EDID del monitor dal registro) e le sigle
+// esatte vengono dal listino della build, ma il file si aggiorna a mano quando cambia un
+// pezzo. Come altrove nel repo, `desc` si mostra e `notes` no.
+// L'ordine e' quello di dichiarazione nel manifest: e' un dato redazionale (dall'interno
+// del case verso l'esterno, software per ultimo), non alfabetico.
 let _hw: HwComponent[] | null = null;
 export function getHwComponents(): HwComponent[] {
   if (_hw) return _hw;
   return (_hw = ((hardwareManifest as any).components ?? []) as HwComponent[]);
+}
+
+// I blocchi = i componenti nell'ordine del manifest (dal pezzo piu' interno verso lo
+// schermo), ognuno con le impostazioni che lo riguardano.
+// ⚠️ Un'impostazione il cui `where` non combacia con nessun componente sparirebbe dalla
+// pagina IN SILENZIO: per questo il rimando lo controlla `npm run validate`.
+let _hwBlocks: HwBlock[] | null = null;
+export function getHwBlocks(): HwBlock[] {
+  if (_hwBlocks) return _hwBlocks;
+  const settings = ((hardwareManifest as any).settings ?? []) as HwSetting[];
+  return (_hwBlocks = getHwComponents().map(c => ({ ...c, items: settings.filter(s => s.where === c.key) })));
+}
+export function getHwSettingCount(): number {
+  return ((hardwareManifest as any).settings ?? []).length;
 }
 
 // ── Mount (collezione cavalcature) ────────────────

@@ -15,7 +15,7 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 | [professions/](professions/) | Alberi di specializzazione (dal client) + leveling 1→max (web) per professione | `professions/` (`trees.json`, `leveling.json`, `manifest.json`) |
 | [transmog/](transmog/) | Set dei raid per classe: righe tier, versioni, pezzi collezionati | `transmog/manifest.json` |
 | [mounts/](mounts/) | Cavalcature: tutte quelle del gioco, prese e mancanti, con provenienza (macchina-generato) | `mounts/manifest.json` |
-| [hardware/](hardware/) | Postazione di gioco: componenti + impostazioni (monitor, driver, gioco, BIOS) | `hardware/manifest.json` |
+| [hardware/](hardware/) | Postazione di gioco: spec di ogni pezzo e impostazioni applicate che lo riguardano | `hardware/manifest.json` |
 | [ui-profiles/](ui-profiles/) | Profili addon (Plater, Details, ecc.) | `ui-profiles/manifest.json` |
 | [fonts/](fonts/) | Override font UI Blizzard (nomi-override in `Fonts/`) | `fonts/manifest.json` |
 | [pg.md](pg.md) | Tracker PG per razza × classe, Orda + Alleanza (copertura combo) | `pg.md` |

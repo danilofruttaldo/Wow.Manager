@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog, getMountStats, getHwComponents } from '../lib/content';
+import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog, getMountStats, getHwComponents, getHwSettingCount } from '../lib/content';
 
 interface Props {
   title: string;
@@ -62,7 +62,9 @@ const nav = [
   { href: '/transmog', label: 'Xmog', full: 'Transmog', icon: '/icons/section/transmog.jpg', count: `${tmogPct}%`, color: '#9B4DCA' },
   { href: '/mount', label: 'Mount', full: 'Cavalcature', icon: '/icons/section/mount.jpg', count: `${mountStats.pct}%`, color: '#2F8F4E' },
   { href: '/ui', label: 'UI', full: 'UI', icon: '/icons/section/ui.jpg', count: `${getScreenshotCount()}`, color: '#159A8C' },
-  { href: '/hardware', label: 'HW', full: 'Hardware', icon: '/icons/section/hardware.jpg', count: `${getHwComponents().length}`, color: '#A63A7E' },
+  // ⚠️ Il conteggio HW e' componenti + impostazioni, non i soli componenti: la pagina ha
+  // due meta' (spec e setup) e contarne una sola diceva meno di quello che c'e'.
+  { href: '/hardware', label: 'HW', full: 'Hardware', icon: '/icons/section/hardware.jpg', count: `${getHwComponents().length + getHwSettingCount()}`, color: '#A63A7E' },
   { href: '/extra', label: 'Extra', full: 'Extra', icon: '/icons/section/extra.jpg', count: `${getExtra().length}`, color: '#5B6470' },
 ];
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');

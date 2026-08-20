@@ -1,0 +1,133 @@
+---
+// ── Disegni della pagina /hardware ─────────────────
+// ⚠️ DEROGA VOLUTA alla regola «sul sito solo icone WoW»: qui il soggetto NON e' WoW ma
+// la macchina fisica, e nessuna icona del gioco dice davvero «monitor 1440p» o «banco di
+// RAM». La deroga vale SOLO per questa pagina ed e' scritta in CLAUDE.md; altrove la
+// regola non cambia.
+//
+// Sono SVG in linea e non file in public/ per tre motivi che si tengono insieme:
+//  - prendono `currentColor`, quindi la tinta della sezione entra nel disegno senza una
+//    seconda copia del file per ogni colore;
+//  - nessuna richiesta in piu' (sono 11 disegni da poche centinaia di byte);
+//  - stanno in UN posto solo, quindi il validatore puo' controllare che ogni `art`
+//    dichiarata nel manifest esista davvero (grep di `art === '...'` su questo file).
+//
+// Tratto unico: viewBox 48x48, `stroke` a 1.6, nessun riempimento. Sono schemi, non
+// illustrazioni: devono leggersi a 34px sui telefoni come a 44px sul desktop.
+//
+// Sono sempre DECORATIVI (`aria-hidden`): il nome del pezzo e' scritto accanto, quindi
+// un testo alternativo lo ripeterebbe. Non c'e' una prop per darne uno - se un giorno
+// servisse, e' li' che va aggiunta, non chiamando il componente con un titolo.
+interface Props {
+  art?: string | null;
+  size?: number;
+}
+const { art, size = 48 } = Astro.props;
+// ⚠️ Gli attributi arrivano da UN oggetto solo. Costruirlo con uno spread condizionale
+// — `...(cond ? {a} : {b})` — ne fa l'UNIONE di due forme, e `astro check` la rifiuta su
+// OGNI <svg>: undici errori in un colpo, mentre `npm run build` non se ne accorge perche'
+// i tipi non li guarda.
+const common = {
+  viewBox: '0 0 48 48',
+  width: size,
+  height: size,
+  fill: 'none',
+  stroke: 'currentColor',
+  'stroke-width': 1.6,
+  'stroke-linecap': 'round' as const,
+  'stroke-linejoin': 'round' as const,
+  class: 'hwart',
+  'aria-hidden': true,
+};
+---
+{art === 'cpu' && (
+  <svg {...common}>
+    <rect x="13" y="13" width="22" height="22" rx="2.5" />
+    <rect x="19.5" y="19.5" width="9" height="9" rx="1.5" />
+    <path d="M18 13V8M24 13V8M30 13V8M18 35v5M24 35v5M30 35v5M13 18H8M13 24H8M13 30H8M35 18h5M35 24h5M35 30h5" />
+  </svg>
+)}
+{art === 'scheda-madre' && (
+  <svg {...common}>
+    <rect x="7" y="9" width="34" height="30" rx="2.5" />
+    <rect x="11" y="13" width="10" height="10" rx="1.5" />
+    <path d="M26 13h3v14h-3zM33 13h3v14h-3z" />
+    <path d="M11 28h6v7h-6z" />
+    <path d="M21 31h8M29 31v4h7" />
+  </svg>
+)}
+{art === 'ram' && (
+  <svg {...common}>
+    <rect x="9" y="13" width="12" height="21" rx="1.5" />
+    <rect x="27" y="13" width="12" height="21" rx="1.5" />
+    <path d="M9 19h12M27 19h12" />
+    <path d="M13 34v3M17 34v3M31 34v3M35 34v3" />
+  </svg>
+)}
+{art === 'gpu' && (
+  <svg {...common}>
+    <rect x="6" y="15" width="31" height="18" rx="2" />
+    <circle cx="15" cy="24" r="4.5" />
+    <circle cx="28" cy="24" r="4.5" />
+    <path d="M15 24h.01M28 24h.01" stroke-width="2.6" />
+    <path d="M37 13v22M12 33v3M18 33v3" />
+  </svg>
+)}
+{art === 'monitor' && (
+  <svg {...common}>
+    <rect x="6" y="10" width="36" height="23" rx="2.5" />
+    <path d="M11 15c9 3 17 3 26 0" />
+    <path d="M24 33v5M17 39h14" />
+  </svg>
+)}
+{art === 'ssd' && (
+  <svg {...common}>
+    <path d="M13 18h26a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H13l-2-2v-8z" />
+    <rect x="17" y="21" width="8" height="6" rx="1" />
+    <rect x="29" y="21" width="6" height="6" rx="1" />
+    <path d="M11 21H7M11 27H7" />
+  </svg>
+)}
+{art === 'finestra' && (
+  <svg {...common}>
+    <rect x="9" y="11" width="30" height="26" rx="2.5" />
+    <path d="M24 11v26M9 24h30" />
+  </svg>
+)}
+
+{art === 'mouse' && (
+  <svg {...common}>
+    <path d="M24 8c-5.5 0-10 4.5-10 10v12c0 5.5 4.5 10 10 10s10-4.5 10-10V18c0-5.5-4.5-10-10-10z" />
+    <path d="M24 8v7" />
+    <rect x="22.6" y="16" width="2.8" height="5.5" rx="1.4" />
+  </svg>
+)}
+{art === 'tastiera' && (
+  <svg {...common}>
+    <rect x="5" y="15" width="38" height="18" rx="2.5" />
+    <path d="M11 21h2M17 21h2M23 21h2M29 21h2M35 21h2" />
+    <path d="M11 25.5h2M17 25.5h2M23 25.5h2M29 25.5h2M35 25.5h2" />
+    <path d="M17 29.5h14" />
+  </svg>
+)}
+{art === 'cuffie' && (
+  <svg {...common}>
+    <path d="M10.5 28v-3.5a13.5 13.5 0 0 1 27 0V28" />
+    <rect x="7" y="26" width="7" height="12" rx="3" />
+    <rect x="34" y="26" width="7" height="12" rx="3" />
+  </svg>
+)}
+{art === 'case' && (
+  <svg {...common}>
+    <rect x="13" y="6" width="22" height="36" rx="2.5" />
+    <path d="M13 13h22" />
+    <circle cx="18" cy="9.5" r="1.2" />
+    <rect x="17" y="18" width="14" height="19" rx="1.5" />
+  </svg>
+)}
+<style>
+/* Il disegno prende la tinta della sezione: e' `currentColor`, quindi basta che il
+   contenitore la imposti. Nessuna misura qui dentro — width/height arrivano dalla prop,
+   cosi' lo stesso disegno serve il blocco (44px) e la sua versione stretta (34px). */
+.hwart { display: block; }
+</style>

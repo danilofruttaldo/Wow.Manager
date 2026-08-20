@@ -1,0 +1,33 @@
+---
+// Pastiglia di link ESTERNO usata da /hardware: mostra il dominio della destinazione
+// invece di un'etichetta ripetuta («Pagina prodotto» undici volte non dice dove porta,
+// «rog.asus.com» sì). Il guscio grafico è `.extlink` di global.css, condiviso con le
+// modali di /mount e /addons: qui c'è solo il modo di comporre il testo.
+//
+// ⚠️ La posizione la decide CHI LO USA, e deve farlo con `:global()` ancorato a un
+// contenitore suo: l'`<a>` nasce qui dentro, quindi NON porta l'attributo `data-astro-cid`
+// della pagina, e una regola `.blk-link` scritta lì non lo colpisce. È lo stesso inganno
+// già documentato per i nodi creati dal JS in /transmog e /pg — con i componenti si
+// presenta uguale, e si vede subito: la pastiglia si stira a tutta larghezza perché
+// l'`align-self: flex-start` non arriva.
+//
+// ⚠️ Nasceva duplicato nella pagina — una copia per il link del pezzo e una per quello
+// dell'impostazione, identiche salvo il prefisso letto dagli screen reader. È lo stesso
+// motivo per cui il repo ha unificato `.dlg*` e `dialog.ts`: due copie divergono alla
+// prima correzione, e qui la correzione delicata (niente spazio letterale fra testo e
+// icona) sta scritta una volta sola.
+interface Props {
+  href: string;
+  /** Prefisso letto solo dagli screen reader: dice CHE COSA si apre, visto che il
+      testo visibile è il solo dominio. */
+  label: string;
+}
+const { href, label } = Astro.props;
+// Il `www.` si toglie perché è rumore uguale su tutti i domini.
+const dominio = new URL(href).host.replace(/^www\./, '');
+---
+<a class="extlink" href={href} target="_blank" rel="noopener noreferrer">
+  {/* Niente spazio letterale fra testo e icona: la spaziatura la dà il `gap` di
+      `.extlink`, e uno spazio ci si sommerebbe. */}
+  <span class="sr-only">{label}: </span><span>{dominio}</span><img class="stat-ico" src="/icons/ui/external.jpg" alt="" width="14" height="14" /><span class="sr-only"> (apre in una nuova scheda)</span>
+</a>

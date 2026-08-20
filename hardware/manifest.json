@@ -1,72 +1,195 @@
 {
   "_meta": {
     "rilevato": "2026-08-20",
-    "note": "Scheda tecnica della postazione di gioco: SOLO le spec. I valori sono stati rilevati (WMI/CIM per i componenti, EDID del monitor letto dal registro), non scritti a memoria, ma il file resta REDAZIONALE - nessuno script lo rigenera, quindi quando cambi un pezzo si aggiorna a mano. ⚠️ Niente impostazioni, niente storia di aggiornamenti: la pagina dice com'e' fatta la macchina, non cosa e' stato configurato o aggiornato. Come sempre nel repo, `notes` e' memoria interna e NON si mostra."
+    "note": "Postazione di gioco: ogni blocco e' un pezzo con le sue SPEC e, sotto, le IMPOSTAZIONI applicate che lo riguardano - il raffreddamento sulla CPU, BIOS e XMP sulla scheda madre, driver e G-SYNC sulla scheda video, collegamento e FreeSync sul monitor. I blocchi stanno in un MOSAICO unico, senza intestazioni: l'ordine e' quello di dichiarazione qui dentro - dall'interno del case verso l'esterno (cpu, scheda madre, memoria, video, disco, case, monitor, periferiche) e il software per ultimo. ⚠️ Spec e setup erano due pannelli separati e obbligavano a saltare avanti e indietro per mettere insieme un pezzo e cio' che lo configura: `settings[].where` = chiave del componente che ospita l'impostazione. ⚠️ Cosa NON e' un blocco, e sono scelte: il collegamento video (un cavo non sta al pari di CPU o disco), il BIOS (firmware della scheda madre), il driver video (si scarica da NVIDIA, la scheda e' Gigabyte) e il RAFFREDDAMENTO, che pure e' un prodotto con pagina propria ma dice «come si tiene fredda questa CPU». I CVar del client sono stati tolti del tutto: non sono materia di questa pagina. ⚠️ Le fonti sono due e vanno pesate: i componenti interni sono RILEVATI (WMI/CIM, EDID del monitor dal registro), le sigle esatte vengono dal listino PCPartPicker della build - che pero' fotografa la macchina COM'E' STATA COMPRATA: sul dissipatore e sulla variante della scheda madre e' superato o sbagliato, vedi le `notes`. Il file resta REDAZIONALE: nessuno script lo rigenera, si aggiorna a mano. ⚠️ Il testo mostrato dice cosa c'e', non se sia poco o troppo: niente giudizi sulle prestazioni, niente stati «da sistemare». Le valutazioni stanno nelle `notes`, che come sempre nel repo NON si mostrano. `art` = nome del disegno in src/components/HwArt.astro; `url` = pagina ufficiale, per le spec e per i download."
   },
-
   "components": [
     {
       "key": "cpu",
       "label": "CPU",
+      "art": "cpu",
       "name": "Intel Core i7-8700",
       "detail": "6 core / 12 thread - 3,2 GHz base",
-      "notes": "Coffee Lake di ottava generazione. Per WoW e' abbondante: il gioco carica davvero poco piu' di un paio di core. Non e' un modello K, ma la memoria si overclocca lo stesso perche' il chipset e' Z370: il moltiplicatore RAM lo gestisce la scheda, non la CPU."
+      "desc": "Coffee Lake di ottava generazione, socket LGA 1151 su chipset serie 300. Turbo fino a 4,6 GHz.",
+      "url": "https://www.intel.com/content/www/us/en/products/sku/126686/intel-core-i78700-processor-12m-cache-up-to-4-60-ghz/specifications.html",
+      "notes": "Non e' un modello K, ma la memoria si overclocca lo stesso perche' il chipset e' Z370: il moltiplicatore RAM lo gestisce la scheda, non la CPU. ⚠️ La pagina Intel risponde 403 a curl e ai fetch automatici (protezione anti-bot Akamai): dal browser si apre, quindi non e' un link rotto - non 'correggerlo' perche' un controllo automatico lo segnala."
     },
     {
       "key": "mobo",
       "label": "Scheda madre",
+      "art": "scheda-madre",
       "name": "ASUS ROG MAXIMUS X HERO",
       "detail": "chipset Intel Z370",
-      "notes": "⚠️ E' la variante SENZA Wi-Fi integrato, e il nome nel SMBIOS non lo dice: si distingue dall'adattatore, perche' la WI-FI AC monta un Intel Wireless-AC mentre qui il Wi-Fi e' un Broadcom 802.11ac, quindi aftermarket. Serve saperlo perche' le due varianti hanno BIOS diversi e non intercambiabili. Rete cablata: Intel I219-V."
-    },
-    {
-      "key": "bios",
-      "label": "BIOS",
-      "name": "Versione 1602",
-      "detail": "28 giugno 2018",
-      "notes": "⚠️ Armoury Crate NON aggiorna il BIOS di questa scheda: provato il 2026-08-20, ha installato il proprio stack e il driver chipset ma la versione e' rimasta 1602. Su una Z370 del 2018 quella strada non esiste, resta EZ Flash 3 da chiavetta FAT32. Se un giorno si aggiorna: il flash azzera le impostazioni, XMP compreso."
+      "desc": "Variante senza Wi-Fi integrato: quello presente e' una scheda Broadcom aggiunta a parte.",
+      "url": "https://rog.asus.com/motherboards/rog-maximus/rog-maximus-x-hero-model/",
+      "notes": "⚠️ E' la variante SENZA Wi-Fi, CONFERMATA a voce il 2026-08-20 - e il listino PCPartPicker della build dice invece «(WI-FI AC)»: quella riga del listino e' sbagliata, non fidarsene. La conferma regge la deduzione che c'era gia': il nome nel SMBIOS non distingue le due varianti, ma l'adattatore wireless presente e' un Broadcom 802.11ac (quindi aftermarket) mentre la WI-FI AC integra il proprio modulo. ⚠️ Serve saperlo perche' le due varianti hanno BIOS DIVERSI e non intercambiabili: `url` e il link del BIOS puntano al modello liscio, ed e' quello giusto. (EZ Flash rifiuta comunque i file che non corrispondono alla scheda, quindi l'errore non passerebbe.) Rete cablata: Intel I219-V. ⚠️ Il BIOS non e' un blocco a se': e' il firmware di questa scheda e sta fra le sue impostazioni, con il link alla pagina da cui si scarica."
     },
     {
       "key": "ram",
       "label": "Memoria",
+      "art": "ram",
       "name": "32 GB DDR4 (4 x 8 GB)",
       "detail": "Corsair Vengeance LPX - 2733 MT/s",
-      "notes": "I moduli sono dichiarati DDR4-3000 (CMK16GX4M2B3000C15) e girano a 2733: sono DUE kit da 2x8 accoppiati, non un kit unico da quattro, quindi non sono stati selezionati insieme in fabbrica ed e' la causa tipica del ripiego. 2733 non e' una velocita' JEDEC, quindi l'XMP e' applicato - semplicemente non alla frequenza di targa. Non vale la pena inseguirla per WoW: a 1440p il limite e' la scheda video. ⚠️ Misurato con ConfiguredClockSpeed di Win32_PhysicalMemory, che e' la velocita' REALE; su questa macchina anche il campo Speed riporta 2733 e non il nominale, quindi da solo non basta per accorgersene. Vengeance LPX (sigla CMK) e' senza RGB."
+      "desc": "Quattro banchi da 8 GB: due kit da 2x8 accoppiati, dichiarati DDR4-3000 e in funzione a 2733 MT/s.",
+      "url": "https://www.corsair.com/us/en/p/memory/cmk16gx4m2b3000c15/vengeancea-lpx-16gb-2-x-8gb-ddr4-dram-3000mhz-c15-memory-kit-black-cmk16gx4m2b3000c15",
+      "notes": "Sigla CMK16GX4M2B3000C15 (Vengeance LPX, senza RGB). ⚠️ Il listino PCPartPicker della build elenca DUE volte quel kit: e' la conferma indipendente che i quattro banchi sono due kit da 2x8 e non un kit unico da quattro, che era stato dedotto dalla frequenza. Non essendo selezionati insieme in fabbrica, il ripiego di frequenza e' il caso tipico. 2733 non e' una velocita' JEDEC, quindi l'XMP e' applicato - semplicemente non alla frequenza di targa. Non vale la pena inseguirla per WoW: a 1440p il limite e' la scheda video. ⚠️ Misurato con ConfiguredClockSpeed di Win32_PhysicalMemory, che e' la velocita' REALE; su questa macchina anche il campo Speed riporta 2733 e non il nominale, quindi da solo non basta per accorgersene."
     },
     {
       "key": "gpu",
       "label": "Scheda video",
-      "name": "NVIDIA GeForce GTX 1060 6GB",
-      "detail": "driver 32.0.15.8266",
-      "notes": "E' il collo di bottiglia della postazione: a 1440p decide lei quanti fotogrammi escono, non la CPU ne' la RAM. ⚠️ WMI riporta 4 GB di AdapterRAM: e' l'overflow del campo a 32 bit, la scheda e' da 6 GB - non riportare quel numero da nessuna parte. Essendo Pascal, l'Adaptive-Sync le funziona solo su DisplayPort."
-    },
-    {
-      "key": "monitor",
-      "label": "Monitor",
-      "name": "Samsung Odyssey G5 (LC32G5xT)",
-      "detail": "2560 x 1440 a 144 Hz - FreeSync 48-144 Hz",
-      "notes": "Range 48-144 Hz letto dal descrittore 0xFD dell'EDID nel registro: il rapporto 3:1 e' abbastanza ampio da coprire con la compensazione anche i cali sotto i 48 fps. ⚠️ Espone un EDID DIVERSO per ingresso (SAM7088 su HDMI, SAM7080 su DisplayPort), ma il range dichiarato e' identico sui due."
-    },
-    {
-      "key": "connessione",
-      "label": "Collegamento",
-      "name": "DisplayPort",
-      "detail": "2560 x 1440 a 144 Hz",
-      "notes": "⚠️ Non e' un dettaglio di configurazione ma una caratteristica della postazione: le GeForce gestiscono l'Adaptive-Sync SOLO su DisplayPort, quindi in HDMI il FreeSync del monitor resta acceso e non lavora. Rilevato con VideoOutputTechnology di WmiMonitorConnectionParams."
+      "art": "gpu",
+      "name": "Gigabyte GeForce GTX 1060 G1 Gaming 6G",
+      "detail": "Pascal - 6 GB GDDR5 - WINDFORCE 2X",
+      "desc": "Custom Gigabyte con raffreddamento a due ventole. L'Adaptive-Sync le funziona solo su DisplayPort.",
+      "url": "https://www.gigabyte.com/us/Graphics-Card/GV-N1060G1-GAMING-6GD-rev-20",
+      "notes": "Sigla GV-N1060G1 GAMING-6GD rev. 2.0, dal listino PCPartPicker della build. ⚠️ WMI riporta 4 GB di AdapterRAM: e' l'overflow del campo a 32 bit, la scheda e' da 6 GB - non riportare quel numero da nessuna parte. ⚠️ Il link va alla pagina Gigabyte perche' quella e' la scheda fisica (raffreddamento, clock di fabbrica, RGB); il DRIVER invece si scarica da NVIDIA, ed e' per questo che sta in una riga sua col suo link. Il sito Gigabyte risponde 403 a curl e ai fetch automatici: dal browser si apre."
     },
     {
       "key": "storage",
       "label": "Archiviazione",
+      "art": "ssd",
       "name": "Samsung SSD 970 PRO 512 GB",
-      "detail": "NVMe",
-      "notes": "NVMe MLC: i tempi di caricamento delle zone non sono un problema di questa postazione."
+      "detail": "NVMe M.2",
+      "desc": "NVMe PCIe 3.0 x4 in formato M.2 2280, memoria V-NAND MLC.",
+      "url": "https://www.samsung.com/it/memory-storage/nvme-ssd/970-pro-nvme-m-2-ssd-512gb-mz-v7p512bw/",
+      "notes": "Sigla MZ-V7P512BW, confermata dal listino PCPartPicker della build (M.2-2280, PCIe 3.0 x4)."
+    },
+    {
+      "key": "case",
+      "label": "Case",
+      "art": "case",
+      "name": "be quiet! Pure Base 600 Window Orange",
+      "detail": "mid tower ATX - BGW20",
+      "desc": "Pannello laterale in vetro temperato, materiale fonoassorbente sui pannelli e due ventole Pure Wings 2 preinstallate.",
+      "url": "https://www.bequiet.com/en/case/938",
+      "notes": "Sigla BGW20 dal listino PCPartPicker della build. Predisposto per radiatori fino a 360 mm su fronte e alto. ⚠️ Il sito be quiet! risponde 403 a curl e ai fetch automatici: dal browser si apre."
+    },
+    {
+      "key": "monitor",
+      "label": "Monitor",
+      "art": "monitor",
+      "name": "Samsung Odyssey G5 (LC32G5xT)",
+      "detail": "2560 x 1440 a 144 Hz - FreeSync 48-144 Hz",
+      "desc": "Pannello curvo VA da 32\", con range adattivo dichiarato 48-144 Hz nell'EDID.",
+      "url": "https://www.samsung.com/it/monitors/gaming/odyssey-g5-32-inch-144hz-1ms-curved-lc32g55tqbuxen/",
+      "notes": "Range letto dal descrittore 0xFD dell'EDID nel registro. ⚠️ Espone un EDID DIVERSO per ingresso (SAM7088 su HDMI, SAM7080 su DisplayPort), ma il range dichiarato e' identico sui due. Il codice esatto di questa unita' non e' stato letto dall'etichetta: la pagina prodotto e' quella della variante europea LC32G55TQBUXEN."
+    },
+    {
+      "key": "mouse",
+      "label": "Mouse",
+      "art": "mouse",
+      "name": "Razer Naga Trinity",
+      "detail": "sensore ottico 5G, 16.000 DPI",
+      "desc": "Tre fiancate intercambiabili da 2, 7 e 12 tasti, che si sganciano a magnete.",
+      "url": "https://www.razer.com/it-it/gaming-mice/razer-naga-trinity",
+      "notes": "Cablato. ⚠️ Quale delle tre fiancate sia montata NON e' stato rilevato: e' una configurazione, e finche' non la si guarda non si scrive. La configurazione dei tasti sta in Razer Synapse, che qui non risulta censito fra il software installato - da verificare sulla macchina da gioco, non da qui."
+    },
+    {
+      "key": "tastiera",
+      "label": "Tastiera",
+      "art": "tastiera",
+      "name": "Corsair Gaming K63",
+      "detail": "meccanica tenkeyless - Cherry MX Red",
+      "desc": "Senza tastierino numerico, switch lineari; controlli multimediali dedicati e blocco del tasto Windows.",
+      "url": "https://www.corsair.com/it/it/p/keyboards/ch-9115020-it/k63-compact-mechanical-gaming-keyboard-cherry-mx-red-it-ch-9115020-it",
+      "notes": "⚠️ La sigla esatta non e' stata letta dall'etichetta: il link punta alla variante con layout italiano (CH-9115020-IT), che e' la probabile ma non la verificata - stesso caveat del monitor. Il K63 esiste anche in versione wireless (CH-9145030): qui si assume la cablata, che e' quella marchiata «CORSAIR GAMING K63». Tutte le varianti montano Cherry MX Red, quindi lo switch e' certo anche senza la sigla. La retroilluminazione e le macro si configurano in iCUE, che qui non risulta censito fra il software installato."
+    },
+    {
+      "key": "cuffie",
+      "label": "Cuffie",
+      "art": "cuffie",
+      "name": "Corsair HS80 RGB Wireless",
+      "detail": "driver da 50 mm - SLIPSTREAM wireless",
+      "desc": "Microfono omnidirezionale a braccetto, che si silenzia alzandolo; audio spaziale Dolby Atmos su Windows.",
+      "url": "https://www.corsair.com/it/it/p/gaming-headsets/ca-9011235-eu/hs80-rgb-wireless-premium-gaming-headset-with-spatial-audio-carbon-eu-ca-9011235-eu",
+      "notes": "Confermata a voce la variante WIRELESS (2026-08-20): della serie esistono anche la HS80 RGB USB cablata (CA-9011237) e la HS80 MAX, e il link punta alla CA-9011235-EU Carbon. ⚠️ Resta non letta dall'etichetta la sola finitura (Carbon o White): se e' bianca, la sigla e' CA-9011236-EU. Il ricevitore SLIPSTREAM e' USB; profili audio, sidetone e RGB si regolano in iCUE."
     },
     {
       "key": "os",
-      "label": "Sistema",
+      "label": "Sistema operativo",
+      "art": "finestra",
       "name": "Windows 11 Pro",
       "detail": "build 22631",
-      "notes": "Avvio senza BitLocker e senza TPM attivo (verificato: un flash del BIOS non farebbe scattare la richiesta della chiave di ripristino). Secure Boot non determinabile, quindi probabile avvio legacy/CSM."
+      "desc": "Avvio senza BitLocker e senza TPM attivo.",
+      "url": "https://www.microsoft.com/it-it/windows/windows-11",
+      "notes": "Verificato prima di considerare un aggiornamento del BIOS: senza BitLocker il flash non chiede la chiave al riavvio, che e' l'incidente classico. Secure Boot non determinabile, quindi probabile avvio legacy/CSM."
+    }
+  ],
+  "settings": [
+    {
+      "key": "raffreddamento",
+      "where": "cpu",
+      "name": "Corsair iCUE H100i ELITE CAPELLIX",
+      "value": "AIO 240 mm",
+      "desc": "Raffreddamento a liquido: due ventole ML120 RGB PWM sul radiatore, velocita' e illuminazione dal controller Commander CORE incluso.",
+      "url": "https://www.corsair.com/it/it/p/cpu-coolers/cw-9060046-ww/icue-h100i-elite-capellix-liquid-cpu-cooler-cw-9060046-ww",
+      "notes": "Sigla CW-9060046-WW (nero); esistono la variante bianca (CW-9060050) e la successiva XT (CW-9060068), l'etichetta non e' stata letta. ⚠️ CONFERMATO a voce il 2026-08-20 che il montato e' questo: il listino PCPartPicker della build elenca un Enermax Liqmax II 120 (ELC-LMR120S-BS, radiatore da 120), che e' il dissipatore ORIGINALE, poi sostituito. Il listino fotografa la build com'era comprata, non com'e' adesso - vale come fonte per le sigle dei pezzi mai toccati, non per quelli cambiati (e sulla scheda madre sbaglia proprio). ⚠️ Il controller Commander CORE si pilota da iCUE, che qui non risulta censito fra il software installato - da verificare sulla macchina da gioco. ⚠️ NON e' un blocco a se': sta dentro la CPU, come il BIOS sta dentro la scheda madre. E' una scelta esplicita - un dissipatore e' pur sempre un prodotto con la sua pagina, ma quello che dice al lettore e' «come si tiene fredda questa CPU», quindi la riga vive li' col suo link."
+    },
+    {
+      "key": "bios",
+      "where": "mobo",
+      "name": "BIOS",
+      "value": "1602 - 28 giugno 2018",
+      "desc": "Si aggiorna con EZ Flash 3 dal setup della scheda, con l'immagine su una chiavetta FAT32. Il flash riporta tutto ai valori di fabbrica, XMP compreso.",
+      "url": "https://rog.asus.com/motherboards/rog-maximus/rog-maximus-x-hero-model/helpdesk_bios/",
+      "notes": null
+    },
+    {
+      "key": "xmp",
+      "where": "mobo",
+      "name": "XMP",
+      "value": "Attivo a 2733 MT/s",
+      "desc": "Profilo XMP applicato: la memoria gira a 2733 MT/s invece dei 2133 MT/s del profilo JEDEC.",
+      "notes": "Non vale la pena inseguirlo per WoW - a 1440p il limite e' la scheda video, e fra 2733 e 3000 non si vede la differenza. Se un giorno si vuole provare: BIOS piu' recente (migliore addestramento della memoria), oppure un kit unico da 4 moduli invece di due kit accoppiati. ⚠️ Il flash del BIOS azzera anche questa: da riattivare dopo."
+    },
+    {
+      "key": "driver-nvidia",
+      "where": "gpu",
+      "name": "Driver",
+      "value": "32.0.15.8266",
+      "desc": "Driver GeForce installato. Si scarica da NVIDIA, non da Gigabyte: la scheda e' custom ma il driver e' quello di riferimento.",
+      "url": "https://www.nvidia.com/it-it/drivers/",
+      "notes": null
+    },
+    {
+      "key": "gsync",
+      "where": "gpu",
+      "name": "G-SYNC Compatible",
+      "value": "Attivo",
+      "desc": "Pannello NVIDIA, voce «Imposta G-SYNC»: abilitato sia per modalita' finestra sia per schermo intero.",
+      "notes": "Attivato il 2026-08-20. ⚠️ Non verificabile da script: NVIDIA tiene queste scelte in un database binario (nvdrsdb0.bin), non nel registro. L'unico riscontro macchina e' indiretto - la DATA di quel file, riscritto alle 09:54 e 09:56 subito dopo il riavvio delle 09:49: dice che il pannello e' stato usato e salvato, non COSA e' stato scelto. Per una verifica vera servono la Pendulum Demo o l'indicatore G-SYNC."
+    },
+    {
+      "key": "vsync-driver",
+      "where": "gpu",
+      "name": "Sincronia verticale",
+      "value": "On",
+      "desc": "Attiva nel pannello NVIDIA: interviene solo oltre il refresh del pannello, quindi non si sovrappone al VSync del client.",
+      "notes": "Il VSync del gioco aggiungerebbe latenza sempre; quello del driver interviene solo al superamento del refresh, che con il limite a 141 e' un caso raro."
+    },
+    {
+      "key": "collegamento",
+      "where": "monitor",
+      "name": "Collegamento",
+      "value": "DisplayPort",
+      "desc": "Ingresso in uso verso la scheda video, a 2560 x 1440 e 144 Hz. Sulle GeForce l'Adaptive-Sync funziona solo su DisplayPort: in HDMI il FreeSync resta acceso nell'OSD e non lavora.",
+      "notes": "Rilevato con VideoOutputTechnology di WmiMonitorConnectionParams. Fino al 2026-08-20 era HDMI, ed e' il motivo per cui la voce G-SYNC non compariva affatto nel pannello NVIDIA: non era un'impostazione da trovare, era il cavo. Dopo lo scambio il refresh e' RIMASTO a 144 Hz invece di ricadere a 60, cosa da ricontrollare sempre dopo un cambio di cavo. In HDMI il FreeSync del monitor resta acceso nell'OSD e non lavora."
+    },
+    {
+      "key": "freesync",
+      "where": "monitor",
+      "name": "FreeSync",
+      "value": "Attivo",
+      "desc": "Si accende nell'OSD. E' il presupposto del sync adattivo, ma da solo non basta: servono anche il collegamento DisplayPort e l'opzione nel driver.",
+      "notes": null
+    },
+    {
+      "key": "asus-stack",
+      "where": "os",
+      "name": "Stack ASUS",
+      "value": "13 processi, 286 MB",
+      "desc": "Armoury Crate e AURA, installati per l'illuminazione della scheda madre: quattro servizi ad avvio automatico.",
+      "notes": "Installati il 2026-08-20 insieme al driver Intel Chipset 10.1.18295.8201, che e' l'unica parte utile del giro. Misurato subito dopo: 13 processi per 285,8 MB residenti, i piu' grossi ArmouryCrate.Service (92 MB) e UserSessionHelper (58 MB). ⚠️ Il pacchetto porta di default componenti RGB per hardware che questa macchina NON ha - Patriot Viper DRAM/M2, Kingston AURA DRAM, Universal Holtek RGB DRAM, WD_BLACK AN1500: la RAM e' Corsair Vengeance LPX, che non ha affatto RGB, e il disco e' un Samsung 970 PRO. Rimossi a mano; ogni voce esiste in DUE registrazioni, il pacchetto MSI e il bundle in Package Cache, e va disinstallato il BUNDLE o resta la registrazione orfana."
     }
   ]
 }

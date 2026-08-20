@@ -405,29 +405,60 @@ for (const f of shots) {
 for (const f of thumbs) if (!shots.includes(f)) err('ui', `miniatura orfana: public/screenshots/thumb/${f}`);
 nota(`ui: ${shots.length} screenshot`);
 
-// ── Hardware (postazione di gioco) ─────────────────────────────────────────────
+// ── Hardware (postazione di gioco) ────────────────────────────────────
 // Manifest interamente redazionale: nessuno script lo rigenera, quindi non c'e' un dump
 // da confrontare. Qui si controlla solo che si tenga insieme — che ogni impostazione
-// punti a un posto dichiarato, che lo stato sia uno di quelli che la pagina sa
-// disegnare, e che le due icone referenziate esistano davvero.
+// finisca dentro un componente che esiste, e che ogni disegno esista davvero.
 const hw = json('hardware/manifest.json');
 const componenti = hw.components ?? [];
+const opzioni = hw.settings ?? [];
+// I disegni sono SVG in linea in UN file solo, quindi l'elenco dei nomi validi si legge
+// da li': e' la stessa idea del confronto fra `spec` di builds.json e i nodi del client.
+// ⚠️ Se questo grep smette di trovare nulla vuol dire che HwArt.astro ha cambiato forma
+// (non piu' art === '...'), non che i disegni siano spariti: si segnala invece di
+// dichiarare inesistenti tutti i nomi.
+const ARTI = new Set([...leggi('src/components/HwArt.astro').matchAll(/art === '([a-z-]+)'/g)].map((m) => m[1]));
+if (!ARTI.size) err('hardware', 'src/components/HwArt.astro: nessun disegno riconosciuto, il confronto dei nomi non funziona');
+const artUsate = new Set();
+const linkStrano = (u) => typeof u === 'string' && !/^https:\/\//.test(u);
+
 const chiaviHw = new Set();
 for (const c of componenti) {
+  const dove = `componente ${c.key ?? '(senza key)'}`;
   for (const campo of ['key', 'label', 'name']) {
-    if (!c[campo]) err('hardware', `componente ${c.key ?? '(senza key)'}: manca ${campo}`);
+    if (!c[campo]) err('hardware', `${dove}: manca ${campo}`);
   }
-  if (chiaviHw.has(c.key)) err('hardware', `componente ${c.key}: chiave doppia`);
+  if (chiaviHw.has(c.key)) err('hardware', `${dove}: chiave doppia`);
   chiaviHw.add(c.key);
+  if (c.art) { artUsate.add(c.art); if (ARTI.size && !ARTI.has(c.art)) err('hardware', `${dove}: disegno «${c.art}» non esiste in HwArt.astro`); }
+  else avviso('hardware', `${dove}: nessun campo art, il blocco resta senza disegno`);
+  if (linkStrano(c.url)) err('hardware', `${dove}: il campo url non e un indirizzo https`);
 }
-// ⚠️ La pagina e' una SCHEDA TECNICA: solo `components`. Se ricompaiono `settings` o
-// `places` vuol dire che qualcuno ha rimesso le impostazioni in un manifest che non le
-// rende piu' — sarebbero dati morti, non un'estensione.
-for (const chiave of ['settings', 'places']) {
-  if (hw[chiave]) avviso('hardware', `manifest.${chiave} non e' letto da nessuno: /hardware mostra solo le spec`);
+
+// ⚠️ `where` NON e' piu' un «posto» a se': e' la chiave del componente che ospita
+// l'impostazione (il FreeSync nel monitor, l'XMP nel BIOS). Se non combacia, la pagina
+// non mostra l'impostazione da nessuna parte e non se ne accorge nessuno.
+const chiaviOpz = new Set();
+for (const s of opzioni) {
+  const dove = `impostazione ${s.key ?? '(senza key)'}`;
+  for (const campo of ['key', 'name', 'where']) if (!s[campo]) err('hardware', `${dove}: manca ${campo}`);
+  if (chiaviOpz.has(s.key)) err('hardware', `${dove}: chiave doppia`);
+  chiaviOpz.add(s.key);
+  if (s.where && !chiaviHw.has(s.where)) err('hardware', `${dove}: il componente «${s.where}» non esiste, l impostazione sparirebbe dalla pagina`);
+  // ⚠️ La pagina elenca la configurazione APPLICATA, non le cose da fare: il campo
+  // `state` (ok/todo/warn) e il contatore «N da sistemare» erano la deriva per cui il
+  // setup era stato tolto una prima volta. Nessuno lo legge piu': se torna e' dato morto.
+  if (linkStrano(s.url)) err('hardware', `${dove}: il campo url non e un indirizzo https`);
+  if (s.state) avviso('hardware', `${dove}: il campo state non e letto da nessuno, la pagina non ha piu' stati`);
 }
+// Dati che nessuno legge piu': `places` era l'asse del pannello «Setup» separato, `groups`
+// le intestazioni per tipo tolte in favore del mosaico. Se tornano, sono dati morti.
+if (hw.places) avviso('hardware', 'manifest.places non e letto da nessuno: le impostazioni stanno dentro il componente (settings[].where)');
+if (hw.groups || componenti.some((c) => c.group)) avviso('hardware', 'groups/group non sono letti da nessuno: i blocchi stanno in un mosaico unico, senza intestazioni');
+
+for (const a of ARTI) if (!artUsate.has(a)) avviso('hardware', `disegno «${a}» in HwArt.astro non e usato da nessun componente`);
 if (!ci_sta('public/icons/section/hardware.jpg')) err('hardware', "manca public/icons/section/hardware.jpg (icona della sezione in nav)");
-nota(`hardware: ${componenti.length} componenti`);
+nota(`hardware: ${componenti.length} blocchi, ${opzioni.length} impostazioni, ${ARTI.size} disegni`);
 
 // ── Esito ──────────────────────────────────────────────────────────────────────
 if (verboso || !errori.length) for (const t of note) console.log(`  ${t}`);

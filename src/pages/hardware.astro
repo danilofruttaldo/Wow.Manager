@@ -1,64 +1,129 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getHwComponents } from '../lib/content';
+import HwArt from '../components/HwArt.astro';
+import ExtLink from '../components/ExtLink.astro';
+import { getHwBlocks } from '../lib/content';
 
-// SOLO le spec: la pagina dice com'e' fatta la macchina, non come e' configurata ne'
-// cosa e' stato aggiornato. Una scheda tecnica, quindi niente stati, niente contatori,
-// niente bollini — la sezione non ha nulla da "sistemare".
-const components = getHwComponents();
+// Ogni blocco e' un pezzo della postazione con le sue spec e, sotto, le impostazioni
+// applicate che lo riguardano — il collegamento e il FreeSync nel monitor, il G-SYNC
+// nella scheda video, BIOS e XMP nella scheda madre. Niente intestazioni di sezione: i
+// blocchi stanno tutti in un MOSAICO unico, e sono l'etichetta e il disegno di ciascuno
+// a dire di che pezzo si tratta.
+// ⚠️ Erano due pannelli, «Componenti» e «Setup», e la separazione costringeva a saltare
+// avanti e indietro per mettere insieme un pezzo e cio' che lo configura: la scheda video
+// diceva «l'Adaptive-Sync funziona solo su DisplayPort» in cima e il G-SYNC stava trenta
+// righe piu' giu'. Accorpati, quel legame si legge in un colpo d'occhio e i titoli di
+// sezione non servono piu' — come nel resto del sito, la pagina parte dal contenuto.
+// ⚠️ Il testo mostrato dice COSA C'E', non se sia poco o troppo: niente giudizi sulle
+// prestazioni, niente «fermo al 2018», niente stati o contatori «N da sistemare» — era la
+// deriva per cui il setup era stato tolto una prima volta. Le valutazioni e i compromessi
+// noti stanno nelle `notes` del manifest, che per convenzione non si mostrano.
+const blocks = getHwBlocks();
 ---
-<Base title="Hardware" description="Scheda tecnica della postazione di gioco: CPU, scheda video, memoria, monitor.">
+<Base title="Hardware" description="Postazione di gioco: spec di ogni pezzo — CPU, scheda video, monitor, periferiche — e le impostazioni applicate che lo riguardano.">
   <div class="wrap hw">
-    <dl class="spec">
-      {components.map(c => (
-        <div class="spec-row">
-          <dt class="spec-label">{c.label}</dt>
-          <dd class="spec-val">
-            <span class="spec-name">{c.name}</span>
-            {c.detail && <span class="spec-detail">{c.detail}</span>}
-          </dd>
+    {blocks.map(b => (
+      <article class="blk">
+        <div class="blk-top">
+          <span class="blk-art"><HwArt art={b.art} size={44} /></span>
+          <div class="blk-txt">
+            <p class="blk-lbl">{b.label}</p>
+            {/* Il nome del pezzo e' un'intestazione vera (h2) e quello dell'impostazione
+                una di secondo livello (h3): la pagina non ha titoli visibili, ma senza
+                questi l'unico livello dell'indice sarebbe l'h1 nascosto del layout, e a
+                uno screen reader il documento risulterebbe una distesa piatta di
+                paragrafi. L'aspetto non cambia: lo stile e' tutto sulle classi. */}
+            <h2 class="blk-name">{b.name}</h2>
+            {b.detail && <p class="blk-detail">{b.detail}</p>}
+            {b.desc && <p class="blk-desc">{b.desc}</p>}
+            {b.url && <ExtLink href={b.url} label="Sito ufficiale" />}
+          </div>
         </div>
-      ))}
-    </dl>
+        {b.items.length > 0 && (
+          <ul class="opts">
+            {b.items.map(s => (
+              <li class="opt">
+                <div class="opt-top">
+                  <h3 class="opt-name">{s.name}</h3>
+                  {s.value && <code class="opt-val">{s.value}</code>}
+                </div>
+                {s.desc && <p class="blk-desc">{s.desc}</p>}
+                {/* Il link sta sull'IMPOSTAZIONE quando e' li' che serve: il BIOS si
+                    scarica dalla pagina della scheda madre e il driver da NVIDIA, non
+                    dalle pagine dei rispettivi prodotti. */}
+                {s.url && <ExtLink href={s.url} label="Download" />}
+              </li>
+            ))}
+          </ul>
+        )}
+      </article>
+    ))}
   </div>
 </Base>
 
 <style>
-/* ── Scheda tecnica ────────────────────────────────
-   Una lista di definizioni, non una tabella: le coppie etichetta/valore sono
-   esattamente questo, e <dl> dice la stessa cosa al lettore e allo screen reader senza
-   dover fingere righe e colonne. */
-.hw { padding-top: 0.5rem; }
+/* ── Pagina hardware ───────────────────────────────
+   Un blocco per pezzo: disegno a sinistra, spec a destra, e sotto — staccate da un
+   filetto — le impostazioni che lo riguardano. Il disegno e' quello che rende la pagina
+   leggibile a colpo d'occhio invece che come un elenco di coppie etichetta/valore.
+   ⚠️ I disegni sono SVG in linea (src/components/HwArt.astro) e NON icone WoW: deroga
+   voluta e limitata a questa pagina, spiegata li' e in CLAUDE.md.
 
-.spec {
-  margin: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
+   Mosaico a multi-colonna, lo stesso schema di /macros: `column-width` decide da se'
+   quante colonne stanno nella larghezza, e i blocchi si incastrano invece di lasciare il
+   buco sotto il piu' corto della riga. E' quello che serve qui, dove un blocco va da tre
+   righe di testo (il case) a tre impostazioni con la loro spiegazione (la scheda video):
+   con una griglia a righe, ogni riga era alta quanto il suo blocco piu' alto.
+   ⚠️ Il mosaico impagina per COLONNA, non per riga: l'ordine di lettura scende lungo la
+   prima colonna e poi passa alla seconda. Va bene perche' l'ordine del manifest (dal
+   pezzo piu' interno verso lo schermo) e' un accostamento, non una sequenza da seguire.
+   ⚠️ `break-inside: avoid` col gemello `-webkit-`, e la spaziatura verticale la da' il
+   `margin-bottom` del blocco: in multi-colonna il `gap` regge il solo asse orizzontale. */
+.hw { column-width: 320px; column-gap: var(--grid-gap); padding-top: 0.5rem; }
+
+.blk { display: flex; flex-direction: column; break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: var(--grid-gap); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); padding: var(--card-pad); }
+.blk-top { display: flex; gap: 0.75rem; }
+.blk-txt { min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
+
+/* Il disegno vive in un riquadro tinto: e' quello che lo fa leggere come un elemento
+   grafico invece che come un glifo perso accanto al testo. `color` sul contenitore
+   perche' l'SVG e' tutto `currentColor`. */
+.blk-art {
+  flex: none; display: grid; place-items: center;
+  width: 60px; height: 60px; border-radius: var(--radius-md);
+  color: var(--section, var(--accent));
+  background: color-mix(in srgb, var(--section, var(--accent)) 9%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--section, var(--accent)) 22%, var(--border));
 }
-.spec-row { display: flex; gap: 1rem; padding: 0.75rem 1rem; border-top: 1px solid var(--border-light); }
-.spec-row:first-child { border-top: 0; }
-/* La riga si scalda nella tinta della sezione, come le altre griglie del sito. */
-.spec-row:hover { background: color-mix(in srgb, var(--section, var(--accent)) 4%, transparent); }
 
-/* Colonna etichetta a larghezza fissa: e' quello che incolonna i valori e fa leggere la
-   scheda come una scheda invece che come un elenco puntato. */
-.spec-label {
-  flex: none; width: 9rem; margin: 0;
-  font-size: var(--fs-xs); font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.02em;
-  color: var(--text-subtle);
-  padding-top: 0.12rem;
-}
-.spec-val { min-width: 0; margin: 0; display: flex; flex-direction: column; gap: 0.1rem; }
-.spec-name { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
-/* tabular-nums: le cifre di frequenze e risoluzioni restano incolonnate fra le righe. */
-.spec-detail { font-size: var(--fs-xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.blk-lbl { font-size: var(--fs-2xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-subtle); margin: 0; }
+.blk-name { font-size: var(--fs-md); font-weight: 600; color: var(--text); margin: 0; }
+/* tabular-nums: frequenze, risoluzioni e build restano incolonnate fra un blocco e l'altro. */
+.blk-detail { font-size: var(--fs-xs); color: var(--text-muted); font-variant-numeric: tabular-nums; margin: 0; }
+.blk-desc { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.5; margin: 0.25rem 0 0; }
+/* `align-self: flex-start` in colonna: senza, la pastiglia si stira per tutta la
+   larghezza del blocco (e' lo stesso motivo per cui esiste `.dlg-link`).
+   ⚠️ In `:global()` ANCORATO al contenitore: l'`<a>` lo emette ExtLink.astro, quindi non
+   porta l'attributo `data-astro-cid` di questa pagina e una regola scopata non lo
+   colpirebbe — la pastiglia resterebbe stirata senza che nulla lo segnali. L'ancora
+   (`.blk-txt`, `.opt`) e' scopata, quindi il `:global()` non esce da qui. */
+.blk-txt :global(.extlink) { align-self: flex-start; margin-top: 0.5rem; }
+.opt :global(.extlink) { margin-top: 0.4rem; }
 
-@media (max-width: 620px) {
-  .spec-row { flex-direction: column; gap: 0.2rem; }
-  .spec-label { width: auto; }
+/* ── Impostazioni del pezzo ────────────────────────
+   Stanno nel blocco del pezzo che le porta, staccate da un filetto a tutta larghezza:
+   e' la meta' «come e' configurata» di quello che sopra e' la scheda tecnica. */
+.opts { list-style: none; margin: 0.8rem 0 0; padding: 0.7rem 0 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; }
+.opt + .opt { margin-top: 0.55rem; }
+.opt-top { display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap; margin: 0; }
+.opt-name { font-size: var(--fs-base); font-weight: 600; color: var(--text); }
+/* Il valore e' letterale — «Attivo» oppure il CVar com'e' scritto nel client — quindi
+   sta in `<code>`: e' roba da ricopiare tale e quale, non da parafrasare. */
+.opt-val { font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--text-muted); background: var(--border-light); padding: 0.08rem 0.4rem; border-radius: var(--radius-sm); }
+
+@media (max-width: 480px) {
+  .blk-top { gap: 0.6rem; }
+  .blk-art { width: 48px; height: 48px; }
+  .blk-art :global(svg) { width: 34px; height: 34px; }
 }
 </style>
