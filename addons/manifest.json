@@ -33,11 +33,11 @@
     "LittleWigs": {
       "name": "LittleWigs",
       "desc": "L’equivalente di BigWigs fuori dai raid: boss mod per dungeon, M+ e scenari.",
-      "version": "v12.1.2",
+      "version": "v12.1.4",
       "interface": "120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-08-21",
+      "installed": "2026-08-22",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -52,7 +52,7 @@
         "LittleWigs_WarlordsOfDraenor",
         "LittleWigs_WrathOfTheLichKing"
       ],
-      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-23 v12.0.62->v12.0.63 via /aggiorna-addon (workflow) forgecdn files/8480/339. Aggiornato 2026-08-06 v12.0.63->v12.0.64 via /aggiorna-addon (workflow) forgecdn files/8598/157 (1.7 MB); riga ## Interface invariata, sempre 12 cartelle (nessuna LittleWigs_Midnight: non esiste ancora). TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione). Aggiornato 2026-08-19 v12.0.64->v12.1.1 via /aggiorna-addon (workflow) forgecdn files/8682/393 (1,7 MB); sempre 12 cartelle top-level e ## Interface invariata (120100, 120005, 120007). La cartella LittleWigs ha ora una SOTTOcartella Midnight, ma un modulo top-level LittleWigs_Midnight continua a non esistere: non aggiungerlo a folders. Aggiornato 2026-08-21 v12.1.1->v12.1.2 via /aggiorna-addon (workflow) forgecdn files/8696/575 (LittleWigs-v12.1.2.zip, 1,7 MB); sempre 12 cartelle top-level e ## Interface invariata (120100, 120005, 120007). NB nella cartella primaria non esiste un LittleWigs.toc: i .toc sono per-flavor e quello retail e' LittleWigs_Mainline.toc, da cui si leggono Version e Interface. Le 11 cartelle modulo sono sub-addon senza riga ## Version, e' normale. Nessuna patch locale su questo addon."
+      "notes": "Boss mods per M+/dungeon/scenari, plugin di BigWigs. Aggiornato 2026-07-23 v12.0.62->v12.0.63 via /aggiorna-addon (workflow) forgecdn files/8480/339. Aggiornato 2026-08-06 v12.0.63->v12.0.64 via /aggiorna-addon (workflow) forgecdn files/8598/157 (1.7 MB); riga ## Interface invariata, sempre 12 cartelle (nessuna LittleWigs_Midnight: non esiste ancora). TOC retail principale LittleWigs_Mainline.toc 120100,120005,120007 match build 12.0.7, 12 cartelle (no LittleWigs.toc omonimo, usa toc per espansione). Aggiornato 2026-08-19 v12.0.64->v12.1.1 via /aggiorna-addon (workflow) forgecdn files/8682/393 (1,7 MB); sempre 12 cartelle top-level e ## Interface invariata (120100, 120005, 120007). La cartella LittleWigs ha ora una SOTTOcartella Midnight, ma un modulo top-level LittleWigs_Midnight continua a non esistere: non aggiungerlo a folders. Aggiornato 2026-08-21 v12.1.1->v12.1.2 via /aggiorna-addon (workflow) forgecdn files/8696/575 (LittleWigs-v12.1.2.zip, 1,7 MB); sempre 12 cartelle top-level e ## Interface invariata (120100, 120005, 120007). NB nella cartella primaria non esiste un LittleWigs.toc: i .toc sono per-flavor e quello retail e' LittleWigs_Mainline.toc, da cui si leggono Version e Interface. Le 11 cartelle modulo sono sub-addon senza riga ## Version, e' normale. Nessuna patch locale su questo addon. Aggiornato 2026-08-22 v12.1.2->v12.1.4 via GitHub release BigWigsMods/LittleWigs (LittleWigs-v12.1.4.zip, 1,72 MB), saltando la v12.1.3; 12 cartelle top-level invariate e ## Interface invariata (120100, 120005, 120007). ⚠️ FONTE: per questo addon usa la release GitHub BigWigsMods/LittleWigs, NON cfwidget. Il 2026-08-22 due audit consecutivi hanno letto da cfwidget 'ultimo file = v12.1.2' (file id 8696575) e dichiarato l'addon allineato, mentre la v12.1.3 e la v12.1.4 erano uscite il 21 alle 17:15. ⚠️ Non e' cfwidget fermo come per BigWigs: interrogato piu' tardi lo stesso giorno dava correttamente v12.1.4, cioe' aveva servito un'ISTANTANEA VECCHIA della sua cache - quindi il sintomo non e' riproducibile e non va cercato interrogando cfwidget adesso. A scoprirlo e' stato l'avviso di BigWigs in gioco, non l'audit: se il gioco dice che LittleWigs e' indietro, guarda le release GitHub e non fidarti del 'gia' aggiornato' dell'audit."
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
