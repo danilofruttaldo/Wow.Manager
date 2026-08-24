@@ -3,7 +3,7 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.1.0.69273",
-    "last_sync": "2026-08-23"
+    "last_sync": "2026-08-24"
   },
   "addons": {
     "BigWigs": {
@@ -57,15 +57,15 @@
     "AztarecHelper": {
       "name": "Azta'rec Helper",
       "desc": "Risolve il gioco di memoria del boss Azta'rec: mostra in quale quarto della stanza stare a ogni ondata.",
-      "version": "2.1.7",
+      "version": "2.1.8",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/aztarec-helper",
-      "installed": "2026-08-23",
+      "installed": "2026-08-24",
       "folders": [
         "AztarecHelper"
       ],
-      "notes": "Boss mod per il nemesis del delve Azta'rec (Sermon of Ula'tek): mentre schivi le Waves of Venom registra la sequenza e nella fase Echo, che non ha indicatori a terra, mostra il quarto in cui stare (room view, freccia e voce). Installato 2026-08-23 alla 2.1.5, forgecdn files/8709/981 (AztarecHelper-2.1.5.zip, 204 KB, 24 file), release del 2026-08-22 21:40 UTC. TOC: Interface 120007+120100, SavedVariables AztarecHelperDB, X-Curse-Project-ID 1613242, Wago rNky1mKa, licenza All Rights Reserved (niente mirror GitHub: si scarica solo da CurseForge). RICHIEDE LA MINIMAPPA ROTANTE: il delve non espone coordinate ne' facing agli addon, quindi l'orientamento lo legge dalla bussola della minimappa; la rotazione la accende entrando nel delve e la rimette come stava uscendo. L'autore avvisa che i moduli minimappa quadrata (EllesmereUI, Leatrix Plus) rompono la registrazione automatica: qui NON morde, in Leatrix_Plus MinimapModder e' Off e quindi SquareMinimap On e' inerte (e' una sotto-opzione del modulo). La registrazione a mano resta il default, l'automatica e' un interruttore nelle impostazioni. Nessuna immagine di galleria leggibile (pagina CurseForge 403, cfwidget non ha campo galleria e la descrizione non contiene attachment): niente campo preview, l'anteprima restera' il logo di ripiego finche' non si sceglie uno screenshot a mano. Aggiornato 2026-08-23 2.1.5->2.1.7 via /aggiorna-addon (workflow) forgecdn files/8714/663 (AztarecHelper-2.1.7.zip, 206 KB), saltando la 2.1.6; una cartella, riga ## Interface invariata (120007, 120100). Nessuna patch locale su questo addon."
+      "notes": "Boss mod per il nemesis del delve Azta'rec (Sermon of Ula'tek): mentre schivi le Waves of Venom registra la sequenza e nella fase Echo, che non ha indicatori a terra, mostra il quarto in cui stare (room view, freccia e voce). Installato 2026-08-23 alla 2.1.5, forgecdn files/8709/981 (AztarecHelper-2.1.5.zip, 204 KB, 24 file), release del 2026-08-22 21:40 UTC. TOC: Interface 120007+120100, SavedVariables AztarecHelperDB, X-Curse-Project-ID 1613242, Wago rNky1mKa, licenza All Rights Reserved (niente mirror GitHub: si scarica solo da CurseForge). RICHIEDE LA MINIMAPPA ROTANTE: il delve non espone coordinate ne' facing agli addon, quindi l'orientamento lo legge dalla bussola della minimappa; la rotazione la accende entrando nel delve e la rimette come stava uscendo. L'autore avvisa che i moduli minimappa quadrata (EllesmereUI, Leatrix Plus) rompono la registrazione automatica: qui NON morde, in Leatrix_Plus MinimapModder e' Off e quindi SquareMinimap On e' inerte (e' una sotto-opzione del modulo). La registrazione a mano resta il default, l'automatica e' un interruttore nelle impostazioni. Nessuna immagine di galleria leggibile (pagina CurseForge 403, cfwidget non ha campo galleria e la descrizione non contiene attachment): niente campo preview, l'anteprima restera' il logo di ripiego finche' non si sceglie uno screenshot a mano. Aggiornato 2026-08-23 2.1.5->2.1.7 via /aggiorna-addon (workflow) forgecdn files/8714/663 (AztarecHelper-2.1.7.zip, 206 KB), saltando la 2.1.6; una cartella, riga ## Interface invariata (120007, 120100). Nessuna patch locale su questo addon. Aggiornato 2026-08-24 2.1.7->2.1.8 via /aggiorna-addon forgecdn files/8720/294 (AztarecHelper-2.1.8.zip, 206 KB, 25 file), release del 2026-08-23 23:25 UTC; una cartella, riga ## Interface invariata (120007, 120100), metadati invariati (project id 1613242, Wago rNky1mKa). Non avendo patch locali la cartella e' stata sostituita in pulito; sintassi verificata con lupa/load() su 11 .lua, 0 errori. Oltre al .toc la 2.1.8 tocca tre file e fa due cose: (a) il percorso registrato finisce nei SavedVariables (snapshotPull scrive AztarecHelperDB.lastPull, Safe.RestorePull lo rilegge su PLAYER_LOGIN), quindi rivedere e ripetere una pull sopravvive a un /reload o a una disconnessione, dove prima si perdeva; (b) il riquadro delle istruzioni monta uno scroll frame (tetto 380px, rotella) invece di allungarsi oltre lo schermo, e i link nel testo passano dal box al frame del contenuto perche' sia quello a prendere i click."
     },
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
