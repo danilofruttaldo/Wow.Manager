@@ -3,7 +3,11 @@ import Base from '../layouts/Base.astro';
 import { getAddons, addonsMeta } from '../lib/content';
 
 const addons = getAddons();
-const sourceLabel = (s: string) => s === 'curseforge' ? 'CurseForge' : s;
+// Provenienza: quasi tutto viene da CurseForge, ma non tutto — ArchonTooltip lo installa e lo
+// aggiorna l'app Archon, e su CurseForge non esiste proprio. Mappa invece del ternario perché
+// una terza fonte ora è un'altra riga, non una catena di `?:`.
+const SOURCE_LABEL: Record<string, string> = { curseforge: 'CurseForge', archon: 'Archon App' };
+const sourceLabel = (s: string) => SOURCE_LABEL[s] ?? s;
 
 // Build corrente → codice TOC atteso (es. "12.0.7.68235" → "120007") per l'indicatore di compatibilità.
 const build: string = addonsMeta?.wow_build ?? '';

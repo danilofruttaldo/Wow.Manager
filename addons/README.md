@@ -15,7 +15,7 @@ Inventario degli addon installati in `_retail_/Interface/AddOns/`.
   "desc": "riga breve: cosa fa l'addon (mostrata sul sito)",
   "version": "x.y.z | unknown",
   "interface": "120005, 120007",
-  "source": "curseforge | github | wago | manual",
+  "source": "curseforge | github | wago | archon | manual",
   "url": "https://...",
   "installed": "YYYY-MM-DD | pre-existing",
   "folders": ["FolderName1", "FolderName2"],
