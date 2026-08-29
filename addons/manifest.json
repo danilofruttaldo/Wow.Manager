@@ -79,17 +79,38 @@
       "folders": ["MythicDungeonTools", "MythicDungeonTools_UI"],
       "notes": "Planner M+ con route, pull, sim. Aggiornato 2026-07-05 6.1.19->6.1.20 via /aggiorna-addon (workflow) GitHub release Nnoggie/MythicDungeonTools (cfwidget rotto per MDT). TOC include 120007 match build 12.0.7. Aggiornato 2026-08-12 6.1.20->6.2.1 via /aggiorna-addon (workflow) GitHub release 6.2.1 (14.3 MB). ATTENZIONE, la 6.2.1 SPACCHETTA IN DUE CARTELLE: si aggiunge MythicDungeonTools_UI, che nella 6.1.20 non esisteva -> 'folders' aggiornato, altrimenti npm run validate segnala la cartella non dichiarata. Anche la riga ## Interface cambia: da '120007, 120001, 50504' a '120100, 120007', cioe' sale a 12.1.0 e CADE il supporto Classic 50504. ⚠️ Su cfwidget lo slug 'mythic-dungeon-tools' risponde 404: la fonte e' la release GitHub Nnoggie/MythicDungeonTools (verificato 2026-08-12: 6.2.1 = ultima). Se un audit lo segnala come 'errore', e' questo, non un problema di rete. Aggiornato 2026-08-14 6.2.1->6.2.2 via /aggiorna-addon (workflow) GitHub release 6.2.2 (14.3 MB); due cartelle come la 6.2.1, riga ## Interface invariata ('120100, 120007'). Aggiornato 2026-08-18 6.2.2->6.2.3 via /aggiorna-addon (workflow) GitHub release 6.2.3 (14.3 MB), due cartelle; qui la riga ## Interface CALA a '120100' puro su entrambe: cade il supporto 12.0.7 dichiarato dalla 6.2.1 in poi. Aggiornato 2026-08-19 6.2.3->6.2.4 via /aggiorna-addon (workflow) GitHub release 6.2.4 (14,3 MB), due cartelle; riga ## Interface invariata ('120100'). Aggiornato 2026-08-22 6.2.4->6.2.5 via /aggiorna-addon (workflow) GitHub release 6.2.5 (14,3 MB), due cartelle; riga ## Interface invariata ('120100') su entrambi i .toc. Aggiornato 2026-08-23 6.2.5->6.2.7 via /aggiorna-addon (workflow) GitHub release 6.2.7 (14,3 MB), saltando la 6.2.6; due cartelle, riga ## Interface invariata ('120100') su entrambi i .toc. Aggiornato 2026-08-25 6.2.7->6.2.8 via /aggiorna-addon (workflow) release GitHub Nnoggie/MythicDungeonTools 6.2.8 (14,3 MB); due cartelle, riga ## Interface invariata ('120100') su entrambi i .toc. Aggiornato 2026-08-26 6.2.8->6.2.9 via /aggiorna-addon (workflow) release GitHub Nnoggie/MythicDungeonTools 6.2.9 (14,3 MB, pubblicata 2026-08-25 20:47 UTC); due cartelle, riga ## Interface invariata ('120100') su entrambi i .toc."
     },
-    "Leatrix_Plus": {
-      "name": "Leatrix Plus",
-      "desc": "Comodità varie: quest automatiche, riparazione e vendita delle cianfrusaglie, skip cinematiche.",
-      "version": "12.1.02",
-      "interface": "120100",
+    "EllesmereUI": {
+      "name": "EllesmereUI",
+      "desc": "Suite UI modulare: unit frame, nameplate, barre, borse, chat, meter e comodità, con editor visuale.",
+      "version": "v9.0.7",
+      "interface": "120000, 120001, 120005, 120007, 120100",
       "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/leatrix-plus",
-      "preview": "https://media.forgecdn.net/attachments/841/496/snap6.jpg",
-      "installed": "2026-08-27",
-      "folders": ["Leatrix_Plus"],
-      "notes": "QoL: quest auto, repair, sell junk, skip cinematic. Aggiornato 2026-07-31 12.0.28->12.0.29 via /aggiorna-addon (workflow) forgecdn files/8536/716 (Leatrix_Plus-12.0.29.zip), changelog solo 'Updated deprecated functions', nessuna opzione nuova. Prima: 2026-07-23 12.0.27->12.0.28 forgecdn files/8490/258. Aggiornato 2026-08-06 12.0.29->12.0.30 via /aggiorna-addon (workflow) forgecdn files/8585/35 (Leatrix_Plus-12.0.30.zip, 599 KB, 10 file); riga ## Interface invariata. TOC 120007,120100 (match build 12.0.7). NB opzione 'Maximise camera distance' blocca lo zoom su Midnight -> tenerla OFF (vedi memoria leatrix-camera-zoom-lock); settings in LeaPlusDB account-wide, non toccati dagli update. Aggiornato 2026-08-12 12.0.30->12.1.00 (patch 12.1.0) via /aggiorna-addon (workflow) forgecdn files/8630/262 (Leatrix_Plus-12.1.00.zip, 595 KB, 10 file); il TOC passa da '120007, 120100' a 120100 puro. ⚠️ Pubblicata alle 07:02 UTC del giorno stesso della patch: un controllo fatto un'ora prima vedeva ancora la 12.0.30 del 5 agosto come ultima. Nel giorno di una patch le release escono a raffica (Leatrix ha pubblicato i flavor classic alle 07:09, 07:11 e 07:32) -> un solo audit non basta, va ripetuto. Aggiornato 2026-08-20 12.1.00->12.1.01 via /aggiorna-addon (workflow) forgecdn files/8682/910 (Leatrix_Plus-12.1.01.zip, 596 KB, 10 file); riga ## Interface invariata (120100 puro). SavedVariables non toccate. Aggiornato 2026-08-27 12.1.01->12.1.02 via /aggiorna-addon (workflow) forgecdn files/8742/64 (Leatrix_Plus-12.1.02.zip, 596.645 byte); cartella singola, 10 file, ## Interface invariata (120100). Changelog della 12.1.02 (26 agosto 2026): nuova opzione 'Set edit mode layout' (Settings), che applica da sola un layout di Edit Mode al login su qualsiasi PG; TOLTA 'Resize mail text' (Text) per problemi di secrets; 'Enhance tooltip' (Interface) non elabora piu' i tooltip negli ambienti addon-restricted; 'Mute game sounds' (System) copre i nuovi suoni di Valeera. Le due opzioni note restano da tenere OFF e la 12.1.02 non le tocca: 'Enhance minimap' (fa sparire la freccia del giocatore, MinimapCompassTexture:Hide) e 'Maximise camera distance' (blocca lo zoom della camera)."
+      "url": "https://www.curseforge.com/wow/addons/ellesmereui",
+      "installed": "2026-08-28",
+      "folders": [
+        "EllesmereUI",
+        "EllesmereUIActionBars",
+        "EllesmereUIAuraBuffReminders",
+        "EllesmereUIBags",
+        "EllesmereUIBlizzardSkin",
+        "EllesmereUIChat",
+        "EllesmereUICooldownManager",
+        "EllesmereUIDamageMeters",
+        "EllesmereUIDataBars",
+        "EllesmereUIFriends",
+        "EllesmereUILocales",
+        "EllesmereUIMinimap",
+        "EllesmereUIMythicTimer",
+        "EllesmereUINameplates",
+        "EllesmereUIOptions",
+        "EllesmereUIQoL",
+        "EllesmereUIQuestTracker",
+        "EllesmereUIQuickdraw",
+        "EllesmereUIRaidFrames",
+        "EllesmereUIResourceBars",
+        "EllesmereUIUnitFrames"
+      ],
+      "notes": "Suite UI completa, 21 addon-modulo. Installata 2026-08-28 alla 9.0.7 (release del 2026-08-27, 17,6 MB di zip, 46 MB estratti). ⚠️ Il file NON si scarica da media.forgecdn.net/files/8744/563/ (risponde AccessDenied): e' stato preso da mediafilez.forgecdn.net, stesso percorso. Sostituisce e ha mandato in PARCHEGGIO sei addon: CursorRing (-> modulo QoL Cursor: cerchio cursore, GCD, cast bar, trail), Baganator + Syndicator (-> Bags), Prat-3.0 (-> Chat), Leatrix_Plus (-> QoL + Quest Tracker per auto accept/turn-in, auto repair con fondi gilda, sell junk + Minimap per quadrata e raggruppamento bottoni), SimpleItemLevel (-> BlizzardSkin per scheda personaggio e inspect, + Bags per le borse). Parcheggiati e NON cancellati in Interface/AddOns-parcheggio/ (WoW scandisce solo Interface/AddOns, quindi non li carica); SavedVariables intatti, il perche' e il come tornare indietro stanno in LEGGIMI.txt li' dentro. ⚠️ COSA SI PERDE, verificato leggendo il sorgente 9.0.7 e non la scheda CurseForge: l'indice oggetti cross-personaggio di Syndicator (in EUI Bags l'unico dato cross-char e' l'ORO -- campi characterGold/warbandGold -- non c'e' nessuna tabella di inventari degli alt); i filtri, i colori per canale e la rinomina canali di Prat; auto-release dello spirito, rifiuto duelli e tooltip target/rank di Leatrix (grep su RepopMe/CancelDuel/DUEL_REQUESTED: zero occorrenze in tutto EUI); l'item level su nameplate e unit frame ('item level' non compare nei due file opzioni). ⚠️ NON sostituisce MythicDungeonTools: EUI ha un TIMER M+, non un pianificatore di route. ⚠️ NON sostituisce TeleportMenu: il bottone 'M+ Portals' di chat e minimappa e' una lista hardcoded di 8 portali della stagione corrente piu' 3 hearthstone (PORTAL_SPELLS in EllesmereUIChat.lua), mentre TeleportMenu copre tutte le espansioni. PESO MISURATO: 24,2 MB di Lua+XML totali, ma 10,2 MB sono LoadOnDemand -- EllesmereUIOptions (6,6 MB) e EllesmereUILocales (3,6 MB, che su un client enUS non si carica mai, vedi EllesmereUI_Locale.lua:185 e SET textLocale in Config.wtf). Restano 14,1 MB compilati al login accendendo tutto, contro i 5,5 MB dei sei addon tolti. ⚠️ Ma il costo vero non e' quello: unit frames, nameplates, raid frames e damage meter oggi sono di Blizzard, cioe' C dentro il motore, e accendendo quei moduli diventano Lua su ogni UNIT_HEALTH/UNIT_AURA/COMBAT_LOG_EVENT_UNFILTERED. Accendendo i soli moduli che sostituiscono qualcosa (core + QoL + BlizzardSkin + Bags + Chat + Minimap + QuestTracker = 6,2 MB) lo scambio e' sostanzialmente pari e nessuno di quelli gira per frame. ⚠️ Il modulo QoL ha un auto combat logging: NON accenderlo, c'e' gia' !ArchonLogger installato dall'app Archon. 'preview' assente di proposito: la descrizione cfwidget non contiene immagini di galleria, quindi addon-images.mjs ripieghera' sul logo (da lanciare dalla postazione con Node, node-pending.ps1). Icona: avatar CurseForge 400x400."
     },
     "HandyNotes": {
       "name": "HandyNotes",
@@ -139,54 +160,6 @@
       "folders": ["TomTom"],
       "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-07-14 v4.3.5-release->v4.3.6-release via /aggiorna-addon (workflow) forgecdn files/8426/585. Aggiornato 2026-08-03 v4.3.6-release->v4.3.8-release via /aggiorna-addon (workflow) forgecdn files/8560/433 (11.8 MB). Il TOC e' passato da 120007 puro a multi-flavor (aggiunge 11509/20506/38002/50504 dei client classic e 120100): nessuna azione, il retail usa il valore che gli compete."
     },
-    "Baganator": {
-      "name": "Baganator",
-      "desc": "Borse in un inventario unico: categorie, ricerca istantanea e item level sugli oggetti.",
-      "version": "822",
-      "interface": "120100, 120007, 50504, 38001, 20506, 11509",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/baganator",
-      "preview": "https://media.forgecdn.net/attachments/974/124/categories-2024-09-23-default.webp",
-      "installed": "2026-08-24",
-      "folders": ["Baganator"],
-      "notes": "Borsa unica con auto-categorizzazione + categorie custom, ricerca veloce, view bank/warband/guild bank, overlay item level. Author plusmouse, attivamente mantenuto. Sostituisce BetterBags (rimosso 2026-06-03 su richiesta utente). RICHIEDE Syndicator (data layer): TOC dichiara OptionalDeps ma il codice chiama Syndicator.API senza nil-check (es. Core/Welcome.lua) → errore Lua senza. Aggiornato 2026-07-22 812->814 via /aggiorna-addon (workflow) forgecdn files/8481/597 (Baganator-814.zip); TOC 120007 match build 12.0.7. Aggiornato 2026-08-03 814->815 via /aggiorna-addon (workflow) forgecdn files/8557/56 (Baganator-815.zip, 168 file); riga ## Interface invariata. Aggiornato 2026-08-12 815->816 via /aggiorna-addon (workflow) forgecdn files/8620/311 (Baganator-816.zip, 407 KB); ## Interface aggiunge 120100 e toglie 11508 (stesso movimento di [[Syndicator]] 275, stesso autore e stesso giro di release). Aggiornato 2026-08-15 816->821 via /aggiorna-addon (workflow) forgecdn files/8648/694 (Baganator-821.zip, 407 KB); salto di 5 release in due giorni, ## Interface invariata. Qui [[Syndicator]] resta alla 276: i due addon dello stesso autore NON si muovono sempre insieme. Aggiornato 2026-08-24 821->822 via /aggiorna-addon (workflow) forgecdn files/8723/647 (Baganator-822.zip, 407 KB, 169 file); ## Interface invariata. Stavolta [[Syndicator]] si muove insieme (276->277), al contrario del giro del 2026-08-15."
-    },
-    "Syndicator": {
-      "name": "Syndicator",
-      "desc": "Data layer che indicizza gli oggetti di tutti i personaggi: dipendenza tecnica di Baganator.",
-      "version": "277",
-      "interface": "120100, 120007, 50504, 38001, 20506, 11509",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/syndicator",
-      "preview": "https://media.forgecdn.net/attachments/1083/215/tooltip-2025-01-31.webp",
-      "installed": "2026-08-24",
-      "folders": ["Syndicator"],
-      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-07-22 273->274 via /aggiorna-addon (workflow) forgecdn files/8481/593 (Syndicator-274.zip); TOC include 120007 (build 12.0.7). Aggiornato 2026-08-12 274->275 via /aggiorna-addon (workflow) forgecdn files/8620/314 (Syndicator-275.zip, 104 KB, 41 file); ## Interface aggiunge 120100 e toglie 11508, come Baganator 816. Aggiornato 2026-08-13 275->276 via /aggiorna-addon (workflow) forgecdn files/8634/264 (Syndicator-276.zip, 104 KB, 41 file); ## Interface invariata; changelog 276: fallback quando manca la catalog info di un oggetto decor. Aggiornato 2026-08-24 276->277 via /aggiorna-addon (workflow) forgecdn files/8723/645 (Syndicator-277.zip, 104 KB); ## Interface invariata."
-    },
-    "Prat-3.0": {
-      "name": "Prat 3.0",
-      "desc": "Chat su misura a moduli: timestamp, copia del testo, colori, filtri e scorciatoie sui canali.",
-      "version": "3.9.105",
-      "interface": "120100",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/prat-3-0",
-      "preview": "https://media.forgecdn.net/attachments/293/722/2020-05-24_1-56-57.jpg",
-      "installed": "2026-08-28",
-      "folders": ["Prat-3.0"],
-      "notes": "Framework di moduli per la chat (timestamp, copy, alias/colori canale, sostituzioni, tab). Installato 2026-07-26 al posto di [[WIM]], rimosso su richiesta. Release stabile 3.9.101 via forgecdn files/8250/962 (Prat-3.0-3.9.101.zip); TOC 120005,120007 match build 12.0.7. NB su CurseForge ci sono alpha piu' recenti (3.9.101-3-g2c846fb del 2026-07-18): si resta sulla release. Cartella unica Prat-3.0, SavedVariables Prat3DB. Le SavedVariables di WIM (WTF/Account/STANTUFFO/SavedVariables/WIM.lua + .bak, ~340 KB con lo storico whisper) NON sono state cancellate: inerti senza l'addon, si possono togliere a mano. Aggiornato 2026-08-03 3.9.101->3.9.103 via /aggiorna-addon (workflow) forgecdn files/8557/365 (release stabile); il TOC ora dichiara 120007,120100 (non piu' 120005). Nello zip anche i toc per i client classic (_Mists/_TBC/_Vanilla/_Wrath), irrilevanti per retail. Aggiornato 2026-08-04 3.9.103->3.9.104 via /aggiorna-addon (workflow) forgecdn files/8575/36 (release stabile, 1.5 MB, 213 file); riga ## Interface invariata. Aggiornato 2026-08-28 3.9.104->3.9.105 via /aggiorna-addon (workflow) forgecdn files/8744/816 (Prat-3.0-3.9.105.zip, 1.554.863 byte); cartella unica Prat-3.0. ⚠️ La riga ## Interface e' CAMBIATA: 120007, 120100 -> 120100 puro, la 3.9.105 ha lasciato cadere il supporto 12.0.7. Non e' una svista di lettura: il backup 3.9.104 in /tmp/wow-upd/wf/bak dichiara ancora entrambe. Campo interface del manifest aggiornato di conseguenza - stesso caso di CursorRing 1.5.5. Gli altri .toc della cartella (Mists 50504, TBC 20506, Vanilla 11509, Wrath 30405) non riguardano _retail_."
-    },
-    "CursorRing": {
-      "name": "Cursor Ring",
-      "desc": "Anello colorato per classe attorno al cursore, animato su cast, GCD e combattimento.",
-      "version": "1.5.5",
-      "interface": "120100",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/cursorring",
-      "preview": "https://media.forgecdn.net/attachments/1628/379/screenshot_20260412_133047-png.png",
-      "installed": "2026-08-12",
-      "folders": ["CursorRing"],
-      "notes": "Anello class-colored attorno al cursore con animazioni cast/GCD/combat: migliora visibilità del cursore + funge da GCD tracker. TOC 120005,120007 match build. Scelto come miglior/più aggiornato tra i cursor addon (vs CursorTrail/Cursor Ring +). Aggiornato 2026-06-17 1.5.2->1.5.3 via forgecdn files/8261/188 (filename CursorRing-v1.5.3.zip, NB prefisso 'v'; ignorata la 1.5.3-beta più vecchia). Aggiornato 2026-08-06 1.5.3->1.5.4 via /aggiorna-addon (workflow) forgecdn files/8585/113 (CursorRing-v1.5.4.zip, 156 KB); il TOC scrive '## Version: 1.5.4' senza il 'v' del nome file, ed è la stessa versione. Interface da 120005,120007 a 120007,120100: ora dichiara anche la 12.1.0. Aggiornato 2026-08-12 1.5.4->1.5.5 (patch 12.1.0) forgecdn files/8624/491 (CursorRing-v1.5.5.zip, 157 KB); il TOC ora e' 120100 puro (ha lasciato cadere 120007). Anche questa mancata dall'audit del workflow dello stesso giorno."
-    },
     "Molinari": {
       "name": "Molinari",
       "desc": "Pulsanti contestuali sugli oggetti per macinare, prospettare e disincantare in massa.",
@@ -198,18 +171,6 @@
       "installed": "2026-07-31",
       "folders": ["Molinari"],
       "notes": "Author p3lim. Pulsanti contestuali su item per macinare (milling)/prospettare (prospecting)/disincantare (disenchant) in massa, appaiono sull'item quando applicabile. Aggiornato 2026-07-31 120000.145->120000.146 via /aggiorna-addon (workflow) forgecdn files/8543/488, changelog 'Update Interface versions for wrath': solo bump delle Interface classic (38002/20506/11509), nessuna modifica funzionale. Prima: 2026-06-30 120000.144->120000.145 forgecdn files/8346/985. TOC include 120007/120100 match build 12.0.7."
-    },
-    "SimpleItemLevel": {
-      "name": "Simple Item Level",
-      "desc": "Mostra l’item level su schermata personaggio, inspect, borse, unit frame e nameplate.",
-      "version": "v68",
-      "interface": "120100, 120007, 50504, 30405, 20506, 11508",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/simple-item-level",
-      "preview": "https://media.forgecdn.net/attachments/233/52/simpleitemlevel_bag.jpg",
-      "installed": "2026-08-23",
-      "folders": ["SimpleItemLevel"],
-      "notes": "Mostra item level su character/inspect/bag, su unit frame e nameplate. Reinstallato 2026-06-18 (rimosso 2026-06-17). Aggiornato 2026-06-19 v65->v66 via /aggiorna-addon (workflow) forgecdn files/8282/890. TOC ora include 120007 -> match build 12.0.7, NIENTE PIU OOD (prima era max 120001, serviva Load out of date). Aggiornato 2026-08-09 v66->v67 via /aggiorna-addon (workflow) forgecdn files/8606/885; il TOC aggiunge 120100 in testa. Aggiornato 2026-08-23 v67->v68 via /aggiorna-addon (workflow) forgecdn files/8709/50 (SimpleItemLevel-v68.zip, 27 KB); una cartella, riga ## Interface invariata (120100, 120007, 50504, 30405, 20506, 11508)."
     },
     "AllTheThings": {
       "name": "All The Things",
