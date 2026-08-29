@@ -6,8 +6,8 @@
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "--open"],
+      "program": "${workspaceFolder}/node_modules/astro/bin/astro.mjs",
+      "args": ["dev", "--open"],
       "console": "internalConsole",
       "skipFiles": ["<node_internals>/**"]
     }
