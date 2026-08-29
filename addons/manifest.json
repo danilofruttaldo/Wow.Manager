@@ -160,6 +160,18 @@
       "folders": ["TomTom"],
       "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-07-14 v4.3.5-release->v4.3.6-release via /aggiorna-addon (workflow) forgecdn files/8426/585. Aggiornato 2026-08-03 v4.3.6-release->v4.3.8-release via /aggiorna-addon (workflow) forgecdn files/8560/433 (11.8 MB). Il TOC e' passato da 120007 puro a multi-flavor (aggiunge 11509/20506/38002/50504 dei client classic e 120100): nessuna azione, il retail usa il valore che gli compete."
     },
+    "Syndicator": {
+      "name": "Syndicator",
+      "desc": "Conta gli oggetti su tutti i personaggi: righe nel tooltip e ricerca globale con /syn.",
+      "version": "277",
+      "interface": "120100, 120007, 50504, 38001, 20506, 11509",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/syndicator",
+      "preview": "https://media.forgecdn.net/attachments/1083/215/tooltip-2025-01-31.webp",
+      "installed": "2026-08-24",
+      "folders": ["Syndicator"],
+      "notes": "Data layer/cache cross-personaggio (bank, warband, guild bank, ricerca). Dipendenza de-facto di [[Baganator]], stesso autore plusmouse. Aggiornato 2026-07-22 273->274 via /aggiorna-addon (workflow) forgecdn files/8481/593 (Syndicator-274.zip); TOC include 120007 (build 12.0.7). Aggiornato 2026-08-12 274->275 via /aggiorna-addon (workflow) forgecdn files/8620/314 (Syndicator-275.zip, 104 KB, 41 file); ## Interface aggiunge 120100 e toglie 11508, come Baganator 816. Aggiornato 2026-08-13 275->276 via /aggiorna-addon (workflow) forgecdn files/8634/264 (Syndicator-276.zip, 104 KB, 41 file); ## Interface invariata; changelog 276: fallback quando manca la catalog info di un oggetto decor. Aggiornato 2026-08-24 276->277 via /aggiorna-addon (workflow) forgecdn files/8723/645 (Syndicator-277.zip, 104 KB); ## Interface invariata. ⚠️ SOPRAVVISSUTO al parcheggio del 2026-08-28 mentre [[Baganator]] no, ed e' l'occasione in cui si e' scoperto che la desc di prima -- 'dipendenza tecnica di Baganator' -- era sbagliata NEL VERSO: il .toc di Syndicator non dichiara nessuna dipendenza, e' Baganator a elencare lui in '## OptionalDeps: Syndicator, Masque'. Da solo fa esattamente la cosa che EUI Bags NON fa, cioe' il conteggio cross-personaggio: Tracking/Tooltips.lua aggiunge al tooltip una riga per personaggio, una per banca di gilda e una per la warband (con tetto 'tooltips_character_limit'), e /syn (o /syndicator, in Core/SlashCmd.lua) apre la ricerca 'ovunque'. Nessun conflitto con EUI Bags: in Search/UI c'e' solo la finestra di ricerca, non un frame borse -- l'interfaccia delle borse era Baganator, che resta parcheggiato. ⚠️ Ed e' anche la fonte dichiarata in testa a pg.md (SavedVariables/Syndicator.lua incrociato con le cartelle WTF): parcheggiandolo, quella fonte si sarebbe congelata in silenzio."
+    },
     "Molinari": {
       "name": "Molinari",
       "desc": "Pulsanti contestuali sugli oggetti per macinare, prospettare e disincantare in massa.",
