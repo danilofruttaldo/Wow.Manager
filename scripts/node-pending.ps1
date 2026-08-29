@@ -47,9 +47,26 @@ function PendentiMount {
     $manifest = Percorso "mounts\manifest.json"
     $imgDir = Percorso "public\mounts"
     if (-not (Test-Path $manifest)) { return @{ classe = 0; img = 0 } }
+    $correnti = @{}
     foreach ($l in (Get-Content -Encoding UTF8 $manifest)) {
         if ($l -match '"spell":(\d+)' -and $l -notmatch '"class":') { $classe++ }
-        if ($l -match '"display":(\d+)' -and -not (Test-Path (Join-Path $imgDir ($matches[1] + ".webp")))) { $img++ }
+        if ($l -match '"display":(\d+)') {
+            $correnti[$matches[1]] = $true
+            if (-not (Test-Path (Join-Path $imgDir ($matches[1] + ".webp")))) { $img++ }
+        }
+    }
+    # Le forme alternative contano quanto il display corrente: mount-images.mjs le
+    # scarica e non le considera orfane, quindi contando i soli correnti si direbbe
+    # "niente in sospeso" mentre un render manca davvero. Vedi mounts/display-noti.json.
+    $noti = Percorso "mounts\display-noti.json"
+    if (Test-Path $noti) {
+        $j = Get-Content -Raw -Encoding UTF8 $noti | ConvertFrom-Json
+        foreach ($p in $j.PSObject.Properties) {
+            foreach ($d in $p.Value) {
+                if ($correnti.ContainsKey([string]$d)) { continue }
+                if (-not (Test-Path (Join-Path $imgDir ("$d.webp")))) { $img++ }
+            }
+        }
     }
     return @{ classe = $classe; img = $img }
 }

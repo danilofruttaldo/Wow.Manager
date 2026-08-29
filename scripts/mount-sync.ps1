@@ -553,6 +553,70 @@ if ($rimandate -gt 0) {
     Write-Host ("senza icona: {0} (la card mostra l'iniziale)" -f $senzaIcona) -ForegroundColor Yellow
 }
 
+# --- 5bis. i display gia' visti -------------------------------------------------
+# ⚠️ Il `display` che finisce nel manifest e' quello dell'ULTIMO dump, e per qualche
+# mount CAMBIA da se': Ash'adar ha una forma solare e una lunare (decide l'ora in cui
+# gira il dump), altre seguono la personalizzazione attiva. Il manifest e' macchina-
+# generato e si riscrive per intero, quindi la forma di prima ci sparirebbe -- e il suo
+# render diventerebbe un file senza padrone, che "Verifica dati" segnala e
+# mount-images.mjs cancella, salvo riscaricarlo al ribaltamento dopo. Misurato: e'
+# gia' capitato a 5 mount, due volte alla stessa (Ash'adar), sempre a mano.
+#
+# Qui si tiene l'elenco DUREVOLE dei display visti per ogni mount, in un file suo
+# accanto al manifest -- non dentro, perche' li' al primo sync sparirebbe, che e' la
+# regola gia' scritta per ogni dato non macchina-generato di questo file.
+# Ci finiscono solo le mount con piu' di una forma: oggi 5 righe, non 1565.
+$NotiFile = Join-Path (Split-Path $Manifest -Parent) "display-noti.json"
+$storia = @{}
+if (Test-Path $NotiFile) {
+    $j = Get-Content -Raw -Encoding UTF8 $NotiFile | ConvertFrom-Json
+    foreach ($p in $j.PSObject.Properties) { $storia[$p.Name] = @($p.Value | ForEach-Object { [int]$_ }) }
+}
+$primaForme = $storia.Count
+# Il display di ieri: $vecchio e' il manifest PRIMA di questa riscrittura, letto in
+# memoria al §4 -- e' l'unico posto in cui la forma precedente esiste ancora.
+$displayPrima = @{}
+if ($vecchio) {
+    foreach ($m in $vecchio.mounts) { if ($m.display) { $displayPrima[[string]$m.id] = [int]$m.display } }
+}
+$vivi = @{}
+$displayOra = @{}
+foreach ($l in $righe) {
+    if ($l -notmatch '"id":(\d+),"spell":\d+,"display":(\d+)') { continue }
+    $id = $matches[1]
+    $ora = [int]$matches[2]
+    if ($ora -eq 0) { continue }
+    $vivi[$id] = $true
+    $displayOra[$id] = $ora
+    $viste = @()
+    if ($storia.ContainsKey($id)) { $viste = $storia[$id] }
+    if ($displayPrima.ContainsKey($id)) { $viste = @($viste) + $displayPrima[$id] }
+    $viste = @($viste) + $ora
+    $viste = @($viste | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+    # Una forma sola non e' una storia: la riga si scrive solo quando la mount ribalta.
+    if ($viste.Count -gt 1) { $storia[$id] = $viste } elseif ($storia.ContainsKey($id)) { $storia.Remove($id) }
+}
+# Una mount uscita dal manifest (esclusa, o sparita dal diario) porta via la sua storia:
+# da li' in poi i suoi render sono orfani veri e vanno cancellati davvero.
+foreach ($k in @($storia.Keys)) { if (-not $vivi.ContainsKey($k)) { $storia.Remove($k) } }
+$chiaviNoti = @($storia.Keys | Sort-Object { [int]$_ })
+if ($chiaviNoti.Count -gt 0) {
+    $testoNoti = "{`n" + (($chiaviNoti | ForEach-Object {
+        '  "{0}": [{1}]' -f $_, (($storia[$_] | Sort-Object) -join ", ")
+    }) -join ",`n") + "`n}`n"
+} else {
+    $testoNoti = "{}`n"
+}
+[System.IO.File]::WriteAllText($NotiFile, $testoNoti, (New-Object System.Text.UTF8Encoding($false)))
+if ($storia.Count -gt 0) {
+    $nuoveForme = $storia.Count - $primaForme
+    if ($nuoveForme -gt 0) {
+        Write-Host ("mount che cambiano modello: {0} ({1} nuove in questo giro)" -f $storia.Count, $nuoveForme) -ForegroundColor Cyan
+    } else {
+        Write-Host ("mount che cambiano modello: {0}" -f $storia.Count)
+    }
+}
+
 # --- 5ab. i due passi che vogliono Node -----------------------------------------
 # ATTENZIONE: su QUESTA postazione Node non c'e', ed e' la norma, non un intoppo. Il
 # repo si lavora da due macchine con capacita' disgiunte: qui c'e' WoW (quindi i dump
@@ -598,6 +662,16 @@ if (-not $NoIcone -and -not $HaNode) {
     foreach ($l in $righe) {
         if ($l -match '"spell":(\d+)' -and $l -notmatch '"class":') { $classeDaFare++ }
         if ($l -match '"display":(\d+)' -and -not (Test-Path (Join-Path $ImgDir ($matches[1] + ".webp")))) { $imgDaFare++ }
+    }
+    # Anche le forme alternative sono immagini da avere: mount-images.mjs le scarica e
+    # non le considera orfane, quindi il pendente le deve contare o direbbe "niente da
+    # fare" mentre un render manca.
+    foreach ($k in $storia.Keys) {
+        foreach ($d in $storia[$k]) {
+            # Il display corrente l'ha gia' contato il giro qui sopra.
+            if ($d -eq $displayOra[$k]) { continue }
+            if (-not (Test-Path (Join-Path $ImgDir ("$d.webp")))) { $imgDaFare++ }
+        }
     }
     Write-Host "node non installato qui: vincoli di classe e immagini del modello non toccati." -ForegroundColor Yellow
     if ($classeDaFare -gt 0 -or $imgDaFare -gt 0) {

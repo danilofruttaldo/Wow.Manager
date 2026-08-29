@@ -300,6 +300,7 @@ const sorgenti = new Set(Object.keys(mm.sources ?? {}));
 const iconeMount = new Set(elenco('public/icons/mount').filter((f) => f.endsWith('.jpg')).map((f) => f.slice(0, -4)));
 const renderMount = new Set(elenco('public/mounts').filter((f) => f.endsWith('.webp')).map((f) => f.slice(0, -5)));
 const idVisti = new Set(), iconeUsate = new Set(), renderUsati = new Set();
+const displayDi = new Map();
 let senzaSpell = 0;
 for (const m of mounts) {
   if (idVisti.has(m.id)) err('mount', `id ${m.id} duplicato (e' la chiave di /mount/dettagli.json)`);
@@ -313,12 +314,28 @@ for (const m of mounts) {
     iconeUsate.add(m.icon);
     if (!iconeMount.has(m.icon)) err('mount', `${m.name}: icona dichiarata «${m.icon}» ma il file non c'e'`);
   }
-  if (m.display) renderUsati.add(String(m.display));
+  if (m.display) { renderUsati.add(String(m.display)); displayDi.set(m.id, String(m.display)); }
+}
+// ⚠️ Il `display` del manifest e' quello dell'ULTIMO dump, e per qualche mount cambia da
+// se': Ash'adar ha una forma solare e una lunare (dipende dall'ora in cui gira il dump),
+// altre seguono la personalizzazione attiva. Il render dell'altra forma resterebbe senza
+// padrone e verrebbe segnalato qui a ogni ribaltamento -- rosso in CI e un viaggio sulla
+// postazione con Node per ricancellarlo e riscaricare l'altro, in circolo. display-noti.json
+// e' l'elenco durevole dei display gia' visti per ogni mount: i loro file sono legittimi.
+const displayNoti = ci_sta('mounts/display-noti.json') ? json('mounts/display-noti.json') : {};
+let altriRender = 0;
+for (const [id, visti] of Object.entries(displayNoti)) {
+  if (!idVisti.has(Number(id))) { err('mount', `display-noti.json: la mount ${id} non e' nel manifest`); continue; }
+  const ora = displayDi.get(Number(id));
+  // Se il sync ha scritto il manifest ma non ha unito la storia, il file corrente
+  // manca dall'elenco: e' il solo modo in cui questi due file possono divergere.
+  if (ora && !visti.map(String).includes(ora)) err('mount', `display-noti.json: la mount ${id} ha display ${ora} nel manifest ma non nell'elenco`);
+  for (const d of visti) { if (!renderUsati.has(String(d))) altriRender++; renderUsati.add(String(d)); }
 }
 for (const f of iconeMount) if (!iconeUsate.has(f)) err('mount', `public/icons/mount/${f}.jpg non appartiene a nessuna mount`);
 for (const f of renderMount) if (!renderUsati.has(f)) err('mount', `public/mounts/${f}.webp non appartiene a nessuna mount`);
 if (senzaSpell > mounts.length * 0.05) err('mount', `${senzaSpell} voci senza spellID: dump sospetto`);
-nota(`mount: ${mounts.length} · prese ${presi} · icone ${iconeMount.size} · render ${renderMount.size}`);
+nota(`mount: ${mounts.length} · prese ${presi} · icone ${iconeMount.size} · render ${renderMount.size} (di cui ${altriRender} di forme alternative)`);
 
 // ── Transmog ───────────────────────────────────────────────────────────────────
 const tm = json('transmog/manifest.json');

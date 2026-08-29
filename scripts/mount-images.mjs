@@ -39,7 +39,22 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) WowManagerMountSync/1.0';
 const PARALLELE = 4;
 
 const manifest = JSON.parse(readFileSync(join(root, 'mounts', 'manifest.json'), 'utf8'));
-const displays = [...new Set(manifest.mounts.map((m) => m.display).filter(Boolean))];
+// ⚠️ Non basta il `display` del manifest, che e' quello dell'ultimo dump: qualche mount
+// CAMBIA modello da se' (Ash'adar e' solare o lunare secondo l'ora, altre seguono la
+// personalizzazione attiva). Tenendo conto del solo display corrente questo script
+// cancellerebbe il render dell'altra forma come orfano e lo riscaricherebbe al
+// ribaltamento successivo, all'infinito. mounts/display-noti.json elenca i display gia'
+// visti per ogni mount: quelli valgono quanto il corrente, sia per scaricare sia per
+// decidere cosa e' davvero orfano. Lo tiene aggiornato mount-sync.ps1.
+const vivi = new Set(manifest.mounts.map((m) => String(m.id)));
+const notiPath = join(root, 'mounts', 'display-noti.json');
+const noti = existsSync(notiPath) ? JSON.parse(readFileSync(notiPath, 'utf8')) : {};
+const displays = [...new Set([
+  ...manifest.mounts.map((m) => m.display).filter(Boolean),
+  // Una mount uscita dal manifest (esclusa, o sparita dal diario) porta via anche le
+  // sue forme alternative: i suoi file tornano orfani veri e vanno cancellati.
+  ...Object.entries(noti).filter(([id]) => vivi.has(String(id))).flatMap(([, d]) => d),
+])];
 mkdirSync(dir, { recursive: true });
 
 async function scarica(url) {
