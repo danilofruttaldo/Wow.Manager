@@ -270,6 +270,100 @@
         "NaowhUI_Media"
       ],
       "notes": "Pacchetto UI di Naowh: non e' un addon che fa qualcosa da solo, e' un installer di PROFILI piu' un companion per EllesmereUI. Comando in gioco /nui install. Installato 2026-08-30 dallo zip NaowhUI-20260821.01.zip che l'utente aveva gia' in Downloads (21.161.827 byte, 272 file, 33,4 MB estratti), su sua richiesta. FONTE: naowh.gg/downloads, scaricato a mano. NON e' su CurseForge - api.cfwidget.com/wow/addons/naowhui risponde vuoto - quindi niente og:image per l'icona e niente descrizione da cui pescare la galleria, esattamente il caso ArchonTooltip. Percio' source vale 'naowh' ed e' stata aggiunta la voce a SOURCE_LABEL in src/pages/addons.astro, dov'era rimasta la sola 'archon' ormai inutilizzata. QUATTRO CARTELLE: NaowhUI (core, 271 KB), NaowhUI_Data (1,1 MB, LoadOnDemand, i profili veri), NaowhUI_EUI (1,1 MB, moduli e override sopra EllesmereUI, ## Dependencies: EllesmereUI), NaowhUI_Media (31 MB, texture e font: da sola e' il 94% del peso installato). Il .toc del core e' MULTI-FLAVOUR: ## Interface 120100, 50504, 20506 = Midnight, MoP Classic e TBC Classic in un file solo, con i blocchi [AllowLoadGameType standard, mists, tbc]. La pagina /addons mostra la sola versione piu' alta (lastSupported), quindi i due codici Classic non si vedono e non sporcano nulla. SU RETAIL CONTA IL RAMO 'Standard' di NaowhUI_Data, che importa profili per EllesmereUI, BigWigs, Blizzard EditMode e NorthernSkyRaidTools, piu' 13 file per classe. NIENTE WeakAuras su retail: le WA stanno solo nei rami Classic e Mists, quindi il requisito 'comfortable with WeakAuras' della guida ufficiale riguarda quelli, non Midnight. ADDON NUOVO -> serve il RIAVVIO COMPLETO del client, il /reload non lo vede. Il gioco era aperto durante la copia (l'estrazione e' andata comunque, come per Raider.IO) e l'utente l'ha chiuso subito dopo. DIPENDENZE DELLA GUIDA ANCORA MANCANTI: BugGrabber, BugSack e NorthernSkyRaidTools. Le prime due sono i cattura-errori e si possono rimandare; NSRT no, perche' NaowhUI_Data/Standard/AddOns/NorthernSkyRaidTools.lua e' un profilo da 51 KB che senza l'addon non ha dove andare. Gia' presenti dalla lista 'Required': BigWigs, EllesmereUI, LittleWigs, MythicDungeonTools. Dalla lista 'Optional' ci sono gia' HandyNotes, HandyNotes Midnight, Raider.IO e SimulationCraft; mancano Lucky Vault, Myslot, Talent Loadout Ex e Talent Tree Tweaks. IL PASSO 'Wipe & Backup Your Current UI' DELLA GUIDA NON E' STATO FATTO ed e' dichiarato facoltativo dalla guida stessa: rinominare Interface e WTF qui vuol dire buttare CVar, keybind, layout, chat e SavedVariables di 77 cartelle addon, cioe' buona parte di quello che questo repo documenta. Se un giorno si vuole partire puliti si RINOMINA, non si cancella, e prima si guarda cosa c'e' in WTF. ICONA: non esiste un avatar CurseForge, quindi e' l'og:image della pagina Wago Addons - il .toc dichiara X-Wago-ID n6VPvLGd, da cui addons.wago.io/addons/n6VPvLGd - cioe' cdn.wago.io/thumbnails/GHcTJW4um6YW45KoOGeuM5KoNNNoWbxwwFaEgkQi.png, PNG 2000x2000 da 168 KB (il logo esagonale con la N). Ridotta a 64x64 (4.829 byte, la misura della maggioranza delle altre icone) con System.Drawing in PowerShell, perche' su questa postazione Node e sharp non ci sono e PIL nemmeno. Il CDN di Wago non ha parametri di resize: ?w=128 restituisce l'originale e il percorso /thumbnails/128/ da' 404. PREVIEW ASSENTE, E NON E' LAVORO IN SOSPESO per node-pending.ps1: manca la fonte, non il passaggio. naowh.gg e addons.wago.io sono entrambe pagine JS-rendered, a curl non escono ne' screenshot ne' og:image di galleria, e l'API addons.wago.io/api/addons/<id> reindirizza alla home. La texture LogoAddon.tga dentro NaowhUI_Media non serve: e' lo stesso logo che e' gia' l'icona, ed e' TGA, che System.Drawing non legge. Se si vuole un'anteprima, va presa a mano uno screenshot dal sito. Nessuna patch locale su questo addon."
+    },
+    "BugGrabber": {
+      "name": "BugGrabber",
+      "desc": "Cattura gli errori Lua degli addon e li tiene a disposizione: da solo non ha interfaccia, serve BugSack.",
+      "version": "v12.0.21",
+      "interface": "11508, 11509, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/bug-grabber",
+      "installed": "2026-08-30",
+      "folders": [
+        "!BugGrabber"
+      ],
+      "notes": "Installato 2026-08-30 con NaowhUI, che lo da' fra i Required. File CurseForge 8619054, !BugGrabber-v12.0.21.zip, 11.085 byte, 4 file in una cartella sola. LA CHIAVE E' 'BugGrabber' MA LA CARTELLA E' '!BugGrabber' col punto esclamativo, che serve a farlo caricare per primo, prima degli addon di cui deve catturare gli errori. La chiave e' senza perche' e' anche il nome dei file di icona e anteprima e finirebbe dentro un URL. Da solo NON si usa: e' l'agganciatore di errori, l'interfaccia la mette BugSack, che nel .toc lo dichiara in OptionalDeps ma nella descrizione scrive REQUIRES. Comando /buggrabber. ICONA: e' l'unico addon del manifest il cui progetto CurseForge NON HA AVATAR - cfwidget restituisce il campo thumbnail vuoto, e non e' un errore di lettura. Siccome il validatore esige un file in public/icons/addon per ogni voce, qui c'e' un'icona di WoW dal CDN Wowhead come quelle di public/icons/ui: inv_pet_cockroach, uno scarafaggio, 1.796 byte, verificata per hash contro tutte le icone del repo per non ripetere un file gia' in uso. Se un giorno il progetto si mette un avatar, questa si sostituisce. ANTEPRIMA assente e non ottenibile: l'unica immagine nella descrizione cfwidget e' il badge Patreon 200x49, esattamente il tipo di immagine che CLAUDE.md dice di scartare. Nessuna patch locale."
+    },
+    "BugSack": {
+      "name": "BugSack",
+      "desc": "Mostra in una finestra gli errori Lua raccolti da BugGrabber, con stack completo e testo copiabile.",
+      "version": "v12.0.13",
+      "interface": "11508, 11509, 20505, 20506, 30405, 38001, 40402, 50503, 50504, 120100, 120005, 120007",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/bugsack",
+      "installed": "2026-08-30",
+      "folders": [
+        "BugSack"
+      ],
+      "notes": "Installato 2026-08-30 con NaowhUI, che lo da' fra i Required. File CurseForge 8413273, BugSack-v12.0.13.zip, 70.999 byte, 24 file. Coppia inseparabile con BugGrabber: quello cattura, questo mostra. Plugin LDB con gli ultimi 5 errori nel tooltip piu' una finestra con tutti quelli della sessione e lo stack completo, copiabile. Comando /bugsack. VOCE SEPARATA da BugGrabber e non due cartelle della stessa voce, benche' funzionalmente siano un attrezzo solo: sono due progetti CurseForge con versioni indipendenti (v12.0.13 contro v12.0.21) e il campo version del manifest e' uno solo per voce - accorpandoli, gli aggiornamenti di uno dei due sparirebbero dall'audit di /aggiorna-addon. E' diverso da RaiderIO o EllesmereUI, dove le 16 e le 21 cartelle escono dallo stesso zip con la stessa versione. ANTEPRIMA assente: come BugGrabber, nella descrizione c'e' solo il badge Patreon. Icona: avatar CurseForge 64x64. Nessuna patch locale."
+    },
+    "NorthernSkyRaidTools": {
+      "name": "Northern Sky Raid Tools",
+      "desc": "Avvisi da raid con timer per fase, tracciamento aure e promemoria importati da wowaudit o wowutils.",
+      "version": "12.1.17",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/northern-sky-raid-tools",
+      "installed": "2026-08-30",
+      "folders": [
+        "NorthernSkyRaidTools",
+        "NorthernSkyRaidTools_UI"
+      ],
+      "notes": "Installato 2026-08-30 con NaowhUI, ed e' il piu' importante dei tre Required che mancavano: NaowhUI_Data/Standard/AddOns/NorthernSkyRaidTools.lua e' un profilo da 51 KB che senza questo addon non ha dove andare. File CurseForge 8769684, NorthernSkyRaidTools-12.1.17.zip, 3.455.373 byte, due cartelle - NorthernSkyRaidTools (408 file) e NorthernSkyRaidTools_UI (29 file, ## Dependencies: NorthernSkyRaidTools). PRESA LA RELEASE STABILE, NON L'ALPHA: il 2026-08-30 alle 14:58 UTC era gia' uscita la 12.1.17-2-g74a0cc4 (file 8770186), un'ora dopo la release 12.1.17 delle 13:55. Il progetto pubblica alpha in continuazione, spesso piu' d'una al giorno: qui si tiene la stabile come per tutti gli altri. Fa avvisi d'incontro con timer consapevoli della fase, condizioni, TTS e suoni; tracciamento aure per debuff propri, del co-tank, buff esterni e immunita'; confronto del ritmo mitico sulla vita del boss; e importa i promemoria da wowutils.com e wowaudit.com. OptionalDeps su Grid2, ElvUI, Cell, DandersFrames, VuhDo, MRT e i raid frame di Blizzard: si aggancia al frame che trova, e qui trova quelli di EllesmereUI o di Blizzard. NON e' un rimpiazzo di BigWigs, che resta il timer degli incontri: NSRT sta sopra, sulle assegnazioni e i promemoria del gruppo. ANTEPRIMA assente: la descrizione cfwidget non contiene NESSUNA immagine, solo i link a Patreon e Discord come testo - quindi manca la fonte, non il passaggio, e non e' lavoro in sospeso per node-pending.ps1 finche' non si sceglie a mano uno screenshot dalla galleria, che da qui non si legge (403). Icona: avatar CurseForge 64x64. Nessuna patch locale."
+    },
+    "TalentTreeTweaks": {
+      "name": "Talent Tree Tweaks",
+      "desc": "Migliorie all'albero talenti e professioni: acquisto automatico, sfondo trasparente, loadout in chat.",
+      "version": "v1.13.30",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/talent-tree-tweaks",
+      "preview": "https://media.forgecdn.net/attachments/600/237/transparentbackground.jpg",
+      "installed": "2026-08-30",
+      "folders": [
+        "TalentTreeTweaks"
+      ],
+      "notes": "Installato 2026-08-30 con NaowhUI, dalla lista Optional. File CurseForge 8630926, TalentTreeTweaks-v1.13.30.zip, 251.296 byte, 77 file. Le migliorie sono MODULARI e si accendono una a una: acquisto automatico dei tratti generici (potenziamenti del Manto Reshii, visioni orrifiche e quel che Blizzard aggiungera'), sfondo trasparente e schermo intero sull'albero, stringhe di export cliccabili in chat, mini-albero nel menu dei loadout, confronto talenti in ispezione, id di incantesimo nel tooltip. Tocca anche l'albero delle PROFESSIONI, quindi si incrocia con quello che la pagina /professioni di questo sito documenta. OptionalDeps su TalentTreeViewer_Loader e Chattynator, nessuno dei due installato: sono estensioni, non requisiti. Il .toc scrive '## Interface: 120100, 120100', cioe' lo STESSO codice due volte: nel manifest ne resta uno - e' un refuso a monte, un doppione non aggiunge nulla e la pagina mostrerebbe comunque solo la versione piu' alta. PREVIEW scelta a mano fra le 16 immagini della descrizione cfwidget, guardate una a una come vuole CLAUDE.md: transparentbackground.jpg (1437x789) mostra l'albero talenti pieno di punti col mondo che si vede in trasparenza dietro, cioe' una funzione riconoscibile di QUESTO addon. Scartata full-screen.png (1740x816), che pure e' landscape e piu' grande, perche' il pannello che domina la scena e' il Talent Loadout Manager, cioe' l'interfaccia di TalentLoadoutsEx: illustrerebbe l'addon sbagliato. Scartate anche respecbuttons.jpg (880x121, una striscia sottile come il banner di HandyNotes Midnight) e le nove sotto i 650 px di larghezza. Il .webp NON e' stato generato: qui Node non c'e', lavoro in sospeso per node-pending.ps1. Icona: avatar CurseForge 64x64 jpeg. Nessuna patch locale."
+    },
+    "TalentLoadoutsEx": {
+      "name": "Talent Loadout Ex",
+      "desc": "Salva loadout talenti senza limite di numero, anche parziali, con gruppi ed export; niente barre.",
+      "version": "3.14.14",
+      "interface": "120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/talent-loadout-ex",
+      "installed": "2026-08-30",
+      "folders": [
+        "TalentLoadoutsEx"
+      ],
+      "notes": "Installato 2026-08-30 con NaowhUI, dalla lista Optional. File CurseForge 8724894, TalentLoadoutsEx-3.14.14.zip, 33.123 byte, 24 file. CARTELLA E CHIAVE SONO AL PLURALE - TalentLoadoutsEx - mentre il titolo e lo slug CurseForge sono al singolare, 'Talent Loadout Ex' e talent-loadout-ex: non e' un refuso da correggere, la chiave segue la cartella come ovunque nel manifest. Toglie il limite ai loadout salvati, tiene anche le selezioni incomplete, salva il talento PvP scelto, fa gruppi ed export. Il primo doppio click carica, il secondo applica. NON salva le barre azione, e lo dice la sua stessa descrizione rimandando a Myslot - che infatti sta anch'esso nella lista Optional di NaowhUI: i due si completano, questo per i talenti e quello per le barre. Si sovrappone in parte a TalentTreeTweaks, che sui loadout aggiunge il mini-albero e la condivisione in chat, ma il limite al numero lo toglie solo questo; e TalentTreeTweaks compare fra i suoi OptionalDeps, quindi convivono per costruzione. ANTEPRIMA assente: la descrizione cfwidget non contiene immagini. Icona: avatar CurseForge 64x64. Nessuna patch locale."
+    },
+    "Myslot": {
+      "name": "Myslot",
+      "desc": "Esporta barre azione, macro e keybind in un testo, da reimportare su un altro PG o account.",
+      "version": "v6.1.0",
+      "interface": "120100, 120007, 110207",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/myslot",
+      "installed": "2026-08-30",
+      "folders": [
+        "Myslot"
+      ],
+      "notes": "Installato 2026-08-30 con NaowhUI, dalla lista Optional. File CurseForge 8705340, Myslot-v6.1.0.zip, 96.264 byte, 38 file. Comando /myslot. Esporta disposizione delle barre, macro e assegnazioni tasti come TESTO copiabile, quindi passa fra personaggi, fra classi diverse e fra account - non e' un profilo dentro i SavedVariables ma una stringa da incollare, che si puo' tenere anche fuori dal gioco. UTILE QUI PIU' CHE ALTROVE: le ancore keybind di questa postazione sono trasversali alle classi (backslash per l'interrupt, X per stun e rallentamenti, Alt+backslash per dispel o taunt, G per la Healthstone, Shift+G per la cura personale, Shift+R per il difensivo) e con 48 PG replicarle a mano e' esattamente il lavoro che questo addon evita. Si incastra con TalentLoadoutsEx, che i talenti li salva ma le barre no e rimanda proprio a Myslot. La cartella porta SEI .toc, uno per flavour (Myslot.toc per il retail piu' Cata, Mists, TBC, Vanilla, Wrath): nel manifest sta la riga di Myslot.toc, cioe' 120100, 120007, 110207 - Midnight, la 12.0.7 e la 11.2.7. Le altre cinque non ci riguardano, come i due .toc Classic di RaiderIO. ANTEPRIMA assente: la descrizione cfwidget non contiene immagini. Icona: avatar CurseForge 64x64. Nessuna patch locale."
+    },
+    "LuckyVault": {
+      "name": "Lucky Vault",
+      "desc": "Nasconde le ricompense del Great Vault dietro riquadri, da scoprire una alla volta con un click.",
+      "version": "v1.1.10",
+      "interface": "120001, 120005, 120007, 120100",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/lucky-vault",
+      "preview": "https://media.forgecdn.net/attachments/description/1498194/description_d4c665ca-6664-40e5-9e2d-52adb5a778b4.png",
+      "installed": "2026-08-30",
+      "folders": [
+        "LuckyVault"
+      ],
+      "notes": "Installato 2026-08-30 con NaowhUI, dalla lista Optional. File CurseForge 8766544, LuckyVault-v1.1.10.zip, 8.053 byte, DUE file in tutto: e' il piu' piccolo addon del manifest. Copre i premi del Great Vault con riquadri numerati e li fa scoprire uno alla volta, con suono facoltativo e bottoni per rivelare o ricoprire tutto. Non cambia nulla di funzionale: e' teatro sulla cassa settimanale. Il .toc dichiara '## Version: 1.1.10' senza la v, che c'e' invece nel nome del file di release (LuckyVault-v1.1.10.zip): qui si tiene la forma del file, come gia' per EllesmereUI - non e' una discrepanza da correggere. PREVIEW scelta fra le due immagini della descrizione: quella da 850x565 mostra il Great Vault con le nove caselle numerate e una sola girata sul premio, cioe' letteralmente quello che fa l'addon. L'altra, 224x45, e' un badge. Il .webp NON e' stato generato: qui Node non c'e', lavoro in sospeso per node-pending.ps1. Icona: avatar CurseForge 64x64. Nessuna patch locale."
     }
   }
 }
