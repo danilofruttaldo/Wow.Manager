@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Deep Breath
+/use [@cursor]Deep Breath

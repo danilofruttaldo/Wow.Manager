@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Sigil of Misery
+/use [@cursor]Sigil of Misery

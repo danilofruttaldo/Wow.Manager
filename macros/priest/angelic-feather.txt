@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@player]Angelic Feather
+/use [@player]Angelic Feather

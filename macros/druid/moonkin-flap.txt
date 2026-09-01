@@ -1,2 +1,2 @@
 #showtooltip
-/cast [noform:4]Moonkin Form;Flap
+/use [noform:4]Moonkin Form;Flap

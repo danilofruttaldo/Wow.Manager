@@ -5,7 +5,7 @@
     "last_sync": "2026-06-20",
     "active_spec": "fury",
     "parked_specs": ["arms", "protection"],
-    "active_spec_notes": "Switch Arms->Fury il 2026-06-05 (Fury +~6% sim ST/AoE leggero, MT loadout flessibile). Le macro Arms-specific (cs-rend, ravager-bladestorm, sweeping-cleave) restano in manifest come kit parcheggiato (account-wide, condivise tra spec): non cancellate, riusabili al reswitch. warrior-cs-rend NON ha equivalente Fury (no Colossus Smash/Rend). Il vecchio warrior-avatar-trinket (Arms) è stato FUSO in warrior-avatar-reck-trinket (spec:null, cross-spec via known:Recklessness/known:Avatar): un solo burst opener per Fury e Arms, file arms/avatar-trinket.txt eliminato. Stessa fusione per Bladestorm: warrior-bladestorm (Fury) assorbito in warrior-ravager-bladestorm (spec:null), file fury/bladestorm.txt eliminato. Obiettivo: keybind allineati Fury+Arms, ruoli cross-spec sugli stessi slot — vedi ui-profiles/keybinds-warrior.md. PROTECTION (occasionale, parked 2026-06-06): una sola macro Prot-specific: warrior-prot-intimidating-howl (known:Intimidating Shout → IntShout, altrimenti Piercing Howl, stesso pattern di shockwave-howl). Kit tank precedente creato e poi eliminato 2026-06-07 su richiesta utente (prot-active-mitigation, prot-defensives, prot-taunt, prot-spell-reflect-ally). Per il resto Prot è coperto dalle cross-spec. Le cross-spec esistenti coprono già Prot via known: charge-intervene, heroic-leap-cursor, shockwave-howl, avatar-reck-trinket (Avatar+trinket, Reck saltato), rend-whirlwind (sempre Thunder Clap, ridondante). CAVEAT: warrior-ravager-bladestorm in Prot funziona SOLO con Ravager talentato (fallback Bladestorm non esiste in Prot). CONFERMATO 2026-06-07: NESSUNA delle due build Prot MT scelte (mplus + raid) talenta Ravager -> in Prot la macro e' INERTE, lo slot AoE-channel resta vuoto. L'AoE Prot e' coperto da Thunder Clap (rend-whirlwind). Vedi keybinds-warrior.md sezione E."
+    "active_spec_notes": "Switch Arms->Fury il 2026-06-05 (Fury +~6% sim ST/AoE leggero, MT loadout flessibile). Le macro Arms-specific (cs-rend, ravager-bladestorm, sweeping-cleave) restano in manifest come kit parcheggiato (account-wide, condivise tra spec): non cancellate, riusabili al reswitch. warrior-cs-rend NON ha equivalente Fury (no Colossus Smash/Rend). Il vecchio warrior-avatar-trinket (Arms) è stato FUSO in warrior-avatar-reck-trinket (spec:null, cross-spec via known:Recklessness/known:Avatar): un solo burst opener per Fury e Arms, file arms/avatar-trinket.txt eliminato. ⚠️ QUELLA FUSIONE NON ESISTE PIU', e il nome è tornato a girare: al 2026-09-01 la macro si chiama di nuovo warrior-avatar-trinket ma è un'ALTRA cosa — spec:fury, Avatar + trinket senza alcun ramo known: e senza Recklessness. Ci si è arrivati dal verso opposto: il repo diceva Recklessness, in gioco su Stantu la macro 'A' castava Avatar, e l'utente ha scelto di tenere il gioco. Quindi non cercare il cross-spec via known: — è stato smontato, non spostato. Stessa fusione per Bladestorm: warrior-bladestorm (Fury) assorbito in warrior-ravager-bladestorm (spec:null), file fury/bladestorm.txt eliminato. Obiettivo: keybind allineati Fury+Arms, ruoli cross-spec sugli stessi slot — vedi ui-profiles/keybinds-warrior.md. PROTECTION (occasionale, parked 2026-06-06): una sola macro Prot-specific: warrior-prot-intimidating-howl (known:Intimidating Shout → IntShout, altrimenti Piercing Howl, stesso pattern di shockwave-howl). Kit tank precedente creato e poi eliminato 2026-06-07 su richiesta utente (prot-active-mitigation, prot-defensives, prot-taunt, prot-spell-reflect-ally). Per il resto Prot è coperto dalle cross-spec. Le cross-spec esistenti coprono già Prot via known: charge-intervene, heroic-leap-cursor, shockwave-howl, avatar-trinket (Avatar+trinket; dal 2026-09-01 non c'è più il ramo Recklessness), rend-whirlwind (sempre Thunder Clap, ridondante). CAVEAT: warrior-ravager-bladestorm in Prot funziona SOLO con Ravager talentato (fallback Bladestorm non esiste in Prot). CONFERMATO 2026-06-07: NESSUNA delle due build Prot MT scelte (mplus + raid) talenta Ravager -> in Prot la macro e' INERTE, lo slot AoE-channel resta vuoto. L'AoE Prot e' coperto da Thunder Clap (rend-whirlwind). Vedi keybinds-warrior.md sezione E."
   },
   "macros": {
     "warrior-heroic-leap-cursor": {
@@ -19,11 +19,11 @@
       "icon": null,
       "body_file": "warrior/heroic-leap-cursor.txt",
       "body": null,
-      "notes": "Salta sulla posizione del mouse. `!` previene il reset dell'indicator se ripremi prima del cast (spam-safe). Standard QoL warrior."
+      "notes": "Salta sulla posizione del mouse. `!` previene il reset dell'indicator se ripremi prima del cast (spam-safe). Standard QoL warrior. NOME IN GIOCO: 'HL' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warrior-charge-intervene": {
       "name": "Charge / Intervene",
-      "desc": "Gap-closer: Intervene su un alleato, Shield Charge in Prot col modifier, altrimenti Charge.",
+      "desc": "Gap-closer: Intervene su un alleato, altrimenti Charge.",
       "scope": "account",
       "class": "warrior",
       "spec": null,
@@ -32,7 +32,7 @@
       "icon": null,
       "body_file": "warrior/charge-intervene.txt",
       "body": null,
-      "notes": "Cross-spec gap-closer: friendly target → Intervene, modifier+Prot → Shield Charge, fallback → Charge. Usa known: per safety cross-spec."
+      "notes": "Cross-spec gap-closer: friendly target -> Intervene, fallback -> Charge. Usa known: per safety cross-spec. IL RAMO SHIELD CHARGE E' STATO TOLTO IL 2026-09-01 su decisione dell'utente: in gioco il corpo non l'aveva mai avuto (la macro su Stantu si chiamava I||C||SC ma castava solo Intervene;Charge), quindi il repo prometteva piu' del reale e si e' allineato al reale. NOME IN GIOCO: 'I||C' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warrior-ravager-bladestorm": {
       "name": "Ravager / Bladestorm",
@@ -45,7 +45,7 @@
       "icon": null,
       "body_file": "warrior/arms/ravager-bladestorm.txt",
       "body": null,
-      "notes": "ARMS ONLY (riclassificata 2026-06-08). Ruolo 'AoE channel' di Arms, auto-adattiva via known:Ravager: Ravager talentato (Arms M+) → ground-target su cursor; altrimenti (Arms raid) → Bladestorm sul posto (@cursor innocuo, BS self-centered). In FURY questa macro NON si usa: lì Bladestorm e Avatar sono lo stesso nodo di scelta (raid Slayer = Bladestorm, M+ MT = Avatar) e si mettono raw sulla barra per-loadout (nessuna macro: in raid Slayer ST Bladestorm quasi non si usa). Premere al GCD successivo all'opener."
+      "notes": "ARMS ONLY (riclassificata 2026-06-08). Ruolo 'AoE channel' di Arms, auto-adattiva via known:Ravager: Ravager talentato (Arms M+) → ground-target su cursor; altrimenti (Arms raid) → Bladestorm sul posto (@cursor innocuo, BS self-centered). In FURY questa macro NON si usa: lì Bladestorm e Avatar sono lo stesso nodo di scelta (raid Slayer = Bladestorm, M+ MT = Avatar) e si mettono raw sulla barra per-loadout (nessuna macro: in raid Slayer ST Bladestorm quasi non si usa). Premere al GCD successivo all'opener. NOME IN GIOCO: 'R||BS' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warrior-shockwave-howl": {
       "name": "Shockwave / Piercing Howl",
@@ -58,7 +58,7 @@
       "icon": null,
       "body_file": "warrior/shockwave-howl.txt",
       "body": null,
-      "notes": "AoE CC auto-adattiva su talent loadout: Shockwave talentato → stun cono frontale istantaneo nella direzione in cui sei girato (NON ground-target: Shockwave usa il facing, non il cursore — niente @cursor); altrimenti → Piercing Howl slow centrato su player. Stesso pattern `known:` di Ravager/Bladestorm — un bind solo per il control AoE."
+      "notes": "AoE CC auto-adattiva su talent loadout: Shockwave talentato → stun cono frontale istantaneo nella direzione in cui sei girato (NON ground-target: Shockwave usa il facing, non il cursore — niente @cursor); altrimenti → Piercing Howl slow centrato su player. Stesso pattern `known:` di Ravager/Bladestorm — un bind solo per il control AoE. NOME IN GIOCO: 'SW||PH' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warrior-sweeping-cleave": {
       "name": "Sweeping Strikes + Cleave / Whirlwind",
@@ -71,7 +71,7 @@
       "icon": null,
       "body_file": "warrior/arms/sweeping-cleave.txt",
       "body": null,
-      "notes": "Castsequence auto-adattiva su talent loadout via known:Cleave. Cleave talentato (build M+) → seq 'Sweeping Strikes + 8x Cleave'; altrimenti (build raid) → seq 'Sweeping Strikes + 8x Whirlwind'. La castsequence avanza oltre lo step SS dopo un cast, quindi SS non monopolizza i press (problema della vecchia versione a due /cast: SS è on-GCD + cariche → castava solo SS, mai il filler). SS castabile quasi sempre (cariche) → quando la seq wrappa sullo step SS trova una carica e avanza, niente stuck in nessuna build. reset=29 = reset dopo 29s idle. 8 filler/lato è il max nei 255 char (245). Conteggi indipendenti per lato: si possono ritoccare (meno Cleave = SS più frequente in M+; più Whirlwind = meno spreco SS in raid)."
+      "notes": "Castsequence auto-adattiva su talent loadout via known:Cleave. Cleave talentato (build M+) → seq 'Sweeping Strikes + 8x Cleave'; altrimenti (build raid) → seq 'Sweeping Strikes + 8x Whirlwind'. La castsequence avanza oltre lo step SS dopo un cast, quindi SS non monopolizza i press (problema della vecchia versione a due /cast: SS è on-GCD + cariche → castava solo SS, mai il filler). SS castabile quasi sempre (cariche) → quando la seq wrappa sullo step SS trova una carica e avanza, niente stuck in nessuna build. reset=29 = reset dopo 29s idle. 8 filler/lato è il max nei 255 char (245). Conteggi indipendenti per lato: si possono ritoccare (meno Cleave = SS più frequente in M+; più Whirlwind = meno spreco SS in raid). NOME IN GIOCO: 'SS||C||WW' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warrior-cs-rend": {
       "name": "Colossus Smash + Rend",
@@ -84,20 +84,7 @@
       "icon": "Colossus Smash",
       "body_file": "warrior/arms/cs-rend.txt",
       "body": null,
-      "notes": "Castsequence stile SS+Cleave, cadenzata dal CD di Rend (6s): Colossus Smash poi 7x Rend a coprire i 45s di CD di CS (7 Rend × 6s ≈ 42s ≈ CD CS). Come sweeping-cleave è cadenzata dal CD di Cleave: ogni step Rend avanza solo quando Rend è off-CD, quindi NON si spamma/clippa, lo paga il suo CD. known:Rend via due sequenze: Rend talentato → 'CS + 7 Rend'; build no-Rend → fallback 'Colossus Smash' (solo CS). reset=44 → dopo 44s di idle (no-press) la sequenza riparte da CS, allineato al CD di CS (45s) così dopo una pausa riprende fresco da Colossus Smash. 7 step = ~7 Rend tra un CS e l'altro (45÷6≈7.5); per ridurre la finestra 'stuck su CS' al wrap si può salire a 8."
-    },
-    "warrior-reck-trinket": {
-      "name": "Recklessness + Trinket",
-      "desc": "Burst: Recklessness + trinket 13/14 in un press.",
-      "scope": "account",
-      "class": "warrior",
-      "spec": "fury",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "warrior/fury/reck-trinket.txt",
-      "body": null,
-      "notes": "Burst Fury off-GCD: Recklessness + trinket 13/14 in un press (tutto off-GCD, Reck GCD 0). spec=fury perché Recklessness è solo-Fury (riclassificata 2026-06-08: prima era null/shared, ma l'identità è il burst Fury). Avatar (M+) e Bladestorm (raid) sono il nodo di scelta Fury, si usano raw sulla barra per-loadout (niente macro dedicata). #showtooltip nudo mostra Recklessness. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. NB: i trinket /use partirebbero anche su Arms/Prot, ma lì Reck non c'è e la macro non è pensata per quelle spec."
+      "notes": "Castsequence stile SS+Cleave, cadenzata dal CD di Rend (6s): Colossus Smash poi 7x Rend a coprire i 45s di CD di CS (7 Rend × 6s ≈ 42s ≈ CD CS). Come sweeping-cleave è cadenzata dal CD di Cleave: ogni step Rend avanza solo quando Rend è off-CD, quindi NON si spamma/clippa, lo paga il suo CD. known:Rend via due sequenze: Rend talentato → 'CS + 7 Rend'; build no-Rend → fallback 'Colossus Smash' (solo CS). reset=44 → dopo 44s di idle (no-press) la sequenza riparte da CS, allineato al CD di CS (45s) così dopo una pausa riprende fresco da Colossus Smash. 7 step = ~7 Rend tra un CS e l'altro (45÷6≈7.5); per ridurre la finestra 'stuck su CS' al wrap si può salire a 8. NOME IN GIOCO: 'CS||R' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warrior-rend-whirlwind": {
       "name": "Rend + Whirlwind / Thunder Clap",
@@ -110,7 +97,7 @@
       "icon": null,
       "body_file": "warrior/fury/rend-whirlwind.txt",
       "body": null,
-      "notes": "Cleave applier FURY (rinominata 2026-06-08 da whirlwind-cleave: quel nome è da Arms perché 'Cleave' è un'abilità Arms; questa è Rend+Whirlwind → rend-whirlwind). Auto-adattiva su build via known:Thunder Clap (un solo bind, B1/Q). M+ (Mountain Thane, ha Thunder Clap) → known:Thunder Clap → Thunder Clap singolo (alimenta il loop Thunder Blast). RAID (Slayer, niente Thunder Clap) → noknown:Thunder Clap → castsequence 'Rend, Whirlwind x4' (rapporto 1 Rend : 4 Whirlwind, reset=5s idle: Rend rientra ogni 5 press, no clip del DoT). Rami mutuamente esclusivi (TC vs noTC) → niente doppio-cast. Discriminatore = known:Thunder Clap (scelta utente 2026-06-08): VALIDO perché confermato che Fury raid = Slayer (NO Thunder Clap) e Fury M+ = Mountain Thane (Thunder Clap). Se in futuro il raid passasse a Mountain Thane entrambi i build avrebbero Thunder Clap → spostare il discriminatore su known:Rend (Rend resta solo-raid). ATTENZIONE typo: ogni step deve essere esattamente 'Whirlwind' (un nome errato inchioda la sequence su quello step). reset=5 può ripartire da Rend dopo pause >5s in combat (movimento) — alzare se dà fastidio. NOTA Prot: Protection ha Thunder Clap baseline → known:Thunder Clap → casta sempre Thunder Clap (ok, ridondante con la rotazione)."
+      "notes": "Cleave applier FURY (rinominata 2026-06-08 da whirlwind-cleave: quel nome è da Arms perché 'Cleave' è un'abilità Arms; questa è Rend+Whirlwind → rend-whirlwind). Auto-adattiva su build via known:Thunder Clap (un solo bind, B1/Q). M+ (Mountain Thane, ha Thunder Clap) → known:Thunder Clap → Thunder Clap singolo (alimenta il loop Thunder Blast). RAID (Slayer, niente Thunder Clap) → noknown:Thunder Clap → castsequence 'Rend, Whirlwind x4' (rapporto 1 Rend : 4 Whirlwind, reset=5s idle: Rend rientra ogni 5 press, no clip del DoT). Rami mutuamente esclusivi (TC vs noTC) → niente doppio-cast. Discriminatore = known:Thunder Clap (scelta utente 2026-06-08): VALIDO perché confermato che Fury raid = Slayer (NO Thunder Clap) e Fury M+ = Mountain Thane (Thunder Clap). Se in futuro il raid passasse a Mountain Thane entrambi i build avrebbero Thunder Clap → spostare il discriminatore su known:Rend (Rend resta solo-raid). ATTENZIONE typo: ogni step deve essere esattamente 'Whirlwind' (un nome errato inchioda la sequence su quello step). reset=5 può ripartire da Rend dopo pause >5s in combat (movimento) — alzare se dà fastidio. NOTA Prot: Protection ha Thunder Clap baseline → known:Thunder Clap → casta sempre Thunder Clap (ok, ridondante con la rotazione). NOME IN GIOCO: 'R||WW||TC' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warrior-prot-intimidating-howl": {
       "name": "Intimidating Shout / Piercing Howl",
@@ -123,7 +110,7 @@
       "icon": null,
       "body_file": "warrior/protection/intimidating-howl.txt",
       "body": null,
-      "notes": "AoE control auto-adattivo via known:Intimidating Shout, stesso pattern di warrior-shockwave-howl: Intimidating Shout talentato → fear AoE 8s (hard CC, si rompe a danno sui target secondari); altrimenti → Piercing Howl (slow AoE). Nessun modifier. #showtooltip dinamico mostra l'icona giusta in base al loadout. NB: Piercing Howl compare anche come fallback in warrior-shockwave-howl — slot/ruoli diversi, nessun conflitto. Raggruppata nel kit Prot ma le ability sono cross-spec."
+      "notes": "AoE control auto-adattivo via known:Intimidating Shout, stesso pattern di warrior-shockwave-howl: Intimidating Shout talentato → fear AoE 8s (hard CC, si rompe a danno sui target secondari); altrimenti → Piercing Howl (slow AoE). Nessun modifier. #showtooltip dinamico mostra l'icona giusta in base al loadout. NB: Piercing Howl compare anche come fallback in warrior-shockwave-howl — slot/ruoli diversi, nessun conflitto. Raggruppata nel kit Prot ma le ability sono cross-spec. NOME IN GIOCO: 'IS||PH' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "mage-decurse-spellsteal": {
       "name": "Remove Curse / Spellsteal",
@@ -136,7 +123,7 @@
       "icon": null,
       "body_file": "mage/decurse-spellsteal.txt",
       "body": null,
-      "notes": "Mage-wide, spec:null, auto-adattiva via known:Spellsteal (stesso pattern delle macro warrior known:). Cascata: 1) mouseover amichevole vivo → Remove Curse (decurse alleato senza cambiare target); 2) Spellsteal talentato → Spellsteal sul target nemico (ruba buff); 3) build raid (Spellsteal NON talentato) → Remove Curse su @player. Discriminatore = known:Spellsteal perché in spec raid Spellsteal non viene preso (conferma utente 2026-06-09): in raid la macro è puro decurse, niente errore 'spell sconosciuta'. nodead evita il decurse su alleato morto. #showtooltip nudo dinamico: mostra Remove Curse in raid, Spellsteal con target nemico nelle altre build."
+      "notes": "Mage-wide, spec:null, auto-adattiva via known:Spellsteal (stesso pattern delle macro warrior known:). Cascata: 1) mouseover amichevole vivo → Remove Curse (decurse alleato senza cambiare target); 2) Spellsteal talentato → Spellsteal sul target nemico (ruba buff); 3) build raid (Spellsteal NON talentato) → Remove Curse su @player. Discriminatore = known:Spellsteal perché in spec raid Spellsteal non viene preso (conferma utente 2026-06-09): in raid la macro è puro decurse, niente errore 'spell sconosciuta'. nodead evita il decurse su alleato morto. #showtooltip nudo dinamico: mostra Remove Curse in raid, Spellsteal con target nemico nelle altre build. NOME IN GIOCO: 'RC||S' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "paladin-cleanse-taunt": {
       "name": "Cleanse Toxins / Hand of Reckoning",
@@ -487,7 +474,7 @@
       "icon": null,
       "body_file": "hunter/survival/aspect-eagle-blood-fury.txt",
       "body": null,
-      "notes": "Richiesta utente 2026-07-25 ('nuova macro hunter survival + razziale orco (condizionale)'), body fornito con /use e con Blood Fury nudo. PRIMA macro Survival del repertorio (hunter/survival/ era vuota). DUE NORMALIZZAZIONI sul body fornito: (1) /use → /cast sulle righe di spell — in gioco sono sinonimi, ma nel repertorio /use resta riservato agli slot equipaggiamento (/use 13, /use 14 dei trinket) e tutte le altre 79 righe di spell usano /cast; (2) il razziale è guardato da [known:Blood Fury], che è il 'condizionale' chiesto — stesso pattern di warlock-darkglare-blood-fury e shaman-ascendance-ancestral-call. Serve perché le macro qui si tracciano per classe/spec e mai per personaggio: dei quattro hunter (Orconauta orco, Arconauta troll, Rockbiter earthen, Shottini mechagnome) solo Orconauta ha Blood Fury, e senza il known: sugli altri tre la riga darebbe 'spell sconosciuta'; con il known: è semplicemente inerte e il resto della macro parte lo stesso. Blood Fury è OFF-GCD → non ruba il GCD ad Aspect of the Eagle, partono nello stesso press. #showtooltip nudo: risolve sul primo /cast → mostra icona e cooldown di Aspect of the Eagle (regola del repertorio: showtooltip nudo quando nominerebbe la stessa spell della prima riga). CAVEAT CD DISALLINEATI: Blood Fury è 2 min / 15s (Wowhead 12.0.7), Aspect of the Eagle dura 15s ma ha un CD più corto — Icy Veins 12.0.7 dice 1 min, la scheda spell di Wowhead 1.5 min (le fonti non concordano, probabilmente per riduzioni da talento): in ogni caso l'Aspect torna prima del razziale, quindi premendo a CD il razziale si accompagna solo a un Aspect su due. Nessuno spreco (ogni /cast parte solo se disponibile), ma non è un burst allineato. NB SCELTA DI PAIRING: Aspect of the Eagle non è il CD di danno di Survival — è la finestra che porta le abilità melee a 40y; nella 12.0.7 sia Icy Veins sia method.gg indicano TAKEDOWN come cooldown primario della spec. Se un giorno si vuole il razziale sul burst vero, la riga [known:Blood Fury] va spostata su una macro di Takedown; qui resta com'è perché è quello che l'utente ha chiesto. NON aggiunti /use 13 e /use 14: le altre macro razziale+CD del repertorio (warlock, shaman, warrior, rogue, DK) li hanno, ma l'utente ha fornito un body a tre righe senza trinket e aggiungerli cambierebbe il comportamento del bottone. CAVEAT: se Aspect of the Eagle non fosse disponibile nel loadout corrente la riga è inerte e resta solo il razziale."
+      "notes": "Richiesta utente 2026-07-25 ('nuova macro hunter survival + razziale orco (condizionale)'), body fornito con /use e con Blood Fury nudo. PRIMA macro Survival del repertorio (hunter/survival/ era vuota). DUE NORMALIZZAZIONI sul body fornito: (1) /use → /cast sulle righe di spell — in gioco sono sinonimi, ma nel repertorio /use resta riservato agli slot equipaggiamento (/use 13, /use 14 dei trinket) e tutte le altre 79 righe di spell usano /cast; (2) il razziale è guardato da [known:Blood Fury], che è il 'condizionale' chiesto — stesso pattern di warlock-darkglare-blood-fury e shaman-ascendance-ancestral-call. Serve perché le macro qui si tracciano per classe/spec e mai per personaggio: dei quattro hunter (Orconauta orco, Arconauta troll, Rockbiter earthen, Shottini mechagnome) solo Orconauta ha Blood Fury, e senza il known: sugli altri tre la riga darebbe 'spell sconosciuta'; con il known: è semplicemente inerte e il resto della macro parte lo stesso. Blood Fury è OFF-GCD → non ruba il GCD ad Aspect of the Eagle, partono nello stesso press. #showtooltip nudo: risolve sul primo /cast → mostra icona e cooldown di Aspect of the Eagle (regola del repertorio: showtooltip nudo quando nominerebbe la stessa spell della prima riga). CAVEAT CD DISALLINEATI: Blood Fury è 2 min / 15s (Wowhead 12.0.7), Aspect of the Eagle dura 15s ma ha un CD più corto — Icy Veins 12.0.7 dice 1 min, la scheda spell di Wowhead 1.5 min (le fonti non concordano, probabilmente per riduzioni da talento): in ogni caso l'Aspect torna prima del razziale, quindi premendo a CD il razziale si accompagna solo a un Aspect su due. Nessuno spreco (ogni /cast parte solo se disponibile), ma non è un burst allineato. NB SCELTA DI PAIRING: Aspect of the Eagle non è il CD di danno di Survival — è la finestra che porta le abilità melee a 40y; nella 12.0.7 sia Icy Veins sia method.gg indicano TAKEDOWN come cooldown primario della spec. Se un giorno si vuole il razziale sul burst vero, la riga [known:Blood Fury] va spostata su una macro di Takedown; qui resta com'è perché è quello che l'utente ha chiesto. NON aggiunti /use 13 e /use 14: le altre macro razziale+CD del repertorio (warlock, shaman, warrior, rogue, DK) li hanno, ma l'utente ha fornito un body a tre righe senza trinket e aggiungerli cambierebbe il comportamento del bottone. CAVEAT: se Aspect of the Eagle non fosse disponibile nel loadout corrente la riga è inerte e resta solo il razziale. ⚠️ IL PUNTO (1) E' SUPERATO: il 2026-09-01 il repertorio e' passato tutto a /use, quindi la normalizzazione descritta qui va letta al contrario. Il body originale dell'utente, con /use, era gia' nella forma di oggi."
     },
     "demon-hunter-sigil-of-misery": {
       "name": "Sigil of Misery",
@@ -604,7 +591,20 @@
       "icon": null,
       "body_file": "mage/fire/meteor.txt",
       "body": null,
-      "notes": "Creata 2026-07-16 su richiesta utente ('nuova macro mage fire'), corpo fornito dall'utente e tenuto verbatim. Piazza Meteor sulla posizione del mouse (@cursor): ground-target esplicito -> niente reticolo verde di targeting, va diretto al cursore (stesso schema di death-knight-death-and-decay e demon-hunter-devourer-shift). Meteor NON e' baseline: e' un talento dell'albero Fire -> spec:fire, non spec:null; se non talentato la macro e' inerte. #showtooltip nudo mostra Meteor (unica cast della macro). Nota PG: l'unico mago Fire a manifest e' Repository (Blood Elf, Nemesis), ancora sotto il cap."
+      "notes": "Creata 2026-07-16 su richiesta utente ('nuova macro mage fire'), corpo fornito dall'utente e tenuto verbatim. Piazza Meteor sulla posizione del mouse (@cursor): ground-target esplicito -> niente reticolo verde di targeting, va diretto al cursore (stesso schema di death-knight-death-and-decay e demon-hunter-devourer-shift). Meteor NON e' baseline: e' un talento dell'albero Fire -> spec:fire, non spec:null; se non talentato la macro e' inerte. #showtooltip nudo mostra Meteor (unica cast della macro). Nota PG: l'unico mago Fire a manifest e' Repository (Blood Elf, Nemesis), ancora sotto il cap. NOME IN GIOCO: 'M' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "mage-arcane-surge-racial": {
+      "name": "Arcane Surge + razziale",
+      "desc": "Burst Arcane: razziale off-GCD se c'e', poi Arcane Surge.",
+      "scope": "account",
+      "class": "mage",
+      "spec": "arcane",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "mage/arcane/arcane-surge-racial.txt",
+      "body": null,
+      "notes": "Aggiunta al manifest il 2026-09-01: esisteva SOLO IN GIOCO (su Snowwipe, in forma '/use Berserking' nuda) e il repo non la conosceva. Il condizionale [known:Berserking] e' stato aggiunto per renderla portabile: cosi' su un mago non troll la riga e' un buco innocuo e parte solo Arcane Surge, e il profilo di classe resta UNO per tutti e cinque i mage invece di uno per razza. SOLO BERSERKING, ed e' una decisione dell'utente: e' l'unico razziale off-GCD dei tre in gioco qui: Arcane Torrent (Blood Elf, Repository) e Arcane Pulse (Nightborne, Spelling) si mangerebbero il global e l'Arcane Surge non partirebbe. #showtooltip nomina Arcane Surge perche' la prima riga e' il razziale, spell diversa: non e' ridondante. NOME IN GIOCO: 'AS' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warlock-rain-of-fire": {
       "name": "Rain of Fire",
@@ -656,7 +656,7 @@
       "icon": null,
       "body_file": "warlock/destruction/cataclysm.txt",
       "body": null,
-      "notes": "Creata 2026-07-20 su richiesta utente ('nuova macro warlock destruction'), corpo fornito verbatim dall'utente. Ground-target esplicito (@cursor): niente reticolo verde, l'area va diretta al cursore (stesso schema di warlock-rain-of-fire, warlock-summon-infernal, warlock-shadowfury, mage-meteor). Cataclysm e' talento di Destruction (applica Immolate a tutti i bersagli colpiti) -> spec:destruction, non spec:null. #showtooltip nudo: la macro ha una sola cast, nominarla sarebbe ridondante. CORPO: l'utente l'aveva scritto con /use, ma subito dopo (2026-07-20) ha chiesto di uniformare TUTTO il repertorio su /cast -> convertite 24 voci con `^/use ` seguito da non-cifra. ⚠️ ECCEZIONE DA NON TOCCARE: le righe `/use 13` / `/use 14` (trinket slot sup/inf, in warrior-reck-trinket, dk-pillar-erw-trinket, shaman-ascendance-ancestral-call, warlock-darkglare-blood-fury) restano /use: sulle SPELL i due comandi sono alias esatti, ma /cast NON accetta i numeri di slot e quelle righe diventerebbero inerti."
+      "notes": "Creata 2026-07-20 su richiesta utente ('nuova macro warlock destruction'), corpo fornito verbatim dall'utente. Ground-target esplicito (@cursor): niente reticolo verde, l'area va diretta al cursore (stesso schema di warlock-rain-of-fire, warlock-summon-infernal, warlock-shadowfury, mage-meteor). Cataclysm e' talento di Destruction (applica Immolate a tutti i bersagli colpiti) -> spec:destruction, non spec:null. #showtooltip nudo: la macro ha una sola cast, nominarla sarebbe ridondante. CORPO: l'utente l'aveva scritto con /use, ma subito dopo (2026-07-20) ha chiesto di uniformare TUTTO il repertorio su /cast -> convertite 24 voci con `^/use ` seguito da non-cifra. ⚠️ ECCEZIONE DA NON TOCCARE: le righe `/use 13` / `/use 14` (trinket slot sup/inf, in warrior-reck-trinket, dk-pillar-erw-trinket, shaman-ascendance-ancestral-call, warlock-darkglare-blood-fury) restano /use: sulle SPELL i due comandi sono alias esatti, ma /cast NON accetta i numeri di slot e quelle righe diventerebbero inerti. ⚠️ RIBALTATO IL 2026-09-01: l'utente ha chiesto l'opposto, /use ovunque -> convertite 82 righe di spell in 70 file con la regex /cast(?!sequence). LA CONVENZIONE VIVA E' /use, questa nota resta solo come storia. Il motivo per cui i due comandi sono intercambiabili sulle spell non cambia, e non cambia nemmeno l'eccezione: /use 13 e /use 14 restano tali (non erano toccate, erano gia' /use). ⚠️ E /castsequence NON si converte: /usesequence non esiste e le tre macro che lo usano (warrior sweeping-cleave, cs-rend, rend-whirlwind) morirebbero."
     },
     "rogue-tricks-shiv": {
       "name": "Tricks / Shiv",
@@ -943,6 +943,19 @@
       "body_file": "evoker/landslide.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-07-27 (prime due macro Evoker). Root ad area sul percorso verso il cursore: warcraft.wiki.gg descrive verbatim 'Conjure a path of shifting stone towards the target location, rooting enemies for 15 sec. Damage may cancel the effect.' Ground-target confermato anche dai dati spell su Wowhead (range 10-40 yd 'Donut 10-40', raggio 6 yd, 'Always Show Ground Texture', CD 1.5 min, istantanea) -> @cursor esplicito, niente prompt di targeting verde. CLASSIFICAZIONE spec:null — talento di CLASSE (wiki: 'Class talent, Row 1' dell'albero evoker), quindi aperto a tutte e tre le spec. CAVEAT: la wiki lo da' 'Automatically learned for Devastation and Augmentation evokers', in Preservation va speso il punto -> se non e' nel loadout la macro e' inerte (stesso caveat dei sigilli DH). Ruolo = control AoE (ancora keybind X, stun/slow) — nessun keybinds-evoker.md ancora, quando nasce va allineato. #showtooltip nudo mostra Landslide."
+    },
+    "warrior-avatar-trinket": {
+      "name": "Avatar + Trinket",
+      "desc": "Burst: Avatar + trinket 13/14 in un press.",
+      "scope": "account",
+      "class": "warrior",
+      "spec": "fury",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warrior/fury/avatar-trinket.txt",
+      "body": null,
+      "notes": "Burst Fury: Avatar + trinket 13/14 in un press. ERA RECKLESSNESS FINO AL 2026-09-01: il repo diceva Recklessness ma in gioco su Stantu la macro 'A' castava Avatar, e all'utente e' stato chiesto quale delle due vincesse - ha scelto Avatar, quindi il repo si e' allineato al gioco. spec RESTA fury: le notes precedenti documentavano Avatar come nodo di scelta Fury (in alternativa a Bladestorm), quindi non e' una macro cross-spec anche se il profilo di classe la distribuisce a tutti i warrior - su Arms e Prot i due /use 13-14 partono comunque e /use Avatar resta inerte. #showtooltip nomina Avatar perche' la prima riga e' un trinket, non la spell: non e' il caso dello showtooltip ridondante. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. NOME IN GIOCO: 'A' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     }
   }
 }

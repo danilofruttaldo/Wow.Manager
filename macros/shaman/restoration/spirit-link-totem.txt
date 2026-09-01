@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Spirit Link Totem
+/use [@cursor]Spirit Link Totem

@@ -1,2 +1,2 @@
 #showtooltip
-/cast [mod]Reawaken;Resuscitate
+/use [mod]Reawaken;Resuscitate

@@ -1,2 +1,2 @@
 #showtooltip
-/cast [combat]Intercession;[nocombat,mod,known:Absolution]Absolution;Redemption
+/use [combat]Intercession;[nocombat,mod,known:Absolution]Absolution;Redemption

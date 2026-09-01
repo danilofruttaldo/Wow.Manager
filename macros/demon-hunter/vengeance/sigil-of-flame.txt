@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Sigil of Flame
+/use [@cursor]Sigil of Flame

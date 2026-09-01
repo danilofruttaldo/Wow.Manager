@@ -1,2 +1,2 @@
 #showtooltip
-/cast [group] Create Soulwell; Create Healthstone
+/use [group] Create Soulwell; Create Healthstone

@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor] Anti-Magic Zone
+/use [@cursor] Anti-Magic Zone

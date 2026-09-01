@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]!Heroic Leap
+/use [@cursor]!Heroic Leap

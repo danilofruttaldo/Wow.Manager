@@ -1,2 +1,2 @@
 #showtooltip
-/cast [mod] Travel Form; Wild Charge
+/use [mod] Travel Form; Wild Charge

@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Summon Infernal
+/use [@cursor]Summon Infernal

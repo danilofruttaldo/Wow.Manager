@@ -1,2 +1,2 @@
 #showtooltip
-/cast [help,exists,nodead,known:Intervene]Intervene;[mod,known:Shield Charge]Shield Charge;Charge
+/use [help,exists,nodead,known:Intervene]Intervene;Charge

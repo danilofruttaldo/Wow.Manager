@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Infernal Strike
+/use [@cursor]Infernal Strike

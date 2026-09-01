@@ -1,2 +1,2 @@
 #showtooltip
-/cast [nocombat]Prowl;!Cat Form
+/use [nocombat]Prowl;!Cat Form

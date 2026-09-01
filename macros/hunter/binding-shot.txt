@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Binding Shot
+/use [@cursor]Binding Shot

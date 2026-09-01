@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Rain of Fire
+/use [@cursor]Rain of Fire

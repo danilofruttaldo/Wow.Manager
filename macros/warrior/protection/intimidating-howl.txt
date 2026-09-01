@@ -1,2 +1,2 @@
 #showtooltip
-/cast [known:Intimidating Shout]Intimidating Shout;Piercing Howl
+/use [known:Intimidating Shout]Intimidating Shout;Piercing Howl

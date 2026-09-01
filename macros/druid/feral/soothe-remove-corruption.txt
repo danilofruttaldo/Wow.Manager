@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@mouseover,nodead,help]Remove Corruption;[known:Soothe]Soothe;[@player]Remove Corruption
+/use [@mouseover,nodead,help]Remove Corruption;[known:Soothe]Soothe;[@player]Remove Corruption

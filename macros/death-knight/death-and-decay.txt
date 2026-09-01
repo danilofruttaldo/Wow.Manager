@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor] Death and Decay
+/use [@cursor] Death and Decay

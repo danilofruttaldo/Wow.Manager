@@ -1,2 +1,2 @@
 #showtooltip
-/cast [known:Shockwave]Shockwave;Piercing Howl
+/use [known:Shockwave]Shockwave;Piercing Howl

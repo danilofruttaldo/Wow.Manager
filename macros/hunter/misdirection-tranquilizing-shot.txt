@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@mouseover,help,nodead]Misdirection;Tranquilizing Shot
+/use [@mouseover,help,nodead]Misdirection;Tranquilizing Shot

@@ -1,0 +1,3 @@
+#showtooltip Arcane Surge
+/use [known:Berserking]Berserking
+/use Arcane Surge

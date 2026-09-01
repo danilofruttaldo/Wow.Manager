@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@mouseover,help,nodead] Tricks of the Trade; Shiv
+/use [@mouseover,help,nodead] Tricks of the Trade; Shiv

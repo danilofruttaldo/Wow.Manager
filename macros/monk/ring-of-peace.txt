@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Ring of Peace
+/use [@cursor]Ring of Peace

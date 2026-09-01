@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Ursol's Vortex
+/use [@cursor]Ursol's Vortex

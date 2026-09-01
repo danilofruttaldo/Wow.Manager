@@ -1,3 +1,3 @@
 #showtooltip
 /castsequence [noknown:Thunder Clap]reset=5 Rend, Whirlwind, Whirlwind, Whirlwind, Whirlwind
-/cast [known:Thunder Clap]Thunder Clap
+/use [known:Thunder Clap]Thunder Clap

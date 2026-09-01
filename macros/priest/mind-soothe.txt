@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Mind Soothe
+/use [@cursor]Mind Soothe

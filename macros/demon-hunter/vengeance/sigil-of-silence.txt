@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Sigil of Silence
+/use [@cursor]Sigil of Silence

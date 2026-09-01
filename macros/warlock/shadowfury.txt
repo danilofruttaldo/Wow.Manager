@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Shadowfury
+/use [@cursor]Shadowfury

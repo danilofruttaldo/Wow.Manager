@@ -1,2 +1,2 @@
 #showtooltip
-/cast [mod]Mass Resurrection;[@mouseover]Resurrection
+/use [mod]Mass Resurrection;[@mouseover]Resurrection

@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@cursor]Demonic Gateway
+/use [@cursor]Demonic Gateway

@@ -1,4 +1,4 @@
 #showtooltip
-/cast [known:Deathmark] Deathmark
+/use [known:Deathmark] Deathmark
 /use 13
 /use 14

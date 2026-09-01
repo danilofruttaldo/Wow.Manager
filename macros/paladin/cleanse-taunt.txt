@@ -1,2 +1,2 @@
 #showtooltip
-/cast [@mouseover,help,nodead]Cleanse Toxins;Hand of Reckoning
+/use [@mouseover,help,nodead]Cleanse Toxins;Hand of Reckoning

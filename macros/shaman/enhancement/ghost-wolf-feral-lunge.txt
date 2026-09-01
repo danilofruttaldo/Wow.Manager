@@ -1,2 +1,2 @@
 #showtooltip
-/cast [mod,known:Feral Lunge] Feral Lunge; Ghost Wolf
+/use [mod,known:Feral Lunge] Feral Lunge; Ghost Wolf
