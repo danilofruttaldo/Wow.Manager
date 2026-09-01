@@ -4,7 +4,10 @@
 export const CHAR_SPEC: Record<string, string> = {
   stantu: '*', // wildcard NUDA: gioca tutte le spec Warrior, nessuna preferita -> sola icona wildcard
   furricane: 'brewmaster', // fallback; vedi CHAR_SPEC_BY_RACE per la disambiguazione
-  snowwipe: 'frost',
+  snowwipe: 'arcane',      // era 'frost' fino al 2026-09-01: cambio confermato dall'utente.
+                           // ⚠️ Con questo i mage restano arcane x3 (con spelling e spellstill),
+                           // fire x2 (repository, blinkette) e FROST ZERO: la casella mage-frost
+                           // e' tornata muta, se serve coprirla va spostato un altro mago.
   mustaina: 'feral',
   blessismore: 'protection',
   totemtanz: 'elemental',

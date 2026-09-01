@@ -93,7 +93,7 @@ Fuori dalle due barre principali, sui tasti F:
 | Furricane | Death Knight | Frost | `keybinds-deathknight.md` | M+ + raid |
 | Totemtanz | Shaman | Elemental | `keybinds-shaman.md` | M+ + raid |
 | Mustaina | Druid | Feral | `keybinds-druid.md` | M+ + raid |
-| Snowwipe | Mage | Frost | `keybinds-mage.md` | M+ + raid |
+| Snowwipe | Mage | Arcane | `keybinds-mage.md` ⚠️ | M+ + raid |
 
 > Gli alt sono mono-spec ma scambiano qualche pulsante tra M+ e raid → i file per classe
 > segnano la colonna M+ vs raid dove serve.

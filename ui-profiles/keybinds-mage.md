@@ -1,6 +1,19 @@
-# Mage — Layout keybind (Snowwipe, Frost)
+# Mage — Layout keybind (Snowwipe)
 
-- **Personaggio:** Snowwipe — Frost (dps)
+> ⚠️ **DA RIFARE: questo documento descrive la FROST, e Snowwipe è passata ad ARCANE il 2026-09-01.**
+> Non l'ho riscritto perché il contenuto qui sotto è stato **dedotto da uno screenshot** e per
+> l'Arcane quello screenshot non esiste: `public/screenshots/mage-frost-snowwipe.webp` è ancora
+> la cattura Frost, e rinominarla direbbe una cosa falsa sull'immagine. Serve una schermata nuova.
+>
+> **Cosa resta valido comunque**: le ancore cross-classe, che non dipendono dalla spec —
+> `\` interrupt (Counterspell), `X` stun/slow, `Alt+\` dispel (la macro `RC||S`), `G` Healthstone,
+> `Shift+G` vuoto perché il mago non ha self-heal, `F`/`Shift+F` difensivi. **Cosa non vale più**:
+> tutte le righe di abilità Frost (Ice Lance, Frozen Orb, Glacial Spike, Flurry, Cone of Cold).
+>
+> ⚠️ Anche il nome della macro dispel qui sotto è scritto `RC|S` con una barra sola: in gioco è
+> **`RC||S`**, due barre.
+
+- **Personaggio:** Snowwipe — Arcane (dps); il layout qui sotto è quello di quando era **Frost**
 - **Screenshot:** M+ + raid → **layout identico** (solo proc/highlight diversi su slot `3`).
 - **Metodo:** abilità indovinate dalle icone (`?`). Label macro e slot vuoti certi.
 
