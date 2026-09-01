@@ -1,0 +1,2 @@
+#showtooltip
+/use [@mouseover,help,nodead]Remove Corruption;Growl

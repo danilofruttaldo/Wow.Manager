@@ -112,6 +112,19 @@
       "body": null,
       "notes": "AoE control auto-adattivo via known:Intimidating Shout, stesso pattern di warrior-shockwave-howl: Intimidating Shout talentato → fear AoE 8s (hard CC, si rompe a danno sui target secondari); altrimenti → Piercing Howl (slow AoE). Nessun modifier. #showtooltip dinamico mostra l'icona giusta in base al loadout. NB: Piercing Howl compare anche come fallback in warrior-shockwave-howl — slot/ruoli diversi, nessun conflitto. Raggruppata nel kit Prot ma le ability sono cross-spec. NOME IN GIOCO: 'IS||PH' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
+    "warrior-avatar-trinket": {
+      "name": "Avatar + Trinket",
+      "desc": "Burst: Avatar + trinket 13/14 in un press.",
+      "scope": "account",
+      "class": "warrior",
+      "spec": "fury",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "warrior/fury/avatar-trinket.txt",
+      "body": null,
+      "notes": "Burst Fury: Avatar + trinket 13/14 in un press. ERA RECKLESSNESS FINO AL 2026-09-01: il repo diceva Recklessness ma in gioco su Stantu la macro 'A' castava Avatar, e all'utente e' stato chiesto quale delle due vincesse - ha scelto Avatar, quindi il repo si e' allineato al gioco. spec RESTA fury: le notes precedenti documentavano Avatar come nodo di scelta Fury (in alternativa a Bladestorm), quindi non e' una macro cross-spec anche se il profilo di classe la distribuisce a tutti i warrior - su Arms e Prot i due /use 13-14 partono comunque e /use Avatar resta inerte. #showtooltip nomina Avatar perche' la prima riga e' un trinket, non la spell: non e' il caso dello showtooltip ridondante. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. NOME IN GIOCO: 'A' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
     "mage-decurse-spellsteal": {
       "name": "Remove Curse / Spellsteal",
       "desc": "Mouseover su alleato → Remove Curse; sul nemico → Spellsteal (se talentato).",
@@ -124,6 +137,32 @@
       "body_file": "mage/decurse-spellsteal.txt",
       "body": null,
       "notes": "Mage-wide, spec:null, auto-adattiva via known:Spellsteal (stesso pattern delle macro warrior known:). Cascata: 1) mouseover amichevole vivo → Remove Curse (decurse alleato senza cambiare target); 2) Spellsteal talentato → Spellsteal sul target nemico (ruba buff); 3) build raid (Spellsteal NON talentato) → Remove Curse su @player. Discriminatore = known:Spellsteal perché in spec raid Spellsteal non viene preso (conferma utente 2026-06-09): in raid la macro è puro decurse, niente errore 'spell sconosciuta'. nodead evita il decurse su alleato morto. #showtooltip nudo dinamico: mostra Remove Curse in raid, Spellsteal con target nemico nelle altre build. NOME IN GIOCO: 'RC||S' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "mage-meteor": {
+      "name": "Meteor",
+      "desc": "Meteor sulla posizione del mouse.",
+      "scope": "account",
+      "class": "mage",
+      "spec": "fire",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "mage/fire/meteor.txt",
+      "body": null,
+      "notes": "Creata 2026-07-16 su richiesta utente ('nuova macro mage fire'), corpo fornito dall'utente e tenuto verbatim. Piazza Meteor sulla posizione del mouse (@cursor): ground-target esplicito -> niente reticolo verde di targeting, va diretto al cursore (stesso schema di death-knight-death-and-decay e demon-hunter-devourer-shift). Meteor NON e' baseline: e' un talento dell'albero Fire -> spec:fire, non spec:null; se non talentato la macro e' inerte. #showtooltip nudo mostra Meteor (unica cast della macro). Nota PG: RIVISTA IL 2026-09-01, prima diceva «l'unico mago Fire a manifest e' Repository (Blood Elf, Nemesis), ancora sotto il cap» ed era sbagliata su entrambi i punti: i mage Fire sono DUE (Repository e Blinkette, gnomo su Silvermoon) e Repository e' AL CAP (in pg.md non ha piu' il prefisso _). Blinkette e' l'unico ancora in leveling. NOME IN GIOCO: 'M' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "mage-arcane-surge-racial": {
+      "name": "Arcane Surge + razziale",
+      "desc": "Burst Arcane: razziale off-GCD se c'e', poi Arcane Surge.",
+      "scope": "account",
+      "class": "mage",
+      "spec": "arcane",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "mage/arcane/arcane-surge-racial.txt",
+      "body": null,
+      "notes": "Aggiunta al manifest il 2026-09-01: esisteva SOLO IN GIOCO (su Snowwipe, in forma '/use Berserking' nuda) e il repo non la conosceva. Il condizionale [known:Berserking] e' stato aggiunto per renderla portabile: cosi' su un mago non troll la riga e' un buco innocuo e parte solo Arcane Surge, e il profilo di classe resta UNO per tutti e cinque i mage invece di uno per razza. SOLO BERSERKING, ed e' una decisione dell'utente: e' l'unico razziale off-GCD dei tre in gioco qui: Arcane Torrent (Blood Elf, Repository) e Arcane Pulse (Nightborne, Spelling) si mangerebbero il global e l'Arcane Surge non partirebbe. #showtooltip nomina Arcane Surge perche' la prima riga e' il razziale, spell diversa: non e' ridondante. NOME IN GIOCO: 'AS' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "paladin-cleanse-taunt": {
       "name": "Cleanse Toxins / Hand of Reckoning",
@@ -268,6 +307,110 @@
       "body": null,
       "notes": "Split 2026-07-13 dalla ex spec:null shaman-ghost-wolf-feral-lunge: ramo Elemental della mobilità Ghost Wolf. Nudo → Ghost Wolf (forma lupo, +velocità); [mod] con known:Spiritwalker's Grace → Spiritwalker's Grace (consente il cast in movimento, off-GCD). Stesso schema known: della controparte Enhancement (shaman-ghost-wolf-feral-lunge); se non disponibile il [mod] ricade su Ghost Wolf. #showtooltip nudo dinamico mostra il ramo attivo."
     },
+    "shaman-chain-heal-lightning": {
+      "name": "Chain Heal / Chain Lightning",
+      "desc": "Mouseover su alleato → Chain Heal; altrimenti Chain Lightning.",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "restoration",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/restoration/chain-heal-lightning.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Pandacoil. Uno dei cinque bottoni del kit healer di Pandacoil, tutti sullo stesso schema: mouseover amichevole vivo -> cura, altrimenti -> il colpo di danno omologo. Cosi' il resto cura senza cambiare bersaglio e attacca senza un secondo tasto. NOME IN GIOCO: 'CH||CL' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "shaman-healing-surge-lava-burst": {
+      "name": "Healing Surge / Lava Burst",
+      "desc": "Mouseover su alleato → Healing Surge; altrimenti Lava Burst.",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "restoration",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/restoration/healing-surge-lava-burst.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Pandacoil. Kit healer di Pandacoil: la cura rapida accoppiata al nuke istantaneo. NOME IN GIOCO: 'HS||LB' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "shaman-healing-wave-lightning-bolt": {
+      "name": "Healing Wave / Lightning Bolt",
+      "desc": "Mouseover su alleato → Healing Wave; altrimenti Lightning Bolt.",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "restoration",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/restoration/healing-wave-lightning-bolt.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Pandacoil. Kit healer di Pandacoil: la cura economica accoppiata al filler. NOME IN GIOCO: 'HW||LB' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "shaman-riptide-flame-shock": {
+      "name": "Riptide / Flame Shock",
+      "desc": "Mouseover su alleato → Riptide; altrimenti Flame Shock.",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "restoration",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/restoration/riptide-flame-shock.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Pandacoil. Kit healer di Pandacoil: i due HoT/DoT sullo stesso bottone. NOME IN GIOCO: 'R||FS' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "shaman-healing-rain": {
+      "name": "Healing Rain",
+      "desc": "Healing Rain sulla posizione del mouse.",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "restoration",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/restoration/healing-rain.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Pandacoil. Ground-target esplicito via @cursor: niente reticolo verde, l'area va diretta al cursore. Stesso schema di shaman-earthbind-totem e degli altri @cursor del repo. NOME IN GIOCO: 'HR' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "shaman-ice-strike-frost-shock": {
+      "name": "Ice Strike + Frost Shock",
+      "desc": "Castsequence Ice Strike → Frost Shock.",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "enhancement",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/enhancement/ice-strike-frost-shock.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Totemizer. Una delle tre castsequence di rotazione di Totemizer. reset=12s di inattivita'. I conteggi e i reset sono sue scelte di rotazione, non numeri verificati. NOME IN GIOCO: 'IS||FS' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "shaman-lava-burst-lightning-bolt": {
+      "name": "Lava Burst + Lightning Bolt",
+      "desc": "Castsequence Lava Burst → Lightning Bolt.",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "enhancement",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/enhancement/lava-burst-lightning-bolt.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Totemizer. Castsequence di rotazione di Totemizer, reset=8s. ⚠️ La sigla LB||LB e' ambigua (Lava Burst e Lightning Bolt hanno le stesse iniziali) ma e' quella che usa lui. NOME IN GIOCO: 'LB||LB' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
+    "shaman-primordial-wave-flame-shock": {
+      "name": "Primordial Wave + Flame Shock",
+      "desc": "Castsequence Primordial Wave → Flame Shock.",
+      "scope": "account",
+      "class": "shaman",
+      "spec": "enhancement",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "shaman/enhancement/primordial-wave-flame-shock.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Totemizer. Castsequence di rotazione di Totemizer, reset=30s, cadenzata sul CD di Primordial Wave. NOME IN GIOCO: 'PW||FS' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
     "druid-rebirth-revitalize-revive": {
       "name": "Rebirth / Revitalize / Revive",
       "desc": "Resurrezione: Rebirth in combattimento, Revitalize (di massa in Resto) o Revive fuori.",
@@ -333,6 +476,32 @@
       "body": null,
       "notes": "Sostituisce druid-motw-cat-form 2026-06-12 (Mark of the Wild spostato dall'utente su un bottone separato; questa resta solo Prowl/Cat Form). spec:feral. Logica combat-based 2 rami: [nocombat] → Prowl (stealth); altrimenti (in combat) → !Cat Form (entra in forma cat). VERIFICATO Warcraft Wiki: Prowl AUTO-SHIFTA in Cat Form ('Shift into Cat Form and enter stealth') → fuori combat parte da QUALSIASI forma, cat+stealth in un press; e Prowl NON è usabile in combat. Per questo l'orientamento è nocombat→Prowl/combat→Cat (il viceversa è impossibile: niente Prowl in combat). Il prefisso ! su Cat Form impedisce di USCIRE di forma se premi in combat mentre sei già in Cat (senza !, ri-casteresti Cat Form uscendo). #showtooltip nudo dinamico mostra Prowl fuori combat, Cat Form in combat."
     },
+    "druid-ursols-vortex": {
+      "name": "Ursol’s Vortex",
+      "desc": "Ursol’s Vortex sulla posizione del mouse.",
+      "scope": "account",
+      "class": "druid",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/ursols-vortex.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-06-18 ('shared' → spec:null, cross-spec). Piazza Ursol's Vortex sulla posizione del mouse (@cursor): area che rallenta i nemici e, se provano a uscirne, li ricentra (pseudo-grip AoE). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem e degli altri @cursor druido). VERIFICATO: Ursol's Vortex è talento albero classe → disponibile a tutte le spec druido se talentato (per questo spec:null shared). CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo dinamico mostra Ursol's Vortex."
+    },
+    "druid-remove-corruption-growl": {
+      "name": "Remove Corruption / Growl",
+      "desc": "Mouseover su alleato → Remove Corruption; altrimenti Growl.",
+      "scope": "account",
+      "class": "druid",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "druid/remove-corruption-growl.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Ecoterrorist. E' il GEMELLO DRUIDO di paladin-cleanse-taunt, che il repertorio aveva gia': dispel sull'alleato, altrimenti taunt. Copre l'ancora Alt+backslash della postazione, che vale dispel sui dps e taunt sui tank. spec:null come il gemello paladino, benche' Growl richieda la forma orso: Remove Corruption e' di tutte le spec e il ramo taunt resta inerte fuori dalla forma, senza errori. Da NON confondere con druid-soothe-remove-corruption (spec feral), che accoppia lo stesso dispel a Soothe. NOME IN GIOCO: 'RC||G' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
     "death-knight-anti-magic-zone": {
       "name": "Anti-Magic Zone",
       "desc": "Anti-Magic Zone sulla posizione del mouse.",
@@ -371,19 +540,6 @@
       "body_file": "death-knight/frost/pillar-erw-trinket.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-24 ('dk frost' -> spec:frost). Burst opener Frost off-GCD in un press, analogo esatto di warrior-reck-trinket: Pillar of Frost (CD danno Frost, off-GCD) + Empower Rune Weapon (genera rune+RP, off-GCD) + trinket 13/14 in un colpo solo. Tutto off-GCD -> niente conflitti, parte tutto insieme e puoi castare subito dopo. #showtooltip nudo mostra Pillar of Frost. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. spec:frost perche' Pillar of Frost ed Empower Rune Weapon sono abilita' Frost (su Unholy/Blood la macro darebbe spell non disponibile)."
-    },
-    "druid-ursols-vortex": {
-      "name": "Ursol’s Vortex",
-      "desc": "Ursol’s Vortex sulla posizione del mouse.",
-      "scope": "account",
-      "class": "druid",
-      "spec": null,
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "druid/ursols-vortex.txt",
-      "body": null,
-      "notes": "Fornita dall'utente verbatim 2026-06-18 ('shared' → spec:null, cross-spec). Piazza Ursol's Vortex sulla posizione del mouse (@cursor): area che rallenta i nemici e, se provano a uscirne, li ricentra (pseudo-grip AoE). Ground-target esplicito via @cursor → niente prompt di targeting verde, va diretto al cursore (stesso schema di shaman-capacitor-totem e degli altri @cursor druido). VERIFICATO: Ursol's Vortex è talento albero classe → disponibile a tutte le spec druido se talentato (per questo spec:null shared). CAVEAT: se non talentato nel loadout corrente la macro è inerte (spell non disponibile). #showtooltip nudo dinamico mostra Ursol's Vortex."
     },
     "hunter-flare": {
       "name": "Flare",
@@ -502,6 +658,71 @@
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-06-28 (nuovo pg DH Devourer Illidanielle). Piazza/esegue Shift sulla posizione del mouse (@cursor): dash a terra della spec Devourer che rimpiazza Fel Rush — target il punto col cursore e ci zippi quasi istantaneamente (~30y range, ~20s CD, 1-3 cariche a seconda dei talenti, può salire il terreno). VERIFICATO Wowhead/Icy Veins Midnight 12.0.7: è mobilità SPECIFICA Devourer (Havoc usa Fel Rush, Vengeance Infernal Strike) → spec:devourer, file in demon-hunter/devourer/. NON è un vero teleport: attraversa gli effetti a terra. Ground-target esplicito via @cursor → niente prompt di targeting verde. Uso proattivo per assicurarsi cast lunghi (Void Ray/Collapsing Star) da caster ~25y. #showtooltip nudo mostra Shift."
     },
+    "demon-hunter-infernal-strike": {
+      "name": "Infernal Strike",
+      "desc": "Infernal Strike sulla posizione del mouse (salto + danno ad area).",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "vengeance",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/vengeance/infernal-strike.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance, pg _Demoversion in leveling). Salta sulla posizione del mouse (@cursor) e all'atterraggio infligge danno da fuoco ad area. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema di warrior-heroic-leap-cursor e degli altri @cursor). CLASSIFICAZIONE spec:vengeance — e' la mobilita' base di Vengeance: Havoc usa Fel Rush, Devourer usa Shift (vedi demon-hunter-shift, gia' verificato). Confermato indirettamente dalle note di Midnight 12.0.7 su maxroll, dove i talenti di classe che toccano la mobilita' nominano i tre pezzi come abilita' distinte: 'Erratic Felheart has been updated - Now reduces the cooldown of Fel Rush, Shift, and Infernal Strike by 1 second/2 seconds' e 'Infernal Strike/Shift grants you a rapidly decaying shield for 6% of your maximum health'. #showtooltip nudo mostra Infernal Strike."
+    },
+    "demon-hunter-sigil-of-flame": {
+      "name": "Sigil of Flame",
+      "desc": "Sigil of Flame sulla posizione del mouse (danno ad area nel tempo).",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "vengeance",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/vengeance/sigil-of-flame.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Flame sulla posizione del mouse (@cursor): sigillo che dopo l'attivazione incendia l'area e lascia un danno nel tempo sui nemici dentro; in Vengeance genera anche Fury. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance, NON spec:null — in Midnight NON e' piu' abilita' di classe: maxroll (guide Havoc e Vengeance 12.0.7) scrive verbatim 'Sigil of Flame is now a Vengeance only ability (was all specializations)', e Icy Veins nella guida Havoc parla della 'removal of Sigil of Spite and Sigil of Flame'. Attenzione: e' un cambio recente, le guide vecchie (Dragonflight/TWW) la danno nell'albero classe -> non 'correggere' a spec:null. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Flame."
+    },
+    "demon-hunter-sigil-of-silence": {
+      "name": "Sigil of Silence",
+      "desc": "Sigil of Silence sulla posizione del mouse (silenzia ad area).",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "vengeance",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/vengeance/sigil-of-silence.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Silence sulla posizione del mouse (@cursor): sigillo che dopo l'attivazione silenzia i nemici nell'area — interrupt ad area, strumento cardine in mitica+. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance — prova piu' debole delle altre due (nessuna riga di patch note che la sposti esplicitamente), tenuta su due indizi concordi: method.gg 12.0.7 la elenca sotto i talenti SPEC di Vengeance ('Sigil of Silence is a strong tool in Mythic+ but less important in Raid'), e le guide Havoc di maxroll e Icy Veins non la nominano mai pur elencando Sigil of Misery fra la CC. Se un giorno risultasse ancora di classe, il fix e' spec:null. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Silence."
+    },
+    "demon-hunter-sigil-of-spite": {
+      "name": "Sigil of Spite",
+      "desc": "Sigil of Spite sulla posizione del mouse (danno ad area + frammenti d'anima).",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": "vengeance",
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/vengeance/sigil-of-spite.txt",
+      "body": null,
+      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Spite (ex Elysian Decree) sulla posizione del mouse (@cursor): sigillo di danno ad area che frantuma le anime dei colpiti generando Soul Fragment. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance, NON spec:null — spostata dall'albero di classe a quello di spec in Midnight: maxroll 12.0.7 verbatim 'Sigil of Spite, Soul Sigils, and Quickened Sigils moved to the Vengeance talent tree (was class talents)' e 'Sigil of Spite has been made unique to the Vengeance spec'. Stesso caveat di sigil-of-flame: le guide pre-Midnight la danno di classe. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Spite."
+    },
+    "demon-hunter-throw-glaive": {
+      "name": "Throw Glaive",
+      "desc": "Throw Glaive sul mouseover nemico, altrimenti sul bersaglio.",
+      "scope": "account",
+      "class": "demon-hunter",
+      "spec": null,
+      "character": null,
+      "slot": null,
+      "icon": null,
+      "body_file": "demon-hunter/throw-glaive.txt",
+      "body": null,
+      "notes": "Esisteva SOLO IN GIOCO e il repertorio non la conosceva; censita il 2026-09-01 durante l'allineamento di tutti i PG, corpo preso verbatim da Vanillidan. Throw Glaive e' baseline su tutte le spec DH -> spec:null. La clausola vuota finale [] e' il ripiego sul bersaglio corrente quando il mouseover non e' un nemico valido: sintassi valida, non un refuso. NOME IN GIOCO: 'TG' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
+    },
     "warlock-shadowfury": {
       "name": "Shadowfury",
       "desc": "Shadowfury sulla posizione del mouse (stun AoE).",
@@ -579,32 +800,6 @@
       "body_file": "warlock/pet-special.txt",
       "body": null,
       "notes": "Richiesta utente 2026-07-09 ('macro shared per special ability del pet in base al pet' → shared = cross-spec, spec:null). Un bottone che casta la SECONDA abilità del demone attivo, scelta col contesto [pet:famiglia]. IMPORTANTE (chiarito dall'utente): questa è l'ABILITÀ SECONDARIA del pet, complementare al pulsante Command Demon (che l'utente ha già a parte e casta la special PRIMARIA: Imp→Singe Magic, Voidwalker→Shadow Bulwark, Felhunter→Spell Lock, Sayaad→Seduction, Felguard→Axe Toss). Per questo i rami qui DIVERGONO dai default Command Demon: Imp→Flee (fuga dall'AoE), Felhunter→Devour Magic (purge; lo Spell Lock=interrupt sta su Command Demon e sull'ancora \\), Felguard→Axe Toss. VERIFICATO Warcraft Wiki (Warlock minion): [pet:name] matcha la FAMIGLIA del pet, non il nome random del demone evocato (famiglie: Imp, Voidwalker, Sayaad, Felhunter, Felguard); i rami sono mutuamente esclusivi (un solo pet alla volta) → l'ordine è indifferente. NIENTE FALLBACK GENERICO: valutato e SCARTATO 2026-07-09 il ramo finale 'Command Demon' — duplicherebbe l'altro pulsante dell'utente. Non c'è una seconda-abilità sensata per gli altri pet: Voidwalker→Suffering e Sayaad→Seduction erano le uniche candidate e l'utente le ha ritenute non utili (la Sayaad oltre a Seduction non ha altra utility) → con Voidwalker/Sayaad attivi la macro è AZIONALMENTE inerte, per scelta. ICONA: tenuta SEMPLICE su scelta finale utente 2026-07-09 ('lasciamo stare, rimane semplice') — #showtooltip NUDO, senza fallback. Eredita i condizionali del /cast: per Imp/Felhunter/Felguard mostra l'abilità del pet e cambia da sola cambiando demone; per Voidwalker/Sayaad (nessun ramo) l'icona non risolve (accettato). Fallback icona ESPLORATI e SCARTATI, da NON reintrodurre: 'Command Demon' (rifiutato, richiamava l'altro pulsante), 'Health Funnel' (RIMOSSA dal gioco nella 12.0.0, VERIFICATO Warcraft Wiki), e la spell di evocazione per-pet nel solo #showtooltip (funzionava, ma l'utente ha preferito la versione minima). L'icona manuale (campo icon/selezione in-game) non si mischia con quella dinamica del #showtooltip. spec:null: Imp/Felhunter su tutte le spec; [pet:Felguard] innocuo fuori da Demonology (Felguard = pet permanente Demo). Nessun @target: Devour Magic e Axe Toss risolvono sul bersaglio corrente (smart), Flee è self del pet. CAVEAT: Devour Magic rimuove un buff magico da un nemico O un debuff magico dal warlock (smart) — su target ostile fa purge; Axe Toss è uno stun su bersaglio nemico."
-    },
-    "mage-meteor": {
-      "name": "Meteor",
-      "desc": "Meteor sulla posizione del mouse.",
-      "scope": "account",
-      "class": "mage",
-      "spec": "fire",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "mage/fire/meteor.txt",
-      "body": null,
-      "notes": "Creata 2026-07-16 su richiesta utente ('nuova macro mage fire'), corpo fornito dall'utente e tenuto verbatim. Piazza Meteor sulla posizione del mouse (@cursor): ground-target esplicito -> niente reticolo verde di targeting, va diretto al cursore (stesso schema di death-knight-death-and-decay e demon-hunter-devourer-shift). Meteor NON e' baseline: e' un talento dell'albero Fire -> spec:fire, non spec:null; se non talentato la macro e' inerte. #showtooltip nudo mostra Meteor (unica cast della macro). Nota PG: RIVISTA IL 2026-09-01, prima diceva «l'unico mago Fire a manifest e' Repository (Blood Elf, Nemesis), ancora sotto il cap» ed era sbagliata su entrambi i punti: i mage Fire sono DUE (Repository e Blinkette, gnomo su Silvermoon) e Repository e' AL CAP (in pg.md non ha piu' il prefisso _). Blinkette e' l'unico ancora in leveling. NOME IN GIOCO: 'M' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
-    },
-    "mage-arcane-surge-racial": {
-      "name": "Arcane Surge + razziale",
-      "desc": "Burst Arcane: razziale off-GCD se c'e', poi Arcane Surge.",
-      "scope": "account",
-      "class": "mage",
-      "spec": "arcane",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "mage/arcane/arcane-surge-racial.txt",
-      "body": null,
-      "notes": "Aggiunta al manifest il 2026-09-01: esisteva SOLO IN GIOCO (su Snowwipe, in forma '/use Berserking' nuda) e il repo non la conosceva. Il condizionale [known:Berserking] e' stato aggiunto per renderla portabile: cosi' su un mago non troll la riga e' un buco innocuo e parte solo Arcane Surge, e il profilo di classe resta UNO per tutti e cinque i mage invece di uno per razza. SOLO BERSERKING, ed e' una decisione dell'utente: e' l'unico razziale off-GCD dei tre in gioco qui: Arcane Torrent (Blood Elf, Repository) e Arcane Pulse (Nightborne, Spelling) si mangerebbero il global e l'Arcane Surge non partirebbe. #showtooltip nomina Arcane Surge perche' la prima riga e' il razziale, spell diversa: non e' ridondante. NOME IN GIOCO: 'AS' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     },
     "warlock-rain-of-fire": {
       "name": "Rain of Fire",
@@ -866,58 +1061,6 @@
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-07-23 (serie Priest). Doppio ruolo un-bottone (cura-o-danno), stesso schema mouseover-fallback di mage-decurse-spellsteal / rogue-tricks-shiv: mouseover su alleato vivo (@mouseover,help,nodead) -> Flash Heal (cura rapida sull'alleato sotto il mouse senza cambiare target); altrimenti (nessun mouseover / mouseover nemico) -> Smite (danno sul nemico corrente). Il ramo default NON ha @mouseover -> Smite va sul target attuale. nodead evita la cura su alleato morto. CLASSIFICAZIONE spec:holy — VERIFICATO Warcraft Wiki (12.0.x): Flash Heal e' baseline 'available to all specializations, but Discipline and Shadow eventually replace it with Shadow Mend' -> in pratica solo HOLY casta davvero Flash Heal (Disc e Shadow lo sostituiscono con Shadow Mend). Smite e' Disc+Holy ('known by all priests from level 1', ma su Shadow 'replaced with Mind Flay'). Il vincolo stringente e' Flash Heal (solo Holy) -> spec:holy pulito. #showtooltip nudo dinamico mostra il ramo attivo (Flash Heal col mouse sull'alleato, Smite altrimenti)."
     },
-    "demon-hunter-infernal-strike": {
-      "name": "Infernal Strike",
-      "desc": "Infernal Strike sulla posizione del mouse (salto + danno ad area).",
-      "scope": "account",
-      "class": "demon-hunter",
-      "spec": "vengeance",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "demon-hunter/vengeance/infernal-strike.txt",
-      "body": null,
-      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance, pg _Demoversion in leveling). Salta sulla posizione del mouse (@cursor) e all'atterraggio infligge danno da fuoco ad area. Ground-target esplicito via @cursor -> niente prompt di targeting verde, va diretto al cursore (stesso schema di warrior-heroic-leap-cursor e degli altri @cursor). CLASSIFICAZIONE spec:vengeance — e' la mobilita' base di Vengeance: Havoc usa Fel Rush, Devourer usa Shift (vedi demon-hunter-shift, gia' verificato). Confermato indirettamente dalle note di Midnight 12.0.7 su maxroll, dove i talenti di classe che toccano la mobilita' nominano i tre pezzi come abilita' distinte: 'Erratic Felheart has been updated - Now reduces the cooldown of Fel Rush, Shift, and Infernal Strike by 1 second/2 seconds' e 'Infernal Strike/Shift grants you a rapidly decaying shield for 6% of your maximum health'. #showtooltip nudo mostra Infernal Strike."
-    },
-    "demon-hunter-sigil-of-flame": {
-      "name": "Sigil of Flame",
-      "desc": "Sigil of Flame sulla posizione del mouse (danno ad area nel tempo).",
-      "scope": "account",
-      "class": "demon-hunter",
-      "spec": "vengeance",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "demon-hunter/vengeance/sigil-of-flame.txt",
-      "body": null,
-      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Flame sulla posizione del mouse (@cursor): sigillo che dopo l'attivazione incendia l'area e lascia un danno nel tempo sui nemici dentro; in Vengeance genera anche Fury. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance, NON spec:null — in Midnight NON e' piu' abilita' di classe: maxroll (guide Havoc e Vengeance 12.0.7) scrive verbatim 'Sigil of Flame is now a Vengeance only ability (was all specializations)', e Icy Veins nella guida Havoc parla della 'removal of Sigil of Spite and Sigil of Flame'. Attenzione: e' un cambio recente, le guide vecchie (Dragonflight/TWW) la danno nell'albero classe -> non 'correggere' a spec:null. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Flame."
-    },
-    "demon-hunter-sigil-of-silence": {
-      "name": "Sigil of Silence",
-      "desc": "Sigil of Silence sulla posizione del mouse (silenzia ad area).",
-      "scope": "account",
-      "class": "demon-hunter",
-      "spec": "vengeance",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "demon-hunter/vengeance/sigil-of-silence.txt",
-      "body": null,
-      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Silence sulla posizione del mouse (@cursor): sigillo che dopo l'attivazione silenzia i nemici nell'area — interrupt ad area, strumento cardine in mitica+. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance — prova piu' debole delle altre due (nessuna riga di patch note che la sposti esplicitamente), tenuta su due indizi concordi: method.gg 12.0.7 la elenca sotto i talenti SPEC di Vengeance ('Sigil of Silence is a strong tool in Mythic+ but less important in Raid'), e le guide Havoc di maxroll e Icy Veins non la nominano mai pur elencando Sigil of Misery fra la CC. Se un giorno risultasse ancora di classe, il fix e' spec:null. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Silence."
-    },
-    "demon-hunter-sigil-of-spite": {
-      "name": "Sigil of Spite",
-      "desc": "Sigil of Spite sulla posizione del mouse (danno ad area + frammenti d'anima).",
-      "scope": "account",
-      "class": "demon-hunter",
-      "spec": "vengeance",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "demon-hunter/vengeance/sigil-of-spite.txt",
-      "body": null,
-      "notes": "Fornita dall'utente verbatim 2026-07-24 (serie Demon Hunter Vengeance). Piazza Sigil of Spite (ex Elysian Decree) sulla posizione del mouse (@cursor): sigillo di danno ad area che frantuma le anime dei colpiti generando Soul Fragment. Ground-target esplicito via @cursor -> niente prompt di targeting verde. CLASSIFICAZIONE spec:vengeance, NON spec:null — spostata dall'albero di classe a quello di spec in Midnight: maxroll 12.0.7 verbatim 'Sigil of Spite, Soul Sigils, and Quickened Sigils moved to the Vengeance talent tree (was class talents)' e 'Sigil of Spite has been made unique to the Vengeance spec'. Stesso caveat di sigil-of-flame: le guide pre-Midnight la danno di classe. CAVEAT: se non talentata nel loadout corrente la macro e' inerte. #showtooltip nudo mostra Sigil of Spite."
-    },
     "evoker-deep-breath": {
       "name": "Deep Breath",
       "desc": "Deep Breath sulla posizione del mouse (volo in linea con danno da fuoco).",
@@ -943,19 +1086,6 @@
       "body_file": "evoker/landslide.txt",
       "body": null,
       "notes": "Fornita dall'utente verbatim 2026-07-27 (prime due macro Evoker). Root ad area sul percorso verso il cursore: warcraft.wiki.gg descrive verbatim 'Conjure a path of shifting stone towards the target location, rooting enemies for 15 sec. Damage may cancel the effect.' Ground-target confermato anche dai dati spell su Wowhead (range 10-40 yd 'Donut 10-40', raggio 6 yd, 'Always Show Ground Texture', CD 1.5 min, istantanea) -> @cursor esplicito, niente prompt di targeting verde. CLASSIFICAZIONE spec:null — talento di CLASSE (wiki: 'Class talent, Row 1' dell'albero evoker), quindi aperto a tutte e tre le spec. CAVEAT: la wiki lo da' 'Automatically learned for Devastation and Augmentation evokers', in Preservation va speso il punto -> se non e' nel loadout la macro e' inerte (stesso caveat dei sigilli DH). Ruolo = control AoE (ancora keybind X, stun/slow) — nessun keybinds-evoker.md ancora, quando nasce va allineato. #showtooltip nudo mostra Landslide."
-    },
-    "warrior-avatar-trinket": {
-      "name": "Avatar + Trinket",
-      "desc": "Burst: Avatar + trinket 13/14 in un press.",
-      "scope": "account",
-      "class": "warrior",
-      "spec": "fury",
-      "character": null,
-      "slot": null,
-      "icon": null,
-      "body_file": "warrior/fury/avatar-trinket.txt",
-      "body": null,
-      "notes": "Burst Fury: Avatar + trinket 13/14 in un press. ERA RECKLESSNESS FINO AL 2026-09-01: il repo diceva Recklessness ma in gioco su Stantu la macro 'A' castava Avatar, e all'utente e' stato chiesto quale delle due vincesse - ha scelto Avatar, quindi il repo si e' allineato al gioco. spec RESTA fury: le notes precedenti documentavano Avatar come nodo di scelta Fury (in alternativa a Bladestorm), quindi non e' una macro cross-spec anche se il profilo di classe la distribuisce a tutti i warrior - su Arms e Prot i due /use 13-14 partono comunque e /use Avatar resta inerte. #showtooltip nomina Avatar perche' la prima riga e' un trinket, non la spell: non e' il caso dello showtooltip ridondante. /use 13 e 14 = trinket sup/inf; se passivo non fa nulla. NOME IN GIOCO: 'A' (convenzione di questa postazione: sigle separate da ||, il limite di WoW e' 16 caratteri per il nome e 255 byte per il corpo)."
     }
   }
 }

@@ -1,0 +1,2 @@
+#showtooltip
+/castsequence reset=30 Primordial Wave, Flame Shock
