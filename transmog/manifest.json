@@ -181,7 +181,7 @@
         "normal": "Versione unica"
       },
       "note": "Set di Naxxramas a 40 giocatori: quel raid non esiste piu', quindi nessun boss lo droppa e la copertura boss e' ~0. NON va marcato come non piu' ottenibile: due vie restano aperte, la casa d'aste del mercato nero e il craft da parte di chi possiede il set completo, che produce pezzi con cui altri lo sbloccano. Fonte: indicazione dell'utente, non verificata in gioco ne' su Wowhead. Due pezzi hanno comunque un boss vero per visualID condiviso (Wrist da Ick and Krick a Pit of Saron, Waist dal trash di Karazhan) e restano tali: fonteDi in content.ts salta le voci che contengono gia' un boss.",
-      "fonte": "Mercato nero · o craft da chi ha il set",
+      "fonte": "Mercato nero · o craft",
       "raids": [
         [
           "NAXX",
