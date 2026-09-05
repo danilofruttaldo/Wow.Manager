@@ -653,7 +653,8 @@
                                          "class":  "demon-hunter",
                                          "level":  50,
                                          "professions":  [
-
+                                                             "Engineering",
+                                                             "Mining"
                                                          ],
                                          "midnightSpecs":  [
 
@@ -665,7 +666,8 @@
                                             "class":  "death-knight",
                                             "level":  50,
                                             "professions":  [
-
+                                                                "Jewelcrafting",
+                                                                "Mining"
                                                             ],
                                             "midnightSpecs":  [
 
@@ -690,7 +692,8 @@
                                      "class":  "monk",
                                      "level":  70,
                                      "professions":  [
-
+                                                         "Jewelcrafting",
+                                                         "Mining"
                                                      ],
                                      "midnightSpecs":  [
 
@@ -727,7 +730,8 @@
                                          "class":  "shaman",
                                          "level":  55,
                                          "professions":  [
-
+                                                             "Jewelcrafting",
+                                                             "Mining"
                                                          ],
                                          "midnightSpecs":  [
 
