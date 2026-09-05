@@ -215,8 +215,10 @@ export function getProfessions(): Profession[] {
   return ((professionsManifest as any).professions ?? []) as Profession[];
 }
 
-// Alberi di specializzazione estratti dal CLIENT (scripts/prof-spec-dump.lua), non
-// dalle guide web -- che sui nomi sbagliano e i rank massimi non li pubblicano.
+// Alberi di specializzazione estratti dal CLIENT, non dalle guide web -- che sui nomi
+// sbagliano e i rank massimi non li pubblicano. L'addon che li leggeva
+// (scripts/prof-spec-dump.lua) e' stato rimosso il 2026-09-05 a raccolta finita: sta
+// nella storia git, e il dato qui sotto non si rigenera piu' da solo.
 // File separato da manifest.json apposta: e' dato macchina-generato, non redazionale.
 // `cap` = rank massimo del nodo, cioe' quanti punti conoscenza vi entrano.
 export interface ProfNode {

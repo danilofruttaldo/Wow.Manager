@@ -1,6 +1,6 @@
 {
     "_meta":  {
-                  "note":  "Alberi estratti dal client via scripts/prof-spec-dump.lua. cap = rank massimo del nodo. Chiave: professione -\u003e espansione.",
+                  "note":  "Alberi estratti dal client via scripts/prof-spec-dump.lua, addon rimosso dal repo il 2026-09-05 a raccolta finita (11 alberi su 11): si ripesca dalla storia git se servisse rigenerarli. cap = rank massimo del nodo. Chiave: professione -\u003e espansione.",
                   "build":  "12.0.7"
               },
     "expansions":  [

@@ -7,7 +7,8 @@
 -- vede. Da li' in poi lo tengono aggiornato mount-sync.ps1 e transmog-sync.ps1 (§0).
 --
 -- ── Perche' esiste ────────────────────────────────────────────────────────────
--- I quattro dump (tier, mount, prof, cvar) sono attrezzi da manutenzione: servono
+-- I dump (tier, mount, cvar -- e prof finche' c'e' stato) sono attrezzi da
+-- manutenzione: servono
 -- quando sincronizzo il sito, cioe' qualche volta al mese. Restando addon normali
 -- pero' li pagavo a OGNI sessione, senza usarli:
 --   * 95 KB di Lua compilati a ogni login;
@@ -22,7 +23,7 @@
 -- serve qualcuno di sempre presente che lo faccia al posto suo, ed e' questo file.
 -- Costa il suo caricamento (pochi KB) e un SavedVariables di poche righe.
 --
--- ⚠️ I comandi restano gli stessi (/wmtier /wmmount /wmprof /wmcvar): gli script di
+-- ⚠️ I comandi restano gli stessi (/wmtier /wmmount /wmcvar): gli script di
 -- sync li chiedono per nome, e non devono accorgersi di nulla. Ogni modulo continua
 -- a registrarsi il proprio comando SE questo lanciatore non c'e' (vedi in fondo ai
 -- moduli), cosi' un modulo caricato a mano resta utilizzabile da solo.
@@ -30,7 +31,6 @@
 local MODULI = {
     tier  = { addon = "WowManagerTierDump",  run = "WowManagerTierDump_Run" },
     mount = { addon = "WowManagerMountDump", run = "WowManagerMountDump_Run" },
-    prof  = { addon = "WowManagerProfDump",  run = "WowManagerProfDump_Run" },
     cvar  = { addon = "WowManagerCVarDump",  run = "WowManagerCVarDump_Run" },
 }
 
@@ -67,8 +67,6 @@ SLASH_WMTIER1  = "/wmtier"
 SlashCmdList["WMTIER"]  = function(msg) Esegui("tier", msg) end
 SLASH_WMMOUNT1 = "/wmmount"
 SlashCmdList["WMMOUNT"] = function(msg) Esegui("mount", msg) end
-SLASH_WMPROF1  = "/wmprof"
-SlashCmdList["WMPROF"]  = function(msg) Esegui("prof", msg) end
 SLASH_WMCVAR1  = "/wmcvar"
 SlashCmdList["WMCVAR"]  = function(msg) Esegui("cvar", msg) end
 
@@ -99,19 +97,19 @@ local function ProgrammaMount()
     end)
 end
 
--- ── Professioni: solo quando cambiano ─────────────────────────────────────────
--- Il dump professioni girava a ogni PLAYER_LOGIN, e quell'evento scatta anche a ogni
--- /reload: significava ripercorrere gli alberi (38 skill line, centinaia di chiamate)
--- ogni volta, per riscrivere quasi sempre lo stesso dump. Il motivo per cui girava al
--- login resta valido -- e' cosi' che un alt entra nel tracker professioni senza
--- doversi ricordare /wmprof su ognuno -- quindi non si toglie: si condiziona.
+-- ── Professioni per personaggio ───────────────────────────────────────────────
+-- ⚠️ Questa riga NON e' piu' una cache: e' il DATO. Il modulo che leggeva gli alberi
+-- (WowManagerProfDump, /wmprof) e' stato rimosso il 2026-09-05 -- era servito a
+-- popolare professions/trees.json, che e' completo (11 alberi su 11) -- ma la firma
+-- che decideva se lanciarlo resta, perche' contiene i NOMI delle professioni di ogni
+-- PG ed e' da qui che professions/characters.json prende le icone professione della
+-- tabella PG. Toglierla congelerebbe quel dato per ogni personaggio nuovo.
 --
--- La firma e' fatta di sole chiamate a costo trascurabile (le professioni note e il
--- configID di ogni skill line): se combacia con l'ultima per cui il dump e' stato
--- fatto, non c'e' niente di nuovo da scrivere e il modulo non si carica nemmeno.
--- ⚠️ Il configID entra nella firma perche' e' lui a dire "questa professione e'
--- speccata", cioe' l'unico caso in cui l'albero coi cap esce davvero: senza, il
--- primo /wmprof dopo aver speccato resterebbe l'unica strada.
+-- Costa solo chiamate trascurabili (le professioni note e il configID di ogni skill
+-- line) e si scrive solo quando cambia. ⚠️ Il configID resta dentro perche' dice
+-- "questa professione e' speccata": e' l'informazione che alimenta `midnightSpecs`,
+-- ed e' l'unica traccia rimasta di quali alberi si potrebbero rigenerare -- il
+-- modulo si ripesca dalla storia git.
 local function FirmaProf()
     local pezzi = {}
     for i = 1, select("#", GetProfessions()) do
@@ -143,9 +141,9 @@ local function FirmaProf()
 end
 
 -- ⚠️ Firma vuota = dati del PG non ancora arrivati (oppure un PG senza professioni):
--- in entrambi i casi non c'e' niente da dumpare e NON si registra nulla, altrimenti
--- una lettura a vuoto si fisserebbe come "gia' fatto". Un solo riprova, poi si tace:
--- /wmprof resta li'.
+-- in entrambi i casi NON si registra nulla, altrimenti una lettura a vuoto si
+-- fisserebbe come "gia' fatto". Un solo riprova dopo 20s, poi si tace -- quindi un PG
+-- entra nel registro solo restando loggato una trentina di secondi.
 local function ControllaProf(riprova)
     local firma = FirmaProf()
     if firma == "" then
@@ -157,7 +155,6 @@ local function ControllaProf(riprova)
     WowManagerDumpDB.firmaProf = WowManagerDumpDB.firmaProf or {}
     if WowManagerDumpDB.firmaProf[pg] == firma then return end
     WowManagerDumpDB.firmaProf[pg] = firma
-    Esegui("prof")
 end
 
 -- ⚠️ RegisterEvent su un nome che il client non conosce solleva errore, e un errore
