@@ -5,9 +5,9 @@ export const CHAR_SPEC: Record<string, string> = {
   stantu: '*', // wildcard NUDA: gioca tutte le spec Warrior, nessuna preferita -> sola icona wildcard
   furricane: 'brewmaster', // fallback; vedi CHAR_SPEC_BY_RACE per la disambiguazione
   snowwipe: 'arcane',      // era 'frost' fino al 2026-09-01: cambio confermato dall'utente.
-                           // Il buco che lasciava (mage-frost muta) l'ha chiuso spellstill il
-                           // 2026-09-05: ora i mage sono arcane2 (con spelling), fire2
-                           // (repository, blinkette), frost1 (spellstill).
+                           // Il buco che lasciava (mage-frost muta) l'ha chiuso spelling il
+                           // 2026-09-05: ora i mage sono arcane2 (con spellstill), fire2
+                           // (repository, blinkette), frost1 (spelling).
   mustaina: 'feral',
   blessismore: 'protection',
   totemtanz: 'elemental',
@@ -23,7 +23,8 @@ export const CHAR_SPEC: Record<string, string> = {
   arconauta: 'beastmastery',
   pandacoil: 'restoration',
   repository: 'fire',
-  spelling: 'arcane',
+  spelling: 'frost',           // era 'arcane' fino al 2026-09-05: copre la casella mage-frost,
+                               // muta da quando snowwipe e' passata ad arcane
   illidanielle: 'devourer',
   rotandroll: 'unholy',
   trollminator: 'blood',
@@ -40,8 +41,7 @@ export const CHAR_SPEC: Record<string, string> = {
   demoversion: 'vengeance',
   tearsforfear: 'destruction', // Goblin: esplosivi/caos; completa la varietà stregoni Orda
   // Alleanza (nuovi PG). Spec note; il resto è '?' finché non confermate.
-  spellstill: 'frost',        // era 'arcane' fino al 2026-09-05: copre la casella mage-frost,
-                              // muta da quando snowwipe e' passata ad arcane
+  spellstill: 'arcane',
   gnomorrage: 'assassination',
   dwarfnought: 'arms',        // "dreadnought" → arma pesante a 2 mani
   ipelf: 'windwalker',
