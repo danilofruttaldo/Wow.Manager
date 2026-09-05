@@ -71,7 +71,12 @@ export const CHAR_SPEC: Record<string, string> = {
                               // Bloodlust, che sull'Alleanza si chiama Heroism.
 
   // ── PARCHEGGIATE: nomi che oggi NON sono in pg.md ────────────────────────────────
-  // Le 18 righe qui sotto sono PG pianificati e mai creati, tolti dalla tabella il
+  // ⚠️ Una parcheggiata vale finche' la sua casella e' libera: `naaruto` (Draenei Sha
+  // resto) e' stata tolta il 2026-09-05 perche' Totemptation ha preso quella casella con
+  // quella stessa spec, quindi non era piu' riproponibile. Non e' la regola generale:
+  // `preservative` e `augmentin` mirano a Dracthyr Evo, dove Dragoncelloh c'e' gia' ma
+  // con un'altra spec — e una cella regge piu' PG (`<br>`), quindi restano valide.
+  // Le 17 righe qui sotto sono PG pianificati e mai creati, tolti dalla tabella il
   // 2026-08-04 («PG: rimossi i 19 pianificati») insieme alla decisione — scritta in quel
   // commit — di tenere la convenzione `*nome` in legenda **per reintrodurli**. Le spec
   // restano quindi apposta: sono scelte già fatte, e riscrivendo un `*Nome` in pg.md la
@@ -96,7 +101,6 @@ export const CHAR_SPEC: Record<string, string> = {
   rainmaker: 'restoration',    // Highmountain Sha — Healing Rain (resto)
   stonestrike: 'enhancement',  // Earthen Sha — Stormstrike + pietra=Earthen (enh)
   chlorophil: 'restoration',   // Haranir Sha — natura/foglie (resto)
-  naaruto: 'restoration',      // Draenei Sha — Naaru = esseri di Luce; portava gli sciamani a 5/5/5
   lavalamp: 'elemental',       // Dark Iron Sha — Lava Burst + Dark Iron (ele)
   bloomanjaro: 'restoration',  // Troll Dru — Kilimanjaro → Lifebloom (resto)
   furocious: 'feral',          // Worgen Dru — ferocious/fur = feral
