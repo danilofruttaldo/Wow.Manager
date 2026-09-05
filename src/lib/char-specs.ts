@@ -5,9 +5,9 @@ export const CHAR_SPEC: Record<string, string> = {
   stantu: '*', // wildcard NUDA: gioca tutte le spec Warrior, nessuna preferita -> sola icona wildcard
   furricane: 'brewmaster', // fallback; vedi CHAR_SPEC_BY_RACE per la disambiguazione
   snowwipe: 'arcane',      // era 'frost' fino al 2026-09-01: cambio confermato dall'utente.
-                           // ⚠️ Con questo i mage restano arcane x3 (con spelling e spellstill),
-                           // fire x2 (repository, blinkette) e FROST ZERO: la casella mage-frost
-                           // e' tornata muta, se serve coprirla va spostato un altro mago.
+                           // Il buco che lasciava (mage-frost muta) l'ha chiuso spellstill il
+                           // 2026-09-05: ora i mage sono arcane2 (con spelling), fire2
+                           // (repository, blinkette), frost1 (spellstill).
   mustaina: 'feral',
   blessismore: 'protection',
   totemtanz: 'elemental',
@@ -38,10 +38,10 @@ export const CHAR_SPEC: Record<string, string> = {
   catatonic: 'balance',
   shiftzord: 'restoration',
   demoversion: 'vengeance',
-  foxlust: 'elemental',   // Vulpera: flavor volpe/fuoco; evita il 3° enhancement Orda
   tearsforfear: 'destruction', // Goblin: esplosivi/caos; completa la varietà stregoni Orda
   // Alleanza (nuovi PG). Spec note; il resto è '?' finché non confermate.
-  spellstill: 'arcane',
+  spellstill: 'frost',        // era 'arcane' fino al 2026-09-05: copre la casella mage-frost,
+                              // muta da quando snowwipe e' passata ad arcane
   gnomorrage: 'assassination',
   dwarfnought: 'arms',        // "dreadnought" → arma pesante a 2 mani
   ipelf: 'windwalker',
@@ -56,12 +56,17 @@ export const CHAR_SPEC: Record<string, string> = {
   dayandknight: 'unholy',     // "knight" notturno/oscuro; evita doppione con furricane (frost)
   dwarfenstein: 'blood',      // spec attiva nei dati di gioco (250=blood); completa il trio DK Alleanza
   demongear: 'vengeance',     // "demon…gear" → tank demoniaco
-  blinkette: 'fire',          // gnomo = esplosivi/tinker → Fire; evita doppione con spellstill (arcane)
+  blinkette: 'fire',          // gnomo = esplosivi/tinker → Fire (con repository)
   hadruidken: 'balance',      // "hadouken" → colpo a distanza
   totemizer: 'enhancement',   // spec attiva in gioco
   periodrage: 'fury',         // "rage" → ira
   demonstrate: 'havoc',       // tema demoniaco, DPS melee
   proctolodin: 'holy',        // Nano Pal recuperato — proctologo → medico/cura
+  totemptation: 'restoration',// ex Foxlust (Vulpera ele), cambio fazione+razza il 2026-09-05.
+                              // Resto era l'unica spec sciamano in minoranza (1 su 7 con pandacoil):
+                              // ora ele2/enh3/resto2, e l'Alleanza ha un trio ele/enh/resto completo
+                              // (shockolat, totemizer, questo). Il nome vecchio era un pun su
+                              // Bloodlust, che sull'Alleanza si chiama Heroism.
 
   // ── PARCHEGGIATE: nomi che oggi NON sono in pg.md ────────────────────────────────
   // Le 18 righe qui sotto sono PG pianificati e mai creati, tolti dalla tabella il
