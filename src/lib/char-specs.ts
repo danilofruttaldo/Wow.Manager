@@ -53,7 +53,9 @@ export const CHAR_SPEC: Record<string, string> = {
   tinytank: 'protection',     // "tank"
   plateatico: 'protection',   // "plate" → tank in piastra
   shottini: 'beastmastery',
-  dayandknight: 'unholy',     // "knight" notturno/oscuro; evita doppione con furricane (frost)
+  dayandknight: 'unholy',     // evita doppione con furricane (frost). Da Night Elf a Lightforged
+                              // Draenei il 2026-09-05: "day and knight" e' ora la Luce (draenei
+                              // forgiato) e la non-morte nello stesso PG
   dwarfenstein: 'blood',      // spec attiva nei dati di gioco (250=blood); completa il trio DK Alleanza
   demongear: 'vengeance',     // "demon…gear" → tank demoniaco
   blinkette: 'fire',          // gnomo = esplosivi/tinker → Fire (con repository)

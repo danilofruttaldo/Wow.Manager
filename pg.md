@@ -30,12 +30,12 @@ Personaggi esistenti per combinazione razza/classe. Fonte: `SavedVariables/Syndi
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Human | | | | | | | X | _Spellstill·P | | | X | X | X |
 | Dwarf | _Dwarfnought·R | _Proctolodin·S | | | | | _Shockolat·N | | | | X | X | X |
-| Night Elf | | X | | | | _Dayandknight·P | X | | | _Ipelf·R | _Hadruidken·S | _Demongear·R<br>_Demonstrate·S | X |
+| Night Elf | | X | | | | | X | | | _Ipelf·R | _Hadruidken·S | _Demongear·R<br>_Demonstrate·S | X |
 | Gnome | _Tinytank·P | X | | _Gnomorrage·P | | | X | _Blinkette·S | | | X | X | X |
 | Draenei | | | | | _Holytude·N | | _Totemptation·N | | | | X | X | X |
 | Worgen | | X | | | | Furricane·N | X | | | | | X | X |
 | Void Elf | | X | | | _Discoteque·S | | X | | _Dotnetcore·N | | X | _Vanillidan·N | X |
-| Lightforged Draenei | _Periodrage·S | | | | | | X | | | | X | X | X |
+| Lightforged Draenei | _Periodrage·S | | | | | _Dayandknight·P | X | | | | X | X | X |
 | Dark Iron Dwarf | | _Plateatico·P | | | | _Dwarfenstein·S | | | | | X | X | X |
 | Kul Tiran | | X | | | | | _Totemizer·S | | | | | X | X |
 | Mechagnome | | X | _Shottini·P | | | | X | | | | X | X | X |
