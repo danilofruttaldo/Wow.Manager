@@ -705,7 +705,8 @@
                                           "class":  "warrior",
                                           "level":  50,
                                           "professions":  [
-
+                                                              "Blacksmithing",
+                                                              "Mining"
                                                           ],
                                           "midnightSpecs":  [
 
