@@ -477,6 +477,41 @@ for (const a of ARTI) if (!artUsate.has(a)) avviso('hardware', `disegno «${a}»
 if (!ci_sta('public/icons/section/hardware.jpg')) err('hardware', "manca public/icons/section/hardware.jpg (icona della sezione in nav)");
 nota(`hardware: ${componenti.length} blocchi, ${opzioni.length} impostazioni, ${ARTI.size} disegni`);
 
+// ── Font e profili UI: i due domini che il SITO non mostra ─────────────────────
+//
+// ⚠️ Sono gli unici due domini del README che nessuna pagina legge, e fino al 2026-09-06
+// non li guardava nemmeno questo validatore: se marcivano, non se ne accorgeva nessuno.
+// Non sono pero' la stessa cosa, e la differenza conta:
+//   fonts/       e' DATO VIVO — lo consuma scripts/apply-fonts.ps1, che dichiara di non
+//                avere elenchi hardcoded e di seguire il manifest. Rompere `override.files`
+//                rompe quello script, non una pagina.
+//   ui-profiles/ e' un SEGNAPOSTO: `profiles` e' vuoto dal 27/05 e non lo legge nessuno.
+//                Resta valido averlo dichiarato; qui si controlla solo che la forma regga
+//                per il giorno in cui si riempie.
+// ⚠️ Non si controlla che i percorsi Windows dentro `fonts` esistano: questo gira anche in
+// CI su Linux, dove `C:\Windows\Fonts\...` non c'e' e un errore sarebbe rumore fisso.
+for (const [dove, rel, chiave] of [['fonts', 'fonts/manifest.json', 'override'], ['ui-profiles', 'ui-profiles/manifest.json', 'profiles']]) {
+  if (!ci_sta(rel)) { err(dove, `manca ${rel}, ma il README lo dichiara fonte di verita'`); continue; }
+  let m;
+  try { m = json(rel); } catch (e) { err(dove, `${rel} non e JSON valido: ${e.message}`); continue; }
+  if (!m._meta?.schema_version) err(dove, `${rel}: manca _meta.schema_version`);
+  if (m[chiave] === undefined) err(dove, `${rel}: manca il blocco «${chiave}»`);
+}
+const fontOv = json('fonts/manifest.json').override ?? {};
+if (!fontOv.source_file) err('fonts', 'override.source_file non e dichiarato: apply-fonts.ps1 non saprebbe cosa copiare');
+if (!Array.isArray(fontOv.files) || !fontOv.files.length) err('fonts', 'override.files e vuoto: apply-fonts.ps1 non avrebbe nessun nome da scrivere');
+else {
+  // I nomi-override sono quelli che il client carica: devono restare nomi di file .TTF,
+  // non percorsi, perche' lo script li accoda alla cartella Fonts del gioco.
+  for (const f of fontOv.files) {
+    if (!/^[\w.\-]+\.ttf$/i.test(f)) err('fonts', `override.files: «${f}» non e un nome di file .ttf`);
+  }
+  const doppi = fontOv.files.filter((f, i) => fontOv.files.indexOf(f) !== i);
+  if (doppi.length) err('fonts', `override.files ha nomi ripetuti: ${[...new Set(doppi)].join(', ')}`);
+}
+const nProfili = Object.keys(json('ui-profiles/manifest.json').profiles ?? {}).length;
+nota(`fonts: ${(fontOv.files ?? []).length} nomi-override · ui-profiles: ${nProfili} profili`);
+
 // ── Esito ──────────────────────────────────────────────────────────────────────
 if (verboso || !errori.length) for (const t of note) console.log(`  ${t}`);
 for (const t of avvisi) console.log(`AVVISO  ${t}`);
