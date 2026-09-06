@@ -752,15 +752,19 @@ const RACE_ICON: Record<string, string | null> = {
   'Dark Iron Dwarf': 'darkirondwarf', 'Kul Tiran': 'kultiran', 'Mechagnome': 'mechagnome',
 };
 
+// ⚠️ Le icone della tabella PG vanno TUTTE `loading="lazy"`, come quelle di /mount, /ui e
+// /addons: la pagina pesa 5 KB gzip di HTML ma tira 96 file distinti per 203 KB, cioe' 40
+// volte se stessa, e la tabella e' alta parecchi schermi. Se aggiungi un'icona qui,
+// aggiungi anche gli attributi: nascono giuste, non si rincorrono dopo.
 function classIcon(abbr: string): string {
   const e = CLASS_ABBR[abbr];
   if (!e) return abbr;
-  return `<img class="ico ico-class" src="/icons/class/${e[0]}.jpg" alt="${e[1]}" title="${e[1]}" width="26" height="26">`;
+  return `<img class="ico ico-class" src="/icons/class/${e[0]}.jpg" alt="${e[1]}" title="${e[1]}" width="26" height="26" loading="lazy" decoding="async">`;
 }
 function raceIcon(name: string): string {
   const slug = RACE_ICON[name];
   if (!slug) return `<span class="race-txt" title="${name}">${name}</span>`;
-  return `<img class="ico ico-race" src="/icons/race/${slug}.jpg" alt="${name}" title="${name}" width="26" height="26">`;
+  return `<img class="ico ico-race" src="/icons/race/${slug}.jpg" alt="${name}" title="${name}" width="26" height="26" loading="lazy" decoding="async">`;
 }
 
 // Specializzazioni valide per classe (slug classe -> spec). Ogni combo ha un'icona in
@@ -842,12 +846,12 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
       // spec davanti (`'arms*'`) restano tutte e due, l'icona della spec base piu' la wildcard.
       const wild = raw2.endsWith('*');
       const spec = wild ? raw2.slice(0, -1) : raw2;
-      const star = wild ? '<img class="ico ico-wild" src="/icons/ui/wildcard.jpg" alt="wildcard — tutte le spec" title="wildcard — tutte le spec" width="16" height="16">' : '';
+      const star = wild ? '<img class="ico ico-wild" src="/icons/ui/wildcard.jpg" alt="wildcard — tutte le spec" title="wildcard — tutte le spec" width="16" height="16" loading="lazy" decoding="async">' : '';
       if (spec === '?') return `<span class="spec-q" title="spec da confermare">?</span>${star}`;
       if (SPEC_ICON[classSlug]?.includes(spec)) {
         const label = titleCase(spec);
         const title = wild ? `${label} · wildcard (gioca tutte le spec)` : label;
-        return `<img class="ico ico-spec" src="/icons/spec/${classSlug}-${spec}.jpg" alt="${title}" title="${title}" width="16" height="16">${star}`;
+        return `<img class="ico ico-spec" src="/icons/spec/${classSlug}-${spec}.jpg" alt="${title}" title="${title}" width="16" height="16" loading="lazy" decoding="async">${star}`;
       }
       // Ripiego se l'icona della spec manca. Con spec vuota resta la sola wildcard: niente
       // `spec[0]` su stringa vuota, che farebbe crashare il build.
@@ -891,7 +895,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
           // Ripiego coerente con quello della spec: iniziale fra parentesi se manca la chiave
           // (professione fuori dal manifest), cosi' il dato non sparisce in silenzio.
           return key
-            ? `<img class="ico ico-prof" src="/icons/prof/${key}.jpg" alt="${label}" title="${label}" width="16" height="16">`
+            ? `<img class="ico ico-prof" src="/icons/prof/${key}.jpg" alt="${label}" title="${label}" width="16" height="16" loading="lazy" decoding="async">`
             : `<span class="spec-l" title="${label}">(${p[0].toUpperCase()})</span>`;
         }).join('');
     // Due GRUPPI dentro la fila, non icone tutte in fila: spec (+ wildcard) e professioni.
