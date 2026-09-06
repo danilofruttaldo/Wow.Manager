@@ -32,11 +32,11 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 
 - **Install addon**: verifica compat → estrai in `_retail_/Interface/AddOns/` → entry in `addons/manifest.json` → log in `addons/installs.log`.
 - **Backup macro**: copia testo macro in-game → file in `macros/<classe>/[<spec>/]<slug>.txt` → entry in `macros/manifest.json` con `body_file` che punta a quel file.
-- **Sync/audit**: confronta manifest vs filesystem reale per detect drift.
+- **Sync/audit**: `npm run validate` confronta manifest vs filesystem reale (nomi che devono combaciare, file che devono esistere) e gira anche in CI.
 
 ## Sito
 
-Il repo pubblica anche un sito statico che presenta i dati (addon, macro, professioni, PG, transmog, mount, UI, extra):
+Il repo pubblica anche un sito statico che presenta i dati (addon, macro, professioni, PG, transmog, mount, UI, hardware, extra):
 
 - **URL**: <https://wow.danilofruttaldo.com>
 - **Stack**: [Astro](https://astro.build) (statico), sorgente in `src/`, dati letti dai manifest/markdown del repo.
@@ -50,6 +50,6 @@ Per manutenerlo/estenderlo (anche da un'altra postazione) vedi **[CLAUDE.md](CLA
 
 La [MIT](LICENSE) copre **solo** il lavoro originale di questo repo: il codice del sito (`src/`), gli script di manutenzione (`scripts/`) e i file di dati redazionali (manifest e markdown scritti qui). **Non** copre — né potrebbe — il materiale di terzi che il repo trasporta, elencato in **[NOTICE](NOTICE)** e di proprietà dei rispettivi titolari:
 
-- **World of Warcraft**, i suoi nomi, le icone (`public/icons/`) e gli screenshot di gioco (`public/screenshots/`) sono © e marchi di **Blizzard Entertainment, Inc.**; le icone sono reperite tramite [Wowhead](https://www.wowhead.com). Questo è un progetto **fan non ufficiale e non commerciale**, non affiliato né approvato da Blizzard, pubblicato in linea con i [termini legali Blizzard](https://www.blizzard.com/en-us/legal) per i contenuti dei fan.
-- Gli **avatar degli addon** (`public/icons/addon/`) appartengono ai rispettivi autori, reperiti tramite [CurseForge](https://www.curseforge.com).
+- **World of Warcraft**, i suoi nomi, le icone (`public/icons/`), i render delle cavalcature (`public/mounts/`) e gli screenshot di gioco (`public/screenshots/`) sono © e marchi di **Blizzard Entertainment, Inc.**; le icone sono reperite tramite [Wowhead](https://www.wowhead.com), i render direttamente dal servizio di Blizzard (`render.worldofwarcraft.com`) — 1561 file, ~16 MB, il blocco di materiale Blizzard più grande che il repo trasporta. Questo è un progetto **fan non ufficiale e non commerciale**, non affiliato né approvato da Blizzard, pubblicato in linea con i [termini legali Blizzard](https://www.blizzard.com/en-us/legal) per i contenuti dei fan.
+- Gli **avatar degli addon** (`public/icons/addon/`) e le **anteprime** mostrate nella loro scheda (`public/addon-img/`) appartengono ai rispettivi autori, reperiti tramite [CurseForge](https://www.curseforge.com).
 - I **font web** Inter e JetBrains Mono (`public/fonts/`) sono sotto **SIL Open Font License 1.1** — testo in [public/fonts/OFL.txt](public/fonts/OFL.txt).
