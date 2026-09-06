@@ -42,6 +42,7 @@ Il repo pubblica anche un sito statico che presenta i dati (addon, macro, profes
 - **Stack**: [Astro](https://astro.build) (statico), sorgente in `src/`, dati letti dai manifest/markdown del repo.
 - **Sviluppo locale**: `npm install` una volta, poi `npm run dev` (o **F5** in VS Code → "Sito locale (dev)"). Richiede **Node ≥ 22.12**.
 - **Deploy**: automatico su **GitHub Pages** via GitHub Actions ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) a ogni push su `main`. Dominio in [public/CNAME](public/CNAME).
+- **Hook git**: su un clone nuovo vanno attivati con `git config core.hooksPath .githooks`, altrimenti ci sono ma non girano. Dove Node manca `pre-commit` e `pre-push` saltano dichiarandolo, e i controlli restano alla CI. Dettagli in [CLAUDE.md](CLAUDE.md).
 
 Il sito **non** modifica i dati: li legge in sola lettura. La fonte di verità resta nei manifest/`pg.md`.
 Per manutenerlo/estenderlo (anche da un'altra postazione) vedi **[CLAUDE.md](CLAUDE.md)**.
