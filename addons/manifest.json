@@ -395,6 +395,7 @@
       "interface": "120100, 50504, 20506",
       "source": "naowh",
       "url": "https://naowh.gg/downloads",
+      "preview": "",
       "installed": "2026-09-04",
       "folders": [
         "NaowhUI",
@@ -411,6 +412,7 @@
       "interface": "11508, 11509, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120005, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/bug-grabber",
+      "preview": "",
       "installed": "2026-08-30",
       "folders": [
         "!BugGrabber"

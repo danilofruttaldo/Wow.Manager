@@ -115,9 +115,17 @@ const fonti = existsSync(fonteFile) ? JSON.parse(readFileSync(fonteFile, 'utf8')
 // Sequenziale e non in parallelo: sono 16 addon, e cfwidget e' un servizio gratuito — non
 // vale la pena martellarlo per risparmiare qualche secondo una volta ogni tanto.
 let prese = 0, saltate = 0;
-const senza = [];
+const senza = [], dichiarate = [];
 for (const [key, a] of addons) {
   const file = join(dir, `${key}.webp`);
+  // ⚠️ `preview` VUOTO e `preview` ASSENTE non sono la stessa cosa, ed e' la stessa
+  // convenzione di `class`/`race` nel manifest delle mount: assente = «mai cercata»,
+  // quindi si prova il logo di ripiego; presente e vuoto = «cercata, la fonte non ce
+  // l'ha». Senza questa distinzione NaowhUI (non e' su CurseForge) e BugGrabber (il
+  // progetto non ha avatar e in galleria ha solo un badge Patreon) risultavano in
+  // sospeso a ogni giro, e node-pending.ps1 rilanciava all'infinito uno script che
+  // per loro non puo' fare niente. Il perche' sta per esteso nelle loro `notes`.
+  if (a.preview === '') { dichiarate.push(key); continue; }
   // L'URL scelto a mano vince sempre; il logo e' solo il ripiego per chi non ce l'ha.
   const scelto = (a.preview || '').trim();
   let url = scelto;
@@ -145,8 +153,10 @@ for (const [key, a] of addons) {
 }
 console.log(`immagini addon: ${prese} scaricate, ${saltate} gia' a posto, ${senza.length} senza`);
 for (const t of senza) console.log(`  senza immagine: ${t}`);
+if (dichiarate.length) console.log(`  senza fonte, dichiarato (\`preview\` vuoto): ${dichiarate.join(', ')}`);
 const curate = addons.filter(([, a]) => (a.preview || '').trim()).length;
-console.log(`fonte: ${curate} dalla galleria (campo \`preview\`), ${addons.length - curate} dal logo di ripiego`);
+const conFonte = addons.length - dichiarate.length;
+console.log(`fonte: ${curate} dalla galleria (campo \`preview\`), ${conFonte - curate} dal logo di ripiego`);
 
 // Orfane: un addon rimosso dal manifest lascerebbe il suo file nel repo.
 const vivi = new Set(addons.map(([key]) => key));

@@ -84,6 +84,13 @@ function PendentiAddon {
     if (Test-Path $fFonti) { $fonti = Get-Content -Raw -Encoding UTF8 $fFonti | ConvertFrom-Json }
     $n = 0
     foreach ($p in $addons.PSObject.Properties) {
+        # `preview` PRESENTE E VUOTO = «cercata, la fonte non ce l'ha»: non e' lavoro in
+        # sospeso e non va contato, o si rilancerebbe per sempre uno script che per quella
+        # voce non puo' fare niente (NaowhUI non e' su CurseForge, il progetto BugGrabber
+        # non ha avatar). `preview` ASSENTE resta «mai cercata» e si prova il ripiego.
+        # Stessa convenzione di `class`/`race` nel manifest delle mount.
+        $campo = $p.Value.PSObject.Properties['preview']
+        if ($campo -and $campo.Value -eq '') { continue }
         $webp = Percorso ("public\addon-img\" + $p.Name + ".webp")
         if (-not (Test-Path $webp)) { $n++; continue }
         $preview = $p.Value.preview
