@@ -138,6 +138,7 @@ let gi = 0;
 
 <script>
 import { loadFilters, saveFilters } from '../lib/filter-state';
+import { trappolaFocus } from '../lib/focus-trap';
 
 // ── Stato del lightbox a livello di modulo ──
 // Il listener da tastiera sta su `document` e va agganciato UNA volta sola (vedi
@@ -195,15 +196,12 @@ function initLbKeys() {
     if (e.key === 'ArrowRight') { lbShow(lbIdx + 1); return; }
     if (e.key !== 'Tab') return;
 
-    // Trappola del focus: dentro un dialog modale il Tab non deve uscire
-    // sui contenuti della pagina, che restano inerti dietro l'overlay.
-    const f = Array.from(lb.querySelectorAll<HTMLElement>('button'));
-    if (!f.length) return;
-    const first = f[0];
-    const last = f[f.length - 1];
-    const cur = document.activeElement;
-    if (e.shiftKey && (cur === first || !lb.contains(cur))) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && (cur === last || !lb.contains(cur))) { e.preventDefault(); first.focus(); }
+    // Trappola del focus: sta in lib/focus-trap.ts, una per tutte le modali del sito.
+    // ⚠️ Qui dentro oggi ci sono SOLO bottoni (×, ‹, ›), mai nascosti e mai disabilitati,
+    // quindi il vecchio selettore `'button'` funzionava — per combinazione, non per
+    // scelta. Passando dal modulo comune, il giorno che questo lightbox prendesse un link
+    // o un'area scorrevole non ci sarebbe niente da ricordarsi.
+    trappolaFocus(e, lb);
   });
 }
 

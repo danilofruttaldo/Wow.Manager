@@ -14,6 +14,8 @@
 // viene sostituita ma questo modulo sopravvive, quindi un riferimento preso all'inizio
 // sarebbe quello della pagina precedente — e la terrebbe anche in memoria.
 
+import { trappolaFocus } from './focus-trap';
+
 export interface DialogOpts {
   /** id del contenitore `.dlg` */
   id: string;
@@ -82,24 +84,10 @@ function initKeys() {
     if (e.key === 'ArrowLeft') { e.preventDefault(); vivo?.step(-1); return; }
     if (e.key === 'ArrowRight') { e.preventDefault(); vivo?.step(1); return; }
     if (e.key !== 'Tab') return;
-    // Trappola del focus: dentro un dialog il Tab non deve uscire sulla pagina.
-    // ⚠️ `:not([disabled])` conta: con una sola card visibile le frecce sono disabilitate,
-    // e prenderle comunque manderebbe il focus su un elemento non focalizzabile — cioe'
-    // fuori dalla trappola, che e' esattamente quello che deve impedire.
-    // ⚠️ `[tabindex="0"]` prende il corpo scorrevole (`.dlg-body`): senza, il giro si
-    // chiudeva sui soli comandi della testata e il contenuto lungo non si scorreva da
-    // tastiera. Stesso selettore della modale di /extra.
-    const f = Array.from(lb.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex="0"]'));
-    if (!f.length) return;
-    const first = f[0], last = f[f.length - 1], cur = document.activeElement;
-    // ⚠️ Il pannello e' il punto di partenza (ci va il focus all'apertura) e non e' un
-    // controllo: in avanti il browser scende da solo sul primo bottone, ma all'indietro
-    // uscirebbe dal dialog — la pagina dietro e' `inert`, quindi il focus finirebbe sulla
-    // barra del browser. Si chiude il giro a mano.
-    const panel = lb.querySelector('.dlg-panel');
-    if (e.shiftKey && cur === panel) { e.preventDefault(); last.focus(); return; }
-    if (e.shiftKey && (cur === first || !lb.contains(cur))) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && (cur === last || !lb.contains(cur))) { e.preventDefault(); first.focus(); }
+    // Il pannello e' il punto di partenza (ci va il focus all'apertura) e non e' un
+    // controllo: va passato come `partenza` perche' il giro si chiuda anche all'indietro.
+    // Il resto — selettore e cicli — vive in lib/focus-trap.ts, uno per tutte le modali.
+    trappolaFocus(e, lb, lb.querySelector('.dlg-panel'));
   });
 }
 

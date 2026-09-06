@@ -106,6 +106,7 @@ a.xcard:hover { border-color: var(--accent); }
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
   import { copyText } from '../lib/clipboard';
+  import { trappolaFocus } from '../lib/focus-trap';
 
   // Da dove si era arrivati alla modale, per restituire il focus alla chiusura.
   let xlbLastFocus: HTMLElement | null = null;
@@ -138,19 +139,10 @@ a.xcard:hover { border-color: var(--accent); }
       if (e.key === 'Escape') { closeXlb(); return; }
       if (e.key !== 'Tab') return;
 
-      // Trappola del focus: dentro un dialog modale il Tab non deve uscire
-      // sui contenuti della pagina, che restano inerti dietro l'overlay.
-      // ⚠️ `[tabindex="0"]` NON e' un di piu': il <pre> del corpo e' focalizzabile
-      // apposta (e' lui lo scroller), e con la sola `button` il giro si chiudeva fra
-      // Copia e ×, saltandolo in ENTRAMBE le direzioni — da tastiera uno script lungo
-      // era impossibile da scorrere. Stesso selettore di lib/dialog.ts.
-      const f = Array.from(lb.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex="0"]'));
-      if (!f.length) return;
-      const first = f[0];
-      const last = f[f.length - 1];
-      const cur = document.activeElement;
-      if (e.shiftKey && (cur === first || !lb.contains(cur))) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && (cur === last || !lb.contains(cur))) { e.preventDefault(); first.focus(); }
+      // Trappola del focus: sta in lib/focus-trap.ts, una per tutte le modali del sito.
+      // Qui il focus all'apertura va sulla × (un controllo vero), quindi niente `partenza`:
+      // il caso del pannello non-controllo e' solo di /mount e /addons.
+      trappolaFocus(e, lb);
     });
   }
 
