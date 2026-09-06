@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# ⚠️ COPIA VERSIONATA di un hook che stava solo nella cartella globale
+# (~/.git-hooks) — vedi la nota in .githooks/pre-push per il perche'.
+# Il corpo e' identico all'originale: se lo modifichi, allinea anche quello.
+#
+# `npm audit --omit=dev` guarda le dipendenze di produzione. Il suo esito NON
+# blocca il commit (l'uscita dell'hook e' quella dell'if piu' sotto): riferisce e
+# basta, che e' giusto — una vulnerabilita' a monte non e' colpa del commit che
+# stai facendo. `format:check` invece blocca, ma qui non esiste come script,
+# quindi `--if-present` esce 0 e il ramo BLOCKED non si raggiunge.
+
+if [ -f "package.json" ]; then
+  npm audit --omit=dev
+
+  if npm run format:check --if-present 2>/dev/null; then
+    :
+  else
+    echo "BLOCKED: prettier check failed. Run 'npm run format' to fix."
+    exit 1
+  fi
+fi

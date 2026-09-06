@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# ⚠️ COPIA VERSIONATA di un hook che stava solo nella cartella globale
+# (~/.git-hooks). Sta qui perche' `core.hooksPath` SOSTITUISCE l'intera cartella,
+# non la fonde: puntandolo a .githooks per avere le regole sui messaggi di commit
+# del repo, gli hook globali si spengono. Portandolo dentro il repo vale su
+# entrambe le postazioni invece che solo dove esiste la cartella globale.
+# Il corpo e' identico all'originale: se lo modifichi, allinea anche quello.
+#
+# Opt-in CI mirror. If the repo defines a `ci:verify` npm script, run it
+# before every push so failures surface locally instead of in CI.
+# Repos without the script are unaffected (`--if-present` exits 0).
+# Bypass for emergencies with: SKIP_VERIFY=1 git push
+
+if [ -f "package.json" ]; then
+  if [ "${SKIP_VERIFY:-}" = "1" ]; then
+    echo "pre-push: SKIP_VERIFY=1 — skipping ci:verify."
+  else
+    echo "pre-push: running ci:verify (mirrors CI gates)..."
+    if ! npm run ci:verify --if-present; then
+      echo "BLOCKED: ci:verify failed — fix before pushing (or SKIP_VERIFY=1 git push to bypass)."
+      exit 1
+    fi
+  fi
+fi

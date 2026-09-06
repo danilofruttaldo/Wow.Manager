@@ -477,13 +477,19 @@ Push su `main` → GitHub Actions ([.github/workflows/deploy.yml](.github/workfl
 
 ## Vincoli git del repo (hook attivi — rispettali)
 
-Applicati da [.githooks/commit-msg](.githooks/commit-msg). ⚠️ **Su un clone nuovo vanno attivati a mano**, perché `.git/` non si versiona:
+Gli hook sono **tre**, in [.githooks/](.githooks/): `commit-msg` (regole sui messaggi, sotto), `pre-commit` (`npm audit --omit=dev`, riferisce e non blocca) e `pre-push` (specchio della CI, sotto). ⚠️ **Su un clone nuovo vanno attivati a mano**, perché `.git/` non si versiona:
 
 ```bash
 git config core.hooksPath .githooks
 ```
 
-Senza quel comando l'hook c'è ma non gira.
+Senza quel comando gli hook ci sono ma non girano.
+
+⚠️ **`core.hooksPath` SOSTITUISCE la cartella degli hook, non la fonde**, e questo ha un effetto che è già costato una regressione silenziosa il 2026-09-06. Su questa postazione esiste un set globale in `~/.git-hooks` con tre hook; puntando `core.hooksPath` a `.githooks`, che ne aveva **uno solo**, gli altri due si sono spenti — e l'unico segnale era una riga in meno nell'output di `git push`. Per questo `pre-commit` e `pre-push` sono stati **portati dentro il repo**: versionati valgono su entrambe le postazioni e non dipendono più da cosa c'è nella home di chi clona. Il corpo è identico agli originali globali; se ne modifichi uno, allinea l'altro.
+
+⚠️ **`pre-push` era decorativo, e non si vedeva.** Esegue `npm run ci:verify --if-present`: fino al 2026-09-06 lo script `ci:verify` **non esisteva** in `package.json`, quindi `--if-present` usciva 0 e la riga rassicurante «running ci:verify (mirrors CI gates)» compariva a ogni push **senza che girasse alcun gate**. Ora `ci:verify` c'è ed è `validate && check && build && audit`, cioè esattamente i tre step del workflow *Verifica* più il build che l'audit richiede. Costo: una trentina di secondi per push, che è il prezzo di scoprire un rosso prima di GitHub invece che dopo. Emergenze: `SKIP_VERIFY=1 git push`.
+
+⚠️ **I tre hook sono tracciati `100755`.** Il `commit-msg` stava a `100644`: su Windows non cambia niente (li lancia `sh` a prescindere), ma su un clone Linux o WSL un hook non eseguibile **non gira** e non lo dice — la stessa classe di trappola per cui `.gitattributes` forza già `.githooks/* text eol=lf`, così lo shebang non diventa `#!/bin/sh\r`.
 
 **I fine riga invece NON sono più un passo per-clone**: li decide [.gitattributes](.gitattributes). ⚠️ Prima reggeva solo perché su questa postazione c'è `core.autocrlf=true`, che è una scelta **locale e non versionata**: su un clone senza quel `git config`, il primo sync PowerShell avrebbe riscritto `mounts/manifest.json` (570 KB) in CRLF e il diff sarebbe stato il file intero. Non era teoria — la regex di `mount-classes.mjs` deve già tollerare un `
 ` di troppo. Nel repo resta tutto **LF** (che è già lo stato di ogni file tracciato, quindi il file non ha rinormalizzato nulla); nella copia di lavoro `.ps1`, `.lua` e `.toc` restano **CRLF** perché si aprono su Windows, mentre `.githooks/*` e `.sh` restano **LF** perché li esegue `sh` e uno shebang `#!/bin/sh
