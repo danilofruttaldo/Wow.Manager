@@ -38,12 +38,25 @@ const iw = process.argv.indexOf('--larghezza');
 const LARGHEZZA = iw >= 0 ? Number(process.argv[iw + 1]) : 640;
 const QUALITA = 82;
 
-mkdirSync(dest, { recursive: true });
-const files = readdirSync(src).filter((f) => f.endsWith('.webp')).sort();
+// ⚠️ Prima si guarda, poi si crea. Il `mkdirSync` stava QUI SOPRA, prima del controllo, e
+// con `recursive: true` creava anche `public/screenshots/` oltre a `thumb/`: lanciato ad
+// archivio vuoto lasciava due cartelle vuote sul disco e stampava comunque «Nessuno
+// screenshot da elaborare», cioe' senza dire che aveva scritto qualcosa. E' successo il
+// 2026-09-06, appena svuotato l'archivio. Git non traccia le cartelle vuote, quindi non
+// se ne accorgeva nessuno: restavano solo sulla macchina che aveva lanciato lo script.
+// E' la stessa famiglia dell'inciampo gia' annotato piu' sopra (la cwd sbagliata che
+// creava `./public/screenshots/thumb` altrove), quindi vale la stessa cura.
+//
+// ⚠️ Quel `mkdirSync` era pero' anche cio' che teneva in piedi `readdirSync(src)` quando
+// la cartella non c'era: spostandolo dopo, la lettura va protetta o solleva ENOENT.
+const files = existsSync(src)
+  ? readdirSync(src).filter((f) => f.endsWith('.webp')).sort()
+  : [];
 if (!files.length) {
   console.log('Nessuno screenshot da elaborare.');
   process.exit(0);
 }
+mkdirSync(dest, { recursive: true });
 
 let prima = 0, dopo = 0, fatte = 0, saltate = 0;
 for (const f of files) {
