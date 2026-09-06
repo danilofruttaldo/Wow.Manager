@@ -86,7 +86,10 @@ function initKeys() {
     // ⚠️ `:not([disabled])` conta: con una sola card visibile le frecce sono disabilitate,
     // e prenderle comunque manderebbe il focus su un elemento non focalizzabile — cioe'
     // fuori dalla trappola, che e' esattamente quello che deve impedire.
-    const f = Array.from(lb.querySelectorAll<HTMLElement>('button:not([disabled]), a[href]'));
+    // ⚠️ `[tabindex="0"]` prende il corpo scorrevole (`.dlg-body`): senza, il giro si
+    // chiudeva sui soli comandi della testata e il contenuto lungo non si scorreva da
+    // tastiera. Stesso selettore della modale di /extra.
+    const f = Array.from(lb.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex="0"]'));
     if (!f.length) return;
     const first = f[0], last = f[f.length - 1], cur = document.activeElement;
     // ⚠️ Il pannello e' il punto di partenza (ci va il focus all'apertura) e non e' un

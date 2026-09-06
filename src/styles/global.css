@@ -104,7 +104,6 @@ main { min-height: calc(100vh - var(--header-height) - 60px); padding-top: 1.5re
 .phead h1 { font-size: 1.35rem; }
 .phead .meta { font-size: 0.8rem; color: var(--text-subtle); }
 .phead .meta code { font-size: 0.78rem; }
-.phead .spacer { margin-left: auto; }
 
 h2.group { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-subtle); margin: 1.4rem 0 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
 
@@ -238,6 +237,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
    che ne ha 544: si legge. Il render quadrato di /mount resta 320x320, identico a prima. */
 .dlg-img { max-width: 100%; max-height: min(320px, 40vh); width: auto; height: auto; object-fit: contain; }
 .dlg-body { flex: 1; min-height: 0; padding: 0.85rem 0.9rem 1rem; overflow: auto; display: flex; flex-direction: column; gap: 0.8rem; }
+/* Il corpo e' focalizzabile (e' lui che scorre): l'anello va INDENTRO, perche' il
+   pannello ha `overflow: hidden` e con l'offset positivo del focus globale verrebbe
+   tagliato sui quattro lati. */
+.dlg-body:focus-visible { outline-offset: -2px; border-radius: 0; }
 .dlg-desc { margin: 0; font-size: var(--fs-md); color: var(--text-muted); line-height: 1.5; border-left: 2px solid var(--border); padding-left: 0.7rem; }
 /* Campi «Etichetta: valore»: righe separate da un filetto come le tabelle del sito —
    arrivano a 8, e in blocco si leggono male. */

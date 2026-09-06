@@ -158,7 +158,11 @@ const srcOptions = [...srcCounts.entries()]
             se la va a scaricare. L'attributo lo crea il JS quando serve. */}
         <img class="dlg-img" id="mlb-img" alt="" decoding="async" />
       </div>
-      <div class="dlg-body">
+      {/* `tabindex="0"` perche' e' QUESTO l'elemento che scorre (`overflow: auto`): il
+          pannello ha `overflow: hidden` e non si scrolla, quindi senza una fermata di
+          focus qui il contenuto lungo non si scorreva da tastiera. Stesso pattern del
+          <pre> nella modale di /extra; la trappola in lib/dialog.ts lo raccoglie. */}
+      <div class="dlg-body" tabindex="0" role="region" aria-label="Dettaglio della cavalcatura">
         <div class="mlb-badges" id="mlb-badges"></div>
         <dl class="dlg-fields" id="mlb-fields"></dl>
         <p class="dlg-desc mlb-desc" id="mlb-desc" hidden></p>

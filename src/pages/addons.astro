@@ -124,7 +124,9 @@ const outdatedCount = addons.length - updatedCount;
       {/* Stesso ordine del corpo di /mount: campi, prosa, link. Le cartelle sono una RIGA
           DEI CAMPI (pastiglie nel valore) e non un blocco a parte: cosi' i due corpi
           hanno gli stessi componenti nella stessa sequenza. */}
-      <div class="dlg-body">
+      {/* `tabindex="0"`: e' il corpo a scorrere, non il pannello. Vedi il gemello in
+          mount.astro e la trappola del focus in lib/dialog.ts. */}
+      <div class="dlg-body" tabindex="0" role="region" aria-label="Dettaglio dell'addon">
         <dl class="dlg-fields" id="alb-fields"></dl>
         <p class="dlg-desc" id="alb-desc" hidden></p>
         <a class="dlg-link extlink" id="alb-link" href="#" target="_blank" rel="noopener noreferrer">
@@ -321,10 +323,23 @@ const outdatedCount = addons.length - updatedCount;
           }
           elFields.hidden = elFields.children.length === 0;
 
+          // ⚠️ Stessa cautela della modale di /mount, e qui MANCAVA: nascondere l'ancora
+          // non basta, va tolto anche l'`href`. La trappola del Tab in dialog.ts raccoglie
+          // `a[href]`, e `href=""` lo soddisfa: l'ancora nascosta resterebbe nel giro come
+          // ultimo elemento, dove `focus()` non fa nulla (e' `display: none`) — quindi
+          // Shift+Tab dal pannello non muoverebbe niente e il Tab in avanti scapperebbe
+          // fuori dal dialog, sulla barra del browser, perche' la pagina dietro e' inert.
+          // Oggi tutti e 29 gli addon hanno un `url`, quindi il caso non si presenta: e'
+          // una trappola armata per il primo che non ce l'avra'.
           const url = d.url || '';
-          elLink.href = url;
           el('alb-link-txt').textContent = `Scheda su ${d.srclabel || 'sito ufficiale'}`;
-          elLink.hidden = !url;
+          if (url) {
+            elLink.href = url;
+            elLink.hidden = false;
+          } else {
+            elLink.removeAttribute('href');
+            elLink.hidden = true;
+          }
 
           dialogPos(lb, card, visible);
         },
