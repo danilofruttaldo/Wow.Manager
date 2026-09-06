@@ -112,6 +112,16 @@
       "body_file": "validate-data.mjs",
       "notes": "Nasce perche' le guardie forti del repo (il campo `sospetto` dei dump, la soglia sulla perdita di icone, `mismatches`) stanno dentro gli script di sync, quindi coprono il solo dato macchina-generato: pg.md, char-specs.ts, builds.json e i manifest non avevano nessuna rete. E' successo davvero -- i 19 PG pianificati tolti da pg.md il 2026-08-04 hanno lasciato le loro spec in char-specs.ts e nulla lo ha segnalato per giorni. Copre: chiavi delle cinque tabelle professioni + nomi-nodo di builds/specs contro l'albero del client, body_file delle macro e .txt orfani, campi e icone degli addon, script dichiarati in questo stesso manifest, PG di pg.md contro char-specs (spec valida per la classe, icona presente, omonimi disambiguati), _meta e icone/render delle mount, e per il transmog il triangolo versions/collected/pieceList piu' le virgole vietate in `fonte`. ⚠️ Le chiavi di CHAR_SPEC che non compaiono in pg.md NON sono un errore: sono i pianificati parcheggiati apposta, e si contano soltanto. Niente dipendenze: solo node:fs."
     },
+    "audit-output": {
+      "kind": "script",
+      "name": "Audit dell'HTML costruito",
+      "desc": "Controlla le pagine che il build emette: riferimenti interni rotti, id duplicati, immagini senza alt o senza misura, salti di titolo, bottoni senza nome accessibile.",
+      "lang": "javascript",
+      "when": "Dopo un `npm run build`, e a ogni push (lo lancia GitHub Actions nel workflow Verifica). Con `--dir <cartella>` si punta a un build diverso da dist/.",
+      "warn": "Guarda l'output, non il comportamento: un difetto che si manifesta solo a runtime -- il focus che scappa da una modale, per dire -- non lo vede. Vuole un build gia' fatto: senza dist/ esce con errore.",
+      "body_file": "audit-output.mjs",
+      "notes": "Aggiunto il 2026-09-06 per chiudere una fascia che non guardava nessuno: `npm run validate` copre i DATI e `astro check` i TIPI, ma fra i due una pagina poteva uscire con un src verso un file inesistente, due id uguali o un bottone muto e passare entrambi i gate, arrivando in produzione verde. PROVATO CONTRO GUASTI INIETTATI in una copia di una pagina (riferimento rotto, id doppio, img senza alt, salto di heading h1->h4, button vuoto): li prende tutti e cinque ed esce 1. Un controllo che non ha mai fallito non vale niente, quindi se lo si tocca va rifatta la prova. LE ECCEZIONI SONO TRE e stanno in IMG_SENZA_MISURA: le immagini delle modali prendono il src dal JS, quindi la misura non e' nota a build-time. /mount non e' fra queste perche' il caso li' e' risolto davvero (dichiara 600x600, che e' la tela fissa di mount-images.mjs); /addons accende la fascia dopo il decode e resta fra le eccezioni perche' le anteprime hanno 17 formati diversi; /ui resta scoperta perche' con l'archivio screenshot vuoto il rimedio non era provabile. Tenere quella lista CORTA: un'eccezione senza motivo scritto e' un controllo spento. NON sostituisce validate: quello guarda i dati prima del build, questo l'output dopo. In CI stanno nello stesso workflow Verifica, con if: always(), perche' sono guasti indipendenti."
+    },
     "mount-images": {
       "kind": "script",
       "name": "Immagini dei modelli mount",

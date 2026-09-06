@@ -74,3 +74,24 @@ jobs:
             printf '::error title=astro-check::%s\n' "$msg"
           fi
           exit $esito
+
+      # ⚠️ Il terzo gate guarda l'HTML che il build EMETTE, che finora non guardava nessuno:
+      # `validate` copre i dati, `check` i tipi, e in mezzo restava scoperta la classe
+      # «riferimento rotto in pagina» — un `src` verso un file assente, due id uguali,
+      # un'immagine senza alt, un bottone senza nome. Sono guasti che passano entrambi gli
+      # altri gate e arrivano in produzione verdi.
+      # ⚠️ Vuole il build, quindi costruisce qui: e' l'unico step che non puo' partire dal
+      # solo sorgente. Resta comunque in QUESTO workflow e non nel deploy, per la ragione
+      # scritta in testa al file — un rosso e' un lavoro da fare, non un sito da spegnere.
+      - name: Output costruito (audit)
+        if: always()
+        run: |
+          set +e
+          out=$( { npm run build && npm run audit; } 2>&1 )
+          esito=$?
+          echo "$out"
+          if [ $esito -ne 0 ]; then
+            msg=$(printf '%s' "$out" | tail -c 4000 | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')
+            printf '::error title=audit-output::%s\n' "$msg"
+          fi
+          exit $esito
