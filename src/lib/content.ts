@@ -170,10 +170,15 @@ function filesIn(rel: string): Set<string> {
 // ── Addon ─────────────────────────────────────────
 export const addonsMeta = (addonsManifest as any)._meta;
 // Icona addon (avatar CurseForge scaricato in public/icons/addon/<key>.<ext>).
-// Estensioni miste (png/jpg/jpeg), quindi si prova una per una.
+// Estensioni miste, quindi si prova una per una — ed e' proprio questo che ha reso
+// indolore il passaggio a webp: nessun percorso con l'estensione scritta a mano.
+// ⚠️ `webp` va per PRIMO: dal 2026-09-06 gli avatar sono tutti webp (364 -> 47 KB, -87%,
+// erano 21 PNG su 29), ma png/jpg restano accettati perche' un avatar nuovo si scarica a
+// mano dall'og:image di CurseForge e arriva nel formato che il progetto pubblica. Finche'
+// non passa dal convertitore, deve comunque vedersi.
 function addonIcon(key: string): string | undefined {
   const files = filesIn('icons/addon');
-  for (const ext of ['png', 'jpg', 'jpeg']) {
+  for (const ext of ['webp', 'png', 'jpg', 'jpeg']) {
     if (files.has(`${key}.${ext}`)) return `/icons/addon/${key}.${ext}`;
   }
   return undefined;

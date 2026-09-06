@@ -160,7 +160,11 @@ for (const [k, a] of Object.entries(addons)) {
   for (const campo of ['name', 'desc', 'version', 'interface', 'source', 'folders']) {
     if (a[campo] == null || (Array.isArray(a[campo]) && !a[campo].length)) err('addon', `${k}: campo ${campo} mancante o vuoto`);
   }
-  if (!['png', 'jpg', 'jpeg'].some((e) => ci_sta(`public/icons/addon/${k}.${e}`))) {
+  // ⚠️ Stesso elenco di estensioni di `addonIcon` in src/lib/content.ts, webp per primo:
+  // se i due divergono, il validatore approva un'icona che il sito non sa risolvere (o
+  // viceversa). Dal 2026-09-06 sul disco sono tutte webp, ma png/jpg restano ammessi
+  // perche' un avatar nuovo si scarica a mano nel formato che il progetto pubblica.
+  if (!['webp', 'png', 'jpg', 'jpeg'].some((e) => ci_sta(`public/icons/addon/${k}.${e}`))) {
     err('addon', `${k}: nessuna icona in public/icons/addon/`);
   }
 }
