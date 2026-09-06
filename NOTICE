@@ -16,22 +16,33 @@ other countries. All World of Warcraft names, terms, game icons and imagery
 are copyright (C) Blizzard Entertainment, Inc.
 
 Affected files: the game icons under public/icons/ (class, race, prof, spec,
-section, ui), the in-game UI screenshots under public/screenshots/, and every
-WoW name referenced across the manifests, the PG table and the site pages. Game
-icons were obtained via Wowhead's icon CDN (https://wow.zamimg.com); the
-screenshots capture live gameplay. The underlying game artwork is Blizzard's.
+section, ui), the mount renders under public/mounts/, the in-game UI screenshots
+under public/screenshots/, and every WoW name referenced across the manifests,
+the PG table and the site pages. Game icons were obtained via Wowhead's icon CDN
+(https://wow.zamimg.com); the mount renders are the official character renders
+served by Blizzard itself (https://render.worldofwarcraft.com), re-encoded to
+WebP and re-framed but otherwise unaltered — they are the largest body of
+Blizzard artwork this repo carries (1561 files, ~20 MB); the screenshots capture
+live gameplay. The underlying game artwork is Blizzard's.
 
 This is an unofficial, non-commercial fan project. It is not affiliated with,
 endorsed, sponsored or approved by Blizzard Entertainment, Inc., and is
 published in line with Blizzard's legal terms for fan-created content
 (see https://www.blizzard.com/en-us/legal).
 
-2. Addon authors / CurseForge — addon avatars
----------------------------------------------
+2. Addon authors / CurseForge — addon avatars and previews
+----------------------------------------------------------
 The addon avatar images under public/icons/addon/ are the logos of the
 respective addon projects, obtained via CurseForge (https://curseforge.com).
 They belong to their respective authors / Overwolf (CurseForge) and are used
 here for identification only.
+
+The addon preview images under public/addon-img/ are screenshots and promotional
+art published by those same projects — taken from their CurseForge project
+gallery, or falling back to the project logo where the gallery has none — and
+re-encoded to WebP. They likewise belong to their respective authors and are
+used here to illustrate the addon being described. The source URL of each one is
+recorded in addons/img-fonti.json.
 
 3. Web fonts — SIL Open Font License 1.1
 ----------------------------------------
