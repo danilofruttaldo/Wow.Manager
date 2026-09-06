@@ -22,7 +22,7 @@ the PG table and the site pages. Game icons were obtained via Wowhead's icon CDN
 (https://wow.zamimg.com); the mount renders are the official character renders
 served by Blizzard itself (https://render.worldofwarcraft.com), re-encoded to
 WebP and re-framed but otherwise unaltered — they are the largest body of
-Blizzard artwork this repo carries (1561 files, ~20 MB); the screenshots capture
+Blizzard artwork this repo carries (1561 files, ~16 MB); the screenshots capture
 live gameplay. The underlying game artwork is Blizzard's.
 
 This is an unofficial, non-commercial fan project. It is not affiliated with,
