@@ -156,7 +156,13 @@ const srcOptions = [...srcCounts.entries()]
       <div class="dlg-hero" id="mlb-hero" hidden>
         {/* Niente `src=""`: un src vuoto il browser lo risolve sull'URL della pagina e
             se la va a scaricare. L'attributo lo crea il JS quando serve. */}
-        <img class="dlg-img" id="mlb-img" alt="" decoding="async" />
+        {/* ⚠️ `width`/`height` ci sono benche' il `src` lo metta il JS: servono a RISERVARE
+            il riquadro prima che il render arrivi, altrimenti la fascia nasce alta quanto
+            il suo padding e si assesta a 320px quando l'immagine si dipinge, spingendo giu'
+            tutto il corpo. Il valore e' esatto e non stimato: `mount-images.mjs` scrive
+            SEMPRE una tela 600x600 (verificato su tutti i render), quindi il rapporto e' 1:1
+            e il CSS lo riporta a min(320px, 40vh). Se un giorno la tela cambia, cambia qui. */}
+        <img class="dlg-img" id="mlb-img" alt="" decoding="async" width="600" height="600" />
       </div>
       {/* `tabindex="0"` perche' e' QUESTO l'elemento che scorre (`overflow: auto`): il
           pannello ha `overflow: hidden` e non si scrolla, quindi senza una fermata di

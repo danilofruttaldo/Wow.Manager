@@ -287,12 +287,31 @@ const outdatedCount = addons.length - updatedCount;
           // testo nude — la differenza piu' vistosa fra questa modale e quella di /mount.
           el('alb-state').className = 'dlg-state ' + (ok ? 'ok' : 'warn');
 
-          // Oggi ce l'hanno tutti e 16, ma un addon appena aggiunto resta senza finche'
-          // non gira `addon-images.mjs`: senza, sparisce la fascia INTERA invece di
-          // lasciare una banda vuota sotto la testata — come in /mount.
+          // Oggi ce l'hanno 27 su 29 (due la fonte non ce l'ha, vedi le loro `notes`), e un
+          // addon appena aggiunto resta senza finche' non gira `addon-images.mjs`: senza,
+          // sparisce la fascia INTERA invece di lasciare una banda vuota sotto la testata
+          // — come in /mount.
+          //
+          // ⚠️ La fascia si accende DOPO che l'immagine e' decodificata, non prima. Qui le
+          // anteprime hanno 17 formati diversi (da 151x135 a 640x640), quindi non si puo'
+          // riservare il riquadro con `width`/`height` come fa /mount, dove il render e'
+          // sempre 600x600: accendendola subito la banda nascerebbe alta quanto il padding
+          // e si assesterebbe all'arrivo dell'immagine, spingendo giu' tutto il corpo.
+          // Cosi' invece compare gia' della misura giusta.
           const img = d.img || '';
-          el('alb-hero').hidden = !img;
-          if (img) { elImg.src = img; elImg.alt = d.name || ''; } else { elImg.removeAttribute('src'); }
+          const atteso = img;
+          el('alb-hero').hidden = true;
+          if (img) {
+            elImg.src = img;
+            elImg.alt = d.name || '';
+            // `atteso` come nel prefetch del JSON: le frecce cambiano card senza riaprire
+            // la modale, e una decodifica partita per la card di prima non deve accendere
+            // la fascia di quella che si sta guardando adesso.
+            elImg.decode().then(() => { if (elImg.src.endsWith(atteso)) el('alb-hero').hidden = false; })
+                          .catch(() => { /* immagine rotta: la fascia resta spenta */ });
+          } else {
+            elImg.removeAttribute('src');
+          }
 
           const desc = d.desc || '';
           el('alb-desc').textContent = desc;
