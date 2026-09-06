@@ -10,6 +10,17 @@
 # stai facendo. `format:check` invece blocca, ma qui non esiste come script,
 # quindi `--if-present` esce 0 e il ramo BLOCKED non si raggiunge.
 
+# ⚠️ La postazione di gioco non ha Node: senza questa guardia `npm` esce 127, il ramo
+# BLOCKED qui sotto si raggiunge lo stesso e l'hook accusa prettier per un npm che manca
+# — con `2>/dev/null` a nascondere la causa vera. E il pre-commit non ha bypass, quindi
+# l'unica uscita era `--no-verify`, che spegne anche commit-msg: si perdevano le due
+# regole del repo proprio mentre le si aggirava. Il salto si DICHIARA, non si tace: un
+# controllo che smette di guardare in silenzio e' peggio di uno che non c'e'.
+if ! command -v npm >/dev/null 2>&1; then
+  echo "pre-commit: npm assente su questa postazione, salto i controlli (la CI copre)."
+  exit 0
+fi
+
 if [ -f "package.json" ]; then
   npm audit --omit=dev
 

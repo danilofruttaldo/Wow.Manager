@@ -274,6 +274,16 @@ if ($delta -eq 0) {
 } else {
     git commit -q -m ("Transmog: collezione aggiornata, +{0} pezzi" -f $delta)
 }
+# ⚠️ E si GUARDA anche l'esito del commit, non solo quello del push. Un commit puo'
+# fallire (un hook che rifiuta, un indice bloccato), e $ErrorActionPreference = "Stop"
+# NON intercetta l'exit code di un eseguibile nativo: lo script tirava dritto e il push
+# a vuoto faceva stampare «committato, ma il PUSH E' FALLITO», che era falso su entrambi
+# i punti e mandava a rilanciare un push che non aveva nulla da mandare.
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "COMMIT FALLITO (git ha risposto $LASTEXITCODE): non e' stato committato nulla." -ForegroundColor Red
+    Write-Host "  il manifest aggiornato e' nella copia di lavoro: committa tu." -ForegroundColor Yellow
+    exit 1
+}
 # ⚠️ L'esito del push si GUARDA. Prima si stampava «committato e pushato» comunque, quindi
 # una rete giu' o un token scaduto passavano inosservati: il commit restava locale, e
 # siccome e' il push a far ripartire GitHub Actions, il sito continuava a mostrare i dati

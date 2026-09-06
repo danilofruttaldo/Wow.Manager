@@ -239,6 +239,17 @@ $titolo = "Node: " + $(if ($pezzi.Count -gt 0) { $pezzi -join ", " } else { "pen
 # L'hook commit-msg rifiuta i titoli oltre i 72 caratteri.
 if ($titolo.Length -gt 72) { $titolo = $titolo.Substring(0, 69) + "..." }
 git commit -q -m $titolo
+# ⚠️ E si GUARDA anche l'esito del commit, non solo quello del push: un hook che rifiuta
+# non ferma lo script, perche' $ErrorActionPreference = "Stop" non intercetta l'exit code
+# di un eseguibile nativo. A rifiutare qui sono commit-msg (il titolo oltre i 72, che la
+# riga sopra tronca apposta) e pre-commit: senza questo controllo un commit mai avvenuto
+# si sarebbe letto come «committato, ma il PUSH E' FALLITO», che manda a rilanciare un
+# push senza nulla da mandare. Il pre-push invece lo intercetta gia' il controllo sotto.
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "COMMIT FALLITO (git ha risposto $LASTEXITCODE): non e' stato committato nulla." -ForegroundColor Red
+    Write-Host "  il lavoro smaltito e' nella copia di lavoro: committa tu." -ForegroundColor Yellow
+    exit 1
+}
 # L'esito del push si GUARDA: e' il push a far ripartire GitHub Actions, quindi un
 # commit rimasto in locale vuol dire sito fermo con la data "sync" vecchia.
 git push -q

@@ -12,6 +12,15 @@
 # Repos without the script are unaffected (`--if-present` exits 0).
 # Bypass for emergencies with: SKIP_VERIFY=1 git push
 
+# ⚠️ Stessa guardia del pre-commit, e per lo stesso motivo: senza Node `ci:verify` non
+# puo' girare (validate, check, build e audit sono tutti `node`), quindi qui l'hook
+# bloccava OGNI push — anche quelli senza nulla da pushare, verificato con --dry-run.
+# Il salto si DICHIARA, non si tace.
+if ! command -v npm >/dev/null 2>&1; then
+  echo "pre-push: npm assente su questa postazione, salto ci:verify (la CI copre)."
+  exit 0
+fi
+
 if [ -f "package.json" ]; then
   if [ "${SKIP_VERIFY:-}" = "1" ]; then
     echo "pre-push: SKIP_VERIFY=1 — skipping ci:verify."
