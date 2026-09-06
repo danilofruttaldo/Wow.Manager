@@ -14,12 +14,13 @@
 # indietro sull'altra macchina, e si smaltisce di qua.
 #
 # ⚠️ NON e' solo roba di mount, anche se sono le mount a segnalarlo. I lavori sono
-# quattro, e per tre di essi nessuno stampa niente quando restano indietro:
+# CINQUE, e per quattro di essi nessuno stampa niente quando restano indietro:
 #   1. vincoli di classe/razza delle mount   mount-classes.mjs   (lo dice mount-sync)
 #   2. immagini dei modelli delle mount      mount-images.mjs    (lo dice mount-sync)
 #   3. anteprime degli addon                 addon-images.mjs    (non lo dice nessuno)
 #   4. miniature degli screenshot UI         make-thumbs.mjs     (lo dice npm run validate)
-# Questo script li conta tutti e quattro e lancia solo quelli che servono: se non c'e'
+#   5. icone delle mount rimaste in jpg      icons-webp.mjs      (non lo dice nessuno)
+# Questo script li conta tutti e cinque e lancia solo quelli che servono: se non c'e'
 # niente da fare dice "niente in sospeso" ed esce senza toccare nulla.
 
 param(
@@ -102,6 +103,17 @@ function PendentiAddon {
     return $n
 }
 
+# Le icone delle cavalcature rimaste in jpg: le converte icons-webp.mjs.
+# ⚠️ Il CDN di Wowhead le pubblica in JPEG e PowerShell il webp non lo sa scrivere, quindi
+# ogni sync che trova mount nuove ne lascia dietro qualcuna. Non e' un guasto e non si vede
+# in pagina — `iconaMount` in content.ts risolve entrambe le estensioni, quindi un'icona
+# appena scaricata si mostra subito: e' solo peso da smaltire dalla postazione con Node.
+function PendentiIconeMount {
+    $dir = Percorso "public\icons\mount"
+    if (-not (Test-Path $dir)) { return 0 }
+    return @(Get-ChildItem $dir -File -Filter *.jpg -ErrorAction SilentlyContinue).Count
+}
+
 # Le miniature degli screenshot: e' l'unico dei quattro che `npm run validate` gia'
 # controlla, quindi qui si arriva di solito con zero.
 function PendentiMiniature {
@@ -153,7 +165,8 @@ if (-not $NoGit -and -not $NoPull) {
 $mount = PendentiMount
 $addon = PendentiAddon
 $mini  = PendentiMiniature
-$totale = $mount.classe + $mount.img + $addon + $mini
+$icone = PendentiIconeMount
+$totale = $mount.classe + $mount.img + $addon + $mini + $icone
 if ($totale -eq 0) {
     Write-Host "niente in sospeso: nessun lavoro da fare qui." -ForegroundColor Green
     exit 0
@@ -163,6 +176,7 @@ if ($mount.classe -gt 0) { Write-Host ("   {0,4} mount da controllare (vincolo d
 if ($mount.img -gt 0)    { Write-Host ("   {0,4} immagini di modelli da scaricare" -f $mount.img) }
 if ($addon -gt 0)        { Write-Host ("   {0,4} anteprime di addon da rifare" -f $addon) }
 if ($mini -gt 0)         { Write-Host ("   {0,4} miniature di screenshot da generare" -f $mini) }
+if ($icone -gt 0)        { Write-Host ("   {0,4} icone di cavalcature da convertire in webp" -f $icone) }
 
 # --- 3. i quattro passi, solo quelli che servono ---------------------------------
 # Ognuno tiene la propria cache sul disco (il campo `class` nel manifest, il file
@@ -172,6 +186,7 @@ if ($mount.classe -gt 0) { Write-Host "vincoli di classe e razza..."; Lancia "mo
 if ($mount.img -gt 0)    { Write-Host "immagini dei modelli...";      Lancia "mount-images.mjs" }
 if ($addon -gt 0)        { Write-Host "anteprime degli addon...";     Lancia "addon-images.mjs" }
 if ($mini -gt 0)         { Write-Host "miniature degli screenshot..."; Lancia "make-thumbs.mjs" }
+if ($icone -gt 0)        { Write-Host "icone delle cavalcature...";   Lancia "icons-webp.mjs" }
 
 # --- 4. cosa resta ---------------------------------------------------------------
 # ⚠️ Restare indietro su una parte e' NORMALE e non e' un errore: 7 modelli Blizzard
@@ -181,9 +196,10 @@ if ($mini -gt 0)         { Write-Host "miniature degli screenshot..."; Lancia "m
 $mountDopo = PendentiMount
 $addonDopo = PendentiAddon
 $miniDopo  = PendentiMiniature
-Write-Host ("fatto: vincoli {0} -> {1}, immagini {2} -> {3}, anteprime {4} -> {5}, miniature {6} -> {7}" -f
+$iconeDopo = PendentiIconeMount
+Write-Host ("fatto: vincoli {0} -> {1}, immagini {2} -> {3}, anteprime {4} -> {5}, miniature {6} -> {7}, icone {8} -> {9}" -f
     $mount.classe, $mountDopo.classe, $mount.img, $mountDopo.img,
-    $addon, $addonDopo, $mini, $miniDopo) -ForegroundColor Green
+    $addon, $addonDopo, $mini, $miniDopo, $icone, $iconeDopo) -ForegroundColor Green
 
 # --- 5. git ----------------------------------------------------------------------
 if ($NoGit) {
@@ -192,7 +208,7 @@ if ($NoGit) {
 }
 
 $miei = @("mounts/manifest.json", "public/mounts", "public/addon-img",
-          "addons/img-fonti.json", "public/screenshots/thumb")
+          "addons/img-fonti.json", "public/screenshots/thumb", "public/icons/mount")
 git add -- $miei
 git diff --cached --quiet
 if ($LASTEXITCODE -eq 0) {
@@ -218,6 +234,7 @@ if (($mount.classe - $mountDopo.classe) -gt 0) { $pezzi += ("{0} vincoli mount" 
 if (($mount.img - $mountDopo.img) -gt 0)       { $pezzi += ("{0} immagini mount" -f ($mount.img - $mountDopo.img)) }
 if (($addon - $addonDopo) -gt 0)               { $pezzi += ("{0} anteprime addon" -f ($addon - $addonDopo)) }
 if (($mini - $miniDopo) -gt 0)                 { $pezzi += ("{0} miniature" -f ($mini - $miniDopo)) }
+if (($icone - $iconeDopo) -gt 0)               { $pezzi += ("{0} icone mount in webp" -f ($icone - $iconeDopo)) }
 $titolo = "Node: " + $(if ($pezzi.Count -gt 0) { $pezzi -join ", " } else { "pendente smaltito" })
 # L'hook commit-msg rifiuta i titoli oltre i 72 caratteri.
 if ($titolo.Length -gt 72) { $titolo = $titolo.Substring(0, 69) + "..." }

@@ -390,7 +390,7 @@ export interface Mount {
   class: string | null;
   race: string | null;
   got: 0 | 1;
-  icon?: string;           // nome icona Wowhead -> public/icons/mount/<icon>.jpg
+  icon?: string;           // URL icona gia risolto (webp o jpg), vedi iconaMount
   img?: string;            // path dell'immagine del modello, se scaricata
 }
 
@@ -429,6 +429,22 @@ export function mountBadges(m: Mount): MountBadge[] {
 function mountImg(display: number | undefined): string | undefined {
   return display && filesIn('mounts').has(`${display}.webp`) ? `/mounts/${display}.webp` : undefined;
 }
+// URL dell'icona di una cavalcatura, risolvendo l'ESTENSIONE invece di darla per scontata.
+// ⚠️ webp per primo, jpg come ripiego, esattamente come `addonIcon` per gli avatar: dal
+// 2026-09-06 sul disco sono tutte webp (2274 -> 1843 KB, il 19% — sono 56x56, a quella
+// misura il webp rende poco), ma `mount-sync.ps1` continua a scaricarle in **jpg** dal CDN
+// di Wowhead perche' PowerShell il webp non lo sa scrivere. Un'icona appena arrivata deve
+// vedersi subito, senza aspettare che qualcuno lanci `icons-webp.mjs` dalla postazione con
+// Node. ⚠️ Il valore restituito e' l'URL COMPLETO, non piu' il solo nome: cosi' l'estensione
+// si decide in un punto unico e nessuna pagina se la ricostruisce addosso.
+function iconaMount(nome?: string): string | undefined {
+  if (!nome) return undefined;
+  const files = filesIn('icons/mount');
+  for (const ext of ['webp', 'jpg']) {
+    if (files.has(`${nome}.${ext}`)) return `/icons/mount/${nome}.${ext}`;
+  }
+  return undefined;
+}
 let _mounts: Mount[] | null = null;
 export function getMounts(): Mount[] {
   if (_mounts) return _mounts;
@@ -437,7 +453,7 @@ export function getMounts(): Mount[] {
   // ripiega sul monogramma invece di mostrare un'immagine rotta.
   return (_mounts = raw.map((m) => ({
     ...m,
-    icon: m.icon && filesIn('icons/mount').has(`${m.icon}.jpg`) ? m.icon : undefined,
+    icon: iconaMount(m.icon),
     img: mountImg(m.display),
   })));
 }

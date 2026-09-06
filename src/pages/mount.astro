@@ -81,8 +81,13 @@ const srcOptions = [...srcCounts.entries()]
         <button type="button" class="mcard" data-id={String(m.id)} data-got={String(m.got)}
                  data-cats={mountCats(m).join(' ')} data-src={String(m.src)}
                  data-search={`${m.name} ${srcLines(m).join(' ')} ${sources[String(m.src)] ?? ''} ${m.class ?? ''} ${m.race ?? ''}`.toLowerCase()}>
+          {/* ⚠️ `m.icon` e' gia' l'URL COMPLETO, con l'estensione risolta da `iconaMount`
+              in content.ts (webp, o jpg per quelle appena scaricate): qui non si
+              ricostruisce il percorso e non si presume il formato. Il commento sta FUORI
+              dal ternario — dentro un'espressione spezza il parser, come i tipi con le
+              parentesi angolari (vedi CLAUDE.md). */}
           {m.icon
-            ? <img class="mico" src={`/icons/mount/${m.icon}.jpg`} alt="" width="36" height="36" loading="lazy" decoding="async" />
+            ? <img class="mico" src={m.icon} alt="" width="36" height="36" loading="lazy" decoding="async" />
             : <span class="mono" aria-hidden="true">{m.name.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase()}</span>}
           <div class="mbody">
             <span class="mname">{m.name}</span>

@@ -301,7 +301,15 @@ const presi = mounts.filter((m) => m.got === 1).length;
 if (mounts.length !== mm._meta?.total) err('mount', `_meta.total = ${mm._meta?.total} ma le voci sono ${mounts.length}`);
 if (presi !== mm._meta?.collected) err('mount', `_meta.collected = ${mm._meta?.collected} ma le prese sono ${presi}`);
 const sorgenti = new Set(Object.keys(mm.sources ?? {}));
-const iconeMount = new Set(elenco('public/icons/mount').filter((f) => f.endsWith('.jpg')).map((f) => f.slice(0, -4)));
+// ⚠️ Due estensioni ammesse, come `iconaMount` in src/lib/content.ts: sul disco sono webp,
+// ma mount-sync.ps1 le scarica in jpg (PowerShell il webp non lo scrive) e finche' non
+// passa `icons-webp.mjs` restano tali. Filtrando il solo `.jpg` questo controllo direbbe
+// «nessuna icona» per tutte e 1215, e l'elenco delle orfane sarebbe tutto il contenuto
+// della cartella. Se aggiungi un formato qui, aggiungilo anche in content.ts.
+const ESTENSIONI_ICONA = /\.(webp|jpg)$/;
+const iconeMount = new Set(
+  elenco('public/icons/mount').filter((f) => ESTENSIONI_ICONA.test(f)).map((f) => f.replace(ESTENSIONI_ICONA, '')),
+);
 const renderMount = new Set(elenco('public/mounts').filter((f) => f.endsWith('.webp')).map((f) => f.slice(0, -5)));
 const idVisti = new Set(), iconeUsate = new Set(), renderUsati = new Set();
 const displayDi = new Map();
@@ -336,7 +344,7 @@ for (const [id, visti] of Object.entries(displayNoti)) {
   if (ora && !visti.map(String).includes(ora)) err('mount', `display-noti.json: la mount ${id} ha display ${ora} nel manifest ma non nell'elenco`);
   for (const d of visti) { if (!renderUsati.has(String(d))) altriRender++; renderUsati.add(String(d)); }
 }
-for (const f of iconeMount) if (!iconeUsate.has(f)) err('mount', `public/icons/mount/${f}.jpg non appartiene a nessuna mount`);
+for (const f of iconeMount) if (!iconeUsate.has(f)) err('mount', `public/icons/mount/${f} (webp o jpg) non appartiene a nessuna mount`);
 for (const f of renderMount) if (!renderUsati.has(f)) err('mount', `public/mounts/${f}.webp non appartiene a nessuna mount`);
 if (senzaSpell > mounts.length * 0.05) err('mount', `${senzaSpell} voci senza spellID: dump sospetto`);
 nota(`mount: ${mounts.length} · prese ${presi} · icone ${iconeMount.size} · render ${renderMount.size} (di cui ${altriRender} di forme alternative)`);

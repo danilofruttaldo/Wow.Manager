@@ -302,7 +302,13 @@ function DatiDiSpell($spellID) {
 
 function ScaricaIcona($nome) {
     $file = Join-Path $IconDir "$nome.jpg"
-    if (Test-Path $file) { return $true }
+    # ATTENZIONE: si guarda anche il .webp, non solo il .jpg. Dal 2026-09-06 le icone sul
+    # disco sono webp (le converte scripts/icons-webp.mjs, PowerShell il webp non lo sa
+    # scrivere): controllando il solo .jpg questa funzione le darebbe tutte per mancanti e
+    # il sync riscaricherebbe 1215 icone dal CDN a ogni giro, lasciandole poi come doppioni
+    # jpg accanto ai webp. Il sito risolve entrambe le estensioni (iconaMount in content.ts),
+    # quindi un'icona nuova appena scaricata in jpg si vede subito.
+    if ((Test-Path $file) -or (Test-Path (Join-Path $IconDir "$nome.webp"))) { return $true }
     try {
         Invoke-WebRequest -Uri "https://wow.zamimg.com/images/wow/icons/large/$nome.jpg" `
                           -Headers @{ "User-Agent" = $UA } -OutFile $file -TimeoutSec 30 -UseBasicParsing
@@ -701,7 +707,12 @@ $orfane = 0
 if (-not $NoIcone -and $rimandate -eq 0 -and $suoManifest) {
     $usate = @{}
     foreach ($l in $righe) { if ($l -match '"icon":"([^"]+)"') { $usate[$matches[1]] = $true } }
-    foreach ($f in Get-ChildItem $IconDir -Filter *.jpg -ErrorAction SilentlyContinue) {
+    # ATTENZIONE: si guardano jpg E webp. Con il solo `-Filter *.jpg` questa pulizia, dopo
+    # la conversione del 2026-09-06, non avrebbe piu' visto nulla e le icone orfane si
+    # sarebbero accumulate in silenzio. `.gitkeep` resta fuori perche' si filtra per
+    # estensione: un file che si chiama solo `.gitkeep` non ha estensione fra le due.
+    foreach ($f in Get-ChildItem $IconDir -File -ErrorAction SilentlyContinue |
+                   Where-Object { $_.Extension -in '.jpg', '.webp' }) {
         if (-not $usate[$f.BaseName]) { Remove-Item $f.FullName -Force; $orfane++ }
     }
     if ($orfane -gt 0) { Write-Host ("icone orfane rimosse: {0}" -f $orfane) }
