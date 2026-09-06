@@ -85,7 +85,12 @@ let gi = 0;
         </div>
       </section>
     ))}
-    <p class="empty" id="empty" role="status" hidden>Nessuno screenshot per questo filtro.</p>
+    {/* Con l'archivio VUOTO il messaggio va reso subito: il JS che lo accende esce prima
+        (`if (!allShots.length) return`), quindi la pagina resterebbe una barra filtri e
+        basta, senza dire perche'. */}
+    <p class="empty" id="empty" role="status" hidden={shots.length > 0}>
+      {shots.length === 0 ? 'Nessuno screenshot in archivio.' : 'Nessuno screenshot per questo filtro.'}
+    </p>
   </div>
 
   <div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lb-cap">
