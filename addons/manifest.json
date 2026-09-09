@@ -317,20 +317,6 @@
       ],
       "notes": "Waypoint arrow + map pins. Integra con HandyNotes (right-click su nodo). Aggiornato 2026-07-14 v4.3.5-release->v4.3.6-release via /aggiorna-addon (workflow) forgecdn files/8426/585. Aggiornato 2026-08-03 v4.3.6-release->v4.3.8-release via /aggiorna-addon (workflow) forgecdn files/8560/433 (11.8 MB). Il TOC e' passato da 120007 puro a multi-flavor (aggiunge 11509/20506/38002/50504 dei client classic e 120100): nessuna azione, il retail usa il valore che gli compete. Aggiornato 2026-08-30 v4.3.8-release->v4.3.9-release via /aggiorna-addon (workflow) forgecdn files/8761/318 (TomTom-v4.3.9-release.zip, 11.858.404 byte), release del 2026-08-29; cartella unica TomTom e riga ## Interface invariata (11509,20506,38002,50504,120007, 120100), quindi nessuna versione di gioco caduta. Nessuna patch locale. La v4.3.9 e' quasi tutta librerie incorporate, verificato sul diff: HereBeDragons 2.15-release-7-g5ccefa1 -> 2.17-release (le funzioni Add* dei pin ora tornano true/false), AceGUI-3.0 CheckBox passa dal globale deprecato SetDesaturation al metodo :SetDesaturated e Slider aggira un bug di caricamento font che lasciava l'editbox vuoto finche' il testo non cambiava; l'unico cambio non-libreria e' la traduzione francese del messaggio sui dati mappa (#17)."
     },
-    "RareScanner": {
-      "name": "RareScanner",
-      "desc": "Avvisa quando un raro, un tesoro o un evento appare vicino, e li segna tutti sulla mappa del mondo.",
-      "version": "12.1.0.9",
-      "interface": "120100",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/rarescanner",
-      "preview": "https://media.forgecdn.net/attachments/508/862/map-with-tooltip.PNG",
-      "installed": "2026-09-09",
-      "folders": [
-        "RareScanner"
-      ],
-      "notes": "Installato 2026-09-09 su richiesta. Release 12.1.0.9 del 2026-09-08, forgecdn files/8835/974 (RareScanner_12.1.0.9.zip, 4.354.134 byte), una sola cartella top-level, 339 file per 11,5 MB installati. ## Interface 120100 (una sola versione di gioco, combacia con la build 12.1.0.69587), SavedVariables RareScannerDB. COMANDI: /rarescanner e /rs (RSCommandLine.lua), piu' il bottone minimappa e la voce nel compartimento addon; le opzioni stanno nel pannello Impostazioni di Blizzard (AceConfigDialog). IL PESO STA NEI DATI, non nel codice: le tre tabelle piu' grosse (NpcLootTables, NpcInfoTables, ContainerInfoTables sotto Tables/) sono il database di rari, tesori ed eventi per tutte le espansioni, ed e' il motivo per cui la cartella pesa dieci volte quella di un addon normale. Librerie Ace incorporate in ExternalLibs (AceAddon/AceConfig/AceDB/AceGUI, LibDBIcon, LibQTip, HereBeDragons, Krowi_WorldMapButtons, LibSharedMedia): nessuna dipendenza esterna, niente da installare a parte. Disegna pin sulla mappa come HandyNotes, che resta installato: sono due strati separati, ognuno coi suoi filtri. ⚠️ E' un addon NUOVO: il client lo vede solo al RIAVVIO, il /reload no - e WoW era APERTO (PID 25564) durante l'installazione, quindi finche' non si chiude non compare nell'elenco. ANTEPRIMA: scelta a mano fra le cinque immagini della descrizione cfwidget, che qui sono TUTTE screenshot veri (nessun banner ne' badge Patreon, il caso da scartare visto altrove): presa map-with-tooltip.PNG (923x547, la piu' larga) perche' mostra insieme le icone sulla mappa e il tooltip. Convertita 640x379 webp q82 con PILLOW e non con sharp - qui Node non c'e' - usando gli stessi parametri di addon-images.mjs (fit inside 640, withoutEnlargement, lanczos, q82), quindi la voce in addons/img-fonti.json e' gia' allineata e node-pending.ps1 non ha nulla in sospeso. ICONA: miniatura 64x64 dell'avatar CurseForge (media.forgecdn.net/avatars/thumbnails/58/841/64/64/636141449063964125.PNG), che esce 64x42 perche' l'endpoint conserva le proporzioni - come BugSack, HandyNotes e Molinari; completamente opaca, quindi webp RGB. Nessuna patch locale."
-    },
     "Syndicator": {
       "name": "Syndicator",
       "desc": "Conta gli oggetti su tutti i personaggi: righe nel tooltip e ricerca globale con /syn.",
