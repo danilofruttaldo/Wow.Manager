@@ -3,18 +3,18 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.1.0.69587",
-    "last_sync": "2026-09-23"
+    "last_sync": "2026-09-24"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
       "desc": "Boss mod per raid: timer, barre e avvisi sonori e visivi sulle abilità dei boss.",
-      "version": "v425.5",
+      "version": "v425.6",
       "interface": "11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120105, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
       "preview": "https://media.forgecdn.net/attachments/873/666/gui.png",
-      "installed": "2026-09-23",
+      "installed": "2026-09-24",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -58,11 +58,11 @@
     "AztarecHelper": {
       "name": "Azta'rec Helper",
       "desc": "Risolve il gioco di memoria del boss Azta'rec: mostra in quale quarto della stanza stare a ogni ondata.",
-      "version": "2.4.8",
+      "version": "2.5.0",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/aztarec-helper",
-      "installed": "2026-09-20",
+      "installed": "2026-09-24",
       "folders": [
         "AztarecHelper"
       ],
@@ -86,11 +86,11 @@
     "EllesmereUI": {
       "name": "EllesmereUI",
       "desc": "Suite UI modulare: unit frame, nameplate, barre, borse, chat, meter e comodità, con editor visuale.",
-      "version": "v9.2.3",
+      "version": "v9.2.5",
       "interface": "120000, 120001, 120005, 120007, 120100, 16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/ellesmereui",
-      "installed": "2026-09-23",
+      "installed": "2026-09-24",
       "folders": [
         "EllesmereUI",
         "EllesmereUIActionBars",
@@ -307,12 +307,12 @@
     "TomTom": {
       "name": "TomTom",
       "desc": "Freccia di navigazione verso il waypoint attivo, con distanza, coordinate e pin su mappa.",
-      "version": "v4.3.10-release",
+      "version": "v4.3.11-release",
       "interface": "120007, 120100, 11509, 16001, 20506, 38002, 40402, 50504",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/tomtom",
       "preview": "https://media.forgecdn.net/attachments/1372/754/tomtom-crazyarrow-png.png",
-      "installed": "2026-09-21",
+      "installed": "2026-09-24",
       "folders": [
         "TomTom"
       ],
@@ -376,12 +376,12 @@
     "RaiderIO": {
       "name": "Raider.IO",
       "desc": "Mostra punteggio Mythic+, progressi raid e stato reclutamento dei giocatori nel tooltip.",
-      "version": "v202609221452",
+      "version": "v202609230600",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/raiderio",
       "preview": "https://cdn.raiderio.net/images/addon/raiderio_search.png",
-      "installed": "2026-09-23",
+      "installed": "2026-09-24",
       "folders": [
         "RaiderIO",
         "RaiderIO_DB_CN_F",
@@ -463,12 +463,12 @@
     "TalentTreeTweaks": {
       "name": "Talent Tree Tweaks",
       "desc": "Migliorie all'albero talenti e professioni: acquisto automatico, sfondo trasparente, loadout in chat.",
-      "version": "v1.14.0",
+      "version": "v1.14.1",
       "interface": "120100, 16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/talent-tree-tweaks",
       "preview": "https://media.forgecdn.net/attachments/600/237/transparentbackground.jpg",
-      "installed": "2026-09-20",
+      "installed": "2026-09-24",
       "folders": [
         "TalentTreeTweaks"
       ],
