@@ -3,18 +3,18 @@
     "schema_version": 1,
     "wow_install": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns",
     "wow_build": "12.1.0.69587",
-    "last_sync": "2026-09-24"
+    "last_sync": "2026-09-25"
   },
   "addons": {
     "BigWigs": {
       "name": "BigWigs",
       "desc": "Boss mod per raid: timer, barre e avvisi sonori e visivi sulle abilità dei boss.",
-      "version": "v425.6",
+      "version": "v425.7",
       "interface": "11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120105, 120007",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/big-wigs",
       "preview": "https://media.forgecdn.net/attachments/873/666/gui.png",
-      "installed": "2026-09-24",
+      "installed": "2026-09-25",
       "folders": [
         "BigWigs",
         "BigWigs_Core",
@@ -34,11 +34,11 @@
     "LittleWigs": {
       "name": "LittleWigs",
       "desc": "L’equivalente di BigWigs fuori dai raid: boss mod per dungeon, M+ e scenari.",
-      "version": "v12.1.16",
+      "version": "v12.1.17",
       "interface": "11508, 11509, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120007, 120100, 120105",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/little-wigs",
-      "installed": "2026-09-20",
+      "installed": "2026-09-25",
       "folders": [
         "LittleWigs",
         "LittleWigs_BattleForAzeroth",
@@ -58,11 +58,11 @@
     "AztarecHelper": {
       "name": "Azta'rec Helper",
       "desc": "Risolve il gioco di memoria del boss Azta'rec: mostra in quale quarto della stanza stare a ogni ondata.",
-      "version": "2.5.0",
+      "version": "2.6.0",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/aztarec-helper",
-      "installed": "2026-09-24",
+      "installed": "2026-09-25",
       "folders": [
         "AztarecHelper"
       ],
@@ -71,12 +71,12 @@
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
       "desc": "Planner per M+: route sulla mappa, pull e conteggio nemici, con export per il gruppo.",
-      "version": "6.2.19",
+      "version": "6.2.20",
       "interface": "120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
       "preview": "https://media.forgecdn.net/attachments/360/274/nnoggievideo_2021-05-01_10-28-16.png",
-      "installed": "2026-09-22",
+      "installed": "2026-09-25",
       "folders": [
         "MythicDungeonTools",
         "MythicDungeonTools_UI"
@@ -86,11 +86,11 @@
     "EllesmereUI": {
       "name": "EllesmereUI",
       "desc": "Suite UI modulare: unit frame, nameplate, barre, borse, chat, meter e comodità, con editor visuale.",
-      "version": "v9.2.5",
+      "version": "v9.2.8",
       "interface": "120000, 120001, 120005, 120007, 120100, 16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/ellesmereui",
-      "installed": "2026-09-24",
+      "installed": "2026-09-25",
       "folders": [
         "EllesmereUI",
         "EllesmereUIActionBars",
@@ -321,12 +321,12 @@
     "Syndicator": {
       "name": "Syndicator",
       "desc": "Conta gli oggetti su tutti i personaggi: righe nel tooltip e ricerca globale con /syn.",
-      "version": "282",
+      "version": "283",
       "interface": "120100, 16001, 50504, 38001, 20506, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/syndicator",
       "preview": "https://media.forgecdn.net/attachments/1083/215/tooltip-2025-01-31.webp",
-      "installed": "2026-09-20",
+      "installed": "2026-09-25",
       "folders": [
         "Syndicator"
       ],
@@ -376,12 +376,12 @@
     "RaiderIO": {
       "name": "Raider.IO",
       "desc": "Mostra punteggio Mythic+, progressi raid e stato reclutamento dei giocatori nel tooltip.",
-      "version": "v202609230600",
+      "version": "v202609240600",
       "interface": "120007, 120100",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/raiderio",
       "preview": "https://cdn.raiderio.net/images/addon/raiderio_search.png",
-      "installed": "2026-09-24",
+      "installed": "2026-09-25",
       "folders": [
         "RaiderIO",
         "RaiderIO_DB_CN_F",
