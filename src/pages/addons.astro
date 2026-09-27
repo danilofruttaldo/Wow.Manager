@@ -3,10 +3,9 @@ import Base from '../layouts/Base.astro';
 import { getAddons, addonsMeta } from '../lib/content';
 
 const addons = getAddons();
-// Provenienza: quasi tutto viene da CurseForge, ma non tutto — NaowhUI si scarica dal sito
-// dell'autore e su CurseForge non esiste (cfwidget risponde vuoto), come già ArchonTooltip,
-// che l'app Archon si portava dentro da sé: quella voce resta anche se oggi non la usa
-// nessuno. Mappa invece del ternario perché una fonte in più è un'altra riga, non una
+// Provenienza: quasi tutto viene da CurseForge, ma non tutto — NaowhUI si scaricava dal sito
+// dell'autore e ArchonTooltip se lo portava dentro l'app Archon: nessuno dei due c'è più,
+// ma le voci restano come esempio di fonte non-CurseForge. Mappa invece del ternario perché una fonte in più è un'altra riga, non una
 // catena di `?:`.
 const SOURCE_LABEL: Record<string, string> = { curseforge: 'CurseForge', archon: 'Archon App', naowh: 'naowh.gg' };
 const sourceLabel = (s: string) => SOURCE_LABEL[s] ?? s;

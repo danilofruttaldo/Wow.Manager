@@ -121,7 +121,7 @@ for (const [key, a] of addons) {
   // ⚠️ `preview` VUOTO e `preview` ASSENTE non sono la stessa cosa, ed e' la stessa
   // convenzione di `class`/`race` nel manifest delle mount: assente = «mai cercata»,
   // quindi si prova il logo di ripiego; presente e vuoto = «cercata, la fonte non ce
-  // l'ha». Senza questa distinzione NaowhUI (non e' su CurseForge) e BugGrabber (il
+  // l'ha». Senza questa distinzione NaowhUI (non era su CurseForge, rimosso il 2026-09-27) e BugGrabber (il
   // progetto non ha avatar e in galleria ha solo un badge Patreon) risultavano in
   // sospeso a ogni giro, e node-pending.ps1 rilanciava all'infinito uno script che
   // per loro non puo' fare niente. Il perche' sta per esteso nelle loro `notes`.
