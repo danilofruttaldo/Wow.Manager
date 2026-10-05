@@ -87,7 +87,7 @@ function PendentiAddon {
     foreach ($p in $addons.PSObject.Properties) {
         # `preview` PRESENTE E VUOTO = «cercata, la fonte non ce l'ha»: non e' lavoro in
         # sospeso e non va contato, o si rilancerebbe per sempre uno script che per quella
-        # voce non puo' fare niente (lo era NaowhUI, fuori da CurseForge; oggi il progetto BugGrabber
+        # voce non puo' fare niente (lo era NaowhUI, fuori da CurseForge; fino al 2026-10-05 BugGrabber, il cui progetto
         # non ha avatar). `preview` ASSENTE resta «mai cercata» e si prova il ripiego.
         # Stessa convenzione di `class`/`race` nel manifest delle mount.
         $campo = $p.Value.PSObject.Properties['preview']
