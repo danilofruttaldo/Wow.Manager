@@ -882,7 +882,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
     // Tooltip nativo (abbozzo): realm e livello. Ne' la spec ne' le professioni ci vanno --
     // sono gia' icone sotto il nome, col proprio title, e ripeterle sarebbe ridondante. Il
     // livello e' GREZZO, dai prefissi della tabella PG (0 se non creato, "in leveling" per "_",
-    // 90 al cap): i numeri reali vivono in AllTheThings.lua (chiave `lvl`) e si agganciano
+    // 90 al cap): i numeri reali stanno in characters.json (copiati da AllTheThings.lua, rimosso il 2026-10-05: non si aggiornano piu') e si agganciano
     // a parte, gestendo gli omonimi per realm.
     const realmCandidate = realmCode ? (REALM_ABBR[realmCode] ?? realmCode) : undefined;
     // Omonimi (Furricane vulpera·P vs worgen·N): la chiave "nome|realm" vince sul nome nudo,
@@ -892,7 +892,7 @@ function annotateSpec(cell: string, race: string, classSlug: string): string {
       ?? CHAR_INFO[name.toLowerCase()];
     const realmName = realmCandidate ?? info0?.realm;
     const info = (realmCandidate && info0?.realm && info0.realm !== realmCandidate) ? undefined : info0;
-    // Livello REALE da AllTheThings (nel tracker) se noto; altrimenti fallback grezzo
+    // Livello REALE dal tracker (ultima copia da AllTheThings) se noto; altrimenti fallback grezzo
     // dai prefissi della tabella PG (0 se non creato, in leveling, 90 al cap).
     const level = info?.level != null
       ? String(info.level)
