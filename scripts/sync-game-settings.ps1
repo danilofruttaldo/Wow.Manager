@@ -8,7 +8,9 @@
 # Due blocchi, perche' il client salva i CVar in due posti: $CharValues (per-PG, in ogni
 # cartella di personaggio) e $AccountValues (account-wide, nel file di account).
 # IMPORTANTE: eseguire con WoW COMPLETAMENTE CHIUSO.  -Prova = dice cosa cambierebbe.
-param([switch]$Prova)
+# -Gioco = la cartella del client: _retail_ (default) o _classic_beta_ per WoW Forever,
+# che legge gli stessi CVar dagli stessi file.
+param([switch]$Prova, [string]$Gioco = '_retail_')
 $ErrorActionPreference = 'Stop'
 
 # --- PRESET per-PG: valore voluto, applicato a ogni personaggio ------------------------
@@ -70,7 +72,7 @@ $AccountValues = [ordered]@{
 
 # Cercata, non scritta a mano: la cartella porta il nome dell'account Battle.net,
 # che non va pubblicato (questo script e' reso per intero sulla pagina Extra).
-$AccRoot = 'C:\Program Files (x86)\World of Warcraft\_retail_\WTF\Account'
+$AccRoot = Join-Path 'C:\Program Files (x86)\World of Warcraft' (Join-Path $Gioco 'WTF\Account')
 $Acc = (Get-ChildItem -LiteralPath $AccRoot -Directory |
   Where-Object { $_.Name -ne 'SavedVariables' } |
   Select-Object -First 1).FullName
@@ -79,7 +81,8 @@ if (-not $Acc) { throw "Nessuna cartella account sotto: $AccRoot" }
 # A gioco aperto e' lavoro buttato: al logout il client riscrive i config-cache col suo
 # stato in memoria e le chiavi appena messe qui tornano come prima.
 if (-not $Prova) {
-  if (Get-Process -Name 'Wow' -ErrorAction SilentlyContinue) {
+  # WowB = l'eseguibile di WoW Forever (_classic_beta_).
+  if (Get-Process -Name 'Wow', 'WowB' -ErrorAction SilentlyContinue) {
     throw "WoW e' aperto: chiudilo prima, oppure lancia con -Prova per vedere solo cosa cambierebbe."
   }
 }
