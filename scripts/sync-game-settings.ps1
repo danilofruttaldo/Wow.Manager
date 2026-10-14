@@ -81,8 +81,12 @@ if (-not $Acc) { throw "Nessuna cartella account sotto: $AccRoot" }
 # A gioco aperto e' lavoro buttato: al logout il client riscrive i config-cache col suo
 # stato in memoria e le chiavi appena messe qui tornano come prima.
 if (-not $Prova) {
-  # WowB = l'eseguibile di WoW Forever (_classic_beta_).
-  if (Get-Process -Name 'Wow', 'WowB' -ErrorAction SilentlyContinue) {
+  # Conta solo il client di QUESTA cartella (Wow.exe per retail, WowB.exe per Forever):
+  # retail aperto non tocca i file di Forever, e viceversa.
+  $dir = Join-Path 'C:\Program Files (x86)\World of Warcraft' $Gioco
+  $aperto = Get-Process -Name 'Wow*' -ErrorAction SilentlyContinue |
+    Where-Object { $_.Path -and $_.Path.StartsWith($dir + '\', [System.StringComparison]::OrdinalIgnoreCase) }
+  if ($aperto) {
     throw "WoW e' aperto: chiudilo prima, oppure lancia con -Prova per vedere solo cosa cambierebbe."
   }
 }
