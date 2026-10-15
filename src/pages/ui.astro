@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import GiocoSwitch from '../components/GiocoSwitch.astro';
 import { classLabel, titleCase } from '../lib/content';
 
 // `*` non attraversa lo slash: questo glob prende solo la radice, non thumb/.
@@ -19,14 +20,19 @@ const thumbs = new Set(
 const ALIAS: Record<string, string> = { deathknight: 'death-knight', demonhunter: 'demon-hunter' };
 const shots = files.map((src) => {
   const stem = src.split('/').pop()!.replace(/\.[^.]+$/, '');
-  const parts = stem.split('-');
+  // Uno screenshot di WoW Forever ha il prefisso `forever-`
+  // (forever-<classe>-<spec>-<nome>.webp); senza prefisso e' retail, come tutti i vecchi.
+  const forever = stem.startsWith('forever-');
+  const parts = (forever ? stem.slice('forever-'.length) : stem).split('-');
   const className = ALIAS[parts[0]] ?? parts[0];
   const spec = parts[1] ?? '';
   const char = parts.slice(2).join('-') || parts[parts.length - 1];
   const thumbPath = `/screenshots/thumb/${stem}.webp`;
   const thumb = thumbs.has(thumbPath) ? thumbPath : src;
-  return { src, thumb, className, spec, char };
+  return { src, thumb, className, spec, char, gioco: forever ? 'forever' : 'retail' };
 });
+// L'interruttore compare solo se c'e' almeno uno screenshot di Forever.
+const haForever = shots.some((s) => s.gioco === 'forever');
 
 // Raggruppa per classe
 const byClass = new Map<string, typeof shots>();
@@ -42,9 +48,10 @@ const iconFor = (cls: string) => `/icons/class/${cls.replace(/-/g, '')}.jpg`;
 
 // Chip filtro: TUTTE le 13 classi WoW, anche senza screenshot (count 0 → chip attenuata).
 const ALL_CLASSES = ['warrior','paladin','hunter','rogue','priest','death-knight','shaman','mage','warlock','monk','druid','demon-hunter','evoker'];
-const shotCountByClass = new Map(groups.map(([cls, list]) => [cls, list.length] as const));
+// Conteggi per classe E per gioco: con l'interruttore la chip mostra quelli del gioco scelto.
+const contaClasse = (cls: string, gioco: string) => shots.filter((s) => s.className === cls && s.gioco === gioco).length;
 const classChips = ALL_CLASSES
-  .map((cls) => ({ cls, count: shotCountByClass.get(cls) ?? 0 }))
+  .map((cls) => ({ cls, count: contaClasse(cls, 'retail'), countF: contaClasse(cls, 'forever') }))
   .sort((a, b) => classLabel(a.cls).localeCompare(classLabel(b.cls)));
 
 // indice globale per il lightbox (ordine = ordine di render)
@@ -53,13 +60,19 @@ let gi = 0;
 <Base title="UI" description="La UI reale in gioco di ogni personaggio, per classe.">
   <div class="wrap" id="ui-main">
     <div class="filters row">
+      {haForever && <GiocoSwitch />}
       <input id="ui-search" class="search" type="search" inputmode="search" autocomplete="off"
              placeholder="Cerca PG, classe, spec…" aria-label="Cerca screenshot" />
       <div class="chips" id="ui-filters" role="group" aria-label="Filtra per classe">
-        {classChips.map(({ cls, count }) => (
+        {/* ⚠️ `is-empty` (chip attenuata) resta sul conteggio retail anche su Forever: e' un
+            ritocco di resa, e con pochi screenshot Forever non vale una classe in piu' da
+            tenere allineata via JS. Il NUMERO invece segue il gioco (`data-solo`). */}
+        {classChips.map(({ cls, count, countF }) => (
           <button class:list={['chip', { 'is-empty': count === 0 }]} data-class={cls} type="button" aria-pressed="false">
             <img class="chip-ico" src={iconFor(cls)} alt="" width="18" height="18" />
-            {classLabel(cls)}<span class="c">{count}</span>
+            {classLabel(cls)}{haForever
+              ? <><span class="c" data-solo="retail">{count}</span><span class="c" data-solo="forever">{countF}</span></>
+              : <span class="c">{count}</span>}
           </button>
         ))}
       </div>
@@ -72,7 +85,7 @@ let gi = 0;
           {list.map((s) => {
             const i = gi++;
             return (
-              <button class="shot" style={`--pc: var(--c-${s.className})`} data-i={i} data-class={s.className} data-search={`${s.char} ${classLabel(s.className)} ${s.spec}`.toLowerCase()} data-src={s.src} data-char={titleCase(s.char)} data-who={`${classLabel(s.className)} · ${titleCase(s.spec)}`}>
+              <button class="shot" style={`--pc: var(--c-${s.className})`} data-i={i} data-class={s.className} data-gioco={s.gioco} data-search={`${s.char} ${classLabel(s.className)} ${s.spec}`.toLowerCase()} data-src={s.src} data-char={titleCase(s.char)} data-who={`${classLabel(s.className)} · ${titleCase(s.spec)}`}>
                 {/* Le prime ~3 thumb sono sopra la piega: eager per non penalizzare l'LCP; il resto lazy. `i` e' l'indice GLOBALE (gi++). */}
                 <span class="imgwrap"><img src={s.thumb} alt={`UI di ${titleCase(s.char)}`} loading={i < 3 ? 'eager' : 'lazy'} decoding="async" width="640" height="360" /></span>
                 <span class="cap">
@@ -139,6 +152,11 @@ let gi = 0;
 <script>
 import { loadFilters, saveFilters } from '../lib/filter-state';
 import { trappolaFocus } from '../lib/focus-trap';
+import { initGioco, EVENTO_GIOCO, type Gioco } from '../lib/gioco';
+
+// Listener del cambio di gioco: su `document`, quindi da staccare a ogni navigazione (vedi
+// il gemello in addons.astro).
+let onGioco: ((e: Event) => void) | null = null;
 
 // ── Stato del lightbox a livello di modulo ──
 // Il listener da tastiera sta su `document` e va agganciato UNA volta sola (vedi
@@ -214,6 +232,7 @@ document.addEventListener('astro:page-load', () => {
   // un solo posto sistemato su due e' peggio che nessuno, perche' sembra una scelta.
   lbList = [];
   lbLastFocus = null;
+  if (onGioco) { document.removeEventListener(EVENTO_GIOCO, onGioco); onGioco = null; }
   const lb = document.getElementById('lb');
   if (!lb) return;
   const allShots = Array.from(document.querySelectorAll<HTMLButtonElement>('.shot'));
@@ -226,15 +245,17 @@ document.addEventListener('astro:page-load', () => {
   const empty = document.getElementById('empty');
   const activeClasses = new Set<string>();
   let query = '';
+  let gioco: Gioco = 'retail';   // cambia solo se la pagina ha l'interruttore
   // Salva ricerca + classi selezionate (multi, quindi array) in localStorage.
   const persist = () => saveFilters('ui', { q: search?.value || '', classes: [...activeClasses] });
 
   const applyFilter = () => {
     let shown = 0;
     for (const el of allShots) {
+      const okGioco = (el.dataset.gioco || 'retail') === gioco;
       const okClass = activeClasses.size === 0 || activeClasses.has(el.dataset.class || '');
       const okText = query === '' || (el.dataset.search || '').includes(query);
-      const show = okClass && okText;
+      const show = okGioco && okClass && okText;
       el.hidden = !show;
       if (show) shown++;
     }
@@ -274,6 +295,13 @@ document.addEventListener('astro:page-load', () => {
     }
   }
   applyFilter();
+
+  // Retail / Forever: solo con l'interruttore in pagina (almeno uno screenshot `forever-`).
+  if (document.querySelector('#ui-main [data-gioco-btn]')) {
+    onGioco = (e: Event) => { gioco = (e as CustomEvent<Gioco>).detail; applyFilter(); };
+    document.addEventListener(EVENTO_GIOCO, onGioco);
+    initGioco();   // applica il gioco salvato: scatta subito `onGioco`
+  }
 
   // ── Lightbox: naviga solo tra gli screenshot visibili ──
   lbList = allShots;

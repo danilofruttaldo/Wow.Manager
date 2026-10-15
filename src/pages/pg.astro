@@ -1,14 +1,35 @@
 ---
 import Base from '../layouts/Base.astro';
+import GiocoSwitch from '../components/GiocoSwitch.astro';
 import { getPgHtml } from '../lib/content';
 
 const html = getPgHtml();
+// Forever: sezioni «## Forever Orda» / «## Forever Alleanza» di pg.md, facoltative. Senza,
+// la pagina resta quella di sempre — niente interruttore che non cambierebbe nulla.
+const htmlForever = getPgHtml('forever');
 ---
 <Base title="PG" description="Matrice razza × classe: copertura combinazioni e PG esistenti (Orda + Alleanza).">
   <div class="wrap pg-wrap">
-    <article class="pg-prose" set:html={html}></article>
+    {htmlForever ? (
+      <>
+        <div class="filters row"><GiocoSwitch /></div>
+        <article class="pg-prose" data-solo="retail" set:html={html}></article>
+        <article class="pg-prose" data-solo="forever" set:html={htmlForever}></article>
+      </>
+    ) : (
+      <article class="pg-prose" set:html={html}></article>
+    )}
   </div>
 </Base>
+
+<script>
+  import { initGioco } from '../lib/gioco';
+  // Qui il gioco non filtra niente via JS: le due tabelle le mostra/nasconde il CSS da
+  // `data-solo`. Serve solo agganciare l'interruttore, se la pagina ce l'ha.
+  document.addEventListener('astro:page-load', () => {
+    if (document.querySelector('.pg-wrap [data-gioco-btn]')) initGioco();
+  });
+</script>
 
 <style>
   /* Larghezza: eredita --page-max da .wrap (standard unico del sito), niente override. */

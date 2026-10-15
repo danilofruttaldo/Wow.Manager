@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import { wowBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog, getMountStats, getHwComponents, getHwSettingCount } from '../lib/content';
+import { wowBuild, foreverBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog, getMountStats, getHwComponents, getHwSettingCount } from '../lib/content';
 
 interface Props {
   title: string;
@@ -107,6 +107,27 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
        se servono. Rigenerabile con scripts/fetch-fonts.ps1. -->
   <link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/fonts.css" />
+
+  <!-- Retail o Forever (lib/gioco.ts): l'attributo va messo PRIMA del disegno, o chi ha
+       scelto Forever vedrebbe la pagina nascere retail e cambiare un attimo dopo. Stesso
+       ordine di lettura di leggiGioco(): ?gioco= nell'URL, poi la scelta salvata.
+       ⚠️ Con ClientRouter gli attributi di <html> si riprendono dalla pagina nuova a ogni
+       navigazione, quindi l'attributo andrebbe perso: `astro:after-swap` lo rimette. -->
+  <script is:inline>
+    (function () {
+      function g() {
+        var v = 'retail';
+        try {
+          var q = new URLSearchParams(location.search).get('gioco');
+          var s = JSON.parse(localStorage.getItem('wm.filters.gioco') || '{}').g;
+          v = q === 'forever' || q === 'retail' ? q : (s === 'forever' ? 'forever' : 'retail');
+        } catch (e) { /* storage bloccato: resta retail */ }
+        document.documentElement.setAttribute('data-gioco', v);
+      }
+      g();
+      document.addEventListener('astro:after-swap', g);
+    })();
+  </script>
 </head>
 <body>
   <a href="#main" class="skip-link">Vai al contenuto</a>
@@ -135,6 +156,10 @@ const sectionColor = nav.find(item => isActive(item.href))?.color;
       <span>{SITE_NAME}</span>
       <span class="build-badge">
         {wowBuild && <>build <code>{wowBuild}</code></>}
+        {/* Entrambe le build, sempre: il footer e' lo stesso su pagine che hanno Forever e
+            su pagine che non l'hanno, e una build sola che cambia con l'interruttore direbbe
+            «Forever» anche su /mount, dove i dati sono tutti di retail. */}
+        {foreverBuild && <> · Forever <code>{foreverBuild}</code></>}
         {updated && <> · sync <code>{updated}</code></>}
       </span>
       <a href="https://github.com/danilofruttaldo/Wow.Manager" target="_blank" rel="noopener noreferrer">GitHub</a>

@@ -202,12 +202,22 @@
       "body_file": "settings-report.ps1",
       "notes": "La sezione da leggere è la 2: le impostazioni fuori dal default che il preset non propaga ancora. La colonna nei file dice su quanti config-cache.wtf la chiave compare e con quanti valori distinti, cioè se i PG oggi divergono. ⚠️ La sezione 4 è quasi tutta STATO, non impostazioni: i config-cache per-PG contengono 118 chiavi e la gran parte sono tutorial visti, header chiusi, filtri del Dungeon Journal, config di talenti salvate. Serve per capire cosa NON mettere nel preset. Il preset non è duplicato qui: lo script lo legge dai blocchi CharValues e AccountValues di sync-game-settings.ps1 e si ferma se non ne cava chiavi, così i due file non possono divergere in silenzio."
     },
+    "forever-sync": {
+      "kind": "script",
+      "name": "Sync PG di WoW Forever",
+      "desc": "Allinea i personaggi di WoW Forever a quelli di retail: le impostazioni di gioco (con lo stesso preset di Sync impostazioni) e il layout della Modalità Modifica, assegnato per nome a tutte le spec.",
+      "lang": "powershell",
+      "when": "Dopo aver creato un PG su Forever: entra una volta col personaggio, chiudi il gioco e lancialo. Con -Prova dice cosa cambierebbe, con -Layout sceglie un layout diverso da Stantu.",
+      "warn": "Forever deve essere chiuso: all'uscita riscrive questi file.",
+      "body_file": "forever-sync.ps1",
+      "notes": "Nato il 2026-10-15 dalla migrazione delle impostazioni retail su Forever (2026-10-14). L'indice del layout NON si scrive a mano: lo ricava dal nome nel file di account, formato 5 di Forever (retail scrive il 2). La chat NON si copia: misurato che i colori di Stantu sono quelli di fabbrica e che il resto Forever lo scarta alla prima sessione. Il profilo EllesmereUI e' account-wide e non c'entra con questo script."
+    },
     "sync-game-settings": {
       "kind": "script",
       "name": "Sync impostazioni di gioco",
       "desc": "Applica un preset di impostazioni di gioco a tutti i personaggi: scrive solo le chiavi dichiarate nello script, il resto dello stato per-PG resta intatto.",
       "lang": "powershell",
-      "when": "Con WoW completamente chiuso (lo script si ferma se il gioco è aperto). Con -Prova dice cosa cambierebbe senza scrivere niente.",
+      "when": "Con WoW completamente chiuso (lo script si ferma se il gioco è aperto). Con -Prova dice cosa cambierebbe senza scrivere niente, con -Gioco _classic_beta_ lavora su WoW Forever.",
       "warn": "Sovrascrive i config-cache.wtf: esegui a gioco chiuso o perdi le modifiche.",
       "body_file": "sync-game-settings.ps1",
       "notes": "DUE preset in testa allo script, perché il client salva i CVar in due posti. (1) CHARVALUES = per-PG: il valore è dichiarato lì e si scrive su TUTTI i personaggi, Stantu compreso — non è più la sorgente, è un bersaglio come gli altri; salta il file account-level e le cartelle _backup-*. (2) ACCOUNTVALUES = account-wide: quei CVar nei file per-PG non ci sono proprio, stanno solo in Account/<ACC>/config-cache.wtf, quindi scriverli per-PG non farebbe nulla — oggi solo whisperMode = popout_and_inline (Social > New Whispers = Both; gli altri valori sono inline e popout). ⚠️ Non spostare una chiave dall'una all'altra a occhio: verifica in quale file il client la scrive davvero (grep del nome nel WTF), perché una chiave account-wide scritta per-PG non fa nulla e viceversa. Col preset il vecchio inganno non esiste più: quando i valori venivano copiati da Stantu, una chiave che lui non aveva veniva saltata in silenzio e sembrava sincronizzata — era il caso di dragonRidingRacesFilter (filtro delle corse di skyriding, presente su 43 PG ma non su Stantu), rimossa il 2026-07-27 perché inerte dal primo commit e oggi riaggiungibile. ⚠️ Le quattro chiavi camera* le riscrive il client a ogni sessione: divergono da sole e ogni giro le riporta al preset, ed è il motivo per cui cameraSavedPitch risulta l'unica differenza su quasi tutti i PG. ⚠️ Il blocco degli inviti in gilda NON è sincronizzabile: non è un CVar (verificato enumerando le stringhe di Wow.exe sul client 12.0.7) ma un flag server-side per personaggio, C_GuildInfo.SetAutoDeclineGuildInvites, che non passa da nessun file WTF."

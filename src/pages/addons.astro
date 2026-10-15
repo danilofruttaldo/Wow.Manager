@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getAddons, addonsMeta } from '../lib/content';
+import GiocoSwitch from '../components/GiocoSwitch.astro';
+import { getAddons, addonsMeta, foreverBuild } from '../lib/content';
 
 const addons = getAddons();
 // Provenienza: quasi tutto viene da CurseForge, ma non tutto — NaowhUI si scaricava dal sito
@@ -28,17 +29,62 @@ const tocToVer = (toc: number) => `${Math.floor(toc / 10000)}.${Math.floor(toc /
 // elenca anche i flavour Classic (fino a nove voci, e una, `38001`, non corrisponde a
 // nessuna versione reale), che su un sito di solo Retail sono rumore.
 const lastSupported = (iface: string) => { const c = codici(iface); return c.length ? tocToVer(c[0]) : ''; };
-const updatedCount = addons.filter(a => matchesBuild(a.interface)).length;
-const outdatedCount = addons.length - updatedCount;
+
+// ── WoW Forever ──────────────────────────────────────
+// Stesso calcolo sulla build di Forever (1.60.1 -> TOC 16001). Un addon sta su Forever
+// solo se lo dice `giochi` nel manifest; assente = solo retail.
+const [fMaj, fMin, fPat] = foreverBuild.split('.');
+const fShort = fMaj && fMin != null && fPat != null ? `${fMaj}.${fMin}.${fPat}` : '';
+const fToc = fShort ? Number(fMaj) * 10000 + Number(fMin) * 100 + Number(fPat) : 0;
+const giochiDi = (a: (typeof addons)[number]) => a.giochi ?? ['retail'];
+const suForever = addons.filter(a => giochiDi(a).includes('forever'));
+const suRetail = addons.filter(a => giochiDi(a).includes('retail'));
+// L'interruttore compare solo se almeno un addon sta su Forever (e la build e' nota).
+const haForever = suForever.length > 0 && !!fToc;
+const okForever = (iface: string) => !!fToc && codici(iface).includes(fToc);
+
+// Quello che cambia fra i due giochi, per card: stato, testo di stato, versione con cui
+// e' compatibile, cartelle installate. Il JS lo copia nel `dataset` della card al cambio
+// di gioco, cosi' barretta, filtri e modale continuano a leggere gli stessi campi di prima.
+const perGioco = (a: (typeof addons)[number]) => {
+  const ok = matchesBuild(a.interface);
+  const okF = okForever(a.interface);
+  const senza = new Set(a.forever?.senza ?? []);
+  return {
+    retail: {
+      updated: ok ? '1' : '0',
+      statetxt: ok ? `Aggiornato · ${buildShort}` : `Da aggiornare · supporta fino a ${lastSupported(a.interface)}`,
+      iface: lastSupported(a.interface),
+      folders: a.folders ?? [],
+    },
+    forever: {
+      updated: okF ? '1' : '0',
+      statetxt: okF ? `Aggiornato · Forever ${fShort}` : `Da aggiornare · non dichiara Forever ${fShort}`,
+      iface: okF ? `Forever ${fShort}` : 'Forever non dichiarato',
+      folders: (a.folders ?? []).filter(f => !senza.has(f)),
+    },
+  };
+};
+const updatedCount = suRetail.filter(a => matchesBuild(a.interface)).length;
+const outdatedCount = suRetail.length - updatedCount;
+const updatedF = suForever.filter(a => okForever(a.interface)).length;
+const outdatedF = suForever.length - updatedF;
 ---
-<Base title="Addon" description="Addon WoW Retail installati: versione, cosa fanno e link, con ricerca in tempo reale.">
+<Base title="Addon" description="Addon WoW installati (Retail e Forever): versione, cosa fanno e link, con ricerca in tempo reale.">
   <div class="wrap" id="addon-main">
     <div class="filters row">
+      {haForever && <GiocoSwitch />}
       <input id="addon-search" class="search" type="search" inputmode="search" autocomplete="off"
              placeholder="Cerca addon…" aria-label="Cerca addon" />
+      {/* Conteggi per gioco: con l'interruttore ci sono le due versioni del numero e il
+          CSS ne mostra una (`data-solo`); senza, resta il solo numero retail. */}
       <div class="chips" id="addon-filters" role="group" aria-label="Filtra per stato">
-        <button class="chip" data-filter="updated" type="button" aria-pressed="false"><img class="chip-ico" src="/icons/ui/ok.jpg" alt="" width="18" height="18" /> Aggiornati<span class="c">{updatedCount}</span></button>
-        <button class="chip" data-filter="outdated" type="button" aria-pressed="false"><img class="chip-ico" src="/icons/ui/warn.jpg" alt="" width="18" height="18" /> Da aggiornare<span class="c">{outdatedCount}</span></button>
+        <button class="chip" data-filter="updated" type="button" aria-pressed="false"><img class="chip-ico" src="/icons/ui/ok.jpg" alt="" width="18" height="18" /> Aggiornati{haForever
+          ? <><span class="c" data-solo="retail">{updatedCount}</span><span class="c" data-solo="forever">{updatedF}</span></>
+          : <span class="c">{updatedCount}</span>}</button>
+        <button class="chip" data-filter="outdated" type="button" aria-pressed="false"><img class="chip-ico" src="/icons/ui/warn.jpg" alt="" width="18" height="18" /> Da aggiornare{haForever
+          ? <><span class="c" data-solo="retail">{outdatedCount}</span><span class="c" data-solo="forever">{outdatedF}</span></>
+          : <span class="c">{outdatedCount}</span>}</button>
       </div>
     </div>
 
@@ -50,15 +96,20 @@ const outdatedCount = addons.length - updatedCount;
     <div class="addon-grid" id="addon-grid">
       {addons.map(a => {
         const ok = matchesBuild(a.interface);
+        const per = perGioco(a);
+        // I campi che dipendono dal gioco nascono coi valori retail (la pagina senza JS,
+        // o senza interruttore, e' quella di sempre); `data-per` li porta tutti e due.
         return (
           <button type="button" class="acard"
-                  data-updated={ok ? '1' : '0'}
+                  data-updated={per.retail.updated}
+                  data-giochi={giochiDi(a).join(' ')}
+                  data-per={haForever ? JSON.stringify(per) : undefined}
                   data-search={`${a.name} ${a.desc ?? ''} ${a.version} ${a.source} ${(a.folders ?? []).join(' ')}`.toLowerCase()}
                   data-name={a.name} data-ver={a.version} data-desc={a.desc ?? ''}
-                  data-state={ok ? buildShort : lastSupported(a.interface)}
-                  data-iface={lastSupported(a.interface)} data-installed={a.installed ?? ''}
+                  data-statetxt={per.retail.statetxt}
+                  data-iface={per.retail.iface} data-installed={a.installed ?? ''}
                   data-srclabel={sourceLabel(a.source)} data-url={a.url ?? ''}
-                  data-folders={JSON.stringify(a.folders ?? [])} data-img={a.img ?? ''}>
+                  data-folders={JSON.stringify(per.retail.folders)} data-img={a.img ?? ''}>
             {a.icon
               ? <img class="aico" src={a.icon} alt="" width="36" height="36" loading="lazy" />
               : <span class="mono" aria-hidden="true">{a.name.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase()}</span>}
@@ -77,9 +128,19 @@ const outdatedCount = addons.length - updatedCount;
                 bottone non puo' avere un `aria-label`: su un bottone quello SOSTITUISCE il
                 nome calcolato dal contenuto, quindi nome, descrizione, versione e stato
                 non verrebbero annunciati affatto. Il contenuto basta gia' a nominarlo. */}
+            {/* Con l'interruttore l'icona `warn` c'e' sempre nel markup e la mostra il CSS
+                quando la card e' `data-updated="0"`: lo stato cambia col gioco, e sarebbe
+                il JS a doverla aggiungere e togliere. Senza interruttore resta com'era. */}
             <span class="acard-tail">
-              {!ok && <img class="stat-ico" src="/icons/ui/warn.jpg" alt="" width="14" height="14" />}
-              <span class="sr-only">{ok ? `Aggiornato al build ${buildShort}. ` : `Da aggiornare, supporta fino a ${lastSupported(a.interface)}. `}Versione </span>
+              {(haForever || !ok) && <img class="stat-ico" src="/icons/ui/warn.jpg" alt="" width="14" height="14" />}
+              {haForever ? (
+                <>
+                  <span class="sr-only" data-solo="retail">{per.retail.statetxt}. Versione </span>
+                  <span class="sr-only" data-solo="forever">{per.forever.statetxt}. Versione </span>
+                </>
+              ) : (
+                <span class="sr-only">{ok ? `Aggiornato al build ${buildShort}. ` : `Da aggiornare, supporta fino a ${lastSupported(a.interface)}. `}Versione </span>
+              )}
               <span class="acard-ver badge badge--accent">{a.version}</span>
             </span>
           </button>
@@ -165,6 +226,9 @@ const outdatedCount = addons.length - updatedCount;
 .acard:hover { border-color: var(--section, var(--accent)); box-shadow: inset 3px 0 0 var(--bar), var(--shadow-md); transform: translateY(-1px); }
 .acard[data-updated="0"] { --bar: var(--warn); background: var(--surface-2); }
 .acard[hidden] { display: none !important; }  /* display:flex vince su [hidden]: forziamo */
+/* L'icona `warn` solo sulle card da aggiornare. Serve con l'interruttore Retail/Forever,
+   dove l'icona e' sempre nel markup perche' lo stato cambia col gioco. */
+.acard[data-updated="1"] .stat-ico { display: none; }
 
 /* 36px come `.mico`: le icone-card del sito condividono il raggio (--radius-lg), qui
    si allinea anche la misura. */
@@ -191,6 +255,12 @@ const outdatedCount = addons.length - updatedCount;
 <script>
   import { loadFilters, saveFilters } from '../lib/filter-state';
   import { initDialog, dialogPos, dialogField, releaseDialog } from '../lib/dialog';
+  import { initGioco, EVENTO_GIOCO, type Gioco } from '../lib/gioco';
+
+  // Il listener del cambio di gioco sta su `document`, che con ClientRouter sopravvive alla
+  // navigazione: va staccato a ogni giro, come la modale, o se ne accumulerebbe uno per
+  // visita — ognuno a tenere in vita le card di una griglia che non c'e' piu'.
+  let onGioco: ((e: Event) => void) | null = null;
 
   function initAddons() {
     const grid = document.getElementById('addon-grid');
@@ -199,6 +269,7 @@ const outdatedCount = addons.length - updatedCount;
     // ⚠️ E si passa il PROPRIO id: senza, girando dopo l'init di /mount le azzeravamo la
     // modale, che da li' non si chiudeva piu'.
     releaseDialog('alb');
+    if (onGioco) { document.removeEventListener(EVENTO_GIOCO, onGioco); onGioco = null; }
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.acard')) as HTMLElement[];
     const search = document.getElementById('addon-search') as HTMLInputElement;
@@ -215,12 +286,16 @@ const outdatedCount = addons.length - updatedCount;
     // cosi' «successivo» segue il filtro attivo invece di saltare fra le nascoste.
     let visible: HTMLElement[] = [];
 
+    // Gioco mostrato: retail finche' l'interruttore (se c'e') non dice altro.
+    let gioco: Gioco = 'retail';
+
     const apply = () => {
       visible = [];
       for (const card of cards) {
+        const okGioco = (card.dataset.giochi || 'retail').split(' ').includes(gioco);
         const okText = query === '' || (card.dataset.search || '').includes(query);
         const okFilter = filter === '' || card.dataset.updated === (filter === 'updated' ? '1' : '0');
-        const show = okText && okFilter;
+        const show = okGioco && okText && okFilter;
         card.hidden = !show;
         if (show) visible.push(card);
       }
@@ -255,6 +330,28 @@ const outdatedCount = addons.length - updatedCount;
     }
     apply();
 
+    // ── Retail / Forever ───────────────────────────────
+    // Solo se la pagina ha l'interruttore, cioe' se almeno un addon sta su Forever. Al cambio
+    // si copiano nel `dataset` di ogni card i campi di quel gioco (`data-per`, letto una
+    // volta sola), poi si rifiltra: barretta, chip e modale leggono gli stessi campi di prima.
+    if (document.querySelector('#addon-main [data-gioco-btn]')) {
+      const per = new Map(cards.map((c) => [c, JSON.parse(c.dataset.per || '{}')] as const));
+      onGioco = (e: Event) => {
+        gioco = (e as CustomEvent<Gioco>).detail;
+        for (const card of cards) {
+          const v = per.get(card)?.[gioco];
+          if (!v) continue;
+          card.dataset.updated = v.updated;
+          card.dataset.statetxt = v.statetxt;
+          card.dataset.iface = v.iface;
+          card.dataset.folders = JSON.stringify(v.folders);
+        }
+        apply();
+      };
+      document.addEventListener(EVENTO_GIOCO, onGioco);
+      initGioco();   // applica il gioco salvato: scatta subito `onGioco`
+    }
+
     // ── Modale di dettaglio ────────────────────────────
     // Apertura, chiusura, Esc, frecce circolari e trappola del focus stanno in
     // `lib/dialog.ts`, condivisi con /mount: qui resta solo il riempimento, che e'
@@ -276,9 +373,9 @@ const outdatedCount = addons.length - updatedCount;
           // L'icona della card e' l'avatar CurseForge; senza, resta quella di sezione.
           const ico = card.querySelector('.aico');
           (el('alb-ico') as HTMLImageElement).src = ico?.getAttribute('src') || '/icons/section/addon.jpg';
-          el('alb-state-txt').textContent = ok
-            ? `Aggiornato · ${d.state || ''}`
-            : `Da aggiornare · supporta fino a ${d.state || ''}`;
+          // Testo gia' composto lato server, per gioco (`perGioco` nel frontmatter): qui
+          // si scrive e basta, cosi' le due formulazioni non vivono in due posti.
+          el('alb-state-txt').textContent = d.statetxt || '';
           (el('alb-state-ico') as HTMLImageElement).src = ok ? '/icons/ui/ok.jpg' : '/icons/ui/warn.jpg';
           // ⚠️ `className =` SOSTITUISCE l'intero attributo: va riscritta anche `dlg-state`,
           // che sta nel template. Scrivendo solo la variante, la pastiglia perdeva sfondo,

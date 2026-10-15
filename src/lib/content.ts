@@ -32,6 +32,12 @@ export interface Addon {
   url?: string;
   installed?: string;
   folders: string[];
+  // In quali giochi e' installato (vedi lib/gioco.ts). ASSENTE = solo retail, che e' il
+  // caso di quasi tutti: si scrive solo per chi sta anche su WoW Forever.
+  giochi?: ('retail' | 'forever')[];
+  // Differenze dell'installazione su Forever: `senza` = cartelle di `folders` che li' NON
+  // sono installate (moduli tolti apposta, es. i damage meter di EllesmereUI).
+  forever?: { senza?: string[] };
   notes?: string;         // memoria interna di manutenzione: NON mostrata sul sito
 }
 
@@ -112,6 +118,9 @@ export interface HwBlock extends HwComponent {
 
 // ── Meta build + data aggiornamento (git) ─────────
 export const wowBuild: string = (addonsManifest as any)._meta?.wow_build ?? '';
+// Build del client di WoW Forever (`_classic_beta_`, WowB.exe): e' un altro gioco con la
+// sua numerazione (1.60.x, TOC 16001), quindi un campo suo e non una variante del primo.
+export const foreverBuild: string = (addonsManifest as any)._meta?.forever_build ?? '';
 // Data dell'ultimo commit che ha toccato il file/cartella sorgente (YYYY-MM-DD).
 // Memoizzata per relPath: il layout la chiama una volta per pagina (~9 spawn git a
 // build), e lo stesso path da' sempre lo stesso risultato entro un build.
@@ -1128,10 +1137,16 @@ export function getClassStats(): ClassStat[] {
     .sort((a, b) => a.label.localeCompare(b.label, 'it'));
 }
 
-export function getPgHtml(): string {
+// `gioco`: retail legge «## Orda» / «## Alleanza», Forever «## Forever Orda» /
+// «## Forever Alleanza» — stessa forma di tabella, colonne comprese (la testata e' quella
+// del blocco Orda). Per Forever la sezione e' FACOLTATIVA: senza, torna stringa vuota e
+// /pg non mostra l'interruttore. ⚠️ I conteggi (getPgCount, getClassStats, nav, home)
+// restano solo retail: `^##\s+Orda` non aggancia «## Forever Orda».
+export function getPgHtml(gioco: 'retail' | 'forever' = 'retail'): string {
   const raw = Object.values(pgFile)[0] ?? '';
-  const orda = extractPgTable(raw, 'Orda');
-  if (!orda) return '<p>Tabella PG non trovata.</p>';
+  const pre = gioco === 'forever' ? 'Forever ' : '';
+  const orda = extractPgTable(raw, pre + 'Orda');
+  if (!orda) return gioco === 'forever' ? '' : '<p>Tabella PG non trovata.</p>';
   const header = orda[0];
   const ncols = header.length;
 
@@ -1142,7 +1157,7 @@ export function getPgHtml(): string {
   const colTotals = horde.colCounts.slice();
 
   let allyHtml = '';
-  const ally = extractPgTable(raw, 'Alleanza');
+  const ally = extractPgTable(raw, pre + 'Alleanza');
   if (ally) {
     // Razze condivise (già nel blocco Orda) restano solo lì: qui le saltiamo.
     const allyRows = ally.slice(1).filter((cells) => !horde.races.has(stripRealm(cells[0]).trim()));
@@ -1166,6 +1181,6 @@ export function getPgHtml(): string {
 
   const body = band('Orda', 'rsep--horde') + horde.html + allyHtml;
 
-  const caption = '<caption class="sr-only">Matrice razza × classe — PG per combinazione (Orda e Alleanza)</caption>';
+  const caption = `<caption class="sr-only">Matrice razza × classe — PG per combinazione (Orda e Alleanza${gioco === 'forever' ? ', WoW Forever' : ''})</caption>`;
   return `<div class="table-scroll"><table>${caption}${thead}<tbody>${body}</tbody></table></div>`;
 }

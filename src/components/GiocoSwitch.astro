@@ -1,0 +1,19 @@
+---
+// Interruttore Retail / Forever. Lo mette in pagina SOLO chi ha contenuto Forever da
+// mostrare: su una pagina senza, sarebbe un bottone che non cambia niente.
+// La logica sta in lib/gioco.ts (initGioco), che la pagina chiama dal proprio script.
+// ⚠️ NON usa la classe `.chips`: dentro `.filters` quel contenitore si scioglie
+// (`display: contents`, global.css) e i suoi bottoni si mescolerebbero alle chip di stato
+// della stessa barra, come se fossero un gruppo solo. Il gioco e' un asse indipendente dai
+// filtri, quindi ha la forma sua: un selettore segmentato (`.gioco-switch`).
+// ⚠️ Il bottone acceso lo disegna il CSS leggendo `html[data-gioco]`, non una classe messa
+// dal JS: l'attributo c'e' gia' prima del primo disegno (script inline in Base.astro),
+// mentre il JS della pagina arriva dopo — con la classe, chi torna su Forever vedrebbe per
+// un attimo acceso «Retail». `aria-pressed` invece lo allinea il JS (initGioco).
+import { GIOCHI } from '../lib/gioco';
+---
+<div class="gioco-switch" role="group" aria-label="Gioco">
+  {GIOCHI.map((g, i) => (
+    <button type="button" class="gioco-btn" data-gioco-btn={g.key} aria-pressed={i === 0 ? 'true' : 'false'}>{g.label}</button>
+  ))}
+</div>

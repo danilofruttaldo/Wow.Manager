@@ -11,6 +11,10 @@ export const meta = {
 const REPO = "c:/src/Wow.Manager"
 const MANIFEST = `${REPO}/addons/manifest.json`
 const ADDONS_PATH = "/c/Program Files (x86)/World of Warcraft/_retail_/Interface/AddOns"
+// WoW Forever: gli addon col campo `giochi` che contiene "forever" vanno installati ANCHE
+// qui, meno le cartelle elencate in `forever.senza` (oggi EllesmereUI senza DamageMeters e
+// MythicTimer). Senza questo passo Forever resterebbe alla versione vecchia in silenzio.
+const FOREVER_PATH = "/c/Program Files (x86)/World of Warcraft/_classic_beta_/Interface/AddOns"
 
 // ---- Bootstrap: leggi il manifest (la fonte di verita') ----
 phase('Bootstrap')
@@ -30,6 +34,8 @@ const BOOT_SCHEMA = {
           current: { type: 'string' },   // campo version
           source: { type: 'string' },    // "cfwidget" oppure "github"
           repo: { type: 'string' },      // se github: owner/repo
+          forever: { type: 'boolean' },  // installato anche su WoW Forever
+          senza: { type: 'array', items: { type: 'string' } }, // cartelle NON installate su Forever
         },
         additionalProperties: true,
       },
@@ -45,6 +51,8 @@ const boot = await agent(
   - slug = l'ULTIMO segmento del path del campo "url" (es url ".../addons/big-wigs" -> "big-wigs"; ".../teleport-me-nu" -> "teleport-me-nu").
   - current = il campo "version".
   - source/repo: DEFAULT source="cfwidget". ECCEZIONI (cfwidget rotto, usa GitHub releases): se name=="BigWigs" -> source="github", repo="BigWigsMods/BigWigs"; se name=="MythicDungeonTools" -> source="github", repo="Nnoggie/MythicDungeonTools".
+  - forever = true se il campo "giochi" esiste e contiene "forever", altrimenti false.
+  - senza = l'array "forever.senza" se c'e', altrimenti [].
 Non inventare addon: includi esattamente quelli presenti nel manifest.`,
   { label: 'bootstrap:manifest', phase: 'Bootstrap', schema: BOOT_SCHEMA }
 )
@@ -109,7 +117,13 @@ const INSTALL_SCHEMA = {
 }
 
 phase('Update')
-const installed = await parallel(updates.map(u => () => agent(
+const installed = await parallel(updates.map(u => () => {
+  const m = ADDONS.find(a => a.name === u.name) || {}
+  const senza = (m.senza || []).join(' ')
+  const passoForever = m.forever
+    ? `6b. ANCHE WoW Forever: per OGNI cartella X estratta che NON e' fra [${senza}]: cp -r "${FOREVER_PATH}/X" "/tmp/wow-upd/wf/bak/forever_X" 2>/dev/null ; rm -rf "${FOREVER_PATH}/X" ; cp -r "ext_${u.name}/X" "${FOREVER_PATH}/X". Le cartelle elencate fra parentesi su Forever NON si installano. Riporta in notes quante cartelle hai copiato su Forever.\n`
+    : ''
+  return agent(
 `Installa l'update dell'addon WoW ${u.name} (${u.current} -> ${u.latest}). Sovrascrivi i file: le modifiche vengono lette al prossimo /reload o riavvio, non serve che WoW sia chiuso.
 Passi (bash):
 1. mkdir -p /tmp/wow-upd/wf/bak && cd /tmp/wow-upd/wf
@@ -118,10 +132,11 @@ Passi (bash):
 4. rm -rf "ext_${u.name}" && mkdir "ext_${u.name}" && unzip -q "${u.fileName}" -d "ext_${u.name}"
 5. ls -1 "ext_${u.name}"  -> sono le cartelle addon top-level da installare.
 6. Per OGNI cartella X estratta: cp -r "${ADDONS_PATH}/X" "/tmp/wow-upd/wf/bak/X" 2>/dev/null ; rm -rf "${ADDONS_PATH}/X" ; cp -r "ext_${u.name}/X" "${ADDONS_PATH}/X"
-7. Leggi la riga '## Version' e '## Interface' del .toc principale installato (quello che matcha il nome cartella primaria) per confermare.
+${passoForever}7. Leggi la riga '## Version' e '## Interface' del .toc principale installato (quello che matcha il nome cartella primaria) per confermare.
 Restituisci: name, newVer (dal toc), folders (array cartelle installate), tocInterface (riga ## Interface), ok=true se versione installata == "${u.latest}", notes.`,
-  { label: `install:${u.name}`, phase: 'Update', schema: INSTALL_SCHEMA }
-)))
+    { label: `install:${u.name}`, phase: 'Update', schema: INSTALL_SCHEMA }
+  )
+}))
 
 return {
   build: boot.build,

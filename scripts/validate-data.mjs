@@ -155,10 +155,33 @@ camminaTxt('macros');
 nota(`macro: ${Object.keys(macros).length}`);
 
 // ── Addon ──────────────────────────────────────────────────────────────────────
-const addons = json('addons/manifest.json').addons ?? {};
+const addonsManifest = json('addons/manifest.json');
+const addons = addonsManifest.addons ?? {};
+// Retail / Forever (src/lib/gioco.ts): `giochi` assente = solo retail.
+const GIOCHI = ['retail', 'forever'];
+const BUILD_RX = /^\d+\.\d+\.\d+\.\d+$/;
+for (const campo of ['wow_build', 'forever_build']) {
+  const v = addonsManifest._meta?.[campo];
+  if (v != null && !BUILD_RX.test(v)) err('addon', `_meta.${campo} «${v}» non e' nella forma a.b.c.build`);
+}
 for (const [k, a] of Object.entries(addons)) {
   for (const campo of ['name', 'desc', 'version', 'interface', 'source', 'folders']) {
     if (a[campo] == null || (Array.isArray(a[campo]) && !a[campo].length)) err('addon', `${k}: campo ${campo} mancante o vuoto`);
+  }
+  if (a.giochi != null) {
+    if (!Array.isArray(a.giochi) || !a.giochi.length) err('addon', `${k}: giochi dev'essere un elenco non vuoto`);
+    else for (const g of a.giochi) if (!GIOCHI.includes(g)) err('addon', `${k}: gioco «${g}» sconosciuto (ammessi: ${GIOCHI.join(', ')})`);
+  }
+  // `forever` descrive l'installazione su Forever: senza «forever» in `giochi` non vale
+  // nulla, e una cartella in `senza` che non sta in `folders` e' un refuso.
+  if (a.forever != null) {
+    if (!(a.giochi ?? []).includes('forever')) err('addon', `${k}: blocco forever ma «forever» non e' in giochi`);
+    for (const f of a.forever.senza ?? []) {
+      if (!(a.folders ?? []).includes(f)) err('addon', `${k}: forever.senza nomina «${f}», che non e' fra le folders`);
+    }
+  }
+  if ((a.giochi ?? []).includes('forever') && !addonsManifest._meta?.forever_build) {
+    err('addon', `${k}: sta su Forever ma manca _meta.forever_build (la pagina non saprebbe con cosa confrontarlo)`);
   }
   // ⚠️ Stesso elenco di estensioni di `addonIcon` in src/lib/content.ts, webp per primo:
   // se i due divergono, il validatore approva un'icona che il sito non sa risolvere (o
@@ -215,9 +238,11 @@ const tabella = (sezione) => {
   return out.length ? out : null;
 };
 const pg = [];   // { nome, razza, slugIcona }
-for (const sez of ['Orda', 'Alleanza']) {
+// Le sezioni Forever sono FACOLTATIVE (src/lib/content.ts, getPgHtml): se ci sono, si
+// controllano con le stesse regole di quelle retail.
+for (const sez of ['Orda', 'Alleanza', 'Forever Orda', 'Forever Alleanza']) {
   const t = tabella(sez);
-  if (!t) { err('pg.md', `sezione «${sez}» non trovata`); continue; }
+  if (!t) { if (!sez.startsWith('Forever')) err('pg.md', `sezione «${sez}» non trovata`); continue; }
   const testata = t[0].map((c) => c.trim());
   for (const riga of t.slice(1)) {
     if (riga.length !== testata.length) {
@@ -424,8 +449,9 @@ const shots = elenco('public/screenshots').filter((f) => f.endsWith('.webp'));
 const thumbs = new Set(elenco('public/screenshots/thumb').filter((f) => f.endsWith('.webp')));
 for (const f of shots) {
   if (!thumbs.has(f)) err('ui', `public/screenshots/${f} non ha la miniatura in thumb/`);
-  // Il nome del file E' il dato: /ui ne ricava classe e spec.
-  const parti = f.replace(/\.webp$/, '').split('-');
+  // Il nome del file E' il dato: /ui ne ricava classe e spec. Il prefisso `forever-`
+  // marca uno screenshot di WoW Forever e si toglie prima di leggere il resto.
+  const parti = f.replace(/\.webp$/, '').replace(/^forever-/, '').split('-');
   const valide = specDi(parti[0]);
   if (!valide) { err('ui', `${f}: «${parti[0]}» non e' una classe`); continue; }
   if (parti.length < 3) { err('ui', `${f}: il nome non e' <classe>-<spec>-<nome>.webp`); continue; }
