@@ -14,7 +14,9 @@ const ADDONS_PATH = "/c/Program Files (x86)/World of Warcraft/_retail_/Interface
 // WoW Forever: gli addon col campo `giochi` che contiene "forever" vanno installati ANCHE
 // qui, meno le cartelle elencate in `forever.senza` (oggi EllesmereUI senza DamageMeters e
 // MythicTimer). Senza questo passo Forever resterebbe alla versione vecchia in silenzio.
-const FOREVER_PATH = "/c/Program Files (x86)/World of Warcraft/_classic_beta_/Interface/AddOns"
+// Dal lancio (client installato il 2026-11-01) e' _forever_: la beta stava in _classic_beta_,
+// disinstallata, e scriverci ancora vorrebbe dire aggiornare una cartella che nessuno legge.
+const FOREVER_PATH = "/c/Program Files (x86)/World of Warcraft/_forever_/Interface/AddOns"
 
 // ---- Bootstrap: leggi il manifest (la fonte di verita') ----
 phase('Bootstrap')

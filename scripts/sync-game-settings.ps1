@@ -8,7 +8,7 @@
 # Due blocchi, perche' il client salva i CVar in due posti: $CharValues (per-PG, in ogni
 # cartella di personaggio) e $AccountValues (account-wide, nel file di account).
 # IMPORTANTE: eseguire con WoW COMPLETAMENTE CHIUSO.  -Prova = dice cosa cambierebbe.
-# -Gioco = la cartella del client: _retail_ (default) o _classic_beta_ per WoW Forever,
+# -Gioco = la cartella del client: _retail_ (default) o _forever_ per WoW Forever,
 # che legge gli stessi CVar dagli stessi file.
 param([switch]$Prova, [string]$Gioco = '_retail_')
 $ErrorActionPreference = 'Stop'
@@ -81,7 +81,8 @@ if (-not $Acc) { throw "Nessuna cartella account sotto: $AccRoot" }
 # A gioco aperto e' lavoro buttato: al logout il client riscrive i config-cache col suo
 # stato in memoria e le chiavi appena messe qui tornano come prima.
 if (-not $Prova) {
-  # Conta solo il client di QUESTA cartella (Wow.exe per retail, WowB.exe per Forever):
+  # Conta solo il client di QUESTA cartella (dal lancio si chiamano entrambi Wow.exe,
+  # quindi conta il percorso e non il nome):
   # retail aperto non tocca i file di Forever, e viceversa.
   $dir = Join-Path 'C:\Program Files (x86)\World of Warcraft' $Gioco
   $aperto = Get-Process -Name 'Wow*' -ErrorAction SilentlyContinue |

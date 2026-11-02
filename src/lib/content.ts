@@ -118,7 +118,7 @@ export interface HwBlock extends HwComponent {
 
 // ── Meta build + data aggiornamento (git) ─────────
 export const wowBuild: string = (addonsManifest as any)._meta?.wow_build ?? '';
-// Build del client di WoW Forever (`_classic_beta_`, WowB.exe): e' un altro gioco con la
+// Build del client di WoW Forever (`_forever_`, Wow.exe come retail): e' un altro gioco con la
 // sua numerazione (1.60.x, TOC 16001), quindi un campo suo e non una variante del primo.
 export const foreverBuild: string = (addonsManifest as any)._meta?.forever_build ?? '';
 // Data dell'ultimo commit che ha toccato il file/cartella sorgente (YYYY-MM-DD).

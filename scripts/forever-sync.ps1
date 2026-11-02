@@ -1,6 +1,6 @@
 #Requires -Version 5.1
-# Allinea i personaggi di WoW Forever (_classic_beta_) alle impostazioni di retail:
-#   1. CVar: lancia sync-game-settings.ps1 -Gioco _classic_beta_ (stesso preset di retail);
+# Allinea i personaggi di WoW Forever (_forever_) alle impostazioni di retail:
+#   1. CVar: lancia sync-game-settings.ps1 -Gioco _forever_ (stesso preset di retail);
 #   2. layout della Modalita' Modifica: assegna il layout per NOME (default 'Stantu') a tutte
 #      le spec di ogni PG.
 # ATTENZIONE: La CHAT non la tocca, ed e' una scelta misurata (2026-10-15): i colori di Stantu sono
@@ -24,10 +24,13 @@ function CartellaAccount([string]$gioco) {
   if (-not $d) { throw "Nessuna cartella account in $gioco" }
   return $d.FullName
 }
-$F = CartellaAccount '_classic_beta_'
+# La cartella del client di lancio (installato il 2026-11-01). La beta stava in
+# _classic_beta_ ed e' stata disinstallata con tutta la sua WTF.
+$Gioco = '_forever_'
+$F = CartellaAccount $Gioco
 
 if (-not $Prova) {
-  $dir = "$W\_classic_beta_\"
+  $dir = "$W\$Gioco\"
   $aperto = Get-Process -Name 'Wow*' -ErrorAction SilentlyContinue |
     Where-Object { $_.Path -and $_.Path.StartsWith($dir, [System.StringComparison]::OrdinalIgnoreCase) }
   if ($aperto) { throw "Forever e' aperto: chiudilo, oppure lancia con -Prova." }
@@ -39,7 +42,7 @@ $pgDirs = Get-ChildItem -LiteralPath $F -Directory | Where-Object { $_.Name -ne 
 
 # -- 1. CVar --------------------------------------------------------------------
 Write-Host '== CVar (sync-game-settings.ps1)' -ForegroundColor Cyan
-& (Join-Path $PSScriptRoot 'sync-game-settings.ps1') -Gioco '_classic_beta_' -Prova:$Prova
+& (Join-Path $PSScriptRoot 'sync-game-settings.ps1') -Gioco $Gioco -Prova:$Prova
 
 # -- 2. Layout della Modalita' Modifica -----------------------------------------
 # Nel file di account i layout stanno in ordine, ognuno preceduto dalla LUNGHEZZA del suo
@@ -48,7 +51,15 @@ Write-Host '== CVar (sync-game-settings.ps1)' -ForegroundColor Cyan
 # l'indice conta prima i 2 layout di fabbrica (Modern, Classic), quindi = 2 + posizione.
 # ATTENZIONE: Verificato sul formato 5 di Forever: retail scrive il 2, con indici diversi.
 Write-Host "`n== Layout '$Layout'" -ForegroundColor Cyan
-$acc = [System.IO.File]::ReadAllText("$F\edit-mode-cache-account.txt")
+# Senza file di account il layout non c'e' ancora (va ricostruito in gioco): le CVar sono
+# gia' scritte, quindi si avvisa e si esce puliti invece di buttare via il passo 1.
+$accPath = "$F\edit-mode-cache-account.txt"
+if (-not (Test-Path -LiteralPath $accPath)) {
+  Write-Host "  nessun layout salvato su Forever: passo saltato (il layout '$Layout' va creato in gioco)." -ForegroundColor Yellow
+  if ($Prova) { Write-Host "`nPROVA: nessun file scritto." -ForegroundColor Yellow }
+  return
+}
+$acc = [System.IO.File]::ReadAllText($accPath)
 if (-not $acc.StartsWith('5 ')) { throw "edit-mode-cache-account.txt non e' nel formato 5: non tocco niente." }
 $nomi = @()
 foreach ($m in [regex]::Matches($acc, '(?<=\s)(\d{1,2}) ')) {
