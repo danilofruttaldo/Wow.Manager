@@ -61,12 +61,12 @@
     "MythicDungeonTools": {
       "name": "Mythic Dungeon Tools",
       "desc": "Planner per M+: route sulla mappa, pull e conteggio nemici, con export per il gruppo.",
-      "version": "6.3.29",
+      "version": "6.3.30",
       "interface": "120107, 120105",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/mythic-dungeon-tools",
       "preview": "https://media.forgecdn.net/attachments/360/274/nnoggievideo_2021-05-01_10-28-16.png",
-      "installed": "2026-11-01",
+      "installed": "2026-11-05",
       "folders": [
         "MythicDungeonTools",
         "MythicDungeonTools_UI"
@@ -76,11 +76,11 @@
     "EllesmereUI": {
       "name": "EllesmereUI",
       "desc": "Suite UI modulare: unit frame, nameplate, barre, borse, chat, meter e comodità, con editor visuale.",
-      "version": "v9.7.3",
+      "version": "v9.7.6",
       "interface": "120000, 120001, 120005, 120007, 120100, 120105, 16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/ellesmereui",
-      "installed": "2026-11-04",
+      "installed": "2026-11-05",
       "folders": [
         "EllesmereUI",
         "EllesmereUIActionBars",
