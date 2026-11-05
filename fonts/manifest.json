@@ -1,14 +1,17 @@
 {
   "_meta": {
     "schema_version": 1,
-    "wow_fonts_dir": "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Fonts",
-    "last_sync": "2026-06-20"
+    "wow_fonts_dirs": [
+      "c:\\Program Files (x86)\\World of Warcraft\\_retail_\\Fonts",
+      "c:\\Program Files (x86)\\World of Warcraft\\_forever_\\Fonts"
+    ],
+    "last_sync": "2026-11-05"
   },
   "override": {
-    "source_font": "Segoe UI Semibold",
-    "source_file": "C:\\Windows\\Fonts\\seguisb.ttf",
-    "installed": "2026-06-20",
-    "scope": "UI Blizzard di default, globale (tutti i personaggi e account)",
+    "source_font": "Avant Garde",
+    "source_file": "C:\\Program Files (x86)\\World of Warcraft\\_retail_\\Interface\\AddOns\\EllesmereUI\\media\\fonts\\Avant Garde Naowh.ttf",
+    "installed": "2026-11-05",
+    "scope": "UI Blizzard di default, globale (tutti i personaggi e account), retail e Forever",
     "files": [
       "FRIZQT__.TTF",
       "ARIALN.TTF",
@@ -17,6 +20,6 @@
       "2002.TTF",
       "2002B.TTF"
     ],
-    "notes": "Font unico in tutta la UI base. Scelto Semibold (non Regular) per leggibilita su numeri/action bar/nameplate/combat text (sfondi carichi). Metodo: copia di seguisb.ttf sotto i nomi-override che WoW carica da Fonts/ (FRIZQT__ = font principale, ARIALN = chat/numeri, MORPHEUS = titoli quest/posta, skurri = combat text, 2002/2002B = numeri secondari). Il binario .ttf NON e' versionato (font di sistema Windows, ricostruibile copiando source_file). I .slug interni Blizzard restano intatti. Si carica all'AVVIO del client (non basta /reload). Revert: cancellare i 6 .TTF da Fonts/. CAVEAT: addon con font proprio (Details, BigWigs, MRT) non seguono questo override, vanno impostati nei rispettivi selettori. STATO AL 2026-09-28: EllesmereUI ha fonts.applyToAllGameText = true, quindi SCAVALCA questo override su tutto il testo di gioco col proprio font globale, che e' AVANT GARDE (Avant Garde Naowh.ttf incluso in EllesmereUI, lo stesso font che NaowhUI chiamava 'Naowh'): impostato anche su nomi, nameplate, timer M+ e reminder di EllesmereUI e su barre, messaggi, countdown e aure di BigWigs. Il 2026-09-27 era stato messo tutto su Segoe (EllesmereUI su __blizzard, la sentinella Blizzard Default che risolve a STANDARD_TEXT_FONT cioe' FRIZQT__.TTF cioe' questo file; BigWigs su Friz Quadrata TT) e il giorno dopo l'utente l'ha trovato meno leggibile: le dimensioni del profilo erano tarate su Avant Garde. Per tornare a Segoe ovunque basta rimettere quelle due sentinelle. Questo override resta attivo per quel che EllesmereUI non tocca. NB: i 6 .TTF in Fonts/ sono una Segoe UI Semibold di 991.152 byte, non identica al seguisb.ttf attuale di Windows (974.500, aggiornato da Windows): stesso font, versione diversa, e rilanciare apply-fonts.ps1 la sostituirebbe con quella nuova."
+    "notes": "Font unico in tutto il gioco. Metodo: copia di un .ttf sotto i nomi-override che WoW carica da Fonts/ (FRIZQT__ = font principale, ARIALN = chat/numeri, MORPHEUS = titoli quest/posta, skurri = combat text, 2002/2002B = numeri secondari). I .slug interni Blizzard restano intatti. Si carica all'AVVIO del client (non basta /reload). Revert: apply-fonts.ps1 -Revert. DAL 2026-11-05 il font e' AVANT GARDE (Avant Garde Naowh.ttf, incluso in EllesmereUI: lo stesso che NaowhUI chiamava 'Naowh') su richiesta 'avant garde ovunque nel gioco', su retail e Forever. Serve perche' EllesmereUI (fonts.global = Avant Garde, applyToAllGameText = true) copre il testo che raggiunge lui, ma non quello che il client disegna prima o fuori dagli addon (schermata di login e personaggi, combat text, fumetti, testo nel mondo): li' valeva questo override, che prima era Segoe UI Semibold (seguisb.ttf, dal 2026-06-20) su retail e il font di fabbrica su Forever. Il sorgente e' il file dentro l'addon, quindi NON e' versionato e un aggiornamento di EllesmereUI non tocca le copie in Fonts/. Per tornare a Segoe: source_font 'Segoe UI Semibold', source_file C:\\Windows\\Fonts\\seguisb.ttf. CAVEAT: addon con font proprio (Details, BigWigs, MRT) non seguono l'override, vanno impostati nei rispettivi selettori (BigWigs e' gia' su Avant Garde dal 2026-09-28)."
   }
 }

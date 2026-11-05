@@ -20,7 +20,7 @@
       "lang": "powershell",
       "when": "Esegui dalla cartella del repo. Richiede il RIAVVIO del client (non basta /reload).",
       "body_file": "apply-fonts.ps1",
-      "notes": "Legge fonts/manifest.json (override.source_file, override.files, _meta.wow_fonts_dir): nessun elenco hardcoded, segue il manifest. Il .ttf sorgente è un font di sistema Windows, non versionato. Addon con font proprio (Details/BigWigs/MRT) non seguono l'override. Revert: -Revert oppure cancella i .TTF da Fonts/."
+      "notes": "Legge fonts/manifest.json (override.source_file, override.files, _meta.wow_fonts_dirs): nessun elenco hardcoded, segue il manifest. Scrive in ogni cartella Fonts elencata (retail e Forever), saltando i giochi non installati. Il .ttf sorgente (Avant Garde, dentro EllesmereUI) non è versionato. Addon con font proprio (Details/BigWigs/MRT) non seguono l'override. Revert: -Revert oppure cancella i .TTF da Fonts/."
     },
     "fetch-fonts": {
       "kind": "script",
