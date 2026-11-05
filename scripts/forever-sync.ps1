@@ -73,6 +73,13 @@ foreach ($m in [regex]::Matches($acc, '(?<=\s)(\d{1,2}) ')) {
   # di Stantu risultava 7 invece di 4 - preso dalla prova a vuoto, prima di scrivere.
   if ($nome -match '[A-Za-z]' -and $acc.Substring($ini + $n) -match '^ [01] \d+ 0 0 ') { $nomi += $nome }
 }
+# Il client crea il file anche senza layout salvati (solo intestazione, ~80 byte): stesso
+# caso del file assente, si avvisa e si esce puliti.
+if ($nomi.Count -eq 0) {
+  Write-Host "  nessun layout salvato su Forever: passo saltato (il layout '$Layout' va creato in gioco)." -ForegroundColor Yellow
+  if ($Prova) { Write-Host "`nPROVA: nessun file scritto." -ForegroundColor Yellow }
+  return
+}
 $pos = [array]::IndexOf($nomi, $Layout)
 if ($pos -lt 0) { throw "Layout '$Layout' non trovato su Forever (ci sono: $($nomi -join ', ')). Importalo prima in gioco." }
 $idx = [string](2 + $pos + 1)
