@@ -184,7 +184,7 @@
     "DungeonJournal": {
       "name": "DungeonJournal",
       "desc": "Diario dei dungeon: quest disponibili per ogni istanza e dove prenderle, boss e loot che droppano.",
-      "version": "1.6.7",
+      "version": "1.7.0",
       "interface": "16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/dungeonjournal",
