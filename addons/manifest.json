@@ -76,11 +76,11 @@
     "EllesmereUI": {
       "name": "EllesmereUI",
       "desc": "Suite UI modulare: unit frame, nameplate, barre, borse, chat, meter e comodità, con editor visuale.",
-      "version": "v9.7.6",
+      "version": "v9.7.8",
       "interface": "120000, 120001, 120005, 120007, 120100, 120105, 16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/ellesmereui",
-      "installed": "2026-11-05",
+      "installed": "2026-11-06",
       "folders": [
         "EllesmereUI",
         "EllesmereUIActionBars",
