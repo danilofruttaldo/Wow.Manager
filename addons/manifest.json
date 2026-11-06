@@ -182,20 +182,20 @@
       "notes": "Installato 2026-10-25 alla 341 (forgecdn files/9162/359, release del 2026-10-13, 830 KB) su richiesta: addon d'asta 'il piu' semplice' per postare tanta roba, scelto al posto di TradeSkillMaster (piu' potente ma da configurare). Nessun addon posta da solo: Blizzard vuole un evento hardware (clic/tasto) per ogni asta, quindi il massimo e' un tasto da premere a ripetizione dalla scheda Selling. Icona = avatar CurseForge 64x64 PNG (sulla postazione di gioco non c'e' sharp per il webp). preview assente = mai cercata: la riempie node-pending.ps1 col logo di ripiego. Solo retail (non in giochi forever) benche' il .toc dichiari 16001."
     },
     "DungeonJournal": {
-      "name": "Dungeon Journal",
-      "desc": "Guida in gioco a dungeon e raid: abilità dei boss, meccaniche e tabelle loot in una finestra sola.",
-      "version": "4.0",
-      "interface": "20400",
+      "name": "DungeonJournal",
+      "desc": "Diario dei dungeon: quest disponibili per ogni istanza e dove prenderle, boss e loot che droppano.",
+      "version": "1.6.7",
+      "interface": "16001",
       "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/dungeon-journal",
+      "url": "https://www.curseforge.com/wow/addons/dungeonjournal",
       "installed": "2026-11-06",
       "folders": [
-        "DungeonJournal"
+        "ForeverDungeonJournal"
       ],
       "giochi": [
         "forever"
       ],
-      "notes": "Installato 2026-11-06 alla 4.0 (forgecdn files/7683/672, DungeonJournal.zip, release del 2026-02-26, 25,3 MB, 79 file quasi tutti immagini) SOLO su WoW Forever, su richiesta. ATTENZIONE, installato sapendo che NON e' fatto per Forever: e' un addon per TBC Classic (## Interface 20400, tutte e 6 le release su CurseForge marcate solo 2.5.5) e Data.lua copre SOLO i contenuti TBC (Hellfire Ramparts ... Karazhan, Gruul, Magtheridon), mentre Forever ha contenuti vanilla. Si carica perche' Forever ha checkAddonVersion 0 in Config.wtf. Rischi API letti nel sorgente: SetBackdrop chiamato 3 volte (sull'API di retail serve BackdropTemplate) e GetItemInfo globale; su Forever scriptErrors e' 0, quindi un errore si vede come finestra vuota o rotta, non come messaggio. Se non funziona: togliere la cartella da _forever_\\Interface\\AddOns e questa voce. /aggiorna-addon NON lo aggiorna mai: l'audit cerca un file per la build retail e questo progetto pubblica solo 2.5.5, quindi esce latest '?'. Icona = avatar CurseForge (1024x1024, 1,7 MB) ridotto a 64x64 PNG con System.Drawing. preview assente = mai cercata (node-pending.ps1)."
+      "notes": "Installato 2026-11-06 alla 1.6.7 (mediafilez.forgecdn.net files/9456/160, ForeverDungeonJournal-1.6.7.zip, release del 2026-11-05, 29,8 MB, 420 file per 54,9 MB estratti) SOLO su WoW Forever, su richiesta. Autore Exehn, progetto CurseForge 1707971 (slug `dungeonjournal`), 2,9 milioni di download. Il progetto pubblica file separati per flavor: ForeverDungeonJournal-x.y.z (1.60.1), DungeonJournalClassicEra (1.15.9), DungeonJournalTBC (2.5.6). Si prende SOLO il Forever, che ha ## Interface 16001 e cartella ForeverDungeonJournal (SavedVariables ForeverDungeonJournalDB, per PG ForeverDungeonJournalCharacterDB). ATTENZIONE, da non confondere con `dungeon-journal` (progetto 1467479, autore Ezikiel), che e' un addon TBC Classic (Interface 20400, solo contenuti TBC): installato per sbaglio lo stesso giorno e tolto prima di entrare in gioco, quindi niente SavedVariables da ripulire. /aggiorna-addon lo audita sulla build di Forever (retail=false nel bootstrap), non su quella retail, e lo installa solo in _forever_. Icona = avatar CurseForge 400x400 ridotto a 64x64 PNG con System.Drawing. preview assente = mai cercata (node-pending.ps1)."
     }
   }
 }
