@@ -32,7 +32,7 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 
 - **Install addon**: verifica compat → estrai in `_retail_/Interface/AddOns/` → entry in `addons/manifest.json` → log in `addons/installs.log`.
 - **Backup macro**: copia testo macro in-game → file in `macros/<classe>/[<spec>/]<slug>.txt` → entry in `macros/manifest.json` con `body_file` che punta a quel file.
-- **Sync/audit**: `npm run validate` confronta manifest vs filesystem reale (nomi che devono combaciare, file che devono esistere) e gira anche in CI.
+- **Sync/audit**: `npm run validate` confronta manifest vs filesystem reale (nomi che devono combaciare, file che devono esistere) (gira anche nel pre-push, dove c'è Node).
 
 ## Sito
 
@@ -41,7 +41,7 @@ Il repo contiene anche un sito statico che presenta i dati (addon, macro, profes
 - **Stack**: [Astro](https://astro.build) (statico), sorgente in `src/`, dati letti dai manifest/markdown del repo.
 - **Sviluppo locale**: `npm install` una volta, poi `npm run dev` (o **F5** in VS Code → "Sito locale (dev)"). Richiede **Node ≥ 22.12**.
 - **Non pubblicato**: dal 2026-11-06 il deploy su GitHub Pages è stato tolto (`deploy.yml` e `public/CNAME` rimossi). Il sito si consulta solo in locale.
-- **Hook git**: su un clone nuovo vanno attivati con `git config core.hooksPath .githooks`, altrimenti ci sono ma non girano. Dove Node manca `pre-commit` e `pre-push` saltano dichiarandolo, e i controlli restano alla CI. Dettagli in [CLAUDE.md](CLAUDE.md).
+- **Hook git**: su un clone nuovo vanno attivati con `git config core.hooksPath .githooks`, altrimenti ci sono ma non girano. Dove Node manca `pre-commit` e `pre-push` saltano dichiarandolo: lì i controlli non li fa nessuno, non c'è più CI. Dettagli in [CLAUDE.md](CLAUDE.md).
 
 Il sito **non** modifica i dati: li legge in sola lettura. La fonte di verità resta nei manifest/`pg.md`.
 Per manutenerlo/estenderlo (anche da un'altra postazione) vedi **[CLAUDE.md](CLAUDE.md)**.

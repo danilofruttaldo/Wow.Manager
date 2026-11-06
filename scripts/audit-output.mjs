@@ -9,9 +9,8 @@
 // accessibilita' trovati il 2026-09-06 (la trappola del Tab che saltava il corpo
 // scorrevole) gli sarebbero sfuggiti. Prende la classe «riferimento rotto in pagina».
 //
-// Gira su `dist/`, quindi vuole un `npm run build` prima. In CI sta nel workflow Verifica
-// accanto a validate, non nel deploy: un rosso qui e' un lavoro da fare, non un sito da
-// tenere offline.
+// Gira su `dist/`, quindi vuole un `npm run build` prima. Sta in `npm run ci:verify`, che
+// il pre-push lancia accanto a validate e check.
 //
 // Uso: node scripts/audit-output.mjs [--dir dist]
 

@@ -16,7 +16,7 @@
 // esiste da nessuna parte», mai «questa scelta e' sbagliata». Le scelte redazionali (quale
 // spec dare a un PG, quale ordine consigliare in una professione) non sono affar suo.
 //
-// Niente dipendenze: solo `node:fs`. Gira in CI (.github/workflows/verifica.yml) e a mano.
+// Niente dipendenze: solo `node:fs`. Gira nel pre-push (npm run ci:verify) e a mano.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

@@ -17,7 +17,7 @@
 # bloccava OGNI push — anche quelli senza nulla da pushare, verificato con --dry-run.
 # Il salto si DICHIARA, non si tace.
 if ! command -v npm >/dev/null 2>&1; then
-  echo "pre-push: npm assente su questa postazione, salto ci:verify (la CI copre)."
+  echo "pre-push: npm assente su questa postazione, salto ci:verify (nessuna CI: nessun controllo)."
   exit 0
 fi
 
@@ -25,7 +25,7 @@ if [ -f "package.json" ]; then
   if [ "${SKIP_VERIFY:-}" = "1" ]; then
     echo "pre-push: SKIP_VERIFY=1 — skipping ci:verify."
   else
-    echo "pre-push: running ci:verify (mirrors CI gates)..."
+    echo "pre-push: running ci:verify (the only verification gate)..."
     if ! npm run ci:verify --if-present; then
       echo "BLOCKED: ci:verify failed — fix before pushing (or SKIP_VERIFY=1 git push to bypass)."
       exit 1
