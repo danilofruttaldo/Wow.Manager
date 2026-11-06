@@ -36,7 +36,7 @@ WTF root:    `c:\Program Files (x86)\World of Warcraft\_retail_\WTF`
 
 ## Sito
 
-Il repo pubblica anche un sito statico che presenta i dati (addon, macro, professioni, PG, transmog, mount, hardware, extra):
+Il repo contiene anche un sito statico che presenta i dati (addon, macro, professioni, PG, transmog, mount, hardware, extra):
 
 - **URL**: <https://wow.danilofruttaldo.com>
 - **Stack**: [Astro](https://astro.build) (statico), sorgente in `src/`, dati letti dai manifest/markdown del repo.
