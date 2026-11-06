@@ -7,7 +7,7 @@ Come lavorare a questo repo con Claude Code **da qualsiasi postazione**, per agg
 Due nature nello stesso repo:
 
 1. **Dati** = fonte di verità: [addons/](addons/), [macros/](macros/), [professions/](professions/), [pg.md](pg.md), [transmog/](transmog/), [hardware/](hardware/), [ui-profiles/](ui-profiles/), [fonts/](fonts/), [scripts/](scripts/). Manifest JSON + markdown, mantenuti a mano.
-2. **Sito statico** ([src/](src/), Astro) che presenta i dati su <https://wow.danilofruttaldo.com>. Il sito legge i dati in **sola lettura**: non li modifica mai. Ogni pagina si allinea da sola quando cambi il dato corrispondente.
+2. **Sito statico** ([src/](src/), Astro) che presenta i dati. **Dal 2026-11-06 non è più pubblicato** (vedi «Deploy»): si guarda solo in locale. Il sito legge i dati in **sola lettura**: non li modifica mai. Ogni pagina si allinea da sola quando cambi il dato corrispondente.
 
 Pagine del sito: **Home** (matrice per classe: macro, PG, transmog — le card che c'erano prima sono diventate la toolbar in header), **Addon**, **Macro**, **Professioni**, **PG**, **Transmog** (tier set), **Mount** (cavalcature), **Hardware** (postazione di gioco), **Extra** (script/link/note).
 
@@ -57,7 +57,7 @@ Dal 2026-10-14 nel repo ci sono **due giochi**: **retail** (`_retail_`, `Wow.exe
 
 ## Operazioni sui contenuti (aggiungi / modifica / rimuovi)
 
-Dopo ogni modifica: `npm run build` per verificare, poi **commit + push** (il push pubblica e aggiorna anche la data "sync" — vedi sotto).
+Dopo ogni modifica: `npm run build` per verificare, poi **commit + push** (il commit aggiorna la data "sync" — vedi sotto).
 
 ### Addon → [addons/manifest.json](addons/manifest.json)
 Oggetto `addons` con chiave = slug addon. Campi: `name, desc, version, interface, source, url, installed, folders[], notes`.
@@ -467,7 +467,7 @@ Copre: le chiavi delle cinque tabelle professioni e i nomi-nodo di `builds`/`spe
 - ⚠️ **E il gancio con cui si scalda conta quanto lo spostamento.** Su `/mount` era `pointerover` sulla griglia: scatta appena il cursore sfiora una card mentre si scorre, quindi scaricava i 109 KB del JSON anche a chi stava solo guardando. Ora e' `pointerdown` + `focusin`, cioe' «sta per aprirne una». Chi apre non ci perde: la testata della modale si disegna comunque dai dati della griglia.
 - **[src/lib/lazy-json.ts](src/lib/lazy-json.ts)** = il posto unico dove vive «chiedi una volta sola e tieni»: cache per URL, richieste concorrenti condivise, errore di rete che restituisce l'oggetto vuoto invece di rilanciare. `jsonSeCe()` dice cosa c'e' gia' senza far partire nulla — serve a disegnare subito il disegnabile. Erano due copie, in `/transmog` e `/mount`.
 
-**In CI ci sono DUE workflow, separati apposta**: [deploy.yml](.github/workflows/deploy.yml) pubblica, [verifica.yml](.github/workflows/verifica.yml) fa `npm run validate` e `npm run check`. Il deploy non deve fermarsi per un controllo di manutenzione — un rosso sulla verifica è un lavoro da fare, non un sito da tenere offline. ⚠️ Gli errori finiscono anche in un'**annotazione**, non solo nel log: il log di un run vuole l'autenticazione anche su un repo pubblico (l'API risponde **403** in anonimo), mentre le annotazioni si leggono dalla pagina del commit e dall'endpoint `check-runs`. ⚠️ I due step girano **entrambi** (`if: always()` sul secondo) e la coerenza dei dati viene **prima** dei tipi: i manifest si scrivono a mano, quindi è lì che il guasto capita davvero, e il primo messaggio che si legge dev'essere quello che serve.
+**In CI resta UN workflow**, [verifica.yml](.github/workflows/verifica.yml) (il `deploy.yml` che pubblicava è stato tolto il 2026-11-06), che fa `npm run validate` e `npm run check`. Il deploy non deve fermarsi per un controllo di manutenzione — un rosso sulla verifica è un lavoro da fare, non un sito da tenere offline. ⚠️ Gli errori finiscono anche in un'**annotazione**, non solo nel log: il log di un run vuole l'autenticazione anche su un repo pubblico (l'API risponde **403** in anonimo), mentre le annotazioni si leggono dalla pagina del commit e dall'endpoint `check-runs`. ⚠️ I due step girano **entrambi** (`if: always()` sul secondo) e la coerenza dei dati viene **prima** dei tipi: i manifest si scrivono a mano, quindi è lì che il guasto capita davvero, e il primo messaggio che si legge dev'essere quello che serve.
 
 ⚠️ **`astro check` è tornato in CI il 2026-08-15, e i 91 errori erano NOSTRI.** Le due diagnosi precedenti erano sbagliate e vanno lette come un avvertimento sul metodo, non come storia: il 2026-08-04 «è il checker indietro rispetto ad Astro 7», il 2026-08-14 «serve il major di `typescript`». La seconda nasceva dalla prima, ed era falsificabile in un minuto: **i tre punti che rompevano tutto stavano nel nostro codice**, e toglierli chiude il check a **0 errori con la 0.9.9 già installata**, senza toccare né `@astrojs/check` né TypeScript. Il numero fisso a 91 attraverso due upgrade non diceva «il checker è indietro»: diceva che stavamo guardando la cosa sbagliata.
 
@@ -504,7 +504,7 @@ Sintomo: l'overlay di errore di Astro (quello col pulsante *"Use dark theme"*, c
 
 ## Deploy
 
-Push su `main` → GitHub Actions ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) builda e pubblica su GitHub Pages. Custom domain `wow.danilofruttaldo.com` (Settings → Pages → Source: **GitHub Actions**; se torna 404 controlla che il Custom domain non si sia svuotato). DNS: record **CNAME** `wow` → `danilofruttaldo.github.io`.
+**Tolto il 2026-11-06**: il sito non serviva più abbastanza da tenerlo online. Rimossi `.github/workflows/deploy.yml` e `public/CNAME`; il sorgente in `src/` resta e si usa in locale (`npm run dev` / F5). Per ripubblicarlo: ripesca i due file dalla storia (`git show 667caa1:.github/workflows/deploy.yml`, `git show 667caa1:public/CNAME`), poi Settings → Pages → Source: **GitHub Actions**, custom domain `wow.danilofruttaldo.com`, DNS **CNAME** `wow` → `danilofruttaldo.github.io`.
 
 ## Vincoli git del repo (hook attivi — rispettali)
 
@@ -532,5 +532,5 @@ Senza quel comando gli hook ci sono ma non girano.
 
 - **Niente** trailer `Co-Authored-By` nei messaggi di commit (bloccato). ⚠️ Le istruzioni di default di Claude Code dicono di aggiungerlo: qui va omesso.
 - **Titolo commit ≤ 72 caratteri** (bloccato). Merge, revert, `fixup!` e `squash!` sono esentati, hanno titoli generati.
-- Si lavora **direttamente su `main`**; il deploy parte da lì.
+- Si lavora **direttamente su `main`**.
 - `.gitignore` usa `.vscode/*` (non `.vscode/`) così `launch.json` resta versionabile.
