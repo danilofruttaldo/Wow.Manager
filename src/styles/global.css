@@ -177,8 +177,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
    e `.alb-*` — due copie quasi identiche che sarebbero divergite alla prima modifica di
    una sola. Ogni pagina tiene solo il PROPRIO: la fascia col render in /mount, l'elenco
    delle cartelle in /addons.
-   ⚠️ Non si chiama `.lb`: quel nome e' gia' il lightbox delle immagini di /ui, che e' un
-   componente diverso (niente pannello, comandi chiari sul nero) e collidereb be.
    ⚠️ Le righe dei campi le crea il JS a runtime. Nelle pagine servivano dentro `:global()`
    perche' Astro scopa gli stili per attributo e quelle righe l'attributo non ce l'hanno;
    qui il problema NON esiste, global.css non e' scopato. E' un motivo in piu' per tenerle

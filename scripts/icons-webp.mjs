@@ -4,8 +4,8 @@
 //
 // ⚠️ Perche' serve uno script e non una conversione fatta una volta e finita: le icone le
 // scarica `mount-sync.ps1` dal CDN di Wowhead, che le pubblica in **JPEG**, e PowerShell
-// il webp non lo sa scrivere — e' la stessa ragione per cui mount-images.mjs,
-// addon-images.mjs e make-thumbs.mjs sono in JS. Quindi ogni sync che trova cavalcature
+// il webp non lo sa scrivere — e' la stessa ragione per cui mount-images.mjs
+// e addon-images.mjs sono in JS. Quindi ogni sync che trova cavalcature
 // nuove lascia dei `.jpg` dietro di se', e questo script li smaltisce dalla postazione con
 // Node. Il conto lo tiene `node-pending.ps1` insieme agli altri lavori arretrati.
 //

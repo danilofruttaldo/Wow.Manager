@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import { wowBuild, foreverBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getScreenshotCount, getTransmog, getMountStats, getHwComponents, getHwSettingCount } from '../lib/content';
+import { wowBuild, foreverBuild, sourceDate, getAddons, getMacros, getProfessions, getPgCount, getExtra, getTransmog, getMountStats, getHwComponents, getHwSettingCount } from '../lib/content';
 
 interface Props {
   title: string;
@@ -24,7 +24,6 @@ const SOURCE_BY_PATH: Record<string, string> = {
   '/pg': 'pg.md',
   '/transmog': 'transmog/manifest.json',
   '/mount': 'mounts/manifest.json',
-  '/ui': 'public/screenshots',
   '/hardware': 'hardware/manifest.json',
   '/extra': 'scripts',
 };
@@ -61,7 +60,6 @@ const nav = [
   { href: '/pg', label: 'PG', full: 'PG', icon: '/icons/section/pg.jpg', count: `${getPgCount()}`, color: '#C0202A' },
   { href: '/transmog', label: 'Xmog', full: 'Transmog', icon: '/icons/section/transmog.jpg', count: `${tmogPct}%`, color: '#9B4DCA' },
   { href: '/mount', label: 'Mount', full: 'Cavalcature', icon: '/icons/section/mount.jpg', count: `${mountStats.pct}%`, color: '#2F8F4E' },
-  { href: '/ui', label: 'UI', full: 'UI', icon: '/icons/section/ui.jpg', count: `${getScreenshotCount()}`, color: '#159A8C' },
   // ⚠️ Il conteggio HW e' componenti + impostazioni, non i soli componenti: la pagina ha
   // due meta' (spec e setup) e contarne una sola diceva meno di quello che c'e'.
   { href: '/hardware', label: 'HW', full: 'Hardware', icon: '/icons/section/hardware.jpg', count: `${getHwComponents().length + getHwSettingCount()}`, color: '#A63A7E' },

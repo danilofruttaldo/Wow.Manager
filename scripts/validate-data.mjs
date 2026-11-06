@@ -444,22 +444,6 @@ for (const [slug, perTier] of Object.entries(tm.collected ?? {})) {
 }
 nota(`transmog: ${classi.length} classi · ${tiers.length} tier · ${celle} celle · ${pezziPresi}/${pezziTot} pezzi`);
 
-// ── Screenshot UI ──────────────────────────────────────────────────────────────
-const shots = elenco('public/screenshots').filter((f) => f.endsWith('.webp'));
-const thumbs = new Set(elenco('public/screenshots/thumb').filter((f) => f.endsWith('.webp')));
-for (const f of shots) {
-  if (!thumbs.has(f)) err('ui', `public/screenshots/${f} non ha la miniatura in thumb/`);
-  // Il nome del file E' il dato: /ui ne ricava classe e spec. Il prefisso `forever-`
-  // marca uno screenshot di WoW Forever e si toglie prima di leggere il resto.
-  const parti = f.replace(/\.webp$/, '').replace(/^forever-/, '').split('-');
-  const valide = specDi(parti[0]);
-  if (!valide) { err('ui', `${f}: «${parti[0]}» non e' una classe`); continue; }
-  if (parti.length < 3) { err('ui', `${f}: il nome non e' <classe>-<spec>-<nome>.webp`); continue; }
-  if (!valide.includes(parti[1])) err('ui', `${f}: «${parti[1]}» non e' una spec di ${parti[0]}`);
-}
-for (const f of thumbs) if (!shots.includes(f)) err('ui', `miniatura orfana: public/screenshots/thumb/${f}`);
-nota(`ui: ${shots.length} screenshot`);
-
 // ── Hardware (postazione di gioco) ────────────────────────────────────
 // Manifest interamente redazionale: nessuno script lo rigenera, quindi non c'e' un dump
 // da confrontare. Qui si controlla solo che si tenga insieme — che ogni impostazione

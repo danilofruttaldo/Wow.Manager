@@ -2,8 +2,9 @@
 // sulla pagina, che dietro l'overlay e' `inert` — se il focus scappa finisce sulla barra
 // del browser e l'utente non ha piu' modo di tornare dentro se non ricaricando.
 //
-// ⚠️ Esisteva in TRE copie — `lib/dialog.ts` (/mount e /addons), `pages/extra.astro`,
-// `pages/ui.astro` — con la riga dello Shift+Tab identica byte per byte in tutte e tre.
+// ⚠️ Esisteva in TRE copie — `lib/dialog.ts` (/mount e /addons), `pages/extra.astro` e il
+// lightbox della vecchia pagina /ui (tolta il 2026-11-06) — con la riga dello Shift+Tab
+// identica byte per byte in tutte e tre.
 // Non era teoria: il 2026-09-06 la stessa correzione al selettore e' stata applicata a
 // mano in due punti, e la terza copia e' rimasta indietro (era corretta solo per
 // combinazione, nel lightbox di /ui ci sono solo bottoni). Da qui in poi si tocca qui.

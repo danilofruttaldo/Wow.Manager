@@ -140,7 +140,7 @@ export function sourceDate(relPath = '.'): string {
 
 // ── Esistenza dei file in public/ ─────────────────
 // Le pagine chiedono di continuo «questo file c'è?» per non mostrare un'immagine rotta:
-// icone addon, anteprime addon, icone mount, render mount, screenshot UI.
+// icone addon, anteprime addon, icone mount, render mount.
 //
 // ⚠️ NON si usa `import.meta.glob('/public/…')`, che pure sarebbe la via ovvia: di quei
 // glob si usano solo le CHIAVI, mai i moduli, ma il solo fatto di dichiararli fa passare
@@ -151,7 +151,7 @@ export function sourceDate(relPath = '.'): string {
 //
 // ⚠️ La cache SCADE dopo un secondo, e non è un dettaglio: senza cache la pagina mount
 // farebbe 1525 letture di una directory da 1508 file (secondi), ma una cache eterna
-// toglierebbe l'hot-reload — aggiungi uno screenshot in dev e non compare finché non
+// toglierebbe l'hot-reload — aggiungi un'icona in dev e non compare finché non
 // riavvii. Con la scadenza breve il build rilegge una manciata di volte in 17 secondi
 // (niente) e in dev basta ricaricare la pagina.
 // ⚠️ La radice è `process.cwd()`, NON un path ricavato da `import.meta.url`: in build il
@@ -782,7 +782,7 @@ const RACE_ICON: Record<string, string | null> = {
   'Dark Iron Dwarf': 'darkirondwarf', 'Kul Tiran': 'kultiran', 'Mechagnome': 'mechagnome',
 };
 
-// ⚠️ Le icone della tabella PG vanno TUTTE `loading="lazy"`, come quelle di /mount, /ui e
+// ⚠️ Le icone della tabella PG vanno TUTTE `loading="lazy"`, come quelle di /mount e
 // /addons: la pagina pesa 5 KB gzip di HTML ma tira 96 file distinti per 203 KB, cioe' 40
 // volte se stessa, e la tabella e' alta parecchi schermi. Se aggiungi un'icona qui,
 // aggiungi anche gli attributi: nascono giuste, non si rincorrono dopo.
@@ -1049,22 +1049,9 @@ export function getPgCount(): number {
   return (_pgCount = count);
 }
 
-// ── Screenshot UI ─────────────────────────────────
-// Quanti screenshot ha la pagina /ui. Serve alla card della home, che fino al
-// 2026-07-20 portava il numero scritto a mano e andava ritoccato a ogni file
-// aggiunto o tolto.
-// ⚠️ Il filtro `.webp` fa anche il lavoro che nel glob faceva lo slash: `readdirSync`
-// elenca anche la sottocartella `thumb/`, che pero' `.webp` non e' — quindi le miniature
-// restano fuori dal conto, come prima. Se un giorno si mettessero miniature in radice,
-// il numero raddoppierebbe.
-const screenshots = (): string[] => [...filesIn('screenshots')].filter((f) => f.endsWith('.webp'));
-export function getScreenshotCount(): number {
-  return screenshots().length;
-}
-
 // ── Stats per classe (matrice della home) ─────────
 // Aggrega in una riga per classe le metriche per-classe che il repo gia' conosce:
-// quante macro, quanti PG, quanti screenshot, e il completamento transmog.
+// quante macro, quanti PG e il completamento transmog.
 // Tutte e 13 le classi sempre presenti, anche a zero, cosi' la matrice e' completa e
 // stabile. Le fonti sono le stesse delle rispettive pagine: nessun conteggio nuovo da
 // mantenere a mano, si allinea da se' quando cambi il dato sottostante.
@@ -1074,13 +1061,12 @@ export interface ClassStat {
   icon: string;
   macros: number;
   pg: number;
-  shots: number;
   tmogGot: number;
   tmogTotal: number;
   tmogPct: number;              // 0..100
 }
 
-// icona-slug senza trattino (CLASS_ABBR, prefisso dei filename screenshot) -> slug dashed
+// icona-slug senza trattino (CLASS_ABBR) -> slug dashed
 const toDashedSlug = (s: string): string =>
   ({ deathknight: 'death-knight', demonhunter: 'demon-hunter' } as Record<string, string>)[s] ?? s;
 
@@ -1107,14 +1093,6 @@ export function getClassStats(): ClassStat[] {
     }
   }
 
-  // Screenshot: la classe e' il prefisso del filename (<classe>-<spec>-<nome>.jpg).
-  const shotsBy: Record<string, number> = {};
-  for (const nome of screenshots()) {
-    const prefix = nome.split('-')[0];
-    const slug = toDashedSlug(prefix);
-    if (slug in CLASS_LABELS) shotsBy[slug] = (shotsBy[slug] ?? 0) + 1;
-  }
-
   // Transmog: got/total per classe gia' calcolati da getTransmog (chiavi dashed).
   const tmogBy: Record<string, { got: number; total: number }> = {};
   for (const c of getTransmog()) tmogBy[c.slug] = { got: c.got, total: c.total };
@@ -1128,7 +1106,6 @@ export function getClassStats(): ClassStat[] {
         icon: `/icons/class/${slug.replace(/-/g, '')}.jpg`,
         macros: macroBy[slug] ?? 0,
         pg: pgBy[slug] ?? 0,
-        shots: shotsBy[slug] ?? 0,
         tmogGot: t.got,
         tmogTotal: t.total,
         tmogPct: t.total ? Math.round((t.got / t.total) * 100) : 0,

@@ -144,8 +144,7 @@ const srcOptions = [...srcCounts.entries()]
             <span id="mlb-state-txt"></span>
           </span>
         </div>
-        {/* Frecce fra le card, come il lightbox di /ui (stesse ArrowLeft/ArrowRight e
-            stesso giro circolare). Scorrono le card VISIBILI, cioe' rispettano il
+        {/* Frecce fra le card (ArrowLeft/ArrowRight, giro circolare). Scorrono le card VISIBILI, cioe' rispettano il
             filtro attivo: con 1525 cavalcature sfogliare il sottoinsieme e' il modo
             normale di usarle. In testata e non sull'immagine, che 8 mount non hanno. */}
         <span class="dlg-pos" id="mlb-pos"></span>
@@ -220,7 +219,7 @@ const srcOptions = [...srcCounts.entries()]
    aggiungendo l'ombra la si spegne e la card sembra cambiare stato al passaggio. La
    ripete via `--bar`, cosi' la regola vale per tutti e due gli stati invece di
    duplicarsi. Il sollevamento di 1px e' il feedback comune a tutte le card cliccabili
-   del sito (/extra e /ui): la card apre una modale, quindi si comporta come quelle. */
+   del sito (/extra, /addons): la card apre una modale, quindi si comporta come quelle. */
 .mcard:hover { border-color: var(--section, var(--accent)); box-shadow: inset 3px 0 0 var(--bar), var(--shadow-md); transform: translateY(-1px); }
 .mcard[data-got="0"] { --bar: color-mix(in srgb, var(--text-subtle) 35%, var(--border)); background: var(--surface-2); }
 /* Mancante: l'icona resta leggibile ma smorzata, cosi' la griglia si legge a colpo

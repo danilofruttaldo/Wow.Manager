@@ -32,12 +32,12 @@ if (!fs.existsSync(dist)) {
 // ── Eccezioni dichiarate ────────────────────────────────────────────────────
 // ⚠️ Vanno tenute CORTE e motivate: un'eccezione senza motivo e' un controllo spento.
 //
-// Le tre immagini delle modali non hanno `width`/`height` perche' il `src` lo mette il JS
-// all'apertura e la misura non e' nota a build-time. Due delle tre hanno gia' un rimedio
-// suo: /mount dichiara 600x600 (i render hanno sempre quella tela) e /addons accende la
-// fascia dopo il `decode()`. Resta scoperta quella di /ui, dove oggi l'archivio
-// screenshot e' vuoto e non c'e' modo di provare il rimedio.
-const IMG_SENZA_MISURA = new Set(['alb-img', 'lb-img']);
+// Le immagini delle modali non hanno `width`/`height` perche' il `src` lo mette il JS
+// all'apertura e la misura non e' nota a build-time. /mount ha il suo rimedio (dichiara
+// 600x600, i render hanno sempre quella tela); /addons accende la fascia dopo il
+// `decode()` e resta qui perche' le anteprime hanno formati diversi. (C'era anche `lb-img`,
+// il lightbox di /ui: uscito con la pagina il 2026-11-06.)
+const IMG_SENZA_MISURA = new Set(['alb-img']);
 
 const problemi = [];
 const segnala = (pagina, testo) => problemi.push(`${pagina}: ${testo}`);
