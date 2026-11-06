@@ -1,4 +1,4 @@
-This directory ships the web fonts served by wow.danilofruttaldo.com:
+This directory ships the web fonts served by the WoW Manager site:
 
   - Inter            (Inter-latin.woff2, Inter-latin-ext.woff2)
   - JetBrains Mono   (JetBrainsMono-latin.woff2, JetBrainsMono-latin-ext.woff2)

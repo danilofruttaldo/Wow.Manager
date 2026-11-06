@@ -161,17 +161,7 @@
       "warn": "La galleria di CurseForge non e' leggibile in automatico: l'URL buono va incollato a mano nel campo `preview`, altrimenti resta il logo di ripiego.",
       "body_file": "addon-images.mjs",
       "notes": "Due fonti in ordine: (1) il campo `preview` del manifest, URL scelto a mano dalla galleria del progetto -- e' la fonte buona, mostra l'addon in gioco; (2) ripiego sul logo ufficiale dal campo `thumbnail` di api.cfwidget.com, togliendo dal percorso il segmento thumbnails/<w>/<h> per avere l'originale. La galleria via API e' stata provata su quattro strade e rispondono tutte 403 o sono dismesse. addons/img-fonti.json ricorda da quale URL viene ogni file: senza, cambiare il `preview` lascerebbe il webp vecchio in silenzio, perche' il nome del file e' la chiave dell'addon. Copertura: 16 su 16, di cui 14 dalla galleria."
-    },
-    "make-og-image": {
-      "kind": "script",
-      "name": "Immagine di anteprima social",
-      "desc": "Genera public/og-image.png (1200x630), l'anteprima che compare quando un link al sito viene incollato in chat o sui social.",
-      "lang": "powershell",
-      "when": "Quando cambia il nome o l'identita' visiva del sito. Non serve toccarla per gli aggiornamenti di contenuto: l'immagine non porta numeri.",
-      "warn": "Il file finisce in public/ e viene servito dalla radice: il nome og-image.png e' quello a cui punta il meta tag in Base.astro.",
-      "body_file": "make-og-image.ps1",
-      "notes": "Usa System.Drawing di .NET (presente in PS 5.1), che per il PNG va benissimo -- l'eccezione a sharp riguarda il solo webp. 1200x630 e' la misura che Open Graph e Twitter Card si aspettano, ed e' dichiarata anche nei meta og:image:width/height del layout."
-    },
+    },
     "cvar-dump": {
       "kind": "script",
       "name": "Dump impostazioni del client",

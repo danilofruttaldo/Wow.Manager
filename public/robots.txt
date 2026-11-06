@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://wow.danilofruttaldo.com/sitemap-index.xml
