@@ -176,10 +176,11 @@
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/auctionator",
       "installed": "2026-11-08",
+      "giochi": ["retail", "forever"],
       "folders": [
         "Auctionator"
       ],
-      "notes": "Installato 2026-10-25 alla 341 (forgecdn files/9162/359, release del 2026-10-13, 830 KB) su richiesta: addon d'asta 'il piu' semplice' per postare tanta roba, scelto al posto di TradeSkillMaster (piu' potente ma da configurare). Nessun addon posta da solo: Blizzard vuole un evento hardware (clic/tasto) per ogni asta, quindi il massimo e' un tasto da premere a ripetizione dalla scheda Selling. Icona = avatar CurseForge 64x64 PNG (sulla postazione di gioco non c'e' sharp per il webp). preview assente = mai cercata: la riempie node-pending.ps1 col logo di ripiego. Solo retail (non in giochi forever) benche' il .toc dichiari 16001. Aggiornato 2026-11-08 341->342 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9494/788; 1 cartella, ## Interface invariata. Solo retail. Nessuna patch locale."
+      "notes": "Installato 2026-10-25 alla 341 (forgecdn files/9162/359, release del 2026-10-13, 830 KB) su richiesta: addon d'asta 'il piu' semplice' per postare tanta roba, scelto al posto di TradeSkillMaster (piu' potente ma da configurare). Nessun addon posta da solo: Blizzard vuole un evento hardware (clic/tasto) per ogni asta, quindi il massimo e' un tasto da premere a ripetizione dalla scheda Selling. Icona = avatar CurseForge 64x64 PNG (sulla postazione di gioco non c'e' sharp per il webp). preview assente = mai cercata: la riempie node-pending.ps1 col logo di ripiego. Inizialmente solo retail. Aggiornato 2026-11-08 341->342 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9494/788; 1 cartella, ## Interface invariata. Nessuna patch locale. Installato 2026-11-08 anche su WoW Forever su richiesta (342, cartella identica a retail): il .toc dichiara 16001 e Source/Constants/Main.lua tratta WOW_PROJECT_CAMELOT come retail, commentandolo 'temporary fix'. DA PROVARE all'asta in gioco."
     },
     "DungeonJournal": {
       "name": "DungeonJournal",
