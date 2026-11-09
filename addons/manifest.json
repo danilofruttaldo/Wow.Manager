@@ -197,6 +197,22 @@
         "forever"
       ],
       "notes": "Installato 2026-11-06 alla 1.6.7 (mediafilez.forgecdn.net files/9456/160, ForeverDungeonJournal-1.6.7.zip, release del 2026-11-05, 29,8 MB, 420 file per 54,9 MB estratti) SOLO su WoW Forever, su richiesta. Autore Exehn, progetto CurseForge 1707971 (slug `dungeonjournal`), 2,9 milioni di download. Il progetto pubblica file separati per flavor: ForeverDungeonJournal-x.y.z (1.60.1), DungeonJournalClassicEra (1.15.9), DungeonJournalTBC (2.5.6). Si prende SOLO il Forever, che ha ## Interface 16001 e cartella ForeverDungeonJournal (SavedVariables ForeverDungeonJournalDB, per PG ForeverDungeonJournalCharacterDB). ATTENZIONE, da non confondere con `dungeon-journal` (progetto 1467479, autore Ezikiel), che e' un addon TBC Classic (Interface 20400, solo contenuti TBC): installato per sbaglio lo stesso giorno e tolto prima di entrare in gioco, quindi niente SavedVariables da ripulire. /aggiorna-addon lo audita sulla build di Forever (retail=false nel bootstrap), non su quella retail, e lo installa solo in _forever_. Icona = avatar CurseForge 400x400 ridotto a 64x64 PNG con System.Drawing. preview assente = mai cercata (node-pending.ps1). Aggiornato 2026-11-08 1.7.0->1.7.3 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9506/720 (ForeverDungeonJournal-1.7.3.zip); cartella unica, ## Interface 16001 invariata, solo su Forever."
+    },
+    "Leatrix_Maps": {
+      "name": "Leatrix Maps",
+      "desc": "Migliora la mappa del mondo: finestra spostabile e ridimensionabile, zone inesplorate visibili e icone utili.",
+      "version": "1.60.28-forever",
+      "interface": "16001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/leatrix-maps",
+      "installed": "2026-11-09",
+      "folders": [
+        "Leatrix_Maps"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-09 alla 1.60.28-forever (mediafilez.forgecdn.net files/9467/345, release del 2026-11-06, 24,7 MB) SOLO su WoW Forever, su richiesta. Autore Leatrix, progetto CurseForge 298842. Il progetto pubblica file separati per flavor: -forever (1.60.1), -classic, -bcc, -titan e il retail 12.x senza suffisso. Si prende SOLO il -forever, ## Interface 16001, SavedVariables LeaMapsDB. Icona = avatar CurseForge ridotto a 64x64 PNG con System.Drawing. preview assente = mai cercata (node-pending.ps1). Nessuna patch locale."
     }
   }
 }
