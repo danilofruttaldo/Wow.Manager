@@ -76,11 +76,11 @@
     "EllesmereUI": {
       "name": "EllesmereUI",
       "desc": "Suite UI modulare: unit frame, nameplate, barre, borse, chat, meter e comodità, con editor visuale.",
-      "version": "v9.8.2",
+      "version": "v9.8.3",
       "interface": "120000, 120001, 120005, 120007, 120100, 120105, 16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/ellesmereui",
-      "installed": "2026-11-08",
+      "installed": "2026-11-09",
       "folders": [
         "EllesmereUI",
         "EllesmereUIActionBars",
@@ -171,11 +171,11 @@
     "Auctionator": {
       "name": "Auctionator",
       "desc": "Asta semplificata: mette in vendita al prezzo più basso del momento con un tasto e tiene lo storico prezzi.",
-      "version": "342",
+      "version": "343",
       "interface": "120100, 120105, 16001, 50504, 38000, 20506, 11508, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/auctionator",
-      "installed": "2026-11-08",
+      "installed": "2026-11-09",
       "giochi": ["retail", "forever"],
       "folders": [
         "Auctionator"
@@ -185,11 +185,11 @@
     "DungeonJournal": {
       "name": "DungeonJournal",
       "desc": "Diario dei dungeon: quest disponibili per ogni istanza e dove prenderle, boss e loot che droppano.",
-      "version": "1.7.3",
+      "version": "1.7.4",
       "interface": "16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/dungeonjournal",
-      "installed": "2026-11-08",
+      "installed": "2026-11-09",
       "folders": [
         "ForeverDungeonJournal"
       ],
