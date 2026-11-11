@@ -200,6 +200,23 @@
       ],
       "notes": "Installato 2026-11-06 alla 1.6.7 (mediafilez.forgecdn.net files/9456/160, ForeverDungeonJournal-1.6.7.zip, release del 2026-11-05, 29,8 MB, 420 file per 54,9 MB estratti) SOLO su WoW Forever, su richiesta. Autore Exehn, progetto CurseForge 1707971 (slug `dungeonjournal`), 2,9 milioni di download. Il progetto pubblica file separati per flavor: ForeverDungeonJournal-x.y.z (1.60.1), DungeonJournalClassicEra (1.15.9), DungeonJournalTBC (2.5.6). Si prende SOLO il Forever, che ha ## Interface 16001 e cartella ForeverDungeonJournal (SavedVariables ForeverDungeonJournalDB, per PG ForeverDungeonJournalCharacterDB). ATTENZIONE, da non confondere con `dungeon-journal` (progetto 1467479, autore Ezikiel), che e' un addon TBC Classic (Interface 20400, solo contenuti TBC): installato per sbaglio lo stesso giorno e tolto prima di entrare in gioco, quindi niente SavedVariables da ripulire. /aggiorna-addon lo audita sulla build di Forever (retail=false nel bootstrap), non su quella retail, e lo installa solo in _forever_. Icona = avatar CurseForge 400x400 ridotto a 64x64 PNG con System.Drawing. preview assente = mai cercata (node-pending.ps1). Aggiornato 2026-11-08 1.7.0->1.7.3 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9506/720 (ForeverDungeonJournal-1.7.3.zip); cartella unica, ## Interface 16001 invariata, solo su Forever. Aggiornato 2026-11-10 1.7.4->2.0 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9532/329 (DungeonJournal-2.0.zip); cartella unica ForeverDungeonJournal, ## Interface 16001 invariata, solo su Forever. Aggiornato 2026-11-11 2.0->2.0.1 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9547/760 (ForeverDungeonJournal-2.0.1.zip); cartella unica, ## Interface 16001 invariata, solo su Forever."
     },
+    "AllTheThings": {
+      "name": "All The Things",
+      "desc": "Tracker di collezioni: per ogni transmog, mount o pet elenca i pezzi mancanti e la fonte.",
+      "version": "5.4.9",
+      "interface": "11509, 16001, 20506, 30405, 38002, 40402, 50504, 120105, 120107",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/all-the-things",
+      "preview": "https://media.forgecdn.net/attachments/227/368/crieve-2.png",
+      "installed": "2026-11-11",
+      "folders": [
+        "AllTheThings"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-11 alla 5.4.9 (mediafilez.forgecdn.net files/9547/803, AllTheThings-5.4.9.zip, release del 2026-11-10, 18,5 MB, 544 file per 70,4 MB estratti) SOLO su WoW Forever, su richiesta. Progetto CurseForge 267285: a differenza di DungeonJournal e' UN SOLO pacchetto multi-flavor (file marcato anche 1.60.1, .toc con 16001) con un database per gioco in db/<flavor>, e Forever ha il suo, db/Camelot (WOW_PROJECT_CAMELOT). Su retail era stato tolto il 2026-10-05 con tutte le SavedVariables (vedi git show a631acc^:addons/manifest.json per la storia retail): li' resta disinstallato, quindi giochi = solo forever. Icona e anteprima ripescate da a631acc^ (stessa galleria di prima). Il file CurseForge e' lo stesso per tutti i flavor, quindi l'audit di Forever trova la release giusta senza filtri sul nome."
+    },
     "Leatrix_Maps": {
       "name": "Leatrix Maps",
       "desc": "Migliora la mappa del mondo: finestra spostabile e ridimensionabile, zone inesplorate visibili e icone utili.",
