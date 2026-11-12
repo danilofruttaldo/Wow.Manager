@@ -232,6 +232,23 @@
         "forever"
       ],
       "notes": "Installato 2026-11-09 alla 1.60.28-forever (mediafilez.forgecdn.net files/9467/345, release del 2026-11-06, 24,7 MB) SOLO su WoW Forever, su richiesta. Autore Leatrix, progetto CurseForge 298842. Il progetto pubblica file separati per flavor: -forever (1.60.1), -classic, -bcc, -titan e il retail 12.x senza suffisso. Si prende SOLO il -forever, ## Interface 16001, SavedVariables LeaMapsDB. Icona = avatar CurseForge ridotto a 64x64 PNG con System.Drawing. preview assente = mai cercata (node-pending.ps1). Nessuna patch locale. Aggiornato 2026-11-12 1.60.28->1.60.30-forever via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9565/641; il .toc dice ## Version 1.60.30 (il suffisso -forever e' solo nel nome file CurseForge), ## Interface 16001 invariata, solo su Forever."
+    },
+    "Stockpile": {
+      "name": "Stockpile",
+      "desc": "Rifornisce da solo le borse dal vendor e dalla banca: per ogni oggetto scegli quanti tenerne, lui compra o preleva la differenza.",
+      "version": "1.1.1",
+      "interface": "16001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/stockpile",
+      "preview": "https://media.forgecdn.net/attachments/1965/668/screenshot-2026-09-21-130611-png.png",
+      "installed": "2026-11-12",
+      "folders": [
+        "Stockpile"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-12 alla 1.1.1 (mediafilez.forgecdn.net files/9142/547, Stockpile-1.1.1.zip, release del 2026-10-12, 142 KB estratti) SOLO su WoW Forever, su richiesta: serviva il riacquisto automatico dei reagenti delle spell. Autore Jon (Vatik), progetto CurseForge 1706356; cfwidget risponde 404 per questo progetto, file id e avatar presi dalla pagina CurseForge, download via www.curseforge.com/api/v1/mods/1706356/files/<fileId>/download (redirect a mediafilez). Il progetto pubblica solo file Forever (1.60.1), ## Interface 16001, SavedVariablesPerCharacter StockpileDB: la lista oggetti e' PER PG, quindi su ogni alt i reagenti vanno trascinati nella finestra (/stockpile). Gira da solo all'apertura di vendor, banca e banca di gilda (prelievo da gilda sperimentale, per oggetto); riserva d'oro opzionale. NON ha un avviso di scorta bassa (solo conteggio rosso nella sua finestra): valutati e scartati ToppedOff Forever (avviso + acquisto a un click, ma si sovrappone al reminder buff di EllesmereUI) e Reagent Vendor (solo a click). EllesmereUI non ha nulla di equivalente (verificato nel codice: MerchantBulkBuy e' solo Shift+click con quantita'). OptionalDeps EllesmereUI: ha uno stile finestra EllesmereUI. Icona = avatar CurseForge 64x64 jpg. preview = screenshot della galleria, guardato. Nessuna patch locale."
     }
   }
 }
