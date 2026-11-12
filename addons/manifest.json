@@ -173,11 +173,11 @@
     "Auctionator": {
       "name": "Auctionator",
       "desc": "Asta semplificata: mette in vendita al prezzo più basso del momento con un tasto e tiene lo storico prezzi.",
-      "version": "345",
+      "version": "346",
       "interface": "120100, 120105, 16001, 50504, 38000, 20506, 11508, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/auctionator",
-      "installed": "2026-11-11",
+      "installed": "2026-11-12",
       "giochi": ["retail", "forever"],
       "folders": [
         "Auctionator"
@@ -220,7 +220,7 @@
     "Leatrix_Maps": {
       "name": "Leatrix Maps",
       "desc": "Migliora la mappa del mondo: finestra spostabile e ridimensionabile, zone inesplorate visibili e icone utili.",
-      "version": "1.60.30-forever",
+      "version": "1.60.31-forever",
       "interface": "16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/leatrix-maps",
