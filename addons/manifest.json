@@ -249,6 +249,38 @@
         "forever"
       ],
       "notes": "Installato 2026-11-12 alla 1.1.1 (mediafilez.forgecdn.net files/9142/547, Stockpile-1.1.1.zip, release del 2026-10-12, 142 KB estratti) SOLO su WoW Forever, su richiesta: serviva il riacquisto automatico dei reagenti delle spell. Autore Jon (Vatik), progetto CurseForge 1706356; cfwidget risponde 404 per questo progetto, file id e avatar presi dalla pagina CurseForge, download via www.curseforge.com/api/v1/mods/1706356/files/<fileId>/download (redirect a mediafilez). Il progetto pubblica solo file Forever (1.60.1), ## Interface 16001, SavedVariablesPerCharacter StockpileDB: la lista oggetti e' PER PG, quindi su ogni alt i reagenti vanno trascinati nella finestra (/stockpile). Gira da solo all'apertura di vendor, banca e banca di gilda (prelievo da gilda sperimentale, per oggetto); riserva d'oro opzionale. NON ha un avviso di scorta bassa (solo conteggio rosso nella sua finestra): valutati e scartati ToppedOff Forever (avviso + acquisto a un click, ma si sovrappone al reminder buff di EllesmereUI) e Reagent Vendor (solo a click). EllesmereUI non ha nulla di equivalente (verificato nel codice: MerchantBulkBuy e' solo Shift+click con quantita'). OptionalDeps EllesmereUI: ha uno stile finestra EllesmereUI. Icona = avatar CurseForge 64x64 jpg. preview = screenshot della galleria, guardato. Nessuna patch locale."
+    },
+    "HandyNotes": {
+      "name": "HandyNotes",
+      "desc": "Motore di segnalini per mappa e minimappa: da solo fa poco, serve ai plugin che portano i punti (qui Forever Books).",
+      "version": "v1.6.32",
+      "interface": "120100, 11509, 16001, 20506, 50504",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes",
+      "installed": "2026-11-13",
+      "folders": [
+        "HandyNotes"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-13 alla v1.6.32 (mediafilez files/9414/756, release del 2026-11-03) SOLO su WoW Forever, come dipendenza di HandyNotes - Forever Books (RequiredDeps). E' un file unico multi-flavor: la release v1.6.32 dichiara 1.60.1 fra le versioni e il .toc ha 16001. Su retail era stato tolto il 2026-10-05 con tutti i plugin: qui NON torna su retail. SavedVariables HandyNotesDB, HandyNotes_HandyNotesDB. Icona = avatar CurseForge 64x41 jpg. preview assente = mai cercata (ripiego al logo via node-pending). Altri plugin Forever visti su CurseForge il 2026-11-13, NON installati: HandyNotes: WoW Forever (Kemayo, tesori e rare), Forever Flight Guide (maestri di volo), Forever Instances (ingressi dungeon/raid); cfwidget da' 404 su WoW Forever e Instances. Nessuna patch locale."
+    },
+    "HandyNotes_ForeverBooks": {
+      "name": "HandyNotes - Forever Books",
+      "desc": "I 40 libri della Library of Azeroth come segnalini su mappa e minimappa (plugin di HandyNotes).",
+      "version": "1.3.0",
+      "interface": "16001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-forever-books",
+      "installed": "2026-11-13",
+      "folders": [
+        "HandyNotes_ForeverBooks"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-13 alla 1.3.0 (mediafilez files/9411/888, release del 2026-11-02) SOLO su WoW Forever, su richiesta (l'utente cercava un 'Librarian': su CurseForge non esiste con quel nome; fra Books Forever, Forever Library Scout e questo ha scelto questo). Progetto CurseForge 1716248, pubblica solo file 1.60.1, ## Interface 16001, RequiredDeps HandyNotes. SavedVariables HandyNotes_ForeverBooksDB, PerCharacter HandyNotes_ForeverBooksCharDB. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale."
     }
   }
 }
