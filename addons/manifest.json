@@ -187,11 +187,11 @@
     "DungeonJournal": {
       "name": "DungeonJournal",
       "desc": "Diario dei dungeon: quest disponibili per ogni istanza e dove prenderle, boss e loot che droppano.",
-      "version": "2.0.3",
+      "version": "2.0.4",
       "interface": "16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/dungeonjournal",
-      "installed": "2026-11-12",
+      "installed": "2026-11-13",
       "folders": [
         "ForeverDungeonJournal"
       ],
@@ -203,12 +203,12 @@
     "AllTheThings": {
       "name": "All The Things",
       "desc": "Tracker di collezioni: per ogni transmog, mount o pet elenca i pezzi mancanti e la fonte.",
-      "version": "5.4.9",
+      "version": "5.4.10",
       "interface": "11509, 16001, 20506, 30405, 38002, 40402, 50504, 120105, 120107",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/all-the-things",
       "preview": "https://media.forgecdn.net/attachments/227/368/crieve-2.png",
-      "installed": "2026-11-11",
+      "installed": "2026-11-13",
       "folders": [
         "AllTheThings"
       ],
