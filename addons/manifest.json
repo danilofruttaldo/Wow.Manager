@@ -252,7 +252,7 @@
     },
     "HandyNotes": {
       "name": "HandyNotes",
-      "desc": "Motore di segnalini per mappa e minimappa: da solo fa poco, serve ai plugin che portano i punti (qui Forever Books).",
+      "desc": "Motore di segnalini per mappa e minimappa: da solo fa poco, serve ai plugin che portano i punti (libri, rare e tesori, NPC, stazioni di professione).",
       "version": "v1.6.32",
       "interface": "120100, 11509, 16001, 20506, 50504",
       "source": "curseforge",
@@ -264,7 +264,7 @@
       "giochi": [
         "forever"
       ],
-      "notes": "Installato 2026-11-13 alla v1.6.32 (mediafilez files/9414/756, release del 2026-11-03) SOLO su WoW Forever, come dipendenza di HandyNotes - Forever Books (RequiredDeps). E' un file unico multi-flavor: la release v1.6.32 dichiara 1.60.1 fra le versioni e il .toc ha 16001. Su retail era stato tolto il 2026-10-05 con tutti i plugin: qui NON torna su retail. SavedVariables HandyNotesDB, HandyNotes_HandyNotesDB. Icona = avatar CurseForge 64x41 jpg. preview assente = mai cercata (ripiego al logo via node-pending). Altri plugin Forever visti su CurseForge il 2026-11-13, NON installati: HandyNotes: WoW Forever (Kemayo, tesori e rare), Forever Flight Guide (maestri di volo), Forever Instances (ingressi dungeon/raid); cfwidget da' 404 su WoW Forever e Instances. Nessuna patch locale."
+      "notes": "Installato 2026-11-13 alla v1.6.32 (mediafilez files/9414/756, release del 2026-11-03) SOLO su WoW Forever, come dipendenza di HandyNotes - Forever Books (RequiredDeps). E' un file unico multi-flavor: la release v1.6.32 dichiara 1.60.1 fra le versioni e il .toc ha 16001. Su retail era stato tolto il 2026-10-05 con tutti i plugin: qui NON torna su retail. SavedVariables HandyNotesDB, HandyNotes_HandyNotesDB. Icona = avatar CurseForge 64x41 jpg. preview assente = mai cercata (ripiego al logo via node-pending). PLUGIN (2026-11-13): sulla ricerca CurseForge filtrata Forever ce ne sono ~33, molti doppioni fra loro. Scelti in base agli addon gia' presenti: Forever Books, Rares and Treasures Forever, NPCs-forever, Profession Stations, WorldMapButton. SCARTATI apposta, non reinstallarli 'per completezza': ingressi dungeon/raid (DungeonLocations Classic, Dungeon & Raid Locations Forever, Forever Instances), voli (Forever Flight Guide, Forever Flights, FlightMasters), MapNotes Forever, Traveler, SpiritHealers, Classic and Cataclysm = gia' coperti da Leatrix Maps 'Show points of interest' (acceso nel SavedVariables Forever: dungeon, flight point, boat/zepp/tram, portali, spirit healer, zone crossing) e da EllesmereUI Forever Essentials 'Map Markers' (spento); rare/tesori alternativi (HandyNotes: WoW Forever di Kemayo fermo al 4/10, Forever Rare Hunter); serie Frostaphim (ClassTrainers, ProfessionTrainers, RecipeVendors, WeaponMasters, Innkeepers, ReagentVendors, MountVendors, RepairVendors) e Forever Trade Guide e Directions = doppioni di NPCs-forever; EasyFind Extension (serve EasyFind), World Lore Forever (nessun file 1.60.1), DockWatch (non plugin); MapSearch opzionale non preso. cfwidget da' 404 su diversi di questi. Nessuna patch locale."
     },
     "HandyNotes_ForeverBooks": {
       "name": "HandyNotes - Forever Books",
@@ -281,6 +281,70 @@
         "forever"
       ],
       "notes": "Installato 2026-11-13 alla 1.3.0 (mediafilez files/9411/888, release del 2026-11-02) SOLO su WoW Forever, su richiesta (l'utente cercava un 'Librarian': su CurseForge non esiste con quel nome; fra Books Forever, Forever Library Scout e questo ha scelto questo). Progetto CurseForge 1716248, pubblica solo file 1.60.1, ## Interface 16001, RequiredDeps HandyNotes. SavedVariables HandyNotes_ForeverBooksDB, PerCharacter HandyNotes_ForeverBooksCharDB. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale."
+    },
+    "HandyNotes_RaresTreasuresForever": {
+      "name": "HandyNotes - Rares and Treasures Forever",
+      "desc": "Rare e tesori di WoW Forever sulla mappa, e registra quelli nuovi che incontri (plugin di HandyNotes).",
+      "version": "1.3.8",
+      "interface": "16001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-rares-and-treasures-forever",
+      "installed": "2026-11-13",
+      "folders": [
+        "HandyNotes_RaresTreasuresForever"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-13 alla 1.3.8 (mediafilez files/9580/662) SOLO su Forever, su richiesta. Progetto 1784907 (Black_Zetsuu). Scelto fra tre alternativi perche' l'unico aggiornato di recente (release 12/11); ATT elenca le rare ma non le segna in mappa. RequiredDeps HandyNotes, SavedVariables HandyNotes_RaresTreasuresForeverDB. Icona = avatar CurseForge 64x64 png. Nessuna patch locale."
+    },
+    "HandyNotes_NPCs_Forever": {
+      "name": "HandyNotes - NPCs Forever",
+      "desc": "Vendor, allenatori, locandieri e altri NPC di servizio su mappa e minimappa (plugin di HandyNotes).",
+      "version": "0.6.0",
+      "interface": "16001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-npcs-forever",
+      "installed": "2026-11-13",
+      "folders": [
+        "HandyNotes_NPCs_Forever"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-13 alla 0.6.0 (mediafilez files/9556/321) SOLO su Forever, su richiesta. Progetto 1784734 (gundor_). Tutto-in-uno: sostituisce i 9 plugin Frostaphim per tipo di NPC. Si sovrappone a Leatrix Maps solo sugli spirit healer. RequiredDeps HandyNotes, SavedVariables HandyNotes_NPCsForeverDB. Icona = avatar CurseForge 64x64 jpg. Nessuna patch locale."
+    },
+    "HandyNotes_ProfessionStations": {
+      "name": "HandyNotes - Profession Stations",
+      "desc": "Incudini, forge, fuochi da cucina e le altre stazioni di professione sulla mappa (plugin di HandyNotes).",
+      "version": "1.0.4",
+      "interface": "120105, 16001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-profession-stations",
+      "installed": "2026-11-13",
+      "folders": [
+        "HandyNotes_ProfessionStations"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-13 alla 1.0.4 (mediafilez files/9504/724) SOLO su Forever, su richiesta. Progetto 1788729 (Laxxz). File multi-flavor (12.1.5 + 1.60.1). Dependencies HandyNotes, SavedVariables HandyNotes_ProfessionStationsDB. Icona = avatar CurseForge 64x64 png. Nessuna patch locale."
+    },
+    "HandyNotes_WorldMapButton": {
+      "name": "HandyNotes - WorldMapButton",
+      "desc": "Aggiunge alla mappa del mondo un bottone per accendere e spegnere i segnalini di HandyNotes.",
+      "version": "20261106.02-Release",
+      "interface": "120105, 120100, 120007, 110207, 50503, 40402, 38001, 30405, 20506, 16001, 11508",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/handynotes-worldmapbutton",
+      "installed": "2026-11-13",
+      "folders": [
+        "HandyNotes_WorldMapButton"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-13 alla 20261106.02-Release (mediafilez files/9472/104) SOLO su Forever, su richiesta. Progetto 298530 (fuba82). File multi-flavor unico. RequiredDeps HandyNotes, nessun SavedVariables. Icona = avatar CurseForge 64x64 jpg. Nessuna patch locale."
     }
   }
 }
