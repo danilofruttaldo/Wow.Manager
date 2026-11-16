@@ -76,11 +76,11 @@
     "EllesmereUI": {
       "name": "EllesmereUI",
       "desc": "Suite UI modulare: unit frame, nameplate, barre, borse, chat, meter e comodità, con editor visuale.",
-      "version": "v9.8.6",
+      "version": "v9.8.8",
       "interface": "120000, 120001, 120005, 120007, 120100, 120105, 16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/ellesmereui",
-      "installed": "2026-11-15",
+      "installed": "2026-11-16",
       "folders": [
         "EllesmereUI",
         "EllesmereUIActionBars",
@@ -143,12 +143,12 @@
     "Syndicator": {
       "name": "Syndicator",
       "desc": "Conta gli oggetti su tutti i personaggi: righe nel tooltip e ricerca globale con /syn.",
-      "version": "290",
+      "version": "291",
       "interface": "120100, 120105, 16001, 50504, 38001, 20506, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/syndicator",
       "preview": "https://media.forgecdn.net/attachments/1083/215/tooltip-2025-01-31.webp",
-      "installed": "2026-11-10",
+      "installed": "2026-11-16",
       "giochi": ["retail", "forever"],
       "folders": [
         "Syndicator"
@@ -187,11 +187,11 @@
     "DungeonJournal": {
       "name": "DungeonJournal",
       "desc": "Diario dei dungeon: quest disponibili per ogni istanza e dove prenderle, boss e loot che droppano.",
-      "version": "2.0.7",
+      "version": "2.0.8",
       "interface": "16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/dungeonjournal",
-      "installed": "2026-11-15",
+      "installed": "2026-11-16",
       "folders": [
         "ForeverDungeonJournal"
       ],
@@ -285,11 +285,11 @@
     "HandyNotes_RaresTreasuresForever": {
       "name": "HandyNotes - Rares and Treasures Forever",
       "desc": "Rare e tesori di WoW Forever sulla mappa, e registra quelli nuovi che incontri (plugin di HandyNotes).",
-      "version": "1.4.0",
+      "version": "1.4.1",
       "interface": "16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-rares-and-treasures-forever",
-      "installed": "2026-11-15",
+      "installed": "2026-11-16",
       "folders": [
         "HandyNotes_RaresTreasuresForever"
       ],
