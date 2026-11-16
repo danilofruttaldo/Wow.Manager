@@ -345,6 +345,22 @@
         "forever"
       ],
       "notes": "Installato 2026-11-13 alla 20261106.02-Release (mediafilez files/9472/104) SOLO su Forever, su richiesta. Progetto 298530 (fuba82). File multi-flavor unico. RequiredDeps HandyNotes, nessun SavedVariables. Icona = avatar CurseForge 64x64 jpg. Nessuna patch locale."
+    },
+    "GuildDungeonForever": {
+      "name": "Guild Dungeon Forever",
+      "desc": "Gruppi per i dungeon dentro la gilda: apri un gruppo con posti per ruolo e i membri si candidano con un click.",
+      "version": "1.2.0",
+      "interface": "16001",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/guild-dungeon-forever",
+      "installed": "2026-11-16",
+      "folders": [
+        "GuildDungeonForever"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-16 alla 1.2.0 (mediafilez files/9621/8, GuildDungeonForever-1.2.0.zip, release del 2026-11-14) SOLO su Forever, su richiesta. Progetto CurseForge 1802744 (Mojitsu), nato il 2026-11-14, pubblica solo file 1.60.1; ## Interface 16001, SavedVariables GDF_DB, nessuna dipendenza. Funziona solo fra membri di gilda che hanno l'addon (canale addon GUILD), con annuncio facoltativo in chat di gilda per chi non ce l'ha. Comando /gdf o bottone minimappa; lingua EN/IT dalle opzioni. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale."
     }
   }
 }
