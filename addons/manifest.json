@@ -369,22 +369,6 @@
         "forever"
       ],
       "notes": "Installato 2026-11-16 alla 1.2.0 (mediafilez files/9621/8, GuildDungeonForever-1.2.0.zip, release del 2026-11-14) SOLO su Forever, su richiesta. Progetto CurseForge 1802744 (Mojitsu), nato il 2026-11-14, pubblica solo file 1.60.1; ## Interface 16001, SavedVariables GDF_DB, nessuna dipendenza. Funziona solo fra membri di gilda che hanno l'addon (canale addon GUILD), con annuncio facoltativo in chat di gilda per chi non ce l'ha. Comando /gdf o bottone minimappa; lingua EN/IT dalle opzioni. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale."
-    },
-    "RareScanner": {
-      "name": "RareScanner",
-      "desc": "Avvisa quando un raro, un tesoro o un evento compare nei paraggi e li segna sulla mappa del mondo.",
-      "version": "1.60.1.8",
-      "interface": "16001",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/rarescanner",
-      "installed": "2026-11-16",
-      "folders": [
-        "RareScanner"
-      ],
-      "giochi": [
-        "forever"
-      ],
-      "notes": "Installato 2026-11-16 alla 1.60.1.8 (mediafilez files/9645/905, RareScanner_FOREVER_1.60.1.8.zip, release del 2026-11-16) SOLO su Forever, su richiesta. Progetto CurseForge 84208 (stesso progetto del retail): pubblica file separati per flavor, prendere i RareScanner_FOREVER_* (1.60.1), non i 12.x. ## Interface 16001, SavedVariables RareScannerDB, nessuna dipendenza (librerie in ExternalLibs). Icona = avatar CurseForge 64x42 png. preview assente = mai cercata. Nessuna patch locale."
     }
   }
 }
