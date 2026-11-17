@@ -293,18 +293,18 @@
     "HandyNotes_RaresTreasuresForever": {
       "name": "HandyNotes - Rares and Treasures Forever",
       "desc": "Rare e tesori di WoW Forever sulla mappa, e registra quelli nuovi che incontri (plugin di HandyNotes).",
-      "version": "1.4.1",
+      "version": "1.4.2",
       "interface": "16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/handynotes-rares-and-treasures-forever",
-      "installed": "2026-11-16",
+      "installed": "2026-11-17",
       "folders": [
         "HandyNotes_RaresTreasuresForever"
       ],
       "giochi": [
         "forever"
       ],
-      "notes": "Installato 2026-11-13 alla 1.3.8 (mediafilez files/9580/662) SOLO su Forever, su richiesta. Progetto 1784907 (Black_Zetsuu). Scelto fra tre alternativi perche' l'unico aggiornato di recente (release 12/11); ATT elenca le rare ma non le segna in mappa. RequiredDeps HandyNotes, SavedVariables HandyNotes_RaresTreasuresForeverDB. Icona = avatar CurseForge 64x64 png. Nessuna patch locale. Aggiornato 2026-11-15 1.3.9->1.4.0 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9613/561; solo Forever, ## Interface invariata."
+      "notes": "Installato 2026-11-13 alla 1.3.8 (mediafilez files/9580/662) SOLO su Forever, su richiesta. Progetto 1784907 (Black_Zetsuu). Scelto fra tre alternativi perche' l'unico aggiornato di recente (release 12/11); ATT elenca le rare ma non le segna in mappa. RequiredDeps HandyNotes, SavedVariables HandyNotes_RaresTreasuresForeverDB. Icona = avatar CurseForge 64x64 png. Nessuna patch locale. Aggiornato 2026-11-15 1.3.9->1.4.0 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9613/561; solo Forever, ## Interface invariata. Aggiornato 2026-11-17 1.4.1->1.4.2 via /aggiorna-addon (workflow) mediafilez files/9658/494; solo Forever, ## Interface 16001 invariata."
     },
     "HandyNotes_NPCs_Forever": {
       "name": "HandyNotes - NPCs Forever",
@@ -357,18 +357,18 @@
     "GuildDungeonForever": {
       "name": "Guild Dungeon Forever",
       "desc": "Gruppi per i dungeon dentro la gilda: apri un gruppo con posti per ruolo e i membri si candidano con un click.",
-      "version": "1.2.0",
+      "version": "1.3.1",
       "interface": "16001",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/guild-dungeon-forever",
-      "installed": "2026-11-16",
+      "installed": "2026-11-17",
       "folders": [
         "GuildDungeonForever"
       ],
       "giochi": [
         "forever"
       ],
-      "notes": "Installato 2026-11-16 alla 1.2.0 (mediafilez files/9621/8, GuildDungeonForever-1.2.0.zip, release del 2026-11-14) SOLO su Forever, su richiesta. Progetto CurseForge 1802744 (Mojitsu), nato il 2026-11-14, pubblica solo file 1.60.1; ## Interface 16001, SavedVariables GDF_DB, nessuna dipendenza. Funziona solo fra membri di gilda che hanno l'addon (canale addon GUILD), con annuncio facoltativo in chat di gilda per chi non ce l'ha. Comando /gdf o bottone minimappa; lingua EN/IT dalle opzioni. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale."
+      "notes": "Installato 2026-11-16 alla 1.2.0 (mediafilez files/9621/8, GuildDungeonForever-1.2.0.zip, release del 2026-11-14) SOLO su Forever, su richiesta. Progetto CurseForge 1802744 (Mojitsu), nato il 2026-11-14, pubblica solo file 1.60.1; ## Interface 16001, SavedVariables GDF_DB, nessuna dipendenza. Funziona solo fra membri di gilda che hanno l'addon (canale addon GUILD), con annuncio facoltativo in chat di gilda per chi non ce l'ha. Comando /gdf o bottone minimappa; lingua EN/IT dalle opzioni. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale. Aggiornato 2026-11-17 1.2.0->1.3.1 via /aggiorna-addon (workflow) mediafilez files/9656/564; solo Forever, ## Interface 16001 invariata."
     }
   }
 }
