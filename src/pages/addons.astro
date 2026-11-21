@@ -8,7 +8,7 @@ const addons = getAddons();
 // dell'autore e ArchonTooltip se lo portava dentro l'app Archon: nessuno dei due c'è più,
 // ma le voci restano come esempio di fonte non-CurseForge. Mappa invece del ternario perché una fonte in più è un'altra riga, non una
 // catena di `?:`.
-const SOURCE_LABEL: Record<string, string> = { curseforge: 'CurseForge', archon: 'Archon App', naowh: 'naowh.gg' };
+const SOURCE_LABEL: Record<string, string> = { curseforge: 'CurseForge', github: 'GitHub', archon: 'Archon App', naowh: 'naowh.gg' };
 const sourceLabel = (s: string) => SOURCE_LABEL[s] ?? s;
 
 // Build corrente → codice TOC atteso (es. "12.0.7.68235" → "120007") per l'indicatore di compatibilità.

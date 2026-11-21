@@ -55,7 +55,7 @@ const boot = await agent(
   - name = la CHIAVE dell'oggetto nel manifest (es "BigWigs", "Leatrix_Plus", "MythicDungeonTools").
   - slug = l'ULTIMO segmento del path del campo "url" (es url ".../addons/big-wigs" -> "big-wigs"; ".../teleport-me-nu" -> "teleport-me-nu").
   - current = il campo "version".
-  - source/repo: DEFAULT source="cfwidget". ECCEZIONI (cfwidget rotto, usa GitHub releases): se name=="BigWigs" -> source="github", repo="BigWigsMods/BigWigs"; se name=="MythicDungeonTools" -> source="github", repo="Nnoggie/MythicDungeonTools".
+  - source/repo: DEFAULT source="cfwidget". ECCEZIONI (cfwidget rotto, usa GitHub releases): se name=="BigWigs" -> source="github", repo="BigWigsMods/BigWigs"; se name=="MythicDungeonTools" -> source="github", repo="Nnoggie/MythicDungeonTools"; se name=="QuestieDB" -> source="github", repo="Questie/QuestieDB" (su cfwidget non esiste: 404).
   - retail = true se il campo "giochi" e' assente OPPURE contiene "retail"; false se "giochi" esiste e non contiene "retail".
   - forever = true se il campo "giochi" esiste e contiene "forever", altrimenti false.
   - senza = l'array "forever.senza" se c'e', altrimenti [].
@@ -101,7 +101,8 @@ const audits = await parallel(ADDONS.map(a => () => {
   if (a.source === 'github') {
     prompt = `${common}
 Esegui: curl -s --max-time 30 "https://api.github.com/repos/${a.repo}/releases/latest"
-tag_name = versione latest. Tra gli assets prendi l'asset .zip (NON release.json): usa il suo browser_download_url come downloadUrl e il suo name come fileName.
+tag_name = versione latest. Tra gli assets prendi l'asset .zip (NON release.json): usa il suo browser_download_url come downloadUrl e il suo name come fileName.${soloForever ? `
+ATTENZIONE: addon SOLO Forever. Se la release ha piu' zip per flavor (es. QuestieDB: -Forever, -Vanilla, -TBC, -Wrath, -Cata, -Mists, -all), prendi SOLO quello che finisce in "-Forever.zip". Mai "-all" (contiene tutti i flavor, 85 MB) ne' un altro flavor. Se manca lo zip -Forever: needsUpdate=false, notes che lo dice.` : ''}
 needsUpdate = true se tag_name diverso da "${a.current}". source="github".`
   } else {
     prompt = `${common}
