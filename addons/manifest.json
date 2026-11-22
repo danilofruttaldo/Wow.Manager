@@ -260,7 +260,7 @@
     },
     "HandyNotes": {
       "name": "HandyNotes",
-      "desc": "Motore di segnalini per mappa e minimappa: da solo fa poco, serve ai plugin che portano i punti (libri, rare e tesori, NPC, stazioni di professione).",
+      "desc": "Motore di segnalini per mappa e minimappa: da solo fa poco, serve ai plugin che portano i punti (libri e rare e tesori).",
       "version": "v1.6.32",
       "interface": "120100, 11509, 16001, 20506, 50504",
       "source": "curseforge",
@@ -306,54 +306,6 @@
       ],
       "notes": "Installato 2026-11-13 alla 1.3.8 (mediafilez files/9580/662) SOLO su Forever, su richiesta. Progetto 1784907 (Black_Zetsuu). Scelto fra tre alternativi perche' l'unico aggiornato di recente (release 12/11); ATT elenca le rare ma non le segna in mappa. RequiredDeps HandyNotes, SavedVariables HandyNotes_RaresTreasuresForeverDB. Icona = avatar CurseForge 64x64 png. Nessuna patch locale. Aggiornato 2026-11-15 1.3.9->1.4.0 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9613/561; solo Forever, ## Interface invariata. Aggiornato 2026-11-17 1.4.1->1.4.2 via /aggiorna-addon (workflow) mediafilez files/9658/494; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-18 1.4.2->1.5.0 via /aggiorna-addon (workflow) mediafilez files/9671/43; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-20 1.5.0->1.6.5 via /aggiorna-addon (workflow) mediafilez files/9704/20; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-21 1.6.5->1.7.0 via /aggiorna-addon (workflow) mediafilez files/9721/691; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-22 1.7.0->1.7.1 via /aggiorna-addon (workflow) mediafilez files/9741/806; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-22 1.7.1->1.7.2 via /aggiorna-addon (workflow) mediafilez files/9753/773; solo Forever, ## Interface 16001 invariata."
     },
-    "HandyNotes_NPCs_Forever": {
-      "name": "HandyNotes - NPCs Forever",
-      "desc": "Vendor, allenatori, locandieri e altri NPC di servizio su mappa e minimappa (plugin di HandyNotes).",
-      "version": "0.7.0",
-      "interface": "16001",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/handynotes-npcs-forever",
-      "installed": "2026-11-15",
-      "folders": [
-        "HandyNotes_NPCs_Forever"
-      ],
-      "giochi": [
-        "forever"
-      ],
-      "notes": "Installato 2026-11-13 alla 0.6.0 (mediafilez files/9556/321) SOLO su Forever, su richiesta. Progetto 1784734 (gundor_). Tutto-in-uno: sostituisce i 9 plugin Frostaphim per tipo di NPC. Si sovrappone a Leatrix Maps solo sugli spirit healer. RequiredDeps HandyNotes, SavedVariables HandyNotes_NPCsForeverDB. Icona = avatar CurseForge 64x64 jpg. Nessuna patch locale. Aggiornato 2026-11-15 0.6.0->0.7.0 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9607/596; solo Forever, ## Interface invariata."
-    },
-    "HandyNotes_ProfessionStations": {
-      "name": "HandyNotes - Profession Stations",
-      "desc": "Incudini, forge, fuochi da cucina e le altre stazioni di professione sulla mappa (plugin di HandyNotes).",
-      "version": "1.0.4",
-      "interface": "120105, 16001",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/handynotes-profession-stations",
-      "installed": "2026-11-13",
-      "folders": [
-        "HandyNotes_ProfessionStations"
-      ],
-      "giochi": [
-        "forever"
-      ],
-      "notes": "Installato 2026-11-13 alla 1.0.4 (mediafilez files/9504/724) SOLO su Forever, su richiesta. Progetto 1788729 (Laxxz). File multi-flavor (12.1.5 + 1.60.1). Dependencies HandyNotes, SavedVariables HandyNotes_ProfessionStationsDB. Icona = avatar CurseForge 64x64 png. Nessuna patch locale."
-    },
-    "HandyNotes_WorldMapButton": {
-      "name": "HandyNotes - WorldMapButton",
-      "desc": "Aggiunge alla mappa del mondo un bottone per accendere e spegnere i segnalini di HandyNotes.",
-      "version": "20261106.02-Release",
-      "interface": "120105, 120100, 120007, 110207, 50503, 40402, 38001, 30405, 20506, 16001, 11508",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/handynotes-worldmapbutton",
-      "installed": "2026-11-13",
-      "folders": [
-        "HandyNotes_WorldMapButton"
-      ],
-      "giochi": [
-        "forever"
-      ],
-      "notes": "Installato 2026-11-13 alla 20261106.02-Release (mediafilez files/9472/104) SOLO su Forever, su richiesta. Progetto 298530 (fuba82). File multi-flavor unico. RequiredDeps HandyNotes, nessun SavedVariables. Icona = avatar CurseForge 64x64 jpg. Nessuna patch locale."
-    },
     "GuildDungeonForever": {
       "name": "Guild Dungeon Forever",
       "desc": "Gruppi per i dungeon dentro la gilda: apri un gruppo con posti per ruolo e i membri si candidano con un click.",
@@ -369,6 +321,40 @@
         "forever"
       ],
       "notes": "Installato 2026-11-16 alla 1.2.0 (mediafilez files/9621/8, GuildDungeonForever-1.2.0.zip, release del 2026-11-14) SOLO su Forever, su richiesta. Progetto CurseForge 1802744 (Mojitsu), nato il 2026-11-14, pubblica solo file 1.60.1; ## Interface 16001, SavedVariables GDF_DB, nessuna dipendenza. Funziona solo fra membri di gilda che hanno l'addon (canale addon GUILD), con annuncio facoltativo in chat di gilda per chi non ce l'ha. Comando /gdf o bottone minimappa; lingua EN/IT dalle opzioni. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale. Aggiornato 2026-11-17 1.2.0->1.3.1 via /aggiorna-addon (workflow) mediafilez files/9656/564; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-19 1.3.1->1.3.3 via /aggiorna-addon (workflow) mediafilez files/9683/738; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-20 1.3.3->1.3.4 via /aggiorna-addon (workflow) mediafilez files/9705/623; solo Forever, ## Interface 16001 invariata."
+    },
+    "Questie": {
+      "name": "Questie",
+      "desc": "Quest helper: mostra sulla mappa e sulla minimappa dove prendere, completare e consegnare le quest, con il tracker degli obiettivi.",
+      "version": "v12.12.0",
+      "interface": "11508, 11509, 16001, 20506, 38002, 50503, 50504",
+      "source": "curseforge",
+      "url": "https://www.curseforge.com/wow/addons/questie",
+      "installed": "2026-11-22",
+      "folders": [
+        "Questie",
+        "QuestieTrace"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-21 alla v12.11.1 (mediafilez files/9701/389, Questie-v12.11.1.zip, release del 2026-11-19) SOLO su Forever, su richiesta. Progetto CurseForge 334372 (questie), file UNICO multi-flavor (5.5.4, 2.5.6, 1.15.9, 3.80.2, 1.60.1): non c'e' un file Forever separato, il client sceglie Questie_Forever.toc (## Interface 16001) fra i sei .toc per flavor; il campo interface elenca l'unione dei .toc. Il pacchetto porta anche QuestieTrace (1.13.0, QuestieTrace-Forever.toc 16001), companion che registra dati di quest per segnalare errori al database: va con l'addon, non e' una scelta a parte. SavedVariables QuestieConfig, QuestieProfilerEnabled (+ per PG QuestieConfigCharacter), QuestieTrace/QuestieTraceDumps. Librerie incluse. ATTENZIONE: il database delle quest NON e' nel pacchetto CurseForge: dalla 12.0.0 sta nell'addon separato QuestieDB (voce a se' qui sotto), obbligatorio benche' il .toc lo dichiari solo OptionalDeps. Installato senza il 2026-11-21 e aggiunto lo stesso giorno. Il .toc dichiara X-QuestieDB-Contract: 4, che deve combaciare con X-Contract-Version di QuestieDB. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale. Sovrapposizioni note: DungeonJournal elenca le quest per istanza e AllTheThings le quest mancanti, ma nessuno dei due le segna in mappa. RIMOSSO del tutto il 2026-11-22 (cartelle + SavedVariables) e REINSTALLATO lo stesso giorno, su richiesta, alla v12.12.0 (mediafilez files/9736/238, release del 2026-11-21) con QuestieTrace 1.13.2; Questie_Forever.toc ## Interface 16001, X-QuestieDB-Contract 4."
+    },
+    "QuestieDB": {
+      "name": "QuestieDB",
+      "desc": "Il database di Questie: quest, NPC, oggetti e luoghi di WoW Forever. Senza, Questie non funziona.",
+      "version": "v1.1.4",
+      "interface": "16001",
+      "source": "github",
+      "url": "https://github.com/Questie/QuestieDB",
+      "preview": "",
+      "installed": "2026-11-22",
+      "folders": [
+        "QuestieDB"
+      ],
+      "giochi": [
+        "forever"
+      ],
+      "notes": "Installato 2026-11-21 alla v1.1.3 (GitHub release Questie/QuestieDB, asset QuestieDB-1.1.3-Forever.zip, 8,2 MB, 63 file per 19,2 MB estratti, release del 2026-11-18) SOLO su Forever, su richiesta, dopo Questie che senza non funziona. Su cfwidget il progetto NON esiste (404 su questiedb e varianti; il README di Questie rimanda a curseforge.com/wow/addons/questiedb, che cfwidget non indicizza): per questo source=github e /aggiorna-addon lo audita via GitHub releases (eccezione nel bootstrap del workflow, con la regola di prendere SOLO lo zip -Forever). La release pubblica uno zip per flavor piu' un -all da 85 MB: va preso il -Forever, che contiene il solo QuestieDB_Forever.toc (## Interface 16001). Esiste anche un tag 'preview' marcato prerelease: da ignorare. ## X-Contract-Version: 4 = X-QuestieDB-Contract di Questie v12.11.1: se un aggiornamento cambia uno dei due numeri, aggiornare insieme Questie e QuestieDB. Icona = icons/QuestieTDB_64x64.png del pacchetto stesso (non c'e' avatar CurseForge raggiungibile). preview vuoto = cercata, la fonte non ce l'ha: il ripiego automatico passa da cfwidget, che qui da' 404, quindi senza la stringa vuota node-pending.ps1 lo conterebbe in sospeso a ogni giro (stesso caso di NaowhUI). Uno screenshot si puo' incollare a mano. Nessuna patch locale. RIMOSSO del tutto il 2026-11-22 insieme a Questie e REINSTALLATO lo stesso giorno alla v1.1.4 (GitHub release, QuestieDB-1.1.4-Forever.zip, release del 2026-11-21); ## Interface 16001, X-Contract-Version 4 = contratto di Questie v12.12.0."
     }
   }
 }
