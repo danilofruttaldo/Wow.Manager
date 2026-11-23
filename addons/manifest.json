@@ -181,16 +181,16 @@
     "Auctionator": {
       "name": "Auctionator",
       "desc": "Asta semplificata: mette in vendita al prezzo più basso del momento con un tasto e tiene lo storico prezzi.",
-      "version": "351",
+      "version": "352",
       "interface": "120100, 120105, 16001, 50504, 38000, 20506, 11508, 11509",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/auctionator",
-      "installed": "2026-11-22",
+      "installed": "2026-11-23",
       "giochi": ["retail", "forever"],
       "folders": [
         "Auctionator"
       ],
-      "notes": "Installato 2026-10-25 alla 341 (forgecdn files/9162/359, release del 2026-10-13, 830 KB) su richiesta: addon d'asta 'il piu' semplice' per postare tanta roba, scelto al posto di TradeSkillMaster (piu' potente ma da configurare). Nessun addon posta da solo: Blizzard vuole un evento hardware (clic/tasto) per ogni asta, quindi il massimo e' un tasto da premere a ripetizione dalla scheda Selling. Icona = avatar CurseForge 64x64 PNG (sulla postazione di gioco non c'e' sharp per il webp). preview assente = mai cercata: la riempie node-pending.ps1 col logo di ripiego. Inizialmente solo retail. Aggiornato 2026-11-08 341->342 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9494/788; 1 cartella, ## Interface invariata. Nessuna patch locale. Installato 2026-11-08 anche su WoW Forever su richiesta (342, cartella identica a retail): il .toc dichiara 16001 e Source/Constants/Main.lua tratta WOW_PROJECT_CAMELOT come retail, commentandolo 'temporary fix'. DA PROVARE all'asta in gioco. Aggiornato 2026-11-10 343->344 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9534/205; 1 cartella, ## Interface invariata, installato su retail e su Forever. Nessuna patch locale. Aggiornato 2026-11-11 344->345 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9548/985; 1 cartella, ## Interface invariata, installato su retail e su Forever. Nessuna patch locale. Aggiornato 2026-11-15 346->347 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9620/638; 1 cartella, retail e Forever, ## Interface invariata. Aggiornato 2026-11-19 347->349 via /aggiorna-addon (workflow) mediafilez files/9690/303; retail e Forever, ## Interface invariata. Aggiornato 2026-11-22 349->351 via /aggiorna-addon (workflow) mediafilez files/9740/188; retail e Forever, ## Interface invariata."
+      "notes": "Installato 2026-10-25 alla 341 (forgecdn files/9162/359, release del 2026-10-13, 830 KB) su richiesta: addon d'asta 'il piu' semplice' per postare tanta roba, scelto al posto di TradeSkillMaster (piu' potente ma da configurare). Nessun addon posta da solo: Blizzard vuole un evento hardware (clic/tasto) per ogni asta, quindi il massimo e' un tasto da premere a ripetizione dalla scheda Selling. Icona = avatar CurseForge 64x64 PNG (sulla postazione di gioco non c'e' sharp per il webp). preview assente = mai cercata: la riempie node-pending.ps1 col logo di ripiego. Inizialmente solo retail. Aggiornato 2026-11-08 341->342 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9494/788; 1 cartella, ## Interface invariata. Nessuna patch locale. Installato 2026-11-08 anche su WoW Forever su richiesta (342, cartella identica a retail): il .toc dichiara 16001 e Source/Constants/Main.lua tratta WOW_PROJECT_CAMELOT come retail, commentandolo 'temporary fix'. DA PROVARE all'asta in gioco. Aggiornato 2026-11-10 343->344 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9534/205; 1 cartella, ## Interface invariata, installato su retail e su Forever. Nessuna patch locale. Aggiornato 2026-11-11 344->345 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9548/985; 1 cartella, ## Interface invariata, installato su retail e su Forever. Nessuna patch locale. Aggiornato 2026-11-15 346->347 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9620/638; 1 cartella, retail e Forever, ## Interface invariata. Aggiornato 2026-11-19 347->349 via /aggiorna-addon (workflow) mediafilez files/9690/303; retail e Forever, ## Interface invariata. Aggiornato 2026-11-22 349->351 via /aggiorna-addon (workflow) mediafilez files/9740/188; retail e Forever, ## Interface invariata. Aggiornato 2026-11-23 351->352 via /aggiorna-addon (workflow) mediafilez files/9761/689; retail e Forever, ## Interface invariata."
     },
     "DungeonJournal": {
       "name": "DungeonJournal",
@@ -211,19 +211,19 @@
     "AllTheThings": {
       "name": "All The Things",
       "desc": "Tracker di collezioni: per ogni transmog, mount o pet elenca i pezzi mancanti e la fonte.",
-      "version": "5.4.16",
+      "version": "5.4.17",
       "interface": "11509, 16001, 20506, 30405, 38002, 40402, 50504, 120105, 120107",
       "source": "curseforge",
       "url": "https://www.curseforge.com/wow/addons/all-the-things",
       "preview": "https://media.forgecdn.net/attachments/227/368/crieve-2.png",
-      "installed": "2026-11-22",
+      "installed": "2026-11-23",
       "folders": [
         "AllTheThings"
       ],
       "giochi": [
         "forever"
       ],
-      "notes": "Installato 2026-11-11 alla 5.4.9 (mediafilez.forgecdn.net files/9547/803, AllTheThings-5.4.9.zip, release del 2026-11-10, 18,5 MB, 544 file per 70,4 MB estratti) SOLO su WoW Forever, su richiesta. Progetto CurseForge 267285: a differenza di DungeonJournal e' UN SOLO pacchetto multi-flavor (file marcato anche 1.60.1, .toc con 16001) con un database per gioco in db/<flavor>, e Forever ha il suo, db/Camelot (WOW_PROJECT_CAMELOT). Su retail era stato tolto il 2026-10-05 con tutte le SavedVariables (vedi git show a631acc^:addons/manifest.json per la storia retail): li' resta disinstallato, quindi giochi = solo forever. Icona e anteprima ripescate da a631acc^ (stessa galleria di prima). Il file CurseForge e' lo stesso per tutti i flavor, quindi l'audit di Forever trova la release giusta senza filtri sul nome. Aggiornato 2026-11-15 5.4.11->5.4.13 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9625/970; solo Forever, ## Interface invariata. Aggiornato 2026-11-19 5.4.13->5.4.14 via /aggiorna-addon (workflow) mediafilez files/9689/417; solo Forever, ## Interface invariata. Aggiornato 2026-11-21 5.4.14->5.4.15 via /aggiorna-addon (workflow) mediafilez files/9718/379; solo Forever, ## Interface invariata. Aggiornato 2026-11-22 5.4.15->5.4.16 via /aggiorna-addon (workflow) mediafilez files/9730/436; solo Forever, ## Interface invariata."
+      "notes": "Installato 2026-11-11 alla 5.4.9 (mediafilez.forgecdn.net files/9547/803, AllTheThings-5.4.9.zip, release del 2026-11-10, 18,5 MB, 544 file per 70,4 MB estratti) SOLO su WoW Forever, su richiesta. Progetto CurseForge 267285: a differenza di DungeonJournal e' UN SOLO pacchetto multi-flavor (file marcato anche 1.60.1, .toc con 16001) con un database per gioco in db/<flavor>, e Forever ha il suo, db/Camelot (WOW_PROJECT_CAMELOT). Su retail era stato tolto il 2026-10-05 con tutte le SavedVariables (vedi git show a631acc^:addons/manifest.json per la storia retail): li' resta disinstallato, quindi giochi = solo forever. Icona e anteprima ripescate da a631acc^ (stessa galleria di prima). Il file CurseForge e' lo stesso per tutti i flavor, quindi l'audit di Forever trova la release giusta senza filtri sul nome. Aggiornato 2026-11-15 5.4.11->5.4.13 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9625/970; solo Forever, ## Interface invariata. Aggiornato 2026-11-19 5.4.13->5.4.14 via /aggiorna-addon (workflow) mediafilez files/9689/417; solo Forever, ## Interface invariata. Aggiornato 2026-11-21 5.4.14->5.4.15 via /aggiorna-addon (workflow) mediafilez files/9718/379; solo Forever, ## Interface invariata. Aggiornato 2026-11-22 5.4.15->5.4.16 via /aggiorna-addon (workflow) mediafilez files/9730/436; solo Forever, ## Interface invariata. Aggiornato 2026-11-23 5.4.16->5.4.17 via /aggiorna-addon (workflow) mediafilez files/9760/480; solo Forever, ## Interface invariata."
     },
     "Leatrix_Maps": {
       "name": "Leatrix Maps",
