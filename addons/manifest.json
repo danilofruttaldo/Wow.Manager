@@ -192,21 +192,21 @@
       ],
       "notes": "Installato 2026-10-25 alla 341 (forgecdn files/9162/359, release del 2026-10-13, 830 KB) su richiesta: addon d'asta 'il piu' semplice' per postare tanta roba, scelto al posto di TradeSkillMaster (piu' potente ma da configurare). Nessun addon posta da solo: Blizzard vuole un evento hardware (clic/tasto) per ogni asta, quindi il massimo e' un tasto da premere a ripetizione dalla scheda Selling. Icona = avatar CurseForge 64x64 PNG (sulla postazione di gioco non c'e' sharp per il webp). preview assente = mai cercata: la riempie node-pending.ps1 col logo di ripiego. Inizialmente solo retail. Aggiornato 2026-11-08 341->342 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9494/788; 1 cartella, ## Interface invariata. Nessuna patch locale. Installato 2026-11-08 anche su WoW Forever su richiesta (342, cartella identica a retail): il .toc dichiara 16001 e Source/Constants/Main.lua tratta WOW_PROJECT_CAMELOT come retail, commentandolo 'temporary fix'. DA PROVARE all'asta in gioco. Aggiornato 2026-11-10 343->344 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9534/205; 1 cartella, ## Interface invariata, installato su retail e su Forever. Nessuna patch locale. Aggiornato 2026-11-11 344->345 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9548/985; 1 cartella, ## Interface invariata, installato su retail e su Forever. Nessuna patch locale. Aggiornato 2026-11-15 346->347 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9620/638; 1 cartella, retail e Forever, ## Interface invariata. Aggiornato 2026-11-19 347->349 via /aggiorna-addon (workflow) mediafilez files/9690/303; retail e Forever, ## Interface invariata. Aggiornato 2026-11-22 349->351 via /aggiorna-addon (workflow) mediafilez files/9740/188; retail e Forever, ## Interface invariata. Aggiornato 2026-11-23 351->352 via /aggiorna-addon (workflow) mediafilez files/9761/689; retail e Forever, ## Interface invariata."
     },
-    "DungeonJournal": {
-      "name": "DungeonJournal",
-      "desc": "Diario dei dungeon: quest disponibili per ogni istanza e dove prenderle, boss e loot che droppano.",
-      "version": "2.1.4",
+    "OneForAll": {
+      "name": "OneForAll",
+      "desc": "Compagno tutto-in-uno per Forever: dungeon e raid con boss e loot, gear planner e BiS, professioni, talenti, Library Books e pet del cacciatore.",
+      "version": "6.2.16",
       "interface": "16001",
       "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/dungeonjournal",
+      "url": "https://www.curseforge.com/wow/addons/oneforall-forever",
       "installed": "2026-11-24",
       "folders": [
-        "ForeverDungeonJournal"
+        "OneForAll"
       ],
       "giochi": [
         "forever"
       ],
-      "notes": "Installato 2026-11-06 alla 1.6.7 (mediafilez.forgecdn.net files/9456/160, ForeverDungeonJournal-1.6.7.zip, release del 2026-11-05, 29,8 MB, 420 file per 54,9 MB estratti) SOLO su WoW Forever, su richiesta. Autore Exehn, progetto CurseForge 1707971 (slug `dungeonjournal`), 2,9 milioni di download. Il progetto pubblica file separati per flavor: ForeverDungeonJournal-x.y.z (1.60.1), DungeonJournalClassicEra (1.15.9), DungeonJournalTBC (2.5.6). Si prende SOLO il Forever, che ha ## Interface 16001 e cartella ForeverDungeonJournal (SavedVariables ForeverDungeonJournalDB, per PG ForeverDungeonJournalCharacterDB). ATTENZIONE, da non confondere con `dungeon-journal` (progetto 1467479, autore Ezikiel), che e' un addon TBC Classic (Interface 20400, solo contenuti TBC): installato per sbaglio lo stesso giorno e tolto prima di entrare in gioco, quindi niente SavedVariables da ripulire. /aggiorna-addon lo audita sulla build di Forever (retail=false nel bootstrap), non su quella retail, e lo installa solo in _forever_. Icona = avatar CurseForge 400x400 ridotto a 64x64 PNG con System.Drawing. preview assente = mai cercata (node-pending.ps1). Aggiornato 2026-11-08 1.7.0->1.7.3 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9506/720 (ForeverDungeonJournal-1.7.3.zip); cartella unica, ## Interface 16001 invariata, solo su Forever. Aggiornato 2026-11-10 1.7.4->2.0 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9532/329 (DungeonJournal-2.0.zip); cartella unica ForeverDungeonJournal, ## Interface 16001 invariata, solo su Forever. Aggiornato 2026-11-11 2.0->2.0.1 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9547/760 (ForeverDungeonJournal-2.0.1.zip); cartella unica, ## Interface 16001 invariata, solo su Forever. Aggiornato 2026-11-12 2.0.1->2.0.3 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9567/829 (DungeonJournal-2.0.3.zip); cartella unica ForeverDungeonJournal, ## Interface 16001 invariata, solo su Forever. Aggiornato 2026-11-15 2.0.5->2.0.7 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9620/47 (DungeonJournal-2.0.7.zip, cartella ForeverDungeonJournal), solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-16 2.0.8->2.0.9 via /aggiorna-addon (workflow) mediafilez.forgecdn.net files/9650/596 (DungeonJournal2.0.9.zip, cartella ForeverDungeonJournal), solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-18 2.0.9->2.0.10 via /aggiorna-addon (workflow) mediafilez files/9669/30 (DungeonJournal2.0.10.zip); solo Forever, cartella ForeverDungeonJournal, ## Interface 16001 invariata. Aggiornato 2026-11-18 2.0.10->2.0.11 via /aggiorna-addon (workflow) mediafilez files/9678/417 (DungeonJournal2.0.11.zip); solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-19 2.0.11->2.0.12 via /aggiorna-addon (workflow) mediafilez files/9687/205; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-20 2.0.12->2.1.0 via /aggiorna-addon (workflow) mediafilez files/9705/465; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-21 2.1.0->2.1.1 via /aggiorna-addon (workflow) mediafilez files/9723/634; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-22 2.1.1->2.1.3 via /aggiorna-addon (workflow) mediafilez files/9741/988; solo Forever, ## Interface 16001 invariata. Aggiornato 2026-11-24 2.1.3->2.1.4 via /aggiorna-addon (workflow) mediafilez files/9771/279; solo Forever, ## Interface 16001 invariata."
+      "notes": "Installato 2026-11-24 alla 6.2.16 (mediafilez files/9782/203, OneForAll-6.2.16.zip, release del 2026-11-23, 14,5 MB) SOLO su WoW Forever, su richiesta. Autore Smoergi, progetto CurseForge 1714201 (slug oneforall-forever; `oneforall` da' 404 su cfwidget), pubblica solo file 1.60.1. Cartella unica OneForAll, ## Interface 16001, OptionalDeps Baganator. SavedVariables OneForAllDB, ForeverCompanionDB, ForeverLibraryTrackerDB; per PG OneForAllCharDB, ForeverCompanionCharDB. Si apre con /ofa o dal bottone della minimappa. SOSTITUISCE due addon rimossi lo stesso giorno perche' doppioni pieni: DungeonJournal (boss, loot, quest e mappe delle istanze) e HandyNotes_ForeverBooks (tracker Library Books con icone in mappa e avviso di vicinanza); le loro note si rileggono con git show HEAD~1:addons/manifest.json dal commit di questa installazione. Leatrix_Maps NON tolto: i suoi doppioni con EllesmereUI erano gia' spenti dal 2026-11-18 e cio' che gli resta (coordinate, mappa semplificata, menu zone, battlefield map) OneForAll non lo fa. Sovrapposizioni da gestire nelle opzioni di OneForAll (tab Quality of Life): gran parte del QoL la fa gia' EllesmereUI (Forever Essentials: timer di volo, junk, loot feed, map reveal, map travel, livelli zona, ricompense quest, uprank; QoL: buff reminder, upgrade tooltip; Minimap/DataBars/Chat), da tenere spenta da una parte. Lo zoom camera lungo va lasciato spento (vedi il caso Leatrix su retail). Con Questie caricato OneForAll nasconde da se' le sue icone quest in mappa e le quest sugli NPC. Icona = avatar CurseForge 400x400 ridotto a 64x64 PNG con System.Drawing. preview assente = mai cercata (node-pending.ps1). Nessuna patch locale."
     },
     "AllTheThings": {
       "name": "All The Things",
@@ -260,7 +260,7 @@
     },
     "HandyNotes": {
       "name": "HandyNotes",
-      "desc": "Motore di segnalini per mappa e minimappa: da solo fa poco, serve ai plugin che portano i punti (libri e rare e tesori).",
+      "desc": "Motore di segnalini per mappa e minimappa: da solo fa poco, serve al plugin che porta i punti (rare e tesori).",
       "version": "v1.6.32",
       "interface": "120100, 11509, 16001, 20506, 50504",
       "source": "curseforge",
@@ -273,22 +273,6 @@
         "forever"
       ],
       "notes": "Installato 2026-11-13 alla v1.6.32 (mediafilez files/9414/756, release del 2026-11-03) SOLO su WoW Forever, come dipendenza di HandyNotes - Forever Books (RequiredDeps). E' un file unico multi-flavor: la release v1.6.32 dichiara 1.60.1 fra le versioni e il .toc ha 16001. Su retail era stato tolto il 2026-10-05 con tutti i plugin: qui NON torna su retail. SavedVariables HandyNotesDB, HandyNotes_HandyNotesDB. Icona = avatar CurseForge 64x41 jpg. preview assente = mai cercata (ripiego al logo via node-pending). PLUGIN (2026-11-13): sulla ricerca CurseForge filtrata Forever ce ne sono ~33, molti doppioni fra loro. Scelti in base agli addon gia' presenti: Forever Books, Rares and Treasures Forever, NPCs-forever, Profession Stations, WorldMapButton. SCARTATI apposta, non reinstallarli 'per completezza': ingressi dungeon/raid (DungeonLocations Classic, Dungeon & Raid Locations Forever, Forever Instances), voli (Forever Flight Guide, Forever Flights, FlightMasters), MapNotes Forever, Traveler, SpiritHealers, Classic and Cataclysm = gia' coperti da Leatrix Maps 'Show points of interest' (acceso nel SavedVariables Forever: dungeon, flight point, boat/zepp/tram, portali, spirit healer, zone crossing) e da EllesmereUI Forever Essentials 'Map Markers' (spento); rare/tesori alternativi (HandyNotes: WoW Forever di Kemayo fermo al 4/10, Forever Rare Hunter); serie Frostaphim (ClassTrainers, ProfessionTrainers, RecipeVendors, WeaponMasters, Innkeepers, ReagentVendors, MountVendors, RepairVendors) e Forever Trade Guide e Directions = doppioni di NPCs-forever; EasyFind Extension (serve EasyFind), World Lore Forever (nessun file 1.60.1), DockWatch (non plugin); MapSearch opzionale non preso. cfwidget da' 404 su diversi di questi. Nessuna patch locale."
-    },
-    "HandyNotes_ForeverBooks": {
-      "name": "HandyNotes - Forever Books",
-      "desc": "I 40 libri della Library of Azeroth come segnalini su mappa e minimappa (plugin di HandyNotes).",
-      "version": "1.3.0",
-      "interface": "16001",
-      "source": "curseforge",
-      "url": "https://www.curseforge.com/wow/addons/handynotes-forever-books",
-      "installed": "2026-11-13",
-      "folders": [
-        "HandyNotes_ForeverBooks"
-      ],
-      "giochi": [
-        "forever"
-      ],
-      "notes": "Installato 2026-11-13 alla 1.3.0 (mediafilez files/9411/888, release del 2026-11-02) SOLO su WoW Forever, su richiesta (l'utente cercava un 'Librarian': su CurseForge non esiste con quel nome; fra Books Forever, Forever Library Scout e questo ha scelto questo). Progetto CurseForge 1716248, pubblica solo file 1.60.1, ## Interface 16001, RequiredDeps HandyNotes. SavedVariables HandyNotes_ForeverBooksDB, PerCharacter HandyNotes_ForeverBooksCharDB. Icona = avatar CurseForge 64x64 png. preview assente = mai cercata. Nessuna patch locale."
     },
     "HandyNotes_RaresTreasuresForever": {
       "name": "HandyNotes - Rares and Treasures Forever",
